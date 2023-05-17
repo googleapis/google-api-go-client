@@ -936,6 +936,15 @@ type GoogleAppsScriptTypeProcess struct {
 	// ProjectName: Name of the script being executed.
 	ProjectName string `json:"projectName,omitempty"`
 
+	// RuntimeVersion: Which version of maestro to use to execute the
+	// script.
+	//
+	// Possible values:
+	//   "RUNTIME_VERSION_UNSPECIFIED" - Runtime version unset / unknown.
+	//   "DEPRECATED_ES5" - Legacy rhino version of the Apps script runtime
+	//   "V8" - Current default V8 version of the apps script runtime.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
 	// StartTime: Time the execution started.
 	StartTime string `json:"startTime,omitempty"`
 

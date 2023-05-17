@@ -1110,6 +1110,37 @@
                 "https://www.googleapis.com/auth/apps.order"
               ]
             },
+            "queryEligibleBillingAccounts": {
+              "description": "Lists the billing accounts that are eligible to purchase particular SKUs for a given customer. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: Based on the provided list of SKUs, returns a list of SKU groups that must be purchased using the same billing account and the billing accounts eligible to purchase each SKU group.",
+              "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:queryEligibleBillingAccounts",
+              "httpMethod": "GET",
+              "id": "cloudchannel.accounts.customers.queryEligibleBillingAccounts",
+              "parameterOrder": [
+                "customer"
+              ],
+              "parameters": {
+                "customer": {
+                  "description": "Required. The resource name of the customer to list eligible billing accounts for. Format: accounts/{account_id}/customers/{customer_id}.",
+                  "location": "path",
+                  "pattern": "^accounts/[^/]+/customers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "skus": {
+                  "description": "Required. List of SKUs to list eligible billing accounts for. At least one SKU is required. Format: products/{product_id}/skus/{sku_id}.",
+                  "location": "query",
+                  "repeated": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+customer}:queryEligibleBillingAccounts",
+              "response": {
+                "$ref": "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/apps.order"
+              ]
+            },
             "transferEntitlements": {
               "description": "Transfers customer entitlements to new reseller. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS: The SKU was already transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain verification to transfer, but the domain is not verified. * An Add-On SKU (example, Vault or Drive) is missing the pre-requisite SKU (example, G Suite Basic). * (Developer accounts only) Reseller and resold domain must meet the following naming requirements: * Domain names must start with goog-test. * Domain names must include the reseller domain. * Specify all transferring entitlements. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
               "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:transferEntitlements",
@@ -2055,7 +2086,7 @@
       }
     }
   },
-  "revision": "20230507",
+  "revision": "20230515",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {
@@ -2095,6 +2126,49 @@
         "baseEntitlement": {
           "description": "The name of the base entitlement, for which this entitlement is an add-on.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudChannelV1BillingAccount": {
+      "description": "Represents a billing account.",
+      "id": "GoogleCloudChannelV1BillingAccount",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time when this billing account was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "currencyCode": {
+          "description": "Output only. The 3-letter currency code defined in ISO 4217.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Display name of the billing account.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Resource name of the billing account. Format: accounts/{account_id}/billingAccounts/{billing_account_id}.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "Output only. The CLDR region code.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudChannelV1BillingAccountPurchaseInfo": {
+      "description": "Represents a billing account that can be used to make a purchase.",
+      "id": "GoogleCloudChannelV1BillingAccountPurchaseInfo",
+      "properties": {
+        "billingAccount": {
+          "$ref": "GoogleCloudChannelV1BillingAccount",
+          "description": "The billing account resource."
         }
       },
       "type": "object"
@@ -3954,6 +4028,20 @@
       },
       "type": "object"
     },
+    "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse": {
+      "description": "Response message for QueryEligibleBillingAccounts.",
+      "id": "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse",
+      "properties": {
+        "skuPurchaseGroups": {
+          "description": "List of SKU purchase groups where each group represents a set of SKUs that must be purchased using the same billing account. Each SKU from [QueryEligibleBillingAccountsRequest.skus] will appear in exactly one SKU group.",
+          "items": {
+            "$ref": "GoogleCloudChannelV1SkuPurchaseGroup"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudChannelV1RegisterSubscriberRequest": {
       "description": "Request Message for RegisterSubscriber.",
       "id": "GoogleCloudChannelV1RegisterSubscriberRequest",
@@ -4308,6 +4396,27 @@
         "skuGroup": {
           "description": "Specifies a SKU group (https://cloud.google.com/skus/sku-groups). Resource name of SKU group. Format: accounts/{account}/skuGroups/{sku_group}. Example: \"accounts/C01234/skuGroups/3d50fd57-3157-4577-a5a9-a219b8490041\".",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudChannelV1SkuPurchaseGroup": {
+      "description": "Represents a set of SKUs that must be purchased using the same billing account.",
+      "id": "GoogleCloudChannelV1SkuPurchaseGroup",
+      "properties": {
+        "billingAccountPurchaseInfos": {
+          "description": "List of billing accounts that are eligible to purhcase these SKUs.",
+          "items": {
+            "$ref": "GoogleCloudChannelV1BillingAccountPurchaseInfo"
+          },
+          "type": "array"
+        },
+        "skus": {
+          "description": "Resource names of the SKUs included in this group. Format: products/{product_id}/skus/{sku_id}.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

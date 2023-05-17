@@ -2565,7 +2565,7 @@
       }
     }
   },
-  "revision": "20230429",
+  "revision": "20230508",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "Backup": {
@@ -3771,7 +3771,7 @@
           "type": "array"
         },
         "state": {
-          "description": "Output only. The current instance config state.",
+          "description": "Output only. The current instance config state. Applicable only for USER_MANAGED configs.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",

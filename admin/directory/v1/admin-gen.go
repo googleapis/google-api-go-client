@@ -3531,7 +3531,7 @@ func (s *ListPrintersResponse) MarshalJSON() ([]byte, error) {
 // Guide (/admin-sdk/directory/v1/guides/manage-group-members).
 type Member struct {
 	// DeliverySettings: Defines mail delivery preferences of member. This
-	// is only supported by create/update/get.
+	// field is only supported by `insert`, `update`, and `get` methods.
 	DeliverySettings string `json:"delivery_settings,omitempty"`
 
 	// Email: The member's email address. A member can be a user or another
@@ -23094,7 +23094,11 @@ type UsersInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a user.
+// Insert: Creates a user. Mutate calls immediately following user
+// creation might sometimes fail as the user isn't fully created due to
+// propagation delay in our backends. Check the error details for the
+// "User creation is not complete" message to see if this is the case.
+// Retrying the calls after some time can help in this case.
 func (r *UsersService) Insert(user *User) *UsersInsertCall {
 	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.user = user
@@ -23189,7 +23193,7 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a user.",
+	//   "description": "Creates a user. Mutate calls immediately following user creation might sometimes fail as the user isn't fully created due to propagation delay in our backends. Check the error details for the \"User creation is not complete\" message to see if this is the case. Retrying the calls after some time can help in this case.",
 	//   "flatPath": "admin/directory/v1/users",
 	//   "httpMethod": "POST",
 	//   "id": "directory.users.insert",

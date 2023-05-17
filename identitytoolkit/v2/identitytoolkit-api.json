@@ -1660,6 +1660,27 @@
     },
     "v2": {
       "methods": {
+        "getPasswordPolicy": {
+          "description": "Gets password policy config set on the project or tenant.",
+          "flatPath": "v2/passwordPolicy",
+          "httpMethod": "GET",
+          "id": "identitytoolkit.getPasswordPolicy",
+          "parameterOrder": [],
+          "parameters": {
+            "tenantId": {
+              "description": "The id of a tenant.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v2/passwordPolicy",
+          "response": {
+            "$ref": "GoogleCloudIdentitytoolkitV2PasswordPolicy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getRecaptchaConfig": {
           "description": "Gets parameters needed for reCAPTCHA analysis.",
           "flatPath": "v2/recaptchaConfig",
@@ -1714,7 +1735,7 @@
       }
     }
   },
-  "revision": "20230414",
+  "revision": "20230508",
   "rootUrl": "https://identitytoolkit.googleapis.com/",
   "schemas": {
     "GoogleCloudIdentitytoolkitAdminV2AllowByDefault": {
@@ -1905,6 +1926,10 @@
           "$ref": "GoogleCloudIdentitytoolkitAdminV2NotificationConfig",
           "description": "Configuration related to sending notifications to users."
         },
+        "passwordPolicyConfig": {
+          "$ref": "GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig",
+          "description": "The project level password policy configuration."
+        },
         "quota": {
           "$ref": "GoogleCloudIdentitytoolkitAdminV2QuotaConfig",
           "description": "Configuration related to quotas."
@@ -1935,6 +1960,39 @@
           ],
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions": {
+      "description": "Custom strength options to enforce on user passwords.",
+      "id": "GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions",
+      "properties": {
+        "containsLowercaseCharacter": {
+          "description": "The password must contain a lower case character.",
+          "type": "boolean"
+        },
+        "containsNonAlphanumericCharacter": {
+          "description": "The password must contain a non alpha numeric character.",
+          "type": "boolean"
+        },
+        "containsNumericCharacter": {
+          "description": "The password must contain a number.",
+          "type": "boolean"
+        },
+        "containsUppercaseCharacter": {
+          "description": "The password must contain an upper case character.",
+          "type": "boolean"
+        },
+        "maxPasswordLength": {
+          "description": "Maximum password length. No default max length",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minPasswordLength": {
+          "description": "Minimum password length. Range from 6 to 30",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -2505,6 +2563,61 @@
       },
       "type": "object"
     },
+    "GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig": {
+      "description": "The configuration for the password policy on the project.",
+      "id": "GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig",
+      "properties": {
+        "forceUpgradeOnSignin": {
+          "description": "Users must have a password compliant with the password policy to sign-in.",
+          "type": "boolean"
+        },
+        "lastUpdateTime": {
+          "description": "Output only. The last time the password policy on the project was updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "passwordPolicyEnforcementState": {
+          "description": "Which enforcement mode to use for the password policy.",
+          "enum": [
+            "PASSWORD_POLICY_ENFORCEMENT_STATE_UNSPECIFIED",
+            "OFF",
+            "ENFORCE"
+          ],
+          "enumDescriptions": [
+            "Illegal State, should not be used.",
+            "Password Policy will not be used on the project.",
+            "Passwords non-compliant with the password policy will be rejected with an error thrown."
+          ],
+          "type": "string"
+        },
+        "passwordPolicyVersions": {
+          "description": "Must be of length 1. Contains the strength attributes for the password policy.",
+          "items": {
+            "$ref": "GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion": {
+      "description": "The strength attributes for the password policy on the project.",
+      "id": "GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion",
+      "properties": {
+        "customStrengthOptions": {
+          "$ref": "GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions",
+          "description": "The custom strength options enforced by the password policy."
+        },
+        "schemaVersion": {
+          "description": "Output only. schema version number for the password policy",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudIdentitytoolkitAdminV2Permissions": {
       "description": "Configuration related to restricting a user's ability to affect their account.",
       "id": "GoogleCloudIdentitytoolkitAdminV2Permissions",
@@ -2965,6 +3078,10 @@
           "readOnly": true,
           "type": "string"
         },
+        "passwordPolicyConfig": {
+          "$ref": "GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig",
+          "description": "The tenant-level password policy config"
+        },
         "recaptchaConfig": {
           "$ref": "GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig",
           "description": "The tenant-level reCAPTCHA config."
@@ -3128,6 +3245,39 @@
         "appSignatureHash": {
           "description": "The Android app's signature hash for Google Play Service's SMS Retriever API.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudIdentitytoolkitV2CustomStrengthOptions": {
+      "description": "Custom strength options to enforce on user passwords.",
+      "id": "GoogleCloudIdentitytoolkitV2CustomStrengthOptions",
+      "properties": {
+        "containsLowercaseCharacter": {
+          "description": "The password must contain a lower case character.",
+          "type": "boolean"
+        },
+        "containsNonAlphanumericCharacter": {
+          "description": "The password must contain a non alpha numeric character.",
+          "type": "boolean"
+        },
+        "containsNumericCharacter": {
+          "description": "The password must contain a number.",
+          "type": "boolean"
+        },
+        "containsUppercaseCharacter": {
+          "description": "The password must contain an upper case character.",
+          "type": "boolean"
+        },
+        "maxPasswordLength": {
+          "description": "Maximum password length. No default max length",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minPasswordLength": {
+          "description": "Minimum password length. Range from 6 to 30",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -3368,6 +3518,31 @@
         "verificationCode": {
           "description": "User-entered verification code.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudIdentitytoolkitV2PasswordPolicy": {
+      "description": "Configuration for password policy.",
+      "id": "GoogleCloudIdentitytoolkitV2PasswordPolicy",
+      "properties": {
+        "allowedNonAlphanumericCharacters": {
+          "description": "Output only. Allowed characters which satisfy the non_alphanumeric requirement.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "customStrengthOptions": {
+          "$ref": "GoogleCloudIdentitytoolkitV2CustomStrengthOptions",
+          "description": "The custom strength options enforced by the password policy."
+        },
+        "schemaVersion": {
+          "description": "Output only. schema version number for the password policy",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
         }
       },
       "type": "object"

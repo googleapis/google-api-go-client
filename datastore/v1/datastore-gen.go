@@ -694,9 +694,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Entity: A Datastore data object. An entity is limited to 1 megabyte
-// when stored. That _roughly_ corresponds to a limit of 1 megabyte for
-// the serialized form of this message.
+// Entity: A Datastore data object. Must not exceed 1 MiB - 4 bytes.
 type Entity struct {
 	// Key: The entity's key. An entity must have a key, unless otherwise
 	// documented (for example, an entity in `Value.entity_value` may have

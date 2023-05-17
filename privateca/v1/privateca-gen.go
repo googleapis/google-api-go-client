@@ -2673,6 +2673,19 @@ func (s *PublicKey) MarshalJSON() ([]byte, error) {
 // extensions in issued Certificates. The options set here apply to
 // certificates issued by any CertificateAuthority in the CaPool.
 type PublishingOptions struct {
+	// EncodingFormat: Optional. Specifies the encoding format of each
+	// CertificateAuthority's CA certificate and CRLs. If this is omitted,
+	// CA certificates and CRLs will be published in PEM.
+	//
+	// Possible values:
+	//   "ENCODING_FORMAT_UNSPECIFIED" - Not specified. By default, PEM
+	// format will be used.
+	//   "PEM" - The CertificateAuthority's CA certificate and CRLs will be
+	// published in PEM format.
+	//   "DER" - The CertificateAuthority's CA certificate and CRLs will be
+	// published in DER format.
+	EncodingFormat string `json:"encodingFormat,omitempty"`
+
 	// PublishCaCert: Optional. When true, publishes each
 	// CertificateAuthority's CA certificate and includes its URL in the
 	// "Authority Information Access" X.509 extension in all issued
@@ -2690,7 +2703,7 @@ type PublishingOptions struct {
 	// CRLs are also rebuilt shortly after a certificate is revoked.
 	PublishCrl bool `json:"publishCrl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublishCaCert") to
+	// ForceSendFields is a list of field names (e.g. "EncodingFormat") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2698,12 +2711,13 @@ type PublishingOptions struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublishCaCert") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EncodingFormat") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

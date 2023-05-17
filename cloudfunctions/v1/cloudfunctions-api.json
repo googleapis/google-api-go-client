@@ -546,7 +546,7 @@
       }
     }
   },
-  "revision": "20230420",
+  "revision": "20230504",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1687,7 +1687,7 @@
           "type": "string"
         },
         "version": {
-          "description": "Version of the secret (version number or the string 'latest'). It is preferrable to use `latest` version with secret volumes as secret value changes are reflected immediately.",
+          "description": "Version of the secret (version number or the string 'latest'). It is preferable to use `latest` version with secret volumes as secret value changes are reflected immediately.",
           "type": "string"
         }
       },

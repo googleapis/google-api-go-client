@@ -3106,6 +3106,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse struct {
 	// true.
 	Registered bool `json:"registered,omitempty"`
 
+	// UserNotifications: Warning notifications for the user.
+	UserNotifications []*GoogleCloudIdentitytoolkitV1UserNotification `json:"userNotifications,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -3805,6 +3808,55 @@ func (s *GoogleCloudIdentitytoolkitV1UserInfo) UnmarshalJSON(data []byte) error 
 	}
 	s.PasswordUpdatedAt = float64(s1.PasswordUpdatedAt)
 	return nil
+}
+
+// GoogleCloudIdentitytoolkitV1UserNotification: Warning notifications
+// for the user.
+type GoogleCloudIdentitytoolkitV1UserNotification struct {
+	// NotificationCode: Warning notification enum. Can be used for
+	// localization.
+	//
+	// Possible values:
+	//   "NOTIFICATION_CODE_UNSPECIFIED" - No notification specified.
+	//   "MISSING_LOWERCASE_CHARACTER" - Password missing lowercase
+	// character.
+	//   "MISSING_UPPERCASE_CHARACTER" - Password missing uppercase
+	// character.
+	//   "MISSING_NUMERIC_CHARACTER" - Password missing numeric character.
+	//   "MISSING_NON_ALPHANUMERIC_CHARACTER" - Password missing non
+	// alphanumeric character.
+	//   "MINIMUM_PASSWORD_LENGTH" - Password less than minimum required
+	// length.
+	//   "MAXIMUM_PASSWORD_LENGTH" - Password greater than maximum required
+	// length.
+	NotificationCode string `json:"notificationCode,omitempty"`
+
+	// NotificationMessage: Warning notification string. Can be used as
+	// fallback.
+	NotificationMessage string `json:"notificationMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NotificationCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NotificationCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV1UserNotification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV1UserNotification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1VerifyIosClientRequest: Request message

@@ -1444,7 +1444,7 @@
       }
     }
   },
-  "revision": "20230501",
+  "revision": "20230503",
   "rootUrl": "https://connectors.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1852,7 +1852,7 @@
           "readOnly": true
         },
         "subscriptionType": {
-          "description": "Output only. This subscription type enum value states if the metrics should be sent for billing or not.",
+          "description": "Output only. This subscription type enum states the subscription type of the project.",
           "enum": [
             "SUBSCRIPTION_TYPE_UNSPECIFIED",
             "PAY_G",
@@ -1860,8 +1860,8 @@
           ],
           "enumDescriptions": [
             "Unspecified subscription type.",
-            "Metrics should be sent for billing for PayG type.",
-            "Metrics should not be sent for billing for Paid Subscription type."
+            "PayG subscription.",
+            "Paid Subscription."
           ],
           "readOnly": true,
           "type": "string"
@@ -1962,7 +1962,7 @@
             "Connection is being deleted.",
             "Connection is being updated.",
             "Connection is not running due to an error.",
-            "Connection is not running due to an auth error for the Oauth2 Auth Code based connector."
+            "Connection is not running because the authorization configuration is not complete."
           ],
           "type": "string"
         },

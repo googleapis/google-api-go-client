@@ -1960,7 +1960,7 @@ type SecretVersion struct {
 	Path string `json:"path,omitempty"`
 
 	// Version: Version of the secret (version number or the string
-	// 'latest'). It is preferrable to use `latest` version with secret
+	// 'latest'). It is preferable to use `latest` version with secret
 	// volumes as secret value changes are reflected immediately.
 	Version string `json:"version,omitempty"`
 

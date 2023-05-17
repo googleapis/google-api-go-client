@@ -94,8 +94,8 @@ const (
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
-// NewService creates a new Service.
-func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+// NewService creates a new APIService.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -118,23 +118,23 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	return s, nil
 }
 
-// New creates a new Service. It uses the provided http.Client for requests.
+// New creates a new APIService. It uses the provided http.Client for requests.
 //
 // Deprecated: please use NewService instead.
 // To provide a custom HTTP client, use option.WithHTTPClient.
 // If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
-func New(client *http.Client) (*Service, error) {
+func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath}
 	s.ApplicationDetailService = NewApplicationDetailServiceService(s)
 	s.Projects = NewProjectsService(s)
 	s.TestEnvironmentCatalog = NewTestEnvironmentCatalogService(s)
 	return s, nil
 }
 
-type Service struct {
+type APIService struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
@@ -146,50 +146,50 @@ type Service struct {
 	TestEnvironmentCatalog *TestEnvironmentCatalogService
 }
 
-func (s *Service) userAgent() string {
+func (s *APIService) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewApplicationDetailServiceService(s *Service) *ApplicationDetailServiceService {
+func NewApplicationDetailServiceService(s *APIService) *ApplicationDetailServiceService {
 	rs := &ApplicationDetailServiceService{s: s}
 	return rs
 }
 
 type ApplicationDetailServiceService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsService(s *Service) *ProjectsService {
+func NewProjectsService(s *APIService) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.TestMatrices = NewProjectsTestMatricesService(s)
 	return rs
 }
 
 type ProjectsService struct {
-	s *Service
+	s *APIService
 
 	TestMatrices *ProjectsTestMatricesService
 }
 
-func NewProjectsTestMatricesService(s *Service) *ProjectsTestMatricesService {
+func NewProjectsTestMatricesService(s *APIService) *ProjectsTestMatricesService {
 	rs := &ProjectsTestMatricesService{s: s}
 	return rs
 }
 
 type ProjectsTestMatricesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewTestEnvironmentCatalogService(s *Service) *TestEnvironmentCatalogService {
+func NewTestEnvironmentCatalogService(s *APIService) *TestEnvironmentCatalogService {
 	rs := &TestEnvironmentCatalogService{s: s}
 	return rs
 }
 
 type TestEnvironmentCatalogService struct {
-	s *Service
+	s *APIService
 }
 
 // Account: Identifies an account and how to log into it.
@@ -859,6 +859,9 @@ type ApkManifest struct {
 	// PackageName: Full Java-style package name for this application, e.g.
 	// "com.example.foo".
 	PackageName string `json:"packageName,omitempty"`
+
+	// Services: Services contained in the tag.
+	Services []*Service `json:"services,omitempty"`
 
 	// TargetSdkVersion: Specifies the API Level on which the application is
 	// designed to run.
@@ -2515,6 +2518,38 @@ func (s *RoboStartingIntent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Service: The section of an tag.
+// https://developer.android.com/guide/topics/manifest/service-element
+type Service struct {
+	// IntentFilter: Intent filters in the service
+	IntentFilter []*IntentFilter `json:"intentFilter,omitempty"`
+
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentFilter") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Service) MarshalJSON() ([]byte, error) {
+	type NoMethod Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Shard: Output only. Details about the shard.
 type Shard struct {
 	// NumShards: Output only. The total number of shards.
@@ -3533,7 +3568,7 @@ func (s *XcodeVersion) MarshalJSON() ([]byte, error) {
 // method id "testing.applicationDetailService.getApkDetails":
 
 type ApplicationDetailServiceGetApkDetailsCall struct {
-	s             *Service
+	s             *APIService
 	filereference *FileReference
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
@@ -3658,7 +3693,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 // method id "testing.projects.testMatrices.cancel":
 
 type ProjectsTestMatricesCancelCall struct {
-	s            *Service
+	s            *APIService
 	projectId    string
 	testMatrixId string
 	urlParams_   gensupport.URLParams
@@ -3806,7 +3841,7 @@ func (c *ProjectsTestMatricesCancelCall) Do(opts ...googleapi.CallOption) (*Canc
 // method id "testing.projects.testMatrices.create":
 
 type ProjectsTestMatricesCreateCall struct {
-	s          *Service
+	s          *APIService
 	projectId  string
 	testmatrix *TestMatrix
 	urlParams_ gensupport.URLParams
@@ -3970,7 +4005,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 // method id "testing.projects.testMatrices.get":
 
 type ProjectsTestMatricesGetCall struct {
-	s            *Service
+	s            *APIService
 	projectId    string
 	testMatrixId string
 	urlParams_   gensupport.URLParams
@@ -4135,7 +4170,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 // method id "testing.testEnvironmentCatalog.get":
 
 type TestEnvironmentCatalogGetCall struct {
-	s               *Service
+	s               *APIService
 	environmentType string
 	urlParams_      gensupport.URLParams
 	ifNoneMatch_    string

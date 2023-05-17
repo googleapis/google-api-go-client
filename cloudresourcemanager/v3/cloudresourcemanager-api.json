@@ -1805,7 +1805,7 @@
       }
     }
   },
-  "revision": "20230430",
+  "revision": "20230514",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2054,7 +2054,7 @@
           "type": "string"
         },
         "tagKeyParentName": {
-          "description": "The parent name of the tag key. Must be in the format `organizations/{organization_id}`.",
+          "description": "The parent name of the tag key. Must be in the format `organizations/{organization_id}` or `projects/{project_number}`",
           "type": "string"
         },
         "tagValue": {

@@ -2830,15 +2830,6 @@ type EnrollBareMetalAdminClusterRequest struct {
 	// and follow RFC-1123 (https://tools.ietf.org/html/rfc1123) format.
 	BareMetalAdminClusterId string `json:"bareMetalAdminClusterId,omitempty"`
 
-	// LocalName: The object name of the bare metal OnPremAdminCluster
-	// custom resource on the associated admin cluster. This field is used
-	// to support conflicting resource names when enrolling existing
-	// clusters to the API. When not provided, this field will resolve to
-	// the bare_metal_admin_cluster_id. Otherwise, it must match the object
-	// name of the bare metal OnPremAdminCluster custom resource. It is not
-	// modifiable outside / beyond the enrollment operation.
-	LocalName string `json:"localName,omitempty"`
-
 	// Membership: Required. This is the full resource name of this admin
 	// cluster's fleet membership.
 	Membership string `json:"membership,omitempty"`
@@ -6796,6 +6787,31 @@ func (r *ProjectsLocationsBareMetalAdminClustersService) Get(name string) *Proje
 	return c
 }
 
+// View sets the optional parameter "view": View for bare metal admin
+// cluster. When `BASIC` is specified, only the cluster resource name
+// and membership are returned. The default/unset value
+// `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the
+// complete cluster configuration details.
+//
+// Possible values:
+//
+//	"CLUSTER_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a cluster resource
+//
+// including cluster resource name and membership.
+//
+//	"FULL" - Includes the complete configuration for bare metal admin
+//
+// cluster resource. This is the default value for
+// GetBareMetalAdminClusterRequest method.
+func (c *ProjectsLocationsBareMetalAdminClustersGetCall) View(view string) *ProjectsLocationsBareMetalAdminClustersGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6908,6 +6924,21 @@ func (c *ProjectsLocationsBareMetalAdminClustersGetCall) Do(opts ...googleapi.Ca
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/bareMetalAdminClusters/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for bare metal admin cluster. When `BASIC` is specified, only the cluster resource name and membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete cluster configuration details.",
+	//       "enum": [
+	//         "CLUSTER_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a cluster resource including cluster resource name and membership.",
+	//         "Includes the complete configuration for bare metal admin cluster resource. This is the default value for GetBareMetalAdminClusterRequest method."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -9033,6 +9064,31 @@ func (r *ProjectsLocationsBareMetalClustersService) Get(name string) *ProjectsLo
 	return c
 }
 
+// View sets the optional parameter "view": View for bare metal user
+// cluster. When `BASIC` is specified, only the cluster resource name
+// and admin cluster membership are returned. The default/unset value
+// `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the
+// complete cluster configuration details.
+//
+// Possible values:
+//
+//	"CLUSTER_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a cluster resource
+//
+// including cluster resource name and admin cluster membership.
+//
+//	"FULL" - Includes the complete configuration for bare metal cluster
+//
+// resource. This is the default value for GetBareMetalClusterRequest
+// method.
+func (c *ProjectsLocationsBareMetalClustersGetCall) View(view string) *ProjectsLocationsBareMetalClustersGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9145,6 +9201,21 @@ func (c *ProjectsLocationsBareMetalClustersGetCall) Do(opts ...googleapi.CallOpt
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/bareMetalClusters/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for bare metal user cluster. When `BASIC` is specified, only the cluster resource name and admin cluster membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete cluster configuration details.",
+	//       "enum": [
+	//         "CLUSTER_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a cluster resource including cluster resource name and admin cluster membership.",
+	//         "Includes the complete configuration for bare metal cluster resource. This is the default value for GetBareMetalClusterRequest method."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -15715,6 +15786,31 @@ func (r *ProjectsLocationsVmwareClustersService) Get(name string) *ProjectsLocat
 	return c
 }
 
+// View sets the optional parameter "view": View for VMware user
+// cluster. When `BASIC` is specified, only the cluster resource name
+// and admin cluster membership are returned. The default/unset value
+// `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the
+// complete cluster configuration details.
+//
+// Possible values:
+//
+//	"CLUSTER_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a cluster resource
+//
+// including cluster resource name and admin cluster membership.
+//
+//	"FULL" - Includes the complete configuration for VMware cluster
+//
+// resource. This is the default value for GetVmwareClusterRequest
+// method.
+func (c *ProjectsLocationsVmwareClustersGetCall) View(view string) *ProjectsLocationsVmwareClustersGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -15827,6 +15923,21 @@ func (c *ProjectsLocationsVmwareClustersGetCall) Do(opts ...googleapi.CallOption
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/vmwareClusters/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for VMware user cluster. When `BASIC` is specified, only the cluster resource name and admin cluster membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete cluster configuration details.",
+	//       "enum": [
+	//         "CLUSTER_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a cluster resource including cluster resource name and admin cluster membership.",
+	//         "Includes the complete configuration for VMware cluster resource. This is the default value for GetVmwareClusterRequest method."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

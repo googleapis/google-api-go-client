@@ -1693,6 +1693,112 @@
             }
           }
         },
+        "adSenseLinks": {
+          "methods": {
+            "create": {
+              "description": "Creates an AdSenseLink.",
+              "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks",
+              "httpMethod": "POST",
+              "id": "analyticsadmin.properties.adSenseLinks.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The property for which to create an AdSense Link. Format: properties/{propertyId} Example: properties/1234",
+                  "location": "path",
+                  "pattern": "^properties/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+parent}/adSenseLinks",
+              "request": {
+                "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
+              },
+              "response": {
+                "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
+              }
+            },
+            "delete": {
+              "description": "Deletes an AdSenseLink.",
+              "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks/{adSenseLinksId}",
+              "httpMethod": "DELETE",
+              "id": "analyticsadmin.properties.adSenseLinks.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Unique identifier for the AdSense Link to be deleted. Format: properties/{propertyId}/adSenseLinks/{linkId} Example: properties/1234/adSenseLinks/5678",
+                  "location": "path",
+                  "pattern": "^properties/[^/]+/adSenseLinks/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+name}",
+              "response": {
+                "$ref": "GoogleProtobufEmpty"
+              }
+            },
+            "get": {
+              "description": "Looks up a single AdSenseLink.",
+              "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks/{adSenseLinksId}",
+              "httpMethod": "GET",
+              "id": "analyticsadmin.properties.adSenseLinks.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Unique identifier for the AdSense Link requested. Format: properties/{propertyId}/adSenseLinks/{linkId} Example: properties/1234/adSenseLinks/5678",
+                  "location": "path",
+                  "pattern": "^properties/[^/]+/adSenseLinks/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+name}",
+              "response": {
+                "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
+              }
+            },
+            "list": {
+              "description": "Lists AdSenseLinks on a property.",
+              "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks",
+              "httpMethod": "GET",
+              "id": "analyticsadmin.properties.adSenseLinks.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token received from a previous `ListAdSenseLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAdSenseLinks` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. Resource name of the parent property. Format: properties/{propertyId} Example: properties/1234",
+                  "location": "path",
+                  "pattern": "^properties/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+parent}/adSenseLinks",
+              "response": {
+                "$ref": "GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse"
+              }
+            }
+          }
+        },
         "audiences": {
           "methods": {
             "archive": {
@@ -2873,7 +2979,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules",
+                      "description": "Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules/{event_create_rule}",
                       "location": "path",
                       "pattern": "^properties/[^/]+/dataStreams/[^/]+/eventCreateRules/[^/]+$",
                       "required": true,
@@ -4216,7 +4322,7 @@
       }
     }
   },
-  "revision": "20230507",
+  "revision": "20230516",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -4688,6 +4794,22 @@
       "description": "Response message for AcknowledgeUserDataCollection RPC.",
       "id": "GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleAnalyticsAdminV1alphaAdSenseLink": {
+      "description": "A link between a GA4 Property and an AdSense for Content ad client.",
+      "id": "GoogleAnalyticsAdminV1alphaAdSenseLink",
+      "properties": {
+        "adClientCode": {
+          "description": "Immutable. The AdSense ad client code that the GA4 property is linked to. Example format: \"ca-pub-1234567890\"",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The resource name for this AdSense Link resource. Format: properties/{propertyId}/adSenseLinks/{linkId} Example: properties/1234/adSenseLinks/6789",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposalRequest": {
@@ -5537,6 +5659,10 @@
         "account": {
           "$ref": "GoogleAnalyticsAdminV1alphaAccount",
           "description": "A snapshot of an Account resource in change history."
+        },
+        "adsenseLink": {
+          "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink",
+          "description": "A snapshot of an AdSenseLink resource in change history."
         },
         "attributionSettings": {
           "$ref": "GoogleAnalyticsAdminV1alphaAttributionSettings",
@@ -6389,7 +6515,7 @@
           "type": "array"
         },
         "name": {
-          "description": "Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules",
+          "description": "Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules/{event_create_rule}",
           "readOnly": true,
           "type": "string"
         },
@@ -6813,6 +6939,24 @@
           "description": "Results that were accessible to the caller.",
           "items": {
             "$ref": "GoogleAnalyticsAdminV1alphaAccount"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse": {
+      "description": "Response message for ListAdSenseLinks method.",
+      "id": "GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse",
+      "properties": {
+        "adsenseLinks": {
+          "description": "List of AdSenseLinks.",
+          "items": {
+            "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
           },
           "type": "array"
         },
@@ -7685,6 +7829,7 @@
               "EXPANDED_DATA_SET",
               "CHANNEL_GROUP",
               "ENHANCED_MEASUREMENT_SETTINGS",
+              "ADSENSE_LINK",
               "AUDIENCE",
               "EVENT_CREATE_RULE"
             ],
@@ -7708,6 +7853,7 @@
               "ExpandedDataSet resource",
               "ChannelGroup resource",
               "EnhancedMeasurementSettings resource",
+              "AdSenseLink resource",
               "Audience resource",
               "EventCreateRule resource"
             ],

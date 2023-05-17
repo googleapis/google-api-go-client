@@ -4143,7 +4143,7 @@
       }
     }
   },
-  "revision": "20230504",
+  "revision": "20230512",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -4401,6 +4401,20 @@
       "properties": {
         "dataProfile": {
           "description": "Name of the data profile, for example, `projects/123/locations/europe/tableProfiles/8383929`.",
+          "type": "string"
+        },
+        "parentType": {
+          "description": "The resource hierarchy level at which the data profile was generated.",
+          "enum": [
+            "PARENT_TYPE_UNSPECIFIED",
+            "ORGANIZATION",
+            "PROJECT"
+          ],
+          "enumDescriptions": [
+            "Unspecified parent type.",
+            "Organization-level configurations.",
+            "Project-level configurations."
+          ],
           "type": "string"
         }
       },

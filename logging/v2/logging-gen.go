@@ -1453,7 +1453,7 @@ type HttpRequest struct {
 
 	// Referer: The referer URL of the request, as defined in HTTP/1.1
 	// Header Field Definitions
-	// (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+	// (https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
 	Referer string `json:"referer,omitempty"`
 
 	// RemoteIp: The IP address (IPv4 or IPv6) of the client that issued the

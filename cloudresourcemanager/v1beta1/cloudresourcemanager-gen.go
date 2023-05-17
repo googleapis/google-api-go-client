@@ -1645,6 +1645,7 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 	//       "type": "string"
 	//     },
 	//     "organizationId": {
+	//       "deprecated": true,
 	//       "description": "The id of the Organization resource to fetch. This field is deprecated and will be removed in v1. Use name instead.",
 	//       "location": "query",
 	//       "type": "string"

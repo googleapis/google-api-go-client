@@ -708,6 +708,42 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogetArtifact: A detailed representation of a GooGet artifact.
+type GoogetArtifact struct {
+	// Architecture: Output only. Operating system architecture of the
+	// artifact.
+	Architecture string `json:"architecture,omitempty"`
+
+	// Name: Output only. The Artifact Registry resource name of the
+	// artifact.
+	Name string `json:"name,omitempty"`
+
+	// PackageName: Output only. The GooGet package name of the artifact.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Architecture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogetArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogetArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsArtifactregistryV1File: Files store content that is
 // potentially associated with Packages or Versions.
 type GoogleDevtoolsArtifactregistryV1File struct {
@@ -930,6 +966,38 @@ func (s *ImportAptArtifactsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportGoogetArtifactsErrorInfo: Error information explaining why a
+// package was not imported.
+type ImportGoogetArtifactsErrorInfo struct {
+	// Error: The detailed error status.
+	Error *Status `json:"error,omitempty"`
+
+	// GcsSource: Google Cloud Storage location requested.
+	GcsSource *ImportGoogetArtifactsGcsSource `json:"gcsSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportGoogetArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportGoogetArtifactsErrorInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ImportGoogetArtifactsGcsSource: Google Cloud Storage location where
 // the artifacts currently reside.
 type ImportGoogetArtifactsGcsSource struct {
@@ -963,6 +1031,11 @@ func (s *ImportGoogetArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportGoogetArtifactsMetadata: The operation metadata for importing
+// artifacts.
+type ImportGoogetArtifactsMetadata struct {
+}
+
 // ImportGoogetArtifactsRequest: The request to import new googet
 // artifacts.
 type ImportGoogetArtifactsRequest struct {
@@ -989,6 +1062,38 @@ type ImportGoogetArtifactsRequest struct {
 
 func (s *ImportGoogetArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportGoogetArtifactsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportGoogetArtifactsResponse: The response message from importing
+// artifacts.
+type ImportGoogetArtifactsResponse struct {
+	// Errors: Detailed error info for packages that were not imported.
+	Errors []*ImportGoogetArtifactsErrorInfo `json:"errors,omitempty"`
+
+	// GoogetArtifacts: The GooGet artifacts updated.
+	GoogetArtifacts []*GoogetArtifact `json:"googetArtifacts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportGoogetArtifactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportGoogetArtifactsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1524,7 +1629,7 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -2590,8 +2695,44 @@ func (s *UploadGoogetArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UploadGoogetArtifactMetadata: The operation metadata for uploading
+// artifacts.
+type UploadGoogetArtifactMetadata struct {
+}
+
 // UploadGoogetArtifactRequest: The request to upload an artifact.
 type UploadGoogetArtifactRequest struct {
+}
+
+// UploadGoogetArtifactResponse: The response of the completed artifact
+// upload operation. This response is contained in the Operation and
+// available to users.
+type UploadGoogetArtifactResponse struct {
+	// GoogetArtifacts: The Apt artifacts updated.
+	GoogetArtifacts []*GoogetArtifact `json:"googetArtifacts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GoogetArtifacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoogetArtifacts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadGoogetArtifactResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadGoogetArtifactResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // UploadKfpArtifactMediaResponse: The response to upload an artifact.

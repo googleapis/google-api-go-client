@@ -2078,8 +2078,8 @@ type GkeNodeConfig struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/using-cmek)
 	// used to encrypt the boot disk attached to each node in the node pool.
 	// Specify the key using the following format:
-	// projects/KEY_PROJECT_ID/locations/LOCATION
-	// /keyRings/RING_NAME/cryptoKeys/KEY_NAME.
+	// projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys
+	// /{crypto_key}
 	BootDiskKmsKey string `json:"bootDiskKmsKey,omitempty"`
 
 	// LocalSsdCount: Optional. The number of local SSD disks to attach to

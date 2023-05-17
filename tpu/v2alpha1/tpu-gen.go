@@ -1115,6 +1115,10 @@ type Node struct {
 	// startup-script and shutdown-script
 	Metadata map[string]string `json:"metadata,omitempty"`
 
+	// MultisliceNode: Output only. Whether the Node belongs to a Multislice
+	// group.
+	MultisliceNode bool `json:"multisliceNode,omitempty"`
+
 	// Name: Output only. Immutable. The name of the TPU.
 	Name string `json:"name,omitempty"`
 
@@ -4909,6 +4913,17 @@ func (r *ProjectsLocationsQueuedResourcesService) Delete(name string) *ProjectsL
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, all
+// running nodes belonging to this queued resource will be deleted first
+// and then the queued resource will be deleted. Otherwise (i.e.
+// force=false), the queued resource will only be deleted if its nodes
+// have already been deleted or the queued resource is in the ACCEPTED,
+// FAILED, or SUSPENDED state.
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) Force(force bool) *ProjectsLocationsQueuedResourcesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": Idempotent request
 // UUID.
 func (c *ProjectsLocationsQueuedResourcesDeleteCall) RequestId(requestId string) *ProjectsLocationsQueuedResourcesDeleteCall {
@@ -5010,6 +5025,11 @@ func (c *ProjectsLocationsQueuedResourcesDeleteCall) Do(opts ...googleapi.CallOp
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "If set to true, all running nodes belonging to this queued resource will be deleted first and then the queued resource will be deleted. Otherwise (i.e. force=false), the queued resource will only be deleted if its nodes have already been deleted or the queued resource is in the ACCEPTED, FAILED, or SUSPENDED state.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. The resource name.",
 	//       "location": "path",

@@ -282,7 +282,7 @@
       }
     }
   },
-  "revision": "20230503",
+  "revision": "20230512",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -777,6 +777,13 @@
         "packageName": {
           "description": "Full Java-style package name for this application, e.g. \"com.example.foo\".",
           "type": "string"
+        },
+        "services": {
+          "description": "Services contained in the tag.",
+          "items": {
+            "$ref": "Service"
+          },
+          "type": "array"
         },
         "targetSdkVersion": {
           "description": "Specifies the API Level on which the application is designed to run.",
@@ -1687,6 +1694,24 @@
         "timeout": {
           "description": "Timeout in seconds for each intent.",
           "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Service": {
+      "description": "The section of an tag. https://developer.android.com/guide/topics/manifest/service-element",
+      "id": "Service",
+      "properties": {
+        "intentFilter": {
+          "description": "Intent filters in the service",
+          "items": {
+            "$ref": "IntentFilter"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "The android:name value",
           "type": "string"
         }
       },

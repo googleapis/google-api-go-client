@@ -6,6 +6,7 @@ on:
       - main
     types:
       - opened
+      - reopened
 
 permissions: write-all
 

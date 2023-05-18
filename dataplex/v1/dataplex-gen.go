@@ -2801,12 +2801,16 @@ func (s *GoogleCloudDataplexV1DataScanEvent) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs: Applied
 // configs for data profile type data scan job.
 type GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs struct {
+	// RowFilterApplied: Boolean indicating whether a row filter was applied
+	// in the DataScan job.
+	RowFilterApplied bool `json:"rowFilterApplied,omitempty"`
+
 	// SamplingPercent: The percentage of the records selected from the
 	// dataset for DataScan. Value ranges between 0.0 and 100.0. Value 0.0
 	// or 100.0 imply that sampling was not applied.
 	SamplingPercent float64 `json:"samplingPercent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SamplingPercent") to
+	// ForceSendFields is a list of field names (e.g. "RowFilterApplied") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2814,7 +2818,7 @@ type GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SamplingPercent") to
+	// NullFields is a list of field names (e.g. "RowFilterApplied") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2876,12 +2880,16 @@ func (s *GoogleCloudDataplexV1DataScanEventDataProfileResult) MarshalJSON() ([]b
 // GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs: Applied
 // configs for data quality type data scan job.
 type GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs struct {
+	// RowFilterApplied: Boolean indicating whether a row filter was applied
+	// in the DataScan job.
+	RowFilterApplied bool `json:"rowFilterApplied,omitempty"`
+
 	// SamplingPercent: The percentage of the records selected from the
 	// dataset for DataScan. Value ranges between 0.0 and 100.0. Value 0.0
 	// or 100.0 imply that sampling was not applied.
 	SamplingPercent float64 `json:"samplingPercent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SamplingPercent") to
+	// ForceSendFields is a list of field names (e.g. "RowFilterApplied") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2889,7 +2897,7 @@ type GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SamplingPercent") to
+	// NullFields is a list of field names (e.g. "RowFilterApplied") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

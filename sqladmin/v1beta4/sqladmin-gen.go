@@ -1667,6 +1667,26 @@ func (s *ExportContext) MarshalJSON() ([]byte, error) {
 // ExportContextBakExportOptions: Options for exporting BAK files (SQL
 // Server-only)
 type ExportContextBakExportOptions struct {
+	// BakType: Type of this bak file will be export, FULL or DIFF, SQL
+	// Server only
+	//
+	// Possible values:
+	//   "BAK_TYPE_UNSPECIFIED" - default type to meet enum requirement,
+	// will be set to FULL if not set
+	//   "FULL" - Full backup.
+	//   "DIFF" - Differential backup.
+	BakType string `json:"bakType,omitempty"`
+
+	// CopyOnly: Whether or not the export will be exeucted with COPY_ONLY,
+	// SQL Server only deprecated as the behavior should default to
+	// copy_only = true use differential_base instead
+	CopyOnly bool `json:"copyOnly,omitempty"`
+
+	// DifferentialBase: Whether or not the backup can be use as
+	// differential base only non copy only backup can be served as
+	// differential base
+	DifferentialBase bool `json:"differentialBase,omitempty"`
+
 	// StripeCount: Option for specifying how many stripes to use for the
 	// export. If blank, and the value of the striped field is true, the
 	// number of stripes is automatically chosen.
@@ -1675,7 +1695,7 @@ type ExportContextBakExportOptions struct {
 	// Striped: Whether or not the export should be striped.
 	Striped bool `json:"striped,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "StripeCount") to
+	// ForceSendFields is a list of field names (e.g. "BakType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1683,10 +1703,10 @@ type ExportContextBakExportOptions struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "StripeCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BakType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2162,27 +2182,45 @@ func (s *ImportContext) MarshalJSON() ([]byte, error) {
 // ImportContextBakImportOptions: Import parameters specific to SQL
 // Server .BAK files
 type ImportContextBakImportOptions struct {
+	// BakType: Type of the bak content, FULL or DIFF.
+	//
+	// Possible values:
+	//   "BAK_TYPE_UNSPECIFIED" - default type to meet enum requirement,
+	// will be set to FULL if not set
+	//   "FULL" - Full backup.
+	//   "DIFF" - Differential backup.
+	BakType string `json:"bakType,omitempty"`
+
 	EncryptionOptions *ImportContextBakImportOptionsEncryptionOptions `json:"encryptionOptions,omitempty"`
+
+	// NoRecovery: Whether or not the backup importing will restore database
+	// with NORECOVERY option Applies only to Cloud SQL for SQL Server.
+	NoRecovery bool `json:"noRecovery,omitempty"`
+
+	// RecoveryOnly: Whether or not the backup importing request will just
+	// bring database online without downloading Bak content only one of
+	// "no_recovery" and "recovery_only" can be true otherwise error will
+	// return. Applies only to Cloud SQL for SQL Server.
+	RecoveryOnly bool `json:"recoveryOnly,omitempty"`
 
 	// Striped: Whether or not the backup set being restored is striped.
 	// Applies only to Cloud SQL for SQL Server.
 	Striped bool `json:"striped,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EncryptionOptions")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BakType") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EncryptionOptions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BakType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3888,7 +3926,8 @@ type SqlExternalSyncSettingError struct {
 	//   "BINLOG_NOT_ENABLED"
 	//   "INCOMPATIBLE_DATABASE_VERSION"
 	//   "REPLICA_ALREADY_SETUP"
-	//   "INSUFFICIENT_PRIVILEGE"
+	//   "INSUFFICIENT_PRIVILEGE" - The replication user is missing
+	// privileges that are required.
 	//   "UNSUPPORTED_MIGRATION_TYPE" - Unsupported migration type.
 	//   "NO_PGLOGICAL_INSTALLED" - No pglogical extension installed on
 	// databases, applicable for postgres.
@@ -3921,7 +3960,7 @@ type SqlExternalSyncSettingError struct {
 	//   "UNSUPPORTED_DEFINER" - The customer has a definer that will break
 	// EM setup.
 	//   "SQLSERVER_SERVERNAME_MISMATCH" - SQL Server @@SERVERNAME does not
-	// match actual host name
+	// match actual host name.
 	//   "PRIMARY_ALREADY_SETUP" - The primary instance has been setup and
 	// will fail the setup.
 	//   "UNSUPPORTED_BINLOG_FORMAT" - The primary instance has unsupported
@@ -3934,6 +3973,8 @@ type SqlExternalSyncSettingError struct {
 	// eg: PostgreSQL tables without primary keys.
 	//   "EXISTING_DATA_IN_REPLICA" - The replica instance contains existing
 	// data.
+	//   "MISSING_OPTIONAL_PRIVILEGES" - The replication user is missing
+	// privileges that are optional.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to

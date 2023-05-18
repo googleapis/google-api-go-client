@@ -13055,6 +13055,15 @@ func (c *ProjectsLocationsTriggersPatchCall) TriggerId(triggerId string) *Projec
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Update mask for
+// the resource. If this is set, the server will only update the fields
+// specified in the field mask. Otherwise, a full update of the mutable
+// resource fields will be performed.
+func (c *ProjectsLocationsTriggersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTriggersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13168,6 +13177,12 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//     },
 	//     "triggerId": {
 	//       "description": "Required. ID of the `BuildTrigger` to update.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update mask for the resource. If this is set, the server will only update the fields specified in the field mask. Otherwise, a full update of the mutable resource fields will be performed.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15078,6 +15093,15 @@ func (r *ProjectsTriggersService) Patch(projectId string, triggerId string, buil
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Update mask for
+// the resource. If this is set, the server will only update the fields
+// specified in the field mask. Otherwise, a full update of the mutable
+// resource fields will be performed.
+func (c *ProjectsTriggersPatchCall) UpdateMask(updateMask string) *ProjectsTriggersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -15189,6 +15213,12 @@ func (c *ProjectsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*BuildTrig
 	//       "description": "Required. ID of the `BuildTrigger` to update.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update mask for the resource. If this is set, the server will only update the fields specified in the field mask. Otherwise, a full update of the mutable resource fields will be performed.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -477,6 +477,10 @@ type Insight struct {
 	// SentTime: Output only. [Output only] Create time stamp
 	SentTime string `json:"sentTime,omitempty"`
 
+	// SqlserverValidation: The insights data for the sqlserver workload
+	// validation.
+	SqlserverValidation *SqlserverValidation `json:"sqlserverValidation,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "SapDiscovery") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -765,7 +769,7 @@ func (s *ListScannedResourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1276,21 +1280,6 @@ type SapDiscoveryResource struct {
 	// etc.
 	ResourceKind string `json:"resourceKind,omitempty"`
 
-	// ResourceState: Indicates whether this is a new, updated, or missing
-	// resource.
-	//
-	// Possible values:
-	//   "RESOURCE_STATE_UNSPECIFIED" - Undefined resource state
-	//   "ADDED" - Resource was added this cycle
-	//   "UPDATED" - Resource already discovered, just updated this cycle
-	//   "REMOVED" - Resource already discovered, but has been explicitly
-	// removed this cycle
-	//   "REPLACED" - Resource already discovered, but has been replaced by
-	// a new resource this cycle
-	//   "MISSING" - Resource already discovered, but is missing or
-	// unresponsive this cycle
-	ResourceState string `json:"resourceState,omitempty"`
-
 	// ResourceType: The type of this resource.
 	//
 	// Possible values:
@@ -1426,6 +1415,79 @@ type ScannedResource struct {
 
 func (s *ScannedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ScannedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlserverValidation: A presentation of SQLServer workload insight.
+// The schema of SqlServer workloads validation related data.
+type SqlserverValidation struct {
+	// AgentVersion: The agent version collected this data point
+	AgentVersion string `json:"agentVersion,omitempty"`
+
+	// ValidationDetails: A list of SqlServer validation metrics data.
+	ValidationDetails []*SqlserverValidationValidationDetail `json:"validationDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentVersion") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlserverValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlserverValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlserverValidationValidationDetail: Message describing the Sqlserver
+// validation metrics.
+type SqlserverValidationValidationDetail struct {
+	// Details: The pairs of metrics data: field name & field value.
+	Details map[string]string `json:"details,omitempty"`
+
+	// InstanceId: The instance id where the ValidationDetail is generated
+	// from
+	InstanceId string `json:"instanceId,omitempty"`
+
+	// Type: The Sqlserver system that the validation data is from.
+	//
+	// Possible values:
+	//   "SQLSERVER_VALIDATION_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "OS" - The Sqlserver system named OS
+	//   "DB" - The Sqlserver system named DB
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlserverValidationValidationDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlserverValidationValidationDetail
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -157,6 +157,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.KnowledgeBases = NewProjectsKnowledgeBasesService(s)
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.Operations = NewProjectsOperationsService(s)
+	rs.Suggestions = NewProjectsSuggestionsService(s)
 	return rs
 }
 
@@ -176,6 +177,8 @@ type ProjectsService struct {
 	Locations *ProjectsLocationsService
 
 	Operations *ProjectsOperationsService
+
+	Suggestions *ProjectsSuggestionsService
 }
 
 func NewProjectsAgentService(s *Service) *ProjectsAgentService {
@@ -471,6 +474,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
 	rs.KnowledgeBases = NewProjectsLocationsKnowledgeBasesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.Suggestions = NewProjectsLocationsSuggestionsService(s)
 	return rs
 }
 
@@ -488,6 +492,8 @@ type ProjectsLocationsService struct {
 	KnowledgeBases *ProjectsLocationsKnowledgeBasesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	Suggestions *ProjectsLocationsSuggestionsService
 }
 
 func NewProjectsLocationsAgentService(s *Service) *ProjectsLocationsAgentService {
@@ -760,12 +766,30 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsSuggestionsService(s *Service) *ProjectsLocationsSuggestionsService {
+	rs := &ProjectsLocationsSuggestionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSuggestionsService struct {
+	s *Service
+}
+
 func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 	rs := &ProjectsOperationsService{s: s}
 	return rs
 }
 
 type ProjectsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsSuggestionsService(s *Service) *ProjectsSuggestionsService {
+	rs := &ProjectsSuggestionsService{s: s}
+	return rs
+}
+
+type ProjectsSuggestionsService struct {
 	s *Service
 }
 
@@ -3720,6 +3744,17 @@ type GoogleCloudDialogflowCxV3TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// UserEscalated: Whether user was specifically asking for a live agent.
 	UserEscalated bool `json:"userEscalated,omitempty"`
 
@@ -3749,6 +3784,22 @@ func (s *GoogleCloudDialogflowCxV3TurnSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata: Metadata
@@ -3850,8 +3901,32 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -3863,6 +3938,14 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -7237,6 +7320,17 @@ type GoogleCloudDialogflowCxV3beta1TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// UserEscalated: Whether user was specifically asking for a live agent.
 	UserEscalated bool `json:"userEscalated,omitempty"`
 
@@ -7266,6 +7360,22 @@ func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) MarshalJSON() ([]byte, error
 	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata:
@@ -7367,8 +7477,32 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -7380,6 +7514,14 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -14314,6 +14456,168 @@ func (s *GoogleCloudDialogflowV2beta1GcsSources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest: The
+// request message for Conversations.GenerateStatelessSummary.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest struct {
+	// ConversationProfile: Required. A ConversationProfile containing
+	// information required for Summary generation. Required fields:
+	// {language_code, security_settings} Optional fields:
+	// {agent_assistant_config}
+	ConversationProfile *GoogleCloudDialogflowV2beta1ConversationProfile `json:"conversationProfile,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used as
+	// context for generating a Summary. If empty, the latest message of the
+	// conversation will be used. The format is specific to the user and the
+	// names of the messages provided.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// MaxContextSize: Max number of messages prior to and including
+	// [latest_message] to use as context when compiling the suggestion. By
+	// default 500 and at most 1000.
+	MaxContextSize int64 `json:"maxContextSize,omitempty"`
+
+	// StatelessConversation: Required. The conversation to suggest a
+	// summary for.
+	StatelessConversation *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation `json:"statelessConversation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConv
+// ersation: The minimum amount of information required to generate a
+// Summary without having a Conversation resource created.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation struct {
+	// Messages: Required. The messages that the Summary will be generated
+	// from. It is expected that this message content is already redacted
+	// and does not contain any PII. Required fields: {content,
+	// language_code, participant, participant_role} Optional fields:
+	// {send_time} If send_time is not provided, then the messages must be
+	// provided in chronological order.
+	Messages []*GoogleCloudDialogflowV2beta1Message `json:"messages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Messages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Messages") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse: The
+// response message for Conversations.GenerateStatelessSummary.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse struct {
+	// ContextSize: Number of messages prior to and including
+	// last_conversation_message used to compile the suggestion. It may be
+	// smaller than the GenerateStatelessSummaryRequest.context_size field
+	// in the request if there weren't that many messages in the
+	// conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used as
+	// context for compiling suggestion. The format is specific to the user
+	// and the names of the messages provided.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// Summary: Generated summary.
+	Summary *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary `json:"summary,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary:
+// Generated summary for a conversation.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary struct {
+	// Text: The summary content that is concatenated into one string.
+	Text string `json:"text,omitempty"`
+
+	// TextSections: The summary content that is divided into sections. The
+	// key is the section's name and the value is the section's content.
+	// There is no specific format for the key or value.
+	TextSections map[string]string `json:"textSections,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig: Defines the
 // Human Agent Assistant to connect to a conversation.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig struct {
@@ -14363,24 +14667,32 @@ func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig) MarshalJSON() ([
 // Supported feature: ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY,
 // CONVERSATION_SUMMARIZATION.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig struct {
+	// BaselineModelVersion: Version of current baseline model. It will be
+	// ignored if model is set. Valid versions are: Article Suggestion
+	// baseline model: - 0.9 - 1.0 (default) Summarization baseline model: -
+	// 1.0
+	BaselineModelVersion string `json:"baselineModelVersion,omitempty"`
+
 	// Model: Conversation model resource name. Format:
 	// `projects//conversationModels/`.
 	Model string `json:"model,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Model") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BaselineModelVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Model") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BaselineModelVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -14582,7 +14894,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig 
 	// until you have desired results. If this field is not set, it is
 	// default to 0.0, which means that all suggestions are returned.
 	// Supported features: ARTICLE_SUGGESTION, FAQ, SMART_REPLY,
-	// SMART_COMPOSE.
+	// SMART_COMPOSE, KNOWLEDGE_SEARCH, KNOWLEDGE_ASSIST.
 	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
 
 	// ContextFilterSettings: Determines how recent conversation context is
@@ -21011,6 +21323,17 @@ type GoogleCloudDialogflowV3alpha1TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// TriggeredAbandonmentEvent: Whether agent has triggered the event
 	// corresponding to user abandoning the conversation.
 	TriggeredAbandonmentEvent bool `json:"triggeredAbandonmentEvent,omitempty"`
@@ -21044,6 +21367,22 @@ func (s *GoogleCloudDialogflowV3alpha1TurnSignals) MarshalJSON() ([]byte, error)
 	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV3alpha1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata:
@@ -57884,6 +58223,154 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+// method id "dialogflow.projects.locations.suggestions.generateStatelessSummary":
+
+type ProjectsLocationsSuggestionsGenerateStatelessSummaryCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// GenerateStatelessSummary: Generates and returns a summary for a
+// conversation that does not have a resource created for it.
+//
+//   - parent: The parent resource to charge for the Summary's generation.
+//     Format: `projects//locations/`.
+func (r *ProjectsLocationsSuggestionsService) GenerateStatelessSummary(parent string, googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall {
+	c := &ProjectsLocationsSuggestionsGenerateStatelessSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1generatestatelesssummaryrequest = googleclouddialogflowv2beta1generatestatelesssummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Fields(s ...googleapi.Field) *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Context(ctx context.Context) *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1generatestatelesssummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/suggestions:generateStatelessSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.suggestions.generateStatelessSummary" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates and returns a summary for a conversation that does not have a resource created for it.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/suggestions:generateStatelessSummary",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.suggestions.generateStatelessSummary",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource to charge for the Summary's generation. Format: `projects//locations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/suggestions:generateStatelessSummary",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.operations.cancel":
 
 type ProjectsOperationsCancelCall struct {
@@ -58381,4 +58868,152 @@ func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLo
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "dialogflow.projects.suggestions.generateStatelessSummary":
+
+type ProjectsSuggestionsGenerateStatelessSummaryCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// GenerateStatelessSummary: Generates and returns a summary for a
+// conversation that does not have a resource created for it.
+//
+//   - parent: The parent resource to charge for the Summary's generation.
+//     Format: `projects//locations/`.
+func (r *ProjectsSuggestionsService) GenerateStatelessSummary(parent string, googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) *ProjectsSuggestionsGenerateStatelessSummaryCall {
+	c := &ProjectsSuggestionsGenerateStatelessSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1generatestatelesssummaryrequest = googleclouddialogflowv2beta1generatestatelesssummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Fields(s ...googleapi.Field) *ProjectsSuggestionsGenerateStatelessSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Context(ctx context.Context) *ProjectsSuggestionsGenerateStatelessSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1generatestatelesssummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/suggestions:generateStatelessSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.suggestions.generateStatelessSummary" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates and returns a summary for a conversation that does not have a resource created for it.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/suggestions:generateStatelessSummary",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.suggestions.generateStatelessSummary",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource to charge for the Summary's generation. Format: `projects//locations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/suggestions:generateStatelessSummary",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
 }

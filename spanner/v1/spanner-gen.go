@@ -2504,7 +2504,8 @@ type InstanceConfig struct {
 	// configuration and their replication properties.
 	Replicas []*ReplicaInfo `json:"replicas,omitempty"`
 
-	// State: Output only. The current instance config state.
+	// State: Output only. The current instance config state. Applicable
+	// only for USER_MANAGED configs.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified.

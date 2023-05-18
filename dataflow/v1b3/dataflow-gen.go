@@ -4395,6 +4395,8 @@ type ParameterMetadata struct {
 	// email.
 	//   "MACHINE_TYPE" - The parameter specifies a Machine Type.
 	//   "KMS_KEY_NAME" - The parameter specifies a KMS Key name.
+	//   "WORKER_REGION" - The parameter specifies a Worker Region.
+	//   "WORKER_ZONE" - The parameter specifies a Worker Zone.
 	ParamType string `json:"paramType,omitempty"`
 
 	// ParentName: Optional. Specifies the name of the parent parameter.

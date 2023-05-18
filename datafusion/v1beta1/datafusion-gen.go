@@ -758,6 +758,9 @@ type Instance struct {
 	// addresses and will not be able to access the public internet.
 	PrivateInstance bool `json:"privateInstance,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// ServiceAccount: Output only. Deprecated. Use tenant_project_id
 	// instead to extract the tenant project ID.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -1069,7 +1072,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".

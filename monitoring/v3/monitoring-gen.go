@@ -11303,7 +11303,9 @@ func (c *ProjectsMetricDescriptorsListCall) Filter(filter string) *ProjectsMetri
 }
 
 // PageSize sets the optional parameter "pageSize": A positive number
-// that is the maximum number of results to return.
+// that is the maximum number of results to return. The default and
+// maximum value is 10,000. If a page_size <= 0 or > 10,000 is
+// submitted, will instead return a maximum of 10,000 results.
 func (c *ProjectsMetricDescriptorsListCall) PageSize(pageSize int64) *ProjectsMetricDescriptorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -11438,7 +11440,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "A positive number that is the maximum number of results to return.",
+	//       "description": "A positive number that is the maximum number of results to return. The default and maximum value is 10,000. If a page_size \u003c= 0 or \u003e 10,000 is submitted, will instead return a maximum of 10,000 results.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

@@ -678,6 +678,10 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 	// users.
 	Notification *GoogleCloudIdentitytoolkitAdminV2NotificationConfig `json:"notification,omitempty"`
 
+	// PasswordPolicyConfig: The project level password policy
+	// configuration.
+	PasswordPolicyConfig *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig `json:"passwordPolicyConfig,omitempty"`
+
 	// Quota: Configuration related to quotas.
 	Quota *GoogleCloudIdentitytoolkitAdminV2QuotaConfig `json:"quota,omitempty"`
 
@@ -723,6 +727,55 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Config) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Config
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions: Custom
+// strength options to enforce on user passwords.
+type GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions struct {
+	// ContainsLowercaseCharacter: The password must contain a lower case
+	// character.
+	ContainsLowercaseCharacter bool `json:"containsLowercaseCharacter,omitempty"`
+
+	// ContainsNonAlphanumericCharacter: The password must contain a non
+	// alpha numeric character.
+	ContainsNonAlphanumericCharacter bool `json:"containsNonAlphanumericCharacter,omitempty"`
+
+	// ContainsNumericCharacter: The password must contain a number.
+	ContainsNumericCharacter bool `json:"containsNumericCharacter,omitempty"`
+
+	// ContainsUppercaseCharacter: The password must contain an upper case
+	// character.
+	ContainsUppercaseCharacter bool `json:"containsUppercaseCharacter,omitempty"`
+
+	// MaxPasswordLength: Maximum password length. No default max length
+	MaxPasswordLength int64 `json:"maxPasswordLength,omitempty"`
+
+	// MinPasswordLength: Minimum password length. Range from 6 to 30
+	MinPasswordLength int64 `json:"minPasswordLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1708,6 +1761,93 @@ func (s *GoogleCloudIdentitytoolkitAdminV2OAuthResponseType) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig: The
+// configuration for the password policy on the project.
+type GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig struct {
+	// ForceUpgradeOnSignin: Users must have a password compliant with the
+	// password policy to sign-in.
+	ForceUpgradeOnSignin bool `json:"forceUpgradeOnSignin,omitempty"`
+
+	// LastUpdateTime: Output only. The last time the password policy on the
+	// project was updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// PasswordPolicyEnforcementState: Which enforcement mode to use for the
+	// password policy.
+	//
+	// Possible values:
+	//   "PASSWORD_POLICY_ENFORCEMENT_STATE_UNSPECIFIED" - Illegal State,
+	// should not be used.
+	//   "OFF" - Password Policy will not be used on the project.
+	//   "ENFORCE" - Passwords non-compliant with the password policy will
+	// be rejected with an error thrown.
+	PasswordPolicyEnforcementState string `json:"passwordPolicyEnforcementState,omitempty"`
+
+	// PasswordPolicyVersions: Must be of length 1. Contains the strength
+	// attributes for the password policy.
+	PasswordPolicyVersions []*GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion `json:"passwordPolicyVersions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ForceUpgradeOnSignin") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ForceUpgradeOnSignin") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion: The strength
+// attributes for the password policy on the project.
+type GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion struct {
+	// CustomStrengthOptions: The custom strength options enforced by the
+	// password policy.
+	CustomStrengthOptions *GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions `json:"customStrengthOptions,omitempty"`
+
+	// SchemaVersion: Output only. schema version number for the password
+	// policy
+	SchemaVersion int64 `json:"schemaVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomStrengthOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomStrengthOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitAdminV2Permissions: Configuration related
 // to restricting a user's ability to affect their account.
 type GoogleCloudIdentitytoolkitAdminV2Permissions struct {
@@ -2453,6 +2593,9 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	// "projects/{project-id}/tenants/{tenant-id}"
 	Name string `json:"name,omitempty"`
 
+	// PasswordPolicyConfig: The tenant-level password policy config
+	PasswordPolicyConfig *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig `json:"passwordPolicyConfig,omitempty"`
+
 	// RecaptchaConfig: The tenant-level reCAPTCHA config.
 	RecaptchaConfig *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig `json:"recaptchaConfig,omitempty"`
 
@@ -2777,6 +2920,55 @@ type GoogleCloudIdentitytoolkitV2AutoRetrievalInfo struct {
 
 func (s *GoogleCloudIdentitytoolkitV2AutoRetrievalInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2AutoRetrievalInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2CustomStrengthOptions: Custom strength
+// options to enforce on user passwords.
+type GoogleCloudIdentitytoolkitV2CustomStrengthOptions struct {
+	// ContainsLowercaseCharacter: The password must contain a lower case
+	// character.
+	ContainsLowercaseCharacter bool `json:"containsLowercaseCharacter,omitempty"`
+
+	// ContainsNonAlphanumericCharacter: The password must contain a non
+	// alpha numeric character.
+	ContainsNonAlphanumericCharacter bool `json:"containsNonAlphanumericCharacter,omitempty"`
+
+	// ContainsNumericCharacter: The password must contain a number.
+	ContainsNumericCharacter bool `json:"containsNumericCharacter,omitempty"`
+
+	// ContainsUppercaseCharacter: The password must contain an upper case
+	// character.
+	ContainsUppercaseCharacter bool `json:"containsUppercaseCharacter,omitempty"`
+
+	// MaxPasswordLength: Maximum password length. No default max length
+	MaxPasswordLength int64 `json:"maxPasswordLength,omitempty"`
+
+	// MinPasswordLength: Minimum password length. Range from 6 to 30
+	MinPasswordLength int64 `json:"minPasswordLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2CustomStrengthOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2CustomStrengthOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3253,6 +3445,50 @@ type GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo struct {
 
 func (s *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2PasswordPolicy: Configuration for
+// password policy.
+type GoogleCloudIdentitytoolkitV2PasswordPolicy struct {
+	// AllowedNonAlphanumericCharacters: Output only. Allowed characters
+	// which satisfy the non_alphanumeric requirement.
+	AllowedNonAlphanumericCharacters []string `json:"allowedNonAlphanumericCharacters,omitempty"`
+
+	// CustomStrengthOptions: The custom strength options enforced by the
+	// password policy.
+	CustomStrengthOptions *GoogleCloudIdentitytoolkitV2CustomStrengthOptions `json:"customStrengthOptions,omitempty"`
+
+	// SchemaVersion: Output only. schema version number for the password
+	// policy
+	SchemaVersion int64 `json:"schemaVersion,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedNonAlphanumericCharacters") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowedNonAlphanumericCharacters") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2PasswordPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2PasswordPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12686,6 +12922,150 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOptio
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.getPasswordPolicy":
+
+type V2GetPasswordPolicyCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPasswordPolicy: Gets password policy config set on the project or
+// tenant.
+func (r *V2Service) GetPasswordPolicy() *V2GetPasswordPolicyCall {
+	c := &V2GetPasswordPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// TenantId sets the optional parameter "tenantId": The id of a tenant.
+func (c *V2GetPasswordPolicyCall) TenantId(tenantId string) *V2GetPasswordPolicyCall {
+	c.urlParams_.Set("tenantId", tenantId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V2GetPasswordPolicyCall) Fields(s ...googleapi.Field) *V2GetPasswordPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V2GetPasswordPolicyCall) IfNoneMatch(entityTag string) *V2GetPasswordPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V2GetPasswordPolicyCall) Context(ctx context.Context) *V2GetPasswordPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V2GetPasswordPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V2GetPasswordPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/passwordPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.getPasswordPolicy" call.
+// Exactly one of *GoogleCloudIdentitytoolkitV2PasswordPolicy or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2PasswordPolicy.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V2GetPasswordPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2PasswordPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2PasswordPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets password policy config set on the project or tenant.",
+	//   "flatPath": "v2/passwordPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.getPasswordPolicy",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "tenantId": {
+	//       "description": "The id of a tenant.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/passwordPolicy",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2PasswordPolicy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

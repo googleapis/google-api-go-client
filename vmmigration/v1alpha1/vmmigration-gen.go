@@ -3439,6 +3439,9 @@ type VmwareSourceDetails struct {
 	// and can not be read in a GET operation.
 	Password string `json:"password,omitempty"`
 
+	// ResolvedVcenterHost: The hostname of the vcenter.
+	ResolvedVcenterHost string `json:"resolvedVcenterHost,omitempty"`
+
 	// Thumbprint: The thumbprint representing the certificate for the
 	// vcenter.
 	Thumbprint string `json:"thumbprint,omitempty"`

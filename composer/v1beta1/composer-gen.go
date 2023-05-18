@@ -722,75 +722,6 @@ func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExecuteAirflowCommandResponse: Response to
-// ExecuteAirflowCommandRequest.
-type ExecuteAirflowCommandResponse struct {
-	// Error: Error message. Empty if there was no error.
-	Error string `json:"error,omitempty"`
-
-	// ExecutionId: The unique ID of the command execution for polling.
-	ExecutionId string `json:"executionId,omitempty"`
-
-	// Pod: The name of the pod where the command is executed.
-	Pod string `json:"pod,omitempty"`
-
-	// PodNamespace: The namespace of the pod where the command is executed.
-	PodNamespace string `json:"podNamespace,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Error") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ExecuteAirflowCommandResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ExecuteAirflowCommandResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ExitInfo: Information about how a command ended.
-type ExitInfo struct {
-	// Error: Error message. Empty if there was no error.
-	Error string `json:"error,omitempty"`
-
-	// ExitCode: The exit code from the command execution.
-	ExitCode int64 `json:"exitCode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Error") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ExitInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ExitInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // IPAllocationPolicy: Configuration for controlling how IPs are
 // allocated in the GKE cluster.
 type IPAllocationPolicy struct {
@@ -912,37 +843,6 @@ type ImageVersion struct {
 
 func (s *ImageVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Line: Contains information about a single line from logs.
-type Line struct {
-	// Content: Text content of the log line.
-	Content string `json:"content,omitempty"`
-
-	// LineNumber: Number of the line.
-	LineNumber int64 `json:"lineNumber,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Line) MarshalJSON() ([]byte, error) {
-	type NoMethod Line
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1488,42 +1388,6 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PollAirflowCommandResponse: Response to PollAirflowCommandRequest.
-type PollAirflowCommandResponse struct {
-	// ExitInfo: The result exit status of the command.
-	ExitInfo *ExitInfo `json:"exitInfo,omitempty"`
-
-	// Output: Output from the command execution. It may not contain the
-	// full output and the caller may need to poll for more lines.
-	Output []*Line `json:"output,omitempty"`
-
-	// OutputEnd: Whether the command execution has finished and there is no
-	// more output.
-	OutputEnd bool `json:"outputEnd,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ExitInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExitInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PollAirflowCommandResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod PollAirflowCommandResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

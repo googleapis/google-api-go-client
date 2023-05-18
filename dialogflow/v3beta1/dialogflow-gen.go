@@ -3384,6 +3384,17 @@ type GoogleCloudDialogflowCxV3TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// UserEscalated: Whether user was specifically asking for a live agent.
 	UserEscalated bool `json:"userEscalated,omitempty"`
 
@@ -3413,6 +3424,22 @@ func (s *GoogleCloudDialogflowCxV3TurnSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata: Metadata
@@ -3514,8 +3541,32 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -3527,6 +3578,14 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -11026,6 +11085,17 @@ type GoogleCloudDialogflowCxV3beta1TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// UserEscalated: Whether user was specifically asking for a live agent.
 	UserEscalated bool `json:"userEscalated,omitempty"`
 
@@ -11055,6 +11125,22 @@ func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) MarshalJSON() ([]byte, error
 	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata:
@@ -11507,8 +11593,32 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -11520,6 +11630,14 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -19490,6 +19608,17 @@ type GoogleCloudDialogflowV3alpha1TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// TriggeredAbandonmentEvent: Whether agent has triggered the event
 	// corresponding to user abandoning the conversation.
 	TriggeredAbandonmentEvent bool `json:"triggeredAbandonmentEvent,omitempty"`
@@ -19523,6 +19652,22 @@ func (s *GoogleCloudDialogflowV3alpha1TurnSignals) MarshalJSON() ([]byte, error)
 	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV3alpha1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata:

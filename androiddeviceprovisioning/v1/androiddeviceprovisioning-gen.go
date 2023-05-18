@@ -516,6 +516,13 @@ type Configuration struct {
 	// `customers.dpcs.list`.
 	DpcResourcePath string `json:"dpcResourcePath,omitempty"`
 
+	// ForcedResetTime: Optional. The timeout before forcing factory reset
+	// the device if the device doesn't go through provisioning in the setup
+	// wizard, usually due to lack of network connectivity during setup
+	// wizard. Ranges from 0-6 hours, with 2 hours being the default if
+	// unset.
+	ForcedResetTime string `json:"forcedResetTime,omitempty"`
+
 	// IsDefault: Required. Whether this is the default configuration that
 	// zero-touch enrollment applies to any new devices the organization
 	// purchases in the future. Only one customer configuration can be the
@@ -1787,6 +1794,8 @@ type PerDeviceStatusInBatch struct {
 	// token.
 	//   "SINGLE_DEVICE_STATUS_REVOKED_TOKEN" - Revoked pre-provisioning
 	// token.
+	//   "SINGLE_DEVICE_STATUS_DEVICE_LIMIT_EXCEEDED" - Status used to
+	// indicate a failure due to a device limit being exceeded
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to

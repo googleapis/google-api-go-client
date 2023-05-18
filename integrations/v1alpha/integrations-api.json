@@ -3202,7 +3202,7 @@
       }
     }
   },
-  "revision": "20230502",
+  "revision": "20230509",
   "rootUrl": "https://integrations.googleapis.com/",
   "schemas": {
     "CrmlogErrorCode": {
@@ -7934,6 +7934,25 @@
           "description": "Required. Connector version on which the connection is created. The format is: projects/*/locations/*/providers/*/connectors/*/versions/* Only global location is supported for ConnectorVersion resource.",
           "type": "string"
         },
+        "connectorVersionLaunchStage": {
+          "description": "Output only. Flag to mark the version indicating the launch stage.",
+          "enum": [
+            "LAUNCH_STAGE_UNSPECIFIED",
+            "PREVIEW",
+            "GA",
+            "DEPRECATED",
+            "PRIVATE_PREVIEW"
+          ],
+          "enumDescriptions": [
+            "LAUNCH_STAGE_UNSPECIFIED.",
+            "PREVIEW.",
+            "GA.",
+            "DEPRECATED.",
+            "PRIVATE_PREVIEW."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "createTime": {
           "description": "Output only. Created time.",
           "format": "google-datetime",
@@ -8004,7 +8023,7 @@
           "readOnly": true
         },
         "subscriptionType": {
-          "description": "Output only. This subscription type enum value states if the metrics should be sent for billing or not.",
+          "description": "Output only. This subscription type enum states the subscription type of the project.",
           "enum": [
             "SUBSCRIPTION_TYPE_UNSPECIFIED",
             "PAY_G",
@@ -8012,8 +8031,8 @@
           ],
           "enumDescriptions": [
             "Unspecified subscription type.",
-            "Metrics should be sent for billing for PayG type.",
-            "Metrics should not be sent for billing for Paid Subscription type."
+            "PayG subscription.",
+            "Paid Subscription."
           ],
           "readOnly": true,
           "type": "string"
@@ -8059,7 +8078,7 @@
             "Connection is being deleted.",
             "Connection is being updated.",
             "Connection is not running due to an error.",
-            "Connection is not running due to an auth error for the Oauth2 Auth Code based connector."
+            "Connection is not running because the authorization configuration is not complete."
           ],
           "type": "string"
         },

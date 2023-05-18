@@ -1192,11 +1192,12 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 	// Example: 'com.companyname.productname.appname'
 	AllowedBundleIds []string `json:"allowedBundleIds,omitempty"`
 
-	// AppleDeveloperId: Apple Developer account details for the app the
-	// reCAPTCHA key will protect. reCAPTCHA Enterprise leverages platform
-	// specific checks like Apple AppAttest and Apple DeviceCheck to protect
-	// your app from abuse. Providing these fields allows reCAPTCHA
-	// Enterprise to get a better assessment of the integrity of your app.
+	// AppleDeveloperId: Apple Developer account details for the app that is
+	// protected by the reCAPTCHA Key. reCAPTCHA Enterprise leverages
+	// platform specific checks like Apple AppAttest and Apple DeviceCheck
+	// to protect your app from abuse. Providing these fields allows
+	// reCAPTCHA Enterprise to get a better assessment of the integrity of
+	// your app.
 	AppleDeveloperId *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId `json:"appleDeveloperId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowAllBundleIds")
@@ -1820,8 +1821,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1ScoreMetrics) MarshalJSON() ([]byte, er
 // memberships.
 type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest struct {
 	// HashedAccountId: Optional. The unique stable hashed user identifier
-	// we should search connections to. The identifier should correspond to
-	// a `hashed_account_id` provided in a previous `CreateAssessment` or
+	// used to search connections. The identifier should correspond to a
+	// `hashed_account_id` provided in a previous `CreateAssessment` or
 	// `AnnotateAssessment` call.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
@@ -4484,8 +4485,8 @@ type ProjectsKeysMigrateCall struct {
 // Enterprise. Once a key is migrated, it can be used from either
 // product. SiteVerify requests are billed as CreateAssessment calls.
 // You must be authenticated as one of the current owners of the
-// reCAPTCHA Site Key, and your user must have the reCAPTCHA Enterprise
-// Admin IAM role in the destination project.
+// reCAPTCHA Key, and your user must have the reCAPTCHA Enterprise Admin
+// IAM role in the destination project.
 //
 //   - name: The name of the key to be migrated, in the format
 //     "projects/{project}/keys/{key}".
@@ -4588,7 +4589,7 @@ func (c *ProjectsKeysMigrateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	}
 	return ret, nil
 	// {
-	//   "description": "Migrates an existing key from reCAPTCHA to reCAPTCHA Enterprise. Once a key is migrated, it can be used from either product. SiteVerify requests are billed as CreateAssessment calls. You must be authenticated as one of the current owners of the reCAPTCHA Site Key, and your user must have the reCAPTCHA Enterprise Admin IAM role in the destination project.",
+	//   "description": "Migrates an existing key from reCAPTCHA to reCAPTCHA Enterprise. Once a key is migrated, it can be used from either product. SiteVerify requests are billed as CreateAssessment calls. You must be authenticated as one of the current owners of the reCAPTCHA Key, and your user must have the reCAPTCHA Enterprise Admin IAM role in the destination project.",
 	//   "flatPath": "v1/projects/{projectsId}/keys/{keysId}:migrate",
 	//   "httpMethod": "POST",
 	//   "id": "recaptchaenterprise.projects.keys.migrate",

@@ -1918,6 +1918,56 @@ func (s *GoogleChromeManagementV1GraphicsStatusReport) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1HeartbeatStatusReport: Heartbeat status
+// report of a device. * Available for Kiosks * This field provides
+// online/offline/unknown status of a device and will only be included
+// if the status has changed (e.g. Online -> Offline) * Data for this
+// field is controlled via policy: HeartbeatEnabled
+// (https://chromeenterprise.google/policies/#HeartbeatEnabled) [More
+// Info](https://support.google.com/chrome/a/answer/6179663#:~:text=On%20
+// the%20Chrome,device%20status%20alerts) * Heartbeat Frequency: 2 mins
+// * Note: If a device goes offline, it can take up to 12 minutes for
+// the online status of the device to be updated * Cache: If the device
+// is offline, the collected data is stored locally, and will be
+// reported when the device is next online: N/A * Reported for
+// affiliated users only: N/A * Granular permission needed:
+// TELEMETRY_API_DEVICE_ACTIVITY_REPORT
+type GoogleChromeManagementV1HeartbeatStatusReport struct {
+	// ReportTime: Timestamp of when status changed was detected
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// State: State the device changed to
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not specified
+	//   "UNKNOWN" - Device is not eligible for heartbeat monitoring
+	//   "ONLINE" - Device is online
+	//   "OFFLINE" - Device is offline
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReportTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReportTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1HeartbeatStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1HeartbeatStatusReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1HttpsLatencyRoutineData: Data that describes
 // the result of the HTTPS latency diagnostics routine, with the HTTPS
 // requests issued to Google websites.
@@ -2047,6 +2097,51 @@ type GoogleChromeManagementV1InstalledApp struct {
 
 func (s *GoogleChromeManagementV1InstalledApp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1InstalledApp
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1KioskAppStatusReport: Kiosk app status report
+// of a device. * Available for Kiosks * This field provides the app id
+// and version number running on a kiosk device and the timestamp of
+// when the report was last updated * Data for this field is controlled
+// via policy: ReportDeviceSessionStatus
+// (https://chromeenterprise.google/policies/#ReportDeviceSessionStatus)
+// * Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A * Granular permission needed: TELEMETRY_API_APPS_REPORT
+type GoogleChromeManagementV1KioskAppStatusReport struct {
+	// AppId: App id of kiosk app for example
+	// "mdmkkicfmmkgmpkmkdikhlbggogpicma"
+	AppId string `json:"appId,omitempty"`
+
+	// AppVersion: App version number of kiosk app for example "1.10.118"
+	AppVersion string `json:"appVersion,omitempty"`
+
+	// ReportTime: Timestamp of when report was collected
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1KioskAppStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1KioskAppStatusReport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2773,6 +2868,15 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// GraphicsStatusReport: Output only. Graphics reports collected
 	// periodically.
 	GraphicsStatusReport []*GoogleChromeManagementV1GraphicsStatusReport `json:"graphicsStatusReport,omitempty"`
+
+	// HeartbeatStatusReport: Output only. Heartbeat status report
+	// containing timestamps periodically sorted in decreasing order of
+	// report_time
+	HeartbeatStatusReport []*GoogleChromeManagementV1HeartbeatStatusReport `json:"heartbeatStatusReport,omitempty"`
+
+	// KioskAppStatusReport: Output only. Kiosk app status report for the
+	// kiosk device
+	KioskAppStatusReport []*GoogleChromeManagementV1KioskAppStatusReport `json:"kioskAppStatusReport,omitempty"`
 
 	// MemoryInfo: Output only. Information regarding memory specs for the
 	// device.

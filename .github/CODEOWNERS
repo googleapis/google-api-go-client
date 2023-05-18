@@ -1,4 +1,4 @@
 # Default owner for all directories not owned by others
 * @googleapis/yoshi-go-admins
-.github/auto-approve.yml                 @googleapis/github-automation
+.github/auto-approve.yml @googleapis/github-automation
 

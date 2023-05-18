@@ -935,6 +935,11 @@
                 "customer"
               ],
               "parameters": {
+                "changeOfferPurchase.billingAccount": {
+                  "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "changeOfferPurchase.entitlement": {
                   "description": "Required. Resource name of the entitlement. Format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
                   "location": "query",
@@ -942,6 +947,11 @@
                 },
                 "changeOfferPurchase.newSku": {
                   "description": "Optional. Resource name of the new target SKU. Provide this SKU when upgrading or downgrading an entitlement. Format: products/{product_id}/skus/{sku_id}",
+                  "location": "query",
+                  "type": "string"
+                },
+                "createEntitlementPurchase.billingAccount": {
+                  "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billing_accounts/{billing_account_id}.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2086,7 +2096,7 @@
       }
     }
   },
-  "revision": "20230515",
+  "revision": "20230516",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {
@@ -2188,6 +2198,10 @@
       "description": "Request message for CloudChannelService.ChangeOffer.",
       "id": "GoogleCloudChannelV1ChangeOfferRequest",
       "properties": {
+        "billingAccount": {
+          "description": "Optional. The billing account resource name that is used to pay for this entitlement when setting up billing on a trial subscription. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+          "type": "string"
+        },
         "offer": {
           "description": "Required. New Offer. Format: accounts/{account_id}/offers/{offer_id}.",
           "type": "string"
@@ -3424,6 +3438,10 @@
       "description": "Request message for CloudChannelService.ListTransferableOffers",
       "id": "GoogleCloudChannelV1ListTransferableOffersRequest",
       "properties": {
+        "billingAccount": {
+          "description": "Optional. The Billing Account to look up Offers for. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+          "type": "string"
+        },
         "cloudIdentityId": {
           "description": "Customer's Cloud Identity ID",
           "type": "string"
@@ -3714,13 +3732,15 @@
             "PARAMETER_TYPE_UNSPECIFIED",
             "INT64",
             "STRING",
-            "DOUBLE"
+            "DOUBLE",
+            "BOOLEAN"
           ],
           "enumDescriptions": [
             "Not used.",
             "Int64 type.",
             "String type.",
-            "Double type."
+            "Double type.",
+            "Boolean type."
           ],
           "type": "string"
         }

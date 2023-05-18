@@ -503,8 +503,8 @@ type CseIdentity struct {
 	// address must be the primary email address of the authenticated user.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
-	// PrimaryKeyPairId: If a key pair is associated, the identifier of the
-	// key pair, CseKeyPair.
+	// PrimaryKeyPairId: If a key pair is associated, the ID of the key
+	// pair, CseKeyPair.
 	PrimaryKeyPairId string `json:"primaryKeyPairId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

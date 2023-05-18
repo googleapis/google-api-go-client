@@ -120,6 +120,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Anomalies = NewAnomaliesService(s)
+	s.Apps = NewAppsService(s)
 	s.Vitals = NewVitalsService(s)
 	return s, nil
 }
@@ -130,6 +131,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Anomalies *AnomaliesService
+
+	Apps *AppsService
 
 	Vitals *VitalsService
 }
@@ -147,6 +150,15 @@ func NewAnomaliesService(s *Service) *AnomaliesService {
 }
 
 type AnomaliesService struct {
+	s *Service
+}
+
+func NewAppsService(s *Service) *AppsService {
+	rs := &AppsService{s: s}
+	return rs
+}
+
+type AppsService struct {
 	s *Service
 }
 
@@ -371,17 +383,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1Anomaly) MarshalJSON() ([]byte, err
 // times. The value is rounded to the nearest multiple of 10, 100, 1,000
 // or 1,000,000, depending on the magnitude of the value. **Supported
 // dimensions:** * `apiLevel` (string): the API level of Android that
-// was running on the user's device. * `versionCode` (int64): version of
-// the app that was running on the user's device. * `deviceModel`
-// (string): unique identifier of the user's device model. *
-// `deviceBrand` (string): unique identifier of the user's device brand.
-// * `deviceType` (string): the type (also known as form factor) of the
-// user's device. * `countryCode` (string): the country or region of the
-// user's device based on their IP address, represented as a 2-letter
-// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-// `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// was running on the user's device, e.g., 26. * `versionCode` (int64):
+// version of the app that was running on the user's device. *
+// `deviceModel` (string): unique identifier of the user's device model.
+// The form of the identifier is 'deviceBrand/device', where deviceBrand
+// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+// the user's device brand, e.g., google. * `deviceType` (string): the
+// type (also known as form factor) of the user's device, e.g., PHONE. *
+// `countryCode` (string): the country or region of the user's device
+// based on their IP address, represented as a 2-letter ISO-3166 code
+// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+// Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary
 // system-on-chip, e.g., "Exynos 2100". Reference
@@ -435,6 +450,73 @@ func (s *GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1alpha1App: A representation of an app
+// in the Play Store.
+type GooglePlayDeveloperReportingV1alpha1App struct {
+	// DisplayName: Title of the app. This is the latest title as set in the
+	// Play Console and may not yet have been reviewed, so might not match
+	// the Play Store. Example: `Google Maps`.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: The resource name. Format: apps/{app}
+	Name string `json:"name,omitempty"`
+
+	// PackageName: Package name of the app. Example: `com.example.app123`.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1App) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1App
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1AppVersion: Representations of an
+// app version.
+type GooglePlayDeveloperReportingV1alpha1AppVersion struct {
+	// VersionCode: Numeric version code of the app version (set by the
+	// app's developer).
+	VersionCode int64 `json:"versionCode,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "VersionCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VersionCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1AppVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1AppVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet: Singleton
 // resource representing the set of crashrate metrics. This metric set
 // contains crashes data combined with usage data to produce a
@@ -476,17 +558,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet) MarshalJSON() ([]
 // times. The value is rounded to the nearest multiple of 10, 100, 1,000
 // or 1,000,000, depending on the magnitude of the value. **Supported
 // dimensions:** * `apiLevel` (string): the API level of Android that
-// was running on the user's device. * `versionCode` (int64): version of
-// the app that was running on the user's device. * `deviceModel`
-// (string): unique identifier of the user's device model. *
-// `deviceBrand` (string): unique identifier of the user's device brand.
-// * `deviceType` (string): the type (also known as form factor) of the
-// user's device. * `countryCode` (string): the country or region of the
-// user's device based on their IP address, represented as a 2-letter
-// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-// `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// was running on the user's device, e.g., 26. * `versionCode` (int64):
+// version of the app that was running on the user's device. *
+// `deviceModel` (string): unique identifier of the user's device model.
+// The form of the identifier is 'deviceBrand/device', where deviceBrand
+// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+// the user's device brand, e.g., google. * `deviceType` (string): the
+// type (also known as form factor) of the user's device, e.g., PHONE. *
+// `countryCode` (string): the country or region of the user's device
+// based on their IP address, represented as a 2-letter ISO-3166 code
+// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+// Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary
 // system-on-chip, e.g., "Exynos 2100". Reference
@@ -572,6 +657,72 @@ func (s *GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1alpha1DeviceId: Identifier of a device.
+type GooglePlayDeveloperReportingV1alpha1DeviceId struct {
+	// BuildBrand: Value of Build.BRAND.
+	BuildBrand string `json:"buildBrand,omitempty"`
+
+	// BuildDevice: Value of Build.DEVICE.
+	BuildDevice string `json:"buildDevice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildBrand") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildBrand") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1DeviceId) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1DeviceId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1DeviceModelSummary: Summary of a
+// device
+type GooglePlayDeveloperReportingV1alpha1DeviceModelSummary struct {
+	// DeviceId: Identifier of the device.
+	DeviceId *GooglePlayDeveloperReportingV1alpha1DeviceId `json:"deviceId,omitempty"`
+
+	// DeviceUri: Link to the device in Play Device Catalog.
+	DeviceUri string `json:"deviceUri,omitempty"`
+
+	// MarketingName: Display name of the device.
+	MarketingName string `json:"marketingName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1DeviceModelSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1DeviceModelSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1alpha1DimensionValue: Represents the
 // value of a single dimension.
 type GooglePlayDeveloperReportingV1alpha1DimensionValue struct {
@@ -631,16 +782,18 @@ func (s *GooglePlayDeveloperReportingV1alpha1DimensionValue) MarshalJSON() ([]by
 // in the `dimensions` field in query requests. * `reportType` (string):
 // the type of error. The value should correspond to one of the possible
 // values in ErrorType. **Supported dimensions:** * `apiLevel` (string):
-// the API level of Android that was running on the user's device. *
-// `versionCode` (int64): version of the app that was running on the
-// user's device. * `deviceModel` (string): unique identifier of the
-// user's device model. * `deviceType` (string): identifier of the
-// device's form factor, e.g., PHONE. * `issueId` (string): the id an
-// error was assigned to. The value should correspond to the `{issue}`
-// component of the issue name. * `deviceRamBucket` (int64): RAM of the
-// device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-// Reference
+// the API level of Android that was running on the user's device, e.g.,
+// 26. * `versionCode` (int64): version of the app that was running on
+// the user's device. * `deviceModel` (string): unique identifier of the
+// user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
+// and device corresponds to Build.DEVICE, e.g., google/coral. *
+// `deviceType` (string): identifier of the device's form factor, e.g.,
+// PHONE. * `issueId` (string): the id an error was assigned to. The
+// value should correspond to the `{issue}` component of the issue name.
+// * `deviceRamBucket` (int64): RAM of the device, in MB, in buckets
+// (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the device's
+// primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary
 // system-on-chip, e.g., "Exynos 2100". Reference
@@ -713,6 +866,50 @@ type GooglePlayDeveloperReportingV1alpha1ErrorIssue struct {
 	// was raised, e.g. SIGSEGV.
 	Cause string `json:"cause,omitempty"`
 
+	// DistinctUsers: An estimate of the number of unique users who have
+	// experienced this issue (only considering occurrences matching the
+	// filters and within the requested time period).
+	DistinctUsers int64 `json:"distinctUsers,omitempty,string"`
+
+	// DistinctUsersPercent: An estimated percentage of users affected by
+	// any issue that are affected by this issue (only considering
+	// occurrences matching the filters and within the requested time
+	// period).
+	DistinctUsersPercent *GoogleTypeDecimal `json:"distinctUsersPercent,omitempty"`
+
+	// ErrorReportCount: The total number of error reports in this issue
+	// (only considering occurrences matching the filters and within the
+	// requested time period).
+	ErrorReportCount int64 `json:"errorReportCount,omitempty,string"`
+
+	// FirstAppVersion: The earliest (inclusive) app version appearing in
+	// this ErrorIssue in the requested time period (only considering
+	// occurrences matching the filters).
+	FirstAppVersion *GooglePlayDeveloperReportingV1alpha1AppVersion `json:"firstAppVersion,omitempty"`
+
+	// FirstOsVersion: The smallest OS version in which this error cluster
+	// has occurred in the requested time period (only considering
+	// occurrences matching the filters and within the requested time
+	// period).
+	FirstOsVersion *GooglePlayDeveloperReportingV1alpha1OsVersion `json:"firstOsVersion,omitempty"`
+
+	// IssueUri: Link to the issue in Android vitals in the Play Console.
+	IssueUri string `json:"issueUri,omitempty"`
+
+	// LastAppVersion: The latest (inclusive) app version appearing in this
+	// ErrorIssue in the requested time period (only considering occurrences
+	// matching the filters).
+	LastAppVersion *GooglePlayDeveloperReportingV1alpha1AppVersion `json:"lastAppVersion,omitempty"`
+
+	// LastErrorReportTime: Start of the hour during which the last error
+	// report in this issue occurred.
+	LastErrorReportTime string `json:"lastErrorReportTime,omitempty"`
+
+	// LastOsVersion: The latest OS version in which this error cluster has
+	// occurred in the requested time period (only considering occurrences
+	// matching the filters and within the requested time period).
+	LastOsVersion *GooglePlayDeveloperReportingV1alpha1OsVersion `json:"lastOsVersion,omitempty"`
+
 	// Location: Location where the issue happened. Depending on the type
 	// this can be either: * APPLICATION_NOT_RESPONDING: the name of the
 	// activity or service that stopped responding. * CRASH: the likely
@@ -766,6 +963,14 @@ func (s *GooglePlayDeveloperReportingV1alpha1ErrorIssue) MarshalJSON() ([]byte, 
 // resource, the calling user needs the _View app information
 // (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1alpha1ErrorReport struct {
+	// DeviceModel: A device model on which an event in this error report
+	// occurred on.
+	DeviceModel *GooglePlayDeveloperReportingV1alpha1DeviceModelSummary `json:"deviceModel,omitempty"`
+
+	// EventTime: Start of the hour during which the latest event in this
+	// error report occurred.
+	EventTime string `json:"eventTime,omitempty"`
+
 	// Issue: The issue this report was associated with. **Please note:**
 	// this resource is currently in Alpha. There could be changes to the
 	// issue grouping that would result in similar but more recent error
@@ -775,6 +980,10 @@ type GooglePlayDeveloperReportingV1alpha1ErrorReport struct {
 	// Name: The resource name of the report. Format:
 	// apps/{app}/errorReports/{report}
 	Name string `json:"name,omitempty"`
+
+	// OsVersion: The OS version on which an event in this error report
+	// occurred on.
+	OsVersion *GooglePlayDeveloperReportingV1alpha1OsVersion `json:"osVersion,omitempty"`
 
 	// ReportText: Textual representation of the error report. These textual
 	// reports are produced by the platform. The reports are then sanitized
@@ -797,7 +1006,7 @@ type GooglePlayDeveloperReportingV1alpha1ErrorReport struct {
 	// SIGSEGV.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Issue") to
+	// ForceSendFields is a list of field names (e.g. "DeviceModel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -805,10 +1014,10 @@ type GooglePlayDeveloperReportingV1alpha1ErrorReport struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Issue") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DeviceModel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -845,17 +1054,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1ErrorReport) MarshalJSON() ([]byte,
 // multiple times. The value is rounded to the nearest multiple of 10,
 // 100, 1,000 or 1,000,000, depending on the magnitude of the value.
 // **Supported dimensions:** * `apiLevel` (string): the API level of
-// Android that was running on the user's device. * `versionCode`
-// (int64): version of the app that was running on the user's device. *
-// `deviceModel` (string): unique identifier of the user's device model.
-// * `deviceBrand` (string): unique identifier of the user's device
-// brand. * `deviceType` (string): the type (also known as form factor)
-// of the user's device. * `countryCode` (string): the country or region
-// of the user's device based on their IP address, represented as a
-// 2-letter ISO-3166 code (e.g. US for the United States). *
-// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB,
-// 4GB, etc.). * `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// Android that was running on the user's device, e.g., 26. *
+// `versionCode` (int64): version of the app that was running on the
+// user's device. * `deviceModel` (string): unique identifier of the
+// user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
+// and device corresponds to Build.DEVICE, e.g., google/coral. *
+// `deviceBrand` (string): unique identifier of the user's device brand,
+// e.g., google. * `deviceType` (string): the type (also known as form
+// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// the country or region of the user's device based on their IP address,
+// represented as a 2-letter ISO-3166 code (e.g. US for the United
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary
 // system-on-chip, e.g., "Exynos 2100". Reference
@@ -1107,22 +1319,54 @@ func (s *GooglePlayDeveloperReportingV1alpha1MetricsRow) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1alpha1OsVersion: Representation of an
+// OS version.
+type GooglePlayDeveloperReportingV1alpha1OsVersion struct {
+	// ApiLevel: Numeric version code of the OS - API level
+	ApiLevel int64 `json:"apiLevel,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1OsVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1OsVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest:
 // Request message for QueryAnrRateMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// Dimensions: Dimensions to slice the metrics by. **Supported
 	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device. * `versionCode` (int64): version of
-	// the app that was running on the user's device. * `deviceModel`
-	// (string): unique identifier of the user's device model. *
-	// `deviceBrand` (string): unique identifier of the user's device brand.
-	// * `deviceType` (string): the type (also known as form factor) of the
-	// user's device. * `countryCode` (string): the country or region of the
-	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-	// `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// was running on the user's device, e.g., 26. * `versionCode` (int64):
+	// version of the app that was running on the user's device. *
+	// `deviceModel` (string): unique identifier of the user's device model.
+	// The form of the identifier is 'deviceBrand/device', where deviceBrand
+	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+	// the user's device brand, e.g., google. * `deviceType` (string): the
+	// type (also known as form factor) of the user's device, e.g., PHONE. *
+	// `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code
+	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary
 	// system-on-chip, e.g., "Exynos 2100". Reference
@@ -1280,17 +1524,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse) Mars
 type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	// Dimensions: Dimensions to slice the metrics by. **Supported
 	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device. * `versionCode` (int64): version of
-	// the app that was running on the user's device. * `deviceModel`
-	// (string): unique identifier of the user's device model. *
-	// `deviceBrand` (string): unique identifier of the user's device brand.
-	// * `deviceType` (string): the type (also known as form factor) of the
-	// user's device. * `countryCode` (string): the country or region of the
-	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-	// `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// was running on the user's device, e.g., 26. * `versionCode` (int64):
+	// version of the app that was running on the user's device. *
+	// `deviceModel` (string): unique identifier of the user's device model.
+	// The form of the identifier is 'deviceBrand/device', where deviceBrand
+	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+	// the user's device brand, e.g., google. * `deviceType` (string): the
+	// type (also known as form factor) of the user's device, e.g., PHONE. *
+	// `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code
+	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary
 	// system-on-chip, e.g., "Exynos 2100". Reference
@@ -1451,18 +1698,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse) Ma
 type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct {
 	// Dimensions: Dimensions to slice the data by. **Supported
 	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device. * `versionCode` (int64): version of
-	// the app that was running on the user's device. * `deviceModel`
-	// (string): unique identifier of the user's device model. *
-	// `deviceType` (string): identifier of the device's form factor, e.g.,
-	// PHONE. * `reportType` (string): the type of error. The value should
-	// correspond to one of the possible values in ErrorType. *
-	// `isUserPerceived` (string): denotes whether error is user perceived
-	// or not, USER_PERCEIVED or NOT_USER_PERCEIVED. * `issueId` (string):
-	// the id an error was assigned to. The value should correspond to the
-	// `{issue}` component of the issue name. * `deviceRamBucket` (int64):
-	// RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-	// `deviceSocMake` (string): Make of the device's primary
+	// was running on the user's device, e.g., 26. * `versionCode` (int64):
+	// unique identifier of the user's device model. The form of the
+	// identifier is 'deviceBrand/device', where deviceBrand corresponds to
+	// Build.BRAND and device corresponds to Build.DEVICE, e.g.,
+	// google/coral. * `deviceModel` (string): unique identifier of the
+	// user's device model. * `deviceType` (string): identifier of the
+	// device's form factor, e.g., PHONE. * `reportType` (string): the type
+	// of error. The value should correspond to one of the possible values
+	// in ErrorType. * `isUserPerceived` (string): denotes whether error is
+	// user perceived or not, USER_PERCEIVED or NOT_USER_PERCEIVED. *
+	// `issueId` (string): the id an error was assigned to. The value should
+	// correspond to the `{issue}` component of the issue name. *
+	// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB,
+	// 4GB, etc.). * `deviceSocMake` (string): Make of the device's primary
 	// system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary
@@ -1575,17 +1824,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse) M
 type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRequest struct {
 	// Dimensions: Dimensions to slice the data by. **Supported
 	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device. * `versionCode` (int64): version of
-	// the app that was running on the user's device. * `deviceModel`
-	// (string): unique identifier of the user's device model. *
-	// `deviceBrand` (string): unique identifier of the user's device brand.
-	// * `deviceType` (string): the type (also known as form factor) of the
-	// user's device. * `countryCode` (string): the country or region of the
-	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-	// `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// was running on the user's device, e.g., 26. * `versionCode` (int64):
+	// version of the app that was running on the user's device. *
+	// `deviceModel` (string): unique identifier of the user's device model.
+	// The form of the identifier is 'deviceBrand/device', where deviceBrand
+	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+	// the user's device brand, e.g., google. * `deviceType` (string): the
+	// type (also known as form factor) of the user's device, e.g., PHONE. *
+	// `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code
+	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary
 	// system-on-chip, e.g., "Exynos 2100". Reference
@@ -1730,17 +1982,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRe
 type GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest struct {
 	// Dimensions: Dimensions to slice the data by. **Supported
 	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device. * `versionCode` (int64): version of
-	// the app that was running on the user's device. * `deviceModel`
-	// (string): unique identifier of the user's device model. *
-	// `deviceBrand` (string): unique identifier of the user's device brand.
-	// * `deviceType` (string): the type (also known as form factor) of the
-	// user's device. * `countryCode` (string): the country or region of the
-	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-	// `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// was running on the user's device, e.g., 26. * `versionCode` (int64):
+	// version of the app that was running on the user's device. *
+	// `deviceModel` (string): unique identifier of the user's device model.
+	// The form of the identifier is 'deviceBrand/device', where deviceBrand
+	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+	// the user's device brand, e.g., google. * `deviceType` (string): the
+	// type (also known as form factor) of the user's device, e.g., PHONE. *
+	// `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code
+	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary
 	// system-on-chip, e.g., "Exynos 2100". Reference
@@ -1894,17 +2149,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetResp
 type GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest struct {
 	// Dimensions: Dimensions to slice the data by. **Supported
 	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device. * `versionCode` (int64): version of
-	// the app that was running on the user's device. * `deviceModel`
-	// (string): unique identifier of the user's device model. *
-	// `deviceBrand` (string): unique identifier of the user's device brand.
-	// * `deviceType` (string): the type (also known as form factor) of the
-	// user's device. * `countryCode` (string): the country or region of the
-	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-	// `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// was running on the user's device, e.g., 26. * `versionCode` (int64):
+	// version of the app that was running on the user's device. *
+	// `deviceModel` (string): unique identifier of the user's device model.
+	// The form of the identifier is 'deviceBrand/device', where deviceBrand
+	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+	// the user's device brand, e.g., google. * `deviceType` (string): the
+	// type (also known as form factor) of the user's device, e.g., PHONE. *
+	// `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code
+	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary
 	// system-on-chip, e.g., "Exynos 2100". Reference
@@ -2048,17 +2306,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetResponse
 type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetRequest struct {
 	// Dimensions: Dimensions to slice the data by. **Supported
 	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device. * `versionCode` (int64): version of
-	// the app that was running on the user's device. * `deviceModel`
-	// (string): unique identifier of the user's device model. *
-	// `deviceBrand` (string): unique identifier of the user's device brand.
-	// * `deviceType` (string): the type (also known as form factor) of the
-	// user's device. * `countryCode` (string): the country or region of the
-	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
-	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
-	// `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// was running on the user's device, e.g., 26. * `versionCode` (int64):
+	// version of the app that was running on the user's device. *
+	// `deviceModel` (string): unique identifier of the user's device model.
+	// The form of the identifier is 'deviceBrand/device', where deviceBrand
+	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
+	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
+	// the user's device brand, e.g., google. * `deviceType` (string): the
+	// type (also known as form factor) of the user's device, e.g., PHONE. *
+	// `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code
+	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary
 	// system-on-chip, e.g., "Exynos 2100". Reference
@@ -2199,6 +2460,110 @@ func (s *GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMet
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1alpha1Release: A representation of an
+// app release.
+type GooglePlayDeveloperReportingV1alpha1Release struct {
+	// DisplayName: Readable identifier of the release.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// VersionCodes: The version codes contained in this release.
+	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1Release) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1Release
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions: A set of
+// filtering options for releases and version codes specific to an app.
+type GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions struct {
+	// Tracks: List of tracks to filter releases over. Provides the grouping
+	// of version codes under releases and tracks.
+	Tracks []*GooglePlayDeveloperReportingV1alpha1Track `json:"tracks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Tracks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tracks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse:
+// Response message for SearchAccessibleApps.
+type GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse struct {
+	// Apps: The apps accessible to the user calling the endpoint.
+	Apps []*GooglePlayDeveloperReportingV1alpha1App `json:"apps,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Apps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Apps") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse:
 // Response with a paginated list of issues that matched the request.
 type GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse struct {
@@ -2310,12 +2675,15 @@ func (s *GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse) Marshal
 // being counted multiple times. The value is rounded to the nearest
 // multiple of 10, 100, 1,000 or 1,000,000, depending on the magnitude
 // of the value. **Supported dimensions:** * `apiLevel` (string): the
-// API level of Android that was running on the user's device. *
-// `versionCode` (int64): version of the app that was running on the
+// API level of Android that was running on the user's device, e.g., 26.
+// * `versionCode` (int64): version of the app that was running on the
 // user's device. * `deviceModel` (string): unique identifier of the
-// user's device model. * `deviceBrand` (string): unique identifier of
-// the user's device brand. * `deviceType` (string): the type (also
-// known as form factor) of the user's device. * `countryCode` (string):
+// user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
+// and device corresponds to Build.DEVICE, e.g., google/coral. *
+// `deviceBrand` (string): unique identifier of the user's device brand,
+// e.g., google. * `deviceType` (string): the type (also known as form
+// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
 // States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
@@ -2397,17 +2765,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1SlowRenderingRateMetricSet) Marshal
 // the request to be valid. * `startType` (string): the type of start
 // that was measured. Valid types are `HOT`, `WARM` and `COLD`.
 // **Supported dimensions:** * `apiLevel` (string): the API level of
-// Android that was running on the user's device. * `versionCode`
-// (int64): version of the app that was running on the user's device. *
-// `deviceModel` (string): unique identifier of the user's device model.
-// * `deviceBrand` (string): unique identifier of the user's device
-// brand. * `deviceType` (string): the type (also known as form factor)
-// of the user's device. * `countryCode` (string): the country or region
-// of the user's device based on their IP address, represented as a
-// 2-letter ISO-3166 code (e.g. US for the United States). *
-// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB,
-// 4GB, etc.). * `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// Android that was running on the user's device, e.g., 26. *
+// `versionCode` (int64): version of the app that was running on the
+// user's device. * `deviceModel` (string): unique identifier of the
+// user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
+// and device corresponds to Build.DEVICE, e.g., google/coral. *
+// `deviceBrand` (string): unique identifier of the user's device brand,
+// e.g., google. * `deviceType` (string): the type (also known as form
+// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// the country or region of the user's device based on their IP address,
+// represented as a 2-letter ISO-3166 code (e.g. US for the United
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary
 // system-on-chip, e.g., "Exynos 2100". Reference
@@ -2484,17 +2855,20 @@ func (s *GooglePlayDeveloperReportingV1alpha1SlowStartRateMetricSet) MarshalJSON
 // multiple times. The value is rounded to the nearest multiple of 10,
 // 100, 1,000 or 1,000,000, depending on the magnitude of the value.
 // **Supported dimensions:** * `apiLevel` (string): the API level of
-// Android that was running on the user's device. * `versionCode`
-// (int64): version of the app that was running on the user's device. *
-// `deviceModel` (string): unique identifier of the user's device model.
-// * `deviceBrand` (string): unique identifier of the user's device
-// brand. * `deviceType` (string): the type (also known as form factor)
-// of the user's device. * `countryCode` (string): the country or region
-// of the user's device based on their IP address, represented as a
-// 2-letter ISO-3166 code (e.g. US for the United States). *
-// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB,
-// 4GB, etc.). * `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// Android that was running on the user's device, e.g., 26. *
+// `versionCode` (int64): version of the app that was running on the
+// user's device. * `deviceModel` (string): unique identifier of the
+// user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
+// and device corresponds to Build.DEVICE, e.g., google/coral. *
+// `deviceBrand` (string): unique identifier of the user's device brand,
+// e.g., google. * `deviceType` (string): the type (also known as form
+// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// the country or region of the user's device based on their IP address,
+// represented as a 2-letter ISO-3166 code (e.g. US for the United
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary
 // system-on-chip, e.g., "Exynos 2100". Reference
@@ -2612,6 +2986,41 @@ type GooglePlayDeveloperReportingV1alpha1TimelineSpec struct {
 
 func (s *GooglePlayDeveloperReportingV1alpha1TimelineSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1TimelineSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1Track: A representation of a Play
+// release track.
+type GooglePlayDeveloperReportingV1alpha1Track struct {
+	// DisplayName: Readable identifier of the track.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ServingReleases: Represents all active releases in the track.
+	ServingReleases []*GooglePlayDeveloperReportingV1alpha1Release `json:"servingReleases,omitempty"`
+
+	// Type: The type of the track.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePlayDeveloperReportingV1alpha1Track) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1Track
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3004,6 +3413,340 @@ func (c *AnomaliesListCall) Do(opts ...googleapi.CallOption) (*GooglePlayDevelop
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AnomaliesListCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "playdeveloperreporting.apps.fetchReleaseFilterOptions":
+
+type AppsFetchReleaseFilterOptionsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchReleaseFilterOptions: Describes filtering options for releases.
+//
+//   - name: Name of the resource, i.e. app the filtering options are for.
+//     Format: apps/{app}.
+func (r *AppsService) FetchReleaseFilterOptions(name string) *AppsFetchReleaseFilterOptionsCall {
+	c := &AppsFetchReleaseFilterOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsFetchReleaseFilterOptionsCall) Fields(s ...googleapi.Field) *AppsFetchReleaseFilterOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsFetchReleaseFilterOptionsCall) IfNoneMatch(entityTag string) *AppsFetchReleaseFilterOptionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsFetchReleaseFilterOptionsCall) Context(ctx context.Context) *AppsFetchReleaseFilterOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsFetchReleaseFilterOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:fetchReleaseFilterOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.apps.fetchReleaseFilterOptions" call.
+// Exactly one of
+// *GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AppsFetchReleaseFilterOptionsCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Describes filtering options for releases.",
+	//   "flatPath": "v1alpha1/apps/{appsId}:fetchReleaseFilterOptions",
+	//   "httpMethod": "GET",
+	//   "id": "playdeveloperreporting.apps.fetchReleaseFilterOptions",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the resource, i.e. app the filtering options are for. Format: apps/{app}",
+	//       "location": "path",
+	//       "pattern": "^apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+name}:fetchReleaseFilterOptions",
+	//   "response": {
+	//     "$ref": "GooglePlayDeveloperReportingV1alpha1ReleaseFilterOptions"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
+	// }
+
+}
+
+// method id "playdeveloperreporting.apps.search":
+
+type AppsSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Searches for Apps accessible by the user.
+func (r *AppsService) Search() *AppsSearchCall {
+	c := &AppsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of apps to return. The service may return fewer than this value. If
+// unspecified, at most 50 apps will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *AppsSearchCall) PageSize(pageSize int64) *AppsSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `SearchAccessibleApps` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `SearchAccessibleApps` must match the call that provided
+// the page token.
+func (c *AppsSearchCall) PageToken(pageToken string) *AppsSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsSearchCall) Fields(s ...googleapi.Field) *AppsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsSearchCall) IfNoneMatch(entityTag string) *AppsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsSearchCall) Context(ctx context.Context) *AppsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/apps:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.apps.search" call.
+// Exactly one of
+// *GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AppsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for Apps accessible by the user.",
+	//   "flatPath": "v1alpha1/apps:search",
+	//   "httpMethod": "GET",
+	//   "id": "playdeveloperreporting.apps.search",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of apps to return. The service may return fewer than this value. If unspecified, at most 50 apps will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `SearchAccessibleApps` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `SearchAccessibleApps` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/apps:search",
+	//   "response": {
+	//     "$ref": "GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AppsSearchCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1alpha1SearchAccessibleAppsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -4195,6 +4938,19 @@ func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeYear(intervalStartTimeYe
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Specifies a field that
+// will be used to order the results. ** Supported dimensions:** *
+// `errorReportCount`: Orders issues by number of error reports. *
+// `distinctUsers`: Orders issues by number of unique affected users. **
+// Supported operations:** * `asc` for ascending order. * `desc` for
+// descending order. Format: A field and an operation, e.g.,
+// `errorReportCount desc` *Note:* currently only one field is supported
+// at a time.
+func (c *VitalsErrorsIssuesSearchCall) OrderBy(orderBy string) *VitalsErrorsIssuesSearchCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of error issues to return. The service may return fewer than this
 // value. If unspecified, at most 50 error issues will be returned. The
@@ -4443,6 +5199,11 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Specifies a field that will be used to order the results. ** Supported dimensions:** * `errorReportCount`: Orders issues by number of error reports. * `distinctUsers`: Orders issues by number of unique affected users. ** Supported operations:** * `asc` for ascending order. * `desc` for descending order. Format: A field and an operation, e.g., `errorReportCount desc` *Note:* currently only one field is supported at a time.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of error issues to return. The service may return fewer than this value. If unspecified, at most 50 error issues will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",

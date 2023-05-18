@@ -3077,7 +3077,7 @@
       }
     }
   },
-  "revision": "20230424",
+  "revision": "20230515",
   "rootUrl": "https://gmail.googleapis.com/",
   "schemas": {
     "AutoForwarding": {
@@ -3162,7 +3162,7 @@
           "type": "string"
         },
         "primaryKeyPairId": {
-          "description": "If a key pair is associated, the identifier of the key pair, CseKeyPair.",
+          "description": "If a key pair is associated, the ID of the key pair, CseKeyPair.",
           "type": "string"
         }
       },

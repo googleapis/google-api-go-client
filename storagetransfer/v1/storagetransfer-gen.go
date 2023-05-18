@@ -345,6 +345,18 @@ type AwsS3Data struct {
 	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).
 	BucketName string `json:"bucketName,omitempty"`
 
+	// CredentialsSecret: Optional. The Resource name of a secret in Secret
+	// Manager. The Azure SAS token must be stored in Secret Manager in JSON
+	// format: { "sas_token" : "SAS_TOKEN" } GoogleServiceAccount must be
+	// granted `roles/secretmanager.secretAccessor` for the resource. See
+	// [Configure access to a source: Microsoft Azure Blob Storage]
+	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager)
+	// for more information. If `credentials_secret` is specified, do not
+	// specify azure_credentials. This feature is in preview
+	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// `projects/{project_number}/secrets/{secret_name}`
+	CredentialsSecret string `json:"credentialsSecret,omitempty"`
+
 	// Path: Root path to transfer objects. Must be an empty string or full
 	// path name that ends with a '/'. This field is treated as an object
 	// prefix. As such, it should generally not begin with a '/'.
@@ -401,6 +413,18 @@ type AzureBlobStorageData struct {
 	// Container: Required. The container to transfer from the Azure Storage
 	// account.
 	Container string `json:"container,omitempty"`
+
+	// CredentialsSecret: Optional. The Resource name of a secret in Secret
+	// Manager. The Azure SAS token must be stored in Secret Manager in JSON
+	// format: { "sas_token" : "SAS_TOKEN" } GoogleServiceAccount must be
+	// granted `roles/secretmanager.secretAccessor` for the resource. See
+	// [Configure access to a source: Microsoft Azure Blob Storage]
+	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager)
+	// for more information. If `credentials_secret` is specified, do not
+	// specify azure_credentials. This feature is in preview
+	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// `projects/{project_number}/secrets/{secret_name}`
+	CredentialsSecret string `json:"credentialsSecret,omitempty"`
 
 	// Path: Root path to transfer objects. Must be an empty string or full
 	// path name that ends with a '/'. This field is treated as an object
@@ -2158,8 +2182,12 @@ type TransferSpec struct {
 	// GcsDataSource: A Cloud Storage data source.
 	GcsDataSource *GcsData `json:"gcsDataSource,omitempty"`
 
-	// GcsIntermediateDataLocation: Cloud Storage intermediate data
-	// location.
+	// GcsIntermediateDataLocation: For transfers between file systems,
+	// specifies a Cloud Storage bucket to be used as an intermediate
+	// location through which to transfer data. See Transfer data between
+	// file systems
+	// (https://cloud.google.com/storage-transfer/docs/file-to-file) for
+	// more information.
 	GcsIntermediateDataLocation *GcsData `json:"gcsIntermediateDataLocation,omitempty"`
 
 	// HttpDataSource: An HTTP URL data source.

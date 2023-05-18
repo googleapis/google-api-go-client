@@ -794,7 +794,7 @@
       }
     }
   },
-  "revision": "20230507",
+  "revision": "20230516",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -2031,6 +2031,34 @@
       },
       "type": "object"
     },
+    "GoogleChromeManagementV1HeartbeatStatusReport": {
+      "description": "Heartbeat status report of a device. * Available for Kiosks * This field provides online/offline/unknown status of a device and will only be included if the status has changed (e.g. Online -\u003e Offline) * Data for this field is controlled via policy: [HeartbeatEnabled](https://chromeenterprise.google/policies/#HeartbeatEnabled) [More Info](https://support.google.com/chrome/a/answer/6179663#:~:text=On%20the%20Chrome,device%20status%20alerts) * Heartbeat Frequency: 2 mins * Note: If a device goes offline, it can take up to 12 minutes for the online status of the device to be updated * Cache: If the device is offline, the collected data is stored locally, and will be reported when the device is next online: N/A * Reported for affiliated users only: N/A * Granular permission needed: TELEMETRY_API_DEVICE_ACTIVITY_REPORT",
+      "id": "GoogleChromeManagementV1HeartbeatStatusReport",
+      "properties": {
+        "reportTime": {
+          "description": "Timestamp of when status changed was detected",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "State the device changed to",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "UNKNOWN",
+            "ONLINE",
+            "OFFLINE"
+          ],
+          "enumDescriptions": [
+            "State not specified",
+            "Device is not eligible for heartbeat monitoring",
+            "Device is online",
+            "Device is offline"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleChromeManagementV1HttpsLatencyRoutineData": {
       "description": "Data that describes the result of the HTTPS latency diagnostics routine, with the HTTPS requests issued to Google websites.",
       "id": "GoogleChromeManagementV1HttpsLatencyRoutineData",
@@ -2170,6 +2198,26 @@
           },
           "readOnly": true,
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleChromeManagementV1KioskAppStatusReport": {
+      "description": "Kiosk app status report of a device. * Available for Kiosks * This field provides the app id and version number running on a kiosk device and the timestamp of when the report was last updated * Data for this field is controlled via policy: [ReportDeviceSessionStatus](https://chromeenterprise.google/policies/#ReportDeviceSessionStatus) * Data Collection Frequency: Only at Upload * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is offline, the collected data is stored locally, and will be reported when the device is next online: No * Reported for affiliated users only: N/A * Granular permission needed: TELEMETRY_API_APPS_REPORT",
+      "id": "GoogleChromeManagementV1KioskAppStatusReport",
+      "properties": {
+        "appId": {
+          "description": "App id of kiosk app for example \"mdmkkicfmmkgmpkmkdikhlbggogpicma\"",
+          "type": "string"
+        },
+        "appVersion": {
+          "description": "App version number of kiosk app for example \"1.10.118\"",
+          "type": "string"
+        },
+        "reportTime": {
+          "description": "Timestamp of when report was collected",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2695,6 +2743,22 @@
           "description": "Output only. Graphics reports collected periodically.",
           "items": {
             "$ref": "GoogleChromeManagementV1GraphicsStatusReport"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "heartbeatStatusReport": {
+          "description": "Output only. Heartbeat status report containing timestamps periodically sorted in decreasing order of report_time",
+          "items": {
+            "$ref": "GoogleChromeManagementV1HeartbeatStatusReport"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "kioskAppStatusReport": {
+          "description": "Output only. Kiosk app status report for the kiosk device",
+          "items": {
+            "$ref": "GoogleChromeManagementV1KioskAppStatusReport"
           },
           "readOnly": true,
           "type": "array"

@@ -396,7 +396,7 @@
       }
     }
   },
-  "revision": "20230507",
+  "revision": "20230517",
   "rootUrl": "https://paymentsresellersubscription.googleapis.com/",
   "schemas": {
     "GoogleCloudPaymentsResellerSubscriptionV1Amount": {
@@ -744,7 +744,7 @@
       "properties": {
         "googleOnePayload": {
           "$ref": "GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload",
-          "description": "Payload specific to Google One products."
+          "description": "Product-specific payloads. Payload specific to Google One products."
         },
         "youtubePayload": {
           "$ref": "GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload",

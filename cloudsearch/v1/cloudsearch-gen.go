@@ -756,6 +756,72 @@ func (s *ActionParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AddOnFrameStartingState: Starting state for an individual add-on
+// frame.
+type AddOnFrameStartingState struct {
+	// AdditionalData: Additional data internal to the add-on that can be
+	// used to initialize itself.
+	AdditionalData string `json:"additionalData,omitempty"`
+
+	// Uri: The uri of the artifact being used for an add-on co-activity.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddOnFrameStartingState) MarshalJSON() ([]byte, error) {
+	type NoMethod AddOnFrameStartingState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddOnStartingState: Starting state properties for add-on co-activity.
+type AddOnStartingState struct {
+	// AddOnFrameStartingStates: List of starting state frames for the
+	// add-on co-activity. Keys for this map are the values of the
+	// AddOnFrameType enum.
+	AddOnFrameStartingStates map[string]AddOnFrameStartingState `json:"addOnFrameStartingStates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AddOnFrameStartingStates") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddOnFrameStartingStates")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddOnStartingState) MarshalJSON() ([]byte, error) {
+	type NoMethod AddOnStartingState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type AddonComposeUiActionMarkup struct {
 	// Possible values:
 	//   "UNSPECIFIED" - Default. When unspecified, no action is taken.
@@ -1079,6 +1145,40 @@ func (s *Annotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AnnotationInfo: Information about the screen annotation session.
+type AnnotationInfo struct {
+	// CoannotatorDeviceIds: The device resource names of other devices
+	// which can annotate the screen.
+	CoannotatorDeviceIds []string `json:"coannotatorDeviceIds,omitempty"`
+
+	// IsActive: Whether the annotation is active.
+	IsActive bool `json:"isActive,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CoannotatorDeviceIds") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CoannotatorDeviceIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnnotationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AnnotationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppId: Identifier of an App.
 type AppId struct {
 	// AppType: Enum indicating the type of App this is.
@@ -1108,6 +1208,7 @@ type AppId struct {
 	//   "ACTIVITY_FEED_APP"
 	//   "DRIVE_APP"
 	//   "CHAT_IN_MEET_APP"
+	//   "SHORTCUT_APP"
 	GsuiteAppType string `json:"gsuiteAppType,omitempty"`
 
 	// Id: Numeric identifier of the App. Set to Project number for 1/3P
@@ -1600,10 +1701,15 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 	//
 	// "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_ACTION_PARAMS"
 	// - Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given action params.
+	// the rules are applicable to the given action params. Deprecated. Use
+	// SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES
 	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_TRIGGER" -
 	// Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given trigger.
+	// the rules are applicable to the given trigger. Deprecated. Use
+	// SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES
+	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES" - Rule fetch
+	// happened, but rule evaluation is skipped because none of the rules
+	// are applicable.
 	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_PERMANENT_ERROR" - Rule
 	// fetch happened, but rule evaluation is skipped because Changeling
 	// returned permanent failure while converting the attachment to text.
@@ -1636,11 +1742,19 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 	// uploaded.
 	DlpScanSummary *DlpScanSummary `json:"dlpScanSummary,omitempty"`
 
+	// Experiment: The list of experiments this video is enabled for Next
+	// tag: 19
+	//
+	// Possible values:
+	//   "UNKNOWN_EXPERIMENT"
+	//   "KRONOS_FAST_FORMAT"
+	Experiment []string `json:"experiment,omitempty"`
+
 	// GroupId: GroupId to which this attachment is uploaded.
 	GroupId *GroupId `json:"groupId,omitempty"`
 
 	// IsClientSideTranscodedVideo: If the uploaded file is a video that has
-	// been transcoded on the client side Next tag: 18
+	// been transcoded on the client side
 	IsClientSideTranscodedVideo bool `json:"isClientSideTranscodedVideo,omitempty"`
 
 	// OriginalDimension: Original dimension of the content. Only set for
@@ -2130,15 +2244,14 @@ type AppsDynamiteSharedChatItemGroupInfo struct {
 	//   "IMMUTABLE_MEMBERSHIP_HUMAN_DM" - A DM with immutable group
 	// membership. It can be a 1:1 DM or a group DM with multiple human
 	// users.
-	//   "POST_ROOM" - A post room. Topics in this room are organized in a
-	// post/reply style. See the design doc for more details:
-	// go/PostRoomsInDynamite. Deprecated. Post rooms are no longer
-	// supported.
 	//   "ACTIVITY_FEED" - Represents an Activity Feed space. These groups
 	// are modeled like flat rooms and contain items for users to catch up
 	// on important things. Each user should only have one group of this
 	// type. See go/activity-feed. Deprecated: The go/activity-feed project
 	// is cancelled and this should no longer be used.
+	//   "SHORTCUT" - Represents a shortcut space. These groups are modeled
+	// like flat rooms and contain items for users to catch up on important
+	// things such as user mentioned messages and starred messages.
 	// LINT.ThenChange(//depot/google3/logs/proto/apps_dynamite/dynamite_visu
 	// al_element_entry.proto:LoggingGroupType,//depot/google3/java/com/googl
 	// e/apps/dynamite/v1/web/ui/group/groups.js:LoggingGroupType)
@@ -2665,6 +2778,15 @@ type AppsDynamiteSharedMeetMetadata struct {
 	// regenerated, which will cause old meeting codes to become invalid.
 	MeetingCode string `json:"meetingCode,omitempty"`
 
+	// MeetingType: Required. Type of the meeting. This controls the chat
+	// client UX.
+	//
+	// Possible values:
+	//   "MEETING_TYPE_UNSPECIFIED"
+	//   "HUDDLE"
+	//   "CALL"
+	MeetingType string `json:"meetingType,omitempty"`
+
 	// MeetingUrl: Required. A URL, in the format
 	// "https://meet.google.com/*" (e.g.
 	// https://meet.google.com/cxv-zbgj-wzw), to identify and access the
@@ -2810,6 +2932,41 @@ type AppsDynamiteSharedMessageIntegrationPayload struct {
 
 func (s *AppsDynamiteSharedMessageIntegrationPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedMessageIntegrationPayload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteSharedMessageSearchInfo: Metadata used to describe how to
+// render a message in search results page, e.g., highlighting and
+// snipetting. In future, we can use this proto to return more search
+// specific data attached to a message.
+type AppsDynamiteSharedMessageSearchInfo struct {
+	// MatchedSegmentsInTextBody: An example use case: clients can use this
+	// field to highlight matched segments in message text_body defined in
+	// http://google3/apps/dynamite/v1/frontend/api/message.proto;l=104;rcl=513400736.
+	MatchedSegmentsInTextBody []*AppsDynamiteSharedTextSegmentsWithDescription `json:"matchedSegmentsInTextBody,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MatchedSegmentsInTextBody") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MatchedSegmentsInTextBody") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedMessageSearchInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedMessageSearchInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3562,8 +3719,8 @@ func (s *AppsDynamiteStorageActionActionParameter) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteStorageBorderStyle: Represents the complete border style
-// applied to widgets.
+// AppsDynamiteStorageBorderStyle: The style options for the border of a
+// card or widget, including the border type and color.
 type AppsDynamiteStorageBorderStyle struct {
 	// CornerRadius: The corner radius for the border.
 	CornerRadius int64 `json:"cornerRadius,omitempty"`
@@ -3873,16 +4030,10 @@ func (s *AppsDynamiteStorageCardSection) MarshalJSON() ([]byte, error) {
 // AppsDynamiteStorageColumns: Represents a Columns widget that displays
 // a single row of columns.
 type AppsDynamiteStorageColumns struct {
-	// ColumnItems: Each card supports up to 2 columns.
+	// ColumnItems: Each card supports up to 2 columns. If the user's screen
+	// width is less than or equal to 480 pixels, the second column wraps
+	// below the first column.
 	ColumnItems []*AppsDynamiteStorageColumnsColumn `json:"columnItems,omitempty"`
-
-	// WrapStyle: Controls how the column resizes based on screen width.
-	//
-	// Possible values:
-	//   "WRAP_STYLE_UNSPECIFIED" - Unspecified.
-	//   "NOWRAP" - Column widgets don't wrap.
-	//   "WRAP" - Column Widgets wrap.
-	WrapStyle string `json:"wrapStyle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnItems") to
 	// unconditionally include in API requests. By default, fields with
@@ -5636,6 +5787,16 @@ type Attachment struct {
 	// specifying editable widgets.
 	CardAddOnData *AppsDynamiteStorageCard `json:"cardAddOnData,omitempty"`
 
+	// ComponentSearchInfo: Contains additional metadata that further
+	// enhance the annotation when it is returned as part of search
+	// response. For example, this can be used to define how the attachment
+	// matches the search. Information can be used to highlight in rendering
+	// search results. The following are the different attachment text
+	// fields that are covered by this field: 1.
+	// ContextualAddOn.Card.CardHeader.title 2.
+	// CardItem.CardItemHeader.title
+	ComponentSearchInfo *AppsDynamiteSharedMessageComponentSearchInfo `json:"componentSearchInfo,omitempty"`
+
 	// DeprecatedAddOnData: Deprecated version of Gmail AddOn attachment.
 	DeprecatedAddOnData *ContextualAddOnMarkup `json:"deprecatedAddOnData,omitempty"`
 
@@ -6477,6 +6638,21 @@ type CallInfo struct {
 	// disabled.
 	AvailableAccessTypes []string `json:"availableAccessTypes,omitempty"`
 
+	// AvailableAnnotationToolTypes: Available screen annotation tool types.
+	//
+	// Possible values:
+	//   "ANNOTATION_TOOL_TYPE_UNSPECIFIED" - Annotation tool type
+	// unspecified.
+	//   "ANNOTATION_TOOL_CLEAR_ALL" - Clears all annotations.
+	//   "ANNOTATION_TOOL_LINE" - Draws vector lines.
+	//   "ANNOTATION_TOOL_MAGIC_ERASER" - Deletes elements that are touched.
+	//   "ANNOTATION_TOOL_PEN" - Draws freeform strokes.
+	//   "ANNOTATION_TOOL_SHAPE" - Draws simple vector shapes (such as
+	// rectangles or ellipses).
+	//   "ANNOTATION_TOOL_TEXT_BOX" - Allows adding/editing text at this
+	// location.
+	AvailableAnnotationToolTypes []string `json:"availableAnnotationToolTypes,omitempty"`
+
 	// AvailableReactions: Output only. The set of reactions that clients
 	// are allowed to send and can expect to receive. Note that a device in
 	// the conference should have the MAY_SEND_REACTIONS privilege to be
@@ -6637,6 +6813,10 @@ type CallSettings struct {
 
 	// ChatLock: Indicates whether the chat lock is currently on or off.
 	ChatLock bool `json:"chatLock,omitempty"`
+
+	// CoActivityLock: Indicates whether the co-activity lock is currently
+	// on or off.
+	CoActivityLock bool `json:"coActivityLock,omitempty"`
 
 	// CseEnabled: Whether Client-side Encryption is enabled for this
 	// conference.
@@ -7399,6 +7579,14 @@ type CoActivity struct {
 	// or the name of the round of a game being co-played.
 	ActivityTitle string `json:"activityTitle,omitempty"`
 
+	// AddOnId: The add-on id of the current add-on being used for
+	// co-activity.
+	AddOnId string `json:"addOnId,omitempty"`
+
+	// AddOnStartingState: The starting state of the add-on frames for
+	// co-activity.
+	AddOnStartingState *AddOnStartingState `json:"addOnStartingState,omitempty"`
+
 	// CoActivityApp: Identifies the app handling this co-activity.
 	//
 	// Possible values:
@@ -7414,6 +7602,17 @@ type CoActivity struct {
 	//   "CO_ACTIVITY_APP_SAMSUNG_NOTES" - Samsung Notes
 	//   "CO_ACTIVITY_APP_HAPPY_AARDVARK" - .
 	CoActivityApp string `json:"coActivityApp,omitempty"`
+
+	// InitiatorDeviceId: The resource name of the device that initiated the
+	// co-activity.
+	InitiatorDeviceId string `json:"initiatorDeviceId,omitempty"`
+
+	// PresentationDeviceId: The resource name of the device that is
+	// presenting the add-on.
+	PresentationDeviceId string `json:"presentationDeviceId,omitempty"`
+
+	// ProjectNumber: The project number of the add-on to determine version.
+	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivityTitle") to
 	// unconditionally include in API requests. By default, fields with
@@ -8276,23 +8475,30 @@ func (s *CustomerUserStats) MarshalJSON() ([]byte, error) {
 // downstream process in BE (e.g. storage and audit logging), and it
 // should never be returned to the client.
 type DataLossPreventionMetadata struct {
-	// DlpScanSummary: The DLP scan summary that should only be set after
-	// the message is scanned in the Chat backend.
+	// DlpMessageScanRecord: The scan record contains the action taken on
+	// the message send as well as scan the summary for the message contents
+	// and the attachment, if applicable.
+	DlpMessageScanRecord *DlpMessageScanRecord `json:"dlpMessageScanRecord,omitempty"`
+
+	// DlpScanSummary: Deprecated. To be replaced by DLP scan record. The
+	// DLP scan summary that should only be set after the message is scanned
+	// in the Chat backend.
 	DlpScanSummary *DlpScanSummary `json:"dlpScanSummary,omitempty"`
 
 	// WarnAcknowledged: Flag set by client on message resend to bypass WARN
 	// violation.
 	WarnAcknowledged bool `json:"warnAcknowledged,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DlpScanSummary") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DlpMessageScanRecord") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DlpScanSummary") to
+	// NullFields is a list of field names (e.g. "DlpMessageScanRecord") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -8921,6 +9127,130 @@ func (s *DlpAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DlpMessageScanRecord: A summary of a DLP scan. This is a combination
+// summary that contains both scan on message and scan on attachments if
+// any.
+type DlpMessageScanRecord struct {
+	// AttachmentScanSummary: Summaries of the attachment scan if any.
+	AttachmentScanSummary *DlpScanSummary `json:"attachmentScanSummary,omitempty"`
+
+	// DlpAction: The applied action.
+	DlpAction *DlpAction `json:"dlpAction,omitempty"`
+
+	// MessageScanSummary: Summaries of the message scan.
+	MessageScanSummary *DlpScanSummary `json:"messageScanSummary,omitempty"`
+
+	// ScanOutcome: The DLP scan outcome for the message.
+	//
+	// Possible values:
+	//   "SCAN_UNKNOWN_OUTCOME"
+	//   "SCAN_SUCCEEDED_NO_VIOLATION" - This means no violation is detected
+	// on the given message/attachment.
+	//   "SCAN_SUCCEEDED_BLOCK" - Violation is detected. The
+	// message/attachment will be blocked (or deleted if this happens in
+	// failure recovery), the user will be warned, and the violation will be
+	// logged to BIP.
+	//   "SCAN_SUCCEEDED_WARN" - Violation is detected. The user will be
+	// warned, and the violation will be logged to BIP.
+	//   "SCAN_SUCCEEDED_AUDIT_ONLY" - Violation is detected and will be
+	// logged to BIP (no user-facing action performed).
+	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
+	// but an exception occurred.
+	//   "SCAN_FAILURE_RULE_FETCH_FAILED" - Rule fetch was attempted but
+	// failed, so rule evaluation could not be performed.
+	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
+	// but the scanning timed out.
+	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
+	// evaluation were attempted, but all of the rules failed to be
+	// evaluated.
+	//   "SCAN_FAILURE_ILLEGAL_STATE_FOR_ATTACHMENTS" - An
+	// IllegalStateException is thrown when executing DLP on attachments.
+	// This could happen if the space row is missing.
+	//   "SCAN_SKIPPED_EXPERIMENT_DISABLED" - Rule fetch and evaluation is
+	// skipped because DLP is not enabled for the user.
+	//   "SCAN_SKIPPED_CONSUMER" - Rule fetch and evaluation are skipped
+	// because the user sending message is consumer.
+	//   "SCAN_SKIPPED_NON_HUMAN_USER" - Rule fetch and evaluation are
+	// skipped because the user sending message is a non-human user (i.e. a
+	// bot).
+	//   "SCAN_SKIPPED_NO_MESSAGE" - Rule fetch and evaluation are skipped
+	// because there is no message to scan. Deprecated: this should not
+	// happen since there must be message or attachment for DLP scan.
+	//   "SCAN_SKIPPED_USER_ACKNOWLEDGED_WARNING" - Rule fetch and
+	// evaluation are skipped because the user has acknowledged the warning
+	// on the message that triggered the Warn violation and sent the message
+	// anyway.
+	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
+	// skipped because the message originated from Interop or Babel.
+	//   "SCAN_SKIPPED_MESSAGE_SENT_DURING_SPACE_MIGRATION" - Scanning was
+	// skipped because the message was sent while the space is in migration
+	// mode. See go/migration-mode for details.
+	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
+	// happened, but rule evaluation is skipped because no rules were found.
+	//
+	// "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_ACTION_PARAMS"
+	// - Rule fetch happened, but rule evaluation is skipped because none of
+	// the rules are applicable to the given action params. Deprecated. Use
+	// SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES
+	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_TRIGGER" -
+	// Rule fetch happened, but rule evaluation is skipped because none of
+	// the rules are applicable to the given trigger. Deprecated. Use
+	// SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES
+	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES" - Rule fetch
+	// happened, but rule evaluation is skipped because none of the rules
+	// are applicable.
+	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_PERMANENT_ERROR" - Rule
+	// fetch happened, but rule evaluation is skipped because Changeling
+	// returned permanent failure while converting the attachment to text.
+	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_EMPTY_RESPONSE" - Rule
+	// fetch happened, but rule evaluation is skipped because Changeling
+	// returned an empty response while converting the attachment to text.
+	//   "SCAN_RULE_EVALUATION_SKIPPED_UNSUPPORTED_FILE_TYPE" - Rule fetch
+	// happened, but rule evaluation is skipped because file type is
+	// unsupported.
+	//   "SCAN_SUCCEEDED_WITH_FAILURES_NO_VIOLATION" - Rules were fetched
+	// but some evaluations failed. No violation was found in the rules that
+	// were successfully evaluated.
+	//   "SCAN_SUCCEEDED_WITH_FAILURES_BLOCK" - Rules were fetched but some
+	// evaluations failed. A blocking violation was found in the rules that
+	// were successfully evaluated. The message/attachment will be blocked,
+	// the user will be notified, and the violation will be logged to BIP. A
+	// blocking violation takes precedence over all other violation types.
+	//   "SCAN_SUCCEEDED_WITH_FAILURES_WARN" - Rules were fetched but some
+	// evaluations failed. A warn violation was found in the rules that were
+	// successfully evaluated. The user will be warned, and the violation
+	// will be logged to BIP.
+	//   "SCAN_SUCCEEDED_WITH_FAILURES_AUDIT_ONLY" - Rules were fetched but
+	// some evaluations failed. An audit-only violation was found in the
+	// rules that were successfully evaluated. The violation will be logged
+	// to BIP (no user-facing action performed).
+	ScanOutcome string `json:"scanOutcome,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AttachmentScanSummary") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachmentScanSummary") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DlpMessageScanRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod DlpMessageScanRecord
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DlpScanSummary: A summary of a DLP scan event. This is a summary and
 // should contain the minimum amount of data required to identify and
 // process DLP scans. It is written to Starcast and encoded & returned
@@ -8995,10 +9325,15 @@ type DlpScanSummary struct {
 	//
 	// "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_ACTION_PARAMS"
 	// - Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given action params.
+	// the rules are applicable to the given action params. Deprecated. Use
+	// SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES
 	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_TRIGGER" -
 	// Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given trigger.
+	// the rules are applicable to the given trigger. Deprecated. Use
+	// SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES
+	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES" - Rule fetch
+	// happened, but rule evaluation is skipped because none of the rules
+	// are applicable.
 	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_PERMANENT_ERROR" - Rule
 	// fetch happened, but rule evaluation is skipped because Changeling
 	// returned permanent failure while converting the attachment to text.
@@ -9025,6 +9360,18 @@ type DlpScanSummary struct {
 	// rules that were successfully evaluated. The violation will be logged
 	// to BIP (no user-facing action performed).
 	ScanOutcome string `json:"scanOutcome,omitempty"`
+
+	// ScanTrigger: The event that triggered the scan. This corresponds to
+	// the rule trigger configured in admin console and maps to the
+	// different things that can be scanned.
+	//
+	// Possible values:
+	//   "UNKNOWN_TRIGGER_TYPE" - LINT.IfChange
+	//   "MESSAGE_SENT"
+	//   "ATTACHMENT_UPLOADED" -
+	// LINT.ThenChange(//depot/google3/java/com/google/apps/dynamite/v1/exter
+	// nal/dlp/DlpTriggerInfo.java)
+	ScanTrigger string `json:"scanTrigger,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DlpAction") to
 	// unconditionally include in API requests. By default, fields with
@@ -12080,7 +12427,9 @@ func (s *GoogleChatV1ContextualAddOnMarkupCardCardHeader) MarshalJSON() ([]byte,
 // fixed width, so there is currently no need for layout properties
 // (e.g. float).
 type GoogleChatV1ContextualAddOnMarkupCardSection struct {
-	// Header: The header of the section, text formatted supported.
+	// Header: The header of the section. Formatted text is supported. For
+	// more information about formatting text, see Formatting text in Google
+	// Chat apps and Formatting text in Google Workspace Add-ons.
 	Header string `json:"header,omitempty"`
 
 	// Widgets: A section must contain at least 1 widget.
@@ -12112,7 +12461,7 @@ func (s *GoogleChatV1ContextualAddOnMarkupCardSection) MarshalJSON() ([]byte, er
 // GoogleChatV1WidgetMarkup: A widget is a UI element that presents
 // texts, images, etc.
 type GoogleChatV1WidgetMarkup struct {
-	// Buttons: A list of buttons. Buttons is also oneof data and only one
+	// Buttons: A list of buttons. Buttons is also `oneof data` and only one
 	// of these fields should be set.
 	Buttons []*GoogleChatV1WidgetMarkupButton `json:"buttons,omitempty"`
 
@@ -12385,13 +12734,17 @@ func (s *GoogleChatV1WidgetMarkupImageButton) MarshalJSON() ([]byte, error) {
 // such as onclick button.
 type GoogleChatV1WidgetMarkupKeyValue struct {
 	// BottomLabel: The text of the bottom label. Formatted text supported.
+	// For more information about formatting text, see Formatting text in
+	// Google Chat apps and Formatting text in Google Workspace Add-ons.
 	BottomLabel string `json:"bottomLabel,omitempty"`
 
 	// Button: A button that can be clicked to trigger an action.
 	Button *GoogleChatV1WidgetMarkupButton `json:"button,omitempty"`
 
 	// Content: The text of the content. Formatted text supported and always
-	// required.
+	// required. For more information about formatting text, see Formatting
+	// text in Google Chat apps and Formatting text in Google Workspace
+	// Add-ons.
 	Content string `json:"content,omitempty"`
 
 	// ContentMultiline: If the content should be multiline.
@@ -12441,7 +12794,9 @@ type GoogleChatV1WidgetMarkupKeyValue struct {
 	// content region are clickable.
 	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
 
-	// TopLabel: The text of the top label. Formatted text supported.
+	// TopLabel: The text of the top label. Formatted text supported. For
+	// more information about formatting text, see Formatting text in Google
+	// Chat apps and Formatting text in Google Workspace Add-ons.
 	TopLabel string `json:"topLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
@@ -12560,7 +12915,9 @@ func (s *GoogleChatV1WidgetMarkupTextButton) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChatV1WidgetMarkupTextParagraph: A paragraph of text. Formatted
-// text supported.
+// text supported. For more information about formatting text, see
+// Formatting text in Google Chat apps and Formatting text in Google
+// Workspace Add-ons.
 type GoogleChatV1WidgetMarkupTextParagraph struct {
 	Text string `json:"text,omitempty"`
 
@@ -13833,6 +14190,7 @@ type ImapSessionContext struct {
 	//   "YANDEX_BROWSER" - from customized OEM flavours). Yandex Browser
 	//   "SILK_BROWSER" - Amazon Silk browser
 	//   "COC_COC_BROWSER" - Popoular browser in Vietnam
+	//   "HEADLESS_CHROME" - Headless version of Chrome
 	//   "MAX_BROWSER_APP_VALUE" - Tag for the maximum enum value that
 	// represents a browser. Enum values (strictly) between OTHER_APP and
 	// this value represent browsers. This should never appear in real data.
@@ -16420,7 +16778,7 @@ func (s *MembershipChangeEvent) MarshalJSON() ([]byte, error) {
 }
 
 // MembershipChangedMetadata: Annotation metadata to display system
-// messages for membership changes. Next Tag: 8
+// messages for membership changes. Next Tag: 13
 type MembershipChangedMetadata struct {
 	AffectedMemberProfiles []*Member `json:"affectedMemberProfiles,omitempty"`
 
@@ -16460,6 +16818,14 @@ type MembershipChangedMetadata struct {
 	// settings. Joined -> Non-member. One user.
 	//   "ROLE_UPDATED" - MembershipRole changed. Multiple users.
 	//   "ROLE_TARGET_AUDIENCE_UPDATED" - The room is now joinable by an
+	//   "SPACE_LIMIT_EXCEEDED" - Space limit exceeded
+	//   "HUMAN_MEMBERSHIP_DISPLAY_DISABLED" -
+	// HUMAN_MEMBERSHIP_DISPLAY_DISABLED indicates that the space has
+	// crossed the member size threshold above which human membership change
+	// system messages will be muted. This event can only occur once for a
+	// space over its lifetime. When this event is received, clients should
+	// display a system message stating that human membership changes will
+	// no longer be displayed in the space.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -16726,6 +17092,25 @@ type Message struct {
 	//   "ORIGIN_BACKFILL_FROM_GMAIL_ARCHIVE"
 	MessageOrigin string `json:"messageOrigin,omitempty"`
 
+	// MessageReference: Contains reference to another message. It is used
+	// in shortcuts which are used to collect messages from different spaces
+	// with a certain common property into another space. For example, all
+	// @mentions of a user are collected into a mention shortcut space
+	// (go/chat-shortcuts-backend-design for more details). Most information
+	// from the source message (like text) are copied onto top-level Message
+	// fields of shortcut messages by the server. The MessageReference is
+	// helpful for clients to enable things like click navigation to source
+	// message.
+	MessageReference *MessageReference `json:"messageReference,omitempty"`
+
+	// MessageSearchInfo: Contains additional metadata that further
+	// annotates this message when returned as a search response. For
+	// example, this field can be used to highlight messages during search
+	// results rendering. In this case, clients can use this field to
+	// highlight matched segments in the message text_body (defined with tag
+	// 6).
+	MessageSearchInfo *AppsDynamiteSharedMessageSearchInfo `json:"messageSearchInfo,omitempty"`
+
 	// MessageState: State of the message, indicating whether the message is
 	// visible to all members in the group or is only visible to the sender
 	// only, or the private_message_viewer if it is set.
@@ -16735,6 +17120,10 @@ type Message struct {
 	//   "PRIVATE" - Private state - only visible to the message creator,
 	// and the private_message_viewer if set.
 	MessageState string `json:"messageState,omitempty"`
+
+	// NumberOfUnicodeEmojis: Indicates the number of unicode emojis in the
+	// message.
+	NumberOfUnicodeEmojis int64 `json:"numberOfUnicodeEmojis,omitempty"`
 
 	// OriginAppSuggestions: Indicates if this message contains any
 	// suggestions that were provided by any Apps.
@@ -17109,6 +17498,42 @@ type MessageProps struct {
 
 func (s *MessageProps) MarshalJSON() ([]byte, error) {
 	type NoMethod MessageProps
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageReference: Contains reference to another message. It is used
+// in shortcuts which are used to collect messages from different spaces
+// with a certain common property into another space. For example, all
+// @mentions of a user are collected into a mention shortcut space
+// (go/chat-shortcuts-backend-design for more details). Clients can use
+// this reference to enable navigation to the source message when the
+// shortcut message is clicked and also to identify a few other details
+// about the source message. Other fields (like text) from the source
+// message are copied on to the top-level fields in the Message proto by
+// the server (More details in go/chat-shortcuts-client-server-design).
+type MessageReference struct {
+	SourceInfo *SourceMessageInfo `json:"sourceInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SourceInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SourceInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MessageReference) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageReference
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18456,6 +18881,10 @@ func (s *PrefWritten) MarshalJSON() ([]byte, error) {
 // currently presenting as well as which device requested the presenter
 // to be set.
 type Presenter struct {
+	// AnnotationInfo: Screen annotation information associated with this
+	// presentation session.
+	AnnotationInfo *AnnotationInfo `json:"annotationInfo,omitempty"`
+
 	// ByDeviceId: The device resource name of the device which requested
 	// the current presenter to be set. This field can not be modified by
 	// clients.
@@ -18469,7 +18898,7 @@ type Presenter struct {
 	// presenting device.
 	PresenterDeviceId string `json:"presenterDeviceId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ByDeviceId") to
+	// ForceSendFields is a list of field names (e.g. "AnnotationInfo") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -18477,12 +18906,13 @@ type Presenter struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ByDeviceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotationInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -20128,7 +20558,8 @@ type RequiredMessageFeaturesMetadata struct {
 	//   "REQUIRED_FEATURE_MESSAGE_QUOTING"
 	//   "REQUIRED_FEATURE_TOMBSTONES_IN_DMS_AND_UFRS"
 	//   "REQUIRED_FEATURE_CUSTOM_HYPERLINK"
-	//   "REQUIRED_FEATURE_SMART_CHIP"
+	//   "REQUIRED_FEATURE_DRIVE_SMART_CHIP"
+	//   "REQUIRED_FEATURE_LEGACY_TOPIC_START"
 	RequiredFeatures []string `json:"requiredFeatures,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequiredFeatures") to
@@ -21039,6 +21470,58 @@ func (s *SearchItemsByViewUrlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SearchLinkData: SearchLink metadata, for SEARCH_LINK segments. For a
+// search link, the "text" field should contain the display text. This
+// is currently not indexed.
+type SearchLinkData struct {
+	// KgEntityConfidence: For lightweight scoring in serving time.
+	KgEntityConfidence float64 `json:"kgEntityConfidence,omitempty"`
+
+	// Mid: MID of the KG entity being linked.
+	Mid string `json:"mid,omitempty"`
+
+	QueryBroadnessScore float64 `json:"queryBroadnessScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KgEntityConfidence")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KgEntityConfidence") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchLinkData) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchLinkData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SearchLinkData) UnmarshalJSON(data []byte) error {
+	type NoMethod SearchLinkData
+	var s1 struct {
+		KgEntityConfidence  gensupport.JSONFloat64 `json:"kgEntityConfidence"`
+		QueryBroadnessScore gensupport.JSONFloat64 `json:"queryBroadnessScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.KgEntityConfidence = float64(s1.KgEntityConfidence)
+	s.QueryBroadnessScore = float64(s1.QueryBroadnessScore)
+	return nil
+}
+
 // SearchQualityMetadata: Additional search quality metadata of the
 // item.
 type SearchQualityMetadata struct {
@@ -21320,6 +21803,9 @@ type Segment struct {
 	// type of the Segment. For LINK type:
 	LinkData *LinkData `json:"linkData,omitempty"`
 
+	// SearchLinkData: For SEARCH_LINK type:
+	SearchLinkData *SearchLinkData `json:"searchLinkData,omitempty"`
+
 	// Text: Text content of the Segment. As a general rule, this field
 	// should contain the actual text that should be rendered in the UI.
 	// Thus, for a hashtag, it should be "#Foo", and for a link, it should
@@ -21369,6 +21855,11 @@ type Segment struct {
 	// a topic. The "text" field should represent display text (e.g.
 	// "#Google"), and additional metadata should be put in the Segment's
 	// hashtag_data field.
+	//   "SEARCH_LINK" - A SEARCH_LINK segment respresents a link to search
+	// results for a KG entity. The "text" field should represent the part
+	// of the comment where the KG entity is extracted from, and additional
+	// metadata of the entity should be put in the Segment's
+	// search_link_data field.
 	Type string `json:"type,omitempty"`
 
 	// UserMentionData: For USER_MENTION type:
@@ -21688,6 +22179,11 @@ type Settings struct {
 	// ChatLock: The chat lock of the meeting space that lets owner control
 	// whether the participants can send chat messages.
 	ChatLock bool `json:"chatLock,omitempty"`
+
+	// CoActivityLock: The co-activity lock of the meeting space that lets
+	// owner control whether the participants can start/stop or update the
+	// state of co-activity.
+	CoActivityLock bool `json:"coActivityLock,omitempty"`
 
 	// CohostArtifactSharingEnabled: Whether meeting artifacts will be
 	// shared with cohosts.
@@ -22285,6 +22781,39 @@ type SourceCrowdingConfig struct {
 
 func (s *SourceCrowdingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceCrowdingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SourceMessageInfo struct {
+	// MessageId: Source message ID
+	MessageId *MessageId `json:"messageId,omitempty"`
+
+	// Possible values:
+	//   "SOURCE_MESSAGE_TYPE_UNDEFINED"
+	//   "ROOT_MESSAGE"
+	//   "INLINE_REPLY"
+	MessageType string `json:"messageType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MessageId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MessageId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SourceMessageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceMessageInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -25075,10 +25604,11 @@ type UserMentionMetadata struct {
 
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "INVITE"
-	//   "UNINVITE"
-	//   "MENTION"
-	//   "MENTION_ALL"
+	//   "INVITE" - An @mention that invites a new member into the space
+	//   "UNINVITE" - DEPRECATED: An @mention that removes a member from a
+	// space. Support for this has been removed.
+	//   "MENTION" - An @mention of an existing member in the space.
+	//   "MENTION_ALL" - An @mention of all members in the space.
 	//   "FAILED_TO_ADD" - Server-generated user mention, for clients to
 	// strikethrough.
 	Type string `json:"type,omitempty"`

@@ -3323,8 +3323,10 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	// IndexableOption: When AttributesConfig.attribute_config_level is
 	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, if INDEXABLE_ENABLED attribute values
 	// are indexed so that it can be filtered, faceted, or boosted in
-	// SearchService.Search. Must be specified, otherwise throws
-	// INVALID_FORMAT error.
+	// SearchService.Search. Must be specified when
+	// AttributesConfig.attribute_config_level is
+	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT
+	// error.
 	//
 	// Possible values:
 	//   "INDEXABLE_OPTION_UNSPECIFIED" - Value used when unset.
@@ -3378,7 +3380,9 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	// SEARCHABLE_ENABLED but attribute type is numerical, attribute values
 	// will not be searchable by text queries in SearchService.Search, as
 	// there are no text values associated to numerical attributes. Must be
-	// specified, otherwise throws INVALID_FORMAT error.
+	// specified, when AttributesConfig.attribute_config_level is
+	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT
+	// error.
 	//
 	// Possible values:
 	//   "SEARCHABLE_OPTION_UNSPECIFIED" - Value used when unset.

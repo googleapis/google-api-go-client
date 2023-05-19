@@ -571,7 +571,7 @@
       }
     }
   },
-  "revision": "20230420",
+  "revision": "20230515",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -927,6 +927,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudFunctionsV2LocationMetadata": {
+      "description": "Extra GCF specific location information.",
+      "id": "GoogleCloudFunctionsV2LocationMetadata",
+      "properties": {
+        "environments": {
+          "description": "The Cloud Function environments this location supports.",
+          "items": {
+            "enum": [
+              "ENVIRONMENT_UNSPECIFIED",
+              "GEN_1",
+              "GEN_2"
+            ],
+            "enumDescriptions": [
+              "Unspecified",
+              "Gen 1",
+              "Gen 2"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudFunctionsV2OperationMetadata": {
       "description": "Represents the metadata of the long-running operation.",
       "id": "GoogleCloudFunctionsV2OperationMetadata",
@@ -1074,6 +1098,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudFunctionsV2alphaLocationMetadata": {
+      "description": "Extra GCF specific location information.",
+      "id": "GoogleCloudFunctionsV2alphaLocationMetadata",
+      "properties": {
+        "environments": {
+          "description": "The Cloud Function environments this location supports.",
+          "items": {
+            "enum": [
+              "ENVIRONMENT_UNSPECIFIED",
+              "GEN_1",
+              "GEN_2"
+            ],
+            "enumDescriptions": [
+              "Unspecified",
+              "Gen 1",
+              "Gen 2"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudFunctionsV2alphaOperationMetadata": {
       "description": "Represents the metadata of the long-running operation.",
       "id": "GoogleCloudFunctionsV2alphaOperationMetadata",
@@ -1217,6 +1265,30 @@
         "type": {
           "description": "One-word CamelCase type of the state message.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudFunctionsV2betaLocationMetadata": {
+      "description": "Extra GCF specific location information.",
+      "id": "GoogleCloudFunctionsV2betaLocationMetadata",
+      "properties": {
+        "environments": {
+          "description": "The Cloud Function environments this location supports.",
+          "items": {
+            "enum": [
+              "ENVIRONMENT_UNSPECIFIED",
+              "GEN_1",
+              "GEN_2"
+            ],
+            "enumDescriptions": [
+              "Unspecified",
+              "Gen 1",
+              "Gen 2"
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

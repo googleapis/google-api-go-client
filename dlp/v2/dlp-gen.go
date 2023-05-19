@@ -2969,9 +2969,9 @@ func (s *GooglePrivacyDlpV2DeidentifyContentResponse) MarshalJSON() ([]byte, err
 }
 
 // GooglePrivacyDlpV2DeidentifyDataSourceDetails: The results of a
-// Deidentify action from an Inspect job.
+// Deidentify action from an inspect job.
 type GooglePrivacyDlpV2DeidentifyDataSourceDetails struct {
-	// DeidentifyStats: Stats about de-identification.
+	// DeidentifyStats: Stats about the de-identification operation.
 	DeidentifyStats *GooglePrivacyDlpV2DeidentifyDataSourceStats `json:"deidentifyStats,omitempty"`
 
 	// RequestedOptions: De-identification config used for the request.
@@ -7746,18 +7746,18 @@ type GooglePrivacyDlpV2ReplaceWithInfoTypeConfig struct {
 // GooglePrivacyDlpV2RequestedDeidentifyOptions: De-id options.
 type GooglePrivacyDlpV2RequestedDeidentifyOptions struct {
 	// SnapshotDeidentifyTemplate: Snapshot of the state of the
-	// DeidentifyTemplate from the Deidentify action at the time this job
+	// `DeidentifyTemplate` from the Deidentify action at the time this job
 	// was run.
 	SnapshotDeidentifyTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"snapshotDeidentifyTemplate,omitempty"`
 
 	// SnapshotImageRedactTemplate: Snapshot of the state of the image
-	// redact DeidentifyTemplate from the Deidentify action at the time this
-	// job was run.
+	// transformation `DeidentifyTemplate` from the `Deidentify` action at
+	// the time this job was run.
 	SnapshotImageRedactTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"snapshotImageRedactTemplate,omitempty"`
 
 	// SnapshotStructuredDeidentifyTemplate: Snapshot of the state of the
-	// structured DeidentifyTemplate from the Deidentify action at the time
-	// this job was run.
+	// structured `DeidentifyTemplate` from the `Deidentify` action at the
+	// time this job was run.
 	SnapshotStructuredDeidentifyTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"snapshotStructuredDeidentifyTemplate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -8049,21 +8049,24 @@ func (s *GooglePrivacyDlpV2SelectedInfoTypes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2SensitivityScore: Score is a summary of all
-// elements in the data profile. A higher number means more sensitive.
+// GooglePrivacyDlpV2SensitivityScore: Score is calculated from of all
+// elements in the data profile. A higher level means the data is more
+// sensitive.
 type GooglePrivacyDlpV2SensitivityScore struct {
-	// Score: The score applied to the resource.
+	// Score: The sensitivity score applied to the resource.
 	//
 	// Possible values:
 	//   "SENSITIVITY_SCORE_UNSPECIFIED" - Unused.
-	//   "SENSITIVITY_LOW" - No sensitive information detected. Limited
-	// access.
-	//   "SENSITIVITY_MODERATE" - Medium risk - PII, potentially sensitive
-	// data, or fields with free-text data that are at higher risk of having
-	// intermittent sensitive data. Consider limiting access.
-	//   "SENSITIVITY_HIGH" - High risk – SPII may be present.
-	// Exfiltration of data may lead to user data loss. Re-identification of
-	// users may be possible. Consider limiting usage and or removing SPII.
+	//   "SENSITIVITY_LOW" - No sensitive information detected. The resource
+	// isn't publicly accessible.
+	//   "SENSITIVITY_MODERATE" - Medium risk. Contains personally
+	// identifiable information (PII), potentially sensitive data, or fields
+	// with free-text data that are at a higher risk of having intermittent
+	// sensitive data. Consider limiting access.
+	//   "SENSITIVITY_HIGH" - High risk. Sensitive personally identifiable
+	// information (SPII) can be present. Exfiltration of data can lead to
+	// user data loss. Re-identification of users might be possible.
+	// Consider limiting usage and or removing SPII.
 	Score string `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Score") to
@@ -8526,7 +8529,8 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// supported locations.
 	DatasetLocation string `json:"datasetLocation,omitempty"`
 
-	// DatasetProjectId: The GCP project ID that owns the BigQuery dataset.
+	// DatasetProjectId: The Google Cloud project ID that owns the BigQuery
+	// dataset.
 	DatasetProjectId string `json:"datasetProjectId,omitempty"`
 
 	// EncryptionStatus: How the table is encrypted.

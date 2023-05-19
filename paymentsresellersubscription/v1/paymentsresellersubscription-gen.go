@@ -788,7 +788,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte
 // GoogleCloudPaymentsResellerSubscriptionV1ProductPayload: Specifies
 // product specific payload.
 type GoogleCloudPaymentsResellerSubscriptionV1ProductPayload struct {
-	// GoogleOnePayload: Payload specific to Google One products.
+	// GoogleOnePayload: Product-specific payloads. Payload specific to
+	// Google One products.
 	GoogleOnePayload *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload `json:"googleOnePayload,omitempty"`
 
 	// YoutubePayload: Payload specific to Youtube products.

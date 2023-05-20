@@ -167,34 +167,34 @@ type OrganizationsLocationsService struct {
 
 func NewOrganizationsLocationsGlobalService(s *Service) *OrganizationsLocationsGlobalService {
 	rs := &OrganizationsLocationsGlobalService{s: s}
-	rs.Tenants = NewOrganizationsLocationsGlobalTenantsService(s)
+	rs.PartnerTenants = NewOrganizationsLocationsGlobalPartnerTenantsService(s)
 	return rs
 }
 
 type OrganizationsLocationsGlobalService struct {
 	s *Service
 
-	Tenants *OrganizationsLocationsGlobalTenantsService
+	PartnerTenants *OrganizationsLocationsGlobalPartnerTenantsService
 }
 
-func NewOrganizationsLocationsGlobalTenantsService(s *Service) *OrganizationsLocationsGlobalTenantsService {
-	rs := &OrganizationsLocationsGlobalTenantsService{s: s}
-	rs.ProxyConfigs = NewOrganizationsLocationsGlobalTenantsProxyConfigsService(s)
+func NewOrganizationsLocationsGlobalPartnerTenantsService(s *Service) *OrganizationsLocationsGlobalPartnerTenantsService {
+	rs := &OrganizationsLocationsGlobalPartnerTenantsService{s: s}
+	rs.ProxyConfigs = NewOrganizationsLocationsGlobalPartnerTenantsProxyConfigsService(s)
 	return rs
 }
 
-type OrganizationsLocationsGlobalTenantsService struct {
+type OrganizationsLocationsGlobalPartnerTenantsService struct {
 	s *Service
 
-	ProxyConfigs *OrganizationsLocationsGlobalTenantsProxyConfigsService
+	ProxyConfigs *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService
 }
 
-func NewOrganizationsLocationsGlobalTenantsProxyConfigsService(s *Service) *OrganizationsLocationsGlobalTenantsProxyConfigsService {
-	rs := &OrganizationsLocationsGlobalTenantsProxyConfigsService{s: s}
+func NewOrganizationsLocationsGlobalPartnerTenantsProxyConfigsService(s *Service) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService {
+	rs := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService{s: s}
 	return rs
 }
 
-type OrganizationsLocationsGlobalTenantsProxyConfigsService struct {
+type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService struct {
 	s *Service
 }
 
@@ -2872,9 +2872,9 @@ func (s *Tunnelv1ProtoTunnelerInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// method id "beyondcorp.organizations.locations.global.tenants.getIamPolicy":
+// method id "beyondcorp.organizations.locations.global.partnerTenants.getIamPolicy":
 
-type OrganizationsLocationsGlobalTenantsGetIamPolicyCall struct {
+type OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall struct {
 	s            *Service
 	resource     string
 	urlParams_   gensupport.URLParams
@@ -2891,8 +2891,8 @@ type OrganizationsLocationsGlobalTenantsGetIamPolicyCall struct {
 //     requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *OrganizationsLocationsGlobalTenantsService) GetIamPolicy(resource string) *OrganizationsLocationsGlobalTenantsGetIamPolicyCall {
-	c := &OrganizationsLocationsGlobalTenantsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalPartnerTenantsService) GetIamPolicy(resource string) *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
@@ -2910,7 +2910,7 @@ func (r *OrganizationsLocationsGlobalTenantsService) GetIamPolicy(resource strin
 // which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *OrganizationsLocationsGlobalTenantsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
 }
@@ -2918,7 +2918,7 @@ func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) OptionsRequestedPo
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalTenantsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2928,7 +2928,7 @@ func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Fields(s ...google
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalTenantsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2936,21 +2936,21 @@ func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) IfNoneMatch(entity
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalTenantsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -2976,14 +2976,14 @@ func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "beyondcorp.organizations.locations.global.tenants.getIamPolicy" call.
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.getIamPolicy" call.
 // Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *GoogleIamV1Policy.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3015,9 +3015,9 @@ func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Do(opts ...googlea
 	return ret, nil
 	// {
 	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}:getIamPolicy",
+	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}:getIamPolicy",
 	//   "httpMethod": "GET",
-	//   "id": "beyondcorp.organizations.locations.global.tenants.getIamPolicy",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.getIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -3031,7 +3031,7 @@ func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Do(opts ...googlea
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3047,9 +3047,9 @@ func (c *OrganizationsLocationsGlobalTenantsGetIamPolicyCall) Do(opts ...googlea
 
 }
 
-// method id "beyondcorp.organizations.locations.global.tenants.setIamPolicy":
+// method id "beyondcorp.organizations.locations.global.partnerTenants.setIamPolicy":
 
-type OrganizationsLocationsGlobalTenantsSetIamPolicyCall struct {
+type OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall struct {
 	s                              *Service
 	resource                       string
 	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
@@ -3066,8 +3066,8 @@ type OrganizationsLocationsGlobalTenantsSetIamPolicyCall struct {
 //     specified. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *OrganizationsLocationsGlobalTenantsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsLocationsGlobalTenantsSetIamPolicyCall {
-	c := &OrganizationsLocationsGlobalTenantsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalPartnerTenantsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
 	return c
@@ -3076,7 +3076,7 @@ func (r *OrganizationsLocationsGlobalTenantsService) SetIamPolicy(resource strin
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalTenantsSetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3084,21 +3084,21 @@ func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Fields(s ...google
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalTenantsSetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3126,14 +3126,14 @@ func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "beyondcorp.organizations.locations.global.tenants.setIamPolicy" call.
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.setIamPolicy" call.
 // Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *GoogleIamV1Policy.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3165,9 +3165,9 @@ func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Do(opts ...googlea
 	return ret, nil
 	// {
 	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}:setIamPolicy",
+	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}:setIamPolicy",
 	//   "httpMethod": "POST",
-	//   "id": "beyondcorp.organizations.locations.global.tenants.setIamPolicy",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.setIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -3175,7 +3175,7 @@ func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Do(opts ...googlea
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3194,9 +3194,9 @@ func (c *OrganizationsLocationsGlobalTenantsSetIamPolicyCall) Do(opts ...googlea
 
 }
 
-// method id "beyondcorp.organizations.locations.global.tenants.testIamPermissions":
+// method id "beyondcorp.organizations.locations.global.partnerTenants.testIamPermissions":
 
-type OrganizationsLocationsGlobalTenantsTestIamPermissionsCall struct {
+type OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall struct {
 	s                                    *Service
 	resource                             string
 	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
@@ -3216,8 +3216,8 @@ type OrganizationsLocationsGlobalTenantsTestIamPermissionsCall struct {
 //     being requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *OrganizationsLocationsGlobalTenantsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall {
-	c := &OrganizationsLocationsGlobalTenantsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalPartnerTenantsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
 	return c
@@ -3226,7 +3226,7 @@ func (r *OrganizationsLocationsGlobalTenantsService) TestIamPermissions(resource
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3234,21 +3234,21 @@ func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Fields(s ...
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3276,7 +3276,7 @@ func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) doRequest(al
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "beyondcorp.organizations.locations.global.tenants.testIamPermissions" call.
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.testIamPermissions" call.
 // Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
 // be non-nil. Any non-2xx status code is an error. Response headers are
 // in either
@@ -3284,7 +3284,7 @@ func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) doRequest(al
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3316,9 +3316,9 @@ func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Do(opts ...g
 	return ret, nil
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}:testIamPermissions",
+	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}:testIamPermissions",
 	//   "httpMethod": "POST",
-	//   "id": "beyondcorp.organizations.locations.global.tenants.testIamPermissions",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -3326,7 +3326,7 @@ func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Do(opts ...g
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3345,9 +3345,9 @@ func (c *OrganizationsLocationsGlobalTenantsTestIamPermissionsCall) Do(opts ...g
 
 }
 
-// method id "beyondcorp.organizations.locations.global.tenants.proxyConfigs.getIamPolicy":
+// method id "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.getIamPolicy":
 
-type OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall struct {
+type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall struct {
 	s            *Service
 	resource     string
 	urlParams_   gensupport.URLParams
@@ -3364,8 +3364,8 @@ type OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall struct {
 //     requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *OrganizationsLocationsGlobalTenantsProxyConfigsService) GetIamPolicy(resource string) *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall {
-	c := &OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) GetIamPolicy(resource string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
@@ -3383,7 +3383,7 @@ func (r *OrganizationsLocationsGlobalTenantsProxyConfigsService) GetIamPolicy(re
 // which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
 }
@@ -3391,7 +3391,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Option
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3401,7 +3401,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Fields
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -3409,21 +3409,21 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) IfNone
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3449,14 +3449,14 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) doRequ
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "beyondcorp.organizations.locations.global.tenants.proxyConfigs.getIamPolicy" call.
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.getIamPolicy" call.
 // Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *GoogleIamV1Policy.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3488,9 +3488,9 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Do(opt
 	return ret, nil
 	// {
 	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}:getIamPolicy",
+	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}/proxyConfigs/{proxyConfigsId}:getIamPolicy",
 	//   "httpMethod": "GET",
-	//   "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.getIamPolicy",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.getIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -3504,7 +3504,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Do(opt
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+/proxyConfigs/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3520,9 +3520,9 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetIamPolicyCall) Do(opt
 
 }
 
-// method id "beyondcorp.organizations.locations.global.tenants.proxyConfigs.setIamPolicy":
+// method id "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.setIamPolicy":
 
-type OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall struct {
+type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall struct {
 	s                              *Service
 	resource                       string
 	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
@@ -3539,8 +3539,8 @@ type OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall struct {
 //     specified. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *OrganizationsLocationsGlobalTenantsProxyConfigsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall {
-	c := &OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
 	return c
@@ -3549,7 +3549,7 @@ func (r *OrganizationsLocationsGlobalTenantsProxyConfigsService) SetIamPolicy(re
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3557,21 +3557,21 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Fields
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3599,14 +3599,14 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) doRequ
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "beyondcorp.organizations.locations.global.tenants.proxyConfigs.setIamPolicy" call.
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.setIamPolicy" call.
 // Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *GoogleIamV1Policy.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3638,9 +3638,9 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Do(opt
 	return ret, nil
 	// {
 	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}:setIamPolicy",
+	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}/proxyConfigs/{proxyConfigsId}:setIamPolicy",
 	//   "httpMethod": "POST",
-	//   "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.setIamPolicy",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.setIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -3648,7 +3648,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Do(opt
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+/proxyConfigs/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3667,9 +3667,9 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsSetIamPolicyCall) Do(opt
 
 }
 
-// method id "beyondcorp.organizations.locations.global.tenants.proxyConfigs.testIamPermissions":
+// method id "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.testIamPermissions":
 
-type OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall struct {
+type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall struct {
 	s                                    *Service
 	resource                             string
 	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
@@ -3689,8 +3689,8 @@ type OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall struc
 //     being requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *OrganizationsLocationsGlobalTenantsProxyConfigsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall {
-	c := &OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
 	return c
@@ -3699,7 +3699,7 @@ func (r *OrganizationsLocationsGlobalTenantsProxyConfigsService) TestIamPermissi
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3707,21 +3707,21 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) 
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3749,7 +3749,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) 
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "beyondcorp.organizations.locations.global.tenants.proxyConfigs.testIamPermissions" call.
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.testIamPermissions" call.
 // Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
 // be non-nil. Any non-2xx status code is an error. Response headers are
 // in either
@@ -3757,7 +3757,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) 
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3789,9 +3789,9 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) 
 	return ret, nil
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}:testIamPermissions",
+	//   "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}/proxyConfigs/{proxyConfigsId}:testIamPermissions",
 	//   "httpMethod": "POST",
-	//   "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.testIamPermissions",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -3799,7 +3799,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsTestIamPermissionsCall) 
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+/proxyConfigs/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

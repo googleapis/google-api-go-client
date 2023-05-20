@@ -4803,6 +4803,24 @@ func (c *EntriesLookupCall) LinkedResource(linkedResource string) *EntriesLookup
 	return c
 }
 
+// Location sets the optional parameter "location": Location where the
+// lookup should be performed. Required to lookup entry that is not a
+// part of `DPMS` or `DATAPLEX` `integrated_system` using its
+// `fully_qualified_name`. Ignored in other cases.
+func (c *EntriesLookupCall) Location(location string) *EntriesLookupCall {
+	c.urlParams_.Set("location", location)
+	return c
+}
+
+// Project sets the optional parameter "project": Project where the
+// lookup should be performed. Required to lookup entry that is not a
+// part of `DPMS` or `DATAPLEX` `integrated_system` using its
+// `fully_qualified_name`. Ignored in other cases.
+func (c *EntriesLookupCall) Project(project string) *EntriesLookupCall {
+	c.urlParams_.Set("project", project)
+	return c
+}
+
 // SqlResource sets the optional parameter "sqlResource": The SQL name
 // of the entry. SQL names are case-sensitive. Examples: *
 // `pubsub.topic.{PROJECT_ID}.{TOPIC_ID}` *
@@ -4927,6 +4945,16 @@ func (c *EntriesLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataca
 	//     },
 	//     "linkedResource": {
 	//       "description": "The full name of the Google Cloud Platform resource the Data Catalog entry represents. For more information, see [Full Resource Name] (https://cloud.google.com/apis/design/resource_names#full_resource_name). Full names are case-sensitive. For example: * `//bigquery.googleapis.com/projects/{PROJECT_ID}/datasets/{DATASET_ID}/tables/{TABLE_ID}` * `//pubsub.googleapis.com/projects/{PROJECT_ID}/topics/{TOPIC_ID}`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "Location where the lookup should be performed. Required to lookup entry that is not a part of `DPMS` or `DATAPLEX` `integrated_system` using its `fully_qualified_name`. Ignored in other cases.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project where the lookup should be performed. Required to lookup entry that is not a part of `DPMS` or `DATAPLEX` `integrated_system` using its `fully_qualified_name`. Ignored in other cases.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

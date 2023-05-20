@@ -1451,7 +1451,7 @@
       }
     }
   },
-  "revision": "20230426",
+  "revision": "20230510",
   "rootUrl": "https://clouddeploy.googleapis.com/",
   "schemas": {
     "AbandonReleaseRequest": {
@@ -1933,11 +1933,15 @@
           "enum": [
             "TYPE_UNSPECIFIED",
             "TYPE_PUBSUB_NOTIFICATION_FAILURE",
+            "TYPE_RESOURCE_STATE_CHANGE",
+            "TYPE_PROCESS_ABORTED",
             "TYPE_RENDER_STATUES_CHANGE"
           ],
           "enumDescriptions": [
             "Type is unspecified.",
             "A Pub/Sub notification failed to be sent.",
+            "Resource state changed.",
+            "A process aborted.",
             "Deprecated: This field is never used. Use release_render log type instead."
           ],
           "type": "string"
@@ -2375,11 +2379,15 @@
           "enum": [
             "TYPE_UNSPECIFIED",
             "TYPE_PUBSUB_NOTIFICATION_FAILURE",
+            "TYPE_RESOURCE_STATE_CHANGE",
+            "TYPE_PROCESS_ABORTED",
             "TYPE_RENDER_STATUES_CHANGE"
           ],
           "enumDescriptions": [
             "Type is unspecified.",
             "A Pub/Sub notification failed to be sent.",
+            "Resource state changed.",
+            "A process aborted.",
             "Deprecated: This field is never used. Use release_render log type instead."
           ],
           "type": "string"
@@ -3049,11 +3057,15 @@
           "enum": [
             "TYPE_UNSPECIFIED",
             "TYPE_PUBSUB_NOTIFICATION_FAILURE",
+            "TYPE_RESOURCE_STATE_CHANGE",
+            "TYPE_PROCESS_ABORTED",
             "TYPE_RENDER_STATUES_CHANGE"
           ],
           "enumDescriptions": [
             "Type is unspecified.",
             "A Pub/Sub notification failed to be sent.",
+            "Resource state changed.",
+            "A process aborted.",
             "Deprecated: This field is never used. Use release_render log type instead."
           ],
           "type": "string"
@@ -3324,11 +3336,15 @@
           "enum": [
             "TYPE_UNSPECIFIED",
             "TYPE_PUBSUB_NOTIFICATION_FAILURE",
+            "TYPE_RESOURCE_STATE_CHANGE",
+            "TYPE_PROCESS_ABORTED",
             "TYPE_RENDER_STATUES_CHANGE"
           ],
           "enumDescriptions": [
             "Type is unspecified.",
             "A Pub/Sub notification failed to be sent.",
+            "Resource state changed.",
+            "A process aborted.",
             "Deprecated: This field is never used. Use release_render log type instead."
           ],
           "type": "string"
@@ -3662,11 +3678,15 @@
           "enum": [
             "TYPE_UNSPECIFIED",
             "TYPE_PUBSUB_NOTIFICATION_FAILURE",
+            "TYPE_RESOURCE_STATE_CHANGE",
+            "TYPE_PROCESS_ABORTED",
             "TYPE_RENDER_STATUES_CHANGE"
           ],
           "enumDescriptions": [
             "Type is unspecified.",
             "A Pub/Sub notification failed to be sent.",
+            "Resource state changed.",
+            "A process aborted.",
             "Deprecated: This field is never used. Use release_render log type instead."
           ],
           "type": "string"

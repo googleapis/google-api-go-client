@@ -2268,8 +2268,8 @@ func (s *TaskExecution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TaskGroup: A TaskGroup contains one or multiple Tasks that share the
-// same Runnable but with different runtime parameters.
+// TaskGroup: A TaskGroup defines one or more Tasks that all share the
+// same TaskSpec.
 type TaskGroup struct {
 	// Name: Output only. TaskGroup name. The system generates this field
 	// based on parent Job name. For example:
@@ -2291,6 +2291,17 @@ type TaskGroup struct {
 	// environment variable to the path of that file. Defaults to false.
 	RequireHostsFile bool `json:"requireHostsFile,omitempty"`
 
+	// SchedulingPolicy: Scheduling policy for Tasks in the TaskGroup. The
+	// default value is AS_SOON_AS_POSSIBLE.
+	//
+	// Possible values:
+	//   "SCHEDULING_POLICY_UNSPECIFIED" - Unspecified.
+	//   "AS_SOON_AS_POSSIBLE" - Run Tasks as soon as resources are
+	// available. Tasks might be executed in parallel depending on
+	// parallelism and task_count values.
+	//   "IN_ORDER" - Run Tasks sequentially with increased task index.
+	SchedulingPolicy string `json:"schedulingPolicy,omitempty"`
+
 	// TaskCount: Number of Tasks in the TaskGroup. Default is 1.
 	TaskCount int64 `json:"taskCount,omitempty,string"`
 
@@ -2307,8 +2318,7 @@ type TaskGroup struct {
 	// variable, in addition to any environment variables set in
 	// task_environments, specifying the number of Tasks in the Task's
 	// parent TaskGroup, and the specific Task's index in the TaskGroup (0
-	// through BATCH_TASK_COUNT - 1). task_environments supports up to 200
-	// entries.
+	// through BATCH_TASK_COUNT - 1).
 	TaskEnvironments []*Environment `json:"taskEnvironments,omitempty"`
 
 	// TaskSpec: Required. Tasks in the group share the same task spec.

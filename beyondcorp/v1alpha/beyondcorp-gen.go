@@ -173,6 +173,7 @@ type OrganizationsLocationsService struct {
 
 func NewOrganizationsLocationsGlobalService(s *Service) *OrganizationsLocationsGlobalService {
 	rs := &OrganizationsLocationsGlobalService{s: s}
+	rs.PartnerTenants = NewOrganizationsLocationsGlobalPartnerTenantsService(s)
 	rs.Tenants = NewOrganizationsLocationsGlobalTenantsService(s)
 	return rs
 }
@@ -180,7 +181,18 @@ func NewOrganizationsLocationsGlobalService(s *Service) *OrganizationsLocationsG
 type OrganizationsLocationsGlobalService struct {
 	s *Service
 
+	PartnerTenants *OrganizationsLocationsGlobalPartnerTenantsService
+
 	Tenants *OrganizationsLocationsGlobalTenantsService
+}
+
+func NewOrganizationsLocationsGlobalPartnerTenantsService(s *Service) *OrganizationsLocationsGlobalPartnerTenantsService {
+	rs := &OrganizationsLocationsGlobalPartnerTenantsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsGlobalPartnerTenantsService struct {
+	s *Service
 }
 
 func NewOrganizationsLocationsGlobalTenantsService(s *Service) *OrganizationsLocationsGlobalTenantsService {
@@ -2623,12 +2635,14 @@ func (s *GoogleCloudBeyondcorpAppgatewaysV1AppGatewayOperationMetadata) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo:
-// Message contains the authentication information to validate against
-// the proxy server.
-type GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo struct {
-	// EncryptionSaEmail: Optional. Service Account for encrypting the JWT.
+// GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo: Message
+// contains the JWT encryption information for the proxy server.
+type GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo struct {
+	// EncryptionSaEmail: Optional. Service Account for encryption key.
 	EncryptionSaEmail string `json:"encryptionSaEmail,omitempty"`
+
+	// Jwk: Optional. JWK in string.
+	Jwk string `json:"jwk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EncryptionSaEmail")
 	// to unconditionally include in API requests. By default, fields with
@@ -2648,17 +2662,17 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo
+func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerMetadata: Metadata
-// associated with Tenant and is provided by the Partner.
+// associated with PartnerTenant and is provided by the Partner.
 type GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerMetadata struct {
 	// PartnerTenantId: Optional. UUID used by the Partner to refer to the
-	// Tenant in their internal systems.
+	// PartnerTenant in their internal systems.
 	PartnerTenantId string `json:"partnerTenantId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PartnerTenantId") to
@@ -2737,19 +2751,76 @@ func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerServiceOperationMetad
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant: Information
+// about a BeyoncCorp Enterprise PartnerTenant.
+type GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant struct {
+	// CreateTime: Output only. Timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Optional. An arbitrary caller-provided name for the
+	// PartnerTenant. Cannot exceed 64 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GoogleGroupEmail: Optional. Google group email to which the
+	// PartnerTenant is enabled.
+	GoogleGroupEmail string `json:"googleGroupEmail,omitempty"`
+
+	// GoogleGroupId: Optional. Google group ID to which the PartnerTenant
+	// is enabled.
+	GoogleGroupId string `json:"googleGroupId,omitempty"`
+
+	// Name: Output only. Unique resource name of the PartnerTenant. The
+	// name is ignored when creating PartnerTenant.
+	Name string `json:"name,omitempty"`
+
+	// PartnerMetadata: Optional. Metadata provided by the Partner
+	// associated with PartnerTenant.
+	PartnerMetadata *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerMetadata `json:"partnerMetadata,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when the resource was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig: Proxy
 // Configuration of a Tenant.
 type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
-	// AuthenticationInfo: Optional. Information to facilitate
-	// Authentication against the proxy server.
-	AuthenticationInfo *GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo `json:"authenticationInfo,omitempty"`
-
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DisplayName: Optional. An arbitrary caller-provided name for the
 	// ProxyConfig. Cannot exceed 64 characters.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// EncryptionInfo: Optional. Information to encrypt JWT for the proxy
+	// server.
+	EncryptionInfo *GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo `json:"encryptionInfo,omitempty"`
 
 	// Name: Output only. ProxyConfig resource name.
 	Name string `json:"name,omitempty"`
@@ -2773,21 +2844,20 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AuthenticationInfo")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AuthenticationInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4818,6 +4888,325 @@ func (s *Tunnelv1ProtoTunnelerInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "beyondcorp.organizations.locations.global.partnerTenants.create":
+
+type OrganizationsLocationsGlobalPartnerTenantsCreateCall struct {
+	s                                                        *Service
+	parent                                                   string
+	googlecloudbeyondcorppartnerservicesv1alphapartnertenant *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// Create: Creates a new BeyondCorp Enterprise partnerTenant in a given
+// organization and can only be called by onboarded BeyondCorp
+// Enterprise partner.
+//
+//   - parent: The resource name of the PartnerTenant using the form:
+//     `organizations/{organization_id}/locations/global`.
+func (r *OrganizationsLocationsGlobalPartnerTenantsService) Create(parent string, googlecloudbeyondcorppartnerservicesv1alphapartnertenant *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant) *OrganizationsLocationsGlobalPartnerTenantsCreateCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudbeyondcorppartnerservicesv1alphapartnertenant = googlecloudbeyondcorppartnerservicesv1alphapartnertenant
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes since the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsGlobalPartnerTenantsCreateCall) RequestId(requestId string) *OrganizationsLocationsGlobalPartnerTenantsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsGlobalPartnerTenantsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsGlobalPartnerTenantsCreateCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsGlobalPartnerTenantsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPartnerTenantsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorppartnerservicesv1alphapartnertenant)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/partnerTenants")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPartnerTenantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new BeyondCorp Enterprise partnerTenant in a given organization and can only be called by onboarded BeyondCorp Enterprise partner.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/partnerTenants",
+	//   "httpMethod": "POST",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the PartnerTenant using the form: `organizations/{organization_id}/locations/global`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/partnerTenants",
+	//   "request": {
+	//     "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.organizations.locations.global.partnerTenants.get":
+
+type OrganizationsLocationsGlobalPartnerTenantsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single PartnerTenant.
+//
+//   - name: The resource name of the PartnerTenant using the form:
+//     `organizations/{organization_id}/locations/global/partnerTenants/{pa
+//     rtner_tenant_id}`.
+func (r *OrganizationsLocationsGlobalPartnerTenantsService) Get(name string) *OrganizationsLocationsGlobalPartnerTenantsGetCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalPartnerTenantsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.get" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsGlobalPartnerTenantsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single PartnerTenant.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the PartnerTenant using the form: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "beyondcorp.organizations.locations.global.tenants.create":
 
 type OrganizationsLocationsGlobalTenantsCreateCall struct {
@@ -5148,8 +5537,8 @@ type OrganizationsLocationsGlobalTenantsProxyConfigsCreateCall struct {
 }
 
 // Create: Creates a new BeyondCorp Enterprise ProxyConfiguration in a
-// given organization and tenant. Can only be called by on onboarded
-// Beyondcorp Enterprise partner.
+// given organization and PartnerTenant. Can only be called by on
+// onboarded Beyondcorp Enterprise partner.
 //
 //   - parent: The resource name of the ProxyConfig using the form:
 //     `organizations/{organization_id}/locations/global/tenants/{tenant_id
@@ -5270,7 +5659,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsCreateCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new BeyondCorp Enterprise ProxyConfiguration in a given organization and tenant. Can only be called by on onboarded Beyondcorp Enterprise partner.",
+	//   "description": "Creates a new BeyondCorp Enterprise ProxyConfiguration in a given organization and PartnerTenant. Can only be called by on onboarded Beyondcorp Enterprise partner.",
 	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs",
 	//   "httpMethod": "POST",
 	//   "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.create",
@@ -5316,7 +5705,7 @@ type OrganizationsLocationsGlobalTenantsProxyConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Tenant.
+// Get: Gets details of a single ProxyConfig.
 //
 //   - name: The resource name of the Tenant using the form:
 //     `organizations/{organization_id}/locations/global/tenants/{tenant_id
@@ -5429,7 +5818,7 @@ func (c *OrganizationsLocationsGlobalTenantsProxyConfigsGetCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details of a single Tenant.",
+	//   "description": "Gets details of a single ProxyConfig.",
 	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}",
 	//   "httpMethod": "GET",
 	//   "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.get",

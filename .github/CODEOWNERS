@@ -1,2 +1,6 @@
 # Default owner for all directories not owned by others
 * @googleapis/yoshi-go-admins
+
+# Give @yoshi-approver owners for all generated files.
+*.json @yoshi-approver
+*-gen.go @yoshi-approver

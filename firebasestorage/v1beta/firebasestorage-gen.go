@@ -400,7 +400,7 @@ type ProjectsBucketsAddFirebaseCall struct {
 //
 //   - bucket: Resource name of the bucket, mirrors the ID of the
 //     underlying Google Cloud Storage bucket,
-//     `projects/{project_number}/buckets/{bucket_id}`.
+//     `projects/{project_id_or_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) AddFirebase(bucket string, addfirebaserequest *AddFirebaseRequest) *ProjectsBucketsAddFirebaseCall {
 	c := &ProjectsBucketsAddFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -508,7 +508,7 @@ func (c *ProjectsBucketsAddFirebaseCall) Do(opts ...googleapi.CallOption) (*Buck
 	//   ],
 	//   "parameters": {
 	//     "bucket": {
-	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_id_or_number}/buckets/{bucket_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -545,7 +545,7 @@ type ProjectsBucketsGetCall struct {
 //
 //   - name: Resource name of the bucket, mirrors the ID of the underlying
 //     Google Cloud Storage bucket,
-//     `projects/{project_number}/buckets/{bucket_id}`.
+//     `projects/{project_id_or_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) Get(name string) *ProjectsBucketsGetCall {
 	c := &ProjectsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -660,7 +660,7 @@ func (c *ProjectsBucketsGetCall) Do(opts ...googleapi.CallOption) (*Bucket, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_id_or_number}/buckets/{bucket_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -693,7 +693,7 @@ type ProjectsBucketsListCall struct {
 // List: Lists the linked storage buckets for a project.
 //
 //   - parent: Resource name of the parent Firebase project,
-//     `projects/{project_number}`.
+//     `projects/{project_id_or_number}`.
 func (r *ProjectsBucketsService) List(parent string) *ProjectsBucketsListCall {
 	c := &ProjectsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -836,7 +836,7 @@ func (c *ProjectsBucketsListCall) Do(opts ...googleapi.CallOption) (*ListBuckets
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent Firebase project, `projects/{project_number}`.",
+	//       "description": "Required. Resource name of the parent Firebase project, `projects/{project_id_or_number}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -892,7 +892,7 @@ type ProjectsBucketsRemoveFirebaseCall struct {
 //
 //   - bucket: Resource name of the bucket, mirrors the ID of the
 //     underlying Google Cloud Storage bucket,
-//     `projects/{project_number}/buckets/{bucket_id}`.
+//     `projects/{project_id_or_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) RemoveFirebase(bucket string, removefirebaserequest *RemoveFirebaseRequest) *ProjectsBucketsRemoveFirebaseCall {
 	c := &ProjectsBucketsRemoveFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -1000,7 +1000,7 @@ func (c *ProjectsBucketsRemoveFirebaseCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "bucket": {
-	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_id_or_number}/buckets/{bucket_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/buckets/[^/]+$",
 	//       "required": true,

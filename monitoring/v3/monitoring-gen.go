@@ -689,7 +689,8 @@ type AlertPolicy struct {
 	// combined conditions evaluate to true, then an incident is created. A
 	// policy can have from one to six conditions. If
 	// condition_time_series_query_language is present, it must be the only
-	// condition.
+	// condition. If condition_monitoring_query_language is present, it must
+	// be the only condition.
 	Conditions []*Condition `json:"conditions,omitempty"`
 
 	// CreationRecord: A read-only record of the creation of the alerting

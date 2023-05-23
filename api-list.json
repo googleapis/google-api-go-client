@@ -49,6 +49,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "accesscontextmanager:v1beta",
+      "name": "accesscontextmanager",
+      "version": "v1beta",
+      "title": "Access Context Manager API",
+      "description": "An API for setting attribute based access control to requests to Google Cloud services.",
+      "discoveryRestUrl": "https://accesscontextmanager.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/access-context-manager/docs/reference/rest/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "accesscontextmanager:v1",
+      "name": "accesscontextmanager",
+      "version": "v1",
+      "title": "Access Context Manager API",
+      "description": "An API for setting attribute based access control to requests to Google Cloud services.",
+      "discoveryRestUrl": "https://accesscontextmanager.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/access-context-manager/docs/reference/rest/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "acmedns:v1",
       "name": "acmedns",
       "version": "v1",

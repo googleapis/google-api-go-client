@@ -111,13 +111,13 @@
           "resources": {
             "global": {
               "resources": {
-                "tenants": {
+                "partnerTenants": {
                   "methods": {
                     "getIamPolicy": {
                       "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-                      "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}:getIamPolicy",
+                      "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}:getIamPolicy",
                       "httpMethod": "GET",
-                      "id": "beyondcorp.organizations.locations.global.tenants.getIamPolicy",
+                      "id": "beyondcorp.organizations.locations.global.partnerTenants.getIamPolicy",
                       "parameterOrder": [
                         "resource"
                       ],
@@ -131,7 +131,7 @@
                         "resource": {
                           "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                           "location": "path",
-                          "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+$",
+                          "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
                           "required": true,
                           "type": "string"
                         }
@@ -146,9 +146,9 @@
                     },
                     "setIamPolicy": {
                       "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-                      "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}:setIamPolicy",
+                      "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}:setIamPolicy",
                       "httpMethod": "POST",
-                      "id": "beyondcorp.organizations.locations.global.tenants.setIamPolicy",
+                      "id": "beyondcorp.organizations.locations.global.partnerTenants.setIamPolicy",
                       "parameterOrder": [
                         "resource"
                       ],
@@ -156,7 +156,7 @@
                         "resource": {
                           "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                           "location": "path",
-                          "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+$",
+                          "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
                           "required": true,
                           "type": "string"
                         }
@@ -174,9 +174,9 @@
                     },
                     "testIamPermissions": {
                       "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-                      "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}:testIamPermissions",
+                      "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}:testIamPermissions",
                       "httpMethod": "POST",
-                      "id": "beyondcorp.organizations.locations.global.tenants.testIamPermissions",
+                      "id": "beyondcorp.organizations.locations.global.partnerTenants.testIamPermissions",
                       "parameterOrder": [
                         "resource"
                       ],
@@ -184,7 +184,7 @@
                         "resource": {
                           "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                           "location": "path",
-                          "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+$",
+                          "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
                           "required": true,
                           "type": "string"
                         }
@@ -206,9 +206,9 @@
                       "methods": {
                         "getIamPolicy": {
                           "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-                          "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}:getIamPolicy",
+                          "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}/proxyConfigs/{proxyConfigsId}:getIamPolicy",
                           "httpMethod": "GET",
-                          "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.getIamPolicy",
+                          "id": "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.getIamPolicy",
                           "parameterOrder": [
                             "resource"
                           ],
@@ -222,7 +222,7 @@
                             "resource": {
                               "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                               "location": "path",
-                              "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+/proxyConfigs/[^/]+$",
+                              "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
                               "required": true,
                               "type": "string"
                             }
@@ -237,9 +237,9 @@
                         },
                         "setIamPolicy": {
                           "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-                          "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}:setIamPolicy",
+                          "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}/proxyConfigs/{proxyConfigsId}:setIamPolicy",
                           "httpMethod": "POST",
-                          "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.setIamPolicy",
+                          "id": "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.setIamPolicy",
                           "parameterOrder": [
                             "resource"
                           ],
@@ -247,7 +247,7 @@
                             "resource": {
                               "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                               "location": "path",
-                              "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+/proxyConfigs/[^/]+$",
+                              "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
                               "required": true,
                               "type": "string"
                             }
@@ -265,9 +265,9 @@
                         },
                         "testIamPermissions": {
                           "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-                          "flatPath": "v1/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}:testIamPermissions",
+                          "flatPath": "v1/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}/proxyConfigs/{proxyConfigsId}:testIamPermissions",
                           "httpMethod": "POST",
-                          "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.testIamPermissions",
+                          "id": "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.testIamPermissions",
                           "parameterOrder": [
                             "resource"
                           ],
@@ -275,7 +275,7 @@
                             "resource": {
                               "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
                               "location": "path",
-                              "pattern": "^organizations/[^/]+/locations/global/tenants/[^/]+/proxyConfigs/[^/]+$",
+                              "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
                               "required": true,
                               "type": "string"
                             }
@@ -1590,7 +1590,7 @@
       }
     }
   },
-  "revision": "20230501",
+  "revision": "20230509",
   "rootUrl": "https://beyondcorp.googleapis.com/",
   "schemas": {
     "AllocatedConnection": {

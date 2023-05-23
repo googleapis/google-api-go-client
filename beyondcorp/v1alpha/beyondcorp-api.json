@@ -111,6 +111,68 @@
           "resources": {
             "global": {
               "resources": {
+                "partnerTenants": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates a new BeyondCorp Enterprise partnerTenant in a given organization and can only be called by onboarded BeyondCorp Enterprise partner.",
+                      "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/partnerTenants",
+                      "httpMethod": "POST",
+                      "id": "beyondcorp.organizations.locations.global.partnerTenants.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The resource name of the PartnerTenant using the form: `organizations/{organization_id}/locations/global`",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/locations/global$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "requestId": {
+                          "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+parent}/partnerTenants",
+                      "request": {
+                        "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets details of a single PartnerTenant.",
+                      "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}",
+                      "httpMethod": "GET",
+                      "id": "beyondcorp.organizations.locations.global.partnerTenants.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The resource name of the PartnerTenant using the form: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}`",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                },
                 "tenants": {
                   "methods": {
                     "create": {
@@ -176,7 +238,7 @@
                     "proxyConfigs": {
                       "methods": {
                         "create": {
-                          "description": "Creates a new BeyondCorp Enterprise ProxyConfiguration in a given organization and tenant. Can only be called by on onboarded Beyondcorp Enterprise partner.",
+                          "description": "Creates a new BeyondCorp Enterprise ProxyConfiguration in a given organization and PartnerTenant. Can only be called by on onboarded Beyondcorp Enterprise partner.",
                           "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs",
                           "httpMethod": "POST",
                           "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.create",
@@ -209,7 +271,7 @@
                           ]
                         },
                         "get": {
-                          "description": "Gets details of a single Tenant.",
+                          "description": "Gets details of a single ProxyConfig.",
                           "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/tenants/{tenantsId}/proxyConfigs/{proxyConfigsId}",
                           "httpMethod": "GET",
                           "id": "beyondcorp.organizations.locations.global.tenants.proxyConfigs.get",
@@ -3202,7 +3264,7 @@
       }
     }
   },
-  "revision": "20230501",
+  "revision": "20230509",
   "rootUrl": "https://beyondcorp.googleapis.com/",
   "schemas": {
     "AllocatedConnection": {
@@ -4831,23 +4893,27 @@
       },
       "type": "object"
     },
-    "GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo": {
-      "description": "Message contains the authentication information to validate against the proxy server.",
-      "id": "GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo",
+    "GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo": {
+      "description": "Message contains the JWT encryption information for the proxy server.",
+      "id": "GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo",
       "properties": {
         "encryptionSaEmail": {
-          "description": "Optional. Service Account for encrypting the JWT.",
+          "description": "Optional. Service Account for encryption key.",
+          "type": "string"
+        },
+        "jwk": {
+          "description": "Optional. JWK in string.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerMetadata": {
-      "description": "Metadata associated with Tenant and is provided by the Partner.",
+      "description": "Metadata associated with PartnerTenant and is provided by the Partner.",
       "id": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerMetadata",
       "properties": {
         "partnerTenantId": {
-          "description": "Optional. UUID used by the Partner to refer to the Tenant in their internal systems.",
+          "description": "Optional. UUID used by the Partner to refer to the PartnerTenant in their internal systems.",
           "type": "string"
         }
       },
@@ -4897,14 +4963,50 @@
       },
       "type": "object"
     },
+    "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant": {
+      "description": "Information about a BeyoncCorp Enterprise PartnerTenant.",
+      "id": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant",
+      "properties": {
+        "createTime": {
+          "description": "Output only. Timestamp when the resource was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. An arbitrary caller-provided name for the PartnerTenant. Cannot exceed 64 characters.",
+          "type": "string"
+        },
+        "googleGroupEmail": {
+          "description": "Optional. Google group email to which the PartnerTenant is enabled.",
+          "type": "string"
+        },
+        "googleGroupId": {
+          "description": "Optional. Google group ID to which the PartnerTenant is enabled.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Unique resource name of the PartnerTenant. The name is ignored when creating PartnerTenant.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "partnerMetadata": {
+          "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerMetadata",
+          "description": "Optional. Metadata provided by the Partner associated with PartnerTenant."
+        },
+        "updateTime": {
+          "description": "Output only. Timestamp when the resource was last modified.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig": {
       "description": "Proxy Configuration of a Tenant.",
       "id": "GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig",
       "properties": {
-        "authenticationInfo": {
-          "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaAuthenticationInfo",
-          "description": "Optional. Information to facilitate Authentication against the proxy server."
-        },
         "createTime": {
           "description": "Output only. Timestamp when the resource was created.",
           "format": "google-datetime",
@@ -4914,6 +5016,10 @@
         "displayName": {
           "description": "Optional. An arbitrary caller-provided name for the ProxyConfig. Cannot exceed 64 characters.",
           "type": "string"
+        },
+        "encryptionInfo": {
+          "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo",
+          "description": "Optional. Information to encrypt JWT for the proxy server."
         },
         "name": {
           "description": "Output only. ProxyConfig resource name.",

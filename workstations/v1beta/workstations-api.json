@@ -12,7 +12,7 @@
   "baseUrl": "https://workstations.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Cloud Workstations",
-  "description": "",
+  "description": "Allows administrators to create managed developer environments in the cloud. ",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/workstations",
   "fullyEncodeReservedExpansion": true,
@@ -1127,7 +1127,7 @@
       }
     }
   },
-  "revision": "20230501",
+  "revision": "20230510",
   "rootUrl": "https://workstations.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -1268,7 +1268,7 @@
       "id": "CustomerEncryptionKey",
       "properties": {
         "kmsKey": {
-          "description": "Immutable. The name of the Google Cloud KMS encryption key. For example, `projects/PROJECT_ID/locations/REGION/keyRings/KEY_RING/cryptoKeys/KEY_NAME`.",
+          "description": "Immutable. The name of the Google Cloud KMS encryption key. For example, `projects/PROJECT_ID/locations/REGION/keyRings/KEY_RING/cryptoKeys/KEY_NAME`. The key must be in the same region as the workstation configuration.",
           "type": "string"
         },
         "kmsKeyServiceAccount": {

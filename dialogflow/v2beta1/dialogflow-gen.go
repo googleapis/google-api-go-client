@@ -11749,6 +11749,9 @@ type GoogleCloudDialogflowV2beta1AgentAssistantRecord struct {
 	// ArticleSuggestionAnswer: Output only. The article suggestion answer.
 	ArticleSuggestionAnswer *GoogleCloudDialogflowV2beta1ArticleAnswer `json:"articleSuggestionAnswer,omitempty"`
 
+	// DialogflowAssistAnswer: Output only. The Dialogflow assist answer.
+	DialogflowAssistAnswer *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer `json:"dialogflowAssistAnswer,omitempty"`
+
 	// FaqAnswer: Output only. The FAQ answer.
 	FaqAnswer *GoogleCloudDialogflowV2beta1FaqAnswer `json:"faqAnswer,omitempty"`
 
@@ -11833,6 +11836,9 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// ASCII characters. A random UUID is recommended. This request is only
 	// idempotent if a `request_id` is provided.
 	RequestId string `json:"requestId,omitempty"`
+
+	// SuggestionInput: An input representing the selection of a suggestion.
+	SuggestionInput *GoogleCloudDialogflowV2beta1SuggestionInput `json:"suggestionInput,omitempty"`
 
 	// TextInput: The natural language text to be processed.
 	TextInput *GoogleCloudDialogflowV2beta1TextInput `json:"textInput,omitempty"`
@@ -12839,6 +12845,8 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata s
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -12890,6 +12898,8 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -13502,6 +13512,42 @@ type GoogleCloudDialogflowV2beta1DetectIntentResponse struct {
 
 func (s *GoogleCloudDialogflowV2beta1DetectIntentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1DetectIntentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1DialogflowAssistAnswer: Represents a
+// Dialogflow assist answer.
+type GoogleCloudDialogflowV2beta1DialogflowAssistAnswer struct {
+	// AnswerRecord: The name of answer record, in the format of
+	// "projects//locations//answerRecords/"
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// IntentSuggestion: An intent suggestion generated from conversation.
+	IntentSuggestion *GoogleCloudDialogflowV2beta1IntentSuggestion `json:"intentSuggestion,omitempty"`
+
+	// QueryResult: Result from v2 agent.
+	QueryResult *GoogleCloudDialogflowV2beta1QueryResult `json:"queryResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1DialogflowAssistAnswer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14894,7 +14940,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig 
 	// until you have desired results. If this field is not set, it is
 	// default to 0.0, which means that all suggestions are returned.
 	// Supported features: ARTICLE_SUGGESTION, FAQ, SMART_REPLY,
-	// SMART_COMPOSE, KNOWLEDGE_SEARCH, KNOWLEDGE_ASSIST.
+	// SMART_COMPOSE, KNOWLEDGE_SEARCH, KNOWLEDGE_ASSIST, ENTITY_EXTRACTION.
 	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
 
 	// ContextFilterSettings: Determines how recent conversation context is
@@ -15007,6 +15053,10 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigD
 	// same Dialogflow project.
 	Agent string `json:"agent,omitempty"`
 
+	// HumanAgentSideConfig: The Dialogflow assist configuration for human
+	// agent.
+	HumanAgentSideConfig *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig `json:"humanAgentSideConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -15026,6 +15076,38 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigD
 
 func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryCo
+// nfigDialogflowQuerySourceHumanAgentSideConfig: The configuration used
+// for human agent side Dialogflow assist suggestion.
+type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig struct {
+	// Agent: Optional. The name of a dialogflow virtual agent used for
+	// intent detection and suggestion triggered by human agent. Format:
+	// `projects//locations//agent`.
+	Agent string `json:"agent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Agent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Agent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15846,6 +15928,43 @@ type GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo struct {
 
 func (s *GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentInput: Represents the intent to
+// trigger programmatically rather than as a result of natural language
+// processing. The intent input is only used for V3 agent.
+type GoogleCloudDialogflowV2beta1IntentInput struct {
+	// Intent: Required. The unique identifier of the intent in V3 agent.
+	// Format: `projects//locations//locations//agents//intents/`.
+	Intent string `json:"intent,omitempty"`
+
+	// LanguageCode: Required. The language of this conversational query.
+	// See Language Support
+	// (https://cloud.google.com/dialogflow/docs/reference/language) for a
+	// list of the currently supported language codes.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Intent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Intent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -17502,6 +17621,44 @@ type GoogleCloudDialogflowV2beta1IntentParameter struct {
 
 func (s *GoogleCloudDialogflowV2beta1IntentParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentSuggestion: Represents an intent
+// suggestion.
+type GoogleCloudDialogflowV2beta1IntentSuggestion struct {
+	// Description: Human readable description for better understanding an
+	// intent like its scope, content, result etc. Maximum character limit:
+	// 140 characters.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The display name of the intent.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IntentV2: The unique identifier of this intent. Format:
+	// `projects//locations//agent/intents/`.
+	IntentV2 string `json:"intentV2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentSuggestion
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19595,6 +19752,8 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata str
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -19965,9 +20124,6 @@ func (s *GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]b
 // GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest: The
 // request message for Conversations.SuggestConversationSummary.
 type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
-	// AssistQueryParams: Parameters for a human assist query.
-	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
-
 	// ContextSize: Max number of messages prior to and including
 	// [latest_message] to use as context when compiling the suggestion. By
 	// default 500 and at most 1000.
@@ -19979,21 +20135,20 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
 	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AssistQueryParams")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AssistQueryParams") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -20082,6 +20237,48 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary struc
 
 func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse: The
+// response message for Participants.SuggestDialogflowAssists.
+type GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse struct {
+	// ContextSize: Number of messages prior to and including latest_message
+	// to compile the suggestion. It may be smaller than the
+	// SuggestDialogflowAssistsRequest.context_size field in the request if
+	// there aren't that many messages in the conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+
+	// DialogflowAssistAnswers: Output only. Multiple reply options provided
+	// by Dialogflow assist service. The order is based on the rank of the
+	// model prediction.
+	DialogflowAssistAnswers []*GoogleCloudDialogflowV2beta1DialogflowAssistAnswer `json:"dialogflowAssistAnswers,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used to
+	// suggest answer. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -20425,6 +20622,8 @@ type GoogleCloudDialogflowV2beta1SuggestionFeature struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	Type string `json:"type,omitempty"`
@@ -20452,6 +20651,61 @@ func (s *GoogleCloudDialogflowV2beta1SuggestionFeature) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1SuggestionInput: Represents the selection
+// of a suggestion.
+type GoogleCloudDialogflowV2beta1SuggestionInput struct {
+	// AnswerRecord: Required. The ID of a suggestion selected by the human
+	// agent. The suggestion(s) were generated in a previous call to request
+	// Dialogflow assist. The format is:
+	// `projects//locations//answerRecords/` where is an alphanumeric
+	// string.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// IntentInput: The intent to be triggered on V3 agent.
+	IntentInput *GoogleCloudDialogflowV2beta1IntentInput `json:"intentInput,omitempty"`
+
+	// Parameters: In Dialogflow assist for v3, the user can submit a form
+	// by sending a SuggestionInput. The form is uniquely determined by the
+	// answer_record field, which identifies a v3 QueryResult containing the
+	// current page. The form parameters are specified via the parameters
+	// field. Depending on your protocol or client library language, this is
+	// a map, associative array, symbol table, dictionary, or JSON object
+	// composed of a collection of (MapKey, MapValue) pairs: - MapKey type:
+	// string - MapKey value: parameter name - MapValue type: - If
+	// parameter's entity type is a composite entity: map - Else: depending
+	// on parameter value type, could be one of string, number, boolean,
+	// null, list or map - MapValue value: - If parameter's entity type is a
+	// composite entity: map from composite entity property names to
+	// property values - Else: parameter value
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+
+	// TextOverride: Optional. If the customer edited the suggestion before
+	// using it, include the revised text here.
+	TextOverride *GoogleCloudDialogflowV2beta1TextInput `json:"textOverride,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestionInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestionInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1SuggestionResult: One response of
 // different type of suggestion response which is used in the response
 // of Participants.AnalyzeContent and Participants.AnalyzeContent, as
@@ -20463,6 +20717,10 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// SuggestArticlesResponse: SuggestArticlesResponse if request is for
 	// ARTICLE_SUGGESTION.
 	SuggestArticlesResponse *GoogleCloudDialogflowV2beta1SuggestArticlesResponse `json:"suggestArticlesResponse,omitempty"`
+
+	// SuggestDialogflowAssistsResponse: SuggestDialogflowAssistsResponse if
+	// request is for DIALOGFLOW_ASSIST.
+	SuggestDialogflowAssistsResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestDialogflowAssistsResponse,omitempty"`
 
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is
 	// for FAQ_ANSWER.

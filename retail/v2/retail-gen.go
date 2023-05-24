@@ -6990,6 +6990,10 @@ type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
 	// ProjectId: Output only. Google Cloud project ID.
 	ProjectId string `json:"projectId,omitempty"`
 
+	// Source: Optional. An optional arbitrary string that could be used as
+	// a tag for tracking link source.
+	Source string `json:"source,omitempty"`
+
 	// State: Output only. Represents the state of the link.
 	//
 	// Possible values:
@@ -8394,6 +8398,10 @@ type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
 
 	// ProjectId: Output only. Google Cloud project ID.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// Source: Optional. An optional arbitrary string that could be used as
+	// a tag for tracking link source.
+	Source string `json:"source,omitempty"`
 
 	// State: Output only. Represents the state of the link.
 	//

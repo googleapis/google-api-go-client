@@ -12668,6 +12668,7 @@ func (c *ChannelSectionsListCall) Do(opts ...googleapi.CallOption) (*ChannelSect
 	//       "type": "string"
 	//     },
 	//     "hl": {
+	//       "deprecated": true,
 	//       "description": "Return content in specified language",
 	//       "location": "query",
 	//       "type": "string"
@@ -24327,6 +24328,7 @@ func (c *VideosListCall) Do(opts ...googleapi.CallOption) (*VideoListResponse, e
 	//       "type": "string"
 	//     },
 	//     "locale": {
+	//       "deprecated": true,
 	//       "location": "query",
 	//       "type": "string"
 	//     },

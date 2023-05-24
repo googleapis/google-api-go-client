@@ -274,7 +274,7 @@ type AuthorizationAttemptInfo struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State is unspecified.
 	//   "AUTHORIZING" - Certificate provisioning for this domain is under
-	// way. GCP will attempt to authorize the domain.
+	// way. Google Cloud will attempt to authorize the domain.
 	//   "AUTHORIZED" - A managed certificate can be provisioned, no issues
 	// for this domain.
 	//   "FAILED" - Attempt to authorize the domain failed. This prevents
@@ -349,8 +349,8 @@ type Certificate struct {
 	//   "DEFAULT" - Certificates with default scope are served from core
 	// Google data centers. If unsure, choose this option.
 	//   "EDGE_CACHE" - Certificates with scope EDGE_CACHE are
-	// special-purposed certificates, served from non-core Google data
-	// centers.
+	// special-purposed certificates, served from Edge Points of Presence.
+	// See https://cloud.google.com/vpc/docs/edge-locations.
 	Scope string `json:"scope,omitempty"`
 
 	// SelfManaged: If set, defines data of a self-managed certificate.
@@ -1199,7 +1199,7 @@ func (s *ListTrustConfigsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".

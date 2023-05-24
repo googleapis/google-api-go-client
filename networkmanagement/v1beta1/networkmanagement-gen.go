@@ -939,6 +939,9 @@ type DropInfo struct {
 	//   "GOOGLE_MANAGED_SERVICE_NO_PEERING" - Packet was dropped because
 	// there is no peering between the originating network and the Google
 	// Managed Services Network.
+	//   "GOOGLE_MANAGED_SERVICE_NO_PSC_ENDPOINT" - Packet was dropped
+	// because the Google-managed service uses Private Service Connect
+	// (PSC), but the PSC endpoint is not found in the project.
 	//   "GKE_PSC_ENDPOINT_MISSING" - Packet was dropped because the GKE
 	// cluster uses Private Service Connect (PSC), but the PSC endpoint is
 	// not found in the project.

@@ -2217,7 +2217,7 @@
       }
     }
   },
-  "revision": "20230516",
+  "revision": "20230518",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -4115,6 +4115,10 @@
         "projectId": {
           "description": "Output only. Google Cloud project ID.",
           "readOnly": true,
+          "type": "string"
+        },
+        "source": {
+          "description": "Optional. An optional arbitrary string that could be used as a tag for tracking link source.",
           "type": "string"
         },
         "state": {
@@ -6645,6 +6649,10 @@
         "projectId": {
           "description": "Output only. Google Cloud project ID.",
           "readOnly": true,
+          "type": "string"
+        },
+        "source": {
+          "description": "Optional. An optional arbitrary string that could be used as a tag for tracking link source.",
           "type": "string"
         },
         "state": {

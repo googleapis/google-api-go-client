@@ -3820,7 +3820,7 @@
       }
     }
   },
-  "revision": "20230508",
+  "revision": "20230516",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -12317,6 +12317,7 @@
             "ARTICLE_SUGGESTION",
             "FAQ",
             "SMART_REPLY",
+            "DIALOGFLOW_ASSIST",
             "CONVERSATION_SUMMARIZATION"
           ],
           "enumDescriptions": [
@@ -12324,6 +12325,7 @@
             "Run article suggestion model for chat.",
             "Run FAQ model.",
             "Run smart reply model for chat.",
+            "Run Dialogflow assist model for chat, which will return automated agent response as suggestion.",
             "Run conversation summarization model for chat."
           ],
           "type": "string"
@@ -12390,6 +12392,25 @@
             "Unrecoverable error during a telephone call. In general non-recoverable errors only occur if something was misconfigured in the ConversationProfile corresponding to the call. After a non-recoverable error, Dialogflow may stop responding. We don't fire this event: * in an API call because we can directly return the error, or, * when we can recover from an error."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1DialogflowAssistAnswer": {
+      "description": "Represents a Dialogflow assist answer.",
+      "id": "GoogleCloudDialogflowV2beta1DialogflowAssistAnswer",
+      "properties": {
+        "answerRecord": {
+          "description": "The name of answer record, in the format of \"projects//locations//answerRecords/\"",
+          "type": "string"
+        },
+        "intentSuggestion": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentSuggestion",
+          "description": "An intent suggestion generated from conversation."
+        },
+        "queryResult": {
+          "$ref": "GoogleCloudDialogflowV2beta1QueryResult",
+          "description": "Result from v2 agent."
         }
       },
       "type": "object"
@@ -13744,6 +13765,25 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1IntentSuggestion": {
+      "description": "Represents an intent suggestion.",
+      "id": "GoogleCloudDialogflowV2beta1IntentSuggestion",
+      "properties": {
+        "description": {
+          "description": "Human readable description for better understanding an intent like its scope, content, result etc. Maximum character limit: 140 characters.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The display name of the intent.",
+          "type": "string"
+        },
+        "intentV2": {
+          "description": "The unique identifier of this intent. Format: `projects//locations//agent/intents/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1IntentTrainingPhrase": {
       "description": "Represents an example that the agent is trained on.",
       "id": "GoogleCloudDialogflowV2beta1IntentTrainingPhrase",
@@ -14184,6 +14224,7 @@
             "ARTICLE_SUGGESTION",
             "FAQ",
             "SMART_REPLY",
+            "DIALOGFLOW_ASSIST",
             "CONVERSATION_SUMMARIZATION"
           ],
           "enumDescriptions": [
@@ -14191,6 +14232,7 @@
             "Run article suggestion model for chat.",
             "Run FAQ model.",
             "Run smart reply model for chat.",
+            "Run Dialogflow assist model for chat, which will return automated agent response as suggestion.",
             "Run conversation summarization model for chat."
           ],
           "type": "string"
@@ -14236,6 +14278,29 @@
         },
         "latestMessage": {
           "description": "The name of the latest conversation message used to compile suggestion for. Format: `projects//locations//conversations//messages/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse": {
+      "description": "The response message for Participants.SuggestDialogflowAssists.",
+      "id": "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
+      "properties": {
+        "contextSize": {
+          "description": "Number of messages prior to and including latest_message to compile the suggestion. It may be smaller than the SuggestDialogflowAssistsRequest.context_size field in the request if there aren't that many messages in the conversation.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "dialogflowAssistAnswers": {
+          "description": "Output only. Multiple reply options provided by Dialogflow assist service. The order is based on the rank of the model prediction.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1DialogflowAssistAnswer"
+          },
+          "type": "array"
+        },
+        "latestMessage": {
+          "description": "The name of the latest conversation message used to suggest answer. Format: `projects//locations//conversations//messages/`.",
           "type": "string"
         }
       },
@@ -14298,6 +14363,10 @@
         "suggestArticlesResponse": {
           "$ref": "GoogleCloudDialogflowV2beta1SuggestArticlesResponse",
           "description": "SuggestArticlesResponse if request is for ARTICLE_SUGGESTION."
+        },
+        "suggestDialogflowAssistsResponse": {
+          "$ref": "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
+          "description": "SuggestDialogflowAssistsResponse if request is for DIALOGFLOW_ASSIST."
         },
         "suggestFaqAnswersResponse": {
           "$ref": "GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse",

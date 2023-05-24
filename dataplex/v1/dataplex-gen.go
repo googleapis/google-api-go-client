@@ -3941,6 +3941,12 @@ type GoogleCloudDataplexV1Job struct {
 	// EndTime: Output only. The time when the job ended.
 	EndTime string `json:"endTime,omitempty"`
 
+	// ExecutionSpec: Output only. Spec related to how a task is executed.
+	ExecutionSpec *GoogleCloudDataplexV1TaskExecutionSpec `json:"executionSpec,omitempty"`
+
+	// Labels: Output only. User-defined labels for the task.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Message: Output only. Additional information about the current state.
 	Message string `json:"message,omitempty"`
 
@@ -3979,6 +3985,16 @@ type GoogleCloudDataplexV1Job struct {
 	//   "FAILED" - The job is no longer running due to an error.
 	//   "ABORTED" - The job was cancelled outside of Dataplex.
 	State string `json:"state,omitempty"`
+
+	// Trigger: Output only. Job execution trigger.
+	//
+	// Possible values:
+	//   "TRIGGER_UNSPECIFIED" - The trigger is unspecified.
+	//   "TASK_CONFIG" - The job was triggered by Dataplex based on trigger
+	// spec from task definition.
+	//   "RUN_REQUEST" - The job was triggered by the explicit call of Task
+	// API.
+	Trigger string `json:"trigger,omitempty"`
 
 	// Uid: Output only. System generated globally unique ID for the job.
 	Uid string `json:"uid,omitempty"`
@@ -5036,6 +5052,47 @@ func (s *GoogleCloudDataplexV1RunDataScanResponse) MarshalJSON() ([]byte, error)
 }
 
 type GoogleCloudDataplexV1RunTaskRequest struct {
+	// Args: Optional. Execution spec arguments. If the map is left empty,
+	// the task will run with existing execution spec args from task
+	// definition. If the map contains an entry with a new key, the same
+	// will be added to existing set of args. If the map contains an entry
+	// with an existing arg key in task definition, the task will run with
+	// new arg value for that entry. Clearing an existing arg will require
+	// arg value to be explicitly set to a hyphen "-". The arg value cannot
+	// be empty.
+	Args map[string]string `json:"args,omitempty"`
+
+	// Labels: Optional. User-defined labels for the task. If the map is
+	// left empty, the task will run with existing labels from task
+	// definition. If the map contains an entry with a new key, the same
+	// will be added to existing set of labels. If the map contains an entry
+	// with an existing label key in task definition, the task will run with
+	// new label value for that entry. Clearing an existing label will
+	// require label value to be explicitly set to a hyphen "-". The label
+	// value cannot be empty.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1RunTaskRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1RunTaskRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDataplexV1RunTaskResponse struct {
@@ -26796,6 +26853,7 @@ func (c *ProjectsLocationsLakesZonesEntitiesPartitionsDeleteCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "etag": {
+	//       "deprecated": true,
 	//       "description": "Optional. The etag associated with the partition.",
 	//       "location": "query",
 	//       "type": "string"

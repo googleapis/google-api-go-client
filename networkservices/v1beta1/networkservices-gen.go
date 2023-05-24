@@ -2139,6 +2139,9 @@ type ListGatewaysResponse struct {
 	// `next_page_token` as `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2538,7 +2541,7 @@ type Mesh struct {
 	// localhost (127.0.0.1) address. The SIDECAR proxy will expect all
 	// traffic to be redirected to this port regardless of its actual
 	// ip:port destination. If unset, a port '15001' is used as the
-	// interception port. This will is applicable only for sidecar proxy
+	// interception port. This is applicable only for sidecar proxy
 	// deployments.
 	InterceptionPort int64 `json:"interceptionPort,omitempty"`
 

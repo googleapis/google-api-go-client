@@ -1918,7 +1918,7 @@
       }
     }
   },
-  "revision": "20230503",
+  "revision": "20230517",
   "rootUrl": "https://datamigration.googleapis.com/",
   "schemas": {
     "AlloyDbConnectionProfile": {
@@ -3833,6 +3833,10 @@
         "privateConnectivity": {
           "$ref": "PrivateConnectivity",
           "description": "Private connectivity."
+        },
+        "ssl": {
+          "$ref": "SslConfig",
+          "description": "SSL configuration for the destination to connect to the source database. The supported configuration for Oracle SSL is of SERVER_ONLY type."
         },
         "staticServiceIpConnectivity": {
           "$ref": "StaticServiceIpConnectivity",

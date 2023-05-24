@@ -964,6 +964,7 @@
                       "type": "string"
                     },
                     "versionId": {
+                      "deprecated": true,
                       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
                       "location": "query",
                       "type": "string"
@@ -1863,6 +1864,7 @@
                   "type": "string"
                 },
                 "versionId": {
+                  "deprecated": true,
                   "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
                   "location": "query",
                   "type": "string"
@@ -2107,7 +2109,7 @@
       }
     }
   },
-  "revision": "20230515",
+  "revision": "20230522",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {

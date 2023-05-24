@@ -965,8 +965,8 @@ type BatchDeleteAssetsRequest struct {
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
 	// Names: Required. The IDs of the assets to delete. A maximum of 1000
-	// assets can be deleted in a batch. format:
-	// projects/{project}/locations/{location}/asset/{name}.
+	// assets can be deleted in a batch. Format:
+	// projects/{project}/locations/{location}/assets/{name}.
 	Names []string `json:"names,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowMissing") to

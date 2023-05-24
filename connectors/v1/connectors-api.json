@@ -1444,7 +1444,7 @@
       }
     }
   },
-  "revision": "20230503",
+  "revision": "20230517",
   "rootUrl": "https://connectors.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1780,6 +1780,25 @@
         },
         "connectorVersion": {
           "description": "Required. Connector version on which the connection is created. The format is: projects/*/locations/*/providers/*/connectors/*/versions/* Only global location is supported for ConnectorVersion resource.",
+          "type": "string"
+        },
+        "connectorVersionLaunchStage": {
+          "description": "Output only. Flag to mark the version indicating the launch stage.",
+          "enum": [
+            "LAUNCH_STAGE_UNSPECIFIED",
+            "PREVIEW",
+            "GA",
+            "DEPRECATED",
+            "PRIVATE_PREVIEW"
+          ],
+          "enumDescriptions": [
+            "LAUNCH_STAGE_UNSPECIFIED.",
+            "PREVIEW.",
+            "GA.",
+            "DEPRECATED.",
+            "PRIVATE_PREVIEW."
+          ],
+          "readOnly": true,
           "type": "string"
         },
         "createTime": {
@@ -3013,6 +3032,10 @@
           "description": "Authorization code to be exchanged for access and refresh tokens.",
           "type": "string"
         },
+        "authUri": {
+          "description": "Auth URL for Authorization Code Flow",
+          "type": "string"
+        },
         "clientId": {
           "description": "Client ID for user-provided OAuth app.",
           "type": "string"
@@ -3604,6 +3627,11 @@
           "description": "Output only. Flag indicates if user is in PayG model",
           "readOnly": true,
           "type": "boolean"
+        },
+        "tenantProjectId": {
+          "description": "Output only. Tenant project id of the consumer project.",
+          "readOnly": true,
+          "type": "string"
         },
         "vpcsc": {
           "description": "Optional. Flag indicates whether vpc-sc is enabled.",

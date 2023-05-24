@@ -462,6 +462,40 @@ func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AwsDiskDetails: The details of an AWS instance disk.
+type AwsDiskDetails struct {
+	// DiskNumber: The ordinal number of the disk.
+	DiskNumber int64 `json:"diskNumber,omitempty"`
+
+	// SizeGb: Size in GB.
+	SizeGb int64 `json:"sizeGb,omitempty,string"`
+
+	// VolumeId: AWS volume ID.
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskNumber") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsDiskDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsDiskDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AwsSecurityGroup: AwsSecurityGroup describes a security group of an
 // AWS VM.
 type AwsSecurityGroup struct {
@@ -568,6 +602,9 @@ type AwsSourceVmDetails struct {
 	// CommittedStorageBytes: The total size of the disks being migrated in
 	// bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
+
+	// Disks: The disks attached to the source VM.
+	Disks []*AwsDiskDetails `json:"disks,omitempty"`
 
 	// Firmware: The firmware type of the source VM.
 	//

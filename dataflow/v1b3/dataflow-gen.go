@@ -4710,6 +4710,10 @@ type PubsubLocation struct {
 	// data.
 	DropLateData bool `json:"dropLateData,omitempty"`
 
+	// DynamicDestinations: If true, then this location represents dynamic
+	// topics.
+	DynamicDestinations bool `json:"dynamicDestinations,omitempty"`
+
 	// IdLabel: If set, contains a pubsub label from which to extract record
 	// ids. If left empty, record deduplication will be strictly best
 	// effort.

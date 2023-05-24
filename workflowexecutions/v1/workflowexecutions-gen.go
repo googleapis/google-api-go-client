@@ -291,7 +291,7 @@ type Execution struct {
 
 	// StateError: Output only. Error regarding the state of the Execution
 	// resource. For example, this field will have error details if the
-	// Execution data is unavailable due to revoked KMS key permissions.
+	// execution data is unavailable due to revoked KMS key permissions.
 	StateError *StateError `json:"stateError,omitempty"`
 
 	// Status: Output only. Status tracks the current steps and progress

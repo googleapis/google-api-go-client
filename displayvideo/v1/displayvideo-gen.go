@@ -10733,14 +10733,11 @@ type LineItem struct {
 	// guaranteed inventory source.
 	ReservationType string `json:"reservationType,omitempty"`
 
-	// TargetingExpansion: The targeting expansion
-	// (//support.google.com/displayvideo/answer/10191558) settings of the
-	// line item. This config is only applicable when eligible audience list
-	// targeting is assigned to the line item. Beginning **March 25, 2023**,
-	// these settings may represent the optimized targeting feature
-	// (//support.google.com/displayvideo/answer/12060859) in place of
-	// targeting expansion. This feature will be rolled out to all partners
-	// by early May 2023.
+	// TargetingExpansion: The optimized targeting
+	// (//support.google.com/displayvideo/answer/12060859) settings of the
+	// line item. This config is only applicable for display, video, or
+	// audio line items that use automated bidding and positively target
+	// eligible audience lists.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the line item was last
@@ -10919,9 +10916,9 @@ type LineItemFlight struct {
 	//   "LINE_ITEM_FLIGHT_DATE_TYPE_CUSTOM" - The line item uses its own
 	// custom flight dates.
 	//   "LINE_ITEM_FLIGHT_DATE_TYPE_TRIGGER" - The line item uses a
-	// trigger. **Warning:** Line Items using manual triggers will stop
-	// serving in Display & Video 360 on **May 17, 2023**. Read our [feature
-	// deprecation
+	// trigger. **Warning:** Line Items using manual triggers no longer
+	// serve in Display & Video 360. This value will sunset on August 1,
+	// 2023. Read our [feature deprecation
 	// announcement](/display-video/api/deprecations#features.manual_triggers
 	// ) for more information.
 	FlightDateType string `json:"flightDateType,omitempty"`
@@ -10932,9 +10929,9 @@ type LineItemFlight struct {
 	// When set, the line item's flight dates are inherited from its parent
 	// insertion order. * Active line items will spend when the selected
 	// trigger is activated within the parent insertion order's flight
-	// dates. **Warning:** Line Items using manual triggers will stop
-	// serving in Display & Video 360 on **May 17, 2023**. Read our feature
-	// deprecation announcement
+	// dates. **Warning:** Line Items using manual triggers no longer serve
+	// in Display & Video 360. This field will sunset on August 1, 2023.
+	// Read our feature deprecation announcement
 	// (/display-video/api/deprecations#features.manual_triggers) for more
 	// information.
 	TriggerId int64 `json:"triggerId,omitempty,string"`
@@ -12294,9 +12291,9 @@ func (s *LookupInvoiceCurrencyResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ManualTrigger: A single manual trigger in Display & Video 360.
-// **Warning:** Line Items using manual triggers will stop serving in
-// Display & Video 360 on **May 17, 2023**. Read our feature deprecation
-// announcement
+// **Warning:** Line Items using manual triggers no longer serve in
+// Display & Video 360. This resource will sunset on August 1, 2023.
+// Read our feature deprecation announcement
 // (/display-video/api/deprecations#features.manual_triggers) for more
 // information.
 type ManualTrigger struct {
@@ -15202,57 +15199,41 @@ func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TargetingExpansionConfig: Settings that control the targeting
-// expansion of the line item. Targeting expansion allows the line item
-// to reach a larger audience based on the original audience list and
-// the targeting expansion level. Beginning **March 25, 2023**, these
-// settings may represent the optimized targeting feature
-// (//support.google.com/displayvideo/answer/12060859) in place of
-// targeting expansion. This feature will be rolled out to all partners
-// by early May 2023.
+// TargetingExpansionConfig: Settings that control the optimized
+// targeting (//support.google.com/displayvideo/answer/12060859)
+// settings of the line item.
 type TargetingExpansionConfig struct {
-	// ExcludeFirstPartyAudience: Required. Whether to exclude first-party
-	// audiences from use in targeting expansion or optimized targeting.
-	// Similar audiences of the excluded first-party lists will not be
-	// excluded. Only applicable when a first-party audience is positively
-	// targeted (directly or included in a combined audience), otherwise
-	// this selection will be ignored. Beginning **March 25, 2023**, this
-	// field may be deprecated with the replacement of targeting expansion
-	// with optimized targeting
-	// (//support.google.com/displayvideo/answer/12060859). Upon
-	// deprecation, this field will be set to `false`. If this field is set
-	// to `true` when deprecated, all positive first-party audience
-	// targeting assigned to this line item will be replaced with negative
-	// targeting of the same first-party audiences to ensure the continued
-	// exclusion of those audiences. This field will be deprecated for all
-	// partners by early May 2023.
+	// ExcludeFirstPartyAudience: Whether to exclude first-party audiences
+	// from use in targeting expansion. This field was deprecated with the
+	// launch of optimized targeting
+	// (//support.google.com/displayvideo/answer/12060859). This field will
+	// be set to `false`. If this field is set to `true` when deprecated,
+	// all positive first-party audience targeting assigned to this line
+	// item will be replaced with negative targeting of the same first-party
+	// audiences to ensure the continued exclusion of those audiences.
 	ExcludeFirstPartyAudience bool `json:"excludeFirstPartyAudience,omitempty"`
 
-	// TargetingExpansionLevel: Required. Magnitude of expansion for
-	// applicable targeting under this line item. Beginning **March 25,
-	// 2023**, the behavior of this field may change in the following ways
-	// with the replacement of targeting expansion with optimized targeting
-	// (//support.google.com/displayvideo/answer/12060859): * This field
-	// will represent the optimized targeting checkbox, with a
-	// `NO_EXPANSION` value representing optimized targeting turned off and
-	// a `LEAST_EXPANSION` value representing optimized targeting turned on.
-	// * `NO_EXPANSION` will be the default value for the field and will be
-	// automatically assigned if you do not set the field. * If you set the
-	// field to any value other than `NO_EXPANSION`, it will automatically
-	// be set to `LEAST_EXPANSION`. This behavior will be rolled out to all
-	// partners by early May 2023.
+	// TargetingExpansionLevel: Required. Whether optimized targeting is
+	// turned on. This field supports the following values: *
+	// `NO_EXPANSION`: optimized targeting is turned off *
+	// `LEAST_EXPANSION`: optimized targeting is turned on If this field is
+	// set to any other value, it will automatically be set to
+	// `LEAST_EXPANSION`. `NO_EXPANSION` will be the default value for the
+	// field and will be automatically assigned if you do not set the field.
 	//
 	// Possible values:
-	//   "TARGETING_EXPANSION_LEVEL_UNSPECIFIED" - Targeting expansion level
-	// is not specified or is unknown in this version.
-	//   "NO_EXPANSION" - Targeting expansion off.
-	//   "LEAST_EXPANSION" - Conservative targeting expansion, lowest reach.
-	//   "SOME_EXPANSION" - Moderately conservative targeting expansion,
-	// lower reach.
-	//   "BALANCED_EXPANSION" - Moderate targeting expansion, medium reach.
-	//   "MORE_EXPANSION" - Moderately aggressive targeting expansion,
-	// higher reach.
-	//   "MOST_EXPANSION" - Aggressive targeting expansion, highest reach.
+	//   "TARGETING_EXPANSION_LEVEL_UNSPECIFIED" - The optimized targeting
+	// setting is not specified or is unknown in this version.
+	//   "NO_EXPANSION" - Optimized targeting is off.
+	//   "LEAST_EXPANSION" - Optimized targeting is on.
+	//   "SOME_EXPANSION" - If used, will automatically be set to
+	// `LEAST_EXPANSION`.
+	//   "BALANCED_EXPANSION" - If used, will automatically be set to
+	// `LEAST_EXPANSION`.
+	//   "MORE_EXPANSION" - If used, will automatically be set to
+	// `LEAST_EXPANSION`.
+	//   "MOST_EXPANSION" - If used, will automatically be set to
+	// `LEAST_EXPANSION`.
 	TargetingExpansionLevel string `json:"targetingExpansionLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -28756,9 +28737,9 @@ type AdvertisersManualTriggersActivateCall struct {
 
 // Activate: Activates a manual trigger. Each activation of the manual
 // trigger must be at least 5 minutes apart, otherwise an error will be
-// returned. **Warning:** Line Items using manual triggers will stop
-// serving in Display & Video 360 on **May 17, 2023**. Read our feature
-// deprecation announcement
+// returned. **Warning:** Line Items using manual triggers no longer
+// serve in Display & Video 360. This method will sunset on August 1,
+// 2023. Read our feature deprecation announcement
 // (/display-video/api/deprecations#features.manual_triggers) for more
 // information.
 //
@@ -28865,7 +28846,7 @@ func (c *AdvertisersManualTriggersActivateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+	//   "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:activate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.activate",
@@ -28918,8 +28899,8 @@ type AdvertisersManualTriggersCreateCall struct {
 
 // Create: Creates a new manual trigger. Returns the newly created
 // manual trigger if successful. **Warning:** Line Items using manual
-// triggers will stop serving in Display & Video 360 on **May 17,
-// 2023**. Read our feature deprecation announcement
+// triggers no longer serve in Display & Video 360. This method will
+// sunset on August 1, 2023. Read our feature deprecation announcement
 // (/display-video/api/deprecations#features.manual_triggers) for more
 // information.
 //
@@ -29023,7 +29004,7 @@ func (c *AdvertisersManualTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+	//   "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/manualTriggers",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.create",
@@ -29067,8 +29048,9 @@ type AdvertisersManualTriggersDeactivateCall struct {
 }
 
 // Deactivate: Deactivates a manual trigger. **Warning:** Line Items
-// using manual triggers will stop serving in Display & Video 360 on
-// **May 17, 2023**. Read our feature deprecation announcement
+// using manual triggers no longer serve in Display & Video 360. This
+// method will sunset on August 1, 2023. Read our feature deprecation
+// announcement
 // (/display-video/api/deprecations#features.manual_triggers) for more
 // information.
 //
@@ -29175,7 +29157,7 @@ func (c *AdvertisersManualTriggersDeactivateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deactivates a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+	//   "description": "Deactivates a manual trigger. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:deactivate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.deactivate",
@@ -29228,8 +29210,8 @@ type AdvertisersManualTriggersGetCall struct {
 }
 
 // Get: Gets a manual trigger. **Warning:** Line Items using manual
-// triggers will stop serving in Display & Video 360 on **May 17,
-// 2023**. Read our feature deprecation announcement
+// triggers no longer serve in Display & Video 360. This method will
+// sunset on August 1, 2023. Read our feature deprecation announcement
 // (/display-video/api/deprecations#features.manual_triggers) for more
 // information.
 //
@@ -29343,7 +29325,7 @@ func (c *AdvertisersManualTriggersGetCall) Do(opts ...googleapi.CallOption) (*Ma
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+	//   "description": "Gets a manual trigger. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.manualTriggers.get",
@@ -29394,8 +29376,9 @@ type AdvertisersManualTriggersListCall struct {
 // List: Lists manual triggers that are accessible to the current user
 // for a given advertiser ID. The order is defined by the order_by
 // parameter. A single advertiser_id is required. **Warning:** Line
-// Items using manual triggers will stop serving in Display & Video 360
-// on **May 17, 2023**. Read our feature deprecation announcement
+// Items using manual triggers no longer serve in Display & Video 360.
+// This method will sunset on August 1, 2023. Read our feature
+// deprecation announcement
 // (/display-video/api/deprecations#features.manual_triggers) for more
 // information.
 //
@@ -29549,7 +29532,7 @@ func (c *AdvertisersManualTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+	//   "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/manualTriggers",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.manualTriggers.list",
@@ -29632,9 +29615,9 @@ type AdvertisersManualTriggersPatchCall struct {
 }
 
 // Patch: Updates a manual trigger. Returns the updated manual trigger
-// if successful. **Warning:** Line Items using manual triggers will
-// stop serving in Display & Video 360 on **May 17, 2023**. Read our
-// feature deprecation announcement
+// if successful. **Warning:** Line Items using manual triggers no
+// longer serve in Display & Video 360. This method will sunset on
+// August 1, 2023. Read our feature deprecation announcement
 // (/display-video/api/deprecations#features.manual_triggers) for more
 // information.
 //
@@ -29748,7 +29731,7 @@ func (c *AdvertisersManualTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a manual trigger. Returns the updated manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+	//   "description": "Updates a manual trigger. Returns the updated manual trigger if successful. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.manualTriggers.patch",

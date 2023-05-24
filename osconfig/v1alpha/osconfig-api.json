@@ -110,6 +110,7 @@
         "locations": {
           "resources": {
             "instanceOSPoliciesCompliances": {
+              "deprecated": true,
               "methods": {
                 "get": {
                   "deprecated": true,
@@ -686,7 +687,7 @@
       }
     }
   },
-  "revision": "20230416",
+  "revision": "20230521",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "CVSSv3": {

@@ -1115,11 +1115,6 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 // OidcToken: Contains information needed for generating an OpenID
 // Connect token
 // (https://developers.google.com/identity/protocols/OpenIDConnect).
-// Service account email
-// (https://cloud.google.com/iam/docs/service-accounts) used for
-// generating the OIDC token. For more information on setting up
-// authentication, see Push subscriptions
-// (https://cloud.google.com/pubsub/docs/push).
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. The
 	// audience claim identifies the recipients that the JWT is intended
@@ -1130,6 +1125,11 @@ type OidcToken struct {
 	// specified, the Push endpoint URL will be used.
 	Audience string `json:"audience,omitempty"`
 
+	// ServiceAccountEmail: Service account email
+	// (https://cloud.google.com/iam/docs/service-accounts) used for
+	// generating the OIDC token. For more information on setting up
+	// authentication, see Push subscriptions
+	// (https://cloud.google.com/pubsub/docs/push).
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to

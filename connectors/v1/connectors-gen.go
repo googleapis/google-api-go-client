@@ -763,6 +763,17 @@ type Connection struct {
 	// global location is supported for ConnectorVersion resource.
 	ConnectorVersion string `json:"connectorVersion,omitempty"`
 
+	// ConnectorVersionLaunchStage: Output only. Flag to mark the version
+	// indicating the launch stage.
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - LAUNCH_STAGE_UNSPECIFIED.
+	//   "PREVIEW" - PREVIEW.
+	//   "GA" - GA.
+	//   "DEPRECATED" - DEPRECATED.
+	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
+	ConnectorVersionLaunchStage string `json:"connectorVersionLaunchStage,omitempty"`
+
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2340,6 +2351,9 @@ type Oauth2AuthCodeFlow struct {
 	// tokens.
 	AuthCode string `json:"authCode,omitempty"`
 
+	// AuthUri: Auth URL for Authorization Code Flow
+	AuthUri string `json:"authUri,omitempty"`
+
 	// ClientId: Client ID for user-provided OAuth app.
 	ClientId string `json:"clientId,omitempty"`
 
@@ -3155,6 +3169,10 @@ type Settings struct {
 
 	// Payg: Output only. Flag indicates if user is in PayG model
 	Payg bool `json:"payg,omitempty"`
+
+	// TenantProjectId: Output only. Tenant project id of the consumer
+	// project.
+	TenantProjectId string `json:"tenantProjectId,omitempty"`
 
 	// Vpcsc: Optional. Flag indicates whether vpc-sc is enabled.
 	Vpcsc bool `json:"vpcsc,omitempty"`

@@ -154,6 +154,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.BareMetalAdminClusters = NewProjectsLocationsBareMetalAdminClustersService(s)
 	rs.BareMetalClusters = NewProjectsLocationsBareMetalClustersService(s)
+	rs.BareMetalStandaloneClusters = NewProjectsLocationsBareMetalStandaloneClustersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.VmwareAdminClusters = NewProjectsLocationsVmwareAdminClustersService(s)
 	rs.VmwareClusters = NewProjectsLocationsVmwareClustersService(s)
@@ -166,6 +167,8 @@ type ProjectsLocationsService struct {
 	BareMetalAdminClusters *ProjectsLocationsBareMetalAdminClustersService
 
 	BareMetalClusters *ProjectsLocationsBareMetalClustersService
+
+	BareMetalStandaloneClusters *ProjectsLocationsBareMetalStandaloneClustersService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -237,6 +240,27 @@ func NewProjectsLocationsBareMetalClustersOperationsService(s *Service) *Project
 }
 
 type ProjectsLocationsBareMetalClustersOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsBareMetalStandaloneClustersService(s *Service) *ProjectsLocationsBareMetalStandaloneClustersService {
+	rs := &ProjectsLocationsBareMetalStandaloneClustersService{s: s}
+	rs.BareMetalStandaloneNodePools = NewProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService(s)
+	return rs
+}
+
+type ProjectsLocationsBareMetalStandaloneClustersService struct {
+	s *Service
+
+	BareMetalStandaloneNodePools *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService
+}
+
+func NewProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService(s *Service) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService {
+	rs := &ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService struct {
 	s *Service
 }
 
@@ -318,11 +342,11 @@ type ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsService struct {
 // Authorization: Authorization defines the On-Prem cluster
 // authorization configuration to bootstrap onto the admin cluster.
 type Authorization struct {
-	// AdminUsers: Required. For VMware user, bare metal user and standalone
-	// clusters, users that will be granted the cluster-admin role on the
-	// cluster, providing full access to the cluster. For bare metal Admin
-	// cluster, users will be granted the view role, which is a view only
-	// access.
+	// AdminUsers: Required. For VMware and bare metal user clusters, users
+	// will be granted the cluster-admin role on the cluster, which provides
+	// full administrative access to the cluster. For bare metal admin
+	// clusters, users will be granted the cluster-view role, which limits
+	// users to read-only access.
 	AdminUsers []*ClusterUser `json:"adminUsers,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminUsers") to
@@ -1703,7 +1727,7 @@ func (s *BareMetalIslandModeCidrConfig) MarshalJSON() ([]byte, error) {
 }
 
 // BareMetalKubeletConfig: KubeletConfig defines the modifiable kubelet
-// configurations for baremetal machines. Note: this list includes
+// configurations for bare metal machines. Note: this list includes
 // fields supported in GKE (see
 // https://cloud.google.com/kubernetes-engine/docs/how-to/node-system-config#kubelet-options).
 type BareMetalKubeletConfig struct {
@@ -2344,8 +2368,8 @@ func (s *BareMetalNodePool) MarshalJSON() ([]byte, error) {
 // BareMetalNodePoolConfig: BareMetalNodePoolConfig describes the
 // configuration of all nodes within a given bare metal node pool.
 type BareMetalNodePoolConfig struct {
-	// KubeletConfig: The modifiable kubelet configurations for the
-	// baremetal machines.
+	// KubeletConfig: The modifiable kubelet configurations for the bare
+	// metal machines.
 	KubeletConfig *BareMetalKubeletConfig `json:"kubeletConfig,omitempty"`
 
 	// Labels: The labels assigned to nodes of this node pool. An object
@@ -2947,18 +2971,47 @@ func (s *EnrollBareMetalNodePoolRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EnrollBareMetalStandaloneNodePoolRequest: Message for enrolling an
+// existing bare metal standalone node pool to the GKE on-prem API.
+type EnrollBareMetalStandaloneNodePoolRequest struct {
+	// BareMetalStandaloneNodePoolId: User provided OnePlatform identifier
+	// that is used as part of the resource name. This value must be up to
+	// 40 characters and follow RFC-1123
+	// (https://tools.ietf.org/html/rfc1123) format.
+	BareMetalStandaloneNodePoolId string `json:"bareMetalStandaloneNodePoolId,omitempty"`
+
+	// ValidateOnly: If set, only validate the request, but do not actually
+	// enroll the node pool.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BareMetalStandaloneNodePoolId") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "BareMetalStandaloneNodePoolId") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnrollBareMetalStandaloneNodePoolRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnrollBareMetalStandaloneNodePoolRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EnrollVmwareAdminClusterRequest: Message for enrolling an existing
 // VMware admin cluster to the GKE on-prem API.
 type EnrollVmwareAdminClusterRequest struct {
-	// LocalName: The object name of the VMware OnPremAdminCluster custom
-	// resource on the associated admin cluster. This field is used to
-	// support conflicting resource names when enrolling existing clusters
-	// to the API. When not provided, this field will resolve to the
-	// vmware_admin_cluster_id. Otherwise, it must match the object name of
-	// the VMware OnPremAdminCluster custom resource. It is not modifiable
-	// outside / beyond the enrollment operation.
-	LocalName string `json:"localName,omitempty"`
-
 	// Membership: Required. This is the full resource name of this admin
 	// cluster's fleet membership.
 	Membership string `json:"membership,omitempty"`
@@ -2970,7 +3023,7 @@ type EnrollVmwareAdminClusterRequest struct {
 	// and follow RFC-1123 (https://tools.ietf.org/html/rfc1123) format.
 	VmwareAdminClusterId string `json:"vmwareAdminClusterId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LocalName") to
+	// ForceSendFields is a list of field names (e.g. "Membership") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2978,7 +3031,7 @@ type EnrollVmwareAdminClusterRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LocalName") to include in
+	// NullFields is a list of field names (e.g. "Membership") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3669,6 +3722,11 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 type OperationMetadata struct {
 	// ApiVersion: Output only. API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// ControlPlaneDisconnected: Output only. Denotes if the local managing
+	// cluster's control plane is currently disconnected. This is expected
+	// to occur temporarily during self-managed cluster upgrades.
+	ControlPlaneDisconnected bool `json:"controlPlaneDisconnected,omitempty"`
 
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -5017,8 +5075,8 @@ type VmwareCluster struct {
 	// NetworkConfig: The VMware user cluster network configuration.
 	NetworkConfig *VmwareNetworkConfig `json:"networkConfig,omitempty"`
 
-	// OnPremVersion: The Anthos clusters on the VMware version for your
-	// user cluster. Defaults to the admin cluster version.
+	// OnPremVersion: Required. The Anthos clusters on the VMware version
+	// for your user cluster.
 	OnPremVersion string `json:"onPremVersion,omitempty"`
 
 	// Reconciling: Output only. If set, there are currently changes in
@@ -11041,6 +11099,31 @@ func (r *ProjectsLocationsBareMetalClustersBareMetalNodePoolsService) Get(name s
 	return c
 }
 
+// View sets the optional parameter "view": View for bare metal node
+// pool. When `BASIC` is specified, only the node pool resource name is
+// returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the
+// same as `FULL', which returns the complete node pool configuration
+// details.
+//
+// Possible values:
+//
+//	"NODE_POOL_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a node pool resource
+//
+// including node pool resource name.
+//
+//	"FULL" - Includes the complete configuration for bare metal node
+//
+// pool resource. This is the default value for
+// GetBareMetalNodePoolRequest method.
+func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetCall) View(view string) *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11153,6 +11236,21 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetCall) Do(opts ..
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/bareMetalClusters/[^/]+/bareMetalNodePools/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for bare metal node pool. When `BASIC` is specified, only the node pool resource name is returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete node pool configuration details.",
+	//       "enum": [
+	//         "NODE_POOL_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a node pool resource including node pool resource name.",
+	//         "Includes the complete configuration for bare metal node pool resource. This is the default value for GetBareMetalNodePoolRequest method."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -11385,6 +11483,31 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsListCall) PageToken
 	return c
 }
 
+// View sets the optional parameter "view": View for bare metal node
+// pools. When `BASIC` is specified, only the node pool resource name is
+// returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the
+// same as `FULL', which returns the complete node pool configuration
+// details.
+//
+// Possible values:
+//
+//	"NODE_POOL_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a node pool resource
+//
+// including node pool resource name.
+//
+//	"FULL" - Includes the complete configuration for bare metal node
+//
+// pool resource. This is the default value for
+// ListBareMetalNodePoolsRequest method.
+func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsListCall) View(view string) *ProjectsLocationsBareMetalClustersBareMetalNodePoolsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11509,6 +11632,21 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsListCall) Do(opts .
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/bareMetalClusters/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for bare metal node pools. When `BASIC` is specified, only the node pool resource name is returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete node pool configuration details.",
+	//       "enum": [
+	//         "NODE_POOL_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a node pool resource including node pool resource name.",
+	//         "Includes the complete configuration for bare metal node pool resource. This is the default value for ListBareMetalNodePoolsRequest method."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/bareMetalNodePools",
@@ -11561,6 +11699,16 @@ func (r *ProjectsLocationsBareMetalClustersBareMetalNodePoolsService) Patch(name
 	c := &ProjectsLocationsBareMetalClustersBareMetalNodePoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.baremetalnodepool = baremetalnodepool
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the bare metal node pool is not found, the request will
+// create a new bare metal node pool with the provided configuration.
+// The user must have both create and update permission to call Update
+// with allow_missing set to true.
+func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsBareMetalClustersBareMetalNodePoolsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
@@ -11683,6 +11831,11 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsPatchCall) Do(opts 
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the bare metal node pool is not found, the request will create a new bare metal node pool with the provided configuration. The user must have both create and update permission to call Update with allow_missing set to true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Immutable. The bare metal node pool resource name.",
 	//       "location": "path",
@@ -12895,6 +13048,153 @@ func (c *ProjectsLocationsBareMetalClustersOperationsListCall) Pages(ctx context
 	}
 }
 
+// method id "gkeonprem.projects.locations.bareMetalStandaloneClusters.bareMetalStandaloneNodePools.enroll":
+
+type ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall struct {
+	s                                        *Service
+	parent                                   string
+	enrollbaremetalstandalonenodepoolrequest *EnrollBareMetalStandaloneNodePoolRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Enroll: Enrolls an existing bare metal standalone node pool to the
+// Anthos On-Prem API within a given project and location. Through
+// enrollment, an existing standalone node pool will become Anthos
+// On-Prem API managed. The corresponding GCP resources will be created.
+//
+//   - parent: The parent resource where this node pool will be created.
+//     projects/{project}/locations/{location}/bareMetalStandaloneClusters/
+//     {cluster}.
+func (r *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService) Enroll(parent string, enrollbaremetalstandalonenodepoolrequest *EnrollBareMetalStandaloneNodePoolRequest) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall {
+	c := &ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.enrollbaremetalstandalonenodepoolrequest = enrollbaremetalstandalonenodepoolrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Fields(s ...googleapi.Field) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Context(ctx context.Context) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enrollbaremetalstandalonenodepoolrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/bareMetalStandaloneNodePools:enroll")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkeonprem.projects.locations.bareMetalStandaloneClusters.bareMetalStandaloneNodePools.enroll" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enrolls an existing bare metal standalone node pool to the Anthos On-Prem API within a given project and location. Through enrollment, an existing standalone node pool will become Anthos On-Prem API managed. The corresponding GCP resources will be created.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/bareMetalStandaloneClusters/{bareMetalStandaloneClustersId}/bareMetalStandaloneNodePools:enroll",
+	//   "httpMethod": "POST",
+	//   "id": "gkeonprem.projects.locations.bareMetalStandaloneClusters.bareMetalStandaloneNodePools.enroll",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this node pool will be created. projects/{project}/locations/{location}/bareMetalStandaloneClusters/{cluster}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/bareMetalStandaloneClusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/bareMetalStandaloneNodePools:enroll",
+	//   "request": {
+	//     "$ref": "EnrollBareMetalStandaloneNodePoolRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "gkeonprem.projects.locations.operations.cancel":
 
 type ProjectsLocationsOperationsCancelCall struct {
@@ -13705,6 +14005,31 @@ func (r *ProjectsLocationsVmwareAdminClustersService) Get(name string) *Projects
 	return c
 }
 
+// View sets the optional parameter "view": View for VMware admin
+// cluster. When `BASIC` is specified, only the cluster resource name
+// and membership are returned. The default/unset value
+// `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the
+// complete cluster configuration details.
+//
+// Possible values:
+//
+//	"CLUSTER_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a cluster resource
+//
+// including cluster resource name and membership.
+//
+//	"FULL" - Includes the complete configuration for VMware admin
+//
+// cluster resource. This is the default value for
+// GetVmwareAdminClusterRequest method.
+func (c *ProjectsLocationsVmwareAdminClustersGetCall) View(view string) *ProjectsLocationsVmwareAdminClustersGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13817,6 +14142,21 @@ func (c *ProjectsLocationsVmwareAdminClustersGetCall) Do(opts ...googleapi.CallO
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/vmwareAdminClusters/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for VMware admin cluster. When `BASIC` is specified, only the cluster resource name and membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete cluster configuration details.",
+	//       "enum": [
+	//         "CLUSTER_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a cluster resource including cluster resource name and membership.",
+	//         "Includes the complete configuration for VMware admin cluster resource. This is the default value for GetVmwareAdminClusterRequest method."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -15255,7 +15595,8 @@ type ProjectsLocationsVmwareClustersCreateCall struct {
 	header_       http.Header
 }
 
-// Create: Creates a new VMware cluster in a given project and location.
+// Create: Creates a new VMware user cluster in a given project and
+// location.
 //
 //   - parent: The parent of the project and location where this cluster
 //     is created in. Format: "projects/{project}/locations/{location}".
@@ -15373,7 +15714,7 @@ func (c *ProjectsLocationsVmwareClustersCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new VMware cluster in a given project and location.",
+	//   "description": "Creates a new VMware user cluster in a given project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/vmwareClusters",
 	//   "httpMethod": "POST",
 	//   "id": "gkeonprem.projects.locations.vmwareClusters.create",
@@ -18094,6 +18435,31 @@ func (r *ProjectsLocationsVmwareClustersVmwareNodePoolsService) Get(name string)
 	return c
 }
 
+// View sets the optional parameter "view": View for VMware node pool.
+// When `BASIC` is specified, only the node pool resource name is
+// returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the
+// same as `FULL', which returns the complete node pool configuration
+// details.
+//
+// Possible values:
+//
+//	"NODE_POOL_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a node pool resource
+//
+// including node pool resource name.
+//
+//	"FULL" - Includes the complete configuration for VMware node pool
+//
+// resource. This is the default value for GetVmwareNodePoolRequest
+// method.
+func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetCall) View(view string) *ProjectsLocationsVmwareClustersVmwareNodePoolsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -18206,6 +18572,21 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetCall) Do(opts ...googl
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/vmwareClusters/[^/]+/vmwareNodePools/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for VMware node pool. When `BASIC` is specified, only the node pool resource name is returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete node pool configuration details.",
+	//       "enum": [
+	//         "NODE_POOL_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a node pool resource including node pool resource name.",
+	//         "Includes the complete configuration for VMware node pool resource. This is the default value for GetVmwareNodePoolRequest method."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -18438,6 +18819,31 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsListCall) PageToken(pageT
 	return c
 }
 
+// View sets the optional parameter "view": View for VMware node pools.
+// When `BASIC` is specified, only the node pool resource name is
+// returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the
+// same as `FULL', which returns the complete node pool configuration
+// details.
+//
+// Possible values:
+//
+//	"NODE_POOL_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// `FULL` view is used.
+//
+//	"BASIC" - Includes basic information of a node pool resource
+//
+// including node pool resource name.
+//
+//	"FULL" - Includes the complete configuration for VMware node pool
+//
+// resource. This is the default value for ListVmwareNodePoolsRequest
+// method.
+func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsListCall) View(view string) *ProjectsLocationsVmwareClustersVmwareNodePoolsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -18561,6 +18967,21 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsListCall) Do(opts ...goog
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/vmwareClusters/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View for VMware node pools. When `BASIC` is specified, only the node pool resource name is returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the same as `FULL', which returns the complete node pool configuration details.",
+	//       "enum": [
+	//         "NODE_POOL_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "If the value is not set, the default `FULL` view is used.",
+	//         "Includes basic information of a node pool resource including node pool resource name.",
+	//         "Includes the complete configuration for VMware node pool resource. This is the default value for ListVmwareNodePoolsRequest method."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -19087,6 +19508,14 @@ func (r *ProjectsLocationsVmwareClustersVmwareNodePoolsService) Unenroll(name st
 	return c
 }
 
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the VMware node pool is not found, the request will succeed
+// but no action will be taken on the server and return a completed LRO.
+func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsUnenrollCall) AllowMissing(allowMissing bool) *ProjectsLocationsVmwareClustersVmwareNodePoolsUnenrollCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
 // Etag sets the optional parameter "etag": The current etag of the
 // VMware node pool. If an etag is provided and does not match the
 // current etag of node pool, deletion will be blocked and an ABORTED
@@ -19197,6 +19626,11 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsUnenrollCall) Do(opts ...
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the VMware node pool is not found, the request will succeed but no action will be taken on the server and return a completed LRO.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "etag": {
 	//       "description": "The current etag of the VMware node pool. If an etag is provided and does not match the current etag of node pool, deletion will be blocked and an ABORTED error will be returned.",
 	//       "location": "query",

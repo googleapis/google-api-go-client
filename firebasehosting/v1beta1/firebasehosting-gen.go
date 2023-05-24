@@ -5973,6 +5973,7 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 	//       "type": "string"
 	//     },
 	//     "versionId": {
+	//       "deprecated": true,
 	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"
@@ -10256,6 +10257,7 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 	//       "type": "string"
 	//     },
 	//     "versionId": {
+	//       "deprecated": true,
 	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"

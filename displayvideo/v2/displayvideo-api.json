@@ -3925,7 +3925,7 @@
         "manualTriggers": {
           "methods": {
             "activate": {
-              "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+              "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
               "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:activate",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.manualTriggers.activate",
@@ -3963,7 +3963,7 @@
               ]
             },
             "create": {
-              "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+              "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
               "flatPath": "v2/advertisers/{advertisersId}/manualTriggers",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.manualTriggers.create",
@@ -3992,7 +3992,7 @@
               ]
             },
             "deactivate": {
-              "description": "Deactivates a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+              "description": "Deactivates a manual trigger. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
               "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:deactivate",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.manualTriggers.deactivate",
@@ -4030,7 +4030,7 @@
               ]
             },
             "get": {
-              "description": "Gets a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+              "description": "Gets a manual trigger. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
               "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
               "httpMethod": "GET",
               "id": "displayvideo.advertisers.manualTriggers.get",
@@ -4065,7 +4065,7 @@
               ]
             },
             "list": {
-              "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+              "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
               "flatPath": "v2/advertisers/{advertisersId}/manualTriggers",
               "httpMethod": "GET",
               "id": "displayvideo.advertisers.manualTriggers.list",
@@ -4112,7 +4112,7 @@
               ]
             },
             "patch": {
-              "description": "Updates a manual trigger. Returns the updated manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+              "description": "Updates a manual trigger. Returns the updated manual trigger if successful. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This method will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
               "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
               "httpMethod": "PATCH",
               "id": "displayvideo.advertisers.manualTriggers.patch",
@@ -9172,7 +9172,7 @@
       }
     }
   },
-  "revision": "20230504",
+  "revision": "20230518",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -17021,7 +17021,7 @@
         },
         "targetingExpansion": {
           "$ref": "TargetingExpansionConfig",
-          "description": "The [targeting expansion](//support.google.com/displayvideo/answer/10191558) settings of the line item. This config is only applicable when eligible audience list targeting is assigned to the line item. Beginning **March 25, 2023**, these settings may represent the [optimized targeting feature](//support.google.com/displayvideo/answer/12060859) in place of targeting expansion. This feature will be rolled out to all partners by early May 2023."
+          "description": "The [optimized targeting](//support.google.com/displayvideo/answer/12060859) settings of the line item. This config is only applicable for display, video, or audio line items that use automated bidding and positively target eligible audience lists."
         },
         "updateTime": {
           "description": "Output only. The timestamp when the line item was last updated. Assigned by the system.",
@@ -17816,7 +17816,7 @@
       "type": "object"
     },
     "ManualTrigger": {
-      "description": "A single manual trigger in Display \u0026 Video 360. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
+      "description": "A single manual trigger in Display \u0026 Video 360. **Warning:** Line Items using manual triggers no longer serve in Display \u0026 Video 360. This resource will sunset on August 1, 2023. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
       "id": "ManualTrigger",
       "properties": {
         "activationDurationMinutes": {
@@ -19792,15 +19792,15 @@
       "type": "object"
     },
     "TargetingExpansionConfig": {
-      "description": "Settings that control the targeting expansion of the line item. Targeting expansion allows the line item to reach a larger audience based on the original audience list and the targeting expansion level. Beginning **March 25, 2023**, these settings may represent the [optimized targeting feature](//support.google.com/displayvideo/answer/12060859) in place of targeting expansion. This feature will be rolled out to all partners by early May 2023.",
+      "description": "Settings that control the [optimized targeting](//support.google.com/displayvideo/answer/12060859) settings of the line item.",
       "id": "TargetingExpansionConfig",
       "properties": {
         "excludeFirstPartyAudience": {
-          "description": "Required. Whether to exclude first-party audiences from use in targeting expansion or optimized targeting. Similar audiences of the excluded first-party lists will not be excluded. Only applicable when a first-party audience is positively targeted (directly or included in a combined audience), otherwise this selection will be ignored. Beginning **March 25, 2023**, this field may be deprecated with the replacement of targeting expansion with [optimized targeting](//support.google.com/displayvideo/answer/12060859). Upon deprecation, this field will be set to `false`. If this field is set to `true` when deprecated, all positive first-party audience targeting assigned to this line item will be replaced with negative targeting of the same first-party audiences to ensure the continued exclusion of those audiences. This field will be deprecated for all partners by early May 2023.",
+          "description": "Whether to exclude first-party audiences from use in targeting expansion. This field was deprecated with the launch of [optimized targeting](//support.google.com/displayvideo/answer/12060859). This field will be set to `false`. If this field is set to `true` when deprecated, all positive first-party audience targeting assigned to this line item will be replaced with negative targeting of the same first-party audiences to ensure the continued exclusion of those audiences.",
           "type": "boolean"
         },
         "targetingExpansionLevel": {
-          "description": "Required. Magnitude of expansion for applicable targeting under this line item. Beginning **March 25, 2023**, the behavior of this field may change in the following ways with the replacement of targeting expansion with [optimized targeting](//support.google.com/displayvideo/answer/12060859): * This field will represent the optimized targeting checkbox, with a `NO_EXPANSION` value representing optimized targeting turned off and a `LEAST_EXPANSION` value representing optimized targeting turned on. * `NO_EXPANSION` will be the default value for the field and will be automatically assigned if you do not set the field. * If you set the field to any value other than `NO_EXPANSION`, it will automatically be set to `LEAST_EXPANSION`. This behavior will be rolled out to all partners by early May 2023.",
+          "description": "Required. Whether optimized targeting is turned on. This field supports the following values: * `NO_EXPANSION`: optimized targeting is turned off * `LEAST_EXPANSION`: optimized targeting is turned on If this field is set to any other value, it will automatically be set to `LEAST_EXPANSION`. `NO_EXPANSION` will be the default value for the field and will be automatically assigned if you do not set the field.",
           "enum": [
             "TARGETING_EXPANSION_LEVEL_UNSPECIFIED",
             "NO_EXPANSION",
@@ -19811,13 +19811,13 @@
             "MOST_EXPANSION"
           ],
           "enumDescriptions": [
-            "Targeting expansion level is not specified or is unknown in this version.",
-            "Targeting expansion off.",
-            "Conservative targeting expansion, lowest reach.",
-            "Moderately conservative targeting expansion, lower reach.",
-            "Moderate targeting expansion, medium reach.",
-            "Moderately aggressive targeting expansion, higher reach.",
-            "Aggressive targeting expansion, highest reach."
+            "The optimized targeting setting is not specified or is unknown in this version.",
+            "Optimized targeting is off.",
+            "Optimized targeting is on.",
+            "If used, will automatically be set to `LEAST_EXPANSION`.",
+            "If used, will automatically be set to `LEAST_EXPANSION`.",
+            "If used, will automatically be set to `LEAST_EXPANSION`.",
+            "If used, will automatically be set to `LEAST_EXPANSION`."
           ],
           "type": "string"
         }

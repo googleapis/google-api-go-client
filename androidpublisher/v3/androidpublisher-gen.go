@@ -14879,6 +14879,7 @@ func (c *InappproductsListCall) Do(opts ...googleapi.CallOption) (*Inappproducts
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
+	//       "deprecated": true,
 	//       "description": "Deprecated and ignored. The page size is determined by the server.",
 	//       "format": "uint32",
 	//       "location": "query",
@@ -14891,6 +14892,7 @@ func (c *InappproductsListCall) Do(opts ...googleapi.CallOption) (*Inappproducts
 	//       "type": "string"
 	//     },
 	//     "startIndex": {
+	//       "deprecated": true,
 	//       "description": "Deprecated and ignored. Set the `token` parameter to retrieve the next page.",
 	//       "format": "uint32",
 	//       "location": "query",

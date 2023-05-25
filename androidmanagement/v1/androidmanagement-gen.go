@@ -812,7 +812,9 @@ func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ApplicationPolicy: Policy for an individual app.
+// ApplicationPolicy: Policy for an individual app. Note: Application
+// availability on a given device cannot be changed using this policy if
+// installAppsDisabled is enabled.
 type ApplicationPolicy struct {
 	// AccessibleTrackIds: List of the app’s track IDs that a device
 	// belonging to the enterprise can access. If the list contains multiple
@@ -2191,8 +2193,8 @@ func (s *Device) MarshalJSON() ([]byte, error) {
 // DeviceConnectivityManagement: Covers controls for device connectivity
 // such as Wi-Fi, USB data access, keyboard/mouse connections, and more.
 type DeviceConnectivityManagement struct {
-	// UsbDataAccess: Controls what can be transferred via USB, files and/or
-	// data. This is supported only on company-owned devices.
+	// UsbDataAccess: Controls what files and/or data can be transferred via
+	// USB. Supported only on company-owned devices.
 	//
 	// Possible values:
 	//   "USB_DATA_ACCESS_UNSPECIFIED" - Unspecified. Defaults to

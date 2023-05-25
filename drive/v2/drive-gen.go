@@ -3453,10 +3453,10 @@ type Permission struct {
 
 	// ExpirationDate: The time at which this permission will expire (RFC
 	// 3339 date-time). Expiration dates have the following restrictions: -
-	// They cannot be set on shared drive items - They can only be set on
-	// user and group permissions - The date must be in the future - The
-	// date cannot be more than a year in the future - The date can only be
-	// set on drive.permissions.update or drive.permissions.patch requests
+	// They can only be set on user and group permissions - The date must be
+	// in the future - The date cannot be more than a year in the future -
+	// The date can only be set on drive.permissions.update or
+	// drive.permissions.patch requests
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
 	// Id: The ID of the user this permission refers to, and identical to
@@ -5125,11 +5125,13 @@ func (c *ChangesGetCall) Do(opts ...googleapi.CallOption) (*Change, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `driveId` instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -5315,11 +5317,13 @@ func (c *ChangesGetStartPageTokenCall) Do(opts ...googleapi.CallOption) (*StartP
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `driveId` instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -5625,6 +5629,7 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//     },
 	//     "includeTeamDriveItems": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -5648,6 +5653,7 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//       "type": "string"
 	//     },
 	//     "startChangeId": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `pageToken` instead.",
 	//       "format": "int64",
 	//       "location": "query",
@@ -5661,11 +5667,13 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `driveId` instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -5986,6 +5994,7 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     },
 	//     "includeTeamDriveItems": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -6009,6 +6018,7 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "startChangeId": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `pageToken` instead.",
 	//       "format": "int64",
 	//       "location": "query",
@@ -6022,11 +6032,13 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `driveId` instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -6270,6 +6282,7 @@ func (c *ChildrenDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: If an item is not in a shared drive and its last parent is removed, the item is placed under its owner's root.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -6597,6 +6610,7 @@ func (c *ChildrenInsertCall) Do(opts ...googleapi.CallOption) (*ChildReference, 
 	//   "parameters": {
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -6615,6 +6629,7 @@ func (c *ChildrenInsertCall) Do(opts ...googleapi.CallOption) (*ChildReference, 
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -9118,6 +9133,7 @@ func (c *FilesCopyCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Copying files into multiple folders is no longer supported. Use shortcuts instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -9163,6 +9179,7 @@ func (c *FilesCopyCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -9326,6 +9343,7 @@ func (c *FilesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   "parameters": {
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item is placed under its owner's root.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -9344,6 +9362,7 @@ func (c *FilesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -9461,6 +9480,7 @@ func (c *FilesEmptyTrashCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item is placed under its owner's root.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -10040,6 +10060,7 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "type": "string"
 	//     },
 	//     "projection": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: This parameter has no function.",
 	//       "enum": [
 	//         "BASIC",
@@ -10065,12 +10086,14 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "updateViewedDate": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `files.update` with `modifiedDateBehavior=noChange, updateViewedDate=true` and an empty request body.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -10423,6 +10446,7 @@ func (c *FilesInsertCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Creating files in multiple folders is no longer supported.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -10462,6 +10486,7 @@ func (c *FilesInsertCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -10784,6 +10809,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//       "type": "string"
 	//     },
 	//     "corpus": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: The body of items (files/documents) to which the query applies. Use `corpora` instead.",
 	//       "enum": [
 	//         "DEFAULT",
@@ -10819,6 +10845,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//     },
 	//     "includeTeamDriveItems": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -10842,6 +10869,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//       "type": "string"
 	//     },
 	//     "projection": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: This parameter has no function.",
 	//       "enum": [
 	//         "BASIC",
@@ -10872,11 +10900,13 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `driveId` instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -11559,12 +11589,14 @@ func (c *FilesPatchCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "convert": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: This parameter has no function.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -11648,6 +11680,7 @@ func (c *FilesPatchCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -11863,6 +11896,7 @@ func (c *FilesTouchCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -12061,6 +12095,7 @@ func (c *FilesTrashCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -12251,6 +12286,7 @@ func (c *FilesUntrashCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -12654,12 +12690,14 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "convert": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: This parameter has no function.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -12743,6 +12781,7 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -13001,6 +13040,7 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "projection": {
+	//       "deprecated": true,
 	//       "description": "Deprecated: This parameter has no function.",
 	//       "enum": [
 	//         "BASIC",
@@ -13026,12 +13066,14 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "updateViewedDate": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -13163,6 +13205,7 @@ func (c *ParentsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   "parameters": {
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: If an item is not in a shared drive and its last parent is removed, the item is placed under its owner's root.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -13496,6 +13539,7 @@ func (c *ParentsInsertCall) Do(opts ...googleapi.CallOption) (*ParentReference, 
 	//   "parameters": {
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -13514,6 +13558,7 @@ func (c *ParentsInsertCall) Do(opts ...googleapi.CallOption) (*ParentReference, 
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -13826,6 +13871,7 @@ func (c *PermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -14023,6 +14069,7 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permission, erro
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -14391,6 +14438,7 @@ func (c *PermissionsInsertCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: See `moveToNewOwnersRoot` for details.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -14421,6 +14469,7 @@ func (c *PermissionsInsertCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -14658,6 +14707,7 @@ func (c *PermissionsListCall) Do(opts ...googleapi.CallOption) (*PermissionList,
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -14899,6 +14949,7 @@ func (c *PermissionsPatchCall) Do(opts ...googleapi.CallOption) (*Permission, er
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -15124,6 +15175,7 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
+	//       "deprecated": true,
 	//       "description": "Deprecated: Use `supportsAllDrives` instead.",
 	//       "location": "query",
 	//       "type": "boolean"

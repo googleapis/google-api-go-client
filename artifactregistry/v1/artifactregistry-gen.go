@@ -1001,7 +1001,7 @@ func (s *ImportGoogetArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
 // ImportGoogetArtifactsGcsSource: Google Cloud Storage location where
 // the artifacts currently reside.
 type ImportGoogetArtifactsGcsSource struct {
-	// Uris: Cloud Storage paths URI (e.g., gs://my_bucket/my_object).
+	// Uris: Cloud Storage paths URI (e.g., `gs://my_bucket/my_object`).
 	Uris []string `json:"uris,omitempty"`
 
 	// UseWildcards: Supports URI wildcards for matching multiple objects
@@ -1979,7 +1979,7 @@ type Package struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: The name of the package, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1".
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`.
 	// If the package ID part contains slashes, the slashes are escaped.
 	Name string `json:"name,omitempty"`
 
@@ -2708,7 +2708,7 @@ type UploadGoogetArtifactRequest struct {
 // upload operation. This response is contained in the Operation and
 // available to users.
 type UploadGoogetArtifactResponse struct {
-	// GoogetArtifacts: The Apt artifacts updated.
+	// GoogetArtifacts: The GooGet artifacts updated.
 	GoogetArtifacts []*GoogetArtifact `json:"googetArtifacts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GoogetArtifacts") to

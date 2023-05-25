@@ -269,11 +269,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -314,11 +316,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -387,6 +391,7 @@
             },
             "includeTeamDriveItems": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -410,6 +415,7 @@
               "type": "string"
             },
             "startChangeId": {
+              "deprecated": true,
               "description": "Deprecated: Use `pageToken` instead.",
               "format": "int64",
               "location": "query",
@@ -423,11 +429,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -497,6 +505,7 @@
             },
             "includeTeamDriveItems": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -520,6 +529,7 @@
               "type": "string"
             },
             "startChangeId": {
+              "deprecated": true,
               "description": "Deprecated: Use `pageToken` instead.",
               "format": "int64",
               "location": "query",
@@ -533,11 +543,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -612,6 +624,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: If an item is not in a shared drive and its last parent is removed, the item is placed under its owner's root.",
               "location": "query",
               "type": "boolean"
@@ -677,6 +690,7 @@
           "parameters": {
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
               "location": "query",
               "type": "boolean"
@@ -695,6 +709,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1226,6 +1241,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Copying files into multiple folders is no longer supported. Use shortcuts instead.",
               "location": "query",
               "type": "boolean"
@@ -1271,6 +1287,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1326,6 +1343,7 @@
           "parameters": {
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item is placed under its owner's root.",
               "location": "query",
               "type": "boolean"
@@ -1344,6 +1362,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1370,6 +1389,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item is placed under its owner's root.",
               "location": "query",
               "type": "boolean"
@@ -1483,6 +1503,7 @@
               "type": "string"
             },
             "projection": {
+              "deprecated": true,
               "description": "Deprecated: This parameter has no function.",
               "enum": [
                 "BASIC",
@@ -1508,12 +1529,14 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "updateViewedDate": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `files.update` with `modifiedDateBehavior=noChange, updateViewedDate=true` and an empty request body.",
               "location": "query",
               "type": "boolean"
@@ -1567,6 +1590,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Creating files in multiple folders is no longer supported.",
               "location": "query",
               "type": "boolean"
@@ -1606,6 +1630,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1669,6 +1694,7 @@
               "type": "string"
             },
             "corpus": {
+              "deprecated": true,
               "description": "Deprecated: The body of items (files/documents) to which the query applies. Use `corpora` instead.",
               "enum": [
                 "DEFAULT",
@@ -1704,6 +1730,7 @@
             },
             "includeTeamDriveItems": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1727,6 +1754,7 @@
               "type": "string"
             },
             "projection": {
+              "deprecated": true,
               "description": "Deprecated: This parameter has no function.",
               "enum": [
                 "BASIC",
@@ -1757,11 +1785,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -1869,12 +1899,14 @@
             },
             "convert": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: This parameter has no function.",
               "location": "query",
               "type": "boolean"
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
               "location": "query",
               "type": "boolean"
@@ -1958,6 +1990,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2034,6 +2067,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2084,6 +2118,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2133,6 +2168,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2181,12 +2217,14 @@
             },
             "convert": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: This parameter has no function.",
               "location": "query",
               "type": "boolean"
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
               "location": "query",
               "type": "boolean"
@@ -2270,6 +2308,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2346,6 +2385,7 @@
               "type": "string"
             },
             "projection": {
+              "deprecated": true,
               "description": "Deprecated: This parameter has no function.",
               "enum": [
                 "BASIC",
@@ -2371,12 +2411,14 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "updateViewedDate": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.",
               "location": "query",
               "type": "boolean"
@@ -2417,6 +2459,7 @@
           "parameters": {
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: If an item is not in a shared drive and its last parent is removed, the item is placed under its owner's root.",
               "location": "query",
               "type": "boolean"
@@ -2488,6 +2531,7 @@
           "parameters": {
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.",
               "location": "query",
               "type": "boolean"
@@ -2506,6 +2550,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2588,6 +2633,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2635,6 +2681,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2706,6 +2753,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: See `moveToNewOwnersRoot` for details.",
               "location": "query",
               "type": "boolean"
@@ -2736,6 +2784,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2800,6 +2849,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2860,6 +2910,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2925,6 +2976,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -3790,7 +3842,7 @@
       }
     }
   },
-  "revision": "20230517",
+  "revision": "20230520",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -5989,7 +6041,7 @@
           "type": "string"
         },
         "expirationDate": {
-          "description": "The time at which this permission will expire (RFC 3339 date-time). Expiration dates have the following restrictions: - They cannot be set on shared drive items - They can only be set on user and group permissions - The date must be in the future - The date cannot be more than a year in the future - The date can only be set on drive.permissions.update or drive.permissions.patch requests",
+          "description": "The time at which this permission will expire (RFC 3339 date-time). Expiration dates have the following restrictions: - They can only be set on user and group permissions - The date must be in the future - The date cannot be more than a year in the future - The date can only be set on drive.permissions.update or drive.permissions.patch requests",
           "format": "date-time",
           "type": "string"
         },

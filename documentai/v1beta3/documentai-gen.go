@@ -719,10 +719,14 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse struct {
 
 // GoogleCloudDocumentaiUiv1beta3DocumentId: Document Identifier.
 type GoogleCloudDocumentaiUiv1beta3DocumentId struct {
+	// GcsManagedDocId: A document id within user managed Cloud Storage.
 	GcsManagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId `json:"gcsManagedDocId,omitempty"`
 
 	// RevisionRef: Points to a specific revision of the document if set.
 	RevisionRef *GoogleCloudDocumentaiUiv1beta3RevisionRef `json:"revisionRef,omitempty"`
+
+	// UnmanagedDocId: A document id within unmanaged dataset.
+	UnmanagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId `json:"unmanagedDocId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsManagedDocId") to
 	// unconditionally include in API requests. By default, fields with
@@ -749,8 +753,8 @@ func (s *GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId:
-// Identifies a document uniquely within the scope of a dataset in the
-// Cloud Storage option.
+// Identifies a document uniquely within the scope of a dataset in user
+// managed Cloud Storage option.
 type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
 	// CwDocId: Id of the document (indexed) managed by Content Warehouse.
 	CwDocId string `json:"cwDocId,omitempty"`
@@ -778,6 +782,36 @@ type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
 
 func (s *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId:
+// Identifies a document uniquely within the scope of a dataset in
+// unmanaged option.
+type GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId struct {
+	// DocId: Required. The id of the document.
+	DocId string `json:"docId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11857,23 +11891,23 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
-// representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness. For example,
-// the fields of this representation can be trivially provided to the
-// constructor of `java.awt.Color` in Java; it can also be trivially
-// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
-// and, with just a little work, it can be easily formatted into a CSS
-// `rgba()` string in JavaScript. This reference page doesn't carry
-// information about the absolute color space that should be used to
-// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications should assume the sRGB color space.
-// When color equality needs to be decided, implementations, unless
-// documented otherwise, treat two colors as equal if all their red,
-// green, blue, and alpha values each differ by at most 1e-5. Example
-// (Java): import com.google.type.Color; // ... public static
-// java.awt.Color fromProto(Color protocolor) { float alpha =
-// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
-// return new java.awt.Color( protocolor.getRed(),
+// representation is designed for simplicity of conversion to and from
+// color representations in various languages over compactness. For
+// example, the fields of this representation can be trivially provided
+// to the constructor of `java.awt.Color` in Java; it can also be
+// trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
+// method in iOS; and, with just a little work, it can be easily
+// formatted into a CSS `rgba()` string in JavaScript. This reference
+// page does not have information about the absolute color space that
+// should be used to interpret the RGB value—for example, sRGB, Adobe
+// RGB, DCI-P3, and BT.2020. By default, applications should assume the
+// sRGB color space. When color equality needs to be decided,
+// implementations, unless documented otherwise, treat two colors as
+// equal if all their red, green, blue, and alpha values each differ by
+// at most `1e-5`. Example (Java): import com.google.type.Color; // ...
+// public static java.awt.Color fromProto(Color protocolor) { float
+// alpha = protocolor.hasAlpha() ? protocolor.getAlpha().getValue() :
+// 1.0; return new java.awt.Color( protocolor.getRed(),
 // protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
 // Color toProto(java.awt.Color color) { float red = (float)
 // color.getRed(); float green = (float) color.getGreen(); float blue =

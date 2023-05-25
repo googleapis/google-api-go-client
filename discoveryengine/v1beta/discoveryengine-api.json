@@ -543,6 +543,80 @@
                         }
                       }
                     },
+                    "schemas": {
+                      "resources": {
+                        "operations": {
+                          "methods": {
+                            "get": {
+                              "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+                              "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/schemas/{schemasId}/operations/{operationsId}",
+                              "httpMethod": "GET",
+                              "id": "discoveryengine.projects.locations.collections.dataStores.schemas.operations.get",
+                              "parameterOrder": [
+                                "name"
+                              ],
+                              "parameters": {
+                                "name": {
+                                  "description": "The name of the operation resource.",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/schemas/[^/]+/operations/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1beta/{+name}",
+                              "response": {
+                                "$ref": "GoogleLongrunningOperation"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform"
+                              ]
+                            },
+                            "list": {
+                              "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
+                              "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/schemas/{schemasId}/operations",
+                              "httpMethod": "GET",
+                              "id": "discoveryengine.projects.locations.collections.dataStores.schemas.operations.list",
+                              "parameterOrder": [
+                                "name"
+                              ],
+                              "parameters": {
+                                "filter": {
+                                  "description": "The standard list filter.",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "description": "The name of the operation's parent resource.",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/schemas/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                },
+                                "pageSize": {
+                                  "description": "The standard list page size.",
+                                  "format": "int32",
+                                  "location": "query",
+                                  "type": "integer"
+                                },
+                                "pageToken": {
+                                  "description": "The standard list page token.",
+                                  "location": "query",
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1beta/{+name}/operations",
+                              "response": {
+                                "$ref": "GoogleLongrunningListOperationsResponse"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
                     "servingConfigs": {
                       "methods": {
                         "recommend": {
@@ -1536,7 +1610,7 @@
       }
     }
   },
-  "revision": "20230504",
+  "revision": "20230518",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {

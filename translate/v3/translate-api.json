@@ -175,6 +175,35 @@
             "https://www.googleapis.com/auth/cloud-translation"
           ]
         },
+        "romanizeText": {
+          "description": "Romanize input text written in non-Latin scripts to Latin text.",
+          "flatPath": "v3/projects/{projectsId}:romanizeText",
+          "httpMethod": "POST",
+          "id": "translate.projects.romanizeText",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
+              "location": "path",
+              "pattern": "^projects/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v3/{+parent}:romanizeText",
+          "request": {
+            "$ref": "RomanizeTextRequest"
+          },
+          "response": {
+            "$ref": "RomanizeTextResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-translation"
+          ]
+        },
         "translateText": {
           "description": "Translates input text and returns translated text.",
           "flatPath": "v3/projects/{projectsId}:translateText",
@@ -391,6 +420,35 @@
               "path": "v3/{+name}/locations",
               "response": {
                 "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-translation"
+              ]
+            },
+            "romanizeText": {
+              "description": "Romanize input text written in non-Latin scripts to Latin text.",
+              "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:romanizeText",
+              "httpMethod": "POST",
+              "id": "translate.projects.locations.romanizeText",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v3/{+parent}:romanizeText",
+              "request": {
+                "$ref": "RomanizeTextRequest"
+              },
+              "response": {
+                "$ref": "RomanizeTextResponse"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
@@ -1286,7 +1344,7 @@
       }
     }
   },
-  "revision": "20230428",
+  "revision": "20230519",
   "rootUrl": "https://translation.googleapis.com/",
   "schemas": {
     "BatchDocumentInputConfig": {
@@ -2167,6 +2225,53 @@
       },
       "type": "object"
     },
+    "Romanization": {
+      "description": "A single romanization response.",
+      "id": "Romanization",
+      "properties": {
+        "detectedLanguageCode": {
+          "description": "The ISO-639 language code of source text in the initial request, detected automatically, if no source language was passed within the initial request. If the source language was passed, auto-detection of the language does not occur and this field is empty.",
+          "type": "string"
+        },
+        "romanizedText": {
+          "description": "Romanized text. If an error occurs during romanization, this field might be excluded from the response.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RomanizeTextRequest": {
+      "description": "The request message for synchronous romanization.",
+      "id": "RomanizeTextRequest",
+      "properties": {
+        "contents": {
+          "description": "Required. The content of the input in string format.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sourceLanguageCode": {
+          "description": "Optional. The ISO-639 language code of the input text if known, for example, \"hi\" or \"zh\". If the source language isn't specified, the API attempts to identify the source language automatically and returns the source language for each content in the response.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RomanizeTextResponse": {
+      "description": "The response message for synchronous romanization.",
+      "id": "RomanizeTextResponse",
+      "properties": {
+        "romanizations": {
+          "description": "Text romanization responses. This field has the same length as `contents`.",
+          "items": {
+            "$ref": "Romanization"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
       "id": "Status",
@@ -2360,6 +2465,10 @@
         "targetLanguageCode": {
           "description": "Required. The ISO-639 language code to use for translation of the input text, set to one of the language codes listed in Language Support.",
           "type": "string"
+        },
+        "transliterationConfig": {
+          "$ref": "TransliterationConfig",
+          "description": "Optional. Transliteration to be applied."
         }
       },
       "type": "object"
@@ -2403,6 +2512,17 @@
         "translatedText": {
           "description": "Text translated into the target language. If an error occurs during translation, this field might be excluded from the response.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TransliterationConfig": {
+      "description": "Confugures transliteration feature on top of translation.",
+      "id": "TransliterationConfig",
+      "properties": {
+        "enableTransliteration": {
+          "description": "If true, source text in romanized form can be translated to the target language.",
+          "type": "boolean"
         }
       },
       "type": "object"

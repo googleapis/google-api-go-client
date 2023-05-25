@@ -171,11 +171,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -239,6 +241,7 @@
             },
             "includeTeamDriveItems": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -278,11 +281,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -347,6 +352,7 @@
             },
             "includeTeamDriveItems": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -386,11 +392,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -905,6 +913,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -988,6 +997,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1024,6 +1034,7 @@
           "parameters": {
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item will be placed under its owner's root.",
               "location": "query",
               "type": "boolean"
@@ -1042,6 +1053,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1068,6 +1080,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item will be placed under its owner's root.",
               "location": "query",
               "type": "boolean"
@@ -1188,6 +1201,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1223,6 +1237,7 @@
               "type": "string"
             },
             "corpus": {
+              "deprecated": true,
               "description": "Deprecated: The source of files to list. Use 'corpora' instead.",
               "enum": [
                 "domain",
@@ -1258,6 +1273,7 @@
             },
             "includeTeamDriveItems": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `includeItemsFromAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1300,11 +1316,13 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
             },
             "teamDriveId": {
+              "deprecated": true,
               "description": "Deprecated: Use `driveId` instead.",
               "location": "query",
               "type": "string"
@@ -1427,6 +1445,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Adding files to multiple folders is no longer supported. Use shortcuts instead.",
               "location": "query",
               "type": "boolean"
@@ -1471,6 +1490,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1537,6 +1557,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1581,6 +1602,7 @@
             },
             "enforceSingleParent": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: See `moveToNewOwnersRoot` for details.",
               "location": "query",
               "type": "boolean"
@@ -1610,6 +1632,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1669,6 +1692,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1716,6 +1740,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1781,6 +1806,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -1841,6 +1867,7 @@
             },
             "supportsTeamDrives": {
               "default": "false",
+              "deprecated": true,
               "description": "Deprecated: Use `supportsAllDrives` instead.",
               "location": "query",
               "type": "boolean"
@@ -2406,7 +2433,7 @@
       }
     }
   },
-  "revision": "20230517",
+  "revision": "20230520",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {

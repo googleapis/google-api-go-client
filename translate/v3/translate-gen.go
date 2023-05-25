@@ -2049,6 +2049,114 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Romanization: A single romanization response.
+type Romanization struct {
+	// DetectedLanguageCode: The ISO-639 language code of source text in the
+	// initial request, detected automatically, if no source language was
+	// passed within the initial request. If the source language was passed,
+	// auto-detection of the language does not occur and this field is
+	// empty.
+	DetectedLanguageCode string `json:"detectedLanguageCode,omitempty"`
+
+	// RomanizedText: Romanized text. If an error occurs during
+	// romanization, this field might be excluded from the response.
+	RomanizedText string `json:"romanizedText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DetectedLanguageCode") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedLanguageCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Romanization) MarshalJSON() ([]byte, error) {
+	type NoMethod Romanization
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RomanizeTextRequest: The request message for synchronous
+// romanization.
+type RomanizeTextRequest struct {
+	// Contents: Required. The content of the input in string format.
+	Contents []string `json:"contents,omitempty"`
+
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input
+	// text if known, for example, "hi" or "zh". If the source language
+	// isn't specified, the API attempts to identify the source language
+	// automatically and returns the source language for each content in the
+	// response.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RomanizeTextRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RomanizeTextRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RomanizeTextResponse: The response message for synchronous
+// romanization.
+type RomanizeTextResponse struct {
+	// Romanizations: Text romanization responses. This field has the same
+	// length as `contents`.
+	Romanizations []*Romanization `json:"romanizations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Romanizations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Romanizations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RomanizeTextResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RomanizeTextResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -2404,6 +2512,9 @@ type TranslateTextRequest struct {
 	// listed in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
 
+	// TransliterationConfig: Optional. Transliteration to be applied.
+	TransliterationConfig *TransliterationConfig `json:"transliterationConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2513,6 +2624,38 @@ type Translation struct {
 
 func (s *Translation) MarshalJSON() ([]byte, error) {
 	type NoMethod Translation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TransliterationConfig: Confugures transliteration feature on top of
+// translation.
+type TransliterationConfig struct {
+	// EnableTransliteration: If true, source text in romanized form can be
+	// translated to the target language.
+	EnableTransliteration bool `json:"enableTransliteration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableTransliteration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableTransliteration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransliterationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TransliterationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2878,6 +3021,155 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//   "path": "v3/{+parent}/supportedLanguages",
 	//   "response": {
 	//     "$ref": "SupportedLanguages"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.romanizeText":
+
+type ProjectsRomanizeTextCall struct {
+	s                   *Service
+	parent              string
+	romanizetextrequest *RomanizeTextRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// RomanizeText: Romanize input text written in non-Latin scripts to
+// Latin text.
+//
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}` or
+//     `projects/{project-number-or-id}`. For global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`.
+func (r *ProjectsService) RomanizeText(parent string, romanizetextrequest *RomanizeTextRequest) *ProjectsRomanizeTextCall {
+	c := &ProjectsRomanizeTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.romanizetextrequest = romanizetextrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRomanizeTextCall) Fields(s ...googleapi.Field) *ProjectsRomanizeTextCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRomanizeTextCall) Context(ctx context.Context) *ProjectsRomanizeTextCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRomanizeTextCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRomanizeTextCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.romanizetextrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:romanizeText")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.romanizeText" call.
+// Exactly one of *RomanizeTextResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RomanizeTextResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTextResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RomanizeTextResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Romanize input text written in non-Latin scripts to Latin text.",
+	//   "flatPath": "v3/projects/{projectsId}:romanizeText",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.romanizeText",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}:romanizeText",
+	//   "request": {
+	//     "$ref": "RomanizeTextRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RomanizeTextResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -4037,6 +4329,155 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "translate.projects.locations.romanizeText":
+
+type ProjectsLocationsRomanizeTextCall struct {
+	s                   *Service
+	parent              string
+	romanizetextrequest *RomanizeTextRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// RomanizeText: Romanize input text written in non-Latin scripts to
+// Latin text.
+//
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}` or
+//     `projects/{project-number-or-id}`. For global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`.
+func (r *ProjectsLocationsService) RomanizeText(parent string, romanizetextrequest *RomanizeTextRequest) *ProjectsLocationsRomanizeTextCall {
+	c := &ProjectsLocationsRomanizeTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.romanizetextrequest = romanizetextrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRomanizeTextCall) Fields(s ...googleapi.Field) *ProjectsLocationsRomanizeTextCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRomanizeTextCall) Context(ctx context.Context) *ProjectsLocationsRomanizeTextCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRomanizeTextCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRomanizeTextCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.romanizetextrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:romanizeText")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.romanizeText" call.
+// Exactly one of *RomanizeTextResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RomanizeTextResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTextResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RomanizeTextResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Romanize input text written in non-Latin scripts to Latin text.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:romanizeText",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.romanizeText",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}:romanizeText",
+	//   "request": {
+	//     "$ref": "RomanizeTextRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RomanizeTextResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
 }
 
 // method id "translate.projects.locations.translateDocument":

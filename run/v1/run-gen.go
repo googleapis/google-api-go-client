@@ -2987,13 +2987,13 @@ type Probe struct {
 	// InitialDelaySeconds: Number of seconds after the container has
 	// started before the probe is initiated. Defaults to 0 seconds. Minimum
 	// value is 0. Maximum value for liveness probe is 3600. Maximum value
-	// for startup probe is 240.
+	// for startup probe is 240. .
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: How often (in seconds) to perform the probe. Default
 	// to 10 seconds. Minimum value is 1. Maximum value for liveness probe
 	// is 3600. Maximum value for startup probe is 240. Must be greater or
-	// equal than timeout_seconds.
+	// equal than timeout_seconds. .
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// SuccessThreshold: Minimum consecutive successes for the probe to be
@@ -3005,7 +3005,8 @@ type Probe struct {
 
 	// TimeoutSeconds: Number of seconds after which the probe times out.
 	// Defaults to 1 second. Minimum value is 1. Maximum value is 3600. Must
-	// be smaller than period_seconds.
+	// be smaller than period_seconds; if period_seconds is not set, must be
+	// less or equal than 10.
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exec") to

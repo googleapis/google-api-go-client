@@ -561,8 +561,9 @@ type AnalyzeEntitiesResponse struct {
 	// concepts or normalized mention content.
 	Entities []*Entity `json:"entities,omitempty"`
 
-	// EntityMentions: entity_mentions contains all the annotated medical
-	// entities that were mentioned in the provided document.
+	// EntityMentions: The `entity_mentions` field contains all the
+	// annotated medical entities that were mentioned in the provided
+	// document.
 	EntityMentions []*EntityMention `json:"entityMentions,omitempty"`
 
 	// Relationships: relationships contains all the binary relationships
@@ -2829,7 +2830,7 @@ type ExportMessagesRequest struct {
 	// (inclusive) to `end_time` (exclusive) are exported.
 	EndTime string `json:"endTime,omitempty"`
 
-	// GcsDestination: Exports to a Cloud Storage destination.
+	// GcsDestination: Export to a Cloud Storage destination.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// StartTime: The start of the range in `send_time` (MSH.7,
@@ -3184,7 +3185,7 @@ type FhirNotificationConfig struct {
 	SendFullResource bool `json:"sendFullResource,omitempty"`
 
 	// SendPreviousResourceOnDelete: Whether to send full FHIR resource to
-	// this pubsub topic for deleting FHIR resource. Note that setting this
+	// this Pub/Sub topic for deleting FHIR resource. Note that setting this
 	// to true does not guarantee that all previous resources will be sent
 	// in the format of full FHIR resource. When a resource change is too
 	// large or during heavy traffic, only the resource name will be sent.

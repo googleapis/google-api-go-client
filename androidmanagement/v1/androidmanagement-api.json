@@ -1065,7 +1065,7 @@
       }
     }
   },
-  "revision": "20230508",
+  "revision": "20230516",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -1503,7 +1503,7 @@
       "type": "object"
     },
     "ApplicationPolicy": {
-      "description": "Policy for an individual app.",
+      "description": "Policy for an individual app. Note: Application availability on a given device cannot be changed using this policy if installAppsDisabled is enabled.",
       "id": "ApplicationPolicy",
       "properties": {
         "accessibleTrackIds": {
@@ -2477,7 +2477,7 @@
       "id": "DeviceConnectivityManagement",
       "properties": {
         "usbDataAccess": {
-          "description": "Controls what can be transferred via USB, files and/or data. This is supported only on company-owned devices.",
+          "description": "Controls what files and/or data can be transferred via USB. Supported only on company-owned devices.",
           "enum": [
             "USB_DATA_ACCESS_UNSPECIFIED",
             "ALLOW_USB_DATA_TRANSFER",

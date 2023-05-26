@@ -2278,6 +2278,10 @@ func (s *RenameVolumeRequest) MarshalJSON() ([]byte, error) {
 type ResetInstanceRequest struct {
 }
 
+// ResetInstanceResponse: Response message from resetting a server.
+type ResetInstanceResponse struct {
+}
+
 // ResizeVolumeRequest: Request for emergency resize Volume.
 type ResizeVolumeRequest struct {
 	// SizeGib: New Volume size, in GiB.
@@ -2442,6 +2446,10 @@ func (s *SnapshotReservationDetail) MarshalJSON() ([]byte, error) {
 type StartInstanceRequest struct {
 }
 
+// StartInstanceResponse: Response message from starting a server.
+type StartInstanceResponse struct {
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -2488,6 +2496,10 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // StopInstanceRequest: Message requesting to stop a server.
 type StopInstanceRequest struct {
+}
+
+// StopInstanceResponse: Response message from stopping a server.
+type StopInstanceResponse struct {
 }
 
 // SubmitProvisioningConfigRequest: Request for

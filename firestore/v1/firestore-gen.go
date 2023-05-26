@@ -2113,8 +2113,8 @@ type GoogleFirestoreAdminV1Index struct {
 	// ApiScope: The API scope supported by this index.
 	//
 	// Possible values:
-	//   "ANY_API" - The index can be used by both Firestore Native and
-	// Firestore in Datastore Mode query API. This is the default.
+	//   "ANY_API" - The index can only be used by the Firestore Native
+	// query API. This is the default.
 	//   "DATASTORE_MODE_API" - The index can only be used by the Firestore
 	// in Datastore Mode query API.
 	ApiScope string `json:"apiScope,omitempty"`
@@ -2750,7 +2750,7 @@ func (s *GoogleFirestoreAdminV1TtlConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1TtlConfigDelta: Information about an TTL
+// GoogleFirestoreAdminV1TtlConfigDelta: Information about a TTL
 // configuration change.
 type GoogleFirestoreAdminV1TtlConfigDelta struct {
 	// ChangeType: Specifies how the TTL configuration is changing.

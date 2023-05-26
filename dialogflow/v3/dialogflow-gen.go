@@ -6988,8 +6988,8 @@ func (s *GoogleCloudDialogflowCxV3TestError) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowCxV3TestRunDifference: The description of
 // differences between original and replayed agent output.
 type GoogleCloudDialogflowCxV3TestRunDifference struct {
-	// Description: A description of the diff, showing the actual output vs
-	// expected output.
+	// Description: A human readable description of the diff, showing the
+	// actual output vs expected output.
 	Description string `json:"description,omitempty"`
 
 	// Type: The type of diff.
@@ -11268,8 +11268,8 @@ func (s *GoogleCloudDialogflowCxV3beta1TestError) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowCxV3beta1TestRunDifference: The description of
 // differences between original and replayed agent output.
 type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
-	// Description: A description of the diff, showing the actual output vs
-	// expected output.
+	// Description: A human readable description of the diff, showing the
+	// actual output vs expected output.
 	Description string `json:"description,omitempty"`
 
 	// Type: The type of diff.

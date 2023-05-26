@@ -3936,6 +3936,11 @@ type Settings struct {
 	// for more information.
 	KmsServiceAccountId string `json:"kmsServiceAccountId,omitempty"`
 
+	// LoggingServiceAccountId: Output only. The service account for the
+	// given container. Sinks use this service account as their
+	// writer_identity if no custom service account is provided.
+	LoggingServiceAccountId string `json:"loggingServiceAccountId,omitempty"`
+
 	// Name: Output only. The resource name of the settings.
 	Name string `json:"name,omitempty"`
 

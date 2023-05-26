@@ -2644,23 +2644,23 @@ type SmartSharding struct {
 	// duration is not guaranteed because smart sharding uses test case
 	// history and default durations which may not be accurate. The rules
 	// for finding the test case timing records are: - If the service has
-	// seen a test case in the last 30 days, the record of the latest
-	// successful one will be used. - For new test cases, the average
+	// processed a test case in the last 30 days, the record of the latest
+	// successful test case will be used. - For new test cases, the average
 	// duration of other known test cases will be used. - If there are no
-	// previous test case timing records available, the test case is
-	// considered to be 15 seconds long by default. Because the actual shard
-	// duration can exceed the targeted shard duration, we recommend setting
-	// the targeted value at least 5 minutes less than the maximum allowed
-	// test timeout (45 minutes for physical devices and 60 minutes for
-	// virtual), or using the custom test timeout value you set. This
-	// approach avoids cancelling the shard before all tests can finish.
-	// Note that there is a limit for maximum number of shards. When you
-	// select one or more physical devices, the number of shards must be <=
-	// 50. When you select one or more ARM virtual devices, it must be <=
-	// 100. When you select only x86 virtual devices, it must be <= 500. To
-	// guarantee at least one test case for per shard, the number of shards
-	// will not exceed the number of test cases. Each shard created will
-	// count toward daily test quota.
+	// previous test case timing records available, the default test case
+	// duration is 15 seconds. Because the actual shard duration can exceed
+	// the targeted shard duration, we recommend that you set the targeted
+	// value at least 5 minutes less than the maximum allowed test timeout
+	// (45 minutes for physical devices and 60 minutes for virtual), or that
+	// you use the custom test timeout value that you set. This approach
+	// avoids cancelling the shard before all tests can finish. Note that
+	// there is a limit for maximum number of shards. When you select one or
+	// more physical devices, the number of shards must be <= 50. When you
+	// select one or more ARM virtual devices, it must be <= 100. When you
+	// select only x86 virtual devices, it must be <= 500. To guarantee at
+	// least one test case for per shard, the number of shards will not
+	// exceed the number of test cases. Each shard created counts toward
+	// daily test quota.
 	TargetedShardDuration string `json:"targetedShardDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2977,8 +2977,8 @@ type TestMatrix struct {
 	// Orchestrator can be disabled by using DO_NOT_USE_ORCHESTRATOR
 	// OrchestratorOption.
 	//   "NO_TEST_RUNNER_CLASS" - The test APK does not contain the test
-	// runner class specified by user or in the manifest file. This can be
-	// caused by either of the following reasons: - the user provided a
+	// runner class specified by the user or in the manifest file. This can
+	// be caused by one of the following reasons: - the user provided a
 	// runner class name that's incorrect, or - the test runner isn't built
 	// into the test APK (might be in the app APK instead).
 	//   "NO_LAUNCHER_ACTIVITY" - A main launcher activity could not be
@@ -3050,7 +3050,7 @@ type TestMatrix struct {
 	//   "SUCCESS" - The test matrix run was successful, for instance: - All
 	// the test cases passed. - Robo did not detect a crash of the
 	// application under test.
-	//   "FAILURE" - A run failed, for instance: - One or more test case
+	//   "FAILURE" - A run failed, for instance: - One or more test cases
 	// failed. - A test timed out. - The application under test crashed.
 	//   "INCONCLUSIVE" - Something unexpected happened. The run should
 	// still be considered unsuccessful but this is likely a transient
@@ -3859,11 +3859,11 @@ type ProjectsTestMatricesCreateCall struct {
 // specifications. Unsupported environments will be returned in the
 // state UNSUPPORTED. A test matrix is limited to use at most 2000
 // devices in parallel. The returned matrix will not yet contain the
-// executions that will be created for this matrix. That happens later
-// on and will require a call to GetTestMatrix. May return any of the
-// following canonical error codes: - PERMISSION_DENIED - if the user is
-// not authorized to write to project - INVALID_ARGUMENT - if the
-// request is malformed or if the matrix tries to use too many
+// executions that will be created for this matrix. Execution creation
+// happens later on and will require a call to GetTestMatrix. May return
+// any of the following canonical error codes: - PERMISSION_DENIED - if
+// the user is not authorized to write to project - INVALID_ARGUMENT -
+// if the request is malformed or if the matrix tries to use too many
 // simultaneous devices.
 //
 // - projectId: The GCE project under which this job will run.
@@ -3974,7 +3974,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. The returned matrix will not yet contain the executions that will be created for this matrix. That happens later on and will require a call to GetTestMatrix. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
+	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. The returned matrix will not yet contain the executions that will be created for this matrix. Execution creation happens later on and will require a call to GetTestMatrix. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices",
 	//   "httpMethod": "POST",
 	//   "id": "testing.projects.testMatrices.create",
@@ -4023,11 +4023,11 @@ type ProjectsTestMatricesGetCall struct {
 // Get: Checks the status of a test matrix and the executions once they
 // are created. The test matrix will contain the list of test executions
 // to run if and only if the resultStorage.toolResultsExecution fields
-// have been populated. Note: Flaky test executions may still be added
-// to the matrix at a later stage. May return any of the following
-// canonical error codes: - PERMISSION_DENIED - if the user is not
-// authorized to read project - INVALID_ARGUMENT - if the request is
-// malformed - NOT_FOUND - if the Test Matrix does not exist
+// have been populated. Note: Flaky test executions may be added to the
+// matrix at a later stage. May return any of the following canonical
+// error codes: - PERMISSION_DENIED - if the user is not authorized to
+// read project - INVALID_ARGUMENT - if the request is malformed -
+// NOT_FOUND - if the Test Matrix does not exist
 //
 //   - projectId: Cloud project that owns the test matrix.
 //   - testMatrixId: Unique test matrix id which was assigned by the
@@ -4139,7 +4139,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks the status of a test matrix and the executions once they are created. The test matrix will contain the list of test executions to run if and only if the resultStorage.toolResultsExecution fields have been populated. Note: Flaky test executions may still be added to the matrix at a later stage. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
+	//   "description": "Checks the status of a test matrix and the executions once they are created. The test matrix will contain the list of test executions to run if and only if the resultStorage.toolResultsExecution fields have been populated. Note: Flaky test executions may be added to the matrix at a later stage. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices/{testMatrixId}",
 	//   "httpMethod": "GET",
 	//   "id": "testing.projects.testMatrices.get",

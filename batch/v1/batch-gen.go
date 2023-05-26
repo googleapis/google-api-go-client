@@ -909,7 +909,6 @@ type InstancePolicy struct {
 
 	// MinCpuPlatform: The minimum CPU platform. See
 	// https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform.
-	// Not yet implemented.
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// ProvisioningModel: The provisioning model.

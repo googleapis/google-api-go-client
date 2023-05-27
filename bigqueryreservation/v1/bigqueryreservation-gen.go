@@ -373,6 +373,10 @@ type CapacityCommitment struct {
 	// reason of failure.
 	FailureStatus *Status `json:"failureStatus,omitempty"`
 
+	// IsFlatRate: Output only. If true, the commitment is a flat-rate
+	// commitment, otherwise, it's an edition commitment.
+	IsFlatRate bool `json:"isFlatRate,omitempty"`
+
 	// MultiRegionAuxiliary: Applicable only for commitments located within
 	// one of the BigQuery multi-regions (US or EU). If set to true, this
 	// commitment is placed in the organization's secondary region which is

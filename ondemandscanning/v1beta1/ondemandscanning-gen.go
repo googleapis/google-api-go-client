@@ -511,6 +511,44 @@ func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type BinarySourceInfo struct {
+	// BinaryVersion: The binary package. This is significant when the
+	// source is different than the binary itself. Historically if they've
+	// differed, we've stored the name of the source and its version in the
+	// package/version fields, but we should also store the binary package
+	// info, as that's what's actually installed. See b/175908657#comment15.
+	BinaryVersion *PackageVersion `json:"binaryVersion,omitempty"`
+
+	// SourceVersion: The source package. Similar to the above, this is
+	// significant when the source is different than the binary itself.
+	// Since the top-level package/version fields are based on an if/else,
+	// we need a separate field for both binary and source if we want to
+	// know definitively where the data is coming from.
+	SourceVersion *PackageVersion `json:"sourceVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BinaryVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BinaryVersion") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BinarySourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BinarySourceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BuildOccurrence: Details of a build occurrence.
 type BuildOccurrence struct {
 	// IntotoProvenance: Deprecated. See InTotoStatement for the
@@ -2398,11 +2436,11 @@ type PackageData struct {
 	// Architecture: The architecture of the package.
 	Architecture string `json:"architecture,omitempty"`
 
-	// BinaryVersion: The binary package. This is significant when the
-	// source is different than the binary itself. Historically if they've
-	// differed, we've stored the name of the source and its version in the
-	// package/version fields, but we should also store the binary package
-	// info, as that's what's actually installed. See b/175908657#comment15.
+	// BinarySourceInfo: A bundle containing the binary and source
+	// information.
+	BinarySourceInfo []*BinarySourceInfo `json:"binarySourceInfo,omitempty"`
+
+	// BinaryVersion: DEPRECATED
 	BinaryVersion *PackageVersion `json:"binaryVersion,omitempty"`
 
 	// CpeUri: The cpe_uri in [cpe format]
@@ -2455,11 +2493,7 @@ type PackageData struct {
 	// go/drydock-dd-custom-binary-scanning
 	PatchedCve []string `json:"patchedCve,omitempty"`
 
-	// SourceVersion: The source package. Similar to the above, this is
-	// significant when the source is different than the binary itself.
-	// Since the top-level package/version fields are based on an if/else,
-	// we need a separate field for both binary and source if we want to
-	// know definitively where the data is coming from.
+	// SourceVersion: DEPRECATED
 	SourceVersion *PackageVersion `json:"sourceVersion,omitempty"`
 
 	Unused string `json:"unused,omitempty"`

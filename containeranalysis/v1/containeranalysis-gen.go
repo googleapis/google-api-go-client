@@ -1892,8 +1892,8 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Build struct {
 	// Console.
 	LogUrl string `json:"logUrl,omitempty"`
 
-	// LogsBucket: Google Cloud Storage bucket where logs should be written
-	// (see Bucket Name Requirements
+	// LogsBucket: Cloud Storage bucket where logs should be written (see
+	// Bucket Name Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	// Logs file names will be of the format
 	// `${logs_bucket}/log-${build_id}.txt`.
@@ -2136,15 +2136,14 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	Env []string `json:"env,omitempty"`
 
 	// LogStreamingOption: Option to define build log streaming behavior to
-	// Google Cloud Storage.
+	// Cloud Storage.
 	//
 	// Possible values:
 	//   "STREAM_DEFAULT" - Service may automatically determine build log
 	// streaming behavior.
-	//   "STREAM_ON" - Build logs should be streamed to Google Cloud
-	// Storage.
-	//   "STREAM_OFF" - Build logs should not be streamed to Google Cloud
-	// Storage; they will be written when the build is completed.
+	//   "STREAM_ON" - Build logs should be streamed to Cloud Storage.
+	//   "STREAM_OFF" - Build logs should not be streamed to Cloud Storage;
+	// they will be written when the build is completed.
 	LogStreamingOption string `json:"logStreamingOption,omitempty"`
 
 	// Logging: Option to specify the logging mode, which determines if and
@@ -2905,12 +2904,11 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Source struct {
 	RepoSource *ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource `json:"repoSource,omitempty"`
 
 	// StorageSource: If provided, get the source from this location in
-	// Google Cloud Storage.
+	// Cloud Storage.
 	StorageSource *ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource `json:"storageSource,omitempty"`
 
 	// StorageSourceManifest: If provided, get the source from this manifest
-	// in Google Cloud Storage. This feature is in Preview; see description
-	// here
+	// in Cloud Storage. This feature is in Preview; see description here
 	// (https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
 	StorageSourceManifest *ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest `json:"storageSourceManifest,omitempty"`
 
@@ -2988,20 +2986,20 @@ func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance) MarshalJSO
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource: Location of
-// the source in an archive file in Google Cloud Storage.
+// the source in an archive file in Cloud Storage.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource struct {
-	// Bucket: Google Cloud Storage bucket containing the source (see Bucket
-	// Name Requirements
+	// Bucket: Cloud Storage bucket containing the source (see Bucket Name
+	// Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
 
-	// Generation: Google Cloud Storage generation for the object. If the
+	// Generation: Cloud Storage generation for the object. If the
 	// generation is omitted, the latest generation will be used.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Object: Google Cloud Storage object containing the source. This
-	// object must be a zipped (`.zip`) or gzipped archive file (`.tar.gz`)
-	// containing source to build.
+	// Object: Cloud Storage object containing the source. This object must
+	// be a zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing
+	// source to build.
 	Object string `json:"object,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
@@ -3028,21 +3026,21 @@ func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource) MarshalJSON()
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest:
-// Location of the source manifest in Google Cloud Storage. This feature
-// is in Preview; see description here
+// Location of the source manifest in Cloud Storage. This feature is in
+// Preview; see description here
 // (https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
 type ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest struct {
-	// Bucket: Google Cloud Storage bucket containing the source manifest
-	// (see Bucket Name Requirements
+	// Bucket: Cloud Storage bucket containing the source manifest (see
+	// Bucket Name Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
 
-	// Generation: Google Cloud Storage generation for the object. If the
+	// Generation: Cloud Storage generation for the object. If the
 	// generation is omitted, the latest generation will be used.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Object: Google Cloud Storage object containing the source manifest.
-	// This object must be a JSON file.
+	// Object: Cloud Storage object containing the source manifest. This
+	// object must be a JSON file.
 	Object string `json:"object,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to

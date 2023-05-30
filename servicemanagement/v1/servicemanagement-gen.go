@@ -6832,6 +6832,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "consumerId": {
+	//       "deprecated": true,
 	//       "description": "Include services consumed by the specified consumer. The Google Service Management implementation accepts the following forms: - project:",
 	//       "location": "query",
 	//       "type": "string"

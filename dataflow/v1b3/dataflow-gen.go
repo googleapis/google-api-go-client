@@ -8934,6 +8934,7 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
@@ -9901,6 +9902,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
@@ -12695,6 +12697,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",

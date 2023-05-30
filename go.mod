@@ -8,14 +8,14 @@ require (
 	github.com/google/s2a-go v0.1.4
 	github.com/google/uuid v1.3.0
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3
-	github.com/googleapis/gax-go/v2 v2.8.0
+	github.com/googleapis/gax-go/v2 v2.9.1
 	go.opencensus.io v0.24.0
 	golang.org/x/net v0.10.0
 	golang.org/x/oauth2 v0.8.0
 	golang.org/x/sync v0.2.0
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto/googleapis/bytestream v0.0.0-20230526161137-0005af68ea54
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19
+	google.golang.org/genproto/googleapis/bytestream v0.0.0-20230526203410-71b5a4ffd15e
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230526203410-71b5a4ffd15e
 	google.golang.org/grpc v1.55.0
 	google.golang.org/protobuf v1.30.0
 )

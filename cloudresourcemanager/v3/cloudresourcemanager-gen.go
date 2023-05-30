@@ -680,7 +680,8 @@ type EffectiveTag struct {
 	TagKey string `json:"tagKey,omitempty"`
 
 	// TagKeyParentName: The parent name of the tag key. Must be in the
-	// format `organizations/{organization_id}`.
+	// format `organizations/{organization_id}` or
+	// `projects/{project_number}`
 	TagKeyParentName string `json:"tagKeyParentName,omitempty"`
 
 	// TagValue: Resource name for TagValue in the format `tagValues/456`.

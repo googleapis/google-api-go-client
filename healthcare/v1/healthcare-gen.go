@@ -470,8 +470,9 @@ type AnalyzeEntitiesResponse struct {
 	// concepts or normalized mention content.
 	Entities []*Entity `json:"entities,omitempty"`
 
-	// EntityMentions: entity_mentions contains all the annotated medical
-	// entities that were mentioned in the provided document.
+	// EntityMentions: The `entity_mentions` field contains all the
+	// annotated medical entities that were mentioned in the provided
+	// document.
 	EntityMentions []*EntityMention `json:"entityMentions,omitempty"`
 
 	// Relationships: relationships contains all the binary relationships
@@ -2425,7 +2426,7 @@ type FhirNotificationConfig struct {
 	SendFullResource bool `json:"sendFullResource,omitempty"`
 
 	// SendPreviousResourceOnDelete: Whether to send full FHIR resource to
-	// this pubsub topic for deleting FHIR resource. Note that setting this
+	// this Pub/Sub topic for deleting FHIR resource. Note that setting this
 	// to true does not guarantee that all previous resources will be sent
 	// in the format of full FHIR resource. When a resource change is too
 	// large or during heavy traffic, only the resource name will be sent.
@@ -5244,11 +5245,14 @@ type SchemaConfig struct {
 	// this limitation, the server will not generate schemas for fields of
 	// type `Resource`, which can hold any resource type. The affected
 	// fields are `Parameters.parameter.resource`, `Bundle.entry.resource`,
-	// and `Bundle.entry.response.outcome`.
+	// and `Bundle.entry.response.outcome`. Analytics schema does not
+	// gracefully handle extensions with one or more occurrences, anaytics
+	// schema also does not handle contained resource.
 	//   "ANALYTICS_V2" - Analytics V2, similar to schema defined by the
 	// FHIR community, with added support for extensions with one or more
 	// occurrences and contained resources in stringified JSON. Analytics V2
-	// uses more space in the destination table than Analytics V1.
+	// uses more space in the destination table than Analytics V1. It is
+	// generally recommended to use Analytics V2 over Analytics.
 	SchemaType string `json:"schemaType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

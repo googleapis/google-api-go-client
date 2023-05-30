@@ -763,6 +763,17 @@ type Connection struct {
 	// global location is supported for ConnectorVersion resource.
 	ConnectorVersion string `json:"connectorVersion,omitempty"`
 
+	// ConnectorVersionLaunchStage: Output only. Flag to mark the version
+	// indicating the launch stage.
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - LAUNCH_STAGE_UNSPECIFIED.
+	//   "PREVIEW" - PREVIEW.
+	//   "GA" - GA.
+	//   "DEPRECATED" - DEPRECATED.
+	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
+	ConnectorVersionLaunchStage string `json:"connectorVersionLaunchStage,omitempty"`
+
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -818,14 +829,13 @@ type Connection struct {
 	// Status: Output only. Current status of the connection.
 	Status *ConnectionStatus `json:"status,omitempty"`
 
-	// SubscriptionType: Output only. This subscription type enum value
-	// states if the metrics should be sent for billing or not.
+	// SubscriptionType: Output only. This subscription type enum states the
+	// subscription type of the project.
 	//
 	// Possible values:
 	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - Unspecified subscription type.
-	//   "PAY_G" - Metrics should be sent for billing for PayG type.
-	//   "PAID" - Metrics should not be sent for billing for Paid
-	// Subscription type.
+	//   "PAY_G" - PayG subscription.
+	//   "PAID" - Paid Subscription.
 	SubscriptionType string `json:"subscriptionType,omitempty"`
 
 	// Suspended: Optional. Suspended indicates if a user has suspended a
@@ -936,8 +946,8 @@ type ConnectionStatus struct {
 	//   "DELETING" - Connection is being deleted.
 	//   "UPDATING" - Connection is being updated.
 	//   "ERROR" - Connection is not running due to an error.
-	//   "AUTHORIZATION_REQUIRED" - Connection is not running due to an auth
-	// error for the Oauth2 Auth Code based connector.
+	//   "AUTHORIZATION_REQUIRED" - Connection is not running because the
+	// authorization configuration is not complete.
 	State string `json:"state,omitempty"`
 
 	// Status: Status provides detailed information for the state.
@@ -2341,6 +2351,9 @@ type Oauth2AuthCodeFlow struct {
 	// tokens.
 	AuthCode string `json:"authCode,omitempty"`
 
+	// AuthUri: Auth URL for Authorization Code Flow
+	AuthUri string `json:"authUri,omitempty"`
+
 	// ClientId: Client ID for user-provided OAuth app.
 	ClientId string `json:"clientId,omitempty"`
 
@@ -3156,6 +3169,10 @@ type Settings struct {
 
 	// Payg: Output only. Flag indicates if user is in PayG model
 	Payg bool `json:"payg,omitempty"`
+
+	// TenantProjectId: Output only. Tenant project id of the consumer
+	// project.
+	TenantProjectId string `json:"tenantProjectId,omitempty"`
 
 	// Vpcsc: Optional. Flag indicates whether vpc-sc is enabled.
 	Vpcsc bool `json:"vpcsc,omitempty"`

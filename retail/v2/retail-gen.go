@@ -1081,8 +1081,10 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	// IndexableOption: When AttributesConfig.attribute_config_level is
 	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, if INDEXABLE_ENABLED attribute values
 	// are indexed so that it can be filtered, faceted, or boosted in
-	// SearchService.Search. Must be specified, otherwise throws
-	// INVALID_FORMAT error.
+	// SearchService.Search. Must be specified when
+	// AttributesConfig.attribute_config_level is
+	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT
+	// error.
 	//
 	// Possible values:
 	//   "INDEXABLE_OPTION_UNSPECIFIED" - Value used when unset.
@@ -1119,7 +1121,9 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	// SEARCHABLE_ENABLED but attribute type is numerical, attribute values
 	// will not be searchable by text queries in SearchService.Search, as
 	// there are no text values associated to numerical attributes. Must be
-	// specified, otherwise throws INVALID_FORMAT error.
+	// specified, when AttributesConfig.attribute_config_level is
+	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT
+	// error.
 	//
 	// Possible values:
 	//   "SEARCHABLE_OPTION_UNSPECIFIED" - Value used when unset.
@@ -6986,6 +6990,10 @@ type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
 	// ProjectId: Output only. Google Cloud project ID.
 	ProjectId string `json:"projectId,omitempty"`
 
+	// Source: Optional. An optional arbitrary string that could be used as
+	// a tag for tracking link source.
+	Source string `json:"source,omitempty"`
+
 	// State: Output only. Represents the state of the link.
 	//
 	// Possible values:
@@ -8390,6 +8398,10 @@ type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
 
 	// ProjectId: Output only. Google Cloud project ID.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// Source: Optional. An optional arbitrary string that could be used as
+	// a tag for tracking link source.
+	Source string `json:"source,omitempty"`
 
 	// State: Output only. Represents the state of the link.
 	//

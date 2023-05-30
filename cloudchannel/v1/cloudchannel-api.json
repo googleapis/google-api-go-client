@@ -935,6 +935,11 @@
                 "customer"
               ],
               "parameters": {
+                "changeOfferPurchase.billingAccount": {
+                  "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "changeOfferPurchase.entitlement": {
                   "description": "Required. Resource name of the entitlement. Format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
                   "location": "query",
@@ -942,6 +947,11 @@
                 },
                 "changeOfferPurchase.newSku": {
                   "description": "Optional. Resource name of the new target SKU. Provide this SKU when upgrading or downgrading an entitlement. Format: products/{product_id}/skus/{sku_id}",
+                  "location": "query",
+                  "type": "string"
+                },
+                "createEntitlementPurchase.billingAccount": {
+                  "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billing_accounts/{billing_account_id}.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1105,6 +1115,37 @@
               },
               "response": {
                 "$ref": "GoogleLongrunningOperation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/apps.order"
+              ]
+            },
+            "queryEligibleBillingAccounts": {
+              "description": "Lists the billing accounts that are eligible to purchase particular SKUs for a given customer. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: Based on the provided list of SKUs, returns a list of SKU groups that must be purchased using the same billing account and the billing accounts eligible to purchase each SKU group.",
+              "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:queryEligibleBillingAccounts",
+              "httpMethod": "GET",
+              "id": "cloudchannel.accounts.customers.queryEligibleBillingAccounts",
+              "parameterOrder": [
+                "customer"
+              ],
+              "parameters": {
+                "customer": {
+                  "description": "Required. The resource name of the customer to list eligible billing accounts for. Format: accounts/{account_id}/customers/{customer_id}.",
+                  "location": "path",
+                  "pattern": "^accounts/[^/]+/customers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "skus": {
+                  "description": "Required. List of SKUs to list eligible billing accounts for. At least one SKU is required. Format: products/{product_id}/skus/{sku_id}.",
+                  "location": "query",
+                  "repeated": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+customer}:queryEligibleBillingAccounts",
+              "response": {
+                "$ref": "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/apps.order"
@@ -2055,7 +2096,7 @@
       }
     }
   },
-  "revision": "20230507",
+  "revision": "20230516",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {
@@ -2099,6 +2140,49 @@
       },
       "type": "object"
     },
+    "GoogleCloudChannelV1BillingAccount": {
+      "description": "Represents a billing account.",
+      "id": "GoogleCloudChannelV1BillingAccount",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time when this billing account was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "currencyCode": {
+          "description": "Output only. The 3-letter currency code defined in ISO 4217.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Display name of the billing account.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Resource name of the billing account. Format: accounts/{account_id}/billingAccounts/{billing_account_id}.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "Output only. The CLDR region code.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudChannelV1BillingAccountPurchaseInfo": {
+      "description": "Represents a billing account that can be used to make a purchase.",
+      "id": "GoogleCloudChannelV1BillingAccountPurchaseInfo",
+      "properties": {
+        "billingAccount": {
+          "$ref": "GoogleCloudChannelV1BillingAccount",
+          "description": "The billing account resource."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudChannelV1CancelEntitlementRequest": {
       "description": "Request message for CloudChannelService.CancelEntitlement.",
       "id": "GoogleCloudChannelV1CancelEntitlementRequest",
@@ -2114,6 +2198,10 @@
       "description": "Request message for CloudChannelService.ChangeOffer.",
       "id": "GoogleCloudChannelV1ChangeOfferRequest",
       "properties": {
+        "billingAccount": {
+          "description": "Optional. The billing account resource name that is used to pay for this entitlement when setting up billing on a trial subscription. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+          "type": "string"
+        },
         "offer": {
           "description": "Required. New Offer. Format: accounts/{account_id}/offers/{offer_id}.",
           "type": "string"
@@ -3350,6 +3438,10 @@
       "description": "Request message for CloudChannelService.ListTransferableOffers",
       "id": "GoogleCloudChannelV1ListTransferableOffersRequest",
       "properties": {
+        "billingAccount": {
+          "description": "Optional. The Billing Account to look up Offers for. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+          "type": "string"
+        },
         "cloudIdentityId": {
           "description": "Customer's Cloud Identity ID",
           "type": "string"
@@ -3640,13 +3732,15 @@
             "PARAMETER_TYPE_UNSPECIFIED",
             "INT64",
             "STRING",
-            "DOUBLE"
+            "DOUBLE",
+            "BOOLEAN"
           ],
           "enumDescriptions": [
             "Not used.",
             "Int64 type.",
             "String type.",
-            "Double type."
+            "Double type.",
+            "Boolean type."
           ],
           "type": "string"
         }
@@ -3950,6 +4044,20 @@
         "sku": {
           "$ref": "GoogleCloudChannelV1Sku",
           "description": "SKU"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse": {
+      "description": "Response message for QueryEligibleBillingAccounts.",
+      "id": "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse",
+      "properties": {
+        "skuPurchaseGroups": {
+          "description": "List of SKU purchase groups where each group represents a set of SKUs that must be purchased using the same billing account. Each SKU from [QueryEligibleBillingAccountsRequest.skus] will appear in exactly one SKU group.",
+          "items": {
+            "$ref": "GoogleCloudChannelV1SkuPurchaseGroup"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -4308,6 +4416,27 @@
         "skuGroup": {
           "description": "Specifies a SKU group (https://cloud.google.com/skus/sku-groups). Resource name of SKU group. Format: accounts/{account}/skuGroups/{sku_group}. Example: \"accounts/C01234/skuGroups/3d50fd57-3157-4577-a5a9-a219b8490041\".",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudChannelV1SkuPurchaseGroup": {
+      "description": "Represents a set of SKUs that must be purchased using the same billing account.",
+      "id": "GoogleCloudChannelV1SkuPurchaseGroup",
+      "properties": {
+        "billingAccountPurchaseInfos": {
+          "description": "List of billing accounts that are eligible to purhcase these SKUs.",
+          "items": {
+            "$ref": "GoogleCloudChannelV1BillingAccountPurchaseInfo"
+          },
+          "type": "array"
+        },
+        "skus": {
+          "description": "Resource names of the SKUs included in this group. Format: products/{product_id}/skus/{sku_id}.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

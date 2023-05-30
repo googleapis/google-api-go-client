@@ -812,7 +812,9 @@ func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ApplicationPolicy: Policy for an individual app.
+// ApplicationPolicy: Policy for an individual app. Note: Application
+// availability on a given device cannot be changed using this policy if
+// installAppsDisabled is enabled.
 type ApplicationPolicy struct {
 	// AccessibleTrackIds: List of the app’s track IDs that a device
 	// belonging to the enterprise can access. If the list contains multiple
@@ -2184,6 +2186,55 @@ type Device struct {
 
 func (s *Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceConnectivityManagement: Covers controls for device connectivity
+// such as Wi-Fi, USB data access, keyboard/mouse connections, and more.
+type DeviceConnectivityManagement struct {
+	// UsbDataAccess: Controls what files and/or data can be transferred via
+	// USB. Supported only on company-owned devices.
+	//
+	// Possible values:
+	//   "USB_DATA_ACCESS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_USB_DATA_TRANSFER, unless usbFileTransferDisabled is set to
+	// true. If usbFileTransferDisabled is set to true, this is equivalent
+	// to DISALLOW_USB_FILE_TRANSFER.
+	//   "ALLOW_USB_DATA_TRANSFER" - All types of USB data transfers are
+	// allowed. usbFileTransferDisabled is ignored.
+	//   "DISALLOW_USB_FILE_TRANSFER" - Transferring files over USB is
+	// disallowed. Other types of USB data connections, such as mouse and
+	// keyboard connection, are allowed. usbFileTransferDisabled is ignored.
+	//   "DISALLOW_USB_DATA_TRANSFER" - When set, all types of USB data
+	// transfers are prohibited. Supported for devices running Android 12 or
+	// above with USB HAL 1.3 or above. If the setting is not supported,
+	// DISALLOW_USB_FILE_TRANSFER will be set. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 12. A
+	// nonComplianceDetail with DEVICE_INCOMPATIBLE is reported if the
+	// device does not have USB HAL 1.3 or above. usbFileTransferDisabled is
+	// ignored.
+	UsbDataAccess string `json:"usbDataAccess,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UsbDataAccess") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UsbDataAccess") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceConnectivityManagement
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4006,6 +4057,8 @@ type NonComplianceDetail struct {
 	// SDK version is not high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been
 	// updated to the minimum version code specified by policy.
+	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
+	// requirements.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 
 	// PackageName: The package name indicating which app is out of
@@ -4100,6 +4153,8 @@ type NonComplianceDetailCondition struct {
 	// SDK version is not high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been
 	// updated to the minimum version code specified by policy.
+	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
+	// requirements.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 
 	// PackageName: The package name of the app that's out of compliance. If
@@ -4970,6 +5025,10 @@ type Policy struct {
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
+	// DeviceConnectivityManagement: Covers controls for device connectivity
+	// such as Wi-Fi, USB data access, keyboard/mouse connections, and more.
+	DeviceConnectivityManagement *DeviceConnectivityManagement `json:"deviceConnectivityManagement,omitempty"`
+
 	// DeviceOwnerLockScreenInfo: The device owner information to be shown
 	// on the lock screen.
 	DeviceOwnerLockScreenInfo *UserFacingMessage `json:"deviceOwnerLockScreenInfo,omitempty"`
@@ -5341,11 +5400,16 @@ type Policy struct {
 	// VpnConfigDisabled: Whether configuring VPN is disabled.
 	VpnConfigDisabled bool `json:"vpnConfigDisabled,omitempty"`
 
-	// WifiConfigDisabled: Whether configuring Wi-Fi access points is
-	// disabled. Note: If a network connection can't be made at boot time
-	// and configuring Wi-Fi is disabled then network escape hatch will be
-	// shown in order to refresh the device policy (see
-	// networkEscapeHatchEnabled).
+	// WifiConfigDisabled: Whether configuring Wi-Fi networks is disabled.
+	// Supported on fully managed devices and work profiles on company-owned
+	// devices. For fully managed devices, setting this to true removes all
+	// configured networks and retains only the networks configured using
+	// openNetworkConfiguration. For work profiles on company-owned devices,
+	// existing configured networks are not affected and the user is not
+	// allowed to add, remove, or modify Wi-Fi networks. Note: If a network
+	// connection can't be made at boot time and configuring Wi-Fi is
+	// disabled then network escape hatch will be shown in order to refresh
+	// the device policy (see networkEscapeHatchEnabled).
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 
 	// WifiConfigsLockdownEnabled: DEPRECATED - Use wifi_config_disabled.

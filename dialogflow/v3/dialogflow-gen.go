@@ -6988,8 +6988,8 @@ func (s *GoogleCloudDialogflowCxV3TestError) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowCxV3TestRunDifference: The description of
 // differences between original and replayed agent output.
 type GoogleCloudDialogflowCxV3TestRunDifference struct {
-	// Description: A description of the diff, showing the actual output vs
-	// expected output.
+	// Description: A human readable description of the diff, showing the
+	// actual output vs expected output.
 	Description string `json:"description,omitempty"`
 
 	// Type: The type of diff.
@@ -7503,6 +7503,17 @@ type GoogleCloudDialogflowCxV3TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// UserEscalated: Whether user was specifically asking for a live agent.
 	UserEscalated bool `json:"userEscalated,omitempty"`
 
@@ -7532,6 +7543,22 @@ func (s *GoogleCloudDialogflowCxV3TurnSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata: Metadata
@@ -7983,8 +8010,32 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -7996,6 +8047,14 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -11209,8 +11268,8 @@ func (s *GoogleCloudDialogflowCxV3beta1TestError) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowCxV3beta1TestRunDifference: The description of
 // differences between original and replayed agent output.
 type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
-	// Description: A description of the diff, showing the actual output vs
-	// expected output.
+	// Description: A human readable description of the diff, showing the
+	// actual output vs expected output.
 	Description string `json:"description,omitempty"`
 
 	// Type: The type of diff.
@@ -11370,6 +11429,17 @@ type GoogleCloudDialogflowCxV3beta1TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// UserEscalated: Whether user was specifically asking for a live agent.
 	UserEscalated bool `json:"userEscalated,omitempty"`
 
@@ -11399,6 +11469,22 @@ func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) MarshalJSON() ([]byte, error
 	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata:
@@ -11500,8 +11586,32 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -11513,6 +11623,14 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -15671,6 +15789,8 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata s
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -15828,6 +15948,42 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 
 func (s *GoogleCloudDialogflowV2beta1ConversationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ConversationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1DialogflowAssistAnswer: Represents a
+// Dialogflow assist answer.
+type GoogleCloudDialogflowV2beta1DialogflowAssistAnswer struct {
+	// AnswerRecord: The name of answer record, in the format of
+	// "projects//locations//answerRecords/"
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// IntentSuggestion: An intent suggestion generated from conversation.
+	IntentSuggestion *GoogleCloudDialogflowV2beta1IntentSuggestion `json:"intentSuggestion,omitempty"`
+
+	// QueryResult: Result from v2 agent.
+	QueryResult *GoogleCloudDialogflowV2beta1QueryResult `json:"queryResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1DialogflowAssistAnswer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18099,6 +18255,44 @@ func (s *GoogleCloudDialogflowV2beta1IntentParameter) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1IntentSuggestion: Represents an intent
+// suggestion.
+type GoogleCloudDialogflowV2beta1IntentSuggestion struct {
+	// Description: Human readable description for better understanding an
+	// intent like its scope, content, result etc. Maximum character limit:
+	// 140 characters.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The display name of the intent.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IntentV2: The unique identifier of this intent. Format:
+	// `projects//locations//agent/intents/`.
+	IntentV2 string `json:"intentV2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentSuggestion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1IntentTrainingPhrase: Represents an
 // example that the agent is trained on.
 type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
@@ -18845,6 +19039,8 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata str
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -18967,6 +19163,48 @@ func (s *GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse: The
+// response message for Participants.SuggestDialogflowAssists.
+type GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse struct {
+	// ContextSize: Number of messages prior to and including latest_message
+	// to compile the suggestion. It may be smaller than the
+	// SuggestDialogflowAssistsRequest.context_size field in the request if
+	// there aren't that many messages in the conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+
+	// DialogflowAssistAnswers: Output only. Multiple reply options provided
+	// by Dialogflow assist service. The order is based on the rank of the
+	// model prediction.
+	DialogflowAssistAnswers []*GoogleCloudDialogflowV2beta1DialogflowAssistAnswer `json:"dialogflowAssistAnswers,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used to
+	// suggest answer. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse: The request
 // message for Participants.SuggestFaqAnswers.
 type GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse struct {
@@ -19061,6 +19299,10 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// SuggestArticlesResponse: SuggestArticlesResponse if request is for
 	// ARTICLE_SUGGESTION.
 	SuggestArticlesResponse *GoogleCloudDialogflowV2beta1SuggestArticlesResponse `json:"suggestArticlesResponse,omitempty"`
+
+	// SuggestDialogflowAssistsResponse: SuggestDialogflowAssistsResponse if
+	// request is for DIALOGFLOW_ASSIST.
+	SuggestDialogflowAssistsResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestDialogflowAssistsResponse,omitempty"`
 
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is
 	// for FAQ_ANSWER.
@@ -19483,6 +19725,17 @@ type GoogleCloudDialogflowV3alpha1TurnSignals struct {
 	// ReachedEndPage: Whether turn resulted in End Session page.
 	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
 
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
 	// TriggeredAbandonmentEvent: Whether agent has triggered the event
 	// corresponding to user abandoning the conversation.
 	TriggeredAbandonmentEvent bool `json:"triggeredAbandonmentEvent,omitempty"`
@@ -19516,6 +19769,22 @@ func (s *GoogleCloudDialogflowV3alpha1TurnSignals) MarshalJSON() ([]byte, error)
 	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV3alpha1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
 }
 
 // GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata:

@@ -2457,6 +2457,18 @@ func (s *MachineConfig) MarshalJSON() ([]byte, error) {
 // MigrationJob: Represents a Database Migration Service migration job
 // object.
 type MigrationJob struct {
+	// CmekKeyName: The CMEK (customer-managed encryption key) fully
+	// qualified key name used for the migration job. This field supports
+	// all migration jobs types except for: * Mysql to Mysql (use the cmek
+	// field in the cloudsql connection profile instead). * PostrgeSQL to
+	// PostgreSQL (use the cmek field in the cloudsql connection profile
+	// instead). * PostgreSQL to AlloyDB (use the kms_key_name field in the
+	// alloydb connection profile instead). Each Cloud CMEK key has the
+	// following format:
+	// projects/[PROJECT]/locations/[REGION]/keyRings/[RING]/cryptoKeys/[KEY_
+	// NAME]
+	CmekKeyName string `json:"cmekKeyName,omitempty"`
+
 	// ConversionWorkspace: The conversion workspace used by the migration.
 	ConversionWorkspace *ConversionWorkspaceInfo `json:"conversionWorkspace,omitempty"`
 
@@ -2586,21 +2598,20 @@ type MigrationJob struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ConversionWorkspace")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CmekKeyName") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConversionWorkspace") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CmekKeyName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2842,6 +2853,11 @@ type OracleConnectionProfile struct {
 
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+
+	// Ssl: SSL configuration for the destination to connect to the source
+	// database. The supported configuration for Oracle SSL is of
+	// SERVER_ONLY type.
+	Ssl *SslConfig `json:"ssl,omitempty"`
 
 	// StaticServiceIpConnectivity: Static Service IP connectivity.
 	StaticServiceIpConnectivity *StaticServiceIpConnectivity `json:"staticServiceIpConnectivity,omitempty"`
@@ -3244,7 +3260,7 @@ func (s *PrivateConnectivity) MarshalJSON() ([]byte, error) {
 
 // PrivateServiceConnectConnectivity: Private Service Connect
 // connectivity
-// (https://cloud.google.com/vpc/docs/private-service-connect#benefits-services)
+// (https://cloud.google.com/vpc/docs/private-service-connect#service-attachments)
 type PrivateServiceConnectConnectivity struct {
 	// ServiceAttachment: Required. A service attachment that exposes a
 	// database, and has the following format:

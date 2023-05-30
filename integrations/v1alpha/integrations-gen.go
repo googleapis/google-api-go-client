@@ -6001,6 +6001,7 @@ type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	//   "SFDC_CDC_CHANNEL"
 	//   "SFDC_PLATFORM_EVENTS_CHANNEL"
 	//   "CLOUD_SCHEDULER"
+	//   "INTEGRATION_CONNECTOR_TRIGGER"
 	TriggerType string `json:"triggerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertConfig") to
@@ -6379,6 +6380,9 @@ type GoogleCloudConnectorsV1AuthConfigOauth2AuthCodeFlow struct {
 	// tokens.
 	AuthCode string `json:"authCode,omitempty"`
 
+	// AuthUri: Auth URL for Authorization Code Flow
+	AuthUri string `json:"authUri,omitempty"`
+
 	// ClientId: Client ID for user-provided OAuth app.
 	ClientId string `json:"clientId,omitempty"`
 
@@ -6612,6 +6616,9 @@ type GoogleCloudConnectorsV1ConfigVariable struct {
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
 
+	// KeyValue: Value is a Encryption Key.
+	KeyValue *GoogleCloudConnectorsV1EncryptionKey `json:"keyValue,omitempty"`
+
 	// SecretValue: Value is a secret.
 	SecretValue *GoogleCloudConnectorsV1Secret `json:"secretValue,omitempty"`
 
@@ -6652,11 +6659,26 @@ type GoogleCloudConnectorsV1Connection struct {
 	// connection with an external system.
 	ConfigVariables []*GoogleCloudConnectorsV1ConfigVariable `json:"configVariables,omitempty"`
 
+	// ConnectionRevision: Output only. Connection revision. This field is
+	// only updated when the connection is created or updated by User.
+	ConnectionRevision int64 `json:"connectionRevision,omitempty,string"`
+
 	// ConnectorVersion: Required. Connector version on which the connection
 	// is created. The format is:
 	// projects/*/locations/*/providers/*/connectors/*/versions/* Only
 	// global location is supported for ConnectorVersion resource.
 	ConnectorVersion string `json:"connectorVersion,omitempty"`
+
+	// ConnectorVersionLaunchStage: Output only. Flag to mark the version
+	// indicating the launch stage.
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - LAUNCH_STAGE_UNSPECIFIED.
+	//   "PREVIEW" - PREVIEW.
+	//   "GA" - GA.
+	//   "DEPRECATED" - DEPRECATED.
+	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
+	ConnectorVersionLaunchStage string `json:"connectorVersionLaunchStage,omitempty"`
 
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -6713,14 +6735,13 @@ type GoogleCloudConnectorsV1Connection struct {
 	// Status: Output only. Current status of the connection.
 	Status *GoogleCloudConnectorsV1ConnectionStatus `json:"status,omitempty"`
 
-	// SubscriptionType: Output only. This subscription type enum value
-	// states if the metrics should be sent for billing or not.
+	// SubscriptionType: Output only. This subscription type enum states the
+	// subscription type of the project.
 	//
 	// Possible values:
 	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - Unspecified subscription type.
-	//   "PAY_G" - Metrics should be sent for billing for PayG type.
-	//   "PAID" - Metrics should not be sent for billing for Paid
-	// Subscription type.
+	//   "PAY_G" - PayG subscription.
+	//   "PAID" - Paid Subscription.
 	SubscriptionType string `json:"subscriptionType,omitempty"`
 
 	// Suspended: Optional. Suspended indicates if a user has suspended a
@@ -6769,8 +6790,8 @@ type GoogleCloudConnectorsV1ConnectionStatus struct {
 	//   "DELETING" - Connection is being deleted.
 	//   "UPDATING" - Connection is being updated.
 	//   "ERROR" - Connection is not running due to an error.
-	//   "AUTHORIZATION_REQUIRED" - Connection is not running due to an auth
-	// error for the Oauth2 Auth Code based connector.
+	//   "AUTHORIZATION_REQUIRED" - Connection is not running because the
+	// authorization configuration is not complete.
 	State string `json:"state,omitempty"`
 
 	// Status: Status provides detailed information for the state.
@@ -6863,6 +6884,45 @@ type GoogleCloudConnectorsV1DestinationConfig struct {
 
 func (s *GoogleCloudConnectorsV1DestinationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudConnectorsV1DestinationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudConnectorsV1EncryptionKey: Encryption Key value.
+type GoogleCloudConnectorsV1EncryptionKey struct {
+	// KmsKeyName: The [KMS key name] with which the content of the
+	// Operation is encrypted. The expected format:
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`. Will be empty
+	// string if google managed.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// Type: Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Value type is not specified.
+	//   "GOOGLE_MANAGED" - Google Managed.
+	//   "CUSTOMER_MANAGED" - Customer Managed.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudConnectorsV1EncryptionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudConnectorsV1EncryptionKey
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7954,6 +8014,70 @@ type GoogleCloudIntegrationsV1alphaEventParameter struct {
 
 func (s *GoogleCloudIntegrationsV1alphaEventParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIntegrationsV1alphaEventParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIntegrationsV1alphaExecuteEventRequest: Request for
+// triggering an integration using event triggers.
+type GoogleCloudIntegrationsV1alphaExecuteEventRequest struct {
+	// CloudEvent: Required. Details about the trigger which is to be
+	// executed and values for input variable to the integration.
+	CloudEvent *IoCloudeventsV1CloudEvent `json:"cloudEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudEvent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudEvent") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIntegrationsV1alphaExecuteEventRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIntegrationsV1alphaExecuteEventRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIntegrationsV1alphaExecuteEventResponse: The response for
+// executing an integration.
+type GoogleCloudIntegrationsV1alphaExecuteEventResponse struct {
+	// ExecutionId: The id of the execution corresponding to this run of
+	// integration.
+	ExecutionId string `json:"executionId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExecutionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExecutionId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIntegrationsV1alphaExecuteEventResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIntegrationsV1alphaExecuteEventResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10181,8 +10305,9 @@ type GoogleCloudIntegrationsV1alphaScheduleIntegrationsRequest struct {
 	// executed immediately.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
-	// TriggerId: Matched against all {@link TriggerConfig}s across all
-	// integrations. i.e. TriggerConfig.trigger_id.equals(trigger_id)
+	// TriggerId: Required. Matched against all {@link TriggerConfig}s
+	// across all integrations. i.e.
+	// TriggerConfig.trigger_id.equals(trigger_id)
 	TriggerId string `json:"triggerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InputParameters") to
@@ -10957,6 +11082,7 @@ type GoogleCloudIntegrationsV1alphaTriggerConfig struct {
 	//   "CLOUD_PUBSUB_EXTERNAL" - Trigger by Pub/Sub external.
 	//   "SFDC_CDC_CHANNEL" - SFDC Channel Trigger for CDC.
 	//   "CLOUD_SCHEDULER" - Trigger by Cloud Scheduler job.
+	//   "INTEGRATION_CONNECTOR_TRIGGER" - Trigger by Connector Event
 	TriggerType string `json:"triggerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertConfig") to
@@ -11264,6 +11390,88 @@ type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// IoCloudeventsV1CloudEvent: -- CloudEvent Context Attributes
+type IoCloudeventsV1CloudEvent struct {
+	// Attributes: Optional & Extension Attributes
+	Attributes map[string]IoCloudeventsV1CloudEventCloudEventAttributeValue `json:"attributes,omitempty"`
+
+	BinaryData string `json:"binaryData,omitempty"`
+
+	// Id: Required Attributes
+	Id string `json:"id,omitempty"`
+
+	ProtoData googleapi.RawMessage `json:"protoData,omitempty"`
+
+	// Source: URI-reference
+	Source string `json:"source,omitempty"`
+
+	SpecVersion string `json:"specVersion,omitempty"`
+
+	TextData string `json:"textData,omitempty"`
+
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IoCloudeventsV1CloudEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod IoCloudeventsV1CloudEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type IoCloudeventsV1CloudEventCloudEventAttributeValue struct {
+	CeBoolean bool `json:"ceBoolean,omitempty"`
+
+	CeBytes string `json:"ceBytes,omitempty"`
+
+	CeInteger int64 `json:"ceInteger,omitempty"`
+
+	CeString string `json:"ceString,omitempty"`
+
+	CeTimestamp string `json:"ceTimestamp,omitempty"`
+
+	CeUri string `json:"ceUri,omitempty"`
+
+	CeUriRef string `json:"ceUriRef,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CeBoolean") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CeBoolean") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IoCloudeventsV1CloudEventCloudEventAttributeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod IoCloudeventsV1CloudEventCloudEventAttributeValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // method id "integrations.callback.generateToken":
@@ -12425,7 +12633,7 @@ func (r *ProjectsLocationsAuthConfigsService) List(parent string) *ProjectsLocat
 
 // Filter sets the optional parameter "filter": Filtering as supported
 // in
-// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
+// https://developers.google.com/authorized-buyers/apis/guides/list-filters.
 func (c *ProjectsLocationsAuthConfigsListCall) Filter(filter string) *ProjectsLocationsAuthConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -12563,7 +12771,7 @@ func (c *ProjectsLocationsAuthConfigsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.",
+	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14069,6 +14277,154 @@ func (c *ProjectsLocationsIntegrationsExecuteCall) Do(opts ...googleapi.CallOpti
 
 }
 
+// method id "integrations.projects.locations.integrations.executeEvent":
+
+type ProjectsLocationsIntegrationsExecuteEventCall struct {
+	s                                                 *Service
+	name                                              string
+	googlecloudintegrationsv1alphaexecuteeventrequest *GoogleCloudIntegrationsV1alphaExecuteEventRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// ExecuteEvent: Executes an integration on receiving events from
+// Integration Connector triggers, Eventarc or CPS Trigger. The details
+// about integration are derived from CloudEvent request body.
+//
+//   - name: The integration resource name. Format:
+//     projects/{gcp_project_id}/locations/{location}/integrations/{integra
+//     tion_id}.
+func (r *ProjectsLocationsIntegrationsService) ExecuteEvent(name string, googlecloudintegrationsv1alphaexecuteeventrequest *GoogleCloudIntegrationsV1alphaExecuteEventRequest) *ProjectsLocationsIntegrationsExecuteEventCall {
+	c := &ProjectsLocationsIntegrationsExecuteEventCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudintegrationsv1alphaexecuteeventrequest = googlecloudintegrationsv1alphaexecuteeventrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsExecuteEventCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsExecuteEventCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsExecuteEventCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsExecuteEventCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsExecuteEventCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsExecuteEventCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaexecuteeventrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:executeEvent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.executeEvent" call.
+// Exactly one of *GoogleCloudIntegrationsV1alphaExecuteEventResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIntegrationsV1alphaExecuteEventResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsIntegrationsExecuteEventCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaExecuteEventResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIntegrationsV1alphaExecuteEventResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Executes an integration on receiving events from Integration Connector triggers, Eventarc or CPS Trigger. The details about integration are derived from CloudEvent request body.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}:executeEvent",
+	//   "httpMethod": "POST",
+	//   "id": "integrations.projects.locations.integrations.executeEvent",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The integration resource name. Format: projects/{gcp_project_id}/locations/{location}/integrations/{integration_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:executeEvent",
+	//   "request": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaExecuteEventRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaExecuteEventResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "integrations.projects.locations.integrations.list":
 
 type ProjectsLocationsIntegrationsListCall struct {
@@ -14757,6 +15113,7 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "filterParams.parameterKey": {
+	//       "deprecated": true,
 	//       "description": "Param key. DEPRECATED. User parameter_pair_key instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -14777,6 +15134,7 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "filterParams.parameterValue": {
+	//       "deprecated": true,
 	//       "description": "Param value. DEPRECATED. User parameter_pair_value instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -14788,6 +15146,7 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "filterParams.taskStatuses": {
+	//       "deprecated": true,
 	//       "description": "List of possible task statuses.",
 	//       "location": "query",
 	//       "repeated": true,
@@ -14833,6 +15192,7 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Do(opts ...googleapi.C
 	//       "type": "boolean"
 	//     },
 	//     "truncateParams": {
+	//       "deprecated": true,
 	//       "description": "Optional. If true, the service will truncate the params to only keep the first 1000 characters of string params and empty the executions in order to make response smaller. Only works for UI and when the params fields are not filtered out.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -17573,7 +17933,7 @@ func (r *ProjectsLocationsProductsAuthConfigsService) List(parent string) *Proje
 
 // Filter sets the optional parameter "filter": Filtering as supported
 // in
-// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
+// https://developers.google.com/authorized-buyers/apis/guides/list-filters.
 func (c *ProjectsLocationsProductsAuthConfigsListCall) Filter(filter string) *ProjectsLocationsProductsAuthConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -17711,7 +18071,7 @@ func (c *ProjectsLocationsProductsAuthConfigsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.",
+	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18454,7 +18814,7 @@ func (r *ProjectsLocationsProductsCertificatesService) List(parent string) *Proj
 
 // Filter sets the optional parameter "filter": Filtering as supported
 // in
-// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
+// https://developers.google.com/authorized-buyers/apis/guides/list-filters.
 func (c *ProjectsLocationsProductsCertificatesListCall) Filter(filter string) *ProjectsLocationsProductsCertificatesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -18593,7 +18953,7 @@ func (c *ProjectsLocationsProductsCertificatesListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.",
+	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20081,6 +20441,7 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "filterParams.parameterKey": {
+	//       "deprecated": true,
 	//       "description": "Param key. DEPRECATED. User parameter_pair_key instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -20101,6 +20462,7 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "filterParams.parameterValue": {
+	//       "deprecated": true,
 	//       "description": "Param value. DEPRECATED. User parameter_pair_value instead.",
 	//       "location": "query",
 	//       "type": "string"
@@ -20112,6 +20474,7 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "filterParams.taskStatuses": {
+	//       "deprecated": true,
 	//       "description": "List of possible task statuses.",
 	//       "location": "query",
 	//       "repeated": true,
@@ -20157,6 +20520,7 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Do(opts ...goo
 	//       "type": "boolean"
 	//     },
 	//     "truncateParams": {
+	//       "deprecated": true,
 	//       "description": "Optional. If true, the service will truncate the params to only keep the first 1000 characters of string params and empty the executions in order to make response smaller. Only works for UI and when the params fields are not filtered out.",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -23341,7 +23705,7 @@ func (r *ProjectsLocationsProductsSfdcInstancesService) List(parent string) *Pro
 
 // Filter sets the optional parameter "filter": Filtering as supported
 // in
-// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
+// https://developers.google.com/authorized-buyers/apis/guides/list-filters.
 func (c *ProjectsLocationsProductsSfdcInstancesListCall) Filter(filter string) *ProjectsLocationsProductsSfdcInstancesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -23480,7 +23844,7 @@ func (c *ProjectsLocationsProductsSfdcInstancesListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.",
+	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24151,7 +24515,7 @@ func (r *ProjectsLocationsProductsSfdcInstancesSfdcChannelsService) List(parent 
 
 // Filter sets the optional parameter "filter": Filtering as supported
 // in
-// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
+// https://developers.google.com/authorized-buyers/apis/guides/list-filters.
 func (c *ProjectsLocationsProductsSfdcInstancesSfdcChannelsListCall) Filter(filter string) *ProjectsLocationsProductsSfdcInstancesSfdcChannelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -24290,7 +24654,7 @@ func (c *ProjectsLocationsProductsSfdcInstancesSfdcChannelsListCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.",
+	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24961,7 +25325,7 @@ func (r *ProjectsLocationsSfdcInstancesService) List(parent string) *ProjectsLoc
 
 // Filter sets the optional parameter "filter": Filtering as supported
 // in
-// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
+// https://developers.google.com/authorized-buyers/apis/guides/list-filters.
 func (c *ProjectsLocationsSfdcInstancesListCall) Filter(filter string) *ProjectsLocationsSfdcInstancesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -25100,7 +25464,7 @@ func (c *ProjectsLocationsSfdcInstancesListCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.",
+	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25771,7 +26135,7 @@ func (r *ProjectsLocationsSfdcInstancesSfdcChannelsService) List(parent string) 
 
 // Filter sets the optional parameter "filter": Filtering as supported
 // in
-// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
+// https://developers.google.com/authorized-buyers/apis/guides/list-filters.
 func (c *ProjectsLocationsSfdcInstancesSfdcChannelsListCall) Filter(filter string) *ProjectsLocationsSfdcInstancesSfdcChannelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -25910,7 +26274,7 @@ func (c *ProjectsLocationsSfdcInstancesSfdcChannelsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.",
+	//       "description": "Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -572,6 +572,10 @@ type CloudRunRewrite struct {
 	// ServiceId: Required. User-defined ID of the Cloud Run service.
 	ServiceId string `json:"serviceId,omitempty"`
 
+	// Tag: Optional. User-provided TrafficConfig tag to send traffic to.
+	// When omitted, traffic is sent to the service-wide URI
+	Tag string `json:"tag,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Region") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5969,6 +5973,7 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 	//       "type": "string"
 	//     },
 	//     "versionId": {
+	//       "deprecated": true,
 	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"
@@ -10252,6 +10257,7 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 	//       "type": "string"
 	//     },
 	//     "versionId": {
+	//       "deprecated": true,
 	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"

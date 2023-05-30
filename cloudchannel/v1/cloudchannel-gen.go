@@ -401,6 +401,79 @@ func (s *GoogleCloudChannelV1AssociationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1BillingAccount: Represents a billing account.
+type GoogleCloudChannelV1BillingAccount struct {
+	// CreateTime: Output only. The time when this billing account was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CurrencyCode: Output only. The 3-letter currency code defined in ISO
+	// 4217.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// DisplayName: Display name of the billing account.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Output only. Resource name of the billing account. Format:
+	// accounts/{account_id}/billingAccounts/{billing_account_id}.
+	Name string `json:"name,omitempty"`
+
+	// RegionCode: Output only. The CLDR region code.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1BillingAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1BillingAccount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1BillingAccountPurchaseInfo: Represents a billing
+// account that can be used to make a purchase.
+type GoogleCloudChannelV1BillingAccountPurchaseInfo struct {
+	// BillingAccount: The billing account resource.
+	BillingAccount *GoogleCloudChannelV1BillingAccount `json:"billingAccount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingAccount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1BillingAccountPurchaseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1BillingAccountPurchaseInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1CancelEntitlementRequest: Request message for
 // CloudChannelService.CancelEntitlement.
 type GoogleCloudChannelV1CancelEntitlementRequest struct {
@@ -441,6 +514,12 @@ func (s *GoogleCloudChannelV1CancelEntitlementRequest) MarshalJSON() ([]byte, er
 // GoogleCloudChannelV1ChangeOfferRequest: Request message for
 // CloudChannelService.ChangeOffer.
 type GoogleCloudChannelV1ChangeOfferRequest struct {
+	// BillingAccount: Optional. The billing account resource name that is
+	// used to pay for this entitlement when setting up billing on a trial
+	// subscription. This field is only relevant for multi-currency
+	// accounts. It should be left empty for single currency accounts.
+	BillingAccount string `json:"billingAccount,omitempty"`
+
 	// Offer: Required. New Offer. Format:
 	// accounts/{account_id}/offers/{offer_id}.
 	Offer string `json:"offer,omitempty"`
@@ -465,7 +544,7 @@ type GoogleCloudChannelV1ChangeOfferRequest struct {
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Offer") to
+	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -473,12 +552,13 @@ type GoogleCloudChannelV1ChangeOfferRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Offer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BillingAccount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2393,6 +2473,12 @@ func (s *GoogleCloudChannelV1ListSubscribersResponse) MarshalJSON() ([]byte, err
 // GoogleCloudChannelV1ListTransferableOffersRequest: Request message
 // for CloudChannelService.ListTransferableOffers
 type GoogleCloudChannelV1ListTransferableOffersRequest struct {
+	// BillingAccount: Optional. The Billing Account to look up Offers for.
+	// Format: accounts/{account_id}/billing_accounts/{billing_account_id}.
+	// This field is only relevant for multi-currency accounts. It should be
+	// left empty for single currency accounts.
+	BillingAccount string `json:"billingAccount,omitempty"`
+
 	// CloudIdentityId: Customer's Cloud Identity ID
 	CloudIdentityId string `json:"cloudIdentityId,omitempty"`
 
@@ -2418,7 +2504,7 @@ type GoogleCloudChannelV1ListTransferableOffersRequest struct {
 	// Sku: Required. The SKU to look up Offers for.
 	Sku string `json:"sku,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudIdentityId") to
+	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2426,7 +2512,7 @@ type GoogleCloudChannelV1ListTransferableOffersRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudIdentityId") to
+	// NullFields is a list of field names (e.g. "BillingAccount") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2838,6 +2924,7 @@ type GoogleCloudChannelV1ParameterDefinition struct {
 	//   "INT64" - Int64 type.
 	//   "STRING" - String type.
 	//   "DOUBLE" - Double type.
+	//   "BOOLEAN" - Boolean type.
 	ParameterType string `json:"parameterType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
@@ -3345,6 +3432,44 @@ type GoogleCloudChannelV1PurchasableSku struct {
 
 func (s *GoogleCloudChannelV1PurchasableSku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1PurchasableSku
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1QueryEligibleBillingAccountsResponse: Response
+// message for QueryEligibleBillingAccounts.
+type GoogleCloudChannelV1QueryEligibleBillingAccountsResponse struct {
+	// SkuPurchaseGroups: List of SKU purchase groups where each group
+	// represents a set of SKUs that must be purchased using the same
+	// billing account. Each SKU from
+	// [QueryEligibleBillingAccountsRequest.skus] will appear in exactly one
+	// SKU group.
+	SkuPurchaseGroups []*GoogleCloudChannelV1SkuPurchaseGroup `json:"skuPurchaseGroups,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SkuPurchaseGroups")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkuPurchaseGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1QueryEligibleBillingAccountsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1QueryEligibleBillingAccountsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4011,6 +4136,42 @@ type GoogleCloudChannelV1SkuGroupCondition struct {
 
 func (s *GoogleCloudChannelV1SkuGroupCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1SkuGroupCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1SkuPurchaseGroup: Represents a set of SKUs that
+// must be purchased using the same billing account.
+type GoogleCloudChannelV1SkuPurchaseGroup struct {
+	// BillingAccountPurchaseInfos: List of billing accounts that are
+	// eligible to purhcase these SKUs.
+	BillingAccountPurchaseInfos []*GoogleCloudChannelV1BillingAccountPurchaseInfo `json:"billingAccountPurchaseInfos,omitempty"`
+
+	// Skus: Resource names of the SKUs included in this group. Format:
+	// products/{product_id}/skus/{sku_id}.
+	Skus []string `json:"skus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BillingAccountPurchaseInfos") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "BillingAccountPurchaseInfos") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1SkuPurchaseGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1SkuPurchaseGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10588,6 +10749,18 @@ func (r *AccountsCustomersService) ListPurchasableOffers(customer string) *Accou
 	return c
 }
 
+// ChangeOfferPurchaseBillingAccount sets the optional parameter
+// "changeOfferPurchase.billingAccount": Resource name of the new target
+// Billing Account. Provide this Billing Account when setting up billing
+// for a trial subscription. Format:
+// accounts/{account_id}/billing_accounts/{billing_account_id}. This
+// field is only relevant for multi-currency accounts. It should be left
+// empty for single currency accounts.
+func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseBillingAccount(changeOfferPurchaseBillingAccount string) *AccountsCustomersListPurchasableOffersCall {
+	c.urlParams_.Set("changeOfferPurchase.billingAccount", changeOfferPurchaseBillingAccount)
+	return c
+}
+
 // ChangeOfferPurchaseEntitlement sets the optional parameter
 // "changeOfferPurchase.entitlement": Required. Resource name of the
 // entitlement. Format:
@@ -10604,6 +10777,15 @@ func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseEntitlem
 // Format: products/{product_id}/skus/{sku_id}
 func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseNewSku(changeOfferPurchaseNewSku string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("changeOfferPurchase.newSku", changeOfferPurchaseNewSku)
+	return c
+}
+
+// CreateEntitlementPurchaseBillingAccount sets the optional parameter
+// "createEntitlementPurchase.billingAccount": Billing account that the
+// result should be restricted to. Format:
+// accounts/{account_id}/billing_accounts/{billing_account_id}.
+func (c *AccountsCustomersListPurchasableOffersCall) CreateEntitlementPurchaseBillingAccount(createEntitlementPurchaseBillingAccount string) *AccountsCustomersListPurchasableOffersCall {
+	c.urlParams_.Set("createEntitlementPurchase.billingAccount", createEntitlementPurchaseBillingAccount)
 	return c
 }
 
@@ -10749,6 +10931,11 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 	//     "customer"
 	//   ],
 	//   "parameters": {
+	//     "changeOfferPurchase.billingAccount": {
+	//       "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "changeOfferPurchase.entitlement": {
 	//       "description": "Required. Resource name of the entitlement. Format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "query",
@@ -10756,6 +10943,11 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 	//     },
 	//     "changeOfferPurchase.newSku": {
 	//       "description": "Optional. Resource name of the new target SKU. Provide this SKU when upgrading or downgrading an entitlement. Format: products/{product_id}/skus/{sku_id}",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "createEntitlementPurchase.billingAccount": {
+	//       "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billing_accounts/{billing_account_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11404,6 +11596,177 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) Do(opts ...googleapi.CallO
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.customers.queryEligibleBillingAccounts":
+
+type AccountsCustomersQueryEligibleBillingAccountsCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryEligibleBillingAccounts: Lists the billing accounts that are
+// eligible to purchase particular SKUs for a given customer. Possible
+// error codes: * PERMISSION_DENIED: The customer doesn't belong to the
+// reseller. * INVALID_ARGUMENT: Required request parameters are missing
+// or invalid. Return value: Based on the provided list of SKUs, returns
+// a list of SKU groups that must be purchased using the same billing
+// account and the billing accounts eligible to purchase each SKU group.
+//
+//   - customer: The resource name of the customer to list eligible
+//     billing accounts for. Format:
+//     accounts/{account_id}/customers/{customer_id}.
+func (r *AccountsCustomersService) QueryEligibleBillingAccounts(customer string) *AccountsCustomersQueryEligibleBillingAccountsCall {
+	c := &AccountsCustomersQueryEligibleBillingAccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Skus sets the optional parameter "skus": Required. List of SKUs to
+// list eligible billing accounts for. At least one SKU is required.
+// Format: products/{product_id}/skus/{sku_id}.
+func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Skus(skus ...string) *AccountsCustomersQueryEligibleBillingAccountsCall {
+	c.urlParams_.SetMulti("skus", append([]string{}, skus...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Fields(s ...googleapi.Field) *AccountsCustomersQueryEligibleBillingAccountsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsCustomersQueryEligibleBillingAccountsCall) IfNoneMatch(entityTag string) *AccountsCustomersQueryEligibleBillingAccountsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Context(ctx context.Context) *AccountsCustomersQueryEligibleBillingAccountsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsCustomersQueryEligibleBillingAccountsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}:queryEligibleBillingAccounts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.customers.queryEligibleBillingAccounts" call.
+// Exactly one of
+// *GoogleCloudChannelV1QueryEligibleBillingAccountsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1QueryEligibleBillingAccountsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1QueryEligibleBillingAccountsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudChannelV1QueryEligibleBillingAccountsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the billing accounts that are eligible to purchase particular SKUs for a given customer. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: Based on the provided list of SKUs, returns a list of SKU groups that must be purchased using the same billing account and the billing accounts eligible to purchase each SKU group.",
+	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:queryEligibleBillingAccounts",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.customers.queryEligibleBillingAccounts",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. The resource name of the customer to list eligible billing accounts for. Format: accounts/{account_id}/customers/{customer_id}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "skus": {
+	//       "description": "Required. List of SKUs to list eligible billing accounts for. At least one SKU is required. Format: products/{product_id}/skus/{sku_id}.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}:queryEligibleBillingAccounts",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/apps.order"

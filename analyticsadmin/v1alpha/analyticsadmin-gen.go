@@ -204,6 +204,7 @@ type AccountsUserLinksService struct {
 func NewPropertiesService(s *Service) *PropertiesService {
 	rs := &PropertiesService{s: s}
 	rs.AccessBindings = NewPropertiesAccessBindingsService(s)
+	rs.AdSenseLinks = NewPropertiesAdSenseLinksService(s)
 	rs.Audiences = NewPropertiesAudiencesService(s)
 	rs.BigQueryLinks = NewPropertiesBigQueryLinksService(s)
 	rs.ChannelGroups = NewPropertiesChannelGroupsService(s)
@@ -225,6 +226,8 @@ type PropertiesService struct {
 	s *Service
 
 	AccessBindings *PropertiesAccessBindingsService
+
+	AdSenseLinks *PropertiesAdSenseLinksService
 
 	Audiences *PropertiesAudiencesService
 
@@ -261,6 +264,15 @@ func NewPropertiesAccessBindingsService(s *Service) *PropertiesAccessBindingsSer
 }
 
 type PropertiesAccessBindingsService struct {
+	s *Service
+}
+
+func NewPropertiesAdSenseLinksService(s *Service) *PropertiesAdSenseLinksService {
+	rs := &PropertiesAdSenseLinksService{s: s}
+	return rs
+}
+
+type PropertiesAdSenseLinksService struct {
 	s *Service
 }
 
@@ -1322,6 +1334,45 @@ type GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleAnalyticsAdminV1alphaAdSenseLink: A link between a GA4 Property
+// and an AdSense for Content ad client.
+type GoogleAnalyticsAdminV1alphaAdSenseLink struct {
+	// AdClientCode: Immutable. The AdSense ad client code that the GA4
+	// property is linked to. Example format: "ca-pub-1234567890"
+	AdClientCode string `json:"adClientCode,omitempty"`
+
+	// Name: Output only. The resource name for this AdSense Link resource.
+	// Format: properties/{propertyId}/adSenseLinks/{linkId} Example:
+	// properties/1234/adSenseLinks/6789
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdClientCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdClientCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaAdSenseLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaAdSenseLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaApproveDisplayVideo360AdvertiserLinkProposa
@@ -2826,6 +2877,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// Account: A snapshot of an Account resource in change history.
 	Account *GoogleAnalyticsAdminV1alphaAccount `json:"account,omitempty"`
 
+	// AdsenseLink: A snapshot of an AdSenseLink resource in change history.
+	AdsenseLink *GoogleAnalyticsAdminV1alphaAdSenseLink `json:"adsenseLink,omitempty"`
+
 	// AttributionSettings: A snapshot of AttributionSettings resource in
 	// change history.
 	AttributionSettings *GoogleAnalyticsAdminV1alphaAttributionSettings `json:"attributionSettings,omitempty"`
@@ -4225,7 +4279,8 @@ type GoogleAnalyticsAdminV1alphaEventCreateRule struct {
 
 	// Name: Output only. Resource name for this EventCreateRule resource.
 	// Format:
-	// properties/{property}/dataStreams/{data_stream}/eventCreateRules
+	// properties/{property}/dataStreams/{data_stream}/eventCreateRules/{even
+	// t_create_rule}
 	Name string `json:"name,omitempty"`
 
 	// ParameterMutations: Parameter mutations define parameter behavior on
@@ -5042,6 +5097,44 @@ type GoogleAnalyticsAdminV1alphaListAccountsResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAccountsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse: Response message
+// for ListAdSenseLinks method.
+type GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse struct {
+	// AdsenseLinks: List of AdSenseLinks.
+	AdsenseLinks []*GoogleAnalyticsAdminV1alphaAdSenseLink `json:"adsenseLinks,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdsenseLinks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdsenseLinks") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6519,6 +6612,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "CHANNEL_GROUP" - ChannelGroup resource
 	//   "ENHANCED_MEASUREMENT_SETTINGS" - EnhancedMeasurementSettings
 	// resource
+	//   "ADSENSE_LINK" - AdSenseLink resource
 	//   "AUDIENCE" - Audience resource
 	//   "EVENT_CREATE_RULE" - EventCreateRule resource
 	ResourceType []string `json:"resourceType,omitempty"`
@@ -15396,6 +15490,621 @@ func (c *PropertiesAccessBindingsPatchCall) Do(opts ...googleapi.CallOption) (*G
 
 }
 
+// method id "analyticsadmin.properties.adSenseLinks.create":
+
+type PropertiesAdSenseLinksCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	googleanalyticsadminv1alphaadsenselink *GoogleAnalyticsAdminV1alphaAdSenseLink
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Creates an AdSenseLink.
+//
+//   - parent: The property for which to create an AdSense Link. Format:
+//     properties/{propertyId} Example: properties/1234.
+func (r *PropertiesAdSenseLinksService) Create(parent string, googleanalyticsadminv1alphaadsenselink *GoogleAnalyticsAdminV1alphaAdSenseLink) *PropertiesAdSenseLinksCreateCall {
+	c := &PropertiesAdSenseLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphaadsenselink = googleanalyticsadminv1alphaadsenselink
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAdSenseLinksCreateCall) Fields(s ...googleapi.Field) *PropertiesAdSenseLinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAdSenseLinksCreateCall) Context(ctx context.Context) *PropertiesAdSenseLinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAdSenseLinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAdSenseLinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaadsenselink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/adSenseLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.adSenseLinks.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaAdSenseLink or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaAdSenseLink.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesAdSenseLinksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAdSenseLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAdSenseLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an AdSenseLink.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.adSenseLinks.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The property for which to create an AdSense Link. Format: properties/{propertyId} Example: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/adSenseLinks",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
+	//   }
+	// }
+
+}
+
+// method id "analyticsadmin.properties.adSenseLinks.delete":
+
+type PropertiesAdSenseLinksDeleteCall struct {
+	s          *Service
+	nameid     string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an AdSenseLink.
+//
+//   - name: Unique identifier for the AdSense Link to be deleted. Format:
+//     properties/{propertyId}/adSenseLinks/{linkId} Example:
+//     properties/1234/adSenseLinks/5678.
+func (r *PropertiesAdSenseLinksService) Delete(nameid string) *PropertiesAdSenseLinksDeleteCall {
+	c := &PropertiesAdSenseLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAdSenseLinksDeleteCall) Fields(s ...googleapi.Field) *PropertiesAdSenseLinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAdSenseLinksDeleteCall) Context(ctx context.Context) *PropertiesAdSenseLinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAdSenseLinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAdSenseLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.adSenseLinks.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesAdSenseLinksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an AdSenseLink.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks/{adSenseLinksId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.adSenseLinks.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Unique identifier for the AdSense Link to be deleted. Format: properties/{propertyId}/adSenseLinks/{linkId} Example: properties/1234/adSenseLinks/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/adSenseLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   }
+	// }
+
+}
+
+// method id "analyticsadmin.properties.adSenseLinks.get":
+
+type PropertiesAdSenseLinksGetCall struct {
+	s            *Service
+	nameid       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Looks up a single AdSenseLink.
+//
+//   - name: Unique identifier for the AdSense Link requested. Format:
+//     properties/{propertyId}/adSenseLinks/{linkId} Example:
+//     properties/1234/adSenseLinks/5678.
+func (r *PropertiesAdSenseLinksService) Get(nameid string) *PropertiesAdSenseLinksGetCall {
+	c := &PropertiesAdSenseLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAdSenseLinksGetCall) Fields(s ...googleapi.Field) *PropertiesAdSenseLinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesAdSenseLinksGetCall) IfNoneMatch(entityTag string) *PropertiesAdSenseLinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAdSenseLinksGetCall) Context(ctx context.Context) *PropertiesAdSenseLinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAdSenseLinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAdSenseLinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.adSenseLinks.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaAdSenseLink or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaAdSenseLink.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesAdSenseLinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaAdSenseLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaAdSenseLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Looks up a single AdSenseLink.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks/{adSenseLinksId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.adSenseLinks.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Unique identifier for the AdSense Link requested. Format: properties/{propertyId}/adSenseLinks/{linkId} Example: properties/1234/adSenseLinks/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/adSenseLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
+	//   }
+	// }
+
+}
+
+// method id "analyticsadmin.properties.adSenseLinks.list":
+
+type PropertiesAdSenseLinksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists AdSenseLinks on a property.
+//
+//   - parent: Resource name of the parent property. Format:
+//     properties/{propertyId} Example: properties/1234.
+func (r *PropertiesAdSenseLinksService) List(parent string) *PropertiesAdSenseLinksListCall {
+	c := &PropertiesAdSenseLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200 (higher values will be coerced to
+// the maximum).
+func (c *PropertiesAdSenseLinksListCall) PageSize(pageSize int64) *PropertiesAdSenseLinksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous `ListAdSenseLinks` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListAdSenseLinks` must match the call that provided the
+// page token.
+func (c *PropertiesAdSenseLinksListCall) PageToken(pageToken string) *PropertiesAdSenseLinksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAdSenseLinksListCall) Fields(s ...googleapi.Field) *PropertiesAdSenseLinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesAdSenseLinksListCall) IfNoneMatch(entityTag string) *PropertiesAdSenseLinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAdSenseLinksListCall) Context(ctx context.Context) *PropertiesAdSenseLinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAdSenseLinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAdSenseLinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/adSenseLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.adSenseLinks.list" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesAdSenseLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists AdSenseLinks on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/adSenseLinks",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.adSenseLinks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token received from a previous `ListAdSenseLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAdSenseLinks` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the parent property. Format: properties/{propertyId} Example: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/adSenseLinks",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesAdSenseLinksListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "analyticsadmin.properties.audiences.archive":
 
 type PropertiesAudiencesArchiveCall struct {
@@ -21461,7 +22170,8 @@ type PropertiesDataStreamsEventCreateRulesPatchCall struct {
 //
 //   - name: Output only. Resource name for this EventCreateRule resource.
 //     Format:
-//     properties/{property}/dataStreams/{data_stream}/eventCreateRules.
+//     properties/{property}/dataStreams/{data_stream}/eventCreateRules/{ev
+//     ent_create_rule}.
 func (r *PropertiesDataStreamsEventCreateRulesService) Patch(name string, googleanalyticsadminv1alphaeventcreaterule *GoogleAnalyticsAdminV1alphaEventCreateRule) *PropertiesDataStreamsEventCreateRulesPatchCall {
 	c := &PropertiesDataStreamsEventCreateRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21581,7 +22291,7 @@ func (c *PropertiesDataStreamsEventCreateRulesPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules",
+	//       "description": "Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules/{event_create_rule}",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/eventCreateRules/[^/]+$",
 	//       "required": true,

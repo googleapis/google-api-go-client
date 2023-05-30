@@ -4395,6 +4395,8 @@ type ParameterMetadata struct {
 	// email.
 	//   "MACHINE_TYPE" - The parameter specifies a Machine Type.
 	//   "KMS_KEY_NAME" - The parameter specifies a KMS Key name.
+	//   "WORKER_REGION" - The parameter specifies a Worker Region.
+	//   "WORKER_ZONE" - The parameter specifies a Worker Zone.
 	ParamType string `json:"paramType,omitempty"`
 
 	// ParentName: Optional. Specifies the name of the parent parameter.
@@ -4707,6 +4709,10 @@ type PubsubLocation struct {
 	// DropLateData: Indicates whether the pipeline allows late-arriving
 	// data.
 	DropLateData bool `json:"dropLateData,omitempty"`
+
+	// DynamicDestinations: If true, then this location represents dynamic
+	// topics.
+	DynamicDestinations bool `json:"dynamicDestinations,omitempty"`
 
 	// IdLabel: If set, contains a pubsub label from which to extract record
 	// ids. If left empty, record deduplication will be strictly best
@@ -8928,6 +8934,7 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
@@ -9895,6 +9902,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",
@@ -12689,6 +12697,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
 	//       "enum": [
 	//         "JOB_VIEW_UNKNOWN",

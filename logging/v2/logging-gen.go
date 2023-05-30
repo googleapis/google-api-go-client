@@ -1453,7 +1453,7 @@ type HttpRequest struct {
 
 	// Referer: The referer URL of the request, as defined in HTTP/1.1
 	// Header Field Definitions
-	// (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+	// (https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
 	Referer string `json:"referer,omitempty"`
 
 	// RemoteIp: The IP address (IPv4 or IPv6) of the client that issued the
@@ -3935,6 +3935,11 @@ type Settings struct {
 	// (https://cloud.google.com/logging/docs/routing/managed-encryption)
 	// for more information.
 	KmsServiceAccountId string `json:"kmsServiceAccountId,omitempty"`
+
+	// LoggingServiceAccountId: Output only. The service account for the
+	// given container. Sinks use this service account as their
+	// writer_identity if no custom service account is provided.
+	LoggingServiceAccountId string `json:"loggingServiceAccountId,omitempty"`
 
 	// Name: Output only. The resource name of the settings.
 	Name string `json:"name,omitempty"`

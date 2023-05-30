@@ -1918,7 +1918,7 @@
       }
     }
   },
-  "revision": "20230426",
+  "revision": "20230517",
   "rootUrl": "https://datamigration.googleapis.com/",
   "schemas": {
     "AlloyDbConnectionProfile": {
@@ -3482,6 +3482,10 @@
       "description": "Represents a Database Migration Service migration job object.",
       "id": "MigrationJob",
       "properties": {
+        "cmekKeyName": {
+          "description": "The CMEK (customer-managed encryption key) fully qualified key name used for the migration job. This field supports all migration jobs types except for: * Mysql to Mysql (use the cmek field in the cloudsql connection profile instead). * PostrgeSQL to PostgreSQL (use the cmek field in the cloudsql connection profile instead). * PostgreSQL to AlloyDB (use the kms_key_name field in the alloydb connection profile instead). Each Cloud CMEK key has the following format: projects/[PROJECT]/locations/[REGION]/keyRings/[RING]/cryptoKeys/[KEY_NAME]",
+          "type": "string"
+        },
         "conversionWorkspace": {
           "$ref": "ConversionWorkspaceInfo",
           "description": "The conversion workspace used by the migration."
@@ -3830,6 +3834,10 @@
           "$ref": "PrivateConnectivity",
           "description": "Private connectivity."
         },
+        "ssl": {
+          "$ref": "SslConfig",
+          "description": "SSL configuration for the destination to connect to the source database. The supported configuration for Oracle SSL is of SERVER_ONLY type."
+        },
         "staticServiceIpConnectivity": {
           "$ref": "StaticServiceIpConnectivity",
           "description": "Static Service IP connectivity."
@@ -4067,7 +4075,7 @@
       "type": "object"
     },
     "PrivateServiceConnectConnectivity": {
-      "description": "Private Service Connect connectivity (https://cloud.google.com/vpc/docs/private-service-connect#benefits-services)",
+      "description": "Private Service Connect connectivity (https://cloud.google.com/vpc/docs/private-service-connect#service-attachments)",
       "id": "PrivateServiceConnectConnectivity",
       "properties": {
         "serviceAttachment": {

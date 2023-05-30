@@ -2899,6 +2899,10 @@ type Product struct {
 	//   "vpnApp" - The app is a VPN.
 	Features []string `json:"features,omitempty"`
 
+	// FullDescription: The localized full app store description, if
+	// available.
+	FullDescription string `json:"fullDescription,omitempty"`
+
 	// IconUrl: A link to an image that can be used as an icon for the
 	// product. This image is suitable for use at up to 512px x 512px.
 	IconUrl string `json:"iconUrl,omitempty"`

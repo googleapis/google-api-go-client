@@ -1313,7 +1313,12 @@ type Cluster struct {
 	// ProtectConfig: Enable/Disable Protect API features for the cluster.
 	ProtectConfig *ProtectConfig `json:"protectConfig,omitempty"`
 
-	// ReleaseChannel: Release channel configuration.
+	// ReleaseChannel: Release channel configuration. If left unspecified on
+	// cluster creation and a version is specified, the cluster is enrolled
+	// in the most mature release channel where the version is available
+	// (first checking STABLE, then REGULAR, and finally RAPID). Otherwise,
+	// if no release channel configuration and no version is specified, the
+	// cluster is enrolled in the REGULAR channel with its default version.
 	ReleaseChannel *ReleaseChannel `json:"releaseChannel,omitempty"`
 
 	// ResourceLabels: The resource labels for the cluster to use to
@@ -4442,6 +4447,47 @@ func (s *NetworkTags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NodeAffinity: Specifies the NodeAffinity key, values, and affinity
+// operator according to shared sole tenant node group affinities
+// (https://cloud.google.com/compute/docs/nodes/sole-tenant-nodes#node_affinity_and_anti-affinity).
+type NodeAffinity struct {
+	// Key: Key for NodeAffinity.
+	Key string `json:"key,omitempty"`
+
+	// Operator: Operator for NodeAffinity.
+	//
+	// Possible values:
+	//   "OPERATOR_UNSPECIFIED" - Invalid or unspecified affinity operator.
+	//   "IN" - Affinity operator.
+	//   "NOT_IN" - Anti-affinity operator.
+	Operator string `json:"operator,omitempty"`
+
+	// Values: Values for NodeAffinity.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeAffinity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: Parameters that describe the nodes in a cluster. GKE
 // Autopilot clusters do not recognize parameters in `NodeConfig`. Use
 // AutoprovisioningNodePoolDefaults instead.
@@ -4609,6 +4655,10 @@ type NodeConfig struct {
 
 	// ShieldedInstanceConfig: Shielded Instance options.
 	ShieldedInstanceConfig *ShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
+
+	// SoleTenantConfig: Parameters for node pools to be backed by shared
+	// sole tenant node groups.
+	SoleTenantConfig *SoleTenantConfig `json:"soleTenantConfig,omitempty"`
 
 	// Spot: Spot flag for enabling Spot VM, which is a rebrand of the
 	// existing preemptible flag.
@@ -5439,13 +5489,13 @@ type Operation struct {
 	// format of this is a URI to the resource being modified (such as a
 	// cluster, node pool, or node). For node pool repairs, there may be
 	// multiple nodes being repaired, but only one will be the target.
-	// Examples: -
-	// `https://container.googleapis.com/v1beta1/projects/123/locations/us-ce
-	// ntral1/clusters/my-cluster` -
-	// `https://container.googleapis.com/v1beta1/projects/123/zones/us-centra
-	// l1-c/clusters/my-cluster/nodePools/my-np` -
-	// `https://container.googleapis.com/v1beta1/projects/123/zones/us-centra
-	// l1-c/clusters/my-cluster/nodePools/my-np/node/my-node`
+	// Examples: - ##
+	// `https://container.googleapis.com/v1/projects/123/locations/us-central
+	// 1/clusters/my-cluster` ##
+	// `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/
+	// clusters/my-cluster/nodePools/my-np`
+	// `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/
+	// clusters/my-cluster/nodePools/my-np/node/my-node`
 	TargetLink string `json:"targetLink,omitempty"`
 
 	// Zone: The name of the Google Compute Engine zone
@@ -7071,6 +7121,38 @@ type ShieldedNodes struct {
 
 func (s *ShieldedNodes) MarshalJSON() ([]byte, error) {
 	type NoMethod ShieldedNodes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SoleTenantConfig: SoleTenantConfig contains the NodeAffinities to
+// specify what shared sole tenant node groups should back the node
+// pool.
+type SoleTenantConfig struct {
+	// NodeAffinities: NodeAffinities used to match to a shared sole tenant
+	// node group.
+	NodeAffinities []*NodeAffinity `json:"nodeAffinities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NodeAffinities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NodeAffinities") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SoleTenantConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SoleTenantConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

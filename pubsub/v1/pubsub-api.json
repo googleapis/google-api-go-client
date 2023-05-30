@@ -1565,7 +1565,7 @@
       }
     }
   },
-  "revision": "20230425",
+  "revision": "20230516",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1974,7 +1974,7 @@
       "type": "object"
     },
     "OidcToken": {
-      "description": "Contains information needed for generating an [OpenID Connect token](https://developers.google.com/identity/protocols/OpenIDConnect). [Service account email](https://cloud.google.com/iam/docs/service-accounts) used for generating the OIDC token. For more information on setting up authentication, see [Push subscriptions](https://cloud.google.com/pubsub/docs/push).",
+      "description": "Contains information needed for generating an [OpenID Connect token](https://developers.google.com/identity/protocols/OpenIDConnect).",
       "id": "OidcToken",
       "properties": {
         "audience": {
@@ -1982,6 +1982,7 @@
           "type": "string"
         },
         "serviceAccountEmail": {
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts) used for generating the OIDC token. For more information on setting up authentication, see [Push subscriptions](https://cloud.google.com/pubsub/docs/push).",
           "type": "string"
         }
       },

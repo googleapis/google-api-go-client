@@ -1735,7 +1735,11 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// App Check metrics collected. Though the service is not protected by
 	// App Check in this mode, other applicable protections, such as user
 	// authorization, are still enforced. An unconfigured service is in this
-	// mode by default.
+	// mode by default. Note that resource policies behave slightly
+	// differently as an unconfigured resource policy means that the
+	// resource will inherit the EnforcementMode configured for the service
+	// it belongs to and will not be considered as being in OFF mode by
+	// default.
 	//   "UNENFORCED" - Firebase App Check is not enforced for the service.
 	// App Check metrics are collected to help you decide when to turn on
 	// enforcement for the service. Though the service is not protected by
@@ -1843,7 +1847,9 @@ func (s *GoogleFirebaseAppcheckV1betaUpdateServiceRequest) MarshalJSON() ([]byte
 // GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest: Request
 // message for the VerifyAppCheckToken method.
 type GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest struct {
-	// AppCheckToken: Required. The App Check token to verify.
+	// AppCheckToken: Required. The App Check token to verify. App Check
+	// tokens exchanged from the SafetyNet provider are not supported; an
+	// HTTP 400 error will be returned.
 	AppCheckToken string `json:"appCheckToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppCheckToken") to
@@ -1874,12 +1880,12 @@ func (s *GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest) MarshalJSON() (
 type GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse struct {
 	// AlreadyConsumed: Whether this token was already consumed. If this is
 	// the first time this method has seen the given App Check token, this
-	// field will contain the value `false`. The given token will then be
-	// marked as `already_consumed` for all future invocations of this
-	// method for that token. Note that if the given App Check token is
-	// invalid, an HTTP 403 error is returned instead of a response
-	// containing this field, regardless whether the token was already
-	// consumed.
+	// field will be omitted from the response. The given token will then be
+	// marked as `already_consumed` (set to `true`) for all future
+	// invocations of this method for that token. Note that if the given App
+	// Check token is invalid, an HTTP 403 error is returned instead of a
+	// response containing this field, regardless whether the token was
+	// already consumed.
 	AlreadyConsumed bool `json:"alreadyConsumed,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2095,15 +2101,20 @@ type ProjectsVerifyAppCheckTokenCall struct {
 // token with an unsupported provider will cause an HTTP 400 error to be
 // returned. Returns whether this token was already consumed before this
 // call. If this is the first time this method has seen the given App
-// Check token, the field `already_consumed` will contain the value
-// `false`. The given token will then be marked as `already_consumed`
-// for all future invocations of this method for that token. Note that
-// if the given App Check token is invalid, an HTTP 403 error is
-// returned instead of a response object, regardless whether the token
-// was already consumed. Currently, when evaluating whether an App Check
-// token was already consumed, only calls to this exact method are
-// counted. Use of the App Check token elsewhere will not mark the token
-// as being already consumed.
+// Check token, the field `already_consumed` in the response will be
+// absent. The given token will then be marked as `already_consumed`
+// (set to `true`) for all future invocations of this method for that
+// token. Note that if the given App Check token is invalid, an HTTP 403
+// error is returned instead of a response object, regardless whether
+// the token was already consumed. Currently, when evaluating whether an
+// App Check token was already consumed, only calls to this exact method
+// are counted. Use of the App Check token elsewhere will not mark the
+// token as being already consumed. The caller must have the
+// `firebaseappcheck.appCheckTokens.verify`
+// (https://firebase.google.com/docs/projects/iam/permissions#app-check)
+// permission to call this method. This permission is part of the
+// Firebase App Check Token Verifier role
+// (https://firebase.google.com/docs/projects/iam/roles-predefined-product#app-check).
 //
 //   - project: The relative resource name of the project for which the
 //     token was minted, in the format: ``` projects/{project_number} ```
@@ -2212,7 +2223,7 @@ func (c *ProjectsVerifyAppCheckTokenCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Verifies the given App Check token and returns token usage signals that callers may act upon. This method currently only supports App Check tokens exchanged from the following attestation providers: * Play Integrity API * App Attest * DeviceCheck (`DCDevice` tokens) * reCAPTCHA Enterprise * reCAPTCHA v3 * Custom providers App Check tokens exchanged from debug secrets are also supported. Calling this method on an otherwise valid App Check token with an unsupported provider will cause an HTTP 400 error to be returned. Returns whether this token was already consumed before this call. If this is the first time this method has seen the given App Check token, the field `already_consumed` will contain the value `false`. The given token will then be marked as `already_consumed` for all future invocations of this method for that token. Note that if the given App Check token is invalid, an HTTP 403 error is returned instead of a response object, regardless whether the token was already consumed. Currently, when evaluating whether an App Check token was already consumed, only calls to this exact method are counted. Use of the App Check token elsewhere will not mark the token as being already consumed.",
+	//   "description": "Verifies the given App Check token and returns token usage signals that callers may act upon. This method currently only supports App Check tokens exchanged from the following attestation providers: * Play Integrity API * App Attest * DeviceCheck (`DCDevice` tokens) * reCAPTCHA Enterprise * reCAPTCHA v3 * Custom providers App Check tokens exchanged from debug secrets are also supported. Calling this method on an otherwise valid App Check token with an unsupported provider will cause an HTTP 400 error to be returned. Returns whether this token was already consumed before this call. If this is the first time this method has seen the given App Check token, the field `already_consumed` in the response will be absent. The given token will then be marked as `already_consumed` (set to `true`) for all future invocations of this method for that token. Note that if the given App Check token is invalid, an HTTP 403 error is returned instead of a response object, regardless whether the token was already consumed. Currently, when evaluating whether an App Check token was already consumed, only calls to this exact method are counted. Use of the App Check token elsewhere will not mark the token as being already consumed. The caller must have the [`firebaseappcheck.appCheckTokens.verify`](https://firebase.google.com/docs/projects/iam/permissions#app-check) permission to call this method. This permission is part of the [Firebase App Check Token Verifier role](https://firebase.google.com/docs/projects/iam/roles-predefined-product#app-check).",
 	//   "flatPath": "v1beta/projects/{projectsId}:verifyAppCheckToken",
 	//   "httpMethod": "POST",
 	//   "id": "firebaseappcheck.projects.verifyAppCheckToken",

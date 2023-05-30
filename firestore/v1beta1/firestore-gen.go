@@ -527,6 +527,91 @@ func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BitSequence: A sequence of bits, encoded in a byte array. Each byte
+// in the `bitmap` byte array stores 8 bits of the sequence. The only
+// exception is the last byte, which may store 8 _or fewer_ bits. The
+// `padding` defines the number of bits of the last byte to be ignored
+// as "padding". The values of these "padding" bits are unspecified and
+// must be ignored. To retrieve the first bit, bit 0, calculate:
+// `(bitmap[0] & 0x01) != 0`. To retrieve the second bit, bit 1,
+// calculate: `(bitmap[0] & 0x02) != 0`. To retrieve the third bit, bit
+// 2, calculate: `(bitmap[0] & 0x04) != 0`. To retrieve the fourth bit,
+// bit 3, calculate: `(bitmap[0] & 0x08) != 0`. To retrieve bit n,
+// calculate: `(bitmap[n / 8] & (0x01 << (n % 8))) != 0`. The "size" of
+// a `BitSequence` (the number of bits it contains) is calculated by
+// this formula: `(bitmap.length * 8) - padding`.
+type BitSequence struct {
+	// Bitmap: The bytes that encode the bit sequence. May have a length of
+	// zero.
+	Bitmap string `json:"bitmap,omitempty"`
+
+	// Padding: The number of bits of the last byte in `bitmap` to ignore as
+	// "padding". If the length of `bitmap` is zero, then this value must be
+	// `0`. Otherwise, this value must be between 0 and 7, inclusive.
+	Padding int64 `json:"padding,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bitmap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bitmap") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitSequence) MarshalJSON() ([]byte, error) {
+	type NoMethod BitSequence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BloomFilter: A bloom filter
+// (https://en.wikipedia.org/wiki/Bloom_filter). The bloom filter hashes
+// the entries with MD5 and treats the resulting 128-bit hash as 2
+// distinct 64-bit hash values, interpreted as unsigned integers using
+// 2's complement encoding. These two hash values, named `h1` and `h2`,
+// are then used to compute the `hash_count` hash values using the
+// formula, starting at `i=0`: h(i) = h1 + (i * h2) These resulting
+// values are then taken modulo the number of bits in the bloom filter
+// to get the bits of the bloom filter to test for the given entry.
+type BloomFilter struct {
+	// Bits: The bloom filter data.
+	Bits *BitSequence `json:"bits,omitempty"`
+
+	// HashCount: The number of hashes used by the algorithm.
+	HashCount int64 `json:"hashCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bits") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BloomFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod BloomFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CollectionSelector: A selection of a collection, such as `messages as
 // m1`.
 type CollectionSelector struct {
@@ -1044,6 +1129,21 @@ type ExistenceFilter struct {
 
 	// TargetId: The target ID to which this filter applies.
 	TargetId int64 `json:"targetId,omitempty"`
+
+	// UnchangedNames: A bloom filter that contains the UTF-8 byte encodings
+	// of the resource names of the documents that match target_id, in the
+	// form
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}` that have NOT changed since the query results indicated by the
+	// resume token or timestamp given in `Target.resume_type`. This bloom
+	// filter may be omitted at the server's discretion, such as if it is
+	// deemed that the client will not make use of it or if it is too
+	// computationally expensive to calculate or transmit. Clients must
+	// gracefully handle this field being absent by falling back to the
+	// logic used before this field existed; that is, re-add the target
+	// without a resume token to figure out which documents in the client's
+	// cache are out of sync.
+	UnchangedNames *BloomFilter `json:"unchangedNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
@@ -2798,6 +2898,13 @@ func (s *StructuredQuery) MarshalJSON() ([]byte, error) {
 type Target struct {
 	// Documents: A target specified by a set of document names.
 	Documents *DocumentsTarget `json:"documents,omitempty"`
+
+	// ExpectedCount: The number of documents that last matched the query at
+	// the resume token or read time. This value is only relevant when a
+	// `resume_type` is provided. This value being present and greater than
+	// zero signals that the client wants `ExistenceFilter.unchanged_names`
+	// to be included in the response.
+	ExpectedCount int64 `json:"expectedCount,omitempty"`
 
 	// Once: If the target should be removed once it is current and
 	// consistent.

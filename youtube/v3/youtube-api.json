@@ -624,6 +624,7 @@
               "type": "string"
             },
             "hl": {
+              "deprecated": true,
               "description": "Return content in specified language",
               "location": "query",
               "type": "string"
@@ -3539,6 +3540,7 @@
               "type": "string"
             },
             "locale": {
+              "deprecated": true,
               "location": "query",
               "type": "string"
             },
@@ -3831,7 +3833,7 @@
       }
     }
   },
-  "revision": "20230505",
+  "revision": "20230522",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {

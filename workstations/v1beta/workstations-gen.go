@@ -472,7 +472,8 @@ type CustomerEncryptionKey struct {
 	// KmsKey: Immutable. The name of the Google Cloud KMS encryption key.
 	// For example,
 	// `projects/PROJECT_ID/locations/REGION/keyRings/KEY_RING/cryptoKeys/KEY
-	// _NAME`.
+	// _NAME`. The key must be in the same region as the workstation
+	// configuration.
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// KmsKeyServiceAccount: Immutable. The service account to use with the

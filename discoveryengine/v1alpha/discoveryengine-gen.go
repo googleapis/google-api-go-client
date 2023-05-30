@@ -194,6 +194,7 @@ func NewProjectsLocationsCollectionsDataStoresService(s *Service) *ProjectsLocat
 	rs.Branches = NewProjectsLocationsCollectionsDataStoresBranchesService(s)
 	rs.Models = NewProjectsLocationsCollectionsDataStoresModelsService(s)
 	rs.Operations = NewProjectsLocationsCollectionsDataStoresOperationsService(s)
+	rs.Schemas = NewProjectsLocationsCollectionsDataStoresSchemasService(s)
 	rs.ServingConfigs = NewProjectsLocationsCollectionsDataStoresServingConfigsService(s)
 	rs.UserEvents = NewProjectsLocationsCollectionsDataStoresUserEventsService(s)
 	return rs
@@ -207,6 +208,8 @@ type ProjectsLocationsCollectionsDataStoresService struct {
 	Models *ProjectsLocationsCollectionsDataStoresModelsService
 
 	Operations *ProjectsLocationsCollectionsDataStoresOperationsService
+
+	Schemas *ProjectsLocationsCollectionsDataStoresSchemasService
 
 	ServingConfigs *ProjectsLocationsCollectionsDataStoresServingConfigsService
 
@@ -273,6 +276,27 @@ func NewProjectsLocationsCollectionsDataStoresOperationsService(s *Service) *Pro
 }
 
 type ProjectsLocationsCollectionsDataStoresOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresSchemasService(s *Service) *ProjectsLocationsCollectionsDataStoresSchemasService {
+	rs := &ProjectsLocationsCollectionsDataStoresSchemasService{s: s}
+	rs.Operations = NewProjectsLocationsCollectionsDataStoresSchemasOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresSchemasService struct {
+	s *Service
+
+	Operations *ProjectsLocationsCollectionsDataStoresSchemasOperationsService
+}
+
+func NewProjectsLocationsCollectionsDataStoresSchemasOperationsService(s *Service) *ProjectsLocationsCollectionsDataStoresSchemasOperationsService {
+	rs := &ProjectsLocationsCollectionsDataStoresSchemasOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresSchemasOperationsService struct {
 	s *Service
 }
 
@@ -745,6 +769,349 @@ func (s *GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1ImportDocumentsMetadata: Metadata related
+// to the progress of the ImportDocuments operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1ImportDocumentsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were processed successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ImportDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ImportDocumentsResponse: Response of the
+// ImportDocumentsRequest. If the long running operation is done, then
+// this message is returned by the
+// google.longrunning.Operations.response field if the operation was
+// successful.
+type GoogleCloudDiscoveryengineV1ImportDocumentsResponse struct {
+	// ErrorConfig: Echoes the destination for the complete errors in the
+	// request if set.
+	ErrorConfig *GoogleCloudDiscoveryengineV1ImportErrorConfig `json:"errorConfig,omitempty"`
+
+	// ErrorSamples: A sample of errors encountered while processing the
+	// request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ImportDocumentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ImportErrorConfig: Configuration of
+// destination for Import related errors.
+type GoogleCloudDiscoveryengineV1ImportErrorConfig struct {
+	// GcsPrefix: Cloud Storage prefix for import errors. This must be an
+	// empty, existing Cloud Storage directory. Import errors will be
+	// written to sharded files in this directory, one per line, as a
+	// JSON-encoded `google.rpc.Status` message.
+	GcsPrefix string `json:"gcsPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ImportErrorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ImportErrorConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ImportUserEventsMetadata: Metadata
+// related to the progress of the Import operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1ImportUserEventsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were processed successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ImportUserEventsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ImportUserEventsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ImportUserEventsResponse: Response of the
+// ImportUserEventsRequest. If the long running operation was
+// successful, then this message is returned by the
+// google.longrunning.Operations.response field if the operation was
+// successful.
+type GoogleCloudDiscoveryengineV1ImportUserEventsResponse struct {
+	// ErrorConfig: Echoes the destination for the complete errors if this
+	// field was set in the request.
+	ErrorConfig *GoogleCloudDiscoveryengineV1ImportErrorConfig `json:"errorConfig,omitempty"`
+
+	// ErrorSamples: A sample of errors encountered while processing the
+	// request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+
+	// JoinedEventsCount: Count of user events imported with complete
+	// existing Documents.
+	JoinedEventsCount int64 `json:"joinedEventsCount,omitempty,string"`
+
+	// UnjoinedEventsCount: Count of user events imported, but with Document
+	// information not found in the existing Branch.
+	UnjoinedEventsCount int64 `json:"unjoinedEventsCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ImportUserEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ImportUserEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1PurgeDocumentsMetadata: Metadata related
+// to the progress of the PurgeDocuments operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1PurgeDocumentsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1PurgeDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1PurgeDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1PurgeDocumentsResponse: Response message
+// for DocumentService.PurgeDocuments method. If the long running
+// operation is successfully done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudDiscoveryengineV1PurgeDocumentsResponse struct {
+	// PurgeCount: The total count of documents purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of document names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1PurgeDocumentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1PurgeDocumentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1Schema: Defines the structure and layout
+// of a type of document data.
+type GoogleCloudDiscoveryengineV1Schema struct {
+	// JsonSchema: The JSON representation of the schema.
+	JsonSchema string `json:"jsonSchema,omitempty"`
+
+	// Name: Immutable. The full resource name of the schema, in the format
+	// of
+	// `projects/{project}/locations/{location}/collections/{collection}/data
+	// Stores/{data_store}/schemas/{schema}`. This field must be a UTF-8
+	// encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+
+	// StructSchema: The structured representation of the schema.
+	StructSchema googleapi.RawMessage `json:"structSchema,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JsonSchema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JsonSchema") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1Schema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1Schema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse:
+// Response message for SiteSearchEngineService.BatchCreateTargetSites
+// method.
+type GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse struct {
+	// TargetSites: TargetSites created.
+	TargetSites []*GoogleCloudDiscoveryengineV1alphaTargetSite `json:"targetSites,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetSites") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetSites") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaBigQuerySource: BigQuery source
 // import data from.
 type GoogleCloudDiscoveryengineV1alphaBigQuerySource struct {
@@ -1099,6 +1466,19 @@ func (s *GoogleCloudDiscoveryengineV1alphaImportDocumentsMetadata) MarshalJSON()
 // GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest: Request
 // message for Import methods.
 type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
+	// AutoGenerateIds: Whether to automatically generate IDs for the
+	// documents if absent. If set to `true`, Document.ids are automatically
+	// generated based on the hash of the payload, where IDs may not be
+	// consistent during multiple imports. In which case
+	// ReconciliationMode.FULL is highly recommended to avoid duplicate
+	// contents. If unset or set to `false`, Document.ids have to be
+	// specified using id_field, otherwises, documents without IDs will fail
+	// to be imported. Only set this field when using GcsSource or
+	// BigQuerySource, and when GcsSource.data_schema or
+	// BigQuerySource.data_schema is `custom`. Otherwise, an
+	// INVALID_ARGUMENT error is thrown.
+	AutoGenerateIds bool `json:"autoGenerateIds,omitempty"`
+
 	// BigquerySource: BigQuery input source.
 	BigquerySource *GoogleCloudDiscoveryengineV1alphaBigQuerySource `json:"bigquerySource,omitempty"`
 
@@ -1108,6 +1488,24 @@ type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
 
 	// GcsSource: Cloud Storage location for the input content.
 	GcsSource *GoogleCloudDiscoveryengineV1alphaGcsSource `json:"gcsSource,omitempty"`
+
+	// IdField: The field in the Cloud Storage and BigQuery sources that
+	// indicates the unique IDs of the documents. For GcsSource it is the
+	// key of the JSON field. For instance, `my_id` for JSON `{"my_id":
+	// "some_uuid"}`. For BigQuerySource it is the column name of the
+	// BigQuery table where the unique ids are stored. The values of the
+	// JSON field or the BigQuery column will be used as the Document.ids.
+	// The JSON field or the BigQuery column must be of string type, and the
+	// values must be set as valid strings conform to RFC-1034
+	// (https://tools.ietf.org/html/rfc1034) with 1-63 characters.
+	// Otherwise, documents without valid IDs will fail to be imported. Only
+	// set this field when using GcsSource or BigQuerySource, and when
+	// GcsSource.data_schema or BigQuerySource.data_schema is `custom`. And
+	// only set this field when auto_generate_ids is unset or set as
+	// `false`. Otherwise, an INVALID_ARGUMENT error is thrown. If it is
+	// unset, a default value `_id` is used when importing from the allowed
+	// data sources.
+	IdField string `json:"idField,omitempty"`
 
 	// InlineSource: The Inline source for the input content for documents.
 	InlineSource *GoogleCloudDiscoveryengineV1alphaImportDocumentsRequestInlineSource `json:"inlineSource,omitempty"`
@@ -1125,7 +1523,7 @@ type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
 	// source location.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BigquerySource") to
+	// ForceSendFields is a list of field names (e.g. "AutoGenerateIds") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1133,7 +1531,7 @@ type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BigquerySource") to
+	// NullFields is a list of field names (e.g. "AutoGenerateIds") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1976,6 +2374,69 @@ type GoogleCloudDiscoveryengineV1alphaSearchInfo struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaSearchInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaTargetSite: A target site for the
+// SiteSearchEngine.
+type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
+	// ExactMatch: Input only. If set to false, an uri_pattern will be
+	// generated to include all pages whose address contains the
+	// provided_uri_pattern. If set to true, an uri_pattern will be
+	// generated to try to be an exact match of the provided_uri_pattern or
+	// just the specific page if the provided_uri_pattern is a specific one.
+	// provided_uri_pattern will always be normalized to generate the uri
+	// pattern to be used by the search engine.
+	ExactMatch bool `json:"exactMatch,omitempty"`
+
+	// GeneratedUriPattern: Output only. This is system-generated based on
+	// the provided_uri_pattern.
+	GeneratedUriPattern string `json:"generatedUriPattern,omitempty"`
+
+	// Name: Output only. The fully qualified resource name of the target
+	// site.
+	// `projects/{project}/locations/{location}/collections/{collection}/data
+	// Stores/{data_store}/siteSearchEngine/targetSites/{target_site}` The
+	// `target_site_id` is system-generated.
+	Name string `json:"name,omitempty"`
+
+	// ProvidedUriPattern: Required. Input only. The user provided uri
+	// pattern from which the `generated_uri_pattern` is generated.
+	ProvidedUriPattern string `json:"providedUriPattern,omitempty"`
+
+	// Type: The type of the target site, e.g. whether the site is to be
+	// included or excluded.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - This value is unused. In this case, server
+	// behavior defaults to Type.INCLUDE.
+	//   "INCLUDE" - Include the target site.
+	//   "EXCLUDE" - Exclude the target site.
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Output only. The target site's last updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExactMatch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExactMatch") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaTargetSite) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaTargetSite
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4961,6 +5422,361 @@ func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) Do(opts ...go
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.schemas.operations.get":
+
+type ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsCollectionsDataStoresSchemasOperationsService) Get(name string) *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall {
+	c := &ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/schemas/{schemasId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.schemas.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/schemas/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.schemas.operations.list":
+
+type ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsCollectionsDataStoresSchemasOperationsService) List(name string) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c := &ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/schemas/{schemasId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.schemas.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/schemas/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}/operations",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

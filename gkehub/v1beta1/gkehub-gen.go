@@ -2757,6 +2757,7 @@ func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "connectAgent.name": {
+	//       "deprecated": true,
 	//       "description": "Do not set.",
 	//       "location": "query",
 	//       "type": "string"

@@ -6157,7 +6157,7 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSearchResult: A result of Resource Search, containing
-// information of a cloud resource. Next ID: 32
+// information of a cloud resource. Next ID: 34
 type ResourceSearchResult struct {
 	// AdditionalAttributes: The additional searchable attributes of this
 	// resource. The attributes may vary from one resource type to another.
@@ -6350,8 +6350,7 @@ type ResourceSearchResult struct {
 
 	// TagValueIds: TagValue IDs, in the format of tagValues/{TAG_VALUE_ID}.
 	// To search against the `tagValueIds`: * Use a field query. Example: -
-	// `tagValueIds:"456" - `tagValueIds="tagValues/456" * Use a free text
-	// query. Example: - `456`
+	// `tagValueIds="tagValues/456"
 	TagValueIds []string `json:"tagValueIds,omitempty"`
 
 	// TagValues: TagValue namespaced names, in the format of

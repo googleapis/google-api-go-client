@@ -523,14 +523,21 @@ type Parameters struct {
 	Options *Options `json:"options,omitempty"`
 
 	// Type: The type of the report. The type of the report will dictate
-	// what dimesions, filters, and metrics can be used.
+	// what dimesions, filters, and metrics can be used. **Warning:** The
+	// `AUDIENCE_COMPOSITION` report type will be deprecated in Display &
+	// Video 360 on **June 8, 2023**. Once deprecated, you will no longer be
+	// able to create new or retrieve existing Query and Report resources of
+	// this type.
 	//
 	// Possible values:
 	//   "REPORT_TYPE_UNSPECIFIED" - Default value when report type is not
 	// specified or is unknown in this version.
 	//   "STANDARD" - Standard report.
 	//   "INVENTORY_AVAILABILITY" - Inventory Availability report.
-	//   "AUDIENCE_COMPOSITION" - Audience Composition report.
+	//   "AUDIENCE_COMPOSITION" - Audience Composition report. **Warning:**
+	// This report type will be deprecated in Display & Video 360 on **June
+	// 8, 2023**. Once deprecated, you will no longer be able to create new
+	// or retrieve existing Query and Report resources of this type.
 	//   "FLOODLIGHT" - Floodlight report.
 	//   "YOUTUBE" - YouTube report.
 	//   "GRP" - GRP report.

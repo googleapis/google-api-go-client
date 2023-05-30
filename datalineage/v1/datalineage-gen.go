@@ -293,14 +293,9 @@ func (s *GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse) Marsha
 // GoogleCloudDatacatalogLineageV1EntityReference: The soft reference to
 // everything you can attach a lineage event to.
 type GoogleCloudDatacatalogLineageV1EntityReference struct {
-	// FullyQualifiedName: Required. Fully Qualified Name of the entity.
-	// Useful for referencing entities that aren't represented as Google
-	// Cloud resources, for example, tables in Dataproc Metastore API.
-	// Examples: * `bigquery:dataset.project_id.dataset_id` *
-	// `bigquery:table.project_id.dataset_id.table_id` *
-	// `pubsub:project_id.topic_id` *
-	// `dataproc_metastore:projectId.locationId.instanceId.databaseId.tableId
-	// `
+	// FullyQualifiedName: Required. Fully Qualified Name (FQN)
+	// (https://cloud.google.com/data-catalog/docs/fully-qualified-names) of
+	// the entity.
 	FullyQualifiedName string `json:"fullyQualifiedName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullyQualifiedName")
@@ -590,6 +585,7 @@ type GoogleCloudDatacatalogLineageV1OperationMetadata struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unused.
 	//   "DELETE" - The resource deletion operation.
+	//   "CREATE" - The resource creation operation.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Resource: Output only. The [relative name]
@@ -637,8 +633,8 @@ func (s *GoogleCloudDatacatalogLineageV1OperationMetadata) MarshalJSON() ([]byte
 // GoogleCloudDatacatalogLineageV1Origin: Origin of a process.
 type GoogleCloudDatacatalogLineageV1Origin struct {
 	// Name: If the source_type isn't CUSTOM, the value of this field should
-	// be a Google Cloud resource name of the system, which reports lineage.
-	// The project and location parts of the resource name must match the
+	// be a GCP resource name of the system, which reports lineage. The
+	// project and location parts of the resource name must match the
 	// project and location of the lineage resource being created. Examples:
 	// - `{source_type: COMPOSER, name:
 	// "projects/foo/locations/us/environments/bar"}` - `{source_type:
@@ -646,7 +642,9 @@ type GoogleCloudDatacatalogLineageV1Origin struct {
 	// CUSTOM, name: "myCustomIntegration"}`
 	Name string `json:"name,omitempty"`
 
-	// SourceType: Type of the source.
+	// SourceType: Type of the source. Use of a source_type other than
+	// `CUSTOM` for process creation or updating is highly discouraged, and
+	// may be restricted in the future without notice.
 	//
 	// Possible values:
 	//   "SOURCE_TYPE_UNSPECIFIED" - Source is Unspecified

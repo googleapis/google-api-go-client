@@ -1018,7 +1018,8 @@ type Instance struct {
 	// minor version.
 	//
 	// Possible values:
-	//   "MEMCACHE_VERSION_UNSPECIFIED"
+	//   "MEMCACHE_VERSION_UNSPECIFIED" - Memcache version is not specified
+	// by customer
 	//   "MEMCACHE_1_5" - Memcached 1.5 version.
 	MemcacheVersion string `json:"memcacheVersion,omitempty"`
 

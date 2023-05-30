@@ -94,8 +94,8 @@ const (
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
-// NewService creates a new Service.
-func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+// NewService creates a new APIService.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -118,23 +118,23 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	return s, nil
 }
 
-// New creates a new Service. It uses the provided http.Client for requests.
+// New creates a new APIService. It uses the provided http.Client for requests.
 //
 // Deprecated: please use NewService instead.
 // To provide a custom HTTP client, use option.WithHTTPClient.
 // If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
-func New(client *http.Client) (*Service, error) {
+func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath}
 	s.ApplicationDetailService = NewApplicationDetailServiceService(s)
 	s.Projects = NewProjectsService(s)
 	s.TestEnvironmentCatalog = NewTestEnvironmentCatalogService(s)
 	return s, nil
 }
 
-type Service struct {
+type APIService struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
@@ -146,50 +146,50 @@ type Service struct {
 	TestEnvironmentCatalog *TestEnvironmentCatalogService
 }
 
-func (s *Service) userAgent() string {
+func (s *APIService) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewApplicationDetailServiceService(s *Service) *ApplicationDetailServiceService {
+func NewApplicationDetailServiceService(s *APIService) *ApplicationDetailServiceService {
 	rs := &ApplicationDetailServiceService{s: s}
 	return rs
 }
 
 type ApplicationDetailServiceService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsService(s *Service) *ProjectsService {
+func NewProjectsService(s *APIService) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.TestMatrices = NewProjectsTestMatricesService(s)
 	return rs
 }
 
 type ProjectsService struct {
-	s *Service
+	s *APIService
 
 	TestMatrices *ProjectsTestMatricesService
 }
 
-func NewProjectsTestMatricesService(s *Service) *ProjectsTestMatricesService {
+func NewProjectsTestMatricesService(s *APIService) *ProjectsTestMatricesService {
 	rs := &ProjectsTestMatricesService{s: s}
 	return rs
 }
 
 type ProjectsTestMatricesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewTestEnvironmentCatalogService(s *Service) *TestEnvironmentCatalogService {
+func NewTestEnvironmentCatalogService(s *APIService) *TestEnvironmentCatalogService {
 	rs := &TestEnvironmentCatalogService{s: s}
 	return rs
 }
 
 type TestEnvironmentCatalogService struct {
-	s *Service
+	s *APIService
 }
 
 // Account: Identifies an account and how to log into it.
@@ -859,6 +859,9 @@ type ApkManifest struct {
 	// PackageName: Full Java-style package name for this application, e.g.
 	// "com.example.foo".
 	PackageName string `json:"packageName,omitempty"`
+
+	// Services: Services contained in the tag.
+	Services []*Service `json:"services,omitempty"`
 
 	// TargetSdkVersion: Specifies the API Level on which the application is
 	// designed to run.
@@ -2515,8 +2518,44 @@ func (s *RoboStartingIntent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Service: The section of an tag.
+// https://developer.android.com/guide/topics/manifest/service-element
+type Service struct {
+	// IntentFilter: Intent filters in the service
+	IntentFilter []*IntentFilter `json:"intentFilter,omitempty"`
+
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentFilter") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Service) MarshalJSON() ([]byte, error) {
+	type NoMethod Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Shard: Output only. Details about the shard.
 type Shard struct {
+	// EstimatedShardDuration: Output only. The estimated shard duration
+	// based on previous test case timing records, if available.
+	EstimatedShardDuration string `json:"estimatedShardDuration,omitempty"`
+
 	// NumShards: Output only. The total number of shards.
 	NumShards int64 `json:"numShards,omitempty"`
 
@@ -2527,20 +2566,22 @@ type Shard struct {
 	// set for manual sharding.
 	TestTargetsForShard *TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NumShards") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "EstimatedShardDuration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NumShards") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EstimatedShardDuration")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2603,23 +2644,23 @@ type SmartSharding struct {
 	// duration is not guaranteed because smart sharding uses test case
 	// history and default durations which may not be accurate. The rules
 	// for finding the test case timing records are: - If the service has
-	// seen a test case in the last 30 days, the record of the latest
-	// successful one will be used. - For new test cases, the average
+	// processed a test case in the last 30 days, the record of the latest
+	// successful test case will be used. - For new test cases, the average
 	// duration of other known test cases will be used. - If there are no
-	// previous test case timing records available, the test case is
-	// considered to be 15 seconds long by default. Because the actual shard
-	// duration can exceed the targeted shard duration, we recommend setting
-	// the targeted value at least 5 minutes less than the maximum allowed
-	// test timeout (45 minutes for physical devices and 60 minutes for
-	// virtual), or using the custom test timeout value you set. This
-	// approach avoids cancelling the shard before all tests can finish.
-	// Note that there is a limit for maximum number of shards. When you
-	// select one or more physical devices, the number of shards must be <=
-	// 50. When you select one or more ARM virtual devices, it must be <=
-	// 100. When you select only x86 virtual devices, it must be <= 500. To
-	// guarantee at least one test case for per shard, the number of shards
-	// will not exceed the number of test cases. Each shard created will
-	// count toward daily test quota.
+	// previous test case timing records available, the default test case
+	// duration is 15 seconds. Because the actual shard duration can exceed
+	// the targeted shard duration, we recommend that you set the targeted
+	// value at least 5 minutes less than the maximum allowed test timeout
+	// (45 minutes for physical devices and 60 minutes for virtual), or that
+	// you use the custom test timeout value that you set. This approach
+	// avoids cancelling the shard before all tests can finish. Note that
+	// there is a limit for maximum number of shards. When you select one or
+	// more physical devices, the number of shards must be <= 50. When you
+	// select one or more ARM virtual devices, it must be <= 100. When you
+	// select only x86 virtual devices, it must be <= 500. To guarantee at
+	// least one test case for per shard, the number of shards will not
+	// exceed the number of test cases. Each shard created counts toward
+	// daily test quota.
 	TargetedShardDuration string `json:"targetedShardDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2936,8 +2977,8 @@ type TestMatrix struct {
 	// Orchestrator can be disabled by using DO_NOT_USE_ORCHESTRATOR
 	// OrchestratorOption.
 	//   "NO_TEST_RUNNER_CLASS" - The test APK does not contain the test
-	// runner class specified by user or in the manifest file. This can be
-	// caused by either of the following reasons: - the user provided a
+	// runner class specified by the user or in the manifest file. This can
+	// be caused by one of the following reasons: - the user provided a
 	// runner class name that's incorrect, or - the test runner isn't built
 	// into the test APK (might be in the app APK instead).
 	//   "NO_LAUNCHER_ACTIVITY" - A main launcher activity could not be
@@ -3009,7 +3050,7 @@ type TestMatrix struct {
 	//   "SUCCESS" - The test matrix run was successful, for instance: - All
 	// the test cases passed. - Robo did not detect a crash of the
 	// application under test.
-	//   "FAILURE" - A run failed, for instance: - One or more test case
+	//   "FAILURE" - A run failed, for instance: - One or more test cases
 	// failed. - A test timed out. - The application under test crashed.
 	//   "INCONCLUSIVE" - Something unexpected happened. The run should
 	// still be considered unsuccessful but this is likely a transient
@@ -3533,7 +3574,7 @@ func (s *XcodeVersion) MarshalJSON() ([]byte, error) {
 // method id "testing.applicationDetailService.getApkDetails":
 
 type ApplicationDetailServiceGetApkDetailsCall struct {
-	s             *Service
+	s             *APIService
 	filereference *FileReference
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
@@ -3658,7 +3699,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 // method id "testing.projects.testMatrices.cancel":
 
 type ProjectsTestMatricesCancelCall struct {
-	s            *Service
+	s            *APIService
 	projectId    string
 	testMatrixId string
 	urlParams_   gensupport.URLParams
@@ -3806,7 +3847,7 @@ func (c *ProjectsTestMatricesCancelCall) Do(opts ...googleapi.CallOption) (*Canc
 // method id "testing.projects.testMatrices.create":
 
 type ProjectsTestMatricesCreateCall struct {
-	s          *Service
+	s          *APIService
 	projectId  string
 	testmatrix *TestMatrix
 	urlParams_ gensupport.URLParams
@@ -3818,11 +3859,11 @@ type ProjectsTestMatricesCreateCall struct {
 // specifications. Unsupported environments will be returned in the
 // state UNSUPPORTED. A test matrix is limited to use at most 2000
 // devices in parallel. The returned matrix will not yet contain the
-// executions that will be created for this matrix. That happens later
-// on and will require a call to GetTestMatrix. May return any of the
-// following canonical error codes: - PERMISSION_DENIED - if the user is
-// not authorized to write to project - INVALID_ARGUMENT - if the
-// request is malformed or if the matrix tries to use too many
+// executions that will be created for this matrix. Execution creation
+// happens later on and will require a call to GetTestMatrix. May return
+// any of the following canonical error codes: - PERMISSION_DENIED - if
+// the user is not authorized to write to project - INVALID_ARGUMENT -
+// if the request is malformed or if the matrix tries to use too many
 // simultaneous devices.
 //
 // - projectId: The GCE project under which this job will run.
@@ -3933,7 +3974,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. The returned matrix will not yet contain the executions that will be created for this matrix. That happens later on and will require a call to GetTestMatrix. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
+	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. The returned matrix will not yet contain the executions that will be created for this matrix. Execution creation happens later on and will require a call to GetTestMatrix. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices",
 	//   "httpMethod": "POST",
 	//   "id": "testing.projects.testMatrices.create",
@@ -3970,7 +4011,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 // method id "testing.projects.testMatrices.get":
 
 type ProjectsTestMatricesGetCall struct {
-	s            *Service
+	s            *APIService
 	projectId    string
 	testMatrixId string
 	urlParams_   gensupport.URLParams
@@ -3982,11 +4023,11 @@ type ProjectsTestMatricesGetCall struct {
 // Get: Checks the status of a test matrix and the executions once they
 // are created. The test matrix will contain the list of test executions
 // to run if and only if the resultStorage.toolResultsExecution fields
-// have been populated. Note: Flaky test executions may still be added
-// to the matrix at a later stage. May return any of the following
-// canonical error codes: - PERMISSION_DENIED - if the user is not
-// authorized to read project - INVALID_ARGUMENT - if the request is
-// malformed - NOT_FOUND - if the Test Matrix does not exist
+// have been populated. Note: Flaky test executions may be added to the
+// matrix at a later stage. May return any of the following canonical
+// error codes: - PERMISSION_DENIED - if the user is not authorized to
+// read project - INVALID_ARGUMENT - if the request is malformed -
+// NOT_FOUND - if the Test Matrix does not exist
 //
 //   - projectId: Cloud project that owns the test matrix.
 //   - testMatrixId: Unique test matrix id which was assigned by the
@@ -4098,7 +4139,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks the status of a test matrix and the executions once they are created. The test matrix will contain the list of test executions to run if and only if the resultStorage.toolResultsExecution fields have been populated. Note: Flaky test executions may still be added to the matrix at a later stage. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
+	//   "description": "Checks the status of a test matrix and the executions once they are created. The test matrix will contain the list of test executions to run if and only if the resultStorage.toolResultsExecution fields have been populated. Note: Flaky test executions may be added to the matrix at a later stage. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices/{testMatrixId}",
 	//   "httpMethod": "GET",
 	//   "id": "testing.projects.testMatrices.get",
@@ -4135,7 +4176,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 // method id "testing.testEnvironmentCatalog.get":
 
 type TestEnvironmentCatalogGetCall struct {
-	s               *Service
+	s               *APIService
 	environmentType string
 	urlParams_      gensupport.URLParams
 	ifNoneMatch_    string

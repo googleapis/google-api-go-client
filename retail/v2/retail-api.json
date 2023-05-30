@@ -2031,7 +2031,7 @@
       }
     }
   },
-  "revision": "20230504",
+  "revision": "20230518",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -2427,7 +2427,7 @@
           "type": "boolean"
         },
         "indexableOption": {
-          "description": "When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if INDEXABLE_ENABLED attribute values are indexed so that it can be filtered, faceted, or boosted in SearchService.Search. Must be specified, otherwise throws INVALID_FORMAT error.",
+          "description": "When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if INDEXABLE_ENABLED attribute values are indexed so that it can be filtered, faceted, or boosted in SearchService.Search. Must be specified when AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT error.",
           "enum": [
             "INDEXABLE_OPTION_UNSPECIFIED",
             "INDEXABLE_ENABLED",
@@ -2459,7 +2459,7 @@
           "type": "string"
         },
         "searchableOption": {
-          "description": "When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if SEARCHABLE_ENABLED, attribute values are searchable by text queries in SearchService.Search. If SEARCHABLE_ENABLED but attribute type is numerical, attribute values will not be searchable by text queries in SearchService.Search, as there are no text values associated to numerical attributes. Must be specified, otherwise throws INVALID_FORMAT error.",
+          "description": "When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if SEARCHABLE_ENABLED, attribute values are searchable by text queries in SearchService.Search. If SEARCHABLE_ENABLED but attribute type is numerical, attribute values will not be searchable by text queries in SearchService.Search, as there are no text values associated to numerical attributes. Must be specified, when AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT error.",
           "enum": [
             "SEARCHABLE_OPTION_UNSPECIFIED",
             "SEARCHABLE_ENABLED",
@@ -5475,6 +5475,10 @@
           "readOnly": true,
           "type": "string"
         },
+        "source": {
+          "description": "Optional. An optional arbitrary string that could be used as a tag for tracking link source.",
+          "type": "string"
+        },
         "state": {
           "description": "Output only. Represents the state of the link.",
           "enum": [
@@ -6245,6 +6249,10 @@
         "projectId": {
           "description": "Output only. Google Cloud project ID.",
           "readOnly": true,
+          "type": "string"
+        },
+        "source": {
+          "description": "Optional. An optional arbitrary string that could be used as a tag for tracking link source.",
           "type": "string"
         },
         "state": {

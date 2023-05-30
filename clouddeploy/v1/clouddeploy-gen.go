@@ -1141,6 +1141,8 @@ type DeliveryPipelineNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1766,6 +1768,8 @@ type JobRunNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -2866,6 +2870,8 @@ type ReleaseNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3214,6 +3220,8 @@ type RolloutNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3771,6 +3779,8 @@ type TargetNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`

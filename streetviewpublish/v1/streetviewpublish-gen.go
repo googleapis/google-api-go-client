@@ -2806,6 +2806,7 @@ func (c *PhotoSequenceGetCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Specifies if a download URL for the photo sequence should be returned in `download_url` of individual photos in the PhotoSequence response. \u003e Note: Currently not implemented.",
 	//       "enum": [
 	//         "BASIC",
@@ -3643,8 +3644,9 @@ func (r *PhotosService) List() *PhotosListCall {
 // Filter sets the optional parameter "filter": The filter expression.
 // For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters
 // supported are: `placeId`, `min_latitude`, `max_latitude`,
-// `min_longitude`, and `max_longitude`. See https://google.aip.dev/160
-// for more information.
+// `min_longitude`, `max_longitude`, 'min_capture_time_seconds', and
+// 'max_capture_time_seconds'. See https://google.aip.dev/160 for more
+// information.
 func (c *PhotosListCall) Filter(filter string) *PhotosListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3799,7 +3801,7 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters supported are: `placeId`, `min_latitude`, `max_latitude`, `min_longitude`, and `max_longitude`. See https://google.aip.dev/160 for more information.",
+	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters supported are: `placeId`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, 'min_capture_time_seconds', and 'max_capture_time_seconds'. See https://google.aip.dev/160 for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

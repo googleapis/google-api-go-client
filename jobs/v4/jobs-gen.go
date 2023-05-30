@@ -3219,6 +3219,9 @@ type SearchJobsRequest struct {
 	// most two jobs in the same company to be shown at once, the other jobs
 	// under same company are pushed to the end of the last page of search
 	// result.
+	//   "MAX_THREE_PER_COMPANY" - Similar to ONE_PER_COMPANY, but it allows
+	// at most three jobs in the same company to be shown at once, the other
+	// jobs under same company are dropped.
 	//   "DIVERSIFY_BY_LOOSER_SIMILARITY" - The result list is ordered such
 	// that somewhat similar results are pushed to the end of the last page
 	// of the search results. This option is recommended if SIMPLE

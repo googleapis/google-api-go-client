@@ -1032,7 +1032,7 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1203,7 +1203,7 @@ type Package struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: The name of the package, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1".
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`.
 	// If the package ID part contains slashes, the slashes are escaped.
 	Name string `json:"name,omitempty"`
 
@@ -5626,7 +5626,9 @@ type ProjectsLocationsRepositoriesPackagesTagsListCall struct {
 
 // List: Lists tags.
 //
-// - parent: The name of the parent resource whose tags will be listed.
+//   - parent: The name of the parent package whose tags will be listed.
+//     Example:
+//     "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) List(parent string) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5783,7 +5785,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose tags will be listed.",
+	//       "description": "The name of the parent package whose tags will be listed. Example: \"projects/p1/locations/us-central1/repositories/repo1/packages/pkg1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
 	//       "required": true,

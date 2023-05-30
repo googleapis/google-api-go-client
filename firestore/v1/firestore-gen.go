@@ -165,6 +165,7 @@ type ProjectsService struct {
 
 func NewProjectsDatabasesService(s *Service) *ProjectsDatabasesService {
 	rs := &ProjectsDatabasesService{s: s}
+	rs.BackupSchedules = NewProjectsDatabasesBackupSchedulesService(s)
 	rs.CollectionGroups = NewProjectsDatabasesCollectionGroupsService(s)
 	rs.Documents = NewProjectsDatabasesDocumentsService(s)
 	rs.Operations = NewProjectsDatabasesOperationsService(s)
@@ -174,11 +175,22 @@ func NewProjectsDatabasesService(s *Service) *ProjectsDatabasesService {
 type ProjectsDatabasesService struct {
 	s *Service
 
+	BackupSchedules *ProjectsDatabasesBackupSchedulesService
+
 	CollectionGroups *ProjectsDatabasesCollectionGroupsService
 
 	Documents *ProjectsDatabasesDocumentsService
 
 	Operations *ProjectsDatabasesOperationsService
+}
+
+func NewProjectsDatabasesBackupSchedulesService(s *Service) *ProjectsDatabasesBackupSchedulesService {
+	rs := &ProjectsDatabasesBackupSchedulesService{s: s}
+	return rs
+}
+
+type ProjectsDatabasesBackupSchedulesService struct {
+	s *Service
 }
 
 func NewProjectsDatabasesCollectionGroupsService(s *Service) *ProjectsDatabasesCollectionGroupsService {
@@ -234,10 +246,22 @@ type ProjectsDatabasesOperationsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Backups = NewProjectsLocationsBackupsService(s)
 	return rs
 }
 
 type ProjectsLocationsService struct {
+	s *Service
+
+	Backups *ProjectsLocationsBackupsService
+}
+
+func NewProjectsLocationsBackupsService(s *Service) *ProjectsLocationsBackupsService {
+	rs := &ProjectsLocationsBackupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBackupsService struct {
 	s *Service
 }
 
@@ -571,6 +595,91 @@ type BeginTransactionResponse struct {
 
 func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BeginTransactionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BitSequence: A sequence of bits, encoded in a byte array. Each byte
+// in the `bitmap` byte array stores 8 bits of the sequence. The only
+// exception is the last byte, which may store 8 _or fewer_ bits. The
+// `padding` defines the number of bits of the last byte to be ignored
+// as "padding". The values of these "padding" bits are unspecified and
+// must be ignored. To retrieve the first bit, bit 0, calculate:
+// `(bitmap[0] & 0x01) != 0`. To retrieve the second bit, bit 1,
+// calculate: `(bitmap[0] & 0x02) != 0`. To retrieve the third bit, bit
+// 2, calculate: `(bitmap[0] & 0x04) != 0`. To retrieve the fourth bit,
+// bit 3, calculate: `(bitmap[0] & 0x08) != 0`. To retrieve bit n,
+// calculate: `(bitmap[n / 8] & (0x01 << (n % 8))) != 0`. The "size" of
+// a `BitSequence` (the number of bits it contains) is calculated by
+// this formula: `(bitmap.length * 8) - padding`.
+type BitSequence struct {
+	// Bitmap: The bytes that encode the bit sequence. May have a length of
+	// zero.
+	Bitmap string `json:"bitmap,omitempty"`
+
+	// Padding: The number of bits of the last byte in `bitmap` to ignore as
+	// "padding". If the length of `bitmap` is zero, then this value must be
+	// `0`. Otherwise, this value must be between 0 and 7, inclusive.
+	Padding int64 `json:"padding,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bitmap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bitmap") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitSequence) MarshalJSON() ([]byte, error) {
+	type NoMethod BitSequence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BloomFilter: A bloom filter
+// (https://en.wikipedia.org/wiki/Bloom_filter). The bloom filter hashes
+// the entries with MD5 and treats the resulting 128-bit hash as 2
+// distinct 64-bit hash values, interpreted as unsigned integers using
+// 2's complement encoding. These two hash values, named `h1` and `h2`,
+// are then used to compute the `hash_count` hash values using the
+// formula, starting at `i=0`: h(i) = h1 + (i * h2) These resulting
+// values are then taken modulo the number of bits in the bloom filter
+// to get the bits of the bloom filter to test for the given entry.
+type BloomFilter struct {
+	// Bits: The bloom filter data.
+	Bits *BitSequence `json:"bits,omitempty"`
+
+	// HashCount: The number of hashes used by the algorithm.
+	HashCount int64 `json:"hashCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bits") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BloomFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod BloomFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1093,6 +1202,21 @@ type ExistenceFilter struct {
 	// TargetId: The target ID to which this filter applies.
 	TargetId int64 `json:"targetId,omitempty"`
 
+	// UnchangedNames: A bloom filter that contains the UTF-8 byte encodings
+	// of the resource names of the documents that match target_id, in the
+	// form
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}` that have NOT changed since the query results indicated by the
+	// resume token or timestamp given in `Target.resume_type`. This bloom
+	// filter may be omitted at the server's discretion, such as if it is
+	// deemed that the client will not make use of it or if it is too
+	// computationally expensive to calculate or transmit. Clients must
+	// gracefully handle this field being absent by falling back to the
+	// logic used before this field existed; that is, re-add the target
+	// without a resume token to figure out which documents in the client's
+	// cache are out of sync.
+	UnchangedNames *BloomFilter `json:"unchangedNames,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1344,6 +1468,137 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1Backup: A Backup of a Cloud Firestore Database.
+// The backup contains all documents and index configurations for the
+// given database at specific point in time.
+type GoogleFirestoreAdminV1Backup struct {
+	// Database: Output only. Name of the Firestore database that the backup
+	// is from. Format is `projects/{project}/databases/{database}`.
+	Database string `json:"database,omitempty"`
+
+	// DatabaseUid: Output only. The system-generated UUID4 for the
+	// Firestore database that the backup is from.
+	DatabaseUid string `json:"databaseUid,omitempty"`
+
+	// ExpireTime: Output only. The timestamp at which this backup expires.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Name: Output only. The unique resource name of the Backup. Format is
+	// `projects/{project}/locations/{location}/backups/{backup}`.
+	Name string `json:"name,omitempty"`
+
+	// SnapshotTime: Output only. The backup contains an externally
+	// consistent copy of the database at this time.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+
+	// State: Output only. The current state of the backup.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "CREATING" - The pending backup is still being created. Operations
+	// on the backup will be rejected in this state.
+	//   "READY" - The backup is complete and ready to use.
+	//   "NOT_AVAILABLE" - The backup is not available at this moment.
+	State string `json:"state,omitempty"`
+
+	// Stats: Output only. Statistics about the backup. This data only
+	// becomes available after the backup is fully materialized to secondary
+	// storage. This field will be empty till then.
+	Stats *GoogleFirestoreAdminV1Stats `json:"stats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1Backup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1Backup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1BackupSchedule: A backup schedule for a Cloud
+// Firestore Database. This resource is owned by the database it is
+// backing up, and is deleted along with the database. The actual
+// backups are not though.
+type GoogleFirestoreAdminV1BackupSchedule struct {
+	// CreateTime: Output only. The timestamp at which this backup schedule
+	// was created and effective since. No backups will be created for this
+	// schedule before this time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DailyRecurrence: For a schedule that runs daily at a specified time.
+	DailyRecurrence *GoogleFirestoreAdminV1DailyRecurrence `json:"dailyRecurrence,omitempty"`
+
+	// Name: Output only. The unique backup schedule identifier across all
+	// locations and databases for the given project. This will be
+	// auto-assigned. Format is
+	// `projects/{project}/databases/{database}/backupSchedules/{backup_sched
+	// ule}`
+	Name string `json:"name,omitempty"`
+
+	// Retention: At what relative time in the future, compared to the
+	// creation time of the backup should the backup be deleted, i.e. keep
+	// backups for 7 days.
+	Retention string `json:"retention,omitempty"`
+
+	// UpdateTime: Output only. The timestamp at which this backup schedule
+	// was most recently updated. When a backup schedule is first created,
+	// this is the same as create_time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// WeeklyRecurrence: For a schedule that runs weekly on a specific day
+	// and time.
+	WeeklyRecurrence *GoogleFirestoreAdminV1WeeklyRecurrence `json:"weeklyRecurrence,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1BackupSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1BackupSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1DailyRecurrence: Represent a recurring schedule
+// that runs at a specific time every day. The time zone is UTC.
+type GoogleFirestoreAdminV1DailyRecurrence struct {
 }
 
 // GoogleFirestoreAdminV1Database: A Cloud Firestore Database. Currently
@@ -1858,8 +2113,8 @@ type GoogleFirestoreAdminV1Index struct {
 	// ApiScope: The API scope supported by this index.
 	//
 	// Possible values:
-	//   "ANY_API" - The index can be used by both Firestore Native and
-	// Firestore in Datastore Mode query API. This is the default.
+	//   "ANY_API" - The index can only be used by the Firestore Native
+	// query API. This is the default.
 	//   "DATASTORE_MODE_API" - The index can only be used by the Firestore
 	// in Datastore Mode query API.
 	ApiScope string `json:"apiScope,omitempty"`
@@ -2151,6 +2406,81 @@ func (s *GoogleFirestoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1ListBackupSchedulesResponse: The response for
+// FirestoreAdmin.ListBackupSchedules.
+type GoogleFirestoreAdminV1ListBackupSchedulesResponse struct {
+	// BackupSchedules: List of all backup schedules.
+	BackupSchedules []*GoogleFirestoreAdminV1BackupSchedule `json:"backupSchedules,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupSchedules") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupSchedules") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1ListBackupSchedulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1ListBackupSchedulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1ListBackupsResponse: The response for
+// FirestoreAdmin.ListBackups.
+type GoogleFirestoreAdminV1ListBackupsResponse struct {
+	// Backups: List of all backups for the project. Ordered by `location
+	// ASC, create_time DESC, name ASC`.
+	Backups []*GoogleFirestoreAdminV1Backup `json:"backups,omitempty"`
+
+	// Unreachable: List of locations that existing backups were not able to
+	// be fetched from. Instead of failing the entire requests when a single
+	// location is unreachable, this response returns a partial result set
+	// and list of locations unable to be reached here. The request can be
+	// retried against a single location to get a concrete error.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Backups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backups") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1ListBackupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1ListBackupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1ListDatabasesResponse: The list of databases
 // for a project.
 type GoogleFirestoreAdminV1ListDatabasesResponse struct {
@@ -2296,6 +2626,83 @@ func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1RestoreDatabaseRequest: The request message for
+// FirestoreAdmin.RestoreDatabase.
+type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
+	// Backup: Required. Backup to restore from. Must be from the same
+	// project as the parent. Format is:
+	// `projects/{project_id}/locations/{location}/backups/{backup}`
+	Backup string `json:"backup,omitempty"`
+
+	// DatabaseId: Required. The ID to use for the database, which will
+	// become the final component of the database's resource name. This
+	// database id must not be associated with an existing database. This
+	// value should be 4-63 characters. Valid characters are /a-z-/ with
+	// first character a letter and the last a letter or a number. Must not
+	// be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)"
+	// database id is also valid.
+	DatabaseId string `json:"databaseId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1RestoreDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1Stats: Backup specific statistics.
+type GoogleFirestoreAdminV1Stats struct {
+	// DocumentCount: Output only. The total number of documents contained
+	// in the backup.
+	DocumentCount int64 `json:"documentCount,omitempty,string"`
+
+	// IndexCount: Output only. The total number of index entries contained
+	// in the backup.
+	IndexCount int64 `json:"indexCount,omitempty,string"`
+
+	// SizeBytes: Output only. Summation of the size of all documents and
+	// index entries in the backup, measured in bytes.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1Stats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1Stats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1TtlConfig: The TTL (time-to-live) configuration
 // for documents that have this `Field` set. Storing a timestamp value
 // into a TTL-enabled field will be treated as the document's absolute
@@ -2343,7 +2750,7 @@ func (s *GoogleFirestoreAdminV1TtlConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1TtlConfigDelta: Information about an TTL
+// GoogleFirestoreAdminV1TtlConfigDelta: Information about a TTL
 // configuration change.
 type GoogleFirestoreAdminV1TtlConfigDelta struct {
 	// ChangeType: Specifies how the TTL configuration is changing.
@@ -2381,6 +2788,46 @@ func (s *GoogleFirestoreAdminV1TtlConfigDelta) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the
 // update database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
+}
+
+// GoogleFirestoreAdminV1WeeklyRecurrence: Represents a recurring
+// schedule that runs on a specified day of the week. The time zone is
+// UTC.
+type GoogleFirestoreAdminV1WeeklyRecurrence struct {
+	// Day: The day of week to run. DAY_OF_WEEK_UNSPECIFIED is not allowed.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1WeeklyRecurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1WeeklyRecurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -3542,6 +3989,13 @@ func (s *StructuredQuery) MarshalJSON() ([]byte, error) {
 type Target struct {
 	// Documents: A target specified by a set of document names.
 	Documents *DocumentsTarget `json:"documents,omitempty"`
+
+	// ExpectedCount: The number of documents that last matched the query at
+	// the resume token or read time. This value is only relevant when a
+	// `resume_type` is provided. This value being present and greater than
+	// zero signals that the client wants `ExistenceFilter.unchanged_names`
+	// to be included in the response.
+	ExpectedCount int64 `json:"expectedCount,omitempty"`
 
 	// Once: If the target should be removed once it is current and
 	// consistent.
@@ -5080,6 +5534,906 @@ func (c *ProjectsDatabasesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.restore":
+
+type ProjectsDatabasesRestoreCall struct {
+	s                                            *Service
+	parent                                       string
+	googlefirestoreadminv1restoredatabaserequest *GoogleFirestoreAdminV1RestoreDatabaseRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Restore: Create a new database by restore from an existing backup.
+// The new database must be in the same cloud region or multi-region
+// location as the existing backup. This behaves similar to
+// FirestoreAdmin.CreateDatabase except instead of creating a new empty
+// database, a new database is created with the database type, index
+// configuration, and documents from an existing backup. The
+// long-running operation can be used to track the progress of the
+// restore, with the Operation's metadata field type being the
+// RestoreDatabaseMetadata. The response type is the Database if the
+// restore was successful. The new database is not readable or writeable
+// until the LRO has completed. Cancelling the returned operation will
+// stop the restore and delete the in-progress database, if the restore
+// is still active.
+//
+//   - parent: The project to restore the database in. Format is
+//     `projects/{project_id}`.
+func (r *ProjectsDatabasesService) Restore(parent string, googlefirestoreadminv1restoredatabaserequest *GoogleFirestoreAdminV1RestoreDatabaseRequest) *ProjectsDatabasesRestoreCall {
+	c := &ProjectsDatabasesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1restoredatabaserequest = googlefirestoreadminv1restoredatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesRestoreCall) Fields(s ...googleapi.Field) *ProjectsDatabasesRestoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesRestoreCall) Context(ctx context.Context) *ProjectsDatabasesRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesRestoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesRestoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1restoredatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases:restore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.restore" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesRestoreCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new database by restore from an existing backup. The new database must be in the same cloud region or multi-region location as the existing backup. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing backup. The long-running operation can be used to track the progress of the restore, with the Operation's metadata field type being the RestoreDatabaseMetadata. The response type is the Database if the restore was successful. The new database is not readable or writeable until the LRO has completed. Cancelling the returned operation will stop the restore and delete the in-progress database, if the restore is still active.",
+	//   "flatPath": "v1/projects/{projectsId}/databases:restore",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.restore",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project to restore the database in. Format is `projects/{project_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/databases:restore",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1RestoreDatabaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.backupSchedules.create":
+
+type ProjectsDatabasesBackupSchedulesCreateCall struct {
+	s                                    *Service
+	parent                               string
+	googlefirestoreadminv1backupschedule *GoogleFirestoreAdminV1BackupSchedule
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Create: Creates a backup schedule on a database. At most two backup
+// schedules can be configured on a database, one daily backup schedule
+// with retention up to 7 days and one weekly backup schedule with
+// retention up to 14 weeks.
+//
+//   - parent: The parent database. Format
+//     `projects/{project}/databases/{database}`.
+func (r *ProjectsDatabasesBackupSchedulesService) Create(parent string, googlefirestoreadminv1backupschedule *GoogleFirestoreAdminV1BackupSchedule) *ProjectsDatabasesBackupSchedulesCreateCall {
+	c := &ProjectsDatabasesBackupSchedulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1backupschedule = googlefirestoreadminv1backupschedule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesBackupSchedulesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesBackupSchedulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesBackupSchedulesCreateCall) Context(ctx context.Context) *ProjectsDatabasesBackupSchedulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesBackupSchedulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesBackupSchedulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1backupschedule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.backupSchedules.create" call.
+// Exactly one of *GoogleFirestoreAdminV1BackupSchedule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleFirestoreAdminV1BackupSchedule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsDatabasesBackupSchedulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a backup schedule on a database. At most two backup schedules can be configured on a database, one daily backup schedule with retention up to 7 days and one weekly backup schedule with retention up to 14 weeks.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/backupSchedules",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.backupSchedules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent database. Format `projects/{project}/databases/{database}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/backupSchedules",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1BackupSchedule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1BackupSchedule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.backupSchedules.delete":
+
+type ProjectsDatabasesBackupSchedulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a backup schedule.
+//
+//   - name: The name of backup schedule. Format
+//     `projects/{project}/databases/{database}/backupSchedules/{backup_sch
+//     edule}`.
+func (r *ProjectsDatabasesBackupSchedulesService) Delete(name string) *ProjectsDatabasesBackupSchedulesDeleteCall {
+	c := &ProjectsDatabasesBackupSchedulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesBackupSchedulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatabasesBackupSchedulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesBackupSchedulesDeleteCall) Context(ctx context.Context) *ProjectsDatabasesBackupSchedulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesBackupSchedulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesBackupSchedulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.backupSchedules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsDatabasesBackupSchedulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a backup schedule.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/backupSchedules/{backupSchedulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firestore.projects.databases.backupSchedules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of backup schedule. Format `projects/{project}/databases/{database}/backupSchedules/{backup_schedule}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/backupSchedules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.backupSchedules.get":
+
+type ProjectsDatabasesBackupSchedulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a backup schedule.
+//
+//   - name: The name of the backup schedule. Format
+//     `projects/{project}/databases/{database}/backupSchedules/{backup_sch
+//     edule}`.
+func (r *ProjectsDatabasesBackupSchedulesService) Get(name string) *ProjectsDatabasesBackupSchedulesGetCall {
+	c := &ProjectsDatabasesBackupSchedulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesBackupSchedulesGetCall) Fields(s ...googleapi.Field) *ProjectsDatabasesBackupSchedulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDatabasesBackupSchedulesGetCall) IfNoneMatch(entityTag string) *ProjectsDatabasesBackupSchedulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesBackupSchedulesGetCall) Context(ctx context.Context) *ProjectsDatabasesBackupSchedulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesBackupSchedulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesBackupSchedulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.backupSchedules.get" call.
+// Exactly one of *GoogleFirestoreAdminV1BackupSchedule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleFirestoreAdminV1BackupSchedule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsDatabasesBackupSchedulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a backup schedule.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/backupSchedules/{backupSchedulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.databases.backupSchedules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the backup schedule. Format `projects/{project}/databases/{database}/backupSchedules/{backup_schedule}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/backupSchedules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1BackupSchedule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.backupSchedules.list":
+
+type ProjectsDatabasesBackupSchedulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List backup schedules.
+//
+//   - parent: The parent database. Format is
+//     `projects/{project}/databases/{database}`.
+func (r *ProjectsDatabasesBackupSchedulesService) List(parent string) *ProjectsDatabasesBackupSchedulesListCall {
+	c := &ProjectsDatabasesBackupSchedulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesBackupSchedulesListCall) Fields(s ...googleapi.Field) *ProjectsDatabasesBackupSchedulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDatabasesBackupSchedulesListCall) IfNoneMatch(entityTag string) *ProjectsDatabasesBackupSchedulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesBackupSchedulesListCall) Context(ctx context.Context) *ProjectsDatabasesBackupSchedulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesBackupSchedulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesBackupSchedulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.backupSchedules.list" call.
+// Exactly one of *GoogleFirestoreAdminV1ListBackupSchedulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleFirestoreAdminV1ListBackupSchedulesResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsDatabasesBackupSchedulesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1ListBackupSchedulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1ListBackupSchedulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List backup schedules.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/backupSchedules",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.databases.backupSchedules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent database. Format is `projects/{project}/databases/{database}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/backupSchedules",
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1ListBackupSchedulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.backupSchedules.patch":
+
+type ProjectsDatabasesBackupSchedulesPatchCall struct {
+	s                                    *Service
+	nameid                               string
+	googlefirestoreadminv1backupschedule *GoogleFirestoreAdminV1BackupSchedule
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Patch: Updates a backup schedule.
+//
+//   - name: Output only. The unique backup schedule identifier across all
+//     locations and databases for the given project. This will be
+//     auto-assigned. Format is
+//     `projects/{project}/databases/{database}/backupSchedules/{backup_sch
+//     edule}`.
+func (r *ProjectsDatabasesBackupSchedulesService) Patch(nameid string, googlefirestoreadminv1backupschedule *GoogleFirestoreAdminV1BackupSchedule) *ProjectsDatabasesBackupSchedulesPatchCall {
+	c := &ProjectsDatabasesBackupSchedulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googlefirestoreadminv1backupschedule = googlefirestoreadminv1backupschedule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsDatabasesBackupSchedulesPatchCall) UpdateMask(updateMask string) *ProjectsDatabasesBackupSchedulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesBackupSchedulesPatchCall) Fields(s ...googleapi.Field) *ProjectsDatabasesBackupSchedulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesBackupSchedulesPatchCall) Context(ctx context.Context) *ProjectsDatabasesBackupSchedulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesBackupSchedulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesBackupSchedulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1backupschedule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.backupSchedules.patch" call.
+// Exactly one of *GoogleFirestoreAdminV1BackupSchedule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleFirestoreAdminV1BackupSchedule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsDatabasesBackupSchedulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a backup schedule.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/backupSchedules/{backupSchedulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "firestore.projects.databases.backupSchedules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The unique backup schedule identifier across all locations and databases for the given project. This will be auto-assigned. Format is `projects/{project}/databases/{database}/backupSchedules/{backup_schedule}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/backupSchedules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1BackupSchedule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1BackupSchedule"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -10260,4 +11614,439 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "firestore.projects.locations.backups.delete":
+
+type ProjectsLocationsBackupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a backup.
+//
+//   - name: Name of the backup to delete. format is
+//     `projects/{project}/locations/{location}/backups/{backup}`.
+func (r *ProjectsLocationsBackupsService) Delete(name string) *ProjectsLocationsBackupsDeleteCall {
+	c := &ProjectsLocationsBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBackupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBackupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsBackupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBackupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.locations.backups.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsBackupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a backup.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/backups/{backupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firestore.projects.locations.backups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the backup to delete. format is `projects/{project}/locations/{location}/backups/{backup}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.locations.backups.get":
+
+type ProjectsLocationsBackupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a backup.
+//
+//   - name: Name of the backup to fetch. Format is
+//     `projects/{project}/locations/{location}/backups/{backup}`.
+func (r *ProjectsLocationsBackupsService) Get(name string) *ProjectsLocationsBackupsGetCall {
+	c := &ProjectsLocationsBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBackupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsBackupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBackupsGetCall) Context(ctx context.Context) *ProjectsLocationsBackupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBackupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.locations.backups.get" call.
+// Exactly one of *GoogleFirestoreAdminV1Backup or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleFirestoreAdminV1Backup.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1Backup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1Backup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a backup.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/backups/{backupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.locations.backups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the backup to fetch. Format is `projects/{project}/locations/{location}/backups/{backup}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1Backup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.locations.backups.list":
+
+type ProjectsLocationsBackupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the backups.
+//
+//   - parent: The location to list backups from. Format is
+//     `projects/{project}/locations/{location}`. Use `{location} = '-'`
+//     to list backups from all locations for the given project. This
+//     allows listing backups from a single location or from all
+//     locations.
+func (r *ProjectsLocationsBackupsService) List(parent string) *ProjectsLocationsBackupsListCall {
+	c := &ProjectsLocationsBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBackupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsBackupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBackupsListCall) Context(ctx context.Context) *ProjectsLocationsBackupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBackupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.locations.backups.list" call.
+// Exactly one of *GoogleFirestoreAdminV1ListBackupsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleFirestoreAdminV1ListBackupsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsBackupsListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1ListBackupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1ListBackupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the backups.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/backups",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.locations.backups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The location to list backups from. Format is `projects/{project}/locations/{location}`. Use `{location} = '-'` to list backups from all locations for the given project. This allows listing backups from a single location or from all locations.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/backups",
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1ListBackupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
 }

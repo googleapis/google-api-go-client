@@ -2960,7 +2960,7 @@ func (r *BiddersFinalizedDealsService) List(parent string) *BiddersFinalizedDeal
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the Cloud API list filtering syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * deal.displayName *
 // deal.dealType * deal.createTime * deal.updateTime *
 // deal.flightStartTime * deal.flightEndTime * dealServingStatus
@@ -3109,7 +3109,7 @@ func (c *BiddersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListF
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
+	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4692,7 +4692,7 @@ func (r *BuyersClientsService) List(parent string) *BuyersClientsListCall {
 
 // Filter sets the optional parameter "filter": Query string using the
 // Filtering Syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported fields for filtering are: * partnerClientId Use this field
 // to filter the clients by the partnerClientId. For example, if the
 // partnerClientId of the client is "1234", the value of this field
@@ -4827,7 +4827,7 @@ func (c *BuyersClientsListCall) Do(opts ...googleapi.CallOption) (*ListClientsRe
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Query string using the [Filtering Syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported fields for filtering are: * partnerClientId Use this field to filter the clients by the partnerClientId. For example, if the partnerClientId of the client is \"1234\", the value of this field should be `partnerClientId = \"1234\"`, in order to get only the client whose partnerClientId is \"1234\" in the response.",
+	//       "description": "Query string using the [Filtering Syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported fields for filtering are: * partnerClientId Use this field to filter the clients by the partnerClientId. For example, if the partnerClientId of the client is \"1234\", the value of this field should be `partnerClientId = \"1234\"`, in order to get only the client whose partnerClientId is \"1234\" in the response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6294,7 +6294,7 @@ func (r *BuyersFinalizedDealsService) List(parent string) *BuyersFinalizedDealsL
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the Cloud API list filtering syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * deal.displayName *
 // deal.dealType * deal.createTime * deal.updateTime *
 // deal.flightStartTime * deal.flightEndTime * dealServingStatus
@@ -6443,7 +6443,7 @@ func (c *BuyersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListFi
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
+	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7401,8 +7401,8 @@ type BuyersProposalsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a proposal using its name. The proposal is returned at most
-// recent revision. revision.
+// Get: Gets a proposal using its resource name. The proposal is
+// returned at the latest revision.
 //
 //   - name: Name of the proposal. Format:
 //     `buyers/{accountId}/proposals/{proposalId}`.
@@ -7511,7 +7511,7 @@ func (c *BuyersProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a proposal using its name. The proposal is returned at most recent revision. revision.",
+	//   "description": "Gets a proposal using its resource name. The proposal is returned at the latest revision.",
 	//   "flatPath": "v1/buyers/{buyersId}/proposals/{proposalsId}",
 	//   "httpMethod": "GET",
 	//   "id": "authorizedbuyersmarketplace.buyers.proposals.get",
@@ -7549,10 +7549,10 @@ type BuyersProposalsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists proposals. A filter expression (list filter syntax) may
-// be specified to filter the results. This will not list finalized
-// versions of proposals that are being renegotiated; to retrieve these
-// use the finalizedProposals resource.
+// List: Lists proposals. A filter expression using Cloud API list
+// filtering syntax
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
+// may be specified to filter the results.
 //
 //   - parent: Parent that owns the collection of proposals Format:
 //     `buyers/{accountId}`.
@@ -7564,7 +7564,7 @@ func (r *BuyersProposalsService) List(parent string) *BuyersProposalsListCall {
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the Cloud API list filtering syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * displayName * dealType *
 // updateTime * state
 func (c *BuyersProposalsListCall) Filter(filter string) *BuyersProposalsListCall {
@@ -7686,7 +7686,7 @@ func (c *BuyersProposalsListCall) Do(opts ...googleapi.CallOption) (*ListProposa
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists proposals. A filter expression (list filter syntax) may be specified to filter the results. This will not list finalized versions of proposals that are being renegotiated; to retrieve these use the finalizedProposals resource.",
+	//   "description": "Lists proposals. A filter expression using [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) may be specified to filter the results.",
 	//   "flatPath": "v1/buyers/{buyersId}/proposals",
 	//   "httpMethod": "GET",
 	//   "id": "authorizedbuyersmarketplace.buyers.proposals.list",
@@ -7695,7 +7695,7 @@ func (c *BuyersProposalsListCall) Do(opts ...googleapi.CallOption) (*ListProposa
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * displayName * dealType * updateTime * state",
+	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * displayName * dealType * updateTime * state",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7762,9 +7762,9 @@ type BuyersProposalsPatchCall struct {
 }
 
 // Patch: Updates the proposal at the given revision number. If the
-// revision number in the request is behind the latest from the server,
-// an error message will be returned. See FieldMask for how to use
-// FieldMask. Only fields specified in the
+// revision number in the request is behind the latest one kept in the
+// server, an error message will be returned. See FieldMask for how to
+// use FieldMask. Only fields specified in the
 // UpdateProposalRequest.update_mask will be updated; Fields noted as
 // 'Immutable' or 'Output only' yet specified in the
 // UpdateProposalRequest.update_mask will be ignored and left unchanged.
@@ -7887,7 +7887,7 @@ func (c *BuyersProposalsPatchCall) Do(opts ...googleapi.CallOption) (*Proposal, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the proposal at the given revision number. If the revision number in the request is behind the latest from the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as 'Immutable' or 'Output only' yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is not allowed and will result in an error.",
+	//   "description": "Updates the proposal at the given revision number. If the revision number in the request is behind the latest one kept in the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as 'Immutable' or 'Output only' yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is not allowed and will result in an error.",
 	//   "flatPath": "v1/buyers/{buyersId}/proposals/{proposalsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "authorizedbuyersmarketplace.buyers.proposals.patch",
@@ -8909,7 +8909,7 @@ func (r *BuyersPublisherProfilesService) List(parent string) *BuyersPublisherPro
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the [Cloud API list filtering]
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // syntax.
 func (c *BuyersPublisherProfilesListCall) Filter(filter string) *BuyersPublisherProfilesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -9040,7 +9040,7 @@ func (c *BuyersPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering] (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) syntax.",
+	//       "description": "Optional query string using the [Cloud API list filtering] (https://developers.google.com/authorized-buyers/apis/guides/list-filters) syntax.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

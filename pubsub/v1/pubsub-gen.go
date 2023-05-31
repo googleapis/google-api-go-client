@@ -2952,6 +2952,7 @@ func (c *ProjectsSchemasDeleteRevisionCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "string"
 	//     },
 	//     "revisionId": {
+	//       "deprecated": true,
 	//       "description": "Optional. This field is deprecated and should not be used for specifying the revision ID. The revision ID should be specified via the `name` parameter.",
 	//       "location": "query",
 	//       "type": "string"

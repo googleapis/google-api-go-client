@@ -13549,58 +13549,63 @@ type PartnerCost struct {
 	//   "PARTNER_COST_TYPE_UNSPECIFIED" - Type value is not specified or is
 	// unknown in this version.
 	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Adloox.
+	// Billed by the partner.
 	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using
-	// Adloox Pre-Bid.
+	// Adloox Pre-Bid. Billed through DV360.
 	//   "PARTNER_COST_TYPE_ADSAFE" - The cost is charged for using AdSafe.
+	// Billed by the partner.
 	//   "PARTNER_COST_TYPE_ADXPOSE" - The cost is charged for using
-	// AdExpose.
+	// AdExpose. Billed by the partner.
 	//   "PARTNER_COST_TYPE_AGGREGATE_KNOWLEDGE" - The cost is charged for
-	// using Aggregate Knowledge.
+	// using Aggregate Knowledge. Billed by the partner.
 	//   "PARTNER_COST_TYPE_AGENCY_TRADING_DESK" - The cost is charged for
-	// using an Agency Trading Desk.
+	// using an Agency Trading Desk. Billed by the partner.
 	//   "PARTNER_COST_TYPE_DV360_FEE" - The cost is charged for using
-	// DV360.
+	// DV360. Billed through DV360.
 	//   "PARTNER_COST_TYPE_COMSCORE_VCE" - The cost is charged for using
-	// comScore vCE.
+	// comScore vCE. Billed through DV360.
 	//   "PARTNER_COST_TYPE_DATA_MANAGEMENT_PLATFORM" - The cost is charged
-	// for using a Data Management Platform.
-	//   "PARTNER_COST_TYPE_DEFAULT" - The default cost type.
+	// for using a Data Management Platform. Billed by the partner.
+	//   "PARTNER_COST_TYPE_DEFAULT" - The default cost type. Billed by the
+	// partner.
 	//   "PARTNER_COST_TYPE_DOUBLE_VERIFY" - The cost is charged for using
-	// DoubleVerify.
+	// DoubleVerify. Billed by the partner.
 	//   "PARTNER_COST_TYPE_DOUBLE_VERIFY_PREBID" - The cost is charged for
-	// using DoubleVerify Pre-Bid.
+	// using DoubleVerify Pre-Bid. Billed through DV360.
 	//   "PARTNER_COST_TYPE_EVIDON" - The cost is charged for using Evidon.
+	// Billed by the partner.
 	//   "PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE_VIDEO" - The cost is charged
-	// for using Integral Ad Science Video.
+	// for using Integral Ad Science Video. Billed by the partner.
 	//   "PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE_PREBID" - The cost is
-	// charged for using Integral Ad Science Pre-Bid.
+	// charged for using Integral Ad Science Pre-Bid. Billed through DV360.
 	//   "PARTNER_COST_TYPE_MEDIA_COST_DATA" - The cost is charged for using
-	// media cost data.
+	// media cost data. Billed by the partner.
 	//   "PARTNER_COST_TYPE_MOAT_VIDEO" - The cost is charged for using MOAT
-	// Video.
+	// Video. Billed by the partner.
 	//   "PARTNER_COST_TYPE_NIELSEN_DAR" - The cost is charged for using
-	// Nielsen Digital Ad Ratings.
+	// Nielsen Digital Ad Ratings. Billed through DV360.
 	//   "PARTNER_COST_TYPE_SHOP_LOCAL" - The cost is charged for using
-	// ShopLocal.
+	// ShopLocal. Billed by the partner.
 	//   "PARTNER_COST_TYPE_TERACENT" - The cost is charged for using
-	// Teracent.
+	// Teracent. Billed by the partner.
 	//   "PARTNER_COST_TYPE_THIRD_PARTY_AD_SERVER" - The cost is charged for
-	// using a third-party ad server.
+	// using a third-party ad server. Billed by the partner.
 	//   "PARTNER_COST_TYPE_TRUST_METRICS" - The cost is charged for using
-	// TrustMetrics.
+	// TrustMetrics. Billed by the partner.
 	//   "PARTNER_COST_TYPE_VIZU" - The cost is charged for using Vizu.
+	// Billed by the partner.
 	//   "PARTNER_COST_TYPE_ADLINGO_FEE" - The cost is charged for using
-	// AdLingo.
+	// AdLingo. Billed through DV360.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_1" - The cost is charged as custom
-	// fee 1.
+	// fee 1. Billed by the partner.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_2" - The cost is charged as custom
-	// fee 2.
+	// fee 2. Billed by the partner.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_3" - The cost is charged as custom
-	// fee 3.
+	// fee 3. Billed by the partner.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_4" - The cost is charged as custom
-	// fee 4.
+	// fee 4. Billed by the partner.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_5" - The cost is charged as custom
-	// fee 5.
+	// fee 5. Billed by the partner.
 	CostType string `json:"costType,omitempty"`
 
 	// FeeAmount: The CPM fee amount in micros of advertiser's currency.

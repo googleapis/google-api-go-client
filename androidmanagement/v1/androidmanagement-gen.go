@@ -6966,6 +6966,7 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "agreementAccepted": {
+	//       "deprecated": true,
 	//       "description": "Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Do not set this field for any customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises). Set this to field to true for all EMM-managed enterprises (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "boolean"

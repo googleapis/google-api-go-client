@@ -8,7 +8,6 @@ import (
 	"bytes"
 	cryptorand "crypto/rand"
 	"io"
-	"io/ioutil"
 	mathrand "math/rand"
 	"net/http"
 	"strings"
@@ -197,7 +196,7 @@ func TestUploadRequestGetBody(t *testing.T) {
 		if getBody == nil {
 			continue
 		}
-		want, err := ioutil.ReadAll(r)
+		want, err := io.ReadAll(r)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -206,7 +205,7 @@ func TestUploadRequestGetBody(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			got, err := ioutil.ReadAll(rc)
+			got, err := io.ReadAll(rc)
 			if err != nil {
 				t.Fatal(err)
 			}

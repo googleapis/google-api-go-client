@@ -11,7 +11,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -63,17 +63,17 @@ func TestAPIs(t *testing.T) {
 			goldenFile := filepath.Join("testdata", name+".want")
 			if *updateGolden {
 				clean := strings.Replace(string(clean), fmt.Sprintf("gdcl/%s", internal.Version), "gdcl/00000000", -1)
-				if err := ioutil.WriteFile(goldenFile, []byte(clean), 0644); err != nil {
+				if err := os.WriteFile(goldenFile, []byte(clean), 0644); err != nil {
 					t.Fatal(err)
 				}
 			}
-			want, err := ioutil.ReadFile(goldenFile)
+			want, err := os.ReadFile(goldenFile)
 			if err != nil {
 				t.Fatal(err)
 			}
 			wantStr := strings.Replace(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", internal.Version), -1)
 			if !bytes.Equal([]byte(wantStr), clean) {
-				tf, _ := ioutil.TempFile("", "api-"+name+"-got-json.")
+				tf, _ := os.CreateTemp("", "api-"+name+"-got-json.")
 				if _, err := tf.Write(clean); err != nil {
 					t.Fatal(err)
 				}
@@ -219,13 +219,13 @@ func TestSupportsPaging(t *testing.T) {
 
 func TestIsNewerRevision(t *testing.T) {
 	olderBytesPath, newerBytesPath := filepath.Join("testdata", "rev20200415.json"), filepath.Join("testdata", "rev20200416.json")
-	olderBytes, err := ioutil.ReadFile(olderBytesPath)
+	olderBytes, err := os.ReadFile(olderBytesPath)
 	if err != nil {
-		t.Fatalf("ioutil.ReadFile(%q) = %v; want nil", olderBytesPath, err)
+		t.Fatalf("os.ReadFile(%q) = %v; want nil", olderBytesPath, err)
 	}
-	newerBytes, err := ioutil.ReadFile(newerBytesPath)
+	newerBytes, err := os.ReadFile(newerBytesPath)
 	if err != nil {
-		t.Fatalf("ioutil.ReadFile(%q) = %v; want nil", newerBytesPath, err)
+		t.Fatalf("os.ReadFile(%q) = %v; want nil", newerBytesPath, err)
 	}
 
 	// newBytes > oldBytes

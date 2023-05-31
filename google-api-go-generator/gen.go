@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"go/format"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -214,7 +213,7 @@ func getAPIs() []*API {
 			log.Fatalf("-cache=true not compatible with -publiconly=false")
 		}
 		var err error
-		bytes, err = ioutil.ReadFile(apiListFile)
+		bytes, err = os.ReadFile(apiListFile)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -275,7 +274,7 @@ func getAPIsFromFile() []*API {
 }
 
 func apiFromFile(file string) (*API, error) {
-	jsonBytes, err := ioutil.ReadFile(file)
+	jsonBytes, err := os.ReadFile(file)
 	if err != nil {
 		return nil, fmt.Errorf("Error reading %s: %v", file, err)
 	}
@@ -298,7 +297,7 @@ func checkAndUpdateSpecFile(file string, contents []byte) error {
 	if _, err := os.Stat(file); os.IsNotExist(err) {
 		return writeFile(file, contents)
 	}
-	existing, err := ioutil.ReadFile(file)
+	existing, err := os.ReadFile(file)
 	if err != nil {
 		return err
 	}
@@ -329,7 +328,7 @@ func isNewerRevision(old []byte, new []byte) error {
 
 func writeFile(file string, contents []byte) error {
 	// Don't write it if the contents are identical.
-	existing, err := ioutil.ReadFile(file)
+	existing, err := os.ReadFile(file)
 	if err == nil && (bytes.Equal(existing, contents) || basicallyEqual(existing, contents)) {
 		return nil
 	}
@@ -337,7 +336,7 @@ func writeFile(file string, contents []byte) error {
 	if err = os.MkdirAll(outdir, 0755); err != nil {
 		return fmt.Errorf("failed to Mkdir %s: %v", outdir, err)
 	}
-	return ioutil.WriteFile(file, contents, 0644)
+	return os.WriteFile(file, contents, 0644)
 }
 
 var ignoreLines = regexp.MustCompile(`(?m)^\s+"(?:etag|revision)": ".+\n`)
@@ -368,7 +367,7 @@ func slurpURL(urlStr string) []byte {
 		log.Printf("WARNING: URL %s served status code %d", urlStr, res.StatusCode)
 		return nil
 	}
-	bs, err := ioutil.ReadAll(res.Body)
+	bs, err := os.ReadAll(res.Body)
 	if err != nil {
 		log.Fatalf("Error reading body of URL %s: %v", urlStr, err)
 	}
@@ -523,7 +522,7 @@ func (a *API) jsonBytes() []byte {
 		var slurp []byte
 		var err error
 		if *useCache {
-			slurp, err = ioutil.ReadFile(a.JSONFile())
+			slurp, err = os.ReadFile(a.JSONFile())
 			if err != nil {
 				log.Fatal(err)
 			}

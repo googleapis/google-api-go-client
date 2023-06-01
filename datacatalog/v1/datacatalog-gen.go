@@ -2068,6 +2068,10 @@ type GoogleCloudDatacatalogV1ImportEntriesRequest struct {
 	// ready for ingestion.
 	GcsBucketPath string `json:"gcsBucketPath,omitempty"`
 
+	// JobId: Optional. (Optional) Dataplex task job id, if specified will
+	// be used as part of ImportEntries LRO ID
+	JobId string `json:"jobId,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "GcsBucketPath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

@@ -10496,7 +10496,12 @@ func (c *GroupsMembershipsSearchDirectGroupsCall) Do(opts ...googleapi.CallOptio
 	//   "path": "v1/{+parent}/memberships:searchDirectGroups",
 	//   "response": {
 	//     "$ref": "SearchDirectGroupsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.groups",
+	//     "https://www.googleapis.com/auth/cloud-identity.groups.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }

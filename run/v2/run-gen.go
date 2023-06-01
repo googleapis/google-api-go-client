@@ -444,7 +444,7 @@ func (s *GoogleCloudRunV2Condition) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2Container: A single application container. This
 // specifies both the container to run, the command to run in the
 // container and the arguments to supply to it. Note that additional
-// arguments may be supplied by the system to the container at runtime.
+// arguments can be supplied by the system to the container at runtime.
 type GoogleCloudRunV2Container struct {
 	// Args: Arguments to the entrypoint. The docker image's CMD is used if
 	// this is not provided.
@@ -608,7 +608,7 @@ func (s *GoogleCloudRunV2EmptyDirVolumeSource) MarshalJSON() ([]byte, error) {
 // present in a Container.
 type GoogleCloudRunV2EnvVar struct {
 	// Name: Required. Name of the environment variable. Must be a
-	// C_IDENTIFIER, and mnay not exceed 32768 characters.
+	// C_IDENTIFIER, and must not exceed 32768 characters.
 	Name string `json:"name,omitempty"`
 
 	// Value: Variable references $(VAR_NAME) are expanded using the

@@ -1200,6 +1200,10 @@ type PhotoSequence struct {
 	// every image in this photo sequence.
 	SequenceBounds *LatLngBounds `json:"sequenceBounds,omitempty"`
 
+	// Takedown: Output only. Set if a Photo within the PhotoSequence
+	// contains a takedown.
+	Takedown bool `json:"takedown,omitempty"`
+
 	// UploadReference: Input only. Required when creating photo sequence.
 	// The resource name where the bytes of the photo sequence (in the form
 	// of video) are uploaded.

@@ -1499,6 +1499,16 @@ func (s *TunnelDestGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ValidateIapAttributeExpressionResponse: API requires a return
+// message, but currently all response strings will fit in the status
+// and public message. In the future, this response can hold AST
+// validation info.
+type ValidateIapAttributeExpressionResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // method id "iap.projects.brands.create":
 
 type ProjectsBrandsCreateCall struct {
@@ -4272,6 +4282,154 @@ func (c *V1UpdateIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings
 	//   },
 	//   "response": {
 	//     "$ref": "IapSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iap.validateAttributeExpression":
+
+type V1ValidateAttributeExpressionCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// ValidateAttributeExpression: Validates a given CEL expression
+// conforms to IAP restrictions.
+//
+// - name: The resource name of the IAP protected resource.
+func (r *V1Service) ValidateAttributeExpression(name string) *V1ValidateAttributeExpressionCall {
+	c := &V1ValidateAttributeExpressionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Expression sets the optional parameter "expression": Required. User
+// input string expression. Should be of the form
+// 'attributes.saml_attributes.filter(attribute, attribute.name in
+// ['{attribute_name}', '{attribute_name}'])'
+func (c *V1ValidateAttributeExpressionCall) Expression(expression string) *V1ValidateAttributeExpressionCall {
+	c.urlParams_.Set("expression", expression)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1ValidateAttributeExpressionCall) Fields(s ...googleapi.Field) *V1ValidateAttributeExpressionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1ValidateAttributeExpressionCall) Context(ctx context.Context) *V1ValidateAttributeExpressionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1ValidateAttributeExpressionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1ValidateAttributeExpressionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:validateAttributeExpression")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.validateAttributeExpression" call.
+// Exactly one of *ValidateIapAttributeExpressionResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ValidateIapAttributeExpressionResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1ValidateAttributeExpressionCall) Do(opts ...googleapi.CallOption) (*ValidateIapAttributeExpressionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ValidateIapAttributeExpressionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Validates a given CEL expression conforms to IAP restrictions.",
+	//   "flatPath": "v1/{v1Id}:validateAttributeExpression",
+	//   "httpMethod": "POST",
+	//   "id": "iap.validateAttributeExpression",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "expression": {
+	//       "description": "Required. User input string expression. Should be of the form 'attributes.saml_attributes.filter(attribute, attribute.name in ['{attribute_name}', '{attribute_name}'])'",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The resource name of the IAP protected resource.",
+	//       "location": "path",
+	//       "pattern": "^.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:validateAttributeExpression",
+	//   "response": {
+	//     "$ref": "ValidateIapAttributeExpressionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

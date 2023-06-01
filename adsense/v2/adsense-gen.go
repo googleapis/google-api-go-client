@@ -485,7 +485,7 @@ type AdUnit struct {
 	// in the `AD_UNIT_ID` reporting dimension.
 	ReportingDimensionId string `json:"reportingDimensionId,omitempty"`
 
-	// State: State of the ad unit.
+	// State: Required. State of the ad unit.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State unspecified.

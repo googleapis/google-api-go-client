@@ -469,6 +469,14 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// project the usage occurred on.
 	Projects []string `json:"projects,omitempty"`
 
+	// ResourceAncestors: Optional. A set of folder and organization names
+	// of the form `folders/{folderId}` or `organizations/{organizationId}`,
+	// specifying that usage from only this set of folders and organizations
+	// should be included in the budget. If omitted, the report includes all
+	// usage for all organizations, regardless of which organization the
+	// usage occurred on.
+	ResourceAncestors []string `json:"resourceAncestors,omitempty"`
+
 	// Services: Optional. A set of services of the form
 	// `services/{service_id}`, specifying that usage from only this set of
 	// services should be included in the budget. If omitted, the report

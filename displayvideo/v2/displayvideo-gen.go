@@ -5756,6 +5756,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
+	//   "SDF_VERSION_6" - SDF version 6
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -15908,6 +15909,7 @@ type SdfConfig struct {
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
+	//   "SDF_VERSION_6" - SDF version 6
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
@@ -15990,6 +15992,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
+	//   "SDF_VERSION_6" - SDF version 6
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to

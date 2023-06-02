@@ -940,7 +940,7 @@
       }
     }
   },
-  "revision": "20230525",
+  "revision": "20230530",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -2973,7 +2973,7 @@
             "ROLE_MANAGER"
           ],
           "enumDescriptions": [
-            "Default value. The user isn't a member of the space, but might be invited.",
+            "Default value. For users: they aren't a member of the space, but can be invited. For Google Groups: they're always assigned this role (other enum values might be used in the future).",
             "A member of the space. The user has basic permissions, like sending messages to the space. In 1:1 and unnamed group conversations, everyone has this role.",
             "A space manager. The user has all basic permissions plus administrative permissions that let them manage the space, like adding or removing members. Only supported in SpaceType.SPACE."
           ],

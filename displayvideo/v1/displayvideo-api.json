@@ -8146,7 +8146,7 @@
       }
     }
   },
-  "revision": "20230530",
+  "revision": "20230601",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -10887,7 +10887,8 @@
             "SDF_VERSION_5_2",
             "SDF_VERSION_5_3",
             "SDF_VERSION_5_4",
-            "SDF_VERSION_5_5"
+            "SDF_VERSION_5_5",
+            "SDF_VERSION_6"
           ],
           "enumDescriptions": [
             "SDF version value is not specified or is unknown in this version.",
@@ -10900,7 +10901,8 @@
             "SDF version 5.2",
             "SDF version 5.3",
             "SDF version 5.4",
-            "SDF version 5.5"
+            "SDF version 5.5",
+            "SDF version 6"
           ],
           "type": "string"
         }
@@ -17656,7 +17658,8 @@
             "SDF_VERSION_5_2",
             "SDF_VERSION_5_3",
             "SDF_VERSION_5_4",
-            "SDF_VERSION_5_5"
+            "SDF_VERSION_5_5",
+            "SDF_VERSION_6"
           ],
           "enumDescriptions": [
             "SDF version value is not specified or is unknown in this version.",
@@ -17669,7 +17672,8 @@
             "SDF version 5.2",
             "SDF version 5.3",
             "SDF version 5.4",
-            "SDF version 5.5"
+            "SDF version 5.5",
+            "SDF version 6"
           ],
           "type": "string"
         }
@@ -17714,7 +17718,8 @@
             "SDF_VERSION_5_2",
             "SDF_VERSION_5_3",
             "SDF_VERSION_5_4",
-            "SDF_VERSION_5_5"
+            "SDF_VERSION_5_5",
+            "SDF_VERSION_6"
           ],
           "enumDescriptions": [
             "SDF version value is not specified or is unknown in this version.",
@@ -17727,7 +17732,8 @@
             "SDF version 5.2",
             "SDF version 5.3",
             "SDF version 5.4",
-            "SDF version 5.5"
+            "SDF version 5.5",
+            "SDF version 6"
           ],
           "type": "string"
         }

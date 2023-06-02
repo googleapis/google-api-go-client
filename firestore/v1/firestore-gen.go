@@ -1648,6 +1648,16 @@ type GoogleFirestoreAdminV1Database struct {
 	//   "DELETE_PROTECTION_ENABLED" - Delete protection is enabled
 	DeleteProtectionState string `json:"deleteProtectionState,omitempty"`
 
+	// EarliestVersionTime: Output only. The earliest timestamp at which
+	// older versions of the data can be read from the database. See
+	// [version_retention_period] above; this field is populated with `now -
+	// version_retention_period`. This value is continuously updated, and
+	// becomes stale the moment it is queried. If you are using this value
+	// to recover data, make sure to account for the time from the moment
+	// when the value is queried to the moment when you initiate the
+	// recovery.
+	EarliestVersionTime string `json:"earliestVersionTime,omitempty"`
+
 	// Etag: This checksum is computed by the server based on the value of
 	// other fields, and may be sent on update and delete requests to ensure
 	// the client has an up-to-date value before proceeding.
@@ -1669,6 +1679,22 @@ type GoogleFirestoreAdminV1Database struct {
 	// `projects/{project}/databases/{database}`
 	Name string `json:"name,omitempty"`
 
+	// PointInTimeRecoveryEnablement: Whether to enable the PITR feature on
+	// this database.
+	//
+	// Possible values:
+	//   "POINT_IN_TIME_RECOVERY_ENABLEMENT_UNSPECIFIED" - Not used.
+	//   "POINT_IN_TIME_RECOVERY_ENABLED" - Reads are supported on selected
+	// versions of the data from within the past 7 days: * Reads against any
+	// timestamp within the past hour * Reads against 1-minute snapshots
+	// beyond 1 hour and within 7 days `version_retention_period` and
+	// `earliest_version_time` can be used to determine the supported
+	// versions.
+	//   "POINT_IN_TIME_RECOVERY_DISABLED" - Reads are supported on any
+	// version of the data from within the past 1 hour.
+	// `version_retention_period` will be unset.
+	PointInTimeRecoveryEnablement string `json:"pointInTimeRecoveryEnablement,omitempty"`
+
 	// Type: The type of the database. See
 	// https://cloud.google.com/datastore/docs/firestore-or-datastore for
 	// information about how to choose.
@@ -1687,6 +1713,13 @@ type GoogleFirestoreAdminV1Database struct {
 	// most recently updated. Note this only includes updates to the
 	// database resource and not data contained by the database.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VersionRetentionPeriod: Output only. The period during which past
+	// versions of data are retained in the database. Any read or query can
+	// specify a `read_time` within this window, and will read the state of
+	// the database at that time. If the PITR feature is enabled, the
+	// retention period is 7 days. If unset, the retention period is 1 hour.
+	VersionRetentionPeriod string `json:"versionRetentionPeriod,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1807,6 +1840,14 @@ type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
 	// is a bucket (without a namespace path), a prefix will be generated
 	// based on the start time.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+
+	// SnapshotTime: The timestamp that corresponds to the version of the
+	// database to be exported. The timestamp must be rounded to the minute,
+	// in the past, and not older than 1 hour. If specified, then the
+	// exported documents will represent a consistent view of the database
+	// at the provided time. Otherwise, there are no guarantees about the
+	// consistency of the exported documents.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with

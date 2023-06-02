@@ -406,6 +406,7 @@ type BackendMetastore struct {
 	//
 	// Possible values:
 	//   "METASTORE_TYPE_UNSPECIFIED" - The metastore type is not set.
+	//   "BIGQUERY" - The backend metastore is BigQuery.
 	//   "DATAPROC_METASTORE" - The backend metastore is Dataproc Metastore.
 	MetastoreType string `json:"metastoreType,omitempty"`
 
@@ -971,6 +972,17 @@ type HiveMetastoreConfig struct {
 	// and can be further customized in the auxiliary version's
 	// AuxiliaryVersionConfig.
 	ConfigOverrides map[string]string `json:"configOverrides,omitempty"`
+
+	// EndpointProtocol: The protocol to use for the metastore service
+	// endpoint. If unspecified, defaults to THRIFT.
+	//
+	// Possible values:
+	//   "ENDPOINT_PROTOCOL_UNSPECIFIED" - The protocol is not set.
+	//   "THRIFT" - Use the legacy Apache Thrift protocol for the metastore
+	// service endpoint.
+	//   "GRPC" - Use the modernized gRPC protocol for the metastore service
+	// endpoint.
+	EndpointProtocol string `json:"endpointProtocol,omitempty"`
 
 	// KerberosConfig: Information used to configure the Hive metastore
 	// service as a service principal in a Kerberos realm. To disable

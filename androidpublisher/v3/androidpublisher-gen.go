@@ -2438,7 +2438,9 @@ type Grant struct {
 	// Possible values:
 	//   "APP_LEVEL_PERMISSION_UNSPECIFIED" - Unknown or unspecified
 	// permission.
-	//   "CAN_ACCESS_APP" - View app information (read-only).
+	//   "CAN_ACCESS_APP" - View app information (read-only). Deprecated:
+	// Try defining a more granular capability. Otherwise, check
+	// AppLevelPermission.CAN_VIEW_NON_FINANCIAL_DATA.
 	//   "CAN_VIEW_FINANCIAL_DATA" - View financial data.
 	//   "CAN_MANAGE_PERMISSIONS" - Admin (all permissions).
 	//   "CAN_REPLY_TO_REVIEWS" - Reply to reviews.
@@ -2451,6 +2453,9 @@ type Grant struct {
 	//   "CAN_MANAGE_DRAFT_APPS" - Edit and delete draft apps.
 	//   "CAN_MANAGE_ORDERS" - Manage orders and subscriptions.
 	//   "CAN_MANAGE_APP_CONTENT" - Manage policy related pages.
+	//   "CAN_VIEW_NON_FINANCIAL_DATA" - View app information (read-only).
+	//   "CAN_VIEW_APP_QUALITY" - View app quality data such as Vitals,
+	// Crashes etc.
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
@@ -5979,6 +5984,10 @@ type User struct {
 	// public, or only available to your organization.
 	//   "CAN_MANAGE_ORDERS_GLOBAL" - Manage orders and subscriptions.
 	//   "CAN_MANAGE_APP_CONTENT_GLOBAL" - Manage policy related pages on
+	// all apps for the developer.
+	//   "CAN_VIEW_NON_FINANCIAL_DATA_GLOBAL" - View app information and
+	// download bulk reports (read-only).
+	//   "CAN_VIEW_APP_QUALITY_GLOBAL" - View app quality information for
 	// all apps for the developer.
 	DeveloperAccountPermissions []string `json:"developerAccountPermissions,omitempty"`
 

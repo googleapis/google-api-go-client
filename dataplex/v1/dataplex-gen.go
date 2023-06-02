@@ -2029,6 +2029,16 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue)
 // GoogleCloudDataplexV1DataProfileSpec: DataProfileScan related
 // setting.
 type GoogleCloudDataplexV1DataProfileSpec struct {
+	// ExcludeFields: Optional. The fields to exclude from data profile.If
+	// specified, the fields will be excluded from data profile, regardless
+	// of include_fields value.
+	ExcludeFields *GoogleCloudDataplexV1DataProfileSpecSelectedFields `json:"excludeFields,omitempty"`
+
+	// IncludeFields: Optional. The fields to include in data profile.If not
+	// specified, all fields at the time of profile scan job execution are
+	// included, except for ones listed in exclude_fields.
+	IncludeFields *GoogleCloudDataplexV1DataProfileSpecSelectedFields `json:"includeFields,omitempty"`
+
 	// RowFilter: Optional. A filter applied to all rows in a single
 	// DataScan job. The filter needs to be a valid SQL expression for a
 	// WHERE clause in BigQuery standard SQL syntax. Example: col1 >= 0 AND
@@ -2041,7 +2051,7 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 	// applied if sampling_percent is not specified, 0 or 100.
 	SamplingPercent float64 `json:"samplingPercent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RowFilter") to
+	// ForceSendFields is a list of field names (e.g. "ExcludeFields") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2049,10 +2059,10 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RowFilter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ExcludeFields") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2076,6 +2086,39 @@ func (s *GoogleCloudDataplexV1DataProfileSpec) UnmarshalJSON(data []byte) error 
 	}
 	s.SamplingPercent = float64(s1.SamplingPercent)
 	return nil
+}
+
+// GoogleCloudDataplexV1DataProfileSpecSelectedFields: The specification
+// for fields to include or exclude in data profile scan.
+type GoogleCloudDataplexV1DataProfileSpecSelectedFields struct {
+	// FieldNames: Optional. Expected input is a list of fully qualified
+	// names of fields as in the schema.Only top-level field names for
+	// nested fields are supported. For instance, if 'x' is of nested field
+	// type, listing 'x' is supported but 'x.y.z' is not supported. Here 'y'
+	// and 'y.z' are nested fields of 'x'.
+	FieldNames []string `json:"fieldNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldNames") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataProfileSpecSelectedFields) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProfileSpecSelectedFields
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityDimensionResult:
@@ -3638,6 +3681,7 @@ func (s *GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility) MarshalJSO
 
 // GoogleCloudDataplexV1Environment: Environment represents a
 // user-visible compute infrastructure for analytics within a lake.
+// LINT.IfChange
 type GoogleCloudDataplexV1Environment struct {
 	// CreateTime: Output only. Environment creation time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4031,6 +4075,17 @@ func (s *GoogleCloudDataplexV1Job) MarshalJSON() ([]byte, error) {
 type GoogleCloudDataplexV1JobEvent struct {
 	// EndTime: The time when the job ended running.
 	EndTime string `json:"endTime,omitempty"`
+
+	// ExecutionTrigger: Job execution trigger.
+	//
+	// Possible values:
+	//   "EXECUTION_TRIGGER_UNSPECIFIED" - The job execution trigger is
+	// unspecified.
+	//   "TASK_CONFIG" - The job was triggered by Dataplex based on trigger
+	// spec from task definition.
+	//   "RUN_REQUEST" - The job was triggered by the explicit call of Task
+	// API.
+	ExecutionTrigger string `json:"executionTrigger,omitempty"`
 
 	// JobId: The unique id identifying the job.
 	JobId string `json:"jobId,omitempty"`
@@ -11164,6 +11219,20 @@ func (r *ProjectsLocationsDataScansJobsService) List(parent string) *ProjectsLoc
 	return c
 }
 
+// Filter sets the optional parameter "filter": An expression for
+// filtering the results of the ListDataScanJobs request.If unspecified,
+// all datascan jobs will be returned. Multiple filters can be applied
+// (with AND, OR logical operators). Filters are case-sensitive.Allowed
+// fields are: start_time end_timestart_time and end_time expect
+// RFC-3339 formatted strings (e.g. 2018-10-08T18:30:00-07:00).For
+// instance, 'start_time > 2018-10-08T00:00:00.123456789Z AND end_time <
+// 2018-10-09T00:00:00.123456789Z' limits results to DataScanJobs
+// between specified start and end times.
+func (c *ProjectsLocationsDataScansJobsListCall) Filter(filter string) *ProjectsLocationsDataScansJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // DataScanJobs to return. The service may return fewer than this value.
 // If unspecified, at most 10 DataScanJobs will be returned. The maximum
@@ -11292,6 +11361,11 @@ func (c *ProjectsLocationsDataScansJobsListCall) Do(opts ...googleapi.CallOption
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. An expression for filtering the results of the ListDataScanJobs request.If unspecified, all datascan jobs will be returned. Multiple filters can be applied (with AND, OR logical operators). Filters are case-sensitive.Allowed fields are: start_time end_timestart_time and end_time expect RFC-3339 formatted strings (e.g. 2018-10-08T18:30:00-07:00).For instance, 'start_time \u003e 2018-10-08T00:00:00.123456789Z AND end_time \u003c 2018-10-09T00:00:00.123456789Z' limits results to DataScanJobs between specified start and end times.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. Maximum number of DataScanJobs to return. The service may return fewer than this value. If unspecified, at most 10 DataScanJobs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",

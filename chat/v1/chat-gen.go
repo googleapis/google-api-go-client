@@ -3792,8 +3792,10 @@ type Membership struct {
 	// their permitted actions in the space.
 	//
 	// Possible values:
-	//   "MEMBERSHIP_ROLE_UNSPECIFIED" - Default value. The user isn't a
-	// member of the space, but might be invited.
+	//   "MEMBERSHIP_ROLE_UNSPECIFIED" - Default value. For users: they
+	// aren't a member of the space, but can be invited. For Google Groups:
+	// they're always assigned this role (other enum values might be used in
+	// the future).
 	//   "ROLE_MEMBER" - A member of the space. The user has basic
 	// permissions, like sending messages to the space. In 1:1 and unnamed
 	// group conversations, everyone has this role.

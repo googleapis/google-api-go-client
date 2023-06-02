@@ -325,7 +325,7 @@ type GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest struct {
 	LocalIds []string `json:"localIds,omitempty"`
 
 	// TenantId: If the accounts belong to an Identity Platform tenant, the
-	// ID of the tenant. If the accounts belong to an default Identity
+	// ID of the tenant. If the accounts belong to a default Identity
 	// Platform project, the field is not needed.
 	TenantId string `json:"tenantId,omitempty"`
 
@@ -2720,24 +2720,25 @@ type GoogleCloudIdentitytoolkitV1SignInWithIdpRequest struct {
 	// the provider ID of the IdP that issued the credential. For example,
 	// if the user is signing in to the Google provider using a Google ID
 	// token, this should be set to
-	// `id_token=[GOOGLE_ID_TOKEN]&providerId=google.com`, where
+	// id_token`=[GOOGLE_ID_TOKEN]&providerId=google.com`, where
 	// `[GOOGLE_ID_TOKEN]` should be replaced with the Google ID token. If
 	// the user is signing in to the Facebook provider using a Facebook
 	// authentication token, this should be set to
-	// `id_token=[FACEBOOK_AUTHENTICATION_TOKEN]&providerId=facebook.com&nonc
-	// e= [NONCE]`, where `[FACEBOOK_AUTHENTICATION_TOKEN]` should be
-	// replaced with the Facebook authentication token. Nonce is required
+	// id_token`=[FACEBOOK_AUTHENTICATION_TOKEN]&providerId=facebook.
+	// com&nonce= [NONCE]`, where `[FACEBOOK_AUTHENTICATION_TOKEN]` should
+	// be replaced with the Facebook authentication token. Nonce is required
 	// for validating the token. The request will fail if no nonce is
 	// provided. If the user is signing in to the Facebook provider using a
 	// Facebook access token, this should be set to
-	// `access_token=[FACEBOOK_ACCESS_TOKEN]&providerId=facebook.com`, where
-	// `[FACEBOOK_ACCESS_TOKEN]` should be replaced with the Facebook access
-	// token. If the user is signing in to the Twitter provider using a
-	// Twitter OAuth 1.0 credential, this should be set to
-	// `access_token=[TWITTER_ACCESS_TOKEN]&oauth_token_secret=[TWITTER_TOKEN
-	// _SECRET]&providerId=twitter.com`, where `[TWITTER_ACCESS_TOKEN]` and
-	// `[TWITTER_TOKEN_SECRET]` should be replaced with the Twitter OAuth
-	// access token and Twitter OAuth token secret respectively.
+	// access_token`=[FACEBOOK_ACCESS_TOKEN]&providerId=facebook. com`,
+	// where `[FACEBOOK_ACCESS_TOKEN]` should be replaced with the Facebook
+	// access token. If the user is signing in to the Twitter provider using
+	// a Twitter OAuth 1.0 credential, this should be set to
+	// access_token`=[TWITTER_ACCESS_TOKEN]&oauth_token_secret=
+	// [TWITTER_TOKEN_SECRET]&providerId=twitter.com`, where
+	// `[TWITTER_ACCESS_TOKEN]` and `[TWITTER_TOKEN_SECRET]` should be
+	// replaced with the Twitter OAuth access token and Twitter OAuth token
+	// secret respectively.
 	PostBody string `json:"postBody,omitempty"`
 
 	// RequestUri: Required. The URL to which the IdP redirects the user
@@ -6979,6 +6980,7 @@ func (c *ProjectsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "delegatedProjectNumber": {
+	//       "deprecated": true,
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -8303,7 +8305,7 @@ type ProjectsTenantsAccountsBatchDeleteCall struct {
 //     Otherwise, the ID of the Google Cloud project that accounts belong
 //     to.
 //   - tenantId: If the accounts belong to an Identity Platform tenant,
-//     the ID of the tenant. If the accounts belong to an default Identity
+//     the ID of the tenant. If the accounts belong to a default Identity
 //     Platform project, the field is not needed.
 func (r *ProjectsTenantsAccountsService) BatchDelete(targetProjectId string, tenantId string, googlecloudidentitytoolkitv1batchdeleteaccountsrequest *GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest) *ProjectsTenantsAccountsBatchDeleteCall {
 	c := &ProjectsTenantsAccountsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8425,7 +8427,7 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "tenantId": {
-	//       "description": "If the accounts belong to an Identity Platform tenant, the ID of the tenant. If the accounts belong to an default Identity Platform project, the field is not needed.",
+	//       "description": "If the accounts belong to an Identity Platform tenant, the ID of the tenant. If the accounts belong to a default Identity Platform project, the field is not needed.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -8615,6 +8617,7 @@ func (c *ProjectsTenantsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "delegatedProjectNumber": {
+	//       "deprecated": true,
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"

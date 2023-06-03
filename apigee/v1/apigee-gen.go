@@ -4371,13 +4371,19 @@ func (s *GoogleCloudApigeeV1DeveloperSubscription) MarshalJSON() ([]byte, error)
 // GoogleCloudApigeeV1DimensionMetric: Encapsulates a metric grouped by
 // dimension.
 type GoogleCloudApigeeV1DimensionMetric struct {
+	// IndividualNames: Individual dimension names. E.g. ["dim1_name",
+	// "dim2_name"].
+	IndividualNames []string `json:"individualNames,omitempty"`
+
 	// Metrics: List of metrics.
 	Metrics []*GoogleCloudApigeeV1Metric `json:"metrics,omitempty"`
 
-	// Name: Name of the dimension.
+	// Name: Comma joined dimension names. E.g. "dim1_name,dim2_name".
+	// Deprecated. If name already has comma before join, we may get wrong
+	// splits. Please use individual_names.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// ForceSendFields is a list of field names (e.g. "IndividualNames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4385,12 +4391,13 @@ type GoogleCloudApigeeV1DimensionMetric struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Metrics") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IndividualNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7701,9 +7708,10 @@ type GoogleCloudApigeeV1Organization struct {
 	// AddonsConfig: Addon configurations of the Apigee organization.
 	AddonsConfig *GoogleCloudApigeeV1AddonsConfig `json:"addonsConfig,omitempty"`
 
-	// AnalyticsRegion: Required. DEPRECATED: This field will be deprecated
-	// once Apigee supports DRZ. Primary Google Cloud region for analytics
-	// data storage. For valid values, see Create an Apigee organization
+	// AnalyticsRegion: Required. DEPRECATED: This field will eventually be
+	// deprecated and replaced with a differently-named field. Primary
+	// Google Cloud region for analytics data storage. For valid values, see
+	// Create an Apigee organization
 	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
@@ -8033,6 +8041,117 @@ func (s *GoogleCloudApigeeV1Point) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Point
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ProfileConfig: ProfileConfig defines a set of
+// categories and policies which will be used to compute security score.
+type GoogleCloudApigeeV1ProfileConfig struct {
+	// Categories: List of categories of profile config.
+	Categories []*GoogleCloudApigeeV1ProfileConfigCategory `json:"categories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ProfileConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ProfileConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ProfileConfigAbuse: Checks for abuse, which
+// includes any requests sent to the API for purposes other than what it
+// is intended for, such as high volumes of requests, data scraping, and
+// abuse related to authorization.
+type GoogleCloudApigeeV1ProfileConfigAbuse struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigAuthorization: By default, following
+// policies will be included: - JWS - JWT - OAuth - BasicAuth - APIKey
+type GoogleCloudApigeeV1ProfileConfigAuthorization struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigCORS: Checks to see if you have CORS
+// policy in place.
+type GoogleCloudApigeeV1ProfileConfigCORS struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigCategory: Advanced API Security
+// provides security profile that scores the following categories.
+type GoogleCloudApigeeV1ProfileConfigCategory struct {
+	// Abuse: Checks for abuse, which includes any requests sent to the API
+	// for purposes other than what it is intended for, such as high volumes
+	// of requests, data scraping, and abuse related to authorization.
+	Abuse *GoogleCloudApigeeV1ProfileConfigAbuse `json:"abuse,omitempty"`
+
+	// Authorization: Checks to see if you have an authorization policy in
+	// place.
+	Authorization *GoogleCloudApigeeV1ProfileConfigAuthorization `json:"authorization,omitempty"`
+
+	// Cors: Checks to see if you have CORS policy in place.
+	Cors *GoogleCloudApigeeV1ProfileConfigCORS `json:"cors,omitempty"`
+
+	// Mediation: Checks to see if you have a mediation policy in place.
+	Mediation *GoogleCloudApigeeV1ProfileConfigMediation `json:"mediation,omitempty"`
+
+	// Mtls: Checks to see if you have configured mTLS for the target
+	// server.
+	Mtls *GoogleCloudApigeeV1ProfileConfigMTLS `json:"mtls,omitempty"`
+
+	// Threat: Checks to see if you have a threat protection policy in
+	// place.
+	Threat *GoogleCloudApigeeV1ProfileConfigThreat `json:"threat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Abuse") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Abuse") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ProfileConfigCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ProfileConfigCategory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ProfileConfigMTLS: Checks to see if you have
+// configured mTLS for the target server.
+type GoogleCloudApigeeV1ProfileConfigMTLS struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigMediation: By default, following
+// policies will be included: - OASValidation - SOAPMessageValidation
+type GoogleCloudApigeeV1ProfileConfigMediation struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigThreat: By default, following
+// policies will be included: - XMLThreatProtection -
+// JSONThreatProtection
+type GoogleCloudApigeeV1ProfileConfigThreat struct {
 }
 
 // GoogleCloudApigeeV1Properties: Message for compatibility with legacy
@@ -9916,6 +10035,9 @@ func (s *GoogleCloudApigeeV1SecurityIncident) MarshalJSON() ([]byte, error) {
 // GoogleCloudApigeeV1SecurityProfile: Represents a SecurityProfile
 // resource.
 type GoogleCloudApigeeV1SecurityProfile struct {
+	// Description: Description of the security profile.
+	Description string `json:"description,omitempty"`
+
 	// DisplayName: Display name of the security profile.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -9933,6 +10055,10 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// Name: Immutable. Name of the security profile resource. Format:
 	// organizations/{org}/securityProfiles/{profile}
 	Name string `json:"name,omitempty"`
+
+	// ProfileConfig: Customized profile configuration that computes the
+	// security score.
+	ProfileConfig *GoogleCloudApigeeV1ProfileConfig `json:"profileConfig,omitempty"`
 
 	// RevisionCreateTime: Output only. The time when revision was created.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
@@ -9955,7 +10081,7 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -9963,7 +10089,7 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// NullFields is a list of field names (e.g. "Description") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as

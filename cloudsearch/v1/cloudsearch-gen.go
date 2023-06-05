@@ -1633,7 +1633,7 @@ func (s *AppsDynamiteSharedAvatarInfo) MarshalJSON() ([]byte, error) {
 }
 
 // AppsDynamiteSharedBackendUploadMetadata: Metadata used only in
-// Dynamite backend for uploaded attachments.
+// Dynamite backend for uploaded attachments. NEXT ID: 20
 type AppsDynamiteSharedBackendUploadMetadata struct {
 	// BlobPath: Blobstore path for the uploaded attachment
 	BlobPath string `json:"blobPath,omitempty"`
@@ -1742,8 +1742,7 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 	// uploaded.
 	DlpScanSummary *DlpScanSummary `json:"dlpScanSummary,omitempty"`
 
-	// Experiment: The list of experiments this video is enabled for Next
-	// tag: 19
+	// Experiment: The list of experiments this video is enabled for
 	//
 	// Possible values:
 	//   "UNKNOWN_EXPERIMENT"
@@ -1756,6 +1755,8 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 	// IsClientSideTranscodedVideo: If the uploaded file is a video that has
 	// been transcoded on the client side
 	IsClientSideTranscodedVideo bool `json:"isClientSideTranscodedVideo,omitempty"`
+
+	MigratedFromHangoutsMetadata *AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata `json:"migratedFromHangoutsMetadata,omitempty"`
 
 	// OriginalDimension: Original dimension of the content. Only set for
 	// image attachments.
@@ -1820,6 +1821,64 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 
 func (s *AppsDynamiteSharedBackendUploadMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedBackendUploadMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata:
+// Metadata for attachments migrated from Hangouts
+type AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata struct {
+	PhotoId *AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadataPhotoId `json:"photoId,omitempty"`
+
+	UpdateTimestampUsec int64 `json:"updateTimestampUsec,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "PhotoId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PhotoId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadataPhotoId struct {
+	PhotoId int64 `json:"photoId,omitempty,string"`
+
+	UserId int64 `json:"userId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "PhotoId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PhotoId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadataPhotoId) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadataPhotoId
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2941,9 +3000,12 @@ func (s *AppsDynamiteSharedMessageIntegrationPayload) MarshalJSON() ([]byte, err
 // snipetting. In future, we can use this proto to return more search
 // specific data attached to a message.
 type AppsDynamiteSharedMessageSearchInfo struct {
-	// MatchedSegmentsInTextBody: An example use case: clients can use this
-	// field to highlight matched segments in message text_body defined in
-	// http://google3/apps/dynamite/v1/frontend/api/message.proto;l=104;rcl=513400736.
+	// MatchedSegmentsInTextBody: Current usage: -
+	// DescriptionType=KEYWORD_MATCH is populated in this field to return
+	// metadata for keyword matches, which clients can use to highlight
+	// matched segments in a message's text_body. - DescriptionType=SNIPPET
+	// can be used to return metadata describing how a message's text_body
+	// can be broken up to provide a snippet.
 	MatchedSegmentsInTextBody []*AppsDynamiteSharedTextSegmentsWithDescription `json:"matchedSegmentsInTextBody,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3495,6 +3557,11 @@ type AppsDynamiteSharedTextSegmentsWithDescription struct {
 	//   "DESCRIPTION_TYPE_UNSPECIFIED"
 	//   "KEYWORD_MATCH" - Indicates the text segments contain matched
 	// keywords. Client can highlight them in search results page.
+	//   "SNIPPET" - Indicates the text segments represent parts of the
+	// snippeted text. Clients can display just these in SRP as shortened
+	// message. Multiple TextSegments with this DescriptionType are returned
+	// to denote disjointed snippets i.e. "a long test message" -> "a ...
+	// message"
 	DescriptionType string `json:"descriptionType,omitempty"`
 
 	TextSegment []*AppsDynamiteSharedTextSegment `json:"textSegment,omitempty"`
@@ -6348,6 +6415,15 @@ type BotInfo struct {
 	//   "CAN_ADD_TO_HUMAN_DM"
 	SupportedUses []string `json:"supportedUses,omitempty"`
 
+	// UninstallCapability: Determine how uninstall is permitted for this
+	// app.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_UNINSTALL_CAPABILITY" - Defaults to ALWAYS_ALLOWED.
+	//   "ALWAYS_ALLOWED"
+	//   "NEVER_ALLOWED"
+	UninstallCapability string `json:"uninstallCapability,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AppAllowlistStatus")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -7673,23 +7749,23 @@ func (s *Collaboration) MarshalJSON() ([]byte, error) {
 }
 
 // Color: Represents a color in the RGBA color space. This
-// representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness. For example,
-// the fields of this representation can be trivially provided to the
-// constructor of `java.awt.Color` in Java; it can also be trivially
-// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
-// and, with just a little work, it can be easily formatted into a CSS
-// `rgba()` string in JavaScript. This reference page doesn't carry
-// information about the absolute color space that should be used to
-// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications should assume the sRGB color space.
-// When color equality needs to be decided, implementations, unless
-// documented otherwise, treat two colors as equal if all their red,
-// green, blue, and alpha values each differ by at most 1e-5. Example
-// (Java): import com.google.type.Color; // ... public static
-// java.awt.Color fromProto(Color protocolor) { float alpha =
-// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
-// return new java.awt.Color( protocolor.getRed(),
+// representation is designed for simplicity of conversion to and from
+// color representations in various languages over compactness. For
+// example, the fields of this representation can be trivially provided
+// to the constructor of `java.awt.Color` in Java; it can also be
+// trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
+// method in iOS; and, with just a little work, it can be easily
+// formatted into a CSS `rgba()` string in JavaScript. This reference
+// page does not have information about the absolute color space that
+// should be used to interpret the RGB value—for example, sRGB, Adobe
+// RGB, DCI-P3, and BT.2020. By default, applications should assume the
+// sRGB color space. When color equality needs to be decided,
+// implementations, unless documented otherwise, treat two colors as
+// equal if all their red, green, blue, and alpha values each differ by
+// at most `1e-5`. Example (Java): import com.google.type.Color; // ...
+// public static java.awt.Color fromProto(Color protocolor) { float
+// alpha = protocolor.hasAlpha() ? protocolor.getAlpha().getValue() :
+// 1.0; return new java.awt.Color( protocolor.getRed(),
 // protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
 // Color toProto(java.awt.Color color) { float red = (float)
 // color.getRed(); float green = (float) color.getGreen(); float blue =
@@ -12306,7 +12382,7 @@ func (s *GoogleChatV1ContextualAddOnMarkup) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChatV1ContextualAddOnMarkupCard: A card is a UI element that
-// can contain UI widgets such as texts, images.
+// can contain UI widgets such as text and images.
 type GoogleChatV1ContextualAddOnMarkupCard struct {
 	// CardActions: The actions of this card.
 	CardActions []*GoogleChatV1ContextualAddOnMarkupCardCardAction `json:"cardActions,omitempty"`
@@ -12379,7 +12455,8 @@ func (s *GoogleChatV1ContextualAddOnMarkupCardCardAction) MarshalJSON() ([]byte,
 }
 
 type GoogleChatV1ContextualAddOnMarkupCardCardHeader struct {
-	// ImageStyle: The image's type (e.g. square border or circular border).
+	// ImageStyle: The image's type (for example, square border or circular
+	// border).
 	//
 	// Possible values:
 	//   "IMAGE_STYLE_UNSPECIFIED"
@@ -12394,8 +12471,8 @@ type GoogleChatV1ContextualAddOnMarkupCardCardHeader struct {
 	Subtitle string `json:"subtitle,omitempty"`
 
 	// Title: The title must be specified. The header has a fixed height: if
-	// both a title and subtitle is specified, each will take up 1 line. If
-	// only the title is specified, it will take up both lines.
+	// both a title and subtitle is specified, each takes up one line. If
+	// only the title is specified, it takes up both lines.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageStyle") to
@@ -12424,15 +12501,18 @@ func (s *GoogleChatV1ContextualAddOnMarkupCardCardHeader) MarshalJSON() ([]byte,
 // GoogleChatV1ContextualAddOnMarkupCardSection: A section contains a
 // collection of widgets that are rendered (vertically) in the order
 // that they are specified. Across all platforms, cards have a narrow
-// fixed width, so there is currently no need for layout properties
-// (e.g. float).
+// fixed width, so there's currently no need for layout properties (for
+// example, float).
 type GoogleChatV1ContextualAddOnMarkupCardSection struct {
 	// Header: The header of the section. Formatted text is supported. For
 	// more information about formatting text, see Formatting text in Google
-	// Chat apps and Formatting text in Google Workspace Add-ons.
+	// Chat apps
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// and Formatting text in Google Workspace Add-ons
+	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Header string `json:"header,omitempty"`
 
-	// Widgets: A section must contain at least 1 widget.
+	// Widgets: A section must contain at least one widget.
 	Widgets []*GoogleChatV1WidgetMarkup `json:"widgets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Header") to
@@ -12458,8 +12538,8 @@ func (s *GoogleChatV1ContextualAddOnMarkupCardSection) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChatV1WidgetMarkup: A widget is a UI element that presents
-// texts, images, etc.
+// GoogleChatV1WidgetMarkup: A widget is a UI element that presents text
+// and images.
 type GoogleChatV1WidgetMarkup struct {
 	// Buttons: A list of buttons. Buttons is also `oneof data` and only one
 	// of these fields should be set.
@@ -12500,10 +12580,10 @@ func (s *GoogleChatV1WidgetMarkup) MarshalJSON() ([]byte, error) {
 // GoogleChatV1WidgetMarkupButton: A button. Can be a text button or an
 // image button.
 type GoogleChatV1WidgetMarkupButton struct {
-	// ImageButton: A button with image and onclick action.
+	// ImageButton: A button with image and `onclick` action.
 	ImageButton *GoogleChatV1WidgetMarkupImageButton `json:"imageButton,omitempty"`
 
-	// TextButton: A button with text and onclick action.
+	// TextButton: A button with text and `onclick` action.
 	TextButton *GoogleChatV1WidgetMarkupTextButton `json:"textButton,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageButton") to
@@ -12530,14 +12610,13 @@ func (s *GoogleChatV1WidgetMarkupButton) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChatV1WidgetMarkupFormAction: A form action describes the
-// behavior when the form is submitted. For example, an Apps Script can
-// be invoked to handle the form.
+// behavior when the form is submitted. For example, you can invoke Apps
+// Script to handle the form.
 type GoogleChatV1WidgetMarkupFormAction struct {
 	// ActionMethodName: The method name is used to identify which part of
 	// the form triggered the form submission. This information is echoed
-	// back to the Chat app as part of the card click event. The same method
-	// name can be used for several elements that trigger a common behavior
-	// if desired.
+	// back to the Chat app as part of the card click event. You can use the
+	// same method name for several elements that trigger a common behavior.
 	ActionMethodName string `json:"actionMethodName,omitempty"`
 
 	// Parameters: List of action parameters.
@@ -12569,9 +12648,9 @@ func (s *GoogleChatV1WidgetMarkupFormAction) MarshalJSON() ([]byte, error) {
 
 // GoogleChatV1WidgetMarkupFormActionActionParameter: List of string
 // parameters to supply when the action method is invoked. For example,
-// consider three snooze buttons: snooze now, snooze 1 day, snooze next
-// week. You might use action method = snooze(), passing the snooze type
-// and snooze time in the list of string parameters.
+// consider three snooze buttons: snooze now, snooze one day, snooze
+// next week. You might use `action method = snooze()`, passing the
+// snooze type and snooze time in the list of string parameters.
 type GoogleChatV1WidgetMarkupFormActionActionParameter struct {
 	// Key: The name of the parameter for the action script.
 	Key string `json:"key,omitempty"`
@@ -12602,20 +12681,19 @@ func (s *GoogleChatV1WidgetMarkupFormActionActionParameter) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChatV1WidgetMarkupImage: An image that is specified by a URL
-// and can have an onclick action.
+// GoogleChatV1WidgetMarkupImage: An image that's specified by a URL and
+// can have an `onclick` action.
 type GoogleChatV1WidgetMarkupImage struct {
-	// AspectRatio: The aspect ratio of this image (width/height). This
-	// field allows clients to reserve the right height for the image while
-	// waiting for it to load. It's not meant to override the native aspect
-	// ratio of the image. If unset, the server fills it by prefetching the
-	// image.
+	// AspectRatio: The aspect ratio of this image (width and height). This
+	// field lets you reserve the right height for the image while waiting
+	// for it to load. It's not meant to override the built-in aspect ratio
+	// of the image. If unset, the server fills it by prefetching the image.
 	AspectRatio float64 `json:"aspectRatio,omitempty"`
 
 	// ImageUrl: The URL of the image.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
-	// OnClick: The onclick action.
+	// OnClick: The `onclick` action.
 	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
@@ -12655,11 +12733,11 @@ func (s *GoogleChatV1WidgetMarkupImage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleChatV1WidgetMarkupImageButton: An image button with an onclick
-// action.
+// GoogleChatV1WidgetMarkupImageButton: An image button with an
+// `onclick` action.
 type GoogleChatV1WidgetMarkupImageButton struct {
-	// Icon: The icon specified by an enum that indices to an icon provided
-	// by Chat API.
+	// Icon: The icon specified by an `enum` that indices to an icon
+	// provided by Chat API.
 	//
 	// Possible values:
 	//   "ICON_UNSPECIFIED"
@@ -12698,12 +12776,11 @@ type GoogleChatV1WidgetMarkupImageButton struct {
 	// IconUrl: The icon specified by a URL.
 	IconUrl string `json:"iconUrl,omitempty"`
 
-	// Name: The name of this image_button which will be used for
-	// accessibility. Default value will be provided if developers don't
-	// specify.
+	// Name: The name of this `image_button` that's used for accessibility.
+	// Default value is provided if this name isn't specified.
 	Name string `json:"name,omitempty"`
 
-	// OnClick: The onclick action.
+	// OnClick: The `onclick` action.
 	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Icon") to
@@ -12730,12 +12807,15 @@ func (s *GoogleChatV1WidgetMarkupImageButton) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChatV1WidgetMarkupKeyValue: A UI element contains a key (label)
-// and a value (content). And this element may also contain some actions
-// such as onclick button.
+// and a value (content). This element can also contain some actions
+// such as `onclick` button.
 type GoogleChatV1WidgetMarkupKeyValue struct {
 	// BottomLabel: The text of the bottom label. Formatted text supported.
 	// For more information about formatting text, see Formatting text in
-	// Google Chat apps and Formatting text in Google Workspace Add-ons.
+	// Google Chat apps
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// and Formatting text in Google Workspace Add-ons
+	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	BottomLabel string `json:"bottomLabel,omitempty"`
 
 	// Button: A button that can be clicked to trigger an action.
@@ -12743,14 +12823,16 @@ type GoogleChatV1WidgetMarkupKeyValue struct {
 
 	// Content: The text of the content. Formatted text supported and always
 	// required. For more information about formatting text, see Formatting
-	// text in Google Chat apps and Formatting text in Google Workspace
-	// Add-ons.
+	// text in Google Chat apps
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// and Formatting text in Google Workspace Add-ons
+	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Content string `json:"content,omitempty"`
 
 	// ContentMultiline: If the content should be multiline.
 	ContentMultiline bool `json:"contentMultiline,omitempty"`
 
-	// Icon: An enum value that will be replaced by the Chat API with the
+	// Icon: An enum value that's replaced by the Chat API with the
 	// corresponding icon image.
 	//
 	// Possible values:
@@ -12790,13 +12872,16 @@ type GoogleChatV1WidgetMarkupKeyValue struct {
 	// IconUrl: The icon specified by a URL.
 	IconUrl string `json:"iconUrl,omitempty"`
 
-	// OnClick: The onclick action. Only the top label, bottom label and
+	// OnClick: The `onclick` action. Only the top label, bottom label, and
 	// content region are clickable.
 	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
 
 	// TopLabel: The text of the top label. Formatted text supported. For
 	// more information about formatting text, see Formatting text in Google
-	// Chat apps and Formatting text in Google Workspace Add-ons.
+	// Chat apps
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// and Formatting text in Google Workspace Add-ons
+	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	TopLabel string `json:"topLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
@@ -12822,13 +12907,15 @@ func (s *GoogleChatV1WidgetMarkupKeyValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChatV1WidgetMarkupOnClick: An onclick action (e.g. open a
-// link).
+// GoogleChatV1WidgetMarkupOnClick: An `onclick` action (for example,
+// open a link).
 type GoogleChatV1WidgetMarkupOnClick struct {
-	// Action: A form action will be triggered by this onclick if specified.
+	// Action: A form action is triggered by this `onclick` action if
+	// specified.
 	Action *GoogleChatV1WidgetMarkupFormAction `json:"action,omitempty"`
 
-	// OpenLink: This onclick triggers an open link action if specified.
+	// OpenLink: This `onclick` action triggers an open link action if
+	// specified.
 	OpenLink *GoogleChatV1WidgetMarkupOpenLink `json:"openLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -12882,10 +12969,10 @@ func (s *GoogleChatV1WidgetMarkupOpenLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChatV1WidgetMarkupTextButton: A button with text and onclick
+// GoogleChatV1WidgetMarkupTextButton: A button with text and `onclick`
 // action.
 type GoogleChatV1WidgetMarkupTextButton struct {
-	// OnClick: The onclick action of the button.
+	// OnClick: The `onclick` action of the button.
 	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
 
 	// Text: The text of the button.
@@ -12916,8 +13003,10 @@ func (s *GoogleChatV1WidgetMarkupTextButton) MarshalJSON() ([]byte, error) {
 
 // GoogleChatV1WidgetMarkupTextParagraph: A paragraph of text. Formatted
 // text supported. For more information about formatting text, see
-// Formatting text in Google Chat apps and Formatting text in Google
-// Workspace Add-ons.
+// Formatting text in Google Chat apps
+// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+// and Formatting text in Google Workspace Add-ons
+// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 type GoogleChatV1WidgetMarkupTextParagraph struct {
 	Text string `json:"text,omitempty"`
 
@@ -16809,8 +16898,8 @@ type MembershipChangedMetadata struct {
 	//   "INVITED" - Non-member -> Can join. Multiple groups and users.
 	//   "JOINED" - Can join -> Member. One user.
 	//   "ADDED" - Non-member -> Member. Multiple users.
-	//   "REMOVED" - Can join -> Non-member. One group or user.
-	//   "LEFT" - Member -> Can join. One user.
+	//   "REMOVED" - Member or can join -> Non-member. One group or user.
+	//   "LEFT" - Before April 2023, a user transitioned from joined
 	//   "BOT_ADDED" - Bot added to the room.
 	//   "BOT_REMOVED" - Bot removed from the room.
 	//   "KICKED_DUE_TO_OTR_CONFLICT" - This signifies the user is kicked
@@ -19511,6 +19600,34 @@ func (s *PushItemRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryActivity: Details about a user's query activity.
+type QueryActivity struct {
+	// Query: User input query to be logged/removed.
+	Query string `json:"query,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Query") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryActivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type QueryCountByStatus struct {
 	Count int64 `json:"count,omitempty,string"`
 
@@ -20385,6 +20502,47 @@ func (s *References) MarshalJSON() ([]byte, error) {
 	type NoMethod References
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoveActivityRequest: Remove Logged Activity Request.
+type RemoveActivityRequest struct {
+	// RequestOptions: Request options, such as the search application and
+	// clientId.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
+
+	// UserActivity: User Activity containing the data to be deleted.
+	UserActivity *UserActivity `json:"userActivity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoveActivityRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveActivityRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoveActivityResponse: Remove Logged Activity Response. will return
+// an empty response for now. Will be revisited in later phases.
+type RemoveActivityResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 type RenameEvent struct {
@@ -22924,6 +23082,20 @@ type SpellResult struct {
 	// SuggestedQuery: The suggested spelling of the query.
 	SuggestedQuery string `json:"suggestedQuery,omitempty"`
 
+	// SuggestionType: Suggestion triggered for the current query.
+	//
+	// Possible values:
+	//   "SUGGESTION_TYPE_UNSPECIFIED" - Default spell check type
+	//   "NON_EMPTY_RESULTS_SPELL_SUGGESTION" - Spell suggestion without any
+	// results changed. The results are still shown for the original query
+	// (which has non zero / results) with a suggestion for spelling that
+	// would have results.
+	//   "ZERO_RESULTS_FULL_PAGE_REPLACEMENT" - Spell suggestion triggered
+	// when original query has no results. When the original query has no
+	// results, and spell suggestion has results we trigger results for the
+	// spell corrected query.
+	SuggestionType string `json:"suggestionType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -25104,6 +25276,17 @@ type UploadMetadata struct {
 	// attachment scan.
 	DlpMetricsMetadata *AppsDynamiteSharedDlpMetricsMetadata `json:"dlpMetricsMetadata,omitempty"`
 
+	// InternalOnlyComponentSearchInfo: Message component search metadata
+	// for this upload_metadata (currently used for message highlighting and
+	// snippeting). For use by Search backend only; clients should get
+	// upload_metadata search info from Annotation.component_search_info.
+	// This field is necessary because backend Message keeps UploadMetadata
+	// in a separate field. Upon converting from backend message to frontend
+	// message, this field will be copied to
+	// Annotation.component_search_info while the corresponding
+	// UploadMetadata is converted into an Annotation.
+	InternalOnlyComponentSearchInfo *AppsDynamiteSharedMessageComponentSearchInfo `json:"internalOnlyComponentSearchInfo,omitempty"`
+
 	// LatestVirusScanTimestamp: The timestamp of the most recent virus scan
 	// completed (in microseconds).
 	LatestVirusScanTimestamp int64 `json:"latestVirusScanTimestamp,omitempty,string"`
@@ -25341,6 +25524,35 @@ type User struct {
 
 func (s *User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserActivity: User's single or bulk query activity. This can be a
+// logging query or deletion query.
+type UserActivity struct {
+	// QueryActivity: Contains data which needs to be logged/removed.
+	QueryActivity *QueryActivity `json:"queryActivity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QueryActivity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QueryActivity") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod UserActivity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -29950,6 +30162,138 @@ func (c *OperationsLroListCall) Pages(ctx context.Context, f func(*ListOperation
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudsearch.query.removeActivity":
+
+type QueryRemoveActivityCall struct {
+	s                     *Service
+	removeactivityrequest *RemoveActivityRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// RemoveActivity: Provides functionality to remove logged activity for
+// a user. Currently to be used only for dynamite 1p clients **Note:**
+// This API requires a standard end user account to execute. A service
+// account can't perform Remove Activity requests directly; to use a
+// service account to perform queries, set up Google Workspace
+// domain-wide delegation of authority
+// (https://developers.google.com/cloud-search/docs/guides/delegation/).
+func (r *QueryService) RemoveActivity(removeactivityrequest *RemoveActivityRequest) *QueryRemoveActivityCall {
+	c := &QueryRemoveActivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.removeactivityrequest = removeactivityrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *QueryRemoveActivityCall) Fields(s ...googleapi.Field) *QueryRemoveActivityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *QueryRemoveActivityCall) Context(ctx context.Context) *QueryRemoveActivityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *QueryRemoveActivityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *QueryRemoveActivityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removeactivityrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/query:removeActivity")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.query.removeActivity" call.
+// Exactly one of *RemoveActivityResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RemoveActivityResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *QueryRemoveActivityCall) Do(opts ...googleapi.CallOption) (*RemoveActivityResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemoveActivityResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provides functionality to remove logged activity for a user. Currently to be used only for dynamite 1p clients **Note:** This API requires a standard end user account to execute. A service account can't perform Remove Activity requests directly; to use a service account to perform queries, set up [Google Workspace domain-wide delegation of authority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
+	//   "flatPath": "v1/query:removeActivity",
+	//   "httpMethod": "POST",
+	//   "id": "cloudsearch.query.removeActivity",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/query:removeActivity",
+	//   "request": {
+	//     "$ref": "RemoveActivityRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RemoveActivityResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.query"
+	//   ]
+	// }
+
 }
 
 // method id "cloudsearch.query.search":

@@ -760,8 +760,8 @@ type AlertPolicy struct {
 	UserLabels map[string]string `json:"userLabels,omitempty"`
 
 	// Validity: Read-only description of how the alert policy is invalid.
-	// OK if the alert policy is valid. If not OK, the alert policy will not
-	// generate incidents.
+	// This field is only set when the alert policy is invalid. An invalid
+	// alert policy will not generate incidents.
 	Validity *Status `json:"validity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

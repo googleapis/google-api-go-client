@@ -8,7 +8,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"math"
 	"net/http"
 	"net/http/httptest"
@@ -47,7 +47,7 @@ func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if h.location != "" {
 		w.Header().Set("Location", h.location)
 	}
-	h.body, h.err = ioutil.ReadAll(r.Body)
+	h.body, h.err = io.ReadAll(r.Body)
 	fmt.Fprintf(w, "{}")
 }
 

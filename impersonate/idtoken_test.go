@@ -8,7 +8,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"testing"
 
@@ -56,7 +56,7 @@ func TestIDTokenSource(t *testing.T) {
 					}
 					return &http.Response{
 						StatusCode: 200,
-						Body:       ioutil.NopCloser(bytes.NewReader(b)),
+						Body:       io.NopCloser(bytes.NewReader(b)),
 						Header:     make(http.Header),
 					}
 				}),

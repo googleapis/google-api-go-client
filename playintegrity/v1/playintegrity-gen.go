@@ -381,6 +381,11 @@ type DeviceIntegrity struct {
 	//   "MEETS_VIRTUAL_INTEGRITY" - App is running on an Android emulator
 	// with Google Play services which meets core Android compatibility
 	// requirements.
+	//   "MEETS_WEAK_INTEGRITY" - App is running on a device that passes
+	// only weak integrity checks (is a physical device). See
+	// go/pcm-physical-device-detection for more details. Note that this
+	// label won't be served for PIA heavyweight and express for now, only
+	// for the crystal mode.
 	DeviceRecognitionVerdict []string `json:"deviceRecognitionVerdict,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

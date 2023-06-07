@@ -2112,6 +2112,10 @@ func (s *NetworkConfigurationCatalog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NoActivityIntent: Skips the starting activity
+type NoActivityIntent struct {
+}
+
 // ObbFile: An opaque binary blob file to install on the device before
 // the test starts.
 type ObbFile struct {
@@ -2486,6 +2490,9 @@ func (s *RoboDirective) MarshalJSON() ([]byte, error) {
 type RoboStartingIntent struct {
 	// LauncherActivity: An intent that starts the main launcher activity.
 	LauncherActivity *LauncherActivityIntent `json:"launcherActivity,omitempty"`
+
+	// NoActivity: Skips the starting activity
+	NoActivity *NoActivityIntent `json:"noActivity,omitempty"`
 
 	// StartActivity: An intent that starts an activity with specific
 	// details.

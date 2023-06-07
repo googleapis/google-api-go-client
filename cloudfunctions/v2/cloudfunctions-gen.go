@@ -707,6 +707,9 @@ type Function struct {
 	// Function.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// Url: Output only. The deployed url for the function.
+	Url string `json:"url,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

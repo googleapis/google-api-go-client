@@ -491,7 +491,8 @@ type GoogleCloudRecaptchaenterpriseV1AppleDeveloperId struct {
 
 	// PrivateKey: Required. Input only. A private key (downloaded as a text
 	// file with a .p8 file extension) generated for your Apple Developer
-	// account.
+	// account. Ensure that Apple DeviceCheck is enabled for the private
+	// key.
 	PrivateKey string `json:"privateKey,omitempty"`
 
 	// TeamId: Required. The Apple team ID (10-character string) owning the
@@ -1194,7 +1195,7 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 
 	// AppleDeveloperId: Apple Developer account details for the app that is
 	// protected by the reCAPTCHA Key. reCAPTCHA Enterprise leverages
-	// platform specific checks like Apple AppAttest and Apple DeviceCheck
+	// platform-specific checks like Apple App Attest and Apple DeviceCheck
 	// to protect your app from abuse. Providing these fields allows
 	// reCAPTCHA Enterprise to get a better assessment of the integrity of
 	// your app.

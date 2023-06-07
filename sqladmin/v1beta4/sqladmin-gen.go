@@ -406,8 +406,8 @@ type BackupConfiguration struct {
 	// Location: Location of the backup
 	Location string `json:"location,omitempty"`
 
-	// PointInTimeRecoveryEnabled: (Postgres only) Whether point in time
-	// recovery is enabled.
+	// PointInTimeRecoveryEnabled: Whether point in time recovery is
+	// enabled.
 	PointInTimeRecoveryEnabled bool `json:"pointInTimeRecoveryEnabled,omitempty"`
 
 	// ReplicationLogArchivingEnabled: Reserved for future use.
@@ -752,11 +752,6 @@ type CloneContext struct {
 	// PointInTime: Timestamp, if specified, identifies the time to which
 	// the source instance is cloned.
 	PointInTime string `json:"pointInTime,omitempty"`
-
-	// PreferredZone: (Point-in-time recovery for PostgreSQL only) Clone to
-	// an instance in the specified zone. If no zone is specified, clone to
-	// the same zone as the source instance.
-	PreferredZone string `json:"preferredZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
 	// unconditionally include in API requests. By default, fields with
@@ -1592,6 +1587,17 @@ func (s *DiskEncryptionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskEncryptionStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // ExportContext: Database instance export context.
@@ -3975,6 +3981,15 @@ type SqlExternalSyncSettingError struct {
 	// data.
 	//   "MISSING_OPTIONAL_PRIVILEGES" - The replication user is missing
 	// privileges that are optional.
+	//   "RISKY_BACKUP_ADMIN_PRIVILEGE" - Additional BACKUP_ADMIN privilege
+	// is granted to the replication user which may lock source MySQL 8
+	// instance for DDLs during initial sync.
+	//   "INSUFFICIENT_GCS_PERMISSIONS" - The Cloud Storage bucket is
+	// missing necessary permissions.
+	//   "INVALID_FILE_INFO" - The Cloud Storage bucket has an error in the
+	// file or contains invalid file information.
+	//   "UNSUPPORTED_DATABASE_SETTINGS" - The source instance has
+	// unsupported database settings for migration.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -4091,6 +4106,17 @@ type SqlInstancesStartExternalSyncRequest struct {
 	//   "OFFLINE" - Offline external sync only dumps and loads a one-time
 	// snapshot of the primary instance's data
 	SyncMode string `json:"syncMode,omitempty"`
+
+	// SyncParallelLevel: Optional. Parallel level for initial data sync.
+	// Currently only applicable for MySQL.
+	//
+	// Possible values:
+	//   "EXTERNAL_SYNC_PARALLEL_LEVEL_UNSPECIFIED" - Unknown sync parallel
+	// level. Will be defaulted to OPTIMAL.
+	//   "MIN" - Minimal parallel level.
+	//   "OPTIMAL" - Optimal parallel level.
+	//   "MAX" - Maximum parallel level.
+	SyncParallelLevel string `json:"syncParallelLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MysqlSyncConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -10308,6 +10334,150 @@ func (c *InstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.operations.cancel":
+
+type OperationsCancelCall struct {
+	s          *Service
+	project    string
+	operation  string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Cancels an instance operation that has been performed on an
+// instance.
+//
+// - operation: Instance operation ID.
+// - project: Project ID of the project that contains the instance.
+func (r *OperationsService) Cancel(project string, operation string) *OperationsCancelCall {
+	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.operation = operation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/operations/{operation}/cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":   c.project,
+		"operation": c.operation,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.operations.cancel" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancels an instance operation that has been performed on an instance.",
+	//   "flatPath": "sql/v1beta4/projects/{project}/operations/{operation}/cancel",
+	//   "httpMethod": "POST",
+	//   "id": "sql.operations.cancel",
+	//   "parameterOrder": [
+	//     "project",
+	//     "operation"
+	//   ],
+	//   "parameters": {
+	//     "operation": {
+	//       "description": "Instance operation ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID of the project that contains the instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "sql/v1beta4/projects/{project}/operations/{operation}/cancel",
+	//   "response": {
+	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

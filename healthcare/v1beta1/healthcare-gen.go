@@ -2426,6 +2426,15 @@ func (s *Entity) MarshalJSON() ([]byte, error) {
 
 // EntityMention: An entity mention in the document.
 type EntityMention struct {
+	// AdditionalInfo: Additional information about the entity mention. For
+	// example, for an entity mention of type `DATE` this can be its more
+	// specific date types from the following list: `ADMISSION_DATE`,
+	// `CONSULTATION_DATE`, `DISCHARGE_DATE`, `SERVICE_DATE`, `VISIT_DATE`,
+	// `DIAGNOSIS_DATE`, `MED_STARTED_DATE`, `MED_ENDED_DATE`, `NOTE_DATE`,
+	// `PROCEDURE_DATE`, `RADIATION_STARTED_DATE`, `RADIATION_ENDED_DATE`,
+	// `STAGE_DATE`
+	AdditionalInfo []*Feature `json:"additionalInfo,omitempty"`
+
 	// CertaintyAssessment: The certainty assessment of the entity mention.
 	// Its value is one of: LIKELY, SOMEWHAT_LIKELY, UNCERTAIN,
 	// SOMEWHAT_UNLIKELY, UNLIKELY, CONDITIONAL
@@ -2468,15 +2477,15 @@ type EntityMention struct {
 	// UNCLEAR_FOLLOWUP.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CertaintyAssessment")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdditionalInfo") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CertaintyAssessment") to
+	// NullFields is a list of field names (e.g. "AdditionalInfo") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

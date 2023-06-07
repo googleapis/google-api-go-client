@@ -358,6 +358,9 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#video.
 	VideoLink []string `json:"videoLink,omitempty"`
 
+	// VirtualModelLink: Virtual Model (3d) asset link.
+	VirtualModelLink string `json:"virtualModelLink,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AdditionalImageLink")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

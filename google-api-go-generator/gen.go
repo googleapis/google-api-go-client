@@ -367,7 +367,7 @@ func slurpURL(urlStr string) []byte {
 		log.Printf("WARNING: URL %s served status code %d", urlStr, res.StatusCode)
 		return nil
 	}
-	bs, err := os.ReadAll(res.Body)
+	bs, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Fatalf("Error reading body of URL %s: %v", urlStr, err)
 	}

@@ -861,7 +861,7 @@ func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
 // trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
 // method in iOS; and, with just a little work, it can be easily
 // formatted into a CSS `rgba()` string in JavaScript. This reference
-// page does not have information about the absolute color space that
+// page doesn't have information about the absolute color space that
 // should be used to interpret the RGB value—for example, sRGB, Adobe
 // RGB, DCI-P3, and BT.2020. By default, applications should assume the
 // sRGB color space. When color equality needs to be decided,
@@ -1642,7 +1642,7 @@ type GoogleAppsCardV1BorderStyle struct {
 	// Type: The border type.
 	//
 	// Possible values:
-	//   "BORDER_TYPE_UNSPECIFIED" - No value specified.
+	//   "BORDER_TYPE_UNSPECIFIED" - Don't use. Unspecified.
 	//   "NO_BORDER" - Default value. No border.
 	//   "STROKE" - Outline.
 	Type string `json:"type,omitempty"`
@@ -1812,7 +1812,7 @@ type GoogleAppsCardV1Card struct {
 	// properties of the `peekCardHeader`. Not supported by Chat apps.
 	//
 	// Possible values:
-	//   "DISPLAY_STYLE_UNSPECIFIED" - Don't use.
+	//   "DISPLAY_STYLE_UNSPECIFIED" - Don't use. Unspecified.
 	//   "PEEK" - The header of the card appears at the bottom of the
 	// sidebar, partially covering the current top card of the stack.
 	// Clicking the header pops the card into the card stack. If the card
@@ -1924,10 +1924,6 @@ type GoogleAppsCardV1CardFixedFooter struct {
 	// is set, you must also set `primaryButton`.
 	SecondaryButton *GoogleAppsCardV1Button `json:"secondaryButton,omitempty"`
 
-	// Widgets: A list of widgets included in the card footer. Primary
-	// button and secondary button are rendered below these widgets.
-	Widgets []*GoogleAppsCardV1FooterWidget `json:"widgets,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PrimaryButton") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2007,7 +2003,7 @@ type GoogleAppsCardV1Column struct {
 	// right, or center of a column.
 	//
 	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified. Do not use.
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Don't use. Unspecified.
 	//   "START" - Default value. Aligns widgets to the start position of
 	// the column. For left-to-right layouts, aligns to the left. For
 	// right-to-left layouts, aligns to the right.
@@ -2021,7 +2017,7 @@ type GoogleAppsCardV1Column struct {
 	// card.
 	//
 	// Possible values:
-	//   "HORIZONTAL_SIZE_STYLE_UNSPECIFIED" - Unspecified. Do not use.
+	//   "HORIZONTAL_SIZE_STYLE_UNSPECIFIED" - Don't use. Unspecified.
 	//   "FILL_AVAILABLE_SPACE" - Default value. Column fills the available
 	// space, up to 70% of the card's width. If both columns are set to
 	// `FILL_AVAILABLE_SPACE`, each column fills 50% of the space.
@@ -2033,7 +2029,7 @@ type GoogleAppsCardV1Column struct {
 	// bottom, or center of a column.
 	//
 	// Possible values:
-	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - Unspecified. Don't use.
+	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - Don't use. Unspecified.
 	//   "CENTER" - Default value. Aligns widgets to the center of a column.
 	//   "TOP" - Aligns widgets to the top of a column.
 	//   "BOTTOM" - Aligns widgets to the bottom of a column.
@@ -2258,47 +2254,6 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1Divider struct {
 }
 
-// GoogleAppsCardV1FooterWidget: The CardFixedFooter can contain a list
-// of these widgets.
-type GoogleAppsCardV1FooterWidget struct {
-	// ButtonList: ButtonList widget.
-	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
-
-	// DateTimePicker: DateTimePicker widget.
-	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
-
-	// DecoratedText: DecoratedText widget.
-	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
-
-	// TextInput: TextInput widget.
-	TextInput *GoogleAppsCardV1TextInput `json:"textInput,omitempty"`
-
-	// TextParagraph: TextParagraph widget.
-	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ButtonList") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ButtonList") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAppsCardV1FooterWidget) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAppsCardV1FooterWidget
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleAppsCardV1Grid: Displays a grid with a collection of items.
 // Items can only include text or images. A grid supports any number of
 // columns and items. The number of rows is determined by items divided
@@ -2369,7 +2324,7 @@ type GoogleAppsCardV1GridItem struct {
 	// Layout: The layout to use for the grid item.
 	//
 	// Possible values:
-	//   "GRID_ITEM_LAYOUT_UNSPECIFIED" - No layout specified.
+	//   "GRID_ITEM_LAYOUT_UNSPECIFIED" - Don't use. Unspecified.
 	//   "TEXT_BELOW" - The title and subtitle are shown below the grid
 	// item's image.
 	//   "TEXT_ABOVE" - The title and subtitle are shown above the grid
@@ -2560,7 +2515,7 @@ type GoogleAppsCardV1ImageCropStyle struct {
 	// Type: The crop type.
 	//
 	// Possible values:
-	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - No value specified. Don't use.
+	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - Don't use. Unspecified.
 	//   "SQUARE" - Default value. Applies a square crop.
 	//   "CIRCLE" - Applies a circular crop.
 	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
@@ -2830,9 +2785,9 @@ func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1SelectionItem: An item that users can select in a
 // selection input, such as a checkbox or switch.
 type GoogleAppsCardV1SelectionItem struct {
-	// Selected: When `true`, more than one item is selected. If more than
-	// one item is selected for radio buttons and dropdown menus, the first
-	// selected item is received and the ones after are ignored.
+	// Selected: Whether the item is selected by default. If the selection
+	// input only accepts one value (such as for radio buttons or a dropdown
+	// menu), only set this field for one item.
 	Selected bool `json:"selected,omitempty"`
 
 	// Text: The text that identifies or describes the item to users.
@@ -3184,7 +3139,7 @@ type GoogleAppsCardV1Widget struct {
 	// right, or center of a column.
 	//
 	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified. Do not use.
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Don't use. Unspecified.
 	//   "START" - Default value. Aligns widgets to the start position of
 	// the column. For left-to-right layouts, aligns to the left. For
 	// right-to-left layouts, aligns to the right.
@@ -3896,8 +3851,13 @@ type Message struct {
 	// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
 	ClientAssignedMessageId string `json:"clientAssignedMessageId,omitempty"`
 
-	// CreateTime: Output only. The time at which the message was created in
-	// Google Chat.
+	// CreateTime: For spaces created in Chat, the time at which the message
+	// was created. This field is output only, except when used in imported
+	// spaces. Developer Preview
+	// (https://developers.google.com/workspace/preview): For imported
+	// spaces, set this field to the historical timestamp at which the
+	// message was created in the source in order to preserve the original
+	// creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DeleteTime: Output only. The time at which the message was deleted in
@@ -7170,8 +7130,9 @@ type SpacesMessagesCreateCall struct {
 // User authentication
 // (https://developers.google.com/chat/api/guides/auth/users) requires
 // the `chat.messages` or `chat.messages.create` authorization scope.
-// Creating a card message requires [app authentication]
-// (https://developers.google.com/chat/api/guides/auth/service-accounts)
+// Creating a card message only supports and requires [app
+// authentication]
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
 // Because Chat provides authentication for webhooks
 // (https://developers.google.com/chat/how-tos/webhooks) as part of the
 // URL that's generated when a webhook is registered, webhooks can
@@ -7337,7 +7298,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a message. For an example, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Creating a text message supports both [user authentication](https://developers.google.com/chat/api/guides/auth/users) and [app authentication] (https://developers.google.com/chat/api/guides/auth/service-accounts). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope. Creating a card message requires [app authentication] (https://developers.google.com/chat/api/guides/auth/service-accounts) Because Chat provides authentication for [webhooks](https://developers.google.com/chat/how-tos/webhooks) as part of the URL that's generated when a webhook is registered, webhooks can create messages without a service account or user authentication.",
+	//   "description": "Creates a message. For an example, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Creating a text message supports both [user authentication](https://developers.google.com/chat/api/guides/auth/users) and [app authentication] (https://developers.google.com/chat/api/guides/auth/service-accounts). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope. Creating a card message only supports and requires [app authentication] (https://developers.google.com/chat/api/guides/auth/service-accounts). Because Chat provides authentication for [webhooks](https://developers.google.com/chat/how-tos/webhooks) as part of the URL that's generated when a webhook is registered, webhooks can create messages without a service account or user authentication.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.create",
@@ -8045,9 +8006,10 @@ func (c *SpacesMessagesPatchCall) AllowMissing(allowMissing bool) *SpacesMessage
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to update. Separate multiple values with commas.
-// Currently supported field paths: - `text` - `cards` (Requires service
-// account authentication (/chat/api/guides/auth/service-accounts).) -
-// `cards_v2` (Requires service account authentication
+// Currently supported field paths: - `text` - `attachment` - `cards`
+// (Requires service account authentication
+// (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires
+// service account authentication
 // (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesPatchCall) UpdateMask(updateMask string) *SpacesMessagesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -8166,7 +8128,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `cards` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) ",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8235,9 +8197,10 @@ func (c *SpacesMessagesUpdateCall) AllowMissing(allowMissing bool) *SpacesMessag
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to update. Separate multiple values with commas.
-// Currently supported field paths: - `text` - `cards` (Requires service
-// account authentication (/chat/api/guides/auth/service-accounts).) -
-// `cards_v2` (Requires service account authentication
+// Currently supported field paths: - `text` - `attachment` - `cards`
+// (Requires service account authentication
+// (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires
+// service account authentication
 // (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -8356,7 +8319,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `cards` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) ",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

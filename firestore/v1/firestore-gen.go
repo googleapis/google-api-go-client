@@ -1692,7 +1692,6 @@ type GoogleFirestoreAdminV1Database struct {
 	// versions.
 	//   "POINT_IN_TIME_RECOVERY_DISABLED" - Reads are supported on any
 	// version of the data from within the past 1 hour.
-	// `version_retention_period` will be unset.
 	PointInTimeRecoveryEnablement string `json:"pointInTimeRecoveryEnablement,omitempty"`
 
 	// Type: The type of the database. See
@@ -1718,7 +1717,8 @@ type GoogleFirestoreAdminV1Database struct {
 	// versions of data are retained in the database. Any read or query can
 	// specify a `read_time` within this window, and will read the state of
 	// the database at that time. If the PITR feature is enabled, the
-	// retention period is 7 days. If unset, the retention period is 1 hour.
+	// retention period is 7 days. Otherwise, the retention period is 1
+	// hour.
 	VersionRetentionPeriod string `json:"versionRetentionPeriod,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

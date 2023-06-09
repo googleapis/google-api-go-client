@@ -468,7 +468,9 @@ func (s *Case) MarshalJSON() ([]byte, error) {
 // CaseClassification: A classification object with a product type and
 // value.
 type CaseClassification struct {
-	// DisplayName: The display name of the classification.
+	// DisplayName: A display name for the classification. The display name
+	// is not static and can change. To uniquely and consistently identify
+	// classifications, use the `CaseClassification.id` field.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Id: The unique ID for a classification. Must be specified for case

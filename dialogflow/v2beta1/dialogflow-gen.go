@@ -18855,15 +18855,15 @@ type GoogleCloudDialogflowV2beta1Participant struct {
 	// the participant. 2. If you set this field in AnalyzeContent or
 	// StreamingAnalyzeContent, Dialogflow will update
 	// Participant.obfuscated_external_user_id. Dialogflow uses this user id
-	// for following purposes: 1) Billing and measurement. If user with the
-	// same obfuscated_external_user_id is created in a later conversation,
-	// dialogflow will know it's the same user. 2) Agent assist suggestion
-	// personalization. For example, Dialogflow can use it to provide
-	// personalized smart reply suggestions for this user. Note: * Please
-	// never pass raw user ids to Dialogflow. Always obfuscate your user id
-	// first. * Dialogflow only accepts a UTF-8 encoded string, e.g., a hex
-	// digest of a hash function like SHA-512. * The length of the user id
-	// must be <= 256 characters.
+	// for billing and measurement. If a user with the same
+	// obfuscated_external_user_id is created in a later conversation,
+	// Dialogflow will know it's the same user. Dialogflow also uses this
+	// user id for Agent Assist suggestion personalization. For example,
+	// Dialogflow can use it to provide personalized smart reply suggestions
+	// for this user. Note: * Please never pass raw user ids to Dialogflow.
+	// Always obfuscate your user id first. * Dialogflow only accepts a
+	// UTF-8 encoded string, e.g., a hex digest of a hash function like
+	// SHA-512. * The length of the user id must be <= 256 characters.
 	ObfuscatedExternalUserId string `json:"obfuscatedExternalUserId,omitempty"`
 
 	// Role: Immutable. The role this participant plays in the conversation.
@@ -34765,6 +34765,7 @@ func (c *ProjectsAnswerRecordsListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
+	//       "deprecated": true,
 	//       "description": "Optional. Filters to restrict results to specific answer records. For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
@@ -52224,6 +52225,7 @@ func (c *ProjectsLocationsAnswerRecordsListCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "filter": {
+	//       "deprecated": true,
 	//       "description": "Optional. Filters to restrict results to specific answer records. For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"

@@ -1375,6 +1375,35 @@ type DeactivateBasePlanRequest struct {
 type DeactivateSubscriptionOfferRequest struct {
 }
 
+// DeferredItemReplacement: Information related to deferred item
+// replacement.
+type DeferredItemReplacement struct {
+	// ProductId: The product_id going to replace the existing product_id.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProductId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeferredItemReplacement) MarshalJSON() ([]byte, error) {
+	type NoMethod DeferredItemReplacement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeobfuscationFile: Represents a deobfuscation file.
 type DeobfuscationFile struct {
 	// SymbolType: The type of the deobfuscation file.
@@ -5146,6 +5175,9 @@ func (s *SubscriptionPurchase) MarshalJSON() ([]byte, error) {
 type SubscriptionPurchaseLineItem struct {
 	// AutoRenewingPlan: The item is auto renewing.
 	AutoRenewingPlan *AutoRenewingPlan `json:"autoRenewingPlan,omitempty"`
+
+	// DeferredItemReplacement: Information for deferred item replacement.
+	DeferredItemReplacement *DeferredItemReplacement `json:"deferredItemReplacement,omitempty"`
 
 	// ExpiryTime: Time at which the subscription expired or will expire
 	// unless the access is extended (ex. renews).

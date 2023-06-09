@@ -179,16 +179,16 @@ type AddEnableRulesMetadata struct {
 // AddEnableRulesResponse: The response message of "AddEnableRules"
 // method.
 type AddEnableRulesResponse struct {
+	// AddedValues: The values added to the parent consumer policy.
+	AddedValues []string `json:"addedValues,omitempty"`
+
 	// Parent: The parent consumer policy. It can be
 	// `projects/12345/consumerPolicies/default`, or
 	// `folders/12345/consumerPolicies/default`, or
 	// `organizations/12345/consumerPolicies/default`.
 	Parent string `json:"parent,omitempty"`
 
-	// Values: The values added to the parent consumer policy.
-	Values []*ValueInfo `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "AddedValues") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -196,10 +196,10 @@ type AddEnableRulesResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AddedValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2527,35 +2527,6 @@ func (s *GoogleApiServiceusageV1beta1ServiceIdentity) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GroupValue: Unimplemented. Do not use. GroupValue contains
-// information of a service group.
-type GroupValue struct {
-	// Name: The name of the value. Example: `groups/googleSerivice`.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GroupValue) MarshalJSON() ([]byte, error) {
-	type NoMethod GroupValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Http: Defines the HTTP configuration for an API service. It contains
 // a list of HttpRule, each specifying the mapping of an RPC method to
 // one or more HTTP REST API methods.
@@ -4619,6 +4590,9 @@ type RemoveEnableRulesResponse struct {
 	// `organizations/12345/consumerPolicies/default`.
 	Parent string `json:"parent,omitempty"`
 
+	// RemovedValues: The values removed from the parent consumer policy.
+	RemovedValues []string `json:"removedValues,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4700,45 +4674,6 @@ type ServiceIdentity struct {
 
 func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceIdentity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ServiceValue: ServiceValue contains information of a service.
-type ServiceValue struct {
-	// DnsAddress: The DNS address at which this service is available.
-	DnsAddress string `json:"dnsAddress,omitempty"`
-
-	// Name: The name of the value. Example:
-	// `services/storage.googleapis.com`.
-	Name string `json:"name,omitempty"`
-
-	// PricingLink: A link to pricing information for the service, such as
-	// https://cloud.google.com/bigquery/pricing.
-	PricingLink string `json:"pricingLink,omitempty"`
-
-	// Tos: Terms of Service
-	Tos []*TermsOfService `json:"tos,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DnsAddress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DnsAddress") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceValue) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4966,38 +4901,6 @@ func (s *SystemParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TermsOfService: TermsOfService captures the metadata about a given
-// terms of service
-type TermsOfService struct {
-	// Title: Title of the terms of service.
-	Title string `json:"title,omitempty"`
-
-	// Uri: URL/URI of the terms of service.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Title") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TermsOfService) MarshalJSON() ([]byte, error) {
-	type NoMethod TermsOfService
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Type: A protocol buffer message type.
 type Type struct {
 	// Edition: The source edition string, only valid when syntax is
@@ -5165,51 +5068,6 @@ type UsageRule struct {
 
 func (s *UsageRule) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageRule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ValueInfo: Information about the value field. Only support value type
-// as service now.
-type ValueInfo struct {
-	// GroupValue: The information related to the value if it is a service
-	// group.
-	GroupValue *GroupValue `json:"groupValue,omitempty"`
-
-	// LearnmoreLink: For public services, it must point to the product
-	// landing page. For private services, it should point to the internal
-	// site. For service group, it is TBD.
-	LearnmoreLink string `json:"learnmoreLink,omitempty"`
-
-	// ServiceValue: The information related to the value if it is a
-	// service.
-	ServiceValue *ServiceValue `json:"serviceValue,omitempty"`
-
-	// Summary: The product summary for this value.
-	Summary string `json:"summary,omitempty"`
-
-	// Title: The product title for this value.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ValueInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ValueInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

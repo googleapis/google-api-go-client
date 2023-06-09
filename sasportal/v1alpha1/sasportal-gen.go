@@ -1710,6 +1710,10 @@ type SasPortalProvisionDeploymentRequest struct {
 	// set to the value of this field.
 	NewOrganizationDisplayName string `json:"newOrganizationDisplayName,omitempty"`
 
+	// OrganizationId: Optional. If this field is set then a new deployment
+	// will be created under the organization specified by this id.
+	OrganizationId int64 `json:"organizationId,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "NewDeploymentDisplayName") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted

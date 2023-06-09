@@ -198,8 +198,8 @@ type DailyMetricTimeSeries struct {
 	// button was clicked.
 	//   "WEBSITE_CLICKS" - The number of times the business profile website
 	// was clicked.
-	//   "BUSINESS_BOOKINGS" - The number of bookings received from the
-	// business profile.
+	//   "BUSINESS_BOOKINGS" - The number of bookings made from the business
+	// profile via Reserve with Google.
 	//   "BUSINESS_FOOD_ORDERS" - The number of food orders received from
 	// the business profile.
 	//   "BUSINESS_FOOD_MENU_CLICKS" - The number of clicks to view or
@@ -710,9 +710,9 @@ func (r *LocationsService) FetchMultiDailyMetricsTimeSeries(location string) *Lo
 //
 // was clicked.
 //
-//	"BUSINESS_BOOKINGS" - The number of bookings received from the
+//	"BUSINESS_BOOKINGS" - The number of bookings made from the business
 //
-// business profile.
+// profile via Reserve with Google.
 //
 //	"BUSINESS_FOOD_ORDERS" - The number of food orders received from
 //
@@ -912,7 +912,7 @@ func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) Do(opts ...googleapi.Cal
 	//         "The number of times a direction request was requested to the business location.",
 	//         "The number of times the business profile call button was clicked.",
 	//         "The number of times the business profile website was clicked.",
-	//         "The number of bookings received from the business profile.",
+	//         "The number of bookings made from the business profile via Reserve with Google.",
 	//         "The number of food orders received from the business profile.",
 	//         "The number of clicks to view or interact with the menu content on the business profile. Multiple clicks by a unique user within a single day are counted as 1."
 	//       ],
@@ -1039,9 +1039,9 @@ func (r *LocationsService) GetDailyMetricsTimeSeries(name string) *LocationsGetD
 //
 // was clicked.
 //
-//	"BUSINESS_BOOKINGS" - The number of bookings received from the
+//	"BUSINESS_BOOKINGS" - The number of bookings made from the business
 //
-// business profile.
+// profile via Reserve with Google.
 //
 //	"BUSINESS_FOOD_ORDERS" - The number of food orders received from
 //
@@ -1293,7 +1293,7 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	//         "The number of times a direction request was requested to the business location.",
 	//         "The number of times the business profile call button was clicked.",
 	//         "The number of times the business profile website was clicked.",
-	//         "The number of bookings received from the business profile.",
+	//         "The number of bookings made from the business profile via Reserve with Google.",
 	//         "The number of food orders received from the business profile.",
 	//         "The number of clicks to view or interact with the menu content on the business profile. Multiple clicks by a unique user within a single day are counted as 1."
 	//       ],

@@ -2287,6 +2287,11 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // Source: The location of the function source code.
 type Source struct {
+	// GitUri: If provided, get the source from GitHub repository. This
+	// option is valid only for GCF 1st Gen function. Example:
+	// https://github.com///blob//
+	GitUri string `json:"gitUri,omitempty"`
+
 	// RepoSource: If provided, get the source from this location in a Cloud
 	// Source Repository.
 	RepoSource *RepoSource `json:"repoSource,omitempty"`
@@ -2295,7 +2300,7 @@ type Source struct {
 	// Google Cloud Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RepoSource") to
+	// ForceSendFields is a list of field names (e.g. "GitUri") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2303,8 +2308,8 @@ type Source struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RepoSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "GitUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2321,6 +2326,10 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 // SourceProvenance: Provenance of the source. Ways to find the original
 // source, or verify that some source was used for this build.
 type SourceProvenance struct {
+	// GitUri: A copy of the build's `source.git_uri`, if exists, with any
+	// commits resolved.
+	GitUri string `json:"gitUri,omitempty"`
+
 	// ResolvedRepoSource: A copy of the build's `source.repo_source`, if
 	// exists, with any revisions resolved.
 	ResolvedRepoSource *RepoSource `json:"resolvedRepoSource,omitempty"`
@@ -2329,21 +2338,20 @@ type SourceProvenance struct {
 	// if exists, with any generations resolved.
 	ResolvedStorageSource *StorageSource `json:"resolvedStorageSource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ResolvedRepoSource")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "GitUri") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ResolvedRepoSource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GitUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

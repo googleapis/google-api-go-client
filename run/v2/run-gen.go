@@ -2083,6 +2083,10 @@ type GoogleCloudRunV2Service struct {
 	// Creator: Output only. Email address of the authenticated creator.
 	Creator string `json:"creator,omitempty"`
 
+	// CustomAudiences: Custom audiences that can be used in the audience
+	// field of ID token for authenticated requests.
+	CustomAudiences []string `json:"customAudiences,omitempty"`
+
 	// DeleteTime: Output only. The deletion time.
 	DeleteTime string `json:"deleteTime,omitempty"`
 

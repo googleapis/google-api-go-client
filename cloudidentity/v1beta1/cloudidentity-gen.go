@@ -1602,9 +1602,16 @@ func (s *GetMembershipGraphResponse) MarshalJSON() ([]byte, error) {
 // GoogleAppsCloudidentityDevicesV1AndroidAttributes: Resource
 // representing the Android specific attributes of a Device.
 type GoogleAppsCloudidentityDevicesV1AndroidAttributes struct {
+	// CtsProfileMatch: Whether the device passes Android CTS compliance.
+	CtsProfileMatch bool `json:"ctsProfileMatch,omitempty"`
+
 	// EnabledUnknownSources: Whether applications from unknown sources can
 	// be installed on device.
 	EnabledUnknownSources bool `json:"enabledUnknownSources,omitempty"`
+
+	// HasPotentiallyHarmfulApps: Whether any potentially harmful apps were
+	// detected on the device.
+	HasPotentiallyHarmfulApps bool `json:"hasPotentiallyHarmfulApps,omitempty"`
 
 	// OwnerProfileAccount: Whether this account is on an owner/primary
 	// profile. For phones, only true for owner profiles. Android 4+ devices
@@ -1627,16 +1634,22 @@ type GoogleAppsCloudidentityDevicesV1AndroidAttributes struct {
 	// administrator turns on the "Enforce Work Profile" policy.
 	SupportsWorkProfile bool `json:"supportsWorkProfile,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "EnabledUnknownSources") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// VerifiedBoot: Whether Android verified boot status is GREEN.
+	VerifiedBoot bool `json:"verifiedBoot,omitempty"`
+
+	// VerifyAppsEnabled: Whether Google Play Protect Verify Apps is
+	// enabled.
+	VerifyAppsEnabled bool `json:"verifyAppsEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CtsProfileMatch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnabledUnknownSources") to
+	// NullFields is a list of field names (e.g. "CtsProfileMatch") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

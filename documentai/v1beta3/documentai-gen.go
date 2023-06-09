@@ -2653,9 +2653,8 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// Error: Any error that occurred while processing this document.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
-	// MimeType: An IANA published MIME type (also referred to as media
-	// type). For more information, see
-	// https://www.iana.org/assignments/media-types/media-types.xhtml.
+	// MimeType: An IANA published media type (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml).
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Pages: Visual page layout for the Document.
@@ -3173,9 +3172,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage struct {
 	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
-	// For more information, see
-	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// LanguageCode: The BCP-47 language code
+	// (https://www.unicode.org/reports/tr35/#Unicode_locale_identifier),
+	// such as `en-US` or `sr-Latn`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -3336,7 +3335,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageImage struct {
 	// Height: Height of the image in pixels.
 	Height int64 `json:"height,omitempty"`
 
-	// MimeType: Encoding mime type for the image.
+	// MimeType: Encoding media type (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml) for
+	// the image.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Width: Width of the image in pixels.
@@ -3366,12 +3367,12 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores: Image
-// Quality Scores for the page image
+// Quality Scores for the page image.
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where `1` is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -3416,7 +3417,7 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
@@ -4233,19 +4234,22 @@ type GoogleCloudDocumentaiV1beta1DocumentStyle struct {
 	// FontSize: Font size.
 	FontSize *GoogleCloudDocumentaiV1beta1DocumentStyleFontSize `json:"fontSize,omitempty"`
 
-	// FontWeight: Font weight. Possible values are normal, bold, bolder,
-	// and lighter. https://www.w3schools.com/cssref/pr_font_weight.asp
+	// FontWeight: Font weight
+	// (https://www.w3schools.com/cssref/pr_font_weight.asp). Possible
+	// values are `normal`, `bold`, `bolder`, and `lighter`.
 	FontWeight string `json:"fontWeight,omitempty"`
 
 	// TextAnchor: Text anchor indexing into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta1DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// TextDecoration: Text decoration. Follows CSS standard.
-	// https://www.w3schools.com/cssref/pr_text_text-decoration.asp
+	// TextDecoration: Text decoration
+	// (https://www.w3schools.com/cssref/pr_text_text-decoration.asp).
+	// Follows CSS standard.
 	TextDecoration string `json:"textDecoration,omitempty"`
 
-	// TextStyle: Text style. Possible values are normal, italic, and
-	// oblique. https://www.w3schools.com/cssref/pr_font_font-style.asp
+	// TextStyle: Text style
+	// (https://www.w3schools.com/cssref/pr_font_font-style.asp). Possible
+	// values are `normal`, `italic`, and `oblique`.
 	TextStyle string `json:"textStyle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
@@ -4278,7 +4282,8 @@ type GoogleCloudDocumentaiV1beta1DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (in, px, pt, etc.).
+	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
+	// etc.).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -4864,9 +4869,8 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// Labels: Labels for this document.
 	Labels []*GoogleCloudDocumentaiV1beta2DocumentLabel `json:"labels,omitempty"`
 
-	// MimeType: An IANA published MIME type (also referred to as media
-	// type). For more information, see
-	// https://www.iana.org/assignments/media-types/media-types.xhtml.
+	// MimeType: An IANA published media type (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml).
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Pages: Visual page layout for the Document.
@@ -5439,9 +5443,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage struct {
 	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
-	// For more information, see
-	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// LanguageCode: The BCP-47 language code
+	// (https://www.unicode.org/reports/tr35/#Unicode_locale_identifier),
+	// such as `en-US` or `sr-Latn`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -5602,7 +5606,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageImage struct {
 	// Height: Height of the image in pixels.
 	Height int64 `json:"height,omitempty"`
 
-	// MimeType: Encoding mime type for the image.
+	// MimeType: Encoding media type (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml) for
+	// the image.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Width: Width of the image in pixels.
@@ -5632,12 +5638,12 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores: Image
-// Quality Scores for the page image
+// Quality Scores for the page image.
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where `1` is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -5682,7 +5688,7 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
@@ -6499,19 +6505,22 @@ type GoogleCloudDocumentaiV1beta2DocumentStyle struct {
 	// FontSize: Font size.
 	FontSize *GoogleCloudDocumentaiV1beta2DocumentStyleFontSize `json:"fontSize,omitempty"`
 
-	// FontWeight: Font weight. Possible values are normal, bold, bolder,
-	// and lighter. https://www.w3schools.com/cssref/pr_font_weight.asp
+	// FontWeight: Font weight
+	// (https://www.w3schools.com/cssref/pr_font_weight.asp). Possible
+	// values are `normal`, `bold`, `bolder`, and `lighter`.
 	FontWeight string `json:"fontWeight,omitempty"`
 
 	// TextAnchor: Text anchor indexing into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta2DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// TextDecoration: Text decoration. Follows CSS standard.
-	// https://www.w3schools.com/cssref/pr_text_text-decoration.asp
+	// TextDecoration: Text decoration
+	// (https://www.w3schools.com/cssref/pr_text_text-decoration.asp).
+	// Follows CSS standard.
 	TextDecoration string `json:"textDecoration,omitempty"`
 
-	// TextStyle: Text style. Possible values are normal, italic, and
-	// oblique. https://www.w3schools.com/cssref/pr_font_font-style.asp
+	// TextStyle: Text style
+	// (https://www.w3schools.com/cssref/pr_font_font-style.asp). Possible
+	// values are `normal`, `italic`, and `oblique`.
 	TextStyle string `json:"textStyle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
@@ -6544,7 +6553,8 @@ type GoogleCloudDocumentaiV1beta2DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (in, px, pt, etc.).
+	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
+	// etc.).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -7209,7 +7219,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 	ProcessOptions *GoogleCloudDocumentaiV1beta3ProcessOptions `json:"processOptions,omitempty"`
 
 	// SkipHumanReview: Whether Human Review feature should be skipped for
-	// this request. Default to false.
+	// this request. Default to `false`.
 	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7243,10 +7253,11 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig struct {
 	// GcsSource: The Cloud Storage location as the source of the document.
 	GcsSource string `json:"gcsSource,omitempty"`
 
-	// MimeType: Media type (MIME type) of the input. If the input is a raw
-	// document, refer to supported file types
-	// (https://cloud.google.com/document-ai/docs/file-types) for the list
-	// of media types. If the input is a Document, the type should be
+	// MimeType: An IANA published media type (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml) of
+	// the input. If the input is a raw document, refer to supported file
+	// types (https://cloud.google.com/document-ai/docs/file-types) for the
+	// list of media types. If the input is a Document, the type should be
 	// `application/json`.
 	MimeType string `json:"mimeType,omitempty"`
 
@@ -7393,7 +7404,7 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 }
 
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
-// `Processor` which configs a collection of documents.
+// Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
 	// DocumentWarehouseConfig: Optional. Document Warehouse-based dataset
 	// config.
@@ -7410,8 +7421,8 @@ type GoogleCloudDocumentaiV1beta3Dataset struct {
 	Name string `json:"name,omitempty"`
 
 	// SpannerIndexingConfig: Optional. A lightweight indexing source with
-	// low latency and high reliablity, but lack advanced features like CMEK
-	// and content based search.
+	// low latency and high reliability, but lack advanced features like
+	// CMEK and content based search.
 	SpannerIndexingConfig *GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig `json:"spannerIndexingConfig,omitempty"`
 
 	// State: Required. State of the dataset. Will be ignored when updating
@@ -7730,9 +7741,8 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// Error: Any error that occurred while processing this document.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
-	// MimeType: An IANA published MIME type (also referred to as media
-	// type). For more information, see
-	// https://www.iana.org/assignments/media-types/media-types.xhtml.
+	// MimeType: An IANA published media type (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml).
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Pages: Visual page layout for the Document.
@@ -8352,9 +8362,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage struct {
 	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
-	// For more information, see
-	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// LanguageCode: The BCP-47 language code
+	// (https://www.unicode.org/reports/tr35/#Unicode_locale_identifier),
+	// such as `en-US` or `sr-Latn`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -8515,7 +8525,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageImage struct {
 	// Height: Height of the image in pixels.
 	Height int64 `json:"height,omitempty"`
 
-	// MimeType: Encoding mime type for the image.
+	// MimeType: Encoding media type (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml) for
+	// the image.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Width: Width of the image in pixels.
@@ -8545,12 +8557,12 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores: Image
-// Quality Scores for the page image
+// Quality Scores for the page image.
 type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where `1` is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -8595,7 +8607,7 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
@@ -9419,12 +9431,12 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 	EnumValues *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues `json:"enumValues,omitempty"`
 
 	// Name: Name of the type. It must be unique within the schema file and
-	// cannot be a 'Common Type'. Besides that we use the following naming
-	// conventions: - *use `snake_casing`* - name matching is case-sensitive
-	// - Maximum 64 characters. - Must start with a letter. - Allowed
-	// characters: ASCII letters `[a-z0-9_-]`. (For backward compatibility
-	// internal infrastructure and tooling can handle any ascii character) -
-	// The `/` is sometimes used to denote a property of a type. For example
+	// cannot be a "Common Type". The following naming conventions are used:
+	// - Use `snake_casing` - Name matching is case-sensitive - Maximum 64
+	// characters. - Must start with a letter. - Allowed characters: ASCII
+	// letters `[a-z0-9_-]`. (For backward compatibility internal
+	// infrastructure and tooling can handle any ascii character) - The `/`
+	// is sometimes used to denote a property of a type. For example
 	// `line_item/amount`. This convention is deprecated, but will still be
 	// honored for backward compatibility.
 	Name string `json:"name,omitempty"`
@@ -9546,7 +9558,7 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata struct {
 	DocumentAllowMultipleLabels bool `json:"documentAllowMultipleLabels,omitempty"`
 
 	// DocumentSplitter: If true, a `document` entity type can be applied to
-	// subdocument ( splitting). Otherwise, it can only be applied to the
+	// subdocument (splitting). Otherwise, it can only be applied to the
 	// entire document (classification).
 	DocumentSplitter bool `json:"documentSplitter,omitempty"`
 
@@ -9639,19 +9651,22 @@ type GoogleCloudDocumentaiV1beta3DocumentStyle struct {
 	// FontSize: Font size.
 	FontSize *GoogleCloudDocumentaiV1beta3DocumentStyleFontSize `json:"fontSize,omitempty"`
 
-	// FontWeight: Font weight. Possible values are normal, bold, bolder,
-	// and lighter. https://www.w3schools.com/cssref/pr_font_weight.asp
+	// FontWeight: Font weight
+	// (https://www.w3schools.com/cssref/pr_font_weight.asp). Possible
+	// values are `normal`, `bold`, `bolder`, and `lighter`.
 	FontWeight string `json:"fontWeight,omitempty"`
 
 	// TextAnchor: Text anchor indexing into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta3DocumentTextAnchor `json:"textAnchor,omitempty"`
 
-	// TextDecoration: Text decoration. Follows CSS standard.
-	// https://www.w3schools.com/cssref/pr_text_text-decoration.asp
+	// TextDecoration: Text decoration
+	// (https://www.w3schools.com/cssref/pr_text_text-decoration.asp).
+	// Follows CSS standard.
 	TextDecoration string `json:"textDecoration,omitempty"`
 
-	// TextStyle: Text style. Possible values are normal, italic, and
-	// oblique. https://www.w3schools.com/cssref/pr_font_font-style.asp
+	// TextStyle: Text style
+	// (https://www.w3schools.com/cssref/pr_font_font-style.asp). Possible
+	// values are `normal`, `italic`, and `oblique`.
 	TextStyle string `json:"textStyle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
@@ -9684,7 +9699,8 @@ type GoogleCloudDocumentaiV1beta3DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (in, px, pt, etc.).
+	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
+	// etc.).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -10912,8 +10928,8 @@ func (s *GoogleCloudDocumentaiV1beta3OcrConfigHints) MarshalJSON() ([]byte, erro
 
 // GoogleCloudDocumentaiV1beta3ProcessOptions: Options for Process API
 type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
-	// OcrConfig: Only applicable to "Document OCR Processor". Returns error
-	// if set on other processor types.
+	// OcrConfig: Only applicable to `OCR_PROCESSOR`. Returns error if set
+	// on other processor types.
 	OcrConfig *GoogleCloudDocumentaiV1beta3OcrConfig `json:"ocrConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OcrConfig") to
@@ -11045,8 +11061,9 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	// DisplayName: The display name of the processor.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// KmsKeyName: The KMS key used for encryption/decryption in CMEK
-	// scenarios. See https://cloud.google.com/security-key-management.
+	// KmsKeyName: The KMS key
+	// (https://cloud.google.com/security-key-management) used for
+	// encryption/decryption in CMEK scenarios.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// Name: Output only. Immutable. The resource name of the processor.
@@ -11211,7 +11228,8 @@ func (s *GoogleCloudDocumentaiV1beta3ProcessorType) MarshalJSON() ([]byte, error
 // GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo: The location
 // information about where the processor is available.
 type GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo struct {
-	// LocationId: The location id, currently must be one of [us, eu].
+	// LocationId: The location id, refer to regional and multi-regional
+	// support (/document-ai/docs/regions) for supported locations.
 	LocationId string `json:"locationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LocationId") to
@@ -11239,7 +11257,7 @@ func (s *GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo) MarshalJSON() ([
 
 // GoogleCloudDocumentaiV1beta3ProcessorVersion: A processor version is
 // an implementation of a processor. Each processor can have multiple
-// versions, pre-trained by Google internally or up-trained by the
+// versions, pre-trained by Google internally or uptrained by the
 // customer. At a time, a processor can only have one default version
 // version. So the processor's behavior (when processing documents) is
 // defined by a default version
@@ -11258,8 +11276,8 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// output.
 	DocumentSchema *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"documentSchema,omitempty"`
 
-	// GoogleManaged: Denotes that this ProcessorVersion is managed by
-	// google.
+	// GoogleManaged: Denotes that this `ProcessorVersion` is managed by
+	// Google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
 
 	// KmsKeyName: The KMS key name used for encryption.

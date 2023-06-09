@@ -8682,7 +8682,8 @@ type ProjectsJobsAggregatedCall struct {
 	header_      http.Header
 }
 
-// Aggregated: List the jobs of a project across all regions.
+// Aggregated: List the jobs of a project across all regions. **Note:**
+// This method doesn't support filtering the list of jobs by name.
 //
 // - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) Aggregated(projectId string) *ProjectsJobsAggregatedCall {
@@ -8727,7 +8728,7 @@ func (c *ProjectsJobsAggregatedCall) Location(location string) *ProjectsJobsAggr
 	return c
 }
 
-// Name sets the optional parameter "name": The job name. Optional.
+// Name sets the optional parameter "name": The job name.
 func (c *ProjectsJobsAggregatedCall) Name(name string) *ProjectsJobsAggregatedCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -8881,7 +8882,7 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	}
 	return ret, nil
 	// {
-	//   "description": "List the jobs of a project across all regions.",
+	//   "description": "List the jobs of a project across all regions. **Note:** This method doesn't support filtering the list of jobs by name.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs:aggregated",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.aggregated",
@@ -8912,7 +8913,7 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Optional. The job name. Optional.",
+	//       "description": "Optional. The job name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9649,8 +9650,10 @@ type ProjectsJobsListCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // To list the all jobs across all regions, use
 // `projects.jobs.aggregated`. Using `projects.jobs.list` is not
-// recommended, as you can only get the list of jobs that are running in
-// `us-central1`.
+// recommended, because you can only get the list of jobs that are
+// running in `us-central1`. `projects.locations.jobs.list` and
+// `projects.jobs.list` support filtering the list of jobs by name.
+// Filtering by name isn't supported by `projects.jobs.aggregated`.
 //
 // - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
@@ -9695,7 +9698,7 @@ func (c *ProjectsJobsListCall) Location(location string) *ProjectsJobsListCall {
 	return c
 }
 
-// Name sets the optional parameter "name": The job name. Optional.
+// Name sets the optional parameter "name": The job name.
 func (c *ProjectsJobsListCall) Name(name string) *ProjectsJobsListCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -9849,7 +9852,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, as you can only get the list of jobs that are running in `us-central1`.",
+	//   "description": "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, because you can only get the list of jobs that are running in `us-central1`. `projects.locations.jobs.list` and `projects.jobs.list` support filtering the list of jobs by name. Filtering by name isn't supported by `projects.jobs.aggregated`.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.list",
@@ -9880,7 +9883,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Optional. The job name. Optional.",
+	//       "description": "Optional. The job name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12446,8 +12449,10 @@ type ProjectsLocationsJobsListCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // To list the all jobs across all regions, use
 // `projects.jobs.aggregated`. Using `projects.jobs.list` is not
-// recommended, as you can only get the list of jobs that are running in
-// `us-central1`.
+// recommended, because you can only get the list of jobs that are
+// running in `us-central1`. `projects.locations.jobs.list` and
+// `projects.jobs.list` support filtering the list of jobs by name.
+// Filtering by name isn't supported by `projects.jobs.aggregated`.
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
@@ -12487,7 +12492,7 @@ func (c *ProjectsLocationsJobsListCall) Filter(filter string) *ProjectsLocations
 	return c
 }
 
-// Name sets the optional parameter "name": The job name. Optional.
+// Name sets the optional parameter "name": The job name.
 func (c *ProjectsLocationsJobsListCall) Name(name string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -12642,7 +12647,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	}
 	return ret, nil
 	// {
-	//   "description": "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, as you can only get the list of jobs that are running in `us-central1`.",
+	//   "description": "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, because you can only get the list of jobs that are running in `us-central1`. `projects.locations.jobs.list` and `projects.jobs.list` support filtering the list of jobs by name. Filtering by name isn't supported by `projects.jobs.aggregated`.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.jobs.list",
@@ -12675,7 +12680,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Optional. The job name. Optional.",
+	//       "description": "Optional. The job name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -2628,7 +2628,7 @@ func (s *Translation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TransliterationConfig: Confugures transliteration feature on top of
+// TransliterationConfig: Configures transliteration feature on top of
 // translation.
 type TransliterationConfig struct {
 	// EnableTransliteration: If true, source text in romanized form can be

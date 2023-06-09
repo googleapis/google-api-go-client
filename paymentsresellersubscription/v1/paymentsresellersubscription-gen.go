@@ -1492,26 +1492,28 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse
 // GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload: Payload
 // specific to Youtube products.
 type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
+	// AccessEndTime: Output only. The access expiration time for this line
+	// item.
+	AccessEndTime string `json:"accessEndTime,omitempty"`
+
 	// PartnerEligibilityIds: The list of eligibility_ids which are
 	// applicable for the line item.
 	PartnerEligibilityIds []string `json:"partnerEligibilityIds,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "PartnerEligibilityIds") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AccessEndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PartnerEligibilityIds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccessEndTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

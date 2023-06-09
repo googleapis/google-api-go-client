@@ -476,6 +476,10 @@ type Access struct {
 	// call to, e.g. "iam.googleapis.com"
 	ServiceName string `json:"serviceName,omitempty"`
 
+	// UserAgent: The caller's user agent string associated with the
+	// finding.
+	UserAgent string `json:"userAgent,omitempty"`
+
 	// UserAgentFamily: Type of user agent associated with the finding. For
 	// example, an operating system shell or an embedded or standalone
 	// application.

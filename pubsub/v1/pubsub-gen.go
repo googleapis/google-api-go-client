@@ -1112,6 +1112,36 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NoWrapper: Sets the `data` field as the HTTP body for delivery.
+type NoWrapper struct {
+	// WriteMetadata: When true, writes the Pub/Sub message metadata to
+	// `x-goog-pubsub-:` headers of the HTTP request. Writes the Pub/Sub
+	// message attributes to `:` headers of the HTTP request.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WriteMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WriteMetadata") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NoWrapper) MarshalJSON() ([]byte, error) {
+	type NoMethod NoWrapper
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OidcToken: Contains information needed for generating an OpenID
 // Connect token
 // (https://developers.google.com/identity/protocols/OpenIDConnect).
@@ -1387,6 +1417,12 @@ func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PubsubWrapper: The payload to the push endpoint is in the form of the
+// JSON representation of a PubsubMessage
+// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+type PubsubWrapper struct {
+}
+
 // PullRequest: Request for the `Pull` method.
 type PullRequest struct {
 	// MaxMessages: Required. The maximum number of messages to return for
@@ -1483,10 +1519,18 @@ type PushConfig struct {
 	// example: `attributes { "x-goog-version": "v1" }`
 	Attributes map[string]string `json:"attributes,omitempty"`
 
+	// NoWrapper: When set, the payload to the push endpoint is not wrapped.
+	NoWrapper *NoWrapper `json:"noWrapper,omitempty"`
+
 	// OidcToken: If specified, Pub/Sub will generate and attach an OIDC JWT
 	// token as an `Authorization` header in the HTTP request for every
 	// pushed message.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
+
+	// PubsubWrapper: When set, the payload to the push endpoint is in the
+	// form of the JSON representation of a PubsubMessage
+	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+	PubsubWrapper *PubsubWrapper `json:"pubsubWrapper,omitempty"`
 
 	// PushEndpoint: A URL locating the endpoint to which messages should be
 	// pushed. For example, a Webhook endpoint might use

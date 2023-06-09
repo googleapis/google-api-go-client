@@ -2596,6 +2596,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "boolean"
 	//     },
 	//     "stripResults": {
+	//       "deprecated": true,
 	//       "description": "This field is deprecated. The following fields are always stripped out of the result: `stack_frames`, `evaluated_expressions` and `variable_table`.",
 	//       "location": "query",
 	//       "type": "boolean"

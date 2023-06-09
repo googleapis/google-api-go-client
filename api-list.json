@@ -3822,7 +3822,7 @@
       "name": "migrationcenter",
       "version": "v1alpha1",
       "title": "Migration Center API",
-      "description": "",
+      "description": "A unified platform that helps you accelerate your end-to-end cloud journey from your current on-premises or cloud environments to Google Cloud.",
       "discoveryRestUrl": "https://migrationcenter.googleapis.com/$discovery/rest?version=v1alpha1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

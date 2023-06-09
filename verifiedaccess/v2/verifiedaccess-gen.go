@@ -211,11 +211,12 @@ func (s *CrowdStrikeAgent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeviceSignals: The device signals as reported by Chrome.
+// DeviceSignals: The device signals as reported by Chrome. Unless
+// otherwise specified, signals are available on all platforms.
 type DeviceSignals struct {
 	// AllowScreenLock: Value of the AllowScreenLock policy on the device.
 	// See https://chromeenterprise.google/policies/?policy=AllowScreenLock
-	// for more details.
+	// for more details. Available on ChromeOS only.
 	AllowScreenLock bool `json:"allowScreenLock,omitempty"`
 
 	// BrowserVersion: Current version of the Chrome browser which generated
@@ -233,7 +234,7 @@ type DeviceSignals struct {
 	ChromeRemoteDesktopAppBlocked bool `json:"chromeRemoteDesktopAppBlocked,omitempty"`
 
 	// CrowdStrikeAgent: Crowdstrike agent properties installed on the
-	// device, if any.
+	// device, if any. Available on Windows and MacOS only.
 	CrowdStrikeAgent *CrowdStrikeAgent `json:"crowdStrikeAgent,omitempty"`
 
 	// DeviceAffiliationIds: Affiliation IDs of the organizations that are
@@ -272,12 +273,14 @@ type DeviceSignals struct {
 	Hostname string `json:"hostname,omitempty"`
 
 	// Imei: International Mobile Equipment Identity (IMEI) of the device.
+	// Available on ChromeOS only.
 	Imei []string `json:"imei,omitempty"`
 
 	// MacAddresses: MAC addresses of the device.
 	MacAddresses []string `json:"macAddresses,omitempty"`
 
-	// Meid: Mobile Equipment Identifier (MEID) of the device.
+	// Meid: Mobile Equipment Identifier (MEID) of the device. Available on
+	// ChromeOS only.
 	Meid []string `json:"meid,omitempty"`
 
 	// OperatingSystem: The type of the Operating System currently running
@@ -372,7 +375,7 @@ type DeviceSignals struct {
 	ScreenLockSecured string `json:"screenLockSecured,omitempty"`
 
 	// SecureBootMode: Whether the device's startup software has its Secure
-	// Boot feature enabled.
+	// Boot feature enabled. Available on Windows only.
 	//
 	// Possible values:
 	//   "SECURE_BOOT_MODE_UNSPECIFIED" - Unspecified.
@@ -385,7 +388,8 @@ type DeviceSignals struct {
 	SecureBootMode string `json:"secureBootMode,omitempty"`
 
 	// SerialNumber: The serial number of the device. On Windows, this
-	// represents the BIOS's serial number.
+	// represents the BIOS's serial number. Not available on most Linux
+	// distributions.
 	SerialNumber string `json:"serialNumber,omitempty"`
 
 	// SiteIsolationEnabled: Whether the Site Isolation (a.k.a Site Per
@@ -401,14 +405,26 @@ type DeviceSignals struct {
 	// ThirdPartyBlockingEnabled: Whether Chrome is blocking third-party
 	// software injection or not. This setting may be controlled by an
 	// enterprise policy:
-	// https://chromeenterprise.google/policies/?policy=ThirdPartyBlockingEnabled
+	// https://chromeenterprise.google/policies/?policy=ThirdPartyBlockingEnabled.
+	// Available on Windows only.
 	ThirdPartyBlockingEnabled bool `json:"thirdPartyBlockingEnabled,omitempty"`
 
+	// Trigger: The trigger which generated this set of signals.
+	//
+	// Possible values:
+	//   "TRIGGER_UNSPECIFIED" - Unspecified.
+	//   "TRIGGER_BROWSER_NAVIGATION" - When navigating to an URL inside a
+	// browser.
+	//   "TRIGGER_LOGIN_SCREEN" - When signing into an account on the
+	// ChromeOS login screen.
+	Trigger string `json:"trigger,omitempty"`
+
 	// WindowsMachineDomain: Windows domain that the current machine has
-	// joined.
+	// joined. Available on Windows only.
 	WindowsMachineDomain string `json:"windowsMachineDomain,omitempty"`
 
-	// WindowsUserDomain: Windows domain for the current OS user.
+	// WindowsUserDomain: Windows domain for the current OS user. Available
+	// on Windows only.
 	WindowsUserDomain string `json:"windowsUserDomain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowScreenLock") to
@@ -510,7 +526,28 @@ type VerifyChallengeResponseResult struct {
 	// device hardware.
 	//   "CHROME_BROWSER_OS_KEY" - Chrome Browser with the key stored at OS
 	// level.
+	//   "CHROME_BROWSER_NO_KEY" - Chrome Browser without an attestation
+	// key.
 	KeyTrustLevel string `json:"keyTrustLevel,omitempty"`
+
+	// ProfileCustomerId: Unique customer id that this profile belongs to,
+	// as defined by the Google Admin SDK at
+	// https://developers.google.com/admin-sdk/directory/v1/guides/manage-customers
+	ProfileCustomerId string `json:"profileCustomerId,omitempty"`
+
+	// ProfileKeyTrustLevel: Profile attested key trust level.
+	//
+	// Possible values:
+	//   "KEY_TRUST_LEVEL_UNSPECIFIED" - UNSPECIFIED.
+	//   "CHROME_OS_VERIFIED_MODE" - ChromeOS device in verified mode.
+	//   "CHROME_OS_DEVELOPER_MODE" - ChromeOS device in developer mode.
+	//   "CHROME_BROWSER_HW_KEY" - Chrome Browser with the key stored in the
+	// device hardware.
+	//   "CHROME_BROWSER_OS_KEY" - Chrome Browser with the key stored at OS
+	// level.
+	//   "CHROME_BROWSER_NO_KEY" - Chrome Browser without an attestation
+	// key.
+	ProfileKeyTrustLevel string `json:"profileKeyTrustLevel,omitempty"`
 
 	// SignedPublicKeyAndChallenge: Certificate Signing Request (in the
 	// SPKAC format, base64 encoded) is returned in this field. This field
@@ -522,6 +559,9 @@ type VerifyChallengeResponseResult struct {
 	// VirtualDeviceId: Virtual device id of the device. The definition of
 	// virtual device id is platform-specific.
 	VirtualDeviceId string `json:"virtualDeviceId,omitempty"`
+
+	// VirtualProfileId: The ID of a profile on the device.
+	VirtualProfileId string `json:"virtualProfileId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

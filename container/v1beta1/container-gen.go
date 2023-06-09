@@ -291,6 +291,10 @@ type AcceleratorConfig struct {
 	// (https://cloud.google.com/compute/docs/gpus)
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 
+	// GpuDriverInstallationConfig: The configuration for auto installation
+	// of GPU driver.
+	GpuDriverInstallationConfig *GPUDriverInstallationConfig `json:"gpuDriverInstallationConfig,omitempty"`
+
 	// GpuPartitionSize: Size of partitions to create on the GPU. Valid
 	// values are described in the NVIDIA mig user guide
 	// (https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#partitioning).
@@ -556,6 +560,9 @@ func (s *AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
 type Autopilot struct {
 	// Enabled: Enable Autopilot
 	Enabled bool `json:"enabled,omitempty"`
+
+	// WorkloadPolicyConfig: Workload policy configuration for Autopilot.
+	WorkloadPolicyConfig *WorkloadPolicyConfig `json:"workloadPolicyConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
@@ -1463,6 +1470,10 @@ type Cluster struct {
 	// unspecified.
 	ResourceUsageExportConfig *ResourceUsageExportConfig `json:"resourceUsageExportConfig,omitempty"`
 
+	// SecurityPostureConfig: Enable/Disable Security Posture API features
+	// for the cluster.
+	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
+
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -1671,6 +1682,10 @@ type ClusterUpdate struct {
 	// the config for the cluster security groups settings.
 	DesiredAuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"desiredAuthenticatorGroupsConfig,omitempty"`
 
+	// DesiredAutopilotWorkloadPolicyConfig: The desired workload policy
+	// configuration for the autopilot cluster.
+	DesiredAutopilotWorkloadPolicyConfig *WorkloadPolicyConfig `json:"desiredAutopilotWorkloadPolicyConfig,omitempty"`
+
 	// DesiredBinaryAuthorization: The desired configuration options for the
 	// Binary Authorization feature.
 	DesiredBinaryAuthorization *BinaryAuthorization `json:"desiredBinaryAuthorization,omitempty"`
@@ -1871,6 +1886,10 @@ type ClusterUpdate struct {
 	// DesiredResourceUsageExportConfig: The desired configuration for
 	// exporting resource usage.
 	DesiredResourceUsageExportConfig *ResourceUsageExportConfig `json:"desiredResourceUsageExportConfig,omitempty"`
+
+	// DesiredSecurityPostureConfig: Enable/Disable Security Posture API
+	// features for the cluster.
+	DesiredSecurityPostureConfig *SecurityPostureConfig `json:"desiredSecurityPostureConfig,omitempty"`
 
 	// DesiredServiceExternalIpsConfig: ServiceExternalIPsConfig specifies
 	// the config for the use of Services with ExternalIPs field.
@@ -2625,6 +2644,44 @@ type Fleet struct {
 
 func (s *Fleet) MarshalJSON() ([]byte, error) {
 	type NoMethod Fleet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GPUDriverInstallationConfig: GPUDriverInstallationConfig specifies
+// the version of GPU driver to be auto installed.
+type GPUDriverInstallationConfig struct {
+	// GpuDriverVersion: Mode for how the GPU driver is installed.
+	//
+	// Possible values:
+	//   "GPU_DRIVER_VERSION_UNSPECIFIED" - Default value is to not install
+	// any GPU driver.
+	//   "INSTALLATION_DISABLED" - Disable GPU driver auto installation and
+	// needs manual installation
+	//   "DEFAULT" - "Default" GPU driver in COS and Ubuntu.
+	//   "LATEST" - "Latest" GPU driver in COS.
+	GpuDriverVersion string `json:"gpuDriverVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GpuDriverVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GpuDriverVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GPUDriverInstallationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GPUDriverInstallationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6499,6 +6556,50 @@ func (s *SecurityBulletinEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SecurityPostureConfig: SecurityPostureConfig defines the flags needed
+// to enable/disable features for the Security Posture API.
+type SecurityPostureConfig struct {
+	// Mode: Sets which mode to use for Security Posture features.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value not specified.
+	//   "DISABLED" - Disables Security Posture features on the cluster.
+	//   "BASIC" - Applies Security Posture features on the cluster.
+	Mode string `json:"mode,omitempty"`
+
+	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
+	//
+	// Possible values:
+	//   "VULNERABILITY_MODE_UNSPECIFIED" - Default value not specified.
+	//   "VULNERABILITY_DISABLED" - Disables vulnerability scanning on the
+	// cluster.
+	//   "VULNERABILITY_BASIC" - Applies basic vulnerability scanning on the
+	// cluster.
+	VulnerabilityMode string `json:"vulnerabilityMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecurityPostureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityPostureConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServerConfig: Kubernetes Engine service configuration.
 type ServerConfig struct {
 	// Channels: List of release channel configurations.
@@ -8607,6 +8708,35 @@ func (s *WorkloadMetadataConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WorkloadPolicyConfig: WorkloadPolicyConfig is the configuration of
+// workload policy for autopilot clusters.
+type WorkloadPolicyConfig struct {
+	// AllowNetAdmin: If true, workloads can use NET_ADMIN capability.
+	AllowNetAdmin bool `json:"allowNetAdmin,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowNetAdmin") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowNetAdmin") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkloadPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadPolicyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "container.projects.aggregated.usableSubnetworks.list":
 
 type ProjectsAggregatedUsableSubnetworksListCall struct {
@@ -8977,11 +9107,13 @@ func (c *ProjectsLocationsGetServerConfigCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) to return operations for. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -9739,6 +9871,7 @@ func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "clusterId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the cluster to delete. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -9751,11 +9884,13 @@ func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -9930,6 +10065,7 @@ func (c *ProjectsLocationsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cl
 	//   ],
 	//   "parameters": {
 	//     "clusterId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the cluster to retrieve. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -9942,11 +10078,13 @@ func (c *ProjectsLocationsClustersGetCall) Do(opts ...googleapi.CallOption) (*Cl
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -10267,11 +10405,13 @@ func (c *ProjectsLocationsClustersListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides, or \"-\" for all zones. This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -12463,6 +12603,7 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "clusterId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the cluster. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -12475,16 +12616,19 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "nodePoolId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the node pool to delete. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -12667,6 +12811,7 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "clusterId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the cluster. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -12679,16 +12824,19 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "nodePoolId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the node pool. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -12863,6 +13011,7 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "clusterId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the cluster. This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -12875,11 +13024,13 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -14079,16 +14230,19 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "operationId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The server-assigned `name` of the operation. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
 	//       "location": "query",
 	//       "type": "string"
@@ -14263,11 +14417,13 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "zone": {
+	//       "deprecated": true,
 	//       "description": "Required. Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) to return operations for, or `-` for all zones. This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"

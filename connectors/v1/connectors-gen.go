@@ -638,6 +638,9 @@ type ConfigVariable struct {
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
 
+	// KeyValue: Value is a Encryption Key.
+	KeyValue *EncryptionKey `json:"keyValue,omitempty"`
+
 	// SecretValue: Value is a secret.
 	SecretValue *Secret `json:"secretValue,omitempty"`
 
@@ -720,6 +723,7 @@ type ConfigVariableTemplate struct {
 	//   "SECRET" - Value type is secret.
 	//   "ENUM" - Value type is enum.
 	//   "AUTHORIZATION_CODE" - Value type is authorization code.
+	//   "ENCRYPTION_KEY" - Encryption Key.
 	ValueType string `json:"valueType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -756,6 +760,10 @@ type Connection struct {
 	// ConfigVariables: Optional. Configuration for configuring the
 	// connection with an external system.
 	ConfigVariables []*ConfigVariable `json:"configVariables,omitempty"`
+
+	// ConnectionRevision: Output only. Connection revision. This field is
+	// only updated when the connection is created or updated by User.
+	ConnectionRevision int64 `json:"connectionRevision,omitempty,string"`
 
 	// ConnectorVersion: Required. Connector version on which the connection
 	// is created. The format is:
@@ -1350,6 +1358,45 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionKey: Encryption Key value.
+type EncryptionKey struct {
+	// KmsKeyName: The [KMS key name] with which the content of the
+	// Operation is encrypted. The expected format:
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`. Will be empty
+	// string if google managed.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// Type: Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Value type is not specified.
+	//   "GOOGLE_MANAGED" - Google Managed.
+	//   "CUSTOMER_MANAGED" - Customer Managed.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // EndpointAttachment: represents the Connector's Endpoint Attachment
@@ -9529,6 +9576,12 @@ func (r *ProjectsLocationsProvidersConnectorsService) List(parent string) *Proje
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter string.
+func (c *ProjectsLocationsProvidersConnectorsListCall) Filter(filter string) *ProjectsLocationsProvidersConnectorsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Page size.
 func (c *ProjectsLocationsProvidersConnectorsListCall) PageSize(pageSize int64) *ProjectsLocationsProvidersConnectorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -9648,6 +9701,11 @@ func (c *ProjectsLocationsProvidersConnectorsListCall) Do(opts ...googleapi.Call
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter string.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Page size.",
 	//       "format": "int32",

@@ -248,6 +248,10 @@ type Access struct {
 	// call to, e.g. "iam.googleapis.com"
 	ServiceName string `json:"serviceName,omitempty"`
 
+	// UserAgent: The caller's user agent string associated with the
+	// finding.
+	UserAgent string `json:"userAgent,omitempty"`
+
 	// UserAgentFamily: Type of user agent associated with the finding. For
 	// example, an operating system shell or an embedded or standalone
 	// application.
@@ -4048,7 +4052,7 @@ type OrganizationSettings struct {
 
 	// EnableAssetDiscovery: A flag that indicates if Asset Discovery should
 	// be enabled. If the flag is set to `true`, then discovery of assets
-	// will occur. If it is set to `false, all historical assets will
+	// will occur. If it is set to `false`, all historical assets will
 	// remain, but discovery of future assets will not occur.
 	EnableAssetDiscovery bool `json:"enableAssetDiscovery,omitempty"`
 

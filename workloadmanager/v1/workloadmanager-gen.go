@@ -264,6 +264,9 @@ type Evaluation struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CustomRulesBucket: The Cloud Storage bucket name for custom rules.
+	CustomRulesBucket string `json:"customRulesBucket,omitempty"`
+
 	// Description: Description of the Evaluation
 	Description string `json:"description,omitempty"`
 
@@ -1007,7 +1010,8 @@ func (s *ResourceFilter) MarshalJSON() ([]byte, error) {
 
 // ResourceStatus: Message describing resource status
 type ResourceStatus struct {
-	// RulesNewerVersions: the new version of rule id if exists
+	// RulesNewerVersions: Historical: Used before 2023-05-22 the new
+	// version of rule id if exists
 	RulesNewerVersions []string `json:"rulesNewerVersions,omitempty"`
 
 	// State: State of the resource
@@ -1454,22 +1458,24 @@ func (s *SqlserverValidation) MarshalJSON() ([]byte, error) {
 // SqlserverValidationValidationDetail: Message describing the Sqlserver
 // validation metrics.
 type SqlserverValidationValidationDetail struct {
-	// Details: The pairs of metrics data: field name & field value.
-	Details map[string]string `json:"details,omitempty"`
-
-	// InstanceId: The instance id where the ValidationDetail is generated
-	// from
-	InstanceId string `json:"instanceId,omitempty"`
+	// Fields:  pairs of metrics data: column name & column value.
+	Fields map[string]string `json:"fields,omitempty"`
 
 	// Type: The Sqlserver system that the validation data is from.
 	//
 	// Possible values:
 	//   "SQLSERVER_VALIDATION_TYPE_UNSPECIFIED" - Unspecified type.
 	//   "OS" - The Sqlserver system named OS
-	//   "DB" - The Sqlserver system named DB
+	//   "DB_LOG_DISK_SEPARATION" - The LOG_DISK_SEPARATION table
+	//   "DB_MAX_PARALLELISM" - The MAX_PARALLELISM table
+	//   "DB_CXPACKET_WAITS" - The CXPACKET_WAITS table
+	//   "DB_TRANSACTION_LOG_HANDLING" - The TRANSACTION_LOG_HANDLING table
+	//   "DB_VIRTUAL_LOG_FILE_COUNT" - The VIRTUAL_LOG_FILE_COUNT table
+	//   "DB_BUFFER_POOL_EXTENSION" - The BUFFER_POOL_EXTENSION table
+	//   "DB_MAX_SERVER_MEMORY" - The MAX_SERVER_MEMORY table
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Details") to
+	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1477,8 +1483,8 @@ type SqlserverValidationValidationDetail struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1575,6 +1581,10 @@ func (s *ViolationDetails) MarshalJSON() ([]byte, error) {
 type WriteInsightRequest struct {
 	// Insight: Required. The metrics data details.
 	Insight *Insight `json:"insight,omitempty"`
+
+	// InstanceId: Optional. The instance id where the insight is generated
+	// from
+	InstanceId string `json:"instanceId,omitempty"`
 
 	// RequestId: Optional. An optional request ID to identify requests.
 	// Specify a unique request ID so that if you must retry your request,
@@ -4261,6 +4271,13 @@ func (r *ProjectsLocationsRulesService) List(parent string) *ProjectsLocationsRu
 	return c
 }
 
+// CustomRulesBucket sets the optional parameter "customRulesBucket":
+// The Cloud Storage bucket name for custom rules.
+func (c *ProjectsLocationsRulesListCall) CustomRulesBucket(customRulesBucket string) *ProjectsLocationsRulesListCall {
+	c.urlParams_.Set("customRulesBucket", customRulesBucket)
+	return c
+}
+
 // Filter sets the optional parameter "filter": Filter based on
 // primary_category, secondary_category
 func (c *ProjectsLocationsRulesListCall) Filter(filter string) *ProjectsLocationsRulesListCall {
@@ -4390,6 +4407,11 @@ func (c *ProjectsLocationsRulesListCall) Do(opts ...googleapi.CallOption) (*List
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "customRulesBucket": {
+	//       "description": "The Cloud Storage bucket name for custom rules.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "filter": {
 	//       "description": "Filter based on primary_category, secondary_category",
 	//       "location": "query",

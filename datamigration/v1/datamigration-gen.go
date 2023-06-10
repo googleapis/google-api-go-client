@@ -2854,9 +2854,9 @@ type OracleConnectionProfile struct {
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
 
-	// Ssl: SSL configuration for the destination to connect to the source
-	// database. The supported configuration for Oracle SSL is of
-	// SERVER_ONLY type.
+	// Ssl: SSL configuration for the connection to the source Oracle
+	// database. * Only `SERVER_ONLY` configuration is supported for Oracle
+	// SSL. * SSL is supported for Oracle versions 12 and above.
 	Ssl *SslConfig `json:"ssl,omitempty"`
 
 	// StaticServiceIpConnectivity: Static Service IP connectivity.

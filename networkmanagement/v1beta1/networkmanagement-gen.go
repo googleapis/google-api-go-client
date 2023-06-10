@@ -244,6 +244,8 @@ type AbortInfo struct {
 	// connection between the control plane and the node of the source
 	// cluster is initiated by the node and managed by the Konnectivity
 	// proxy.
+	//   "RESOURCE_CONFIG_NOT_FOUND" - Aborted because expected resource
+	// configuration was missing.
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -976,6 +978,9 @@ type DropInfo struct {
 	// revision that is not ready.
 	//   "DROPPED_INSIDE_PSC_SERVICE_PRODUCER" - Packet was dropped inside
 	// Private Service Connect service producer.
+	//   "LOAD_BALANCER_HAS_NO_PROXY_SUBNET" - Packet sent to a load
+	// balancer, which requires a proxy-only subnet and the subnet is not
+	// found.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -1512,6 +1517,56 @@ type GKEMasterInfo struct {
 
 func (s *GKEMasterInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GKEMasterInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleServiceInfo: For display only. Details of a Google Service
+// sending packets to a VPC network. Although the source IP might be a
+// publicly routable address, some Google Services use special routes
+// within Google production infrastructure to reach Compute Engine
+// Instances.
+// https://cloud.google.com/vpc/docs/routes#special_return_paths
+type GoogleServiceInfo struct {
+	// GoogleServiceType: Recognized type of a Google Service.
+	//
+	// Possible values:
+	//   "GOOGLE_SERVICE_TYPE_UNSPECIFIED" - Unspecified Google Service.
+	// Includes most of Google APIs and services.
+	//   "IAP" - Identity aware proxy.
+	// https://cloud.google.com/iap/docs/using-tcp-forwarding
+	//   "GFE_PROXY_OR_HEALTH_CHECK_PROBER" - One of two services sharing IP
+	// ranges: * Load Balancer proxy * Centralized Health Check prober
+	// https://cloud.google.com/load-balancing/docs/firewall-rules
+	//   "CLOUD_DNS" - Connectivity from Cloud DNS to forwarding targets or
+	// alternate name servers that use private routing.
+	// https://cloud.google.com/dns/docs/zones/forwarding-zones#firewall-rules
+	// https://cloud.google.com/dns/docs/policies#firewall-rules
+	GoogleServiceType string `json:"googleServiceType,omitempty"`
+
+	// SourceIp: Source IP address.
+	SourceIp string `json:"sourceIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GoogleServiceType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoogleServiceType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleServiceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleServiceInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2544,6 +2599,9 @@ type Step struct {
 	// master.
 	GkeMaster *GKEMasterInfo `json:"gkeMaster,omitempty"`
 
+	// GoogleService: Display information of a Google service
+	GoogleService *GoogleServiceInfo `json:"googleService,omitempty"`
+
 	// Instance: Display information of a Compute Engine instance.
 	Instance *InstanceInfo `json:"instance,omitempty"`
 
@@ -2569,6 +2627,10 @@ type Step struct {
 	// instance information.
 	//   "START_FROM_INTERNET" - Initial state: packet originating from the
 	// internet. The endpoint information is populated.
+	//   "START_FROM_GOOGLE_SERVICE" - Initial state: packet originating
+	// from a Google service. Some Google services, such as health check
+	// probers or Identity Aware Proxy use special routes, outside VPC
+	// routing configuration to reach Compute Engine Instances.
 	//   "START_FROM_PRIVATE_NETWORK" - Initial state: packet originating
 	// from a VPC or on-premises network with internal source IP. If the
 	// source is a VPC network visible to the user, a NetworkInfo is

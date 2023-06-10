@@ -2899,13 +2899,10 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant struct {
 	// PartnerTenant. Cannot exceed 64 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// GoogleGroupEmail: Optional. Google group email to which the
-	// PartnerTenant is enabled.
-	GoogleGroupEmail string `json:"googleGroupEmail,omitempty"`
-
-	// GoogleGroupId: Optional. Google group ID to which the PartnerTenant
-	// is enabled.
-	GoogleGroupId string `json:"googleGroupId,omitempty"`
+	// Group: Optional. Group information for the users enabled to use the
+	// partnerTenant. If the group information is not provided then the
+	// partnerTenant will be enabled for all users.
+	Group *GoogleCloudBeyondcorpPartnerservicesV1alphaGroup `json:"group,omitempty"`
 
 	// Name: Output only. Unique resource name of the PartnerTenant. The
 	// name is ignored when creating PartnerTenant.
@@ -5941,6 +5938,189 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) Pages(ctx context.C
 	}
 }
 
+// method id "beyondcorp.organizations.locations.global.partnerTenants.patch":
+
+type OrganizationsLocationsGlobalPartnerTenantsPatchCall struct {
+	s                                                        *Service
+	name                                                     string
+	googlecloudbeyondcorppartnerservicesv1alphapartnertenant *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// Patch: Updates a single PartnerTenant.
+//
+//   - name: Output only. Unique resource name of the PartnerTenant. The
+//     name is ignored when creating PartnerTenant.
+func (r *OrganizationsLocationsGlobalPartnerTenantsService) Patch(name string, googlecloudbeyondcorppartnerservicesv1alphapartnertenant *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant) *OrganizationsLocationsGlobalPartnerTenantsPatchCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudbeyondcorppartnerservicesv1alphapartnertenant = googlecloudbeyondcorppartnerservicesv1alphapartnertenant
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes since the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) RequestId(requestId string) *OrganizationsLocationsGlobalPartnerTenantsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// PartnerTenant resource by the update. The fields specified in the
+// update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
+func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsGlobalPartnerTenantsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorppartnerservicesv1alphapartnertenant)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.patch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a single PartnerTenant.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Unique resource name of the PartnerTenant. The name is ignored when creating PartnerTenant.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the PartnerTenant resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten. ",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "beyondcorp.organizations.locations.global.partnerTenants.setIamPolicy":
 
 type OrganizationsLocationsGlobalPartnerTenantsSetIamPolicyCall struct {
@@ -7191,6 +7371,161 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall) Do(op
 	//   "request": {
 	//     "$ref": "GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig"
 	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.delete":
+
+type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single ProxyConfig.
+//
+// - name: Name of the resource.
+func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) Delete(name string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall {
+	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall) RequestId(requestId string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single ProxyConfig.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/global/partnerTenants/{partnerTenantsId}/proxyConfigs/{proxyConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the resource.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
 	//   },

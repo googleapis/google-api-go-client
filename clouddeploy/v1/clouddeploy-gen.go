@@ -3318,6 +3318,12 @@ type ServiceNetworking struct {
 	// is managed by the specified Service.
 	Deployment string `json:"deployment,omitempty"`
 
+	// DisablePodOverprovisioning: Optional. Whether to disable Pod
+	// overprovisioning. If Pod overprovisioning is disabled then Cloud
+	// Deploy will limit the number of total Pods used for the deployment
+	// strategy to the number of Pods the Deployment has on the cluster.
+	DisablePodOverprovisioning bool `json:"disablePodOverprovisioning,omitempty"`
+
 	// Service: Required. Name of the Kubernetes Service.
 	Service string `json:"service,omitempty"`
 
@@ -9413,8 +9419,8 @@ func (r *ProjectsLocationsTargetsService) Delete(name string) *ProjectsLocations
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set to
-// true, then deleting an already deleted or non-existing
-// DeliveryPipeline will succeed.
+// true, then deleting an already deleted or non-existing `Target` will
+// succeed.
 func (c *ProjectsLocationsTargetsDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsTargetsDeleteCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
@@ -9549,7 +9555,7 @@ func (c *ProjectsLocationsTargetsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "Optional. If set to true, then deleting an already deleted or non-existing DeliveryPipeline will succeed.",
+	//       "description": "Optional. If set to true, then deleting an already deleted or non-existing `Target` will succeed.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

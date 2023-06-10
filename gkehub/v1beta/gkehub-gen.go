@@ -787,10 +787,12 @@ type ConfigManagementConfigSync struct {
 
 	// Enabled: Enables the installation of ConfigSync. If set to true,
 	// ConfigSync resources will be created and the other ConfigSync fields
-	// will be applied if exist. If set to false, all other ConfigSync
-	// fields will be ignored, ConfigSync resources will be deleted. If
-	// omitted, ConfigSync resources will be managed depends on the presence
-	// of git field.
+	// will be applied if exist. If set to false and Managed Config Sync is
+	// disabled, all other ConfigSync fields will be ignored, ConfigSync
+	// resources will be deleted. Setting this field to false while enabling
+	// Managed Config Sync is invalid. If omitted, ConfigSync resources will
+	// be managed if: * the git or oci field is present; or * Managed Config
+	// Sync is enabled (i.e., managed.enabled is true).
 	Enabled bool `json:"enabled,omitempty"`
 
 	// Git: Git repo configuration for the cluster.
@@ -798,6 +800,15 @@ type ConfigManagementConfigSync struct {
 
 	// Managed: Configuration for Managed Config Sync.
 	Managed *ConfigManagementManaged `json:"managed,omitempty"`
+
+	// MetricsGcpServiceAccountEmail: The Email of the GCP Service Account
+	// (GSA) used for exporting Config Sync metrics to Cloud Monitoring and
+	// Cloud Monarch when Workload Identity is enabled. The GSA should have
+	// the Monitoring Metric Writer (roles/monitoring.metricWriter) IAM
+	// role. The Kubernetes ServiceAccount `default` in the namespace
+	// `config-management-monitoring` should be binded to the GSA. This
+	// field is required when Managed Config Sync is enabled.
+	MetricsGcpServiceAccountEmail string `json:"metricsGcpServiceAccountEmail,omitempty"`
 
 	// Oci: OCI repo configuration for the cluster
 	Oci *ConfigManagementOciConfig `json:"oci,omitempty"`
@@ -932,11 +943,43 @@ func (s *ConfigManagementConfigSyncDeploymentState) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConfigManagementConfigSyncError: Errors pertaining to the
+// installation of Config Sync
+type ConfigManagementConfigSyncError struct {
+	// ErrorMessage: A string representing the user facing error message
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConfigManagementConfigSyncError) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementConfigSyncError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConfigManagementConfigSyncState: State information for ConfigSync
 type ConfigManagementConfigSyncState struct {
 	// DeploymentState: Information about the deployment of ConfigSync,
 	// including the version of the various Pods deployed
 	DeploymentState *ConfigManagementConfigSyncDeploymentState `json:"deploymentState,omitempty"`
+
+	// Errors: Errors pertaining to the installation of Config Sync.
+	Errors []*ConfigManagementConfigSyncError `json:"errors,omitempty"`
 
 	// SyncState: The state of ConfigSync's process to sync configs to a
 	// cluster
@@ -1392,8 +1435,14 @@ func (s *ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
 // ConfigManagementManaged: Configuration for Managed Config Sync.
 type ConfigManagementManaged struct {
 	// Enabled: Set to true to enable Managed Config Sync. Defaults to false
-	// which disables Managed Config Sync.
+	// which disables Managed Config Sync. Setting this field to true when
+	// configSync.enabled is false is invalid.
 	Enabled bool `json:"enabled,omitempty"`
+
+	// StopSyncing: Set to true to stop syncing configs for a single
+	// cluster. Default to false. If set to true, Managed Config Sync will
+	// not upgrade Config Sync.
+	StopSyncing bool `json:"stopSyncing,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
@@ -1424,6 +1473,15 @@ func (s *ConfigManagementManaged) MarshalJSON() ([]byte, error) {
 type ConfigManagementMembershipSpec struct {
 	// Binauthz: Binauthz conifguration for the cluster.
 	Binauthz *ConfigManagementBinauthzConfig `json:"binauthz,omitempty"`
+
+	// Cluster: The user-specified cluster name used by Config Sync
+	// cluster-name-selector annotation or ClusterSelector, for applying
+	// configs to only a subset of clusters. Omit this field if the
+	// cluster's fleet membership name is used by Config Sync
+	// cluster-name-selector annotation or ClusterSelector. Set this field
+	// if a name different from the cluster's fleet membership name is used
+	// by Config Sync cluster-name-selector annotation or ClusterSelector.
+	Cluster string `json:"cluster,omitempty"`
 
 	// ConfigSync: Config Sync configuration for the cluster.
 	ConfigSync *ConfigManagementConfigSync `json:"configSync,omitempty"`
@@ -1467,11 +1525,9 @@ type ConfigManagementMembershipState struct {
 	// BinauthzState: Binauthz status
 	BinauthzState *ConfigManagementBinauthzState `json:"binauthzState,omitempty"`
 
-	// ClusterName: The user-defined name for the cluster used by
-	// ClusterSelectors to group clusters together. This should match
-	// Membership's membership_name, unless the user installed ACM on the
-	// cluster manually prior to enabling the ACM hub feature. Unique within
-	// a Anthos Config Management installation.
+	// ClusterName: This field is set to the `cluster_name` field of the
+	// Membership Spec if it is not empty. Otherwise, it is set to the
+	// cluster's fleet membership name.
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// ConfigSyncState: Current sync status
@@ -3147,7 +3203,8 @@ func (s *MembershipBindingLifecycleState) MarshalJSON() ([]byte, error) {
 }
 
 // MembershipFeatureSpec: MembershipFeatureSpec contains configuration
-// information for a single Membership.
+// information for a single Membership. NOTE: Please use snake case in
+// your feature name.
 type MembershipFeatureSpec struct {
 	// Anthosobservability: Anthos Observability-specific spec
 	Anthosobservability *AnthosObservabilityMembershipSpec `json:"anthosobservability,omitempty"`

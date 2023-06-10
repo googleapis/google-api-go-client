@@ -1936,11 +1936,14 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 
 // ListLogEntriesRequest: The parameters to ListLogEntries.
 type ListLogEntriesRequest struct {
-	// Filter: Optional. Only log entries that match the filter are
-	// returned. An empty filter matches all log entries in the resources
-	// listed in resource_names. Referencing a parent resource that is not
-	// listed in resource_names will cause the filter to return no results.
-	// The maximum length of a filter is 20,000 characters.
+	// Filter: Optional. A filter that chooses which log entries to return.
+	// For more information, see Logging query language
+	// (https://cloud.google.com/logging/docs/view/logging-query-language).Only
+	// log entries that match the filter are returned. An empty filter
+	// matches all log entries in the resources listed in resource_names.
+	// Referencing a parent resource that is not listed in resource_names
+	// will cause the filter to return no results. The maximum length of a
+	// filter is 20,000 characters.
 	Filter string `json:"filter,omitempty"`
 
 	// OrderBy: Optional. How the results should be sorted. Presently, the
@@ -3017,10 +3020,11 @@ type LogSink struct {
 	// Destination: Required. The export destination:
 	// "storage.googleapis.com/[GCS_BUCKET]"
 	// "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
-	// "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]" The
-	// sink's writer_identity, set when the sink is created, must have
-	// permission to write to the destination or else the log entries are
-	// not exported. For more information, see Exporting Logs with Sinks
+	// "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]"
+	// "logging.googleapis.com/projects/[PROJECT_ID]" The sink's
+	// writer_identity, set when the sink is created, must have permission
+	// to write to the destination or else the log entries are not exported.
+	// For more information, see Exporting Logs with Sinks
 	// (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
 	Destination string `json:"destination,omitempty"`
 
@@ -9833,6 +9837,17 @@ func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *B
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *BillingAccountsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksCreateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
@@ -9949,6 +9964,11 @@ func (c *BillingAccountsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The resource in which to create the sink: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" For examples:\"projects/my-project\" \"organizations/123456789\"",
 	//       "location": "path",
@@ -10503,6 +10523,17 @@ func (r *BillingAccountsSinksService) Patch(sinkNameid string, logsink *LogSink)
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *BillingAccountsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksPatchCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
@@ -10632,6 +10663,11 @@ func (c *BillingAccountsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSi
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -10693,6 +10729,17 @@ func (r *BillingAccountsSinksService) Update(sinkNameid string, logsink *LogSink
 	c := &BillingAccountsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
 	c.logsink = logsink
+	return c
+}
+
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *BillingAccountsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksUpdateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
 }
 
@@ -10825,6 +10872,11 @@ func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -17838,6 +17890,17 @@ func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSi
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *FoldersSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksCreateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
@@ -17954,6 +18017,11 @@ func (c *FoldersSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The resource in which to create the sink: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" For examples:\"projects/my-project\" \"organizations/123456789\"",
 	//       "location": "path",
@@ -18508,6 +18576,17 @@ func (r *FoldersSinksService) Patch(sinkNameid string, logsink *LogSink) *Folder
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *FoldersSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksPatchCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
@@ -18637,6 +18716,11 @@ func (c *FoldersSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, erro
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -18698,6 +18782,17 @@ func (r *FoldersSinksService) Update(sinkNameid string, logsink *LogSink) *Folde
 	c := &FoldersSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
 	c.logsink = logsink
+	return c
+}
+
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *FoldersSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksUpdateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
 }
 
@@ -18830,6 +18925,11 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -28915,6 +29015,17 @@ func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *Org
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *OrganizationsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksCreateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
@@ -29031,6 +29142,11 @@ func (c *OrganizationsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The resource in which to create the sink: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" For examples:\"projects/my-project\" \"organizations/123456789\"",
 	//       "location": "path",
@@ -29585,6 +29701,17 @@ func (r *OrganizationsSinksService) Patch(sinkNameid string, logsink *LogSink) *
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *OrganizationsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksPatchCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
@@ -29714,6 +29841,11 @@ func (c *OrganizationsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -29775,6 +29907,17 @@ func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) 
 	c := &OrganizationsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
 	c.logsink = logsink
+	return c
+}
+
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *OrganizationsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksUpdateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
 }
 
@@ -29907,6 +30050,11 @@ func (c *OrganizationsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -36175,6 +36323,17 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *ProjectsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksCreateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": Determines the kind of IAM identity returned
 // as writer_identity in the new sink. If this value is omitted or set
@@ -36291,6 +36450,11 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The resource in which to create the sink: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" For examples:\"projects/my-project\" \"organizations/123456789\"",
 	//       "location": "path",
@@ -36845,6 +37009,17 @@ func (r *ProjectsSinksService) Patch(sinkNameid string, logsink *LogSink) *Proje
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *ProjectsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksPatchCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
@@ -36974,6 +37149,11 @@ func (c *ProjectsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -37035,6 +37215,17 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 	c := &ProjectsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
 	c.logsink = logsink
+	return c
+}
+
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *ProjectsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksUpdateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
 }
 
@@ -37167,6 +37358,11 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",
@@ -37226,6 +37422,17 @@ func (r *SinksService) Create(parent string, logsink *LogSink) *SinksCreateCall 
 	c := &SinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.logsink = logsink
+	return c
+}
+
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *SinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *SinksCreateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
 }
 
@@ -37345,6 +37552,11 @@ func (c *SinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The resource in which to create the sink: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" For examples:\"projects/my-project\" \"organizations/123456789\"",
 	//       "location": "path",
@@ -37899,6 +38111,17 @@ func (r *SinksService) Update(sinkNameid string, logsink *LogSink) *SinksUpdateC
 	return c
 }
 
+// CustomWriterIdentity sets the optional parameter
+// "customWriterIdentity": A service account provided by the caller that
+// will be used to write the log entries. Must be of format
+// serviceAccount:some@email. This can only be specified if writing to a
+// destination outside the sink's project. If not specified, a p4
+// service account will automatically be generated.
+func (c *SinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *SinksUpdateCall {
+	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
+	return c
+}
+
 // UniqueWriterIdentity sets the optional parameter
 // "uniqueWriterIdentity": See sinks.create for a description of this
 // field. When updating a sink, the effect of this field on the value of
@@ -38028,6 +38251,11 @@ func (c *SinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	//     "sinkName"
 	//   ],
 	//   "parameters": {
+	//     "customWriterIdentity": {
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sinkName": {
 	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_ID]/sinks/[SINK_ID]\" \"organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]\" \"folders/[FOLDER_ID]/sinks/[SINK_ID]\" For example:\"projects/my-project/sinks/my-sink\"",
 	//       "location": "path",

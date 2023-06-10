@@ -309,10 +309,22 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsApplicationsService(s *APIService) *ProjectsLocationsApplicationsService {
 	rs := &ProjectsLocationsApplicationsService{s: s}
+	rs.Services = NewProjectsLocationsApplicationsServicesService(s)
 	return rs
 }
 
 type ProjectsLocationsApplicationsService struct {
+	s *APIService
+
+	Services *ProjectsLocationsApplicationsServicesService
+}
+
+func NewProjectsLocationsApplicationsServicesService(s *APIService) *ProjectsLocationsApplicationsServicesService {
+	rs := &ProjectsLocationsApplicationsServicesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsApplicationsServicesService struct {
 	s *APIService
 }
 
@@ -11339,4 +11351,402 @@ func (c *ProjectsLocationsApplicationsRepairCall) Do(opts ...googleapi.CallOptio
 	//   ]
 	// }
 
+}
+
+// method id "appengine.projects.locations.applications.services.get":
+
+type ProjectsLocationsApplicationsServicesGetCall struct {
+	s              *APIService
+	projectsId     string
+	locationsId    string
+	applicationsId string
+	servicesId     string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Get: Gets the current configuration of the specified service.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`. Name of the resource requested.
+//     Example: apps/myapp/services/default.
+//   - servicesId: Part of `name`. See documentation of `projectsId`.
+func (r *ProjectsLocationsApplicationsServicesService) Get(projectsId string, locationsId string, applicationsId string, servicesId string) *ProjectsLocationsApplicationsServicesGetCall {
+	c := &ProjectsLocationsApplicationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.servicesId = servicesId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsApplicationsServicesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsServicesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsApplicationsServicesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsApplicationsServicesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsApplicationsServicesGetCall) Context(ctx context.Context) *ProjectsLocationsApplicationsServicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsApplicationsServicesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+		"servicesId":     c.servicesId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.services.get" call.
+// Exactly one of *Service or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Service.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsApplicationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Service{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the current configuration of the specified service.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.projects.locations.applications.services.get",
+	//   "parameterOrder": [
+	//     "projectsId",
+	//     "locationsId",
+	//     "applicationsId",
+	//     "servicesId"
+	//   ],
+	//   "parameters": {
+	//     "applicationsId": {
+	//       "description": "Part of `name`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locationsId": {
+	//       "description": "Part of `name`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectsId": {
+	//       "description": "Part of `name`. Name of the resource requested. Example: apps/myapp/services/default.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "servicesId": {
+	//       "description": "Part of `name`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}",
+	//   "response": {
+	//     "$ref": "Service"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.projects.locations.applications.services.list":
+
+type ProjectsLocationsApplicationsServicesListCall struct {
+	s              *APIService
+	projectsId     string
+	locationsId    string
+	applicationsId string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// List: Lists all the services in the application.
+//
+//   - applicationsId: Part of `parent`. See documentation of
+//     `projectsId`.
+//   - locationsId: Part of `parent`. See documentation of `projectsId`.
+//   - projectsId: Part of `parent`. Name of the parent Application
+//     resource. Example: apps/myapp.
+func (r *ProjectsLocationsApplicationsServicesService) List(projectsId string, locationsId string, applicationsId string) *ProjectsLocationsApplicationsServicesListCall {
+	c := &ProjectsLocationsApplicationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum results to
+// return per page.
+func (c *ProjectsLocationsApplicationsServicesListCall) PageSize(pageSize int64) *ProjectsLocationsApplicationsServicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *ProjectsLocationsApplicationsServicesListCall) PageToken(pageToken string) *ProjectsLocationsApplicationsServicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsApplicationsServicesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsServicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsApplicationsServicesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsApplicationsServicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsApplicationsServicesListCall) Context(ctx context.Context) *ProjectsLocationsApplicationsServicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsApplicationsServicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsServicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.services.list" call.
+// Exactly one of *ListServicesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListServicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListServicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the services in the application.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.projects.locations.applications.services.list",
+	//   "parameterOrder": [
+	//     "projectsId",
+	//     "locationsId",
+	//     "applicationsId"
+	//   ],
+	//   "parameters": {
+	//     "applicationsId": {
+	//       "description": "Part of `parent`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locationsId": {
+	//       "description": "Part of `parent`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectsId": {
+	//       "description": "Part of `parent`. Name of the parent Application resource. Example: apps/myapp.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services",
+	//   "response": {
+	//     "$ref": "ListServicesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsApplicationsServicesListCall) Pages(ctx context.Context, f func(*ListServicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

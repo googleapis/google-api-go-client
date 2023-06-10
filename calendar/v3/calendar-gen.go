@@ -2033,6 +2033,11 @@ type EventWorkingLocationProperties struct {
 	// an office.
 	OfficeLocation *EventWorkingLocationPropertiesOfficeLocation `json:"officeLocation,omitempty"`
 
+	// Type: Indicates what kind of location this is. Any details will be
+	// specified in a sub-field of the specified name (but which may be
+	// missing if empty). Any other fields will be ignored.
+	Type string `json:"type,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CustomLocation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

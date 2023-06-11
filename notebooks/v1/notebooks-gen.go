@@ -232,7 +232,7 @@ type ProjectsLocationsSchedulesService struct {
 }
 
 // AcceleratorConfig: Definition of a hardware accelerator. Note that
-// not all combinations of `type` and `core_count` are valid. Check GPUs
+// not all combinations of `type` and `core_count` are valid. See GPUs
 // on Compute Engine
 // (https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a
 // valid combination. TPUs are not supported.
@@ -1277,7 +1277,8 @@ type Instance struct {
 	// the proxy.
 	NoProxyAccess bool `json:"noProxyAccess,omitempty"`
 
-	// NoPublicIp: If true, no public IP will be assigned to this instance.
+	// NoPublicIp: If true, no external IP will be assigned to this
+	// instance.
 	NoPublicIp bool `json:"noPublicIp,omitempty"`
 
 	// NoRemoveDataDisk: Input only. If true, the data disk will not be auto
@@ -2594,7 +2595,7 @@ type RuntimeAcceleratorConfig struct {
 	//   "NVIDIA_TESLA_V100" - Accelerator type is Nvidia Tesla V100.
 	//   "NVIDIA_TESLA_P4" - Accelerator type is Nvidia Tesla P4.
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
-	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100.
+	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100 - 40GB.
 	//   "TPU_V2" - (Coming soon) Accelerator type is TPU V2.
 	//   "TPU_V3" - (Coming soon) Accelerator type is TPU V3.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
@@ -2739,7 +2740,7 @@ func (s *RuntimeMetrics) MarshalJSON() ([]byte, error) {
 }
 
 // RuntimeShieldedInstanceConfig: A set of Shielded Instance options.
-// Check Images using supported Shielded VM features
+// See Images using supported Shielded VM features
 // (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
 // Not all combinations are valid.
 type RuntimeShieldedInstanceConfig struct {
@@ -2965,7 +2966,7 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 
 // SchedulerAcceleratorConfig: Definition of a hardware accelerator.
 // Note that not all combinations of `type` and `core_count` are valid.
-// Check GPUs on Compute Engine
+// See GPUs on Compute Engine
 // (https://cloud.google.com/compute/docs/gpus) to find a valid
 // combination. TPUs are not supported.
 type SchedulerAcceleratorConfig struct {
@@ -3045,7 +3046,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // accelerator.
 type SetInstanceAcceleratorRequest struct {
 	// CoreCount: Required. Count of cores of this accelerator. Note that
-	// not all combinations of `type` and `core_count` are valid. Check GPUs
+	// not all combinations of `type` and `core_count` are valid. See GPUs
 	// on Compute Engine
 	// (https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a
 	// valid combination. TPUs are not supported.
@@ -3153,7 +3154,7 @@ func (s *SetInstanceMachineTypeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ShieldedInstanceConfig: A set of Shielded Instance options. Check
+// ShieldedInstanceConfig: A set of Shielded Instance options. See
 // Images using supported Shielded VM features
 // (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
 // Not all combinations are valid.
@@ -6368,7 +6369,7 @@ type ProjectsLocationsInstancesGetInstanceHealthCall struct {
 	header_      http.Header
 }
 
-// GetInstanceHealth: Check if a notebook instance is healthy.
+// GetInstanceHealth: Checks whether a notebook instance is healthy.
 //
 //   - name: Format:
 //     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
@@ -6477,7 +6478,7 @@ func (c *ProjectsLocationsInstancesGetInstanceHealthCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Check if a notebook instance is healthy.",
+	//   "description": "Checks whether a notebook instance is healthy.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:getInstanceHealth",
 	//   "httpMethod": "GET",
 	//   "id": "notebooks.projects.locations.instances.getInstanceHealth",
@@ -6515,7 +6516,7 @@ type ProjectsLocationsInstancesIsUpgradeableCall struct {
 	header_          http.Header
 }
 
-// IsUpgradeable: Check if a notebook instance is upgradable.
+// IsUpgradeable: Checks whether a notebook instance is upgradable.
 //
 //   - notebookInstance: Format:
 //     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
@@ -6640,7 +6641,7 @@ func (c *ProjectsLocationsInstancesIsUpgradeableCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Check if a notebook instance is upgradable.",
+	//   "description": "Checks whether a notebook instance is upgradable.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:isUpgradeable",
 	//   "httpMethod": "GET",
 	//   "id": "notebooks.projects.locations.instances.isUpgradeable",
@@ -11278,7 +11279,7 @@ type ProjectsLocationsRuntimesReportEventCall struct {
 	header_                   http.Header
 }
 
-// ReportEvent: Report and process a runtime event.
+// ReportEvent: Reports and processes a runtime event.
 //
 //   - name: Format:
 //     `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`.
@@ -11380,7 +11381,7 @@ func (c *ProjectsLocationsRuntimesReportEventCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Report and process a runtime event.",
+	//   "description": "Reports and processes a runtime event.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:reportEvent",
 	//   "httpMethod": "POST",
 	//   "id": "notebooks.projects.locations.runtimes.reportEvent",

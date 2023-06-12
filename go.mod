@@ -7,7 +7,7 @@ require (
 	github.com/google/go-cmp v0.5.9
 	github.com/google/s2a-go v0.1.4
 	github.com/google/uuid v1.3.0
-	github.com/googleapis/enterprise-certificate-proxy v0.2.3
+	github.com/googleapis/enterprise-certificate-proxy v0.2.4
 	github.com/googleapis/gax-go/v2 v2.10.0
 	go.opencensus.io v0.24.0
 	golang.org/x/net v0.10.0

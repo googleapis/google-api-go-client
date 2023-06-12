@@ -154,7 +154,6 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.BareMetalAdminClusters = NewProjectsLocationsBareMetalAdminClustersService(s)
 	rs.BareMetalClusters = NewProjectsLocationsBareMetalClustersService(s)
-	rs.BareMetalStandaloneClusters = NewProjectsLocationsBareMetalStandaloneClustersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.VmwareAdminClusters = NewProjectsLocationsVmwareAdminClustersService(s)
 	rs.VmwareClusters = NewProjectsLocationsVmwareClustersService(s)
@@ -167,8 +166,6 @@ type ProjectsLocationsService struct {
 	BareMetalAdminClusters *ProjectsLocationsBareMetalAdminClustersService
 
 	BareMetalClusters *ProjectsLocationsBareMetalClustersService
-
-	BareMetalStandaloneClusters *ProjectsLocationsBareMetalStandaloneClustersService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -240,27 +237,6 @@ func NewProjectsLocationsBareMetalClustersOperationsService(s *Service) *Project
 }
 
 type ProjectsLocationsBareMetalClustersOperationsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsBareMetalStandaloneClustersService(s *Service) *ProjectsLocationsBareMetalStandaloneClustersService {
-	rs := &ProjectsLocationsBareMetalStandaloneClustersService{s: s}
-	rs.BareMetalStandaloneNodePools = NewProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService(s)
-	return rs
-}
-
-type ProjectsLocationsBareMetalStandaloneClustersService struct {
-	s *Service
-
-	BareMetalStandaloneNodePools *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService
-}
-
-func NewProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService(s *Service) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService {
-	rs := &ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService struct {
 	s *Service
 }
 
@@ -2338,6 +2314,9 @@ type BareMetalNodePool struct {
 	// was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// UpgradePolicy: The worker node pool upgrade policy.
+	UpgradePolicy *BareMetalNodePoolUpgradePolicy `json:"upgradePolicy,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2416,6 +2395,38 @@ func (s *BareMetalNodePoolConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BareMetalNodePoolUpgradePolicy: BareMetalNodePoolUpgradePolicy
+// defines the node pool upgrade policy.
+type BareMetalNodePoolUpgradePolicy struct {
+	// ParallelUpgradeConfig: The parallel upgrade settings for worker node
+	// pools.
+	ParallelUpgradeConfig *BareMetalParallelUpgradeConfig `json:"parallelUpgradeConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ParallelUpgradeConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParallelUpgradeConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BareMetalNodePoolUpgradePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalNodePoolUpgradePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BareMetalOsEnvironmentConfig: Specifies operating system settings for
 // cluster provisioning.
 type BareMetalOsEnvironmentConfig struct {
@@ -2443,6 +2454,43 @@ type BareMetalOsEnvironmentConfig struct {
 
 func (s *BareMetalOsEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalOsEnvironmentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BareMetalParallelUpgradeConfig: BareMetalParallelUpgradeConfig
+// defines the parallel upgrade settings for worker node pools.
+type BareMetalParallelUpgradeConfig struct {
+	// ConcurrentNodes: Required. The maximum number of nodes that can be
+	// upgraded at once. Defaults to 1.
+	ConcurrentNodes int64 `json:"concurrentNodes,omitempty"`
+
+	// MinimumAvailableNodes: The minimum number of nodes that should be
+	// healthy and available during an upgrade. If set to the default value
+	// of 0, it is possible that none of the nodes will be available during
+	// an upgrade.
+	MinimumAvailableNodes int64 `json:"minimumAvailableNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrentNodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrentNodes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BareMetalParallelUpgradeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalParallelUpgradeConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2614,6 +2662,9 @@ func (s *BareMetalStorageConfig) MarshalJSON() ([]byte, error) {
 // BareMetalVersionInfo: Contains information about a specific Anthos on
 // bare metal version.
 type BareMetalVersionInfo struct {
+	// Dependencies: The list of upgrade dependencies for this version.
+	Dependencies []*UpgradeDependency `json:"dependencies,omitempty"`
+
 	// HasDependencies: If set, the cluster dependencies (e.g. the admin
 	// cluster, other user clusters managed by the same admin cluster,
 	// version skew policy, etc) must be upgraded before this version can be
@@ -2623,7 +2674,7 @@ type BareMetalVersionInfo struct {
 	// Version: Version number e.g. 1.13.1.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HasDependencies") to
+	// ForceSendFields is a list of field names (e.g. "Dependencies") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2631,13 +2682,12 @@ type BareMetalVersionInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HasDependencies") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Dependencies") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2967,44 +3017,6 @@ type EnrollBareMetalNodePoolRequest struct {
 
 func (s *EnrollBareMetalNodePoolRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollBareMetalNodePoolRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// EnrollBareMetalStandaloneNodePoolRequest: Message for enrolling an
-// existing bare metal standalone node pool to the GKE on-prem API.
-type EnrollBareMetalStandaloneNodePoolRequest struct {
-	// BareMetalStandaloneNodePoolId: User provided OnePlatform identifier
-	// that is used as part of the resource name. This value must be up to
-	// 40 characters and follow RFC-1123
-	// (https://tools.ietf.org/html/rfc1123) format.
-	BareMetalStandaloneNodePoolId string `json:"bareMetalStandaloneNodePoolId,omitempty"`
-
-	// ValidateOnly: If set, only validate the request, but do not actually
-	// enroll the node pool.
-	ValidateOnly bool `json:"validateOnly,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BareMetalStandaloneNodePoolId") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "BareMetalStandaloneNodePoolId") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *EnrollBareMetalStandaloneNodePoolRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod EnrollBareMetalStandaloneNodePoolRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4216,6 +4228,47 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeDependency: UpgradeDependency represents a dependency when
+// upgrading a resource.
+type UpgradeDependency struct {
+	// CurrentVersion: Current version of the dependency e.g. 1.15.0.
+	CurrentVersion string `json:"currentVersion,omitempty"`
+
+	// LocalName: Local name of the dependency.
+	LocalName string `json:"localName,omitempty"`
+
+	// ResourceName: Resource name of the dependency.
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// TargetVersion: Target version of the dependency e.g. 1.16.1. This is
+	// the version the dependency needs to be upgraded to before a resource
+	// can be upgraded.
+	TargetVersion string `json:"targetVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpgradeDependency) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeDependency
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8089,6 +8142,19 @@ func (c *ProjectsLocationsBareMetalAdminClustersUnenrollCall) Etag(etag string) 
 	return c
 }
 
+// IgnoreErrors sets the optional parameter "ignoreErrors": If set to
+// true, the unenrollment of a bare metal admin cluster resource will
+// succeed even if errors occur during unenrollment. This parameter can
+// be used when you want to unenroll admin cluster resource and the
+// on-prem admin cluster is disconnected / unreachable. WARNING: Using
+// this parameter when your admin cluster still exists may result in a
+// deleted GCP admin cluster but existing resourcelink in on-prem admin
+// cluster and membership.
+func (c *ProjectsLocationsBareMetalAdminClustersUnenrollCall) IgnoreErrors(ignoreErrors bool) *ProjectsLocationsBareMetalAdminClustersUnenrollCall {
+	c.urlParams_.Set("ignoreErrors", fmt.Sprint(ignoreErrors))
+	return c
+}
+
 // ValidateOnly sets the optional parameter "validateOnly": Validate the
 // request without actually doing any updates.
 func (c *ProjectsLocationsBareMetalAdminClustersUnenrollCall) ValidateOnly(validateOnly bool) *ProjectsLocationsBareMetalAdminClustersUnenrollCall {
@@ -8199,6 +8265,11 @@ func (c *ProjectsLocationsBareMetalAdminClustersUnenrollCall) Do(opts ...googlea
 	//       "description": "The current etag of the bare metal admin cluster. If an etag is provided and does not match the current etag of the cluster, deletion will be blocked and an ABORTED error will be returned.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "ignoreErrors": {
+	//       "description": "If set to true, the unenrollment of a bare metal admin cluster resource will succeed even if errors occur during unenrollment. This parameter can be used when you want to unenroll admin cluster resource and the on-prem admin cluster is disconnected / unreachable. WARNING: Using this parameter when your admin cluster still exists may result in a deleted GCP admin cluster but existing resourcelink in on-prem admin cluster and membership.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "name": {
 	//       "description": "Required. Name of the bare metal admin cluster to be unenrolled. Format: \"projects/{project}/locations/{location}/bareMetalAdminClusters/{cluster}\"",
@@ -13046,153 +13117,6 @@ func (c *ProjectsLocationsBareMetalClustersOperationsListCall) Pages(ctx context
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "gkeonprem.projects.locations.bareMetalStandaloneClusters.bareMetalStandaloneNodePools.enroll":
-
-type ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall struct {
-	s                                        *Service
-	parent                                   string
-	enrollbaremetalstandalonenodepoolrequest *EnrollBareMetalStandaloneNodePoolRequest
-	urlParams_                               gensupport.URLParams
-	ctx_                                     context.Context
-	header_                                  http.Header
-}
-
-// Enroll: Enrolls an existing bare metal standalone node pool to the
-// Anthos On-Prem API within a given project and location. Through
-// enrollment, an existing standalone node pool will become Anthos
-// On-Prem API managed. The corresponding GCP resources will be created.
-//
-//   - parent: The parent resource where this node pool will be created.
-//     projects/{project}/locations/{location}/bareMetalStandaloneClusters/
-//     {cluster}.
-func (r *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsService) Enroll(parent string, enrollbaremetalstandalonenodepoolrequest *EnrollBareMetalStandaloneNodePoolRequest) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall {
-	c := &ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.enrollbaremetalstandalonenodepoolrequest = enrollbaremetalstandalonenodepoolrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Fields(s ...googleapi.Field) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Context(ctx context.Context) *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enrollbaremetalstandalonenodepoolrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/bareMetalStandaloneNodePools:enroll")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "gkeonprem.projects.locations.bareMetalStandaloneClusters.bareMetalStandaloneNodePools.enroll" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsBareMetalStandaloneClustersBareMetalStandaloneNodePoolsEnrollCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Enrolls an existing bare metal standalone node pool to the Anthos On-Prem API within a given project and location. Through enrollment, an existing standalone node pool will become Anthos On-Prem API managed. The corresponding GCP resources will be created.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/bareMetalStandaloneClusters/{bareMetalStandaloneClustersId}/bareMetalStandaloneNodePools:enroll",
-	//   "httpMethod": "POST",
-	//   "id": "gkeonprem.projects.locations.bareMetalStandaloneClusters.bareMetalStandaloneNodePools.enroll",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this node pool will be created. projects/{project}/locations/{location}/bareMetalStandaloneClusters/{cluster}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/bareMetalStandaloneClusters/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/bareMetalStandaloneNodePools:enroll",
-	//   "request": {
-	//     "$ref": "EnrollBareMetalStandaloneNodePoolRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // method id "gkeonprem.projects.locations.operations.cancel":

@@ -285,7 +285,7 @@ type BackfillJob struct {
 	// LastStartTime: Output only. Backfill job's start time.
 	LastStartTime string `json:"lastStartTime,omitempty"`
 
-	// State: Backfill job state.
+	// State: Output only. Backfill job state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value.
@@ -2754,7 +2754,7 @@ type Validation struct {
 	// Message: Messages reflecting the validation results.
 	Message []*ValidationMessage `json:"message,omitempty"`
 
-	// State: Validation execution status.
+	// State: Output only. Validation execution status.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.

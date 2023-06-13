@@ -695,7 +695,7 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse struct {
 
 // GoogleCloudDocumentaiUiv1beta3DocumentId: Document Identifier.
 type GoogleCloudDocumentaiUiv1beta3DocumentId struct {
-	// GcsManagedDocId: A document id within user managed Cloud Storage.
+	// GcsManagedDocId: A document id within user-managed Cloud Storage.
 	GcsManagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId `json:"gcsManagedDocId,omitempty"`
 
 	// RevisionRef: Points to a specific revision of the document if set.
@@ -729,13 +729,13 @@ func (s *GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId:
-// Identifies a document uniquely within the scope of a dataset in user
-// managed Cloud Storage option.
+// Identifies a document uniquely within the scope of a dataset in the
+// user-managed Cloud Storage option.
 type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
 	// CwDocId: Id of the document (indexed) managed by Content Warehouse.
 	CwDocId string `json:"cwDocId,omitempty"`
 
-	// GcsUri: Required. The Cloud Storage uri where the actual document is
+	// GcsUri: Required. The Cloud Storage URI where the actual document is
 	// stored.
 	GcsUri string `json:"gcsUri,omitempty"`
 
@@ -2896,7 +2896,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1beta1DocumentPageImage `json:"image,omitempty"`
 
-	// ImageQualityScores: Image Quality Scores.
+	// ImageQualityScores: Image quality scores.
 	ImageQualityScores *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
@@ -3331,7 +3331,7 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores: Image
-// Quality Scores for the page image.
+// quality scores for the page image.
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
@@ -3382,7 +3382,7 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) UnmarshalJS
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect struct {
 	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
-	// indicates strong confidence of that the defect exists.
+	// indicates strong confidence that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Type: Name of the defect type. Supported values are: -
@@ -4246,8 +4246,8 @@ type GoogleCloudDocumentaiV1beta1DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
-	// etc.).
+	// Unit: Unit for the font size. Follows CSS naming (such as `in`, `px`,
+	// and `pt`).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -5231,7 +5231,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1beta2DocumentPageImage `json:"image,omitempty"`
 
-	// ImageQualityScores: Image Quality Scores.
+	// ImageQualityScores: Image quality scores.
 	ImageQualityScores *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
@@ -5666,7 +5666,7 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores: Image
-// Quality Scores for the page image.
+// quality scores for the page image.
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
@@ -5717,7 +5717,7 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) UnmarshalJS
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect struct {
 	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
-	// indicates strong confidence of that the defect exists.
+	// indicates strong confidence that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Type: Name of the defect type. Supported values are: -
@@ -6581,8 +6581,8 @@ type GoogleCloudDocumentaiV1beta2DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
-	// etc.).
+	// Unit: Unit for the font size. Follows CSS naming (such as `in`, `px`,
+	// and `pt`).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -8232,7 +8232,7 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
 // method in iOS; and, with just a little work, it can be easily
 // formatted into a CSS `rgba()` string in JavaScript. This reference
-// page does not have information about the absolute color space that
+// page doesn't have information about the absolute color space that
 // should be used to interpret the RGB value—for example, sRGB, Adobe
 // RGB, DCI-P3, and BT.2020. By default, applications should assume the
 // sRGB color space. When color equality needs to be decided,

@@ -1193,7 +1193,9 @@ func (s *DeletionMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeprecatedEvent: Google Chat events.
+// DeprecatedEvent: Google Chat events. To learn how to use events, see
+// Receive and respond to Google Chat events
+// (https://developers.google.com/chat/api/guides/message-formats).
 type DeprecatedEvent struct {
 	// Action: The form action data associated with an interactive card that
 	// was clicked. Only populated for CARD_CLICKED events. See the
@@ -6710,8 +6712,10 @@ type SpacesMembersGetCall struct {
 // the `chat.memberships` or `chat.memberships.readonly` authorization
 // scope.
 //
-//   - name: Resource name of the membership to retrieve. Format:
-//     `spaces/{space}/members/{member}`.
+//   - name: Resource name of the membership to retrieve. To get the app's
+//     own membership, you can optionally use
+//     `spaces/{space}/members/app`. Format:
+//     `spaces/{space}/members/{member}` or `spaces/{space}/members/app`.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6826,7 +6830,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to retrieve. Format: `spaces/{space}/members/{member}`",
+	//       "description": "Required. Resource name of the membership to retrieve. To get the app's own membership, you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app`",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,

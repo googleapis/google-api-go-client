@@ -158,6 +158,7 @@ func NewAccountsService(s *Service) *AccountsService {
 	rs.Offers = NewAccountsOffersService(s)
 	rs.ReportJobs = NewAccountsReportJobsService(s)
 	rs.Reports = NewAccountsReportsService(s)
+	rs.SkuGroups = NewAccountsSkuGroupsService(s)
 	return rs
 }
 
@@ -173,6 +174,8 @@ type AccountsService struct {
 	ReportJobs *AccountsReportJobsService
 
 	Reports *AccountsReportsService
+
+	SkuGroups *AccountsSkuGroupsService
 }
 
 func NewAccountsChannelPartnerLinksService(s *Service) *AccountsChannelPartnerLinksService {
@@ -265,6 +268,27 @@ func NewAccountsReportsService(s *Service) *AccountsReportsService {
 }
 
 type AccountsReportsService struct {
+	s *Service
+}
+
+func NewAccountsSkuGroupsService(s *Service) *AccountsSkuGroupsService {
+	rs := &AccountsSkuGroupsService{s: s}
+	rs.BillableSkus = NewAccountsSkuGroupsBillableSkusService(s)
+	return rs
+}
+
+type AccountsSkuGroupsService struct {
+	s *Service
+
+	BillableSkus *AccountsSkuGroupsBillableSkusService
+}
+
+func NewAccountsSkuGroupsBillableSkusService(s *Service) *AccountsSkuGroupsBillableSkusService {
+	rs := &AccountsSkuGroupsBillableSkusService{s: s}
+	return rs
+}
+
+type AccountsSkuGroupsBillableSkusService struct {
 	s *Service
 }
 
@@ -397,6 +421,46 @@ type GoogleCloudChannelV1AssociationInfo struct {
 
 func (s *GoogleCloudChannelV1AssociationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1AssociationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1BillableSku: Represents the Billable SKU
+// information.
+type GoogleCloudChannelV1BillableSku struct {
+	// Service: Resource name of Service which contains Repricing SKU.
+	// Format: services/{service}. Example: "services/B7D9-FDCB-15D8".
+	Service string `json:"service,omitempty"`
+
+	// ServiceDisplayName: Unique human readable name for the Service.
+	ServiceDisplayName string `json:"serviceDisplayName,omitempty"`
+
+	// Sku: Resource name of Billable SKU. Format: billableSkus/{sku}.
+	// Example: billableSkus/6E1B-6634-470F".
+	Sku string `json:"sku,omitempty"`
+
+	// SkuDisplayName: Unique human readable name for the SKU.
+	SkuDisplayName string `json:"skuDisplayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Service") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Service") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1BillableSku) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1BillableSku
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2393,6 +2457,80 @@ func (s *GoogleCloudChannelV1ListReportsResponse) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1ListSkuGroupBillableSkusResponse: Response
+// message for ListSkuGroupBillableSkus.
+type GoogleCloudChannelV1ListSkuGroupBillableSkusResponse struct {
+	// BillableSkus: The list of billable SKUs in the requested SKU group.
+	BillableSkus []*GoogleCloudChannelV1BillableSku `json:"billableSkus,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass to
+	// ListSkuGroupBillableSkus.page_token to obtain that page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BillableSkus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillableSkus") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ListSkuGroupBillableSkusResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ListSkuGroupBillableSkusResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ListSkuGroupsResponse: Response message for
+// ListSkuGroups.
+type GoogleCloudChannelV1ListSkuGroupsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass to
+	// ListSkuGroups.page_token to obtain that page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SkuGroups: The list of SKU groups requested.
+	SkuGroups []*GoogleCloudChannelV1SkuGroup `json:"skuGroups,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ListSkuGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ListSkuGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1ListSkusResponse: Response message for ListSkus.
 type GoogleCloudChannelV1ListSkusResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
@@ -4104,6 +4242,39 @@ type GoogleCloudChannelV1Sku struct {
 
 func (s *GoogleCloudChannelV1Sku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Sku
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1SkuGroup: Represents the SKU group information.
+type GoogleCloudChannelV1SkuGroup struct {
+	// DisplayName: Unique human readable identifier for the SKU group.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Resource name of SKU group. Format:
+	// accounts/{account}/skuGroups/{sku_group}. Example:
+	// "accounts/C01234/skuGroups/3d50fd57-3157-4577-a5a9-a219b8490041".
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1SkuGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1SkuGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15758,6 +15929,423 @@ func (c *AccountsReportsRunCall) Do(opts ...googleapi.CallOption) (*GoogleLongru
 	//   ]
 	// }
 
+}
+
+// method id "cloudchannel.accounts.skuGroups.list":
+
+type AccountsSkuGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Rebilling supported SKU groups the account is
+// authorized to sell. Reference:
+// https://cloud.google.com/skus/sku-groups Possible Error Codes: *
+// PERMISSION_DENIED: If the account making the request and the account
+// being queried are different, or the account doesn't exist. *
+// INTERNAL: Any non-user error related to technical issues in the
+// backend. In this case, contact Cloud Channel support. Return Value:
+// If successful, the SkuGroup resources. The data for each resource is
+// displayed in the alphabetical order of SKU group display name. The
+// data for each resource is displayed in the ascending order of
+// SkuGroup.display_name If unsuccessful, returns an error.
+//
+//   - parent: The resource name of the account from which to list SKU
+//     groups. Parent uses the format: accounts/{account}.
+func (r *AccountsSkuGroupsService) List(parent string) *AccountsSkuGroupsListCall {
+	c := &AccountsSkuGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of SKU groups to return. The service may return fewer than this
+// value. If unspecified, returns a maximum of 1000 SKU groups. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *AccountsSkuGroupsListCall) PageSize(pageSize int64) *AccountsSkuGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results beyond the first page. Obtained through
+// ListSkuGroups.next_page_token of the previous
+// CloudChannelService.ListSkuGroups call.
+func (c *AccountsSkuGroupsListCall) PageToken(pageToken string) *AccountsSkuGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsSkuGroupsListCall) Fields(s ...googleapi.Field) *AccountsSkuGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsSkuGroupsListCall) IfNoneMatch(entityTag string) *AccountsSkuGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsSkuGroupsListCall) Context(ctx context.Context) *AccountsSkuGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsSkuGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsSkuGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/skuGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.skuGroups.list" call.
+// Exactly one of *GoogleCloudChannelV1ListSkuGroupsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ListSkuGroupsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsSkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListSkuGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudChannelV1ListSkuGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the Rebilling supported SKU groups the account is authorized to sell. Reference: https://cloud.google.com/skus/sku-groups Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different, or the account doesn't exist. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the SkuGroup resources. The data for each resource is displayed in the alphabetical order of SKU group display name. The data for each resource is displayed in the ascending order of SkuGroup.display_name If unsuccessful, returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/skuGroups",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.skuGroups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of SKU groups to return. The service may return fewer than this value. If unspecified, returns a maximum of 1000 SKU groups. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListSkuGroups.next_page_token of the previous CloudChannelService.ListSkuGroups call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the account from which to list SKU groups. Parent uses the format: accounts/{account}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/skuGroups",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ListSkuGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsSkuGroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListSkuGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudchannel.accounts.skuGroups.billableSkus.list":
+
+type AccountsSkuGroupsBillableSkusListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Billable SKUs in a given SKU group. Possible error
+// codes: PERMISSION_DENIED: If the account making the request and the
+// account being queried for are different, or the account doesn't
+// exist. INVALID_ARGUMENT: Missing or invalid required parameters in
+// the request. INTERNAL: Any non-user error related to technical issue
+// in the backend. In this case, contact cloud channel support. Return
+// Value: If successful, the BillableSku resources. The data for each
+// resource is displayed in the ascending order of: *
+// BillableSku.service_display_name * BillableSku.sku_display_name If
+// unsuccessful, returns an error.
+//
+//   - parent: Resource name of the SKU group. Format:
+//     accounts/{account}/skuGroups/{sku_group}.
+func (r *AccountsSkuGroupsBillableSkusService) List(parent string) *AccountsSkuGroupsBillableSkusListCall {
+	c := &AccountsSkuGroupsBillableSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of SKUs to return. The service may return fewer than this value. If
+// unspecified, returns a maximum of 100000 SKUs. The maximum value is
+// 100000; values above 100000 will be coerced to 100000.
+func (c *AccountsSkuGroupsBillableSkusListCall) PageSize(pageSize int64) *AccountsSkuGroupsBillableSkusListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results beyond the first page. Obtained through
+// ListSkuGroupBillableSkus.next_page_token of the previous
+// CloudChannelService.ListSkuGroupBillableSkus call.
+func (c *AccountsSkuGroupsBillableSkusListCall) PageToken(pageToken string) *AccountsSkuGroupsBillableSkusListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsSkuGroupsBillableSkusListCall) Fields(s ...googleapi.Field) *AccountsSkuGroupsBillableSkusListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsSkuGroupsBillableSkusListCall) IfNoneMatch(entityTag string) *AccountsSkuGroupsBillableSkusListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsSkuGroupsBillableSkusListCall) Context(ctx context.Context) *AccountsSkuGroupsBillableSkusListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsSkuGroupsBillableSkusListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsSkuGroupsBillableSkusListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/billableSkus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.skuGroups.billableSkus.list" call.
+// Exactly one of *GoogleCloudChannelV1ListSkuGroupBillableSkusResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudChannelV1ListSkuGroupBillableSkusResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsSkuGroupsBillableSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListSkuGroupBillableSkusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudChannelV1ListSkuGroupBillableSkusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the Billable SKUs in a given SKU group. Possible error codes: PERMISSION_DENIED: If the account making the request and the account being queried for are different, or the account doesn't exist. INVALID_ARGUMENT: Missing or invalid required parameters in the request. INTERNAL: Any non-user error related to technical issue in the backend. In this case, contact cloud channel support. Return Value: If successful, the BillableSku resources. The data for each resource is displayed in the ascending order of: * BillableSku.service_display_name * BillableSku.sku_display_name If unsuccessful, returns an error.",
+	//   "flatPath": "v1/accounts/{accountsId}/skuGroups/{skuGroupsId}/billableSkus",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.skuGroups.billableSkus.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of SKUs to return. The service may return fewer than this value. If unspecified, returns a maximum of 100000 SKUs. The maximum value is 100000; values above 100000 will be coerced to 100000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListSkuGroupBillableSkus.next_page_token of the previous CloudChannelService.ListSkuGroupBillableSkus call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the SKU group. Format: accounts/{account}/skuGroups/{sku_group}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/skuGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/billableSkus",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ListSkuGroupBillableSkusResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsSkuGroupsBillableSkusListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListSkuGroupBillableSkusResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "cloudchannel.operations.cancel":

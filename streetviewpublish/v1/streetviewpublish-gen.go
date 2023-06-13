@@ -2984,7 +2984,8 @@ func (r *PhotoSequencesService) List() *PhotoSequencesListCall {
 // Filter sets the optional parameter "filter": The filter expression.
 // For example: `imagery_type=SPHERICAL`. The filters supported are:
 // `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`,
-// `min_longitude`, `max_longitude`, and `filename_query`. See
+// `min_longitude`, `max_longitude`, `filename_query`,
+// `min_capture_time_seconds`, and `max_capture_time_seconds`. See
 // https://google.aip.dev/160 for more information. Filename queries
 // should sent as a Phrase in order to support multiple words and
 // special characters by adding escaped quotes. Ex:
@@ -3115,7 +3116,7 @@ func (c *PhotoSequencesListCall) Do(opts ...googleapi.CallOption) (*ListPhotoSeq
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter expression. For example: `imagery_type=SPHERICAL`. The filters supported are: `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, and `filename_query`. See https://google.aip.dev/160 for more information. Filename queries should sent as a Phrase in order to support multiple words and special characters by adding escaped quotes. Ex: filename_query=\"example of a phrase.mp4\"",
+	//       "description": "Optional. The filter expression. For example: `imagery_type=SPHERICAL`. The filters supported are: `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, `filename_query`, `min_capture_time_seconds`, and `max_capture_time_seconds`. See https://google.aip.dev/160 for more information. Filename queries should sent as a Phrase in order to support multiple words and special characters by adding escaped quotes. Ex: filename_query=\"example of a phrase.mp4\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3648,9 +3649,8 @@ func (r *PhotosService) List() *PhotosListCall {
 // Filter sets the optional parameter "filter": The filter expression.
 // For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters
 // supported are: `placeId`, `min_latitude`, `max_latitude`,
-// `min_longitude`, `max_longitude`, 'min_capture_time_seconds', and
-// 'max_capture_time_seconds'. See https://google.aip.dev/160 for more
-// information.
+// `min_longitude`, `max_longitude`. See https://google.aip.dev/160 for
+// more information.
 func (c *PhotosListCall) Filter(filter string) *PhotosListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3805,7 +3805,7 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters supported are: `placeId`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, 'min_capture_time_seconds', and 'max_capture_time_seconds'. See https://google.aip.dev/160 for more information.",
+	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters supported are: `placeId`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`. See https://google.aip.dev/160 for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

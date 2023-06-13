@@ -5913,6 +5913,27 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 // revenue share is applied.
 //
 //	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//	"FUNNEL_REQUESTS" - Number of requests for non-ad units (for
+//
+// example a related search unit). For more information, see [Funnel
+// requests](https://support.google.com/adsense/answer/11586959).
+//
+//	"FUNNEL_IMPRESSIONS" - Number of requests for non-ad units ads that
+//
+// returned content that was shown to the user. For more information,
+// see [Funnel
+// impressions](https://support.google.com/adsense/answer/11585767).
+//
+//	"FUNNEL_CLICKS" - Number of times a user clicked on a non-ad unit,
+//
+// triggering further ad requests. For more information, see [Funnel
+// clicks](https://support.google.com/adsense/answer/11586382).
+//
+//	"FUNNEL_RPM" - Revenue per thousand funnel impressions. This is
+//
+// calculated by dividing estimated revenue by the number of funnel
+// impressions multiplied by 1000. For more information, see [Funnel
+// RPM](https://support.google.com/adsense/answer/11585979).
 func (c *AccountsReportsGenerateCall) Metrics(metrics ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
 	return c
@@ -6290,7 +6311,11 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "COST_PER_CLICK",
 	//         "ADS_PER_IMPRESSION",
 	//         "TOTAL_EARNINGS",
-	//         "WEBSEARCH_RESULT_PAGES"
+	//         "WEBSEARCH_RESULT_PAGES",
+	//         "FUNNEL_REQUESTS",
+	//         "FUNNEL_IMPRESSIONS",
+	//         "FUNNEL_CLICKS",
+	//         "FUNNEL_RPM"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified metric.",
@@ -6325,7 +6350,11 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
 	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
-	//         "Number of results pages."
+	//         "Number of results pages.",
+	//         "Number of requests for non-ad units (for example a related search unit). For more information, see [Funnel requests](https://support.google.com/adsense/answer/11586959).",
+	//         "Number of requests for non-ad units ads that returned content that was shown to the user. For more information, see [Funnel impressions](https://support.google.com/adsense/answer/11585767).",
+	//         "Number of times a user clicked on a non-ad unit, triggering further ad requests. For more information, see [Funnel clicks](https://support.google.com/adsense/answer/11586382).",
+	//         "Revenue per thousand funnel impressions. This is calculated by dividing estimated revenue by the number of funnel impressions multiplied by 1000. For more information, see [Funnel RPM](https://support.google.com/adsense/answer/11585979)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6821,6 +6850,27 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 // revenue share is applied.
 //
 //	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//	"FUNNEL_REQUESTS" - Number of requests for non-ad units (for
+//
+// example a related search unit). For more information, see [Funnel
+// requests](https://support.google.com/adsense/answer/11586959).
+//
+//	"FUNNEL_IMPRESSIONS" - Number of requests for non-ad units ads that
+//
+// returned content that was shown to the user. For more information,
+// see [Funnel
+// impressions](https://support.google.com/adsense/answer/11585767).
+//
+//	"FUNNEL_CLICKS" - Number of times a user clicked on a non-ad unit,
+//
+// triggering further ad requests. For more information, see [Funnel
+// clicks](https://support.google.com/adsense/answer/11586382).
+//
+//	"FUNNEL_RPM" - Revenue per thousand funnel impressions. This is
+//
+// calculated by dividing estimated revenue by the number of funnel
+// impressions multiplied by 1000. For more information, see [Funnel
+// RPM](https://support.google.com/adsense/answer/11585979).
 func (c *AccountsReportsGenerateCsvCall) Metrics(metrics ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
 	return c
@@ -7198,7 +7248,11 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "COST_PER_CLICK",
 	//         "ADS_PER_IMPRESSION",
 	//         "TOTAL_EARNINGS",
-	//         "WEBSEARCH_RESULT_PAGES"
+	//         "WEBSEARCH_RESULT_PAGES",
+	//         "FUNNEL_REQUESTS",
+	//         "FUNNEL_IMPRESSIONS",
+	//         "FUNNEL_CLICKS",
+	//         "FUNNEL_RPM"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified metric.",
@@ -7233,7 +7287,11 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
 	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
-	//         "Number of results pages."
+	//         "Number of results pages.",
+	//         "Number of requests for non-ad units (for example a related search unit). For more information, see [Funnel requests](https://support.google.com/adsense/answer/11586959).",
+	//         "Number of requests for non-ad units ads that returned content that was shown to the user. For more information, see [Funnel impressions](https://support.google.com/adsense/answer/11585767).",
+	//         "Number of times a user clicked on a non-ad unit, triggering further ad requests. For more information, see [Funnel clicks](https://support.google.com/adsense/answer/11586382).",
+	//         "Revenue per thousand funnel impressions. This is calculated by dividing estimated revenue by the number of funnel impressions multiplied by 1000. For more information, see [Funnel RPM](https://support.google.com/adsense/answer/11585979)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

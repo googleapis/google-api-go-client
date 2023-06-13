@@ -1764,8 +1764,8 @@ func (s *GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData) MarshalJSON() ([]
 // GoogleAnalyticsAdminV1betaDataStreamWebStreamData: Data specific to
 // web streams.
 type GoogleAnalyticsAdminV1betaDataStreamWebStreamData struct {
-	// DefaultUri: Immutable. Domain name of the web app being measured, or
-	// empty. Example: "http://www.google.com", "https://www.google.com"
+	// DefaultUri: Domain name of the web app being measured, or empty.
+	// Example: "http://www.google.com", "https://www.google.com"
 	DefaultUri string `json:"defaultUri,omitempty"`
 
 	// FirebaseAppId: Output only. ID of the corresponding web app in
@@ -1773,8 +1773,8 @@ type GoogleAnalyticsAdminV1betaDataStreamWebStreamData struct {
 	// recreated.
 	FirebaseAppId string `json:"firebaseAppId,omitempty"`
 
-	// MeasurementId: Output only. Analytics "Measurement ID", without the
-	// "G-" prefix. Example: "G-1A2BCD345E" would just be "1A2BCD345E"
+	// MeasurementId: Output only. Analytics Measurement ID. Example:
+	// "G-1A2BCD345E"
 	MeasurementId string `json:"measurementId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultUri") to

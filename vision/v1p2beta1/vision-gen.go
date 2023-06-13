@@ -647,7 +647,7 @@ func (s *BoundingPoly) MarshalJSON() ([]byte, error) {
 // trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
 // method in iOS; and, with just a little work, it can be easily
 // formatted into a CSS `rgba()` string in JavaScript. This reference
-// page does not have information about the absolute color space that
+// page doesn't have information about the absolute color space that
 // should be used to interpret the RGB value—for example, sRGB, Adobe
 // RGB, DCI-P3, and BT.2020. By default, applications should assume the
 // sRGB color space. When color equality needs to be decided,

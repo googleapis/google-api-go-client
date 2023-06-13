@@ -21270,6 +21270,45 @@ func (s *RpcOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SafeHtmlProto: IMPORTANT: It is unsafe to accept this message from an
+// untrusted source, since it's trivial for an attacker to forge
+// serialized messages that don't fulfill the type's safety contract --
+// for example, it could contain attacker controlled script. A system
+// which receives a SafeHtmlProto implicitly trusts the producer of the
+// SafeHtmlProto. So, it's generally safe to return this message in RPC
+// responses, but generally unsafe to accept it in RPC requests.
+type SafeHtmlProto struct {
+	// PrivateDoNotAccessOrElseSafeHtmlWrappedValue: IMPORTANT: Never set or
+	// read this field, even from tests, it is private. See documentation at
+	// the top of .proto file for programming language packages with which
+	// to create or read this message.
+	PrivateDoNotAccessOrElseSafeHtmlWrappedValue string `json:"privateDoNotAccessOrElseSafeHtmlWrappedValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PrivateDoNotAccessOrElseSafeHtmlWrappedValue") to unconditionally
+	// include in API requests. By default, fields with empty or default
+	// values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PrivateDoNotAccessOrElseSafeHtmlWrappedValue") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SafeHtmlProto) MarshalJSON() ([]byte, error) {
+	type NoMethod SafeHtmlProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SafeUrlProto: Message containing a string that is safe to use in URL
 // contexts in DOM APIs and HTML documents, where the URL context does
 // not refer to a resource that loads code.
@@ -23082,6 +23121,12 @@ type SpellResult struct {
 	// SuggestedQuery: The suggested spelling of the query.
 	SuggestedQuery string `json:"suggestedQuery,omitempty"`
 
+	// SuggestedQueryHtml: The sanitized HTML representing the spell
+	// corrected query that can be used in the UI. This usually has
+	// language-specific tags to mark up parts of the query that are spell
+	// checked.
+	SuggestedQueryHtml *SafeHtmlProto `json:"suggestedQueryHtml,omitempty"`
+
 	// SuggestionType: Suggestion triggered for the current query.
 	//
 	// Possible values:
@@ -24640,6 +24685,8 @@ type TriggerAction struct {
 	// similar to ACTION_MESSAGE_EXPUNGE but fires within one day. To be
 	// used ONLY for auto save drafts. See
 	// go/faster-auto-save-draft-deletion for more details.
+	//   "ACTION_RELEVANCY_SCORE_CATCHUP" - Trigger for relevancy score
+	// catchup. See go/relevancy-trigger-doc for detail.
 	Action string `json:"action,omitempty"`
 
 	// Data: Clients should use extensions on the Trigger message instead.

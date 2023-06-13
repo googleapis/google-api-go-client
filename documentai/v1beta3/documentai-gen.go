@@ -731,7 +731,7 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse struct {
 
 // GoogleCloudDocumentaiUiv1beta3DocumentId: Document Identifier.
 type GoogleCloudDocumentaiUiv1beta3DocumentId struct {
-	// GcsManagedDocId: A document id within user managed Cloud Storage.
+	// GcsManagedDocId: A document id within user-managed Cloud Storage.
 	GcsManagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId `json:"gcsManagedDocId,omitempty"`
 
 	// RevisionRef: Points to a specific revision of the document if set.
@@ -765,13 +765,13 @@ func (s *GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId:
-// Identifies a document uniquely within the scope of a dataset in user
-// managed Cloud Storage option.
+// Identifies a document uniquely within the scope of a dataset in the
+// user-managed Cloud Storage option.
 type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
 	// CwDocId: Id of the document (indexed) managed by Content Warehouse.
 	CwDocId string `json:"cwDocId,omitempty"`
 
-	// GcsUri: Required. The Cloud Storage uri where the actual document is
+	// GcsUri: Required. The Cloud Storage URI where the actual document is
 	// stored.
 	GcsUri string `json:"gcsUri,omitempty"`
 
@@ -2932,7 +2932,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1beta1DocumentPageImage `json:"image,omitempty"`
 
-	// ImageQualityScores: Image Quality Scores.
+	// ImageQualityScores: Image quality scores.
 	ImageQualityScores *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
@@ -3367,7 +3367,7 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores: Image
-// Quality Scores for the page image.
+// quality scores for the page image.
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
@@ -3418,7 +3418,7 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) UnmarshalJS
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect struct {
 	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
-	// indicates strong confidence of that the defect exists.
+	// indicates strong confidence that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Type: Name of the defect type. Supported values are: -
@@ -4282,8 +4282,8 @@ type GoogleCloudDocumentaiV1beta1DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
-	// etc.).
+	// Unit: Unit for the font size. Follows CSS naming (such as `in`, `px`,
+	// and `pt`).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -5203,7 +5203,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1beta2DocumentPageImage `json:"image,omitempty"`
 
-	// ImageQualityScores: Image Quality Scores.
+	// ImageQualityScores: Image quality scores.
 	ImageQualityScores *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
@@ -5638,7 +5638,7 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores: Image
-// Quality Scores for the page image.
+// quality scores for the page image.
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
@@ -5689,7 +5689,7 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) UnmarshalJS
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect struct {
 	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
-	// indicates strong confidence of that the defect exists.
+	// indicates strong confidence that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Type: Name of the defect type. Supported values are: -
@@ -6553,8 +6553,8 @@ type GoogleCloudDocumentaiV1beta2DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
-	// etc.).
+	// Unit: Unit for the font size. Follows CSS naming (such as `in`, `px`,
+	// and `pt`).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -7218,8 +7218,8 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 	// ProcessOptions: Inference-time options for the process API
 	ProcessOptions *GoogleCloudDocumentaiV1beta3ProcessOptions `json:"processOptions,omitempty"`
 
-	// SkipHumanReview: Whether Human Review feature should be skipped for
-	// this request. Default to `false`.
+	// SkipHumanReview: Whether human review should be skipped for this
+	// request. Default to `false`.
 	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7406,13 +7406,13 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
 // Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
-	// DocumentWarehouseConfig: Optional. Document Warehouse-based dataset
-	// config.
+	// DocumentWarehouseConfig: Optional. Document AI Warehouse-based
+	// dataset configuration.
 	DocumentWarehouseConfig *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig `json:"documentWarehouseConfig,omitempty"`
 
-	// GcsManagedConfig: Optional. User managed GCS dataset config. Use this
-	// config if the dataset documents are stored under a user managed GCS
-	// location.
+	// GcsManagedConfig: Optional. User-managed Cloud Storage dataset
+	// configuration. Use this configuration if the dataset documents are
+	// stored under a user-managed Cloud Storage location.
 	GcsManagedConfig *GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig `json:"gcsManagedConfig,omitempty"`
 
 	// Name: Dataset resource name. Format:
@@ -7421,12 +7421,11 @@ type GoogleCloudDocumentaiV1beta3Dataset struct {
 	Name string `json:"name,omitempty"`
 
 	// SpannerIndexingConfig: Optional. A lightweight indexing source with
-	// low latency and high reliability, but lack advanced features like
-	// CMEK and content based search.
+	// low latency and high reliability, but lacking advanced features like
+	// CMEK and content-based search.
 	SpannerIndexingConfig *GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig `json:"spannerIndexingConfig,omitempty"`
 
-	// State: Required. State of the dataset. Will be ignored when updating
-	// dataset.
+	// State: Required. State of the dataset. Ignored when updating dataset.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default unspecified enum, should not be used.
@@ -7435,9 +7434,9 @@ type GoogleCloudDocumentaiV1beta3Dataset struct {
 	//   "INITIALIZED" - Dataset has been initialized.
 	State string `json:"state,omitempty"`
 
-	// UnmanagedDatasetConfig: Optional. Unmanaged dataset config. Use this
-	// config if the dataset documents are managed by the document service
-	// internally (not user managed).
+	// UnmanagedDatasetConfig: Optional. Unmanaged dataset configuration.
+	// Use this configuration if the dataset documents are managed by the
+	// document service internally (not user-managed).
 	UnmanagedDatasetConfig *GoogleCloudDocumentaiV1beta3DatasetUnmanagedDatasetConfig `json:"unmanagedDatasetConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7465,15 +7464,16 @@ func (s *GoogleCloudDocumentaiV1beta3Dataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig: Config
-// specific to the Document Warehouse-based implementation.
+// GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig:
+// Configuration specific to the Document AI Warehouse-based
+// implementation.
 type GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig struct {
-	// Collection: Output only. The collection in Document Warehouse
+	// Collection: Output only. The collection in Document AI Warehouse
 	// associated with the dataset.
 	Collection string `json:"collection,omitempty"`
 
-	// Schema: Output only. The schema in Document Warehouse associated with
-	// the dataset.
+	// Schema: Output only. The schema in Document AI Warehouse associated
+	// with the dataset.
 	Schema string `json:"schema,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Collection") to
@@ -7499,10 +7499,10 @@ func (s *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig: Config specific
-// to the GCS-based implementation.
+// GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig: Configuration
+// specific to the Cloud Storage-based implementation.
 type GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig struct {
-	// GcsPrefix: Required. The Cloud Storage uri (a directory) where the
+	// GcsPrefix: Required. The Cloud Storage URI (a directory) where the
 	// documents belonging to the dataset must be stored.
 	GcsPrefix *GoogleCloudDocumentaiV1beta3GcsPrefix `json:"gcsPrefix,omitempty"`
 
@@ -7567,13 +7567,13 @@ func (s *GoogleCloudDocumentaiV1beta3DatasetSchema) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig: Config
-// specific to spanner based indexing.
+// GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig:
+// Configuration specific to spanner-based indexing.
 type GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig struct {
 }
 
-// GoogleCloudDocumentaiV1beta3DatasetUnmanagedDatasetConfig: Config
-// specific to unmanaged config
+// GoogleCloudDocumentaiV1beta3DatasetUnmanagedDatasetConfig:
+// Configuration specific to an unmanaged dataset.
 type GoogleCloudDocumentaiV1beta3DatasetUnmanagedDatasetConfig struct {
 }
 
@@ -8122,7 +8122,7 @@ type GoogleCloudDocumentaiV1beta3DocumentPage struct {
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1beta3DocumentPageImage `json:"image,omitempty"`
 
-	// ImageQualityScores: Image Quality Scores.
+	// ImageQualityScores: Image quality scores.
 	ImageQualityScores *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
@@ -8557,7 +8557,7 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageImage) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores: Image
-// Quality Scores for the page image.
+// quality scores for the page image.
 type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
@@ -8608,7 +8608,7 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores) UnmarshalJS
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect struct {
 	// Confidence: Confidence of detected defect. Range `[0, 1]` where `1`
-	// indicates strong confidence of that the defect exists.
+	// indicates strong confidence that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Type: Name of the defect type. Supported values are: -
@@ -9432,10 +9432,10 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 
 	// Name: Name of the type. It must be unique within the schema file and
 	// cannot be a "Common Type". The following naming conventions are used:
-	// - Use `snake_casing` - Name matching is case-sensitive - Maximum 64
+	// - Use `snake_casing`. - Name matching is case-sensitive. - Maximum 64
 	// characters. - Must start with a letter. - Allowed characters: ASCII
 	// letters `[a-z0-9_-]`. (For backward compatibility internal
-	// infrastructure and tooling can handle any ascii character) - The `/`
+	// infrastructure and tooling can handle any ascii character.) - The `/`
 	// is sometimes used to denote a property of a type. For example
 	// `line_item/amount`. This convention is deprecated, but will still be
 	// honored for backward compatibility.
@@ -9699,8 +9699,8 @@ type GoogleCloudDocumentaiV1beta3DocumentStyleFontSize struct {
 	// Size: Font size for the text.
 	Size float64 `json:"size,omitempty"`
 
-	// Unit: Unit for the font size. Follows CSS naming (`in`, `px`, `pt`,
-	// etc.).
+	// Unit: Unit for the font size. Follows CSS naming (such as `in`, `px`,
+	// and `pt`).
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
@@ -9893,7 +9893,7 @@ type GoogleCloudDocumentaiV1beta3EnableProcessorResponse struct {
 // GoogleCloudDocumentaiV1beta3EntityTypeMetadata: Metadata about an
 // entity type.
 type GoogleCloudDocumentaiV1beta3EntityTypeMetadata struct {
-	// Inactive: Whether the entity type should be considered as "inactive".
+	// Inactive: Whether the entity type should be considered inactive.
 	Inactive bool `json:"inactive,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Inactive") to
@@ -10977,8 +10977,8 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 	// RawDocument: A raw document content (bytes).
 	RawDocument *GoogleCloudDocumentaiV1beta3RawDocument `json:"rawDocument,omitempty"`
 
-	// SkipHumanReview: Whether Human Review feature should be skipped for
-	// this request. Default to false.
+	// SkipHumanReview: Whether human review should be skipped for this
+	// request. Default to `false`.
 	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
@@ -11063,7 +11063,7 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 
 	// KmsKeyName: The KMS key
 	// (https://cloud.google.com/security-key-management) used for
-	// encryption/decryption in CMEK scenarios.
+	// encryption and decryption in CMEK scenarios.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// Name: Output only. Immutable. The resource name of the processor.
@@ -11228,8 +11228,8 @@ func (s *GoogleCloudDocumentaiV1beta3ProcessorType) MarshalJSON() ([]byte, error
 // GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo: The location
 // information about where the processor is available.
 type GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo struct {
-	// LocationId: The location id, refer to regional and multi-regional
-	// support (/document-ai/docs/regions) for supported locations.
+	// LocationId: The location ID. For supported locations, refer to
+	// regional and multi-regional support (/document-ai/docs/regions).
 	LocationId string `json:"locationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LocationId") to
@@ -11257,10 +11257,9 @@ func (s *GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo) MarshalJSON() ([
 
 // GoogleCloudDocumentaiV1beta3ProcessorVersion: A processor version is
 // an implementation of a processor. Each processor can have multiple
-// versions, pre-trained by Google internally or uptrained by the
-// customer. At a time, a processor can only have one default version
-// version. So the processor's behavior (when processing documents) is
-// defined by a default version
+// versions, pretrained by Google internally or uptrained by the
+// customer. A processor can only have one default version at a time.
+// Its document-processing behavior is defined by that version.
 type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// CreateTime: The time the processor version was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -12167,7 +12166,7 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
 // method in iOS; and, with just a little work, it can be easily
 // formatted into a CSS `rgba()` string in JavaScript. This reference
-// page does not have information about the absolute color space that
+// page doesn't have information about the absolute color space that
 // should be used to interpret the RGB value—for example, sRGB, Adobe
 // RGB, DCI-P3, and BT.2020. By default, applications should assume the
 // sRGB color space. When color equality needs to be decided,
@@ -15470,7 +15469,7 @@ type ProjectsLocationsProcessorsDatasetGetDatasetSchemaCall struct {
 	header_      http.Header
 }
 
-// GetDatasetSchema: Gets the DatasetSchema of a Dataset.
+// GetDatasetSchema: Gets the `DatasetSchema` of a `Dataset`.
 //
 //   - name: The dataset schema resource name. Format:
 //     projects/{project}/locations/{location}/processors/{processor}/datas
@@ -15589,7 +15588,7 @@ func (c *ProjectsLocationsProcessorsDatasetGetDatasetSchemaCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the DatasetSchema of a Dataset.",
+	//   "description": "Gets the `DatasetSchema` of a `Dataset`.",
 	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/dataset/datasetSchema",
 	//   "httpMethod": "GET",
 	//   "id": "documentai.projects.locations.processors.dataset.getDatasetSchema",
@@ -15632,7 +15631,7 @@ type ProjectsLocationsProcessorsDatasetUpdateDatasetSchemaCall struct {
 	header_                                   http.Header
 }
 
-// UpdateDatasetSchema: Updates a DatasetSchema.
+// UpdateDatasetSchema: Updates a `DatasetSchema`.
 //
 //   - name: Dataset schema resource name. Format:
 //     `projects/{project}/locations/{location}/processors/{processor}/data
@@ -15744,7 +15743,7 @@ func (c *ProjectsLocationsProcessorsDatasetUpdateDatasetSchemaCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a DatasetSchema.",
+	//   "description": "Updates a `DatasetSchema`.",
 	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/dataset/datasetSchema",
 	//   "httpMethod": "PATCH",
 	//   "id": "documentai.projects.locations.processors.dataset.updateDatasetSchema",

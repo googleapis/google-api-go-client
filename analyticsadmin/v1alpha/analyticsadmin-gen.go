@@ -3895,8 +3895,8 @@ func (s *GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData) MarshalJSON() ([
 // GoogleAnalyticsAdminV1alphaDataStreamWebStreamData: Data specific to
 // web streams.
 type GoogleAnalyticsAdminV1alphaDataStreamWebStreamData struct {
-	// DefaultUri: Immutable. Domain name of the web app being measured, or
-	// empty. Example: "http://www.google.com", "https://www.google.com"
+	// DefaultUri: Domain name of the web app being measured, or empty.
+	// Example: "http://www.google.com", "https://www.google.com"
 	DefaultUri string `json:"defaultUri,omitempty"`
 
 	// FirebaseAppId: Output only. ID of the corresponding web app in
@@ -3904,8 +3904,8 @@ type GoogleAnalyticsAdminV1alphaDataStreamWebStreamData struct {
 	// recreated.
 	FirebaseAppId string `json:"firebaseAppId,omitempty"`
 
-	// MeasurementId: Output only. Analytics "Measurement ID", without the
-	// "G-" prefix. Example: "G-1A2BCD345E" would just be "1A2BCD345E"
+	// MeasurementId: Output only. Analytics Measurement ID. Example:
+	// "G-1A2BCD345E"
 	MeasurementId string `json:"measurementId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultUri") to
@@ -4173,8 +4173,8 @@ func (s *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal) Marsh
 }
 
 // GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings: Singleton
-// resource under a WebDataStream, configuring measurement of additional
-// site interactions and content.
+// resource under a web DataStream, configuring measurement of
+// additional site interactions and content.
 type GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings struct {
 	// FileDownloadsEnabled: If enabled, capture a file download event each
 	// time a link is clicked with a common document, compressed file,

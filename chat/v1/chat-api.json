@@ -480,7 +480,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the membership to retrieve. Format: `spaces/{space}/members/{member}`",
+                  "description": "Required. Resource name of the membership to retrieve. To get the app's own membership, you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app`",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/members/[^/]+$",
                   "required": true,
@@ -940,7 +940,7 @@
       }
     }
   },
-  "revision": "20230606",
+  "revision": "20230608",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -1454,7 +1454,7 @@
       "type": "object"
     },
     "DeprecatedEvent": {
-      "description": "Google Chat events.",
+      "description": "Google Chat events. To learn how to use events, see [Receive and respond to Google Chat events](https://developers.google.com/chat/api/guides/message-formats).",
       "id": "DeprecatedEvent",
       "properties": {
         "action": {

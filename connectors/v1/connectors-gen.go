@@ -632,14 +632,14 @@ type ConfigVariable struct {
 	// BoolValue: Value is a bool.
 	BoolValue bool `json:"boolValue,omitempty"`
 
+	// EncryptionKeyValue: Value is a Encryption Key.
+	EncryptionKeyValue *EncryptionKey `json:"encryptionKeyValue,omitempty"`
+
 	// IntValue: Value is an integer
 	IntValue int64 `json:"intValue,omitempty,string"`
 
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
-
-	// KeyValue: Value is a Encryption Key.
-	KeyValue *EncryptionKey `json:"keyValue,omitempty"`
 
 	// SecretValue: Value is a secret.
 	SecretValue *Secret `json:"secretValue,omitempty"`
@@ -696,6 +696,10 @@ type ConfigVariableTemplate struct {
 	// Required: Flag represents that this `ConfigVariable` must be provided
 	// for a connection.
 	Required bool `json:"required,omitempty"`
+
+	// RequiredCondition: Condition under which a field would be required.
+	// The condition can be represented in the form of a logical expression.
+	RequiredCondition *LogicalExpression `json:"requiredCondition,omitempty"`
 
 	// RoleGrant: Role grant configuration for the config variable.
 	RoleGrant *RoleGrant `json:"roleGrant,omitempty"`
@@ -1715,6 +1719,52 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FieldComparison: Field that needs to be compared.
+type FieldComparison struct {
+	// BoolValue: Boolean value
+	BoolValue bool `json:"boolValue,omitempty"`
+
+	// Comparator: Comparator to use for comparing the field value.
+	//
+	// Possible values:
+	//   "COMPARATOR_UNSPECIFIED" - The default value.
+	//   "EQUALS" - The field value must be equal to the specified value.
+	//   "NOT_EQUALS" - The field value must not be equal to the specified
+	// value.
+	Comparator string `json:"comparator,omitempty"`
+
+	// IntValue: Integer value
+	IntValue int64 `json:"intValue,omitempty,string"`
+
+	// Key: Key of the field.
+	Key string `json:"key,omitempty"`
+
+	// StringValue: String value
+	StringValue string `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FieldComparison) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldComparison
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InputParameter: Metadata of an input parameter.
 type InputParameter struct {
 	// DataType: The data type of the Parameter.
@@ -2298,6 +2348,47 @@ type LockConfig struct {
 
 func (s *LockConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LockConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogicalExpression: Struct for representing boolean expressions.
+type LogicalExpression struct {
+	// FieldComparisons: A list of fields to be compared.
+	FieldComparisons []*FieldComparison `json:"fieldComparisons,omitempty"`
+
+	// LogicalExpressions: A list of nested conditions to be compared.
+	LogicalExpressions []*LogicalExpression `json:"logicalExpressions,omitempty"`
+
+	// LogicalOperator: The logical operator to use between the fields and
+	// conditions.
+	//
+	// Possible values:
+	//   "OPERATOR_UNSPECIFIED" - The default value.
+	//   "AND" - AND operator; The conditions must all be true.
+	//   "OR" - OR operator; At least one of the conditions must be true.
+	LogicalOperator string `json:"logicalOperator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldComparisons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldComparisons") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogicalExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod LogicalExpression
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2944,7 +3035,7 @@ func (s *ResultMetadata) MarshalJSON() ([]byte, error) {
 
 // RoleGrant: This configuration defines all the Cloud IAM roles that
 // needs to be granted to a particular GCP resource for the selected
-// prinicpal like service account. These configurations will let UI
+// principal like service account. These configurations will let UI
 // display to customers what IAM roles need to be granted by them. Or
 // these configurations can be used by the UI to render a 'grant' button
 // to do the same on behalf of the user.

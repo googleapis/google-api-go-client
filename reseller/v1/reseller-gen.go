@@ -2960,6 +2960,29 @@ func (r *SubscriptionsService) Insert(customerId string, subscription *Subscript
 	return c
 }
 
+// Action sets the optional parameter "action": The intented insert
+// action. The usage of this field is governed by certain policies which
+// are being developed & tested currently. Hence, these might not work
+// as intended. Once this is fully tested & available to consume, we
+// will share more information about its usage, limitations and policy
+// documentation.
+//
+// Possible values:
+//
+//	"actionUnspecified" - Auto determines whether to create new
+//
+// subscription, upgrade or downagrade existing subscription or transfer
+// the existing subscription
+//
+//	"buy" - Create new subscription
+//	"switch" - Switch existing subscription to another sku
+//
+// (upgrade/downgrade)
+func (c *SubscriptionsInsertCall) Action(action string) *SubscriptionsInsertCall {
+	c.urlParams_.Set("action", action)
+	return c
+}
+
 // CustomerAuthToken sets the optional parameter "customerAuthToken":
 // The `customerAuthToken` query string is required when creating a
 // resold account that transfers a direct customer's subscription or
@@ -2969,6 +2992,18 @@ func (r *SubscriptionsService) Insert(customerId string, subscription *Subscript
 // administrator help center.
 func (c *SubscriptionsInsertCall) CustomerAuthToken(customerAuthToken string) *SubscriptionsInsertCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
+	return c
+}
+
+// SourceSkuId sets the optional parameter "sourceSkuId": The sku_id of
+// the existing subscription to be upgraded or downgraded. This is
+// required when action is SWITCH. The usage of this field is governed
+// by certain policies which are being developed & tested currently.
+// Hence, these might not work as intended. Once this is fully tested &
+// available to consume, we will share more information about its usage,
+// limitations and policy documentation.
+func (c *SubscriptionsInsertCall) SourceSkuId(sourceSkuId string) *SubscriptionsInsertCall {
+	c.urlParams_.Set("sourceSkuId", sourceSkuId)
 	return c
 }
 
@@ -3071,6 +3106,21 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	//     "customerId"
 	//   ],
 	//   "parameters": {
+	//     "action": {
+	//       "description": "The intented insert action. The usage of this field is governed by certain policies which are being developed \u0026 tested currently. Hence, these might not work as intended. Once this is fully tested \u0026 available to consume, we will share more information about its usage, limitations and policy documentation.",
+	//       "enum": [
+	//         "actionUnspecified",
+	//         "buy",
+	//         "switch"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Auto determines whether to create new subscription, upgrade or downagrade existing subscription or transfer the existing subscription",
+	//         "Create new subscription",
+	//         "Switch existing subscription to another sku (upgrade/downgrade)"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "customerAuthToken": {
 	//       "description": "The `customerAuthToken` query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
 	//       "location": "query",
@@ -3080,6 +3130,11 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sourceSkuId": {
+	//       "description": "The sku_id of the existing subscription to be upgraded or downgraded. This is required when action is SWITCH. The usage of this field is governed by certain policies which are being developed \u0026 tested currently. Hence, these might not work as intended. Once this is fully tested \u0026 available to consume, we will share more information about its usage, limitations and policy documentation.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

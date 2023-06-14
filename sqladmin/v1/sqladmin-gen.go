@@ -477,6 +477,43 @@ func (s *BackupContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BackupReencryptionConfig: Backup Reencryption Config
+type BackupReencryptionConfig struct {
+	// BackupLimit: Backup re-encryption limit
+	BackupLimit int64 `json:"backupLimit,omitempty"`
+
+	// BackupType: Type of backups users want to re-encrypt.
+	//
+	// Possible values:
+	//   "BACKUP_TYPE_UNSPECIFIED" - Unknown backup type, will be defaulted
+	// to AUTOMATIC backup type
+	//   "AUTOMATED" - Reencrypt automatic backups
+	//   "ON_DEMAND" - Reencrypt on-demand backups
+	BackupType string `json:"backupType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupLimit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupLimit") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackupReencryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupReencryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BackupRetentionSettings: We currently only support backup retention
 // by specifying the number of backups we will retain.
 type BackupRetentionSettings struct {
@@ -856,7 +893,17 @@ type ConnectSettings struct {
 	//   "SQLSERVER_2019_EXPRESS" - The database version is SQL Server 2019
 	// Express.
 	//   "SQLSERVER_2019_WEB" - The database version is SQL Server 2019 Web.
+	//   "SQLSERVER_2022_STANDARD" - The database version is SQL Server 2022
+	// Standard.
+	//   "SQLSERVER_2022_ENTERPRISE" - The database version is SQL Server
+	// 2022 Enterprise.
+	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
+	// Express.
+	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
+
+	// DnsName: The dns name of the instance.
+	DnsName string `json:"dnsName,omitempty"`
 
 	// IpAddresses: The assigned IP addresses for the instance.
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
@@ -1093,6 +1140,13 @@ type DatabaseInstance struct {
 	//   "SQLSERVER_2019_EXPRESS" - The database version is SQL Server 2019
 	// Express.
 	//   "SQLSERVER_2019_WEB" - The database version is SQL Server 2019 Web.
+	//   "SQLSERVER_2022_STANDARD" - The database version is SQL Server 2022
+	// Standard.
+	//   "SQLSERVER_2022_ENTERPRISE" - The database version is SQL Server
+	// 2022 Enterprise.
+	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
+	// Express.
+	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// DiskEncryptionConfiguration: Disk encryption configuration specific
@@ -1678,20 +1732,18 @@ type ExportContextBakExportOptions struct {
 	// Server only
 	//
 	// Possible values:
-	//   "BAK_TYPE_UNSPECIFIED" - default type to meet enum requirement,
-	// will be set to FULL if not set
+	//   "BAK_TYPE_UNSPECIFIED" - default type.
 	//   "FULL" - Full backup.
 	//   "DIFF" - Differential backup.
 	BakType string `json:"bakType,omitempty"`
 
-	// CopyOnly: Whether or not the export will be exeucted with COPY_ONLY,
-	// SQL Server only deprecated as the behavior should default to
-	// copy_only = true use differential_base instead
+	// CopyOnly: Deprecated: copy_only is deprecated. Use differential_base
+	// instead
 	CopyOnly bool `json:"copyOnly,omitempty"`
 
-	// DifferentialBase: Whether or not the backup can be use as
-	// differential base only non copy only backup can be served as
-	// differential base
+	// DifferentialBase: Whether or not the backup can be used as a
+	// differential base copy_only backup can not be served as differential
+	// base
 	DifferentialBase bool `json:"differentialBase,omitempty"`
 
 	// StripeCount: Option for specifying how many stripes to use for the
@@ -1951,6 +2003,13 @@ type Flag struct {
 	//   "SQLSERVER_2019_EXPRESS" - The database version is SQL Server 2019
 	// Express.
 	//   "SQLSERVER_2019_WEB" - The database version is SQL Server 2019 Web.
+	//   "SQLSERVER_2022_STANDARD" - The database version is SQL Server 2022
+	// Standard.
+	//   "SQLSERVER_2022_ENTERPRISE" - The database version is SQL Server
+	// 2022 Enterprise.
+	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
+	// Express.
+	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
 	AppliesTo []string `json:"appliesTo,omitempty"`
 
 	// InBeta: Whether or not the flag is considered in beta.
@@ -2191,8 +2250,7 @@ type ImportContextBakImportOptions struct {
 	// BakType: Type of the bak content, FULL or DIFF
 	//
 	// Possible values:
-	//   "BAK_TYPE_UNSPECIFIED" - default type to meet enum requirement,
-	// will be set to FULL if not set
+	//   "BAK_TYPE_UNSPECIFIED" - default type.
 	//   "FULL" - Full backup.
 	//   "DIFF" - Differential backup.
 	BakType string `json:"bakType,omitempty"`
@@ -2628,6 +2686,37 @@ type InstancesListServerCasResponse struct {
 
 func (s *InstancesListServerCasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancesListServerCasResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstancesReencryptRequest: Database Instance reencrypt request.
+type InstancesReencryptRequest struct {
+	// BackupReencryptionConfig: Configuration specific to backup
+	// re-encryption
+	BackupReencryptionConfig *BackupReencryptionConfig `json:"backupReencryptionConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BackupReencryptionConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupReencryptionConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancesReencryptRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesReencryptRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3182,6 +3271,7 @@ type Operation struct {
 	//   "AUTO_RESTART" - Performs auto-restart of an HA-enabled Cloud SQL
 	// database for auto recovery.
 	//   "REENCRYPT" - Re-encrypts CMEK instances with latest key version.
+	//   "SWITCHOVER" - Switches over to replica instance from primary.
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: The URI of this resource.
@@ -9140,6 +9230,160 @@ func (c *InstancesPromoteReplicaCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     }
 	//   },
 	//   "path": "v1/projects/{project}/instances/{instance}/promoteReplica",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.instances.reencrypt":
+
+type InstancesReencryptCall struct {
+	s                         *Service
+	project                   string
+	instance                  string
+	instancesreencryptrequest *InstancesReencryptRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Reencrypt: Reencrypt CMEK instance with latest key version.
+//
+//   - instance: Cloud SQL instance ID. This does not include the project
+//     ID.
+//   - project: ID of the project that contains the instance.
+func (r *InstancesService) Reencrypt(project string, instance string, instancesreencryptrequest *InstancesReencryptRequest) *InstancesReencryptCall {
+	c := &InstancesReencryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	c.instancesreencryptrequest = instancesreencryptrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesReencryptCall) Fields(s ...googleapi.Field) *InstancesReencryptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesReencryptCall) Context(ctx context.Context) *InstancesReencryptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesReencryptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesReencryptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesreencryptrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{project}/instances/{instance}/reencrypt")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.reencrypt" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesReencryptCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reencrypt CMEK instance with latest key version.",
+	//   "flatPath": "v1/projects/{project}/instances/{instance}/reencrypt",
+	//   "httpMethod": "POST",
+	//   "id": "sql.instances.reencrypt",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "ID of the project that contains the instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{project}/instances/{instance}/reencrypt",
+	//   "request": {
+	//     "$ref": "InstancesReencryptRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

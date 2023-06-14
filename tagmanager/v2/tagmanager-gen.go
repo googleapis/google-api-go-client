@@ -250,6 +250,7 @@ func NewAccountsContainersWorkspacesService(s *Service) *AccountsContainersWorks
 	rs.GtagConfig = NewAccountsContainersWorkspacesGtagConfigService(s)
 	rs.Tags = NewAccountsContainersWorkspacesTagsService(s)
 	rs.Templates = NewAccountsContainersWorkspacesTemplatesService(s)
+	rs.Transformations = NewAccountsContainersWorkspacesTransformationsService(s)
 	rs.Triggers = NewAccountsContainersWorkspacesTriggersService(s)
 	rs.Variables = NewAccountsContainersWorkspacesVariablesService(s)
 	rs.Zones = NewAccountsContainersWorkspacesZonesService(s)
@@ -270,6 +271,8 @@ type AccountsContainersWorkspacesService struct {
 	Tags *AccountsContainersWorkspacesTagsService
 
 	Templates *AccountsContainersWorkspacesTemplatesService
+
+	Transformations *AccountsContainersWorkspacesTransformationsService
 
 	Triggers *AccountsContainersWorkspacesTriggersService
 
@@ -329,6 +332,15 @@ func NewAccountsContainersWorkspacesTemplatesService(s *Service) *AccountsContai
 }
 
 type AccountsContainersWorkspacesTemplatesService struct {
+	s *Service
+}
+
+func NewAccountsContainersWorkspacesTransformationsService(s *Service) *AccountsContainersWorkspacesTransformationsService {
+	rs := &AccountsContainersWorkspacesTransformationsService{s: s}
+	return rs
+}
+
+type AccountsContainersWorkspacesTransformationsService struct {
 	s *Service
 }
 
@@ -962,6 +974,10 @@ type ContainerFeatures struct {
 	// SupportTemplates: Whether this Container supports templates.
 	SupportTemplates bool `json:"supportTemplates,omitempty"`
 
+	// SupportTransformations: Whether this Container supports
+	// transformations.
+	SupportTransformations bool `json:"supportTransformations,omitempty"`
+
 	// SupportTriggers: Whether this Container supports triggers.
 	SupportTriggers bool `json:"supportTriggers,omitempty"`
 
@@ -1066,6 +1082,10 @@ type ContainerVersion struct {
 
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
+
+	// Transformation: The transformations in the container that this
+	// version was taken from.
+	Transformation []*Transformation `json:"transformation,omitempty"`
 
 	// Trigger: The triggers in the container that this version was taken
 	// from.
@@ -1438,6 +1458,9 @@ type Entity struct {
 
 	// Tag: The tag being represented by the entity.
 	Tag *Tag `json:"tag,omitempty"`
+
+	// Transformation: The transformation being represented by the entity.
+	Transformation *Transformation `json:"transformation,omitempty"`
 
 	// Trigger: The trigger being represented by the entity.
 	Trigger *Trigger `json:"trigger,omitempty"`
@@ -2248,6 +2271,41 @@ func (s *ListTemplatesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListTransformationsResponse struct {
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Transformation: All GTM Transformations of a GTM Container.
+	Transformation []*Transformation `json:"transformation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListTransformationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTransformationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListTriggersResponse: List triggers response.
 type ListTriggersResponse struct {
 	// NextPageToken: Continuation token for fetching the next page of
@@ -2805,6 +2863,43 @@ func (s *RevertTemplateResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RevertTransformationResponse: The result of reverting a
+// transformation in a workspace.
+type RevertTransformationResponse struct {
+	// Transformation: Transformation as it appears in the latest container
+	// version since the last workspace synchronization operation. If no
+	// transformation is present, that means the transformation was deleted
+	// in the latest container version.
+	Transformation *Transformation `json:"transformation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Transformation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Transformation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevertTransformationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RevertTransformationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RevertTriggerResponse: The result of reverting a trigger in a
 // workspace.
 type RevertTriggerResponse struct {
@@ -3254,6 +3349,75 @@ type TeardownTag struct {
 
 func (s *TeardownTag) MarshalJSON() ([]byte, error) {
 	type NoMethod TeardownTag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Transformation: Represents a Google Tag Manager Transformation.
+type Transformation struct {
+	// AccountId: GTM Account ID.
+	AccountId string `json:"accountId,omitempty"`
+
+	// ContainerId: GTM Container ID.
+	ContainerId string `json:"containerId,omitempty"`
+
+	// Fingerprint: The fingerprint of the GTM Transformation as computed at
+	// storage time. This value is recomputed whenever the transformation is
+	// modified.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// Name: Transformation display name.
+	Name string `json:"name,omitempty"`
+
+	// Notes: User notes on how to apply this transformation in the
+	// container.
+	Notes string `json:"notes,omitempty"`
+
+	// Parameter: The transformation's parameters.
+	Parameter []*Parameter `json:"parameter,omitempty"`
+
+	// ParentFolderId: Parent folder id.
+	ParentFolderId string `json:"parentFolderId,omitempty"`
+
+	// Path: GTM transformation's API relative path.
+	Path string `json:"path,omitempty"`
+
+	// TagManagerUrl: Auto generated link to the tag manager UI
+	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
+
+	// TransformationId: The Transformation ID uniquely identifies the GTM
+	// transformation.
+	TransformationId string `json:"transformationId,omitempty"`
+
+	// Type: Transformation type.
+	Type string `json:"type,omitempty"`
+
+	// WorkspaceId: GTM Workspace ID.
+	WorkspaceId string `json:"workspaceId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Transformation) MarshalJSON() ([]byte, error) {
+	type NoMethod Transformation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16165,6 +16329,891 @@ func (c *AccountsContainersWorkspacesTemplatesUpdateCall) Do(opts ...googleapi.C
 	//   },
 	//   "response": {
 	//     "$ref": "CustomTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.transformations.create":
+
+type AccountsContainersWorkspacesTransformationsCreateCall struct {
+	s              *Service
+	parent         string
+	transformation *Transformation
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a GTM Transformation.
+//
+//   - parent: GTM Workspace's API relative path. Example:
+//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//     e_id}.
+func (r *AccountsContainersWorkspacesTransformationsService) Create(parent string, transformation *Transformation) *AccountsContainersWorkspacesTransformationsCreateCall {
+	c := &AccountsContainersWorkspacesTransformationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.transformation = transformation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesTransformationsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesTransformationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesTransformationsCreateCall) Context(ctx context.Context) *AccountsContainersWorkspacesTransformationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesTransformationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesTransformationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transformation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+parent}/transformations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.transformations.create" call.
+// Exactly one of *Transformation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Transformation.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesTransformationsCreateCall) Do(opts ...googleapi.CallOption) (*Transformation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Transformation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a GTM Transformation.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/transformations",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.workspaces.transformations.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+parent}/transformations",
+	//   "request": {
+	//     "$ref": "Transformation"
+	//   },
+	//   "response": {
+	//     "$ref": "Transformation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.transformations.delete":
+
+type AccountsContainersWorkspacesTransformationsDeleteCall struct {
+	s          *Service
+	path       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a GTM Transformation.
+//
+//   - path: GTM Transformation's API relative path. Example:
+//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//     e_id}/transformations/{transformation_id}.
+func (r *AccountsContainersWorkspacesTransformationsService) Delete(path string) *AccountsContainersWorkspacesTransformationsDeleteCall {
+	c := &AccountsContainersWorkspacesTransformationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesTransformationsDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesTransformationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesTransformationsDeleteCall) Context(ctx context.Context) *AccountsContainersWorkspacesTransformationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesTransformationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesTransformationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.transformations.delete" call.
+func (c *AccountsContainersWorkspacesTransformationsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Deletes a GTM Transformation.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/transformations/{transformationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "tagmanager.accounts.containers.workspaces.transformations.delete",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "path": {
+	//       "description": "GTM Transformation's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/transformations/{transformation_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/transformations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.transformations.get":
+
+type AccountsContainersWorkspacesTransformationsGetCall struct {
+	s            *Service
+	path         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a GTM Transformation.
+//
+//   - path: GTM Transformation's API relative path. Example:
+//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//     e_id}/transformations/{transformation_id}.
+func (r *AccountsContainersWorkspacesTransformationsService) Get(path string) *AccountsContainersWorkspacesTransformationsGetCall {
+	c := &AccountsContainersWorkspacesTransformationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesTransformationsGetCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesTransformationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersWorkspacesTransformationsGetCall) IfNoneMatch(entityTag string) *AccountsContainersWorkspacesTransformationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesTransformationsGetCall) Context(ctx context.Context) *AccountsContainersWorkspacesTransformationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesTransformationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesTransformationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.transformations.get" call.
+// Exactly one of *Transformation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Transformation.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesTransformationsGetCall) Do(opts ...googleapi.CallOption) (*Transformation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Transformation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a GTM Transformation.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/transformations/{transformationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.workspaces.transformations.get",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "path": {
+	//       "description": "GTM Transformation's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/transformations/{transformation_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/transformations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}",
+	//   "response": {
+	//     "$ref": "Transformation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.transformations.list":
+
+type AccountsContainersWorkspacesTransformationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all GTM Transformations of a GTM container workspace.
+//
+//   - parent: GTM Workspace's API relative path. Example:
+//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//     e_id}.
+func (r *AccountsContainersWorkspacesTransformationsService) List(parent string) *AccountsContainersWorkspacesTransformationsListCall {
+	c := &AccountsContainersWorkspacesTransformationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AccountsContainersWorkspacesTransformationsListCall) PageToken(pageToken string) *AccountsContainersWorkspacesTransformationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesTransformationsListCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesTransformationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersWorkspacesTransformationsListCall) IfNoneMatch(entityTag string) *AccountsContainersWorkspacesTransformationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesTransformationsListCall) Context(ctx context.Context) *AccountsContainersWorkspacesTransformationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesTransformationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesTransformationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+parent}/transformations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.transformations.list" call.
+// Exactly one of *ListTransformationsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTransformationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesTransformationsListCall) Do(opts ...googleapi.CallOption) (*ListTransformationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListTransformationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all GTM Transformations of a GTM container workspace.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/transformations",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.workspaces.transformations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+parent}/transformations",
+	//   "response": {
+	//     "$ref": "ListTransformationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsContainersWorkspacesTransformationsListCall) Pages(ctx context.Context, f func(*ListTransformationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "tagmanager.accounts.containers.workspaces.transformations.revert":
+
+type AccountsContainersWorkspacesTransformationsRevertCall struct {
+	s          *Service
+	path       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Revert: Reverts changes to a GTM Transformation in a GTM Workspace.
+//
+//   - path: GTM Transformation's API relative path. Example:
+//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//     e_id}/transformations/{transformation_id}.
+func (r *AccountsContainersWorkspacesTransformationsService) Revert(path string) *AccountsContainersWorkspacesTransformationsRevertCall {
+	c := &AccountsContainersWorkspacesTransformationsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the transformation in
+// storage.
+func (c *AccountsContainersWorkspacesTransformationsRevertCall) Fingerprint(fingerprint string) *AccountsContainersWorkspacesTransformationsRevertCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesTransformationsRevertCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesTransformationsRevertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesTransformationsRevertCall) Context(ctx context.Context) *AccountsContainersWorkspacesTransformationsRevertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesTransformationsRevertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesTransformationsRevertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}:revert")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.transformations.revert" call.
+// Exactly one of *RevertTransformationResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RevertTransformationResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesTransformationsRevertCall) Do(opts ...googleapi.CallOption) (*RevertTransformationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RevertTransformationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reverts changes to a GTM Transformation in a GTM Workspace.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/transformations/{transformationsId}:revert",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.workspaces.transformations.revert",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the transformation in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "GTM Transformation's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/transformations/{transformation_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/transformations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}:revert",
+	//   "response": {
+	//     "$ref": "RevertTransformationResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.transformations.update":
+
+type AccountsContainersWorkspacesTransformationsUpdateCall struct {
+	s              *Service
+	path           string
+	transformation *Transformation
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Update: Updates a GTM Transformation.
+//
+//   - path: GTM Transformation's API relative path. Example:
+//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//     e_id}/transformations/{transformation_id}.
+func (r *AccountsContainersWorkspacesTransformationsService) Update(path string, transformation *Transformation) *AccountsContainersWorkspacesTransformationsUpdateCall {
+	c := &AccountsContainersWorkspacesTransformationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	c.transformation = transformation
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the transformation in
+// storage.
+func (c *AccountsContainersWorkspacesTransformationsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersWorkspacesTransformationsUpdateCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesTransformationsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesTransformationsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesTransformationsUpdateCall) Context(ctx context.Context) *AccountsContainersWorkspacesTransformationsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesTransformationsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesTransformationsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transformation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.transformations.update" call.
+// Exactly one of *Transformation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Transformation.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesTransformationsUpdateCall) Do(opts ...googleapi.CallOption) (*Transformation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Transformation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a GTM Transformation.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/transformations/{transformationsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "tagmanager.accounts.containers.workspaces.transformations.update",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the transformation in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "GTM Transformation's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/transformations/{transformation_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/transformations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}",
+	//   "request": {
+	//     "$ref": "Transformation"
+	//   },
+	//   "response": {
+	//     "$ref": "Transformation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"

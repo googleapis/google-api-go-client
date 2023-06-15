@@ -121,8 +121,10 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.BillingAccounts = NewBillingAccountsService(s)
 	s.Folders = NewFoldersService(s)
+	s.InsightTypes = NewInsightTypesService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
+	s.Recommenders = NewRecommendersService(s)
 	return s, nil
 }
 
@@ -135,9 +137,13 @@ type Service struct {
 
 	Folders *FoldersService
 
+	InsightTypes *InsightTypesService
+
 	Organizations *OrganizationsService
 
 	Projects *ProjectsService
+
+	Recommenders *RecommendersService
 }
 
 func (s *Service) userAgent() string {
@@ -285,6 +291,15 @@ type FoldersLocationsRecommendersRecommendationsService struct {
 	s *Service
 }
 
+func NewInsightTypesService(s *Service) *InsightTypesService {
+	rs := &InsightTypesService{s: s}
+	return rs
+}
+
+type InsightTypesService struct {
+	s *Service
+}
+
 func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.Locations = NewOrganizationsLocationsService(s)
@@ -420,6 +435,15 @@ func NewProjectsLocationsRecommendersRecommendationsService(s *Service) *Project
 }
 
 type ProjectsLocationsRecommendersRecommendationsService struct {
+	s *Service
+}
+
+func NewRecommendersService(s *Service) *RecommendersService {
+	rs := &RecommendersService{s: s}
+	return rs
+}
+
+type RecommendersService struct {
 	s *Service
 }
 
@@ -687,6 +711,37 @@ func (s *GoogleCloudRecommenderV1beta1InsightStateInfo) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1InsightType: The type of insight. See
+// google3/googledata/devsite/site-cloud/en/recommender/docs/insights/ins
+// ight-types.md for more info.
+type GoogleCloudRecommenderV1beta1InsightType struct {
+	// Name: The insight_type’s name in format insightTypes/{insight_type}
+	// eg: insightTypes/google.iam.policy.Insight
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1InsightType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1InsightType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1InsightTypeConfig: Configuration for an
 // InsightType.
 type GoogleCloudRecommenderV1beta1InsightTypeConfig struct {
@@ -782,6 +837,44 @@ func (s *GoogleCloudRecommenderV1beta1InsightTypeGenerationConfig) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1ListInsightTypesResponse: Response for
+// the `ListInsightTypes` method. Next ID: 3
+type GoogleCloudRecommenderV1beta1ListInsightTypesResponse struct {
+	// InsightTypes: The set of recommenders available
+	InsightTypes []*GoogleCloudRecommenderV1beta1InsightType `json:"insightTypes,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InsightTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InsightTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1ListInsightTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1ListInsightTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1ListInsightsResponse: Response to the
 // `ListInsights` method.
 type GoogleCloudRecommenderV1beta1ListInsightsResponse struct {
@@ -853,6 +946,44 @@ type GoogleCloudRecommenderV1beta1ListRecommendationsResponse struct {
 
 func (s *GoogleCloudRecommenderV1beta1ListRecommendationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1beta1ListRecommendationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1ListRecommendersResponse: Response for
+// the `ListRecommender` method. Next ID: 3
+type GoogleCloudRecommenderV1beta1ListRecommendersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Recommenders: The set of recommenders available
+	Recommenders []*GoogleCloudRecommenderV1beta1RecommenderType `json:"recommenders,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1ListRecommendersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1ListRecommendersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1455,6 +1586,39 @@ type GoogleCloudRecommenderV1beta1RecommenderGenerationConfig struct {
 
 func (s *GoogleCloudRecommenderV1beta1RecommenderGenerationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1beta1RecommenderGenerationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1RecommenderType: The type of a
+// recommender. See
+// google3/googledata/devsite/site-cloud/en/recommender/docs/recommenders
+// .md for more info.
+type GoogleCloudRecommenderV1beta1RecommenderType struct {
+	// Name: The recommender's name in format
+	// RecommenderTypes/{recommender_type} eg:
+	// recommenderTypes/google.iam.policy.Recommender
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1RecommenderType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1RecommenderType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5334,6 +5498,186 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts .
 	//   ]
 	// }
 
+}
+
+// method id "recommender.insightTypes.list":
+
+type InsightTypesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists available InsightTypes. No IAM permissions are required.
+func (r *InsightTypesService) List() *InsightTypesListCall {
+	c := &InsightTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// InsightTypes to return per page. The service may return fewer than
+// this value.
+func (c *InsightTypesListCall) PageSize(pageSize int64) *InsightTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListRecommenders` call. Provide this to
+// retrieve the subsequent page.
+func (c *InsightTypesListCall) PageToken(pageToken string) *InsightTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InsightTypesListCall) Fields(s ...googleapi.Field) *InsightTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InsightTypesListCall) IfNoneMatch(entityTag string) *InsightTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InsightTypesListCall) Context(ctx context.Context) *InsightTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InsightTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InsightTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/insightTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.insightTypes.list" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1ListInsightTypesResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudRecommenderV1beta1ListInsightTypesResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *InsightTypesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1ListInsightTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1ListInsightTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists available InsightTypes. No IAM permissions are required.",
+	//   "flatPath": "v1beta1/insightTypes",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.insightTypes.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The number of InsightTypes to return per page. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListRecommenders` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/insightTypes",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1ListInsightTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InsightTypesListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommenderV1beta1ListInsightTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "recommender.organizations.locations.insightTypes.getConfig":
@@ -9680,4 +10024,185 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts 
 	//   ]
 	// }
 
+}
+
+// method id "recommender.recommenders.list":
+
+type RecommendersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all available Recommenders. No IAM permissions are
+// required.
+func (r *RecommendersService) List() *RecommendersListCall {
+	c := &RecommendersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// RecommenderTypes to return per page. The service may return fewer
+// than this value.
+func (c *RecommendersListCall) PageSize(pageSize int64) *RecommendersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListRecommenders` call. Provide this to
+// retrieve the subsequent page.
+func (c *RecommendersListCall) PageToken(pageToken string) *RecommendersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecommendersListCall) Fields(s ...googleapi.Field) *RecommendersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RecommendersListCall) IfNoneMatch(entityTag string) *RecommendersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecommendersListCall) Context(ctx context.Context) *RecommendersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecommendersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecommendersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/recommenders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.recommenders.list" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1ListRecommendersResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudRecommenderV1beta1ListRecommendersResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RecommendersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1ListRecommendersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1ListRecommendersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all available Recommenders. No IAM permissions are required.",
+	//   "flatPath": "v1beta1/recommenders",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.recommenders.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The number of RecommenderTypes to return per page. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListRecommenders` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/recommenders",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1ListRecommendersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RecommendersListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommenderV1beta1ListRecommendersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

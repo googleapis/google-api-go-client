@@ -1152,6 +1152,84 @@ func (s *GoogleCloudRetailV2ModelServingConfigList) MarshalJSON() ([]byte, error
 type GoogleCloudRetailV2PurgeMetadata struct {
 }
 
+// GoogleCloudRetailV2PurgeProductsMetadata: Metadata related to the
+// progress of the PurgeProducts operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2PurgeProductsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2PurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2PurgeProductsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2PurgeProductsResponse: Response of the
+// PurgeProductsRequest. If the long running operation is successfully
+// done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudRetailV2PurgeProductsResponse struct {
+	// PurgeCount: The total count of products purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of the product names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2PurgeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2PurgeProductsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2PurgeUserEventsResponse: Response of the
 // PurgeUserEventsRequest. If the long running operation is successfully
 // done, then this message is returned by the
@@ -6696,6 +6774,134 @@ func (s *GoogleCloudRetailV2betaPurchaseTransaction) UnmarshalJSON(data []byte) 
 // progress of the Purge operation. This will be returned by the
 // google.longrunning.Operation.metadata field.
 type GoogleCloudRetailV2betaPurgeMetadata struct {
+}
+
+// GoogleCloudRetailV2betaPurgeProductsMetadata: Metadata related to the
+// progress of the PurgeProducts operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2betaPurgeProductsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaPurgeProductsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaPurgeProductsRequest: Request message for
+// PurgeProducts method.
+type GoogleCloudRetailV2betaPurgeProductsRequest struct {
+	// Filter: Required. The filter string to specify the products to be
+	// deleted with a length limit of 5,000 characters. Empty string filter
+	// is not allowed. "*" implies delete all items in a branch. The
+	// eligible fields for filtering are: * `availability`: Double quoted
+	// Product.availability string. * `create_time` : in ISO 8601 "zulu"
+	// format. Supported syntax: * Comparators (">", "<", ">=", "<=", "=").
+	// Examples: * create_time <= "2015-02-13T17:05:46Z" * availability =
+	// "IN_STOCK" * Conjunctions ("AND") Examples: * create_time <=
+	// "2015-02-13T17:05:46Z" AND availability = "PREORDER" * Disjunctions
+	// ("OR") Examples: * create_time <= "2015-02-13T17:05:46Z" OR
+	// availability = "IN_STOCK" * Can support nested queries. Examples: *
+	// (create_time <= "2015-02-13T17:05:46Z" AND availability = "PREORDER")
+	// OR (create_time >= "2015-02-14T13:03:32Z" AND availability =
+	// "IN_STOCK") * Filter Limits: * Filter should not contain more than 6
+	// conditions. * Max nesting depth should not exceed 2 levels. Examples
+	// queries: * Delete back order products created before a timestamp.
+	// create_time <= "2015-02-13T17:05:46Z" OR availability = "BACKORDER"
+	Filter string `json:"filter,omitempty"`
+
+	// Force: Actually perform the purge. If `force` is set to false, the
+	// method will return the expected purge count without deleting any
+	// products.
+	Force bool `json:"force,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaPurgeProductsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaPurgeProductsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaPurgeProductsResponse: Response of the
+// PurgeProductsRequest. If the long running operation is successfully
+// done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudRetailV2betaPurgeProductsResponse struct {
+	// PurgeCount: The total count of products purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of the product names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaPurgeProductsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaPurgeUserEventsRequest: Request message for
@@ -13056,6 +13262,159 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRetailV2betaProduct"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.branches.products.purge":
+
+type ProjectsLocationsCatalogsBranchesProductsPurgeCall struct {
+	s                                           *Service
+	parent                                      string
+	googlecloudretailv2betapurgeproductsrequest *GoogleCloudRetailV2betaPurgeProductsRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Purge: Permanently deletes all selected Products under a branch. This
+// process is asynchronous. If the request is valid, the removal will be
+// enqueued and processed offline. Depending on the number of Products,
+// this operation could take hours to complete. Before the operation
+// completes, some Products may still be returned by
+// ProductService.GetProduct or ProductService.ListProducts. Depending
+// on the number of Products, this operation could take hours to
+// complete. To get a sample of Products that would be deleted, set
+// PurgeProductsRequest.force to false.
+//
+//   - parent: The resource name of the branch under which the products
+//     are created. The format is
+//     `projects/${projectId}/locations/global/catalogs/${catalogId}/branch
+//     es/${branchId}`.
+func (r *ProjectsLocationsCatalogsBranchesProductsService) Purge(parent string, googlecloudretailv2betapurgeproductsrequest *GoogleCloudRetailV2betaPurgeProductsRequest) *ProjectsLocationsCatalogsBranchesProductsPurgeCall {
+	c := &ProjectsLocationsCatalogsBranchesProductsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudretailv2betapurgeproductsrequest = googlecloudretailv2betapurgeproductsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsBranchesProductsPurgeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) Context(ctx context.Context) *ProjectsLocationsCatalogsBranchesProductsPurgeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betapurgeproductsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/products:purge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.branches.products.purge" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Permanently deletes all selected Products under a branch. This process is asynchronous. If the request is valid, the removal will be enqueued and processed offline. Depending on the number of Products, this operation could take hours to complete. Before the operation completes, some Products may still be returned by ProductService.GetProduct or ProductService.ListProducts. Depending on the number of Products, this operation could take hours to complete. To get a sample of Products that would be deleted, set PurgeProductsRequest.force to false.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products:purge",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.branches.products.purge",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the branch under which the products are created. The format is `projects/${projectId}/locations/global/catalogs/${catalogId}/branches/${branchId}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/branches/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+parent}/products:purge",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2betaPurgeProductsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

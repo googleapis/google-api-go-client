@@ -2612,7 +2612,7 @@ func (s *GoogleCloudChannelV1ListSubscribersResponse) MarshalJSON() ([]byte, err
 // for CloudChannelService.ListTransferableOffers
 type GoogleCloudChannelV1ListTransferableOffersRequest struct {
 	// BillingAccount: Optional. The Billing Account to look up Offers for.
-	// Format: accounts/{account_id}/billing_accounts/{billing_account_id}.
+	// Format: accounts/{account_id}/billingAccounts/{billing_account_id}.
 	// This field is only relevant for multi-currency accounts. It should be
 	// left empty for single currency accounts.
 	BillingAccount string `json:"billingAccount,omitempty"`
@@ -10924,7 +10924,7 @@ func (r *AccountsCustomersService) ListPurchasableOffers(customer string) *Accou
 // "changeOfferPurchase.billingAccount": Resource name of the new target
 // Billing Account. Provide this Billing Account when setting up billing
 // for a trial subscription. Format:
-// accounts/{account_id}/billing_accounts/{billing_account_id}. This
+// accounts/{account_id}/billingAccounts/{billing_account_id}. This
 // field is only relevant for multi-currency accounts. It should be left
 // empty for single currency accounts.
 func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseBillingAccount(changeOfferPurchaseBillingAccount string) *AccountsCustomersListPurchasableOffersCall {
@@ -10954,7 +10954,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseNewSku(c
 // CreateEntitlementPurchaseBillingAccount sets the optional parameter
 // "createEntitlementPurchase.billingAccount": Billing account that the
 // result should be restricted to. Format:
-// accounts/{account_id}/billing_accounts/{billing_account_id}.
+// accounts/{account_id}/billingAccounts/{billing_account_id}.
 func (c *AccountsCustomersListPurchasableOffersCall) CreateEntitlementPurchaseBillingAccount(createEntitlementPurchaseBillingAccount string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("createEntitlementPurchase.billingAccount", createEntitlementPurchaseBillingAccount)
 	return c
@@ -11103,7 +11103,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "changeOfferPurchase.billingAccount": {
-	//       "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+	//       "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billingAccounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11118,7 +11118,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "createEntitlementPurchase.billingAccount": {
-	//       "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billing_accounts/{billing_account_id}.",
+	//       "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billingAccounts/{billing_account_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

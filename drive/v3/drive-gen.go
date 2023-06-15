@@ -547,13 +547,12 @@ type ChangeList struct {
 
 	// NewStartPageToken: The starting page token for future changes. This
 	// will be present only if the end of the current changes list has been
-	// reached.
+	// reached. The page token doesn't expire.
 	NewStartPageToken string `json:"newStartPageToken,omitempty"`
 
 	// NextPageToken: The page token for the next page of changes. This will
-	// be absent if the end of the changes list has been reached. If the
-	// token is rejected for any reason, it should be discarded, and
-	// pagination should be restarted from the first page of results.
+	// be absent if the end of the changes list has been reached. The page
+	// token doesn't expire.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -775,7 +774,9 @@ type CommentList struct {
 	// NextPageToken: The page token for the next page of comments. This
 	// will be absent if the end of the comments list has been reached. If
 	// the token is rejected for any reason, it should be discarded, and
-	// pagination should be restarted from the first page of results.
+	// pagination should be restarted from the first page of results. The
+	// page token is typically valid for several hours. However, if new
+	// items are added or removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1192,7 +1193,9 @@ type DriveList struct {
 	// NextPageToken: The page token for the next page of shared drives.
 	// This will be absent if the end of the list has been reached. If the
 	// token is rejected for any reason, it should be discarded, and
-	// pagination should be restarted from the first page of results.
+	// pagination should be restarted from the first page of results. The
+	// page token is typically valid for several hours. However, if new
+	// items are added or removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2154,7 +2157,9 @@ type FileList struct {
 	// NextPageToken: The page token for the next page of files. This will
 	// be absent if the end of the files list has been reached. If the token
 	// is rejected for any reason, it should be discarded, and pagination
-	// should be restarted from the first page of results.
+	// should be restarted from the first page of results. The page token is
+	// typically valid for several hours. However, if new items are added or
+	// removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2379,7 +2384,9 @@ type LabelList struct {
 	// NextPageToken: The page token for the next page of labels. This field
 	// will be absent if the end of the list has been reached. If the token
 	// is rejected for any reason, it should be discarded, and pagination
-	// should be restarted from the first page of results.
+	// should be restarted from the first page of results. The page token is
+	// typically valid for several hours. However, if new items are added or
+	// removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2720,7 +2727,9 @@ type PermissionList struct {
 	// field will be absent if the end of the permissions list has been
 	// reached. If the token is rejected for any reason, it should be
 	// discarded, and pagination should be restarted from the first page of
-	// results.
+	// results. The page token is typically valid for several hours.
+	// However, if new items are added or removed, your expected results
+	// might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Permissions: The list of permissions. If nextPageToken is populated,
@@ -2829,7 +2838,9 @@ type ReplyList struct {
 	// NextPageToken: The page token for the next page of replies. This will
 	// be absent if the end of the replies list has been reached. If the
 	// token is rejected for any reason, it should be discarded, and
-	// pagination should be restarted from the first page of results.
+	// pagination should be restarted from the first page of results. The
+	// page token is typically valid for several hours. However, if new
+	// items are added or removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Replies: The list of replies. If nextPageToken is populated, then
@@ -2960,7 +2971,9 @@ type RevisionList struct {
 	// NextPageToken: The page token for the next page of revisions. This
 	// will be absent if the end of the revisions list has been reached. If
 	// the token is rejected for any reason, it should be discarded, and
-	// pagination should be restarted from the first page of results.
+	// pagination should be restarted from the first page of results. The
+	// page token is typically valid for several hours. However, if new
+	// items are added or removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Revisions: The list of revisions. If nextPageToken is populated, then
@@ -3000,7 +3013,8 @@ type StartPageToken struct {
 	// string "drive#startPageToken".
 	Kind string `json:"kind,omitempty"`
 
-	// StartPageToken: The starting page token for listing changes.
+	// StartPageToken: The starting page token for listing future changes.
+	// The page token doesn't expire.
 	StartPageToken string `json:"startPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3359,7 +3373,9 @@ type TeamDriveList struct {
 	// NextPageToken: The page token for the next page of Team Drives. This
 	// will be absent if the end of the Team Drives list has been reached.
 	// If the token is rejected for any reason, it should be discarded, and
-	// pagination should be restarted from the first page of results.
+	// pagination should be restarted from the first page of results. The
+	// page token is typically valid for several hours. However, if new
+	// items are added or removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TeamDrives: The list of Team Drives. If nextPageToken is populated,

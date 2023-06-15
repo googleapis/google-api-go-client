@@ -196,7 +196,7 @@ type OrganizationsLocationsWorkloadsViolationsService struct {
 }
 
 // GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest: Request for
-// acknowledging the violation Next Id: 4
+// acknowledging the violation Next Id: 5
 type GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest struct {
 	// Comment: Required. Business justification explaining the need for
 	// violation acknowledgement
@@ -914,12 +914,12 @@ func (s *GoogleCloudAssuredworkloadsV1Workload) MarshalJSON() ([]byte, error) {
 // GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus: Represents the
 // Compliance Status of this workload
 type GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus struct {
-	// AcknowledgedViolationCount: Count of active Violations which are
-	// acknowledged in the Workload.
+	// AcknowledgedViolationCount: Number of current orgPolicy violations
+	// which are acknowledged.
 	AcknowledgedViolationCount int64 `json:"acknowledgedViolationCount,omitempty"`
 
-	// ActiveViolationCount: Count of active Violations which haven't been
-	// acknowledged.
+	// ActiveViolationCount: Number of current orgPolicy violations which
+	// are not acknowledged.
 	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

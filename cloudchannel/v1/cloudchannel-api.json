@@ -936,7 +936,7 @@
               ],
               "parameters": {
                 "changeOfferPurchase.billingAccount": {
-                  "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+                  "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billingAccounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
                   "location": "query",
                   "type": "string"
                 },
@@ -951,7 +951,7 @@
                   "type": "string"
                 },
                 "createEntitlementPurchase.billingAccount": {
-                  "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billing_accounts/{billing_account_id}.",
+                  "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billingAccounts/{billing_account_id}.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2178,7 +2178,7 @@
       }
     }
   },
-  "revision": "20230611",
+  "revision": "20230613",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {
@@ -3580,7 +3580,7 @@
       "id": "GoogleCloudChannelV1ListTransferableOffersRequest",
       "properties": {
         "billingAccount": {
-          "description": "Optional. The Billing Account to look up Offers for. Format: accounts/{account_id}/billing_accounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
+          "description": "Optional. The Billing Account to look up Offers for. Format: accounts/{account_id}/billingAccounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
           "type": "string"
         },
         "cloudIdentityId": {

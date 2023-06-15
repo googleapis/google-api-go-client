@@ -2490,6 +2490,17 @@ type WatchRequest struct {
 	// those relating to labelIds specified.
 	LabelFilterAction string `json:"labelFilterAction,omitempty"`
 
+	// LabelFilterBehavior: Filtering behavior of labelIds list specified.
+	// This field replaces label_filter_action; if set, label_filter_action
+	// is ignored.
+	//
+	// Possible values:
+	//   "include" - Only get push notifications for message changes
+	// relating to labelIds specified.
+	//   "exclude" - Get push notifications for all message changes except
+	// those relating to labelIds specified.
+	LabelFilterBehavior string `json:"labelFilterBehavior,omitempty"`
+
 	// LabelIds: List of label_ids to restrict notifications about. By
 	// default, if unspecified, all changes are pushed out. If specified
 	// then dictates which labels are required for a push notification to be

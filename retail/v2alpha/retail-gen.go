@@ -1188,6 +1188,84 @@ func (s *GoogleCloudRetailV2ModelServingConfigList) MarshalJSON() ([]byte, error
 type GoogleCloudRetailV2PurgeMetadata struct {
 }
 
+// GoogleCloudRetailV2PurgeProductsMetadata: Metadata related to the
+// progress of the PurgeProducts operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2PurgeProductsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2PurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2PurgeProductsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2PurgeProductsResponse: Response of the
+// PurgeProductsRequest. If the long running operation is successfully
+// done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudRetailV2PurgeProductsResponse struct {
+	// PurgeCount: The total count of products purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of the product names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2PurgeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2PurgeProductsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2PurgeUserEventsResponse: Response of the
 // PurgeUserEventsRequest. If the long running operation is successfully
 // done, then this message is returned by the
@@ -9224,6 +9302,84 @@ func (s *GoogleCloudRetailV2betaOutputResult) MarshalJSON() ([]byte, error) {
 // progress of the Purge operation. This will be returned by the
 // google.longrunning.Operation.metadata field.
 type GoogleCloudRetailV2betaPurgeMetadata struct {
+}
+
+// GoogleCloudRetailV2betaPurgeProductsMetadata: Metadata related to the
+// progress of the PurgeProducts operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2betaPurgeProductsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaPurgeProductsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaPurgeProductsResponse: Response of the
+// PurgeProductsRequest. If the long running operation is successfully
+// done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudRetailV2betaPurgeProductsResponse struct {
+	// PurgeCount: The total count of products purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of the product names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaPurgeProductsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaPurgeUserEventsResponse: Response of the

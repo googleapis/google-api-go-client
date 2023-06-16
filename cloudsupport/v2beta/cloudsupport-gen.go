@@ -475,7 +475,11 @@ type CaseClassification struct {
 
 	// Id: The unique ID for a classification. Must be specified for case
 	// creation. To retrieve valid classification IDs for case creation, use
-	// `caseClassifications.search`.
+	// `caseClassifications.search`. Classification IDs returned by
+	// `caseClassifications.search` are guaranteed to be valid for at least
+	// 6 months. If a given classification is deactiveated, it will
+	// immediately stop being returned. After 6 months, `case.create`
+	// requests using the classification ID will fail.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -1429,8 +1433,13 @@ type CaseClassificationsSearchCall struct {
 
 // Search: Retrieve valid classifications to be used when creating a
 // support case. The classications are hierarchical, with each
-// classification containing all levels of the hierarchy, separated by "
-// > ". For example "Technical Issue > Compute > Compute Engine".
+// classification containing all levels of the hierarchy, separated by
+// " > ". For example "Technical Issue > Compute > Compute Engine".
+// Classification IDs returned by `caseClassifications.search` are
+// guaranteed to be valid for at least 6 months. If a given
+// classification is deactiveated, it will immediately stop being
+// returned. After 6 months, `case.create` requests using the
+// classification ID will fail.
 func (r *CaseClassificationsService) Search() *CaseClassificationsSearchCall {
 	c := &CaseClassificationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1557,7 +1566,7 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve valid classifications to be used when creating a support case. The classications are hierarchical, with each classification containing all levels of the hierarchy, separated by \" \u003e \". For example \"Technical Issue \u003e Compute \u003e Compute Engine\".",
+	//   "description": "Retrieve valid classifications to be used when creating a support case. The classications are hierarchical, with each classification containing all levels of the hierarchy, separated by `\" \u003e \"`. For example `\"Technical Issue \u003e Compute \u003e Compute Engine\"`. Classification IDs returned by `caseClassifications.search` are guaranteed to be valid for at least 6 months. If a given classification is deactiveated, it will immediately stop being returned. After 6 months, `case.create` requests using the classification ID will fail.",
 	//   "flatPath": "v2beta/caseClassifications:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.caseClassifications.search",

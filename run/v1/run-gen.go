@@ -1005,8 +1005,12 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 // ContainerOverride: Per container override specification.
 type ContainerOverride struct {
 	// Args: Arguments to the entrypoint. Will replace existing args for
-	// override.
+	// override if present. Must be empty if `clear_args` is set to true.
 	Args []string `json:"args,omitempty"`
+
+	// ClearArgs: Optional. True if the intention is to clear out existing
+	// args list.
+	ClearArgs bool `json:"clearArgs,omitempty"`
 
 	// Env: List of environment variables to set in the container. Will be
 	// merged with existing env for override.
@@ -1238,7 +1242,7 @@ type EmptyDirVolumeSource struct {
 	// type:
 	// https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.
 	// The default is nil which means that the limit is undefined. More
-	// info: http://kubernetes.io/docs/user-guide/volumes#emptydir +optional
+	// info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
 	SizeLimit string `json:"sizeLimit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Medium") to
@@ -3474,9 +3478,10 @@ func (s *RouteStatus) MarshalJSON() ([]byte, error) {
 
 // RunJobRequest: Request message for creating a new execution of a job.
 type RunJobRequest struct {
-	// Overrides: Optional. Overrides specification for a given execution of
-	// a job. If provided, overrides will be applied to update the execution
-	// or task spec.
+	// Overrides: Optional. Private preview feature. Currently only
+	// available by invitation. Overrides specification for a given
+	// execution of a job. If provided, overrides will be applied to update
+	// the execution or task spec.
 	Overrides *Overrides `json:"overrides,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Overrides") to

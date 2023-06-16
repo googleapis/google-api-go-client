@@ -2120,12 +2120,7 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// audience group. Used for negative targeting. The COMPLEMENT of the
 	// UNION of this group and other excluded audience groups is used as an
 	// INTERSECTION to any positive audience targeting. All items are
-	// logically ‘OR’ of each other. **Warning:** `ACTIVITY_BASED` and
-	// `FREQUENCY_CAP` audience types will be deprecated on **May 20,
-	// 2023**. After this date, these audiences will not be able to be added
-	// to resource targeting. Read our feature deprecation announcement
-	// (/display-video/api/deprecations#features.first_and_third_party_audien
-	// ce_types) for more information.
+	// logically ‘OR’ of each other.
 	ExcludedFirstAndThirdPartyAudienceGroup *FirstAndThirdPartyAudienceGroup `json:"excludedFirstAndThirdPartyAudienceGroup,omitempty"`
 
 	// ExcludedGoogleAudienceGroup: The Google audience ids of the excluded
@@ -2133,14 +2128,7 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// the UNION of this group and other excluded audience groups is used as
 	// an INTERSECTION to any positive audience targeting. Only contains
 	// Affinity, In-market and Installed-apps type Google audiences. All
-	// items are logically ‘OR’ of each other. **Warning:**
-	// `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and
-	// `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be
-	// deprecated on **May 20, 2023**. After this date, these audiences will
-	// not be able to be added to resource targeting. Read our feature
-	// deprecation announcement
-	// (/display-video/api/deprecations#features.google_audience_types) for
-	// more information.
+	// items are logically ‘OR’ of each other.
 	ExcludedGoogleAudienceGroup *GoogleAudienceGroup `json:"excludedGoogleAudienceGroup,omitempty"`
 
 	// IncludedCombinedAudienceGroup: The combined audience ids of the
@@ -2158,23 +2146,11 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// third party audience ids only. The relation between each first and
 	// third party audience group is INTERSECTION, and the result is
 	// UNION'ed with other audience groups. Repeated groups with same
-	// settings will be ignored. **Warning:** `ACTIVITY_BASED` and
-	// `FREQUENCY_CAP` audience types will be deprecated on **May 20,
-	// 2023**. After this date, these audiences will not be able to be added
-	// to resource targeting. Read our feature deprecation announcement
-	// (/display-video/api/deprecations#features.first_and_third_party_audien
-	// ce_types) for more information.
+	// settings will be ignored.
 	IncludedFirstAndThirdPartyAudienceGroups []*FirstAndThirdPartyAudienceGroup `json:"includedFirstAndThirdPartyAudienceGroups,omitempty"`
 
 	// IncludedGoogleAudienceGroup: The Google audience ids of the included
 	// Google audience group. Contains Google audience ids only.
-	// **Warning:** `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and
-	// `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be
-	// deprecated on **May 20, 2023**. After this date, these audiences will
-	// not be able to be added to resource targeting. Read our feature
-	// deprecation announcement
-	// (/display-video/api/deprecations#features.google_audience_types) for
-	// more information.
 	IncludedGoogleAudienceGroup *GoogleAudienceGroup `json:"includedGoogleAudienceGroup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7945,18 +7921,8 @@ type FirstAndThirdPartyAudience struct {
 	//   "CUSTOMER_MATCH_USER_ID" - Audience was generated through matching
 	// customers to known User IDs.
 	//   "ACTIVITY_BASED" - Audience was created based on campaign activity.
-	// **Warning:** This audience type will be deprecated on **May 20,
-	// 2023**. After this date, these audiences will not be able to be added
-	// to resource targeting. Read our [feature deprecation
-	// announcement](/display-video/api/deprecations#features.first_and_third
-	// _party_audience_types) for more information.
 	//   "FREQUENCY_CAP" - Audience was created based on excluding the
-	// number of impressions they were served. **Warning:** This audience
-	// type will be deprecated on **May 20, 2023**. After this date, these
-	// audiences will not be able to be added to resource targeting. Read
-	// our [feature deprecation
-	// announcement](/display-video/api/deprecations#features.first_and_third
-	// _party_audience_types) for more information.
+	// number of impressions they were served.
 	//   "TAG_BASED" - Audience was created based on custom variables
 	// attached to pixel.
 	//   "YOUTUBE_USERS" - Audience was created based on past interactions
@@ -8726,17 +8692,9 @@ type GoogleAudience struct {
 	//   "GOOGLE_AUDIENCE_TYPE_AFFINITY" - Affinity type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_IN_MARKET" - In-Market type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS" - Installed-Apps type Google
-	// audience. **Warning:** This audience type will be deprecated on **May
-	// 20, 2023**. After this date, these audiences will not be able to be
-	// added to resource targeting. Read our [feature deprecation
-	// announcement](/display-video/api/deprecations#features.google_audience
-	// _types) for more information.
+	// audience.
 	//   "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES" - New-Mobile-Devices type
-	// Google audience. **Warning:** This audience type will be deprecated
-	// on **May 20, 2023**. After this date, these audiences will not be
-	// able to be added to resource targeting. Read our [feature deprecation
-	// announcement](/display-video/api/deprecations#features.google_audience
-	// _types) for more information.
+	// Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_LIFE_EVENT" - Life-Event type Google
 	// audience.
 	//   "GOOGLE_AUDIENCE_TYPE_EXTENDED_DEMOGRAPHIC" - Extended-Demographic

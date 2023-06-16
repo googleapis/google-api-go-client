@@ -3366,14 +3366,23 @@ type Transformation struct {
 	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Name: Transformation display name.
+	// Name: Transformation display name. @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.create
+	// @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.update
 	Name string `json:"name,omitempty"`
 
 	// Notes: User notes on how to apply this transformation in the
-	// container.
+	// container. @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.create
+	// @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.update
 	Notes string `json:"notes,omitempty"`
 
-	// Parameter: The transformation's parameters.
+	// Parameter: The transformation's parameters. @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.create
+	// @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
@@ -3389,7 +3398,10 @@ type Transformation struct {
 	// transformation.
 	TransformationId string `json:"transformationId,omitempty"`
 
-	// Type: Transformation type.
+	// Type: Transformation type. @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.create
+	// @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.update
 	Type string `json:"type,omitempty"`
 
 	// WorkspaceId: GTM Workspace ID.

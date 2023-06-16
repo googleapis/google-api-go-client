@@ -1341,7 +1341,7 @@ type VoterInfoResponse struct {
 	PrecinctId string `json:"precinctId,omitempty"`
 
 	// Precincts: The precincts that match this voter's address. Will only
-	// be returned for project IDs which have been whitelisted as "partner
+	// be returned for project IDs which have been allowlisted as "partner
 	// projects".
 	Precincts []*Precinct `json:"precincts,omitempty"`
 
@@ -1536,6 +1536,13 @@ func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 	return c
 }
 
+// ProductionDataOnly sets the optional parameter "productionDataOnly":
+// Whether to include data that has not been allowlisted yet
+func (c *ElectionsElectionQueryCall) ProductionDataOnly(productionDataOnly bool) *ElectionsElectionQueryCall {
+	c.urlParams_.Set("productionDataOnly", fmt.Sprint(productionDataOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1637,7 +1644,14 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.elections.electionQuery",
 	//   "parameterOrder": [],
-	//   "parameters": {},
+	//   "parameters": {
+	//     "productionDataOnly": {
+	//       "default": "true",
+	//       "description": "Whether to include data that has not been allowlisted yet",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "civicinfo/v2/elections",
 	//   "response": {
 	//     "$ref": "ElectionsQueryResponse"
@@ -1681,6 +1695,15 @@ func (c *ElectionsVoterInfoQueryCall) ElectionId(electionId int64) *ElectionsVot
 // true, only data from official state sources will be returned.
 func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *ElectionsVoterInfoQueryCall {
 	c.urlParams_.Set("officialOnly", fmt.Sprint(officialOnly))
+	return c
+}
+
+// ProductionDataOnly sets the optional parameter "productionDataOnly":
+// Whether to include data that has not been vetted yet. Should only be
+// made available to internal IPs or trusted partners. This is a
+// non-discoverable parameter in the One Platform API config.
+func (c *ElectionsVoterInfoQueryCall) ProductionDataOnly(productionDataOnly bool) *ElectionsVoterInfoQueryCall {
+	c.urlParams_.Set("productionDataOnly", fmt.Sprint(productionDataOnly))
 	return c
 }
 
@@ -1814,6 +1837,12 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	//     "officialOnly": {
 	//       "default": "false",
 	//       "description": "If set to true, only data from official state sources will be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "productionDataOnly": {
+	//       "default": "true",
+	//       "description": "Whether to include data that has not been vetted yet. Should only be made available to internal IPs or trusted partners. This is a non-discoverable parameter in the One Platform API config.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

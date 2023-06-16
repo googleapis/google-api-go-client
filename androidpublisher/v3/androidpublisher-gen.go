@@ -14349,7 +14349,10 @@ type InappproductsDeleteCall struct {
 }
 
 // Delete: Deletes an in-app product (i.e. a managed product or a
-// subscription).
+// subscription). This method should no longer be used to delete
+// subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
 //
 // - packageName: Package name of the app.
 // - sku: Unique identifier for the in-app product.
@@ -14422,7 +14425,7 @@ func (c *InappproductsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes an in-app product (i.e. a managed product or a subscription).",
+	//   "description": "Deletes an in-app product (i.e. a managed product or a subscription). This method should no longer be used to delete subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidpublisher.inappproducts.delete",
@@ -14465,7 +14468,10 @@ type InappproductsGetCall struct {
 }
 
 // Get: Gets an in-app product, which can be a managed product or a
-// subscription.
+// subscription. This method should no longer be used to retrieve
+// subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
 //
 // - packageName: Package name of the app.
 // - sku: Unique identifier for the in-app product.
@@ -14576,7 +14582,7 @@ func (c *InappproductsGetCall) Do(opts ...googleapi.CallOption) (*InAppProduct, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an in-app product, which can be a managed product or a subscription.",
+	//   "description": "Gets an in-app product, which can be a managed product or a subscription. This method should no longer be used to retrieve subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.inappproducts.get",
@@ -14621,7 +14627,10 @@ type InappproductsInsertCall struct {
 }
 
 // Insert: Creates an in-app product (i.e. a managed product or a
-// subscription).
+// subscription). This method should no longer be used to create
+// subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
 //
 // - packageName: Package name of the app.
 func (r *InappproductsService) Insert(packageName string, inappproduct *InAppProduct) *InappproductsInsertCall {
@@ -14732,7 +14741,7 @@ func (c *InappproductsInsertCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an in-app product (i.e. a managed product or a subscription).",
+	//   "description": "Creates an in-app product (i.e. a managed product or a subscription). This method should no longer be used to create subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.inappproducts.insert",
@@ -14782,7 +14791,10 @@ type InappproductsListCall struct {
 // response may be paginated. In this case the response field
 // `tokenPagination.nextPageToken` will be set and the caller should
 // provide its value as a `token` request parameter to retrieve the next
-// page.
+// page. This method should no longer be used to retrieve subscriptions.
+// See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
 //
 // - packageName: Package name of the app.
 func (r *InappproductsService) List(packageName string) *InappproductsListCall {
@@ -14911,7 +14923,7 @@ func (c *InappproductsListCall) Do(opts ...googleapi.CallOption) (*Inappproducts
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all in-app products - both managed products and subscriptions. If an app has a large number of in-app products, the response may be paginated. In this case the response field `tokenPagination.nextPageToken` will be set and the caller should provide its value as a `token` request parameter to retrieve the next page.",
+	//   "description": "Lists all in-app products - both managed products and subscriptions. If an app has a large number of in-app products, the response may be paginated. In this case the response field `tokenPagination.nextPageToken` will be set and the caller should provide its value as a `token` request parameter to retrieve the next page. This method should no longer be used to retrieve subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts",
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.inappproducts.list",
@@ -14969,7 +14981,10 @@ type InappproductsPatchCall struct {
 }
 
 // Patch: Patches an in-app product (i.e. a managed product or a
-// subscription).
+// subscription). This method should no longer be used to update
+// subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
 //
 // - packageName: Package name of the app.
 // - sku: Unique identifier for the in-app product.
@@ -15083,7 +15098,7 @@ func (c *InappproductsPatchCall) Do(opts ...googleapi.CallOption) (*InAppProduct
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches an in-app product (i.e. a managed product or a subscription).",
+	//   "description": "Patches an in-app product (i.e. a managed product or a subscription). This method should no longer be used to update subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.inappproducts.patch",
@@ -15137,7 +15152,10 @@ type InappproductsUpdateCall struct {
 }
 
 // Update: Updates an in-app product (i.e. a managed product or a
-// subscription).
+// subscription). This method should no longer be used to update
+// subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
 //
 // - packageName: Package name of the app.
 // - sku: Unique identifier for the in-app product.
@@ -15259,7 +15277,7 @@ func (c *InappproductsUpdateCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an in-app product (i.e. a managed product or a subscription).",
+	//   "description": "Updates an in-app product (i.e. a managed product or a subscription). This method should no longer be used to update subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.inappproducts.update",

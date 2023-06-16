@@ -2289,7 +2289,7 @@
       }
     }
   },
-  "revision": "20230604",
+  "revision": "20230611",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2625,11 +2625,15 @@
       "id": "ContainerOverride",
       "properties": {
         "args": {
-          "description": "Arguments to the entrypoint. Will replace existing args for override.",
+          "description": "Arguments to the entrypoint. Will replace existing args for override if present. Must be empty if `clear_args` is set to true.",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "clearArgs": {
+          "description": "Optional. True if the intention is to clear out existing args list.",
+          "type": "boolean"
         },
         "env": {
           "description": "List of environment variables to set in the container. Will be merged with existing env for override.",
@@ -2764,7 +2768,7 @@
           "type": "string"
         },
         "sizeLimit": {
-          "description": "Limit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. This field's values are of the 'Quantity' k8s type: https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir +optional",
+          "description": "Limit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. This field's values are of the 'Quantity' k8s type: https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. The default is nil which means that the limit is undefined. More info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir",
           "type": "string"
         }
       },
@@ -4043,7 +4047,7 @@
       "properties": {
         "overrides": {
           "$ref": "Overrides",
-          "description": "Optional. Overrides specification for a given execution of a job. If provided, overrides will be applied to update the execution or task spec."
+          "description": "Optional. Private preview feature. Currently only available by invitation. Overrides specification for a given execution of a job. If provided, overrides will be applied to update the execution or task spec."
         }
       },
       "type": "object"

@@ -1487,17 +1487,33 @@ type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
 	// 100% of the conversion value to the last channel that the customer
 	// clicked through (or engaged view through for YouTube) before
 	// converting.
-	//   "CROSS_CHANNEL_FIRST_CLICK" - Gives all credit for the conversion
-	// to the first channel that a customer clicked (or engaged view through
-	// for YouTube) before converting.
-	//   "CROSS_CHANNEL_LINEAR" - Distributes the credit for the conversion
+	//   "CROSS_CHANNEL_FIRST_CLICK" - Starting in June 2023, new properties
+	// can no longer use this model. See [Analytics
+	// Help](https://support.google.com/analytics/answer/9164320?hl=en#040623
+	// ) for more details. Starting in September 2023, we will sunset this
+	// model for all properties. Gives all credit for the conversion to the
+	// first channel that a customer clicked (or engaged view through for
+	// YouTube) before converting.
+	//   "CROSS_CHANNEL_LINEAR" - Starting in June 2023, new properties can
+	// no longer use this model. See [Analytics
+	// Help](https://support.google.com/analytics/answer/9164320?hl=en#040623
+	// ) for more details. Starting in September 2023, we will sunset this
+	// model for all properties. Distributes the credit for the conversion
 	// equally across all the channels a customer clicked (or engaged view
 	// through for YouTube) before converting.
-	//   "CROSS_CHANNEL_POSITION_BASED" - Attributes 40% credit to the first
-	// and last interaction, and the remaining 20% credit is distributed
-	// evenly to the middle interactions.
-	//   "CROSS_CHANNEL_TIME_DECAY" - Gives more credit to the touchpoints
-	// that happened closer in time to the conversion.
+	//   "CROSS_CHANNEL_POSITION_BASED" - Starting in June 2023, new
+	// properties can no longer use this model. See [Analytics
+	// Help](https://support.google.com/analytics/answer/9164320?hl=en#040623
+	// ) for more details. Starting in September 2023, we will sunset this
+	// model for all properties. Attributes 40% credit to the first and last
+	// interaction, and the remaining 20% credit is distributed evenly to
+	// the middle interactions.
+	//   "CROSS_CHANNEL_TIME_DECAY" - Starting in June 2023, new properties
+	// can no longer use this model. See [Analytics
+	// Help](https://support.google.com/analytics/answer/9164320?hl=en#040623
+	// ) for more details. Starting in September 2023, we will sunset this
+	// model for all properties. Gives more credit to the touchpoints that
+	// happened closer in time to the conversion.
 	//   "ADS_PREFERRED_LAST_CLICK" - Attributes 100% of the conversion
 	// value to the last Google Ads channel that the customer clicked
 	// through before converting.

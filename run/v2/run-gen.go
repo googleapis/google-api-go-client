@@ -578,7 +578,7 @@ type GoogleCloudRunV2EmptyDirVolumeSource struct {
 	// type:
 	// https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.
 	// The default is nil which means that the limit is undefined. More
-	// info: http://kubernetes.io/docs/user-guide/volumes#emptydir +optional
+	// info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
 	SizeLimit string `json:"sizeLimit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Medium") to

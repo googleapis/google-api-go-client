@@ -764,6 +764,7 @@ type CloudSqlSettings struct {
 	//   "POSTGRES_12" - PostgreSQL 12.
 	//   "POSTGRES_13" - PostgreSQL 13.
 	//   "POSTGRES_14" - PostgreSQL 14.
+	//   "POSTGRES_15" - PostgreSQL 15.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// IpConfig: The settings for IP Management. This allows to enable or

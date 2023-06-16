@@ -1196,7 +1196,8 @@ type ExistenceFilter struct {
 	// Count: The total count of documents that match target_id. If
 	// different from the count of documents in the client that match, the
 	// client must manually determine which documents no longer match the
-	// target.
+	// target. The client can use the `unchanged_names` bloom filter to
+	// assist with this determination.
 	Count int64 `json:"count,omitempty"`
 
 	// TargetId: The target ID to which this filter applies.

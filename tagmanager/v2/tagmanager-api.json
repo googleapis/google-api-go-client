@@ -3890,7 +3890,7 @@
       }
     }
   },
-  "revision": "20230612",
+  "revision": "20230614",
   "rootUrl": "https://tagmanager.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5982,15 +5982,21 @@
           "type": "string"
         },
         "name": {
-          "description": "Transformation display name.",
+          "annotations": {
+            "required": [
+              "tagmanager.accounts.containers.workspaces.transformations.create",
+              "tagmanager.accounts.containers.workspaces.transformations.update"
+            ]
+          },
+          "description": "Transformation display name. @mutable tagmanager.accounts.containers.workspaces.transformations.create @mutable tagmanager.accounts.containers.workspaces.transformations.update",
           "type": "string"
         },
         "notes": {
-          "description": "User notes on how to apply this transformation in the container.",
+          "description": "User notes on how to apply this transformation in the container. @mutable tagmanager.accounts.containers.workspaces.transformations.create @mutable tagmanager.accounts.containers.workspaces.transformations.update",
           "type": "string"
         },
         "parameter": {
-          "description": "The transformation's parameters.",
+          "description": "The transformation's parameters. @mutable tagmanager.accounts.containers.workspaces.transformations.create @mutable tagmanager.accounts.containers.workspaces.transformations.update",
           "items": {
             "$ref": "Parameter"
           },
@@ -6013,7 +6019,13 @@
           "type": "string"
         },
         "type": {
-          "description": "Transformation type.",
+          "annotations": {
+            "required": [
+              "tagmanager.accounts.containers.workspaces.transformations.create",
+              "tagmanager.accounts.containers.workspaces.transformations.update"
+            ]
+          },
+          "description": "Transformation type. @mutable tagmanager.accounts.containers.workspaces.transformations.create @mutable tagmanager.accounts.containers.workspaces.transformations.update",
           "type": "string"
         },
         "workspaceId": {

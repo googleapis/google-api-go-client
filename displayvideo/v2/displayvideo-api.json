@@ -9172,7 +9172,7 @@
       }
     }
   },
-  "revision": "20230608",
+  "revision": "20230615",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -10250,11 +10250,11 @@
       "properties": {
         "excludedFirstAndThirdPartyAudienceGroup": {
           "$ref": "FirstAndThirdPartyAudienceGroup",
-          "description": "The first and third party audience ids and recencies of the excluded first and third party audience group. Used for negative targeting. The COMPLEMENT of the UNION of this group and other excluded audience groups is used as an INTERSECTION to any positive audience targeting. All items are logically ‘OR’ of each other. **Warning:** `ACTIVITY_BASED` and `FREQUENCY_CAP` audience types will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.first_and_third_party_audience_types) for more information."
+          "description": "The first and third party audience ids and recencies of the excluded first and third party audience group. Used for negative targeting. The COMPLEMENT of the UNION of this group and other excluded audience groups is used as an INTERSECTION to any positive audience targeting. All items are logically ‘OR’ of each other."
         },
         "excludedGoogleAudienceGroup": {
           "$ref": "GoogleAudienceGroup",
-          "description": "The Google audience ids of the excluded Google audience group. Used for negative targeting. The COMPLEMENT of the UNION of this group and other excluded audience groups is used as an INTERSECTION to any positive audience targeting. Only contains Affinity, In-market and Installed-apps type Google audiences. All items are logically ‘OR’ of each other. **Warning:** `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.google_audience_types) for more information."
+          "description": "The Google audience ids of the excluded Google audience group. Used for negative targeting. The COMPLEMENT of the UNION of this group and other excluded audience groups is used as an INTERSECTION to any positive audience targeting. Only contains Affinity, In-market and Installed-apps type Google audiences. All items are logically ‘OR’ of each other."
         },
         "includedCombinedAudienceGroup": {
           "$ref": "CombinedAudienceGroup",
@@ -10265,7 +10265,7 @@
           "description": "The custom list ids of the included custom list group. Contains custom list ids only."
         },
         "includedFirstAndThirdPartyAudienceGroups": {
-          "description": "The first and third party audience ids and recencies of included first and third party audience groups. Each first and third party audience group contains first and third party audience ids only. The relation between each first and third party audience group is INTERSECTION, and the result is UNION'ed with other audience groups. Repeated groups with same settings will be ignored. **Warning:** `ACTIVITY_BASED` and `FREQUENCY_CAP` audience types will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.first_and_third_party_audience_types) for more information.",
+          "description": "The first and third party audience ids and recencies of included first and third party audience groups. Each first and third party audience group contains first and third party audience ids only. The relation between each first and third party audience group is INTERSECTION, and the result is UNION'ed with other audience groups. Repeated groups with same settings will be ignored.",
           "items": {
             "$ref": "FirstAndThirdPartyAudienceGroup"
           },
@@ -10273,7 +10273,7 @@
         },
         "includedGoogleAudienceGroup": {
           "$ref": "GoogleAudienceGroup",
-          "description": "The Google audience ids of the included Google audience group. Contains Google audience ids only. **Warning:** `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.google_audience_types) for more information."
+          "description": "The Google audience ids of the included Google audience group. Contains Google audience ids only."
         }
       },
       "type": "object"
@@ -14639,8 +14639,8 @@
             "Audience was generated through matching customers to known contact information.",
             "Audience was generated through matching customers to known Mobile device IDs.",
             "Audience was generated through matching customers to known User IDs.",
-            "Audience was created based on campaign activity. **Warning:** This audience type will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.first_and_third_party_audience_types) for more information.",
-            "Audience was created based on excluding the number of impressions they were served. **Warning:** This audience type will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.first_and_third_party_audience_types) for more information.",
+            "Audience was created based on campaign activity.",
+            "Audience was created based on excluding the number of impressions they were served.",
             "Audience was created based on custom variables attached to pixel.",
             "Audience was created based on past interactions with videos, YouTube ads, or YouTube channel.",
             "Subtype of third party audience type."
@@ -15260,8 +15260,8 @@
             "Default value when type is not specified or is unknown.",
             "Affinity type Google audience.",
             "In-Market type Google audience.",
-            "Installed-Apps type Google audience. **Warning:** This audience type will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.google_audience_types) for more information.",
-            "New-Mobile-Devices type Google audience. **Warning:** This audience type will be deprecated on **May 20, 2023**. After this date, these audiences will not be able to be added to resource targeting. Read our [feature deprecation announcement](/display-video/api/deprecations#features.google_audience_types) for more information.",
+            "Installed-Apps type Google audience.",
+            "New-Mobile-Devices type Google audience.",
             "Life-Event type Google audience.",
             "Extended-Demographic type Google audience."
           ],

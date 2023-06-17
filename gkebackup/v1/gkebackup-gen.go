@@ -621,6 +621,26 @@ type BackupPlan struct {
 	// under this plan.
 	RetentionPolicy *RetentionPolicy `json:"retentionPolicy,omitempty"`
 
+	// State: Output only. State of the BackupPlan. This State field
+	// reflects the various stages a BackupPlan can be in during the Create
+	// operation. It will be set to "DEACTIVATED" if the BackupPlan is
+	// deactivated on an Update
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default first value for Enums.
+	//   "CLUSTER_PENDING" - Waiting for cluster state to be RUNNING.
+	//   "PROVISIONING" - The BackupPlan is in the process of being created.
+	//   "READY" - The BackupPlan has successfully been created and is ready
+	// for Backups.
+	//   "FAILED" - BackupPlan creation has failed.
+	//   "DEACTIVATED" - The BackupPlan has been deactivated.
+	//   "DELETING" - The BackupPlan is in the process of being deleted.
+	State string `json:"state,omitempty"`
+
+	// StateReason: Output only. Human-readable description of why
+	// BackupPlan is in the current `state`
+	StateReason string `json:"stateReason,omitempty"`
+
 	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
 	Uid string `json:"uid,omitempty"`
@@ -792,27 +812,41 @@ func (s *ClusterMetadata) MarshalJSON() ([]byte, error) {
 // configuration elsewhere, and will cause an error if selected here. -
 // Namespace - PersistentVolume
 type ClusterResourceRestoreScope struct {
+	// AllGroupKinds: If True, all valid cluster-scoped resources will be
+	// restored. Mutually exclusive to any other field in the message.
+	AllGroupKinds bool `json:"allGroupKinds,omitempty"`
+
+	// ExcludedGroupKinds: A list of cluster-scoped resource group kinds to
+	// NOT restore from the backup. If specified, all valid cluster-scoped
+	// resources will be restored except for those specified in the list.
+	// Mutually exclusive to any other field in the message.
+	ExcludedGroupKinds []*GroupKind `json:"excludedGroupKinds,omitempty"`
+
+	// NoGroupKinds: If True, no cluster-scoped resources will be restored.
+	// This has the same restore scope as if the message is not defined.
+	// Mutually exclusive to any other field in the message.
+	NoGroupKinds bool `json:"noGroupKinds,omitempty"`
+
 	// SelectedGroupKinds: A list of cluster-scoped resource group kinds to
 	// restore from the backup. If specified, only the selected resources
 	// will be restored. Mutually exclusive to any other field in the
 	// message.
 	SelectedGroupKinds []*GroupKind `json:"selectedGroupKinds,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SelectedGroupKinds")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AllGroupKinds") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SelectedGroupKinds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllGroupKinds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1684,6 +1718,57 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResourceFilter: ResourceFilter specifies matching criteria to limit
+// the scope of a change to a specific set of kubernetes resources that
+// are selected for restoration from a backup.
+type ResourceFilter struct {
+	// GroupKinds: (Filtering parameter) Any resource subject to
+	// transformation must belong to one of the listed "types". If this
+	// field is not provided, no type filtering will be performed (all
+	// resources of all types matching previous filtering parameters will be
+	// candidates for transformation).
+	GroupKinds []*GroupKind `json:"groupKinds,omitempty"`
+
+	// JsonPath: This is a [JSONPath]
+	// (https://github.com/json-path/JsonPath/blob/master/README.md)
+	// expression that matches specific fields of candidate resources and it
+	// operates as a filtering parameter (resources that are not matched
+	// with this expression will not be candidates for transformation).
+	JsonPath string `json:"jsonPath,omitempty"`
+
+	// Namespaces: (Filtering parameter) Any resource subject to
+	// transformation must be contained within one of the listed Kubernetes
+	// Namespace in the Backup. If this field is not provided, no namespace
+	// filtering will be performed (all resources in all Namespaces,
+	// including all cluster-scoped resources, will be candidates for
+	// transformation). To mix cluster-scoped and namespaced resources in
+	// the same rule, use an empty string ("") as one of the target
+	// namespaces.
+	Namespaces []string `json:"namespaces,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GroupKinds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GroupKinds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Restore: Represents both a request to Restore some portion of a
 // Backup into a target GKE cluster and a record of the restore
 // operation itself. Next id: 18
@@ -1823,16 +1908,21 @@ type RestoreConfig struct {
 	//   "USE_EXISTING_VERSION" - Do not attempt to restore the conflicting
 	// resource.
 	//   "USE_BACKUP_VERSION" - Delete the existing version before
-	// re-creating it from the Backup. Note that this is a dangerous option
-	// which could cause unintentional data loss if used inappropriately -
-	// for example, deleting a CRD will cause Kubernetes to delete all CRs
-	// of that type.
+	// re-creating it from the Backup. This is a dangerous option which
+	// could cause unintentional data loss if used inappropriately. For
+	// example, deleting a CRD will cause Kubernetes to delete all CRs of
+	// that type.
 	ClusterResourceConflictPolicy string `json:"clusterResourceConflictPolicy,omitempty"`
 
 	// ClusterResourceRestoreScope: Identifies the cluster-scoped resources
 	// to restore from the Backup. Not specifying it means NO cluster
 	// resource will be restored.
 	ClusterResourceRestoreScope *ClusterResourceRestoreScope `json:"clusterResourceRestoreScope,omitempty"`
+
+	// ExcludedNamespaces: A list of selected namespaces excluded from
+	// restoration. All namespaces except those in this list will be
+	// restored.
+	ExcludedNamespaces *Namespaces `json:"excludedNamespaces,omitempty"`
 
 	// NamespacedResourceRestoreMode: Defines the behavior for handling the
 	// situation where sets of namespaced resources being restored already
@@ -1858,6 +1948,10 @@ type RestoreConfig struct {
 	// conflict will be reported.
 	NamespacedResourceRestoreMode string `json:"namespacedResourceRestoreMode,omitempty"`
 
+	// NoNamespaces: Do not restore any namespaced resources if set to
+	// "True". Specifying this field to "False" is not allowed.
+	NoNamespaces bool `json:"noNamespaces,omitempty"`
+
 	// SelectedApplications: A list of selected ProtectedApplications to
 	// restore. The listed ProtectedApplications and all the resources to
 	// which they refer will be restored.
@@ -1875,6 +1969,13 @@ type RestoreConfig struct {
 	// subsequent rules. An empty list means no substitution will occur.
 	SubstitutionRules []*SubstitutionRule `json:"substitutionRules,omitempty"`
 
+	// TransformationRules: A list of transformation rules to be applied
+	// against Kubernetes resources as they are selected for restoration
+	// from a Backup. Rules are executed in order defined - this order
+	// matters, as changes made by a rule may impact the filtering logic of
+	// subsequent rules. An empty list means no transformation will occur.
+	TransformationRules []*TransformationRule `json:"transformationRules,omitempty"`
+
 	// VolumeDataRestorePolicy: Specifies the mechanism to be used to
 	// restore volume data. Default: VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED
 	// (will be treated as NO_VOLUME_DATA_RESTORATION).
@@ -1882,17 +1983,17 @@ type RestoreConfig struct {
 	// Possible values:
 	//   "VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED" - Unspecified (illegal).
 	//   "RESTORE_VOLUME_DATA_FROM_BACKUP" - For each PVC to be restored,
-	// will create a new underlying volume (and PV) from the corresponding
+	// create a new underlying volume and PV from the corresponding
 	// VolumeBackup contained within the Backup.
 	//   "REUSE_VOLUME_HANDLE_FROM_BACKUP" - For each PVC to be restored,
 	// attempt to reuse the original PV contained in the Backup (with its
-	// original underlying volume). Note that option is likely only usable
-	// when restoring a workload to its original cluster.
-	//   "NO_VOLUME_DATA_RESTORATION" - For each PVC to be restored, PVCs
-	// will be created without any particular action to restore data. In
-	// this case, the normal Kubernetes provisioning logic would kick in,
-	// and this would likely result in either dynamically provisioning blank
-	// PVs or binding to statically provisioned PVs.
+	// original underlying volume). This option is likely only usable when
+	// restoring a workload to its original cluster.
+	//   "NO_VOLUME_DATA_RESTORATION" - For each PVC to be restored, create
+	// PVC without any particular action to restore data. In this case, the
+	// normal Kubernetes provisioning logic would kick in, and this would
+	// likely result in either dynamically provisioning blank PVs or binding
+	// to statically provisioned PVs.
 	VolumeDataRestorePolicy string `json:"volumeDataRestorePolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllNamespaces") to
@@ -1961,6 +2062,23 @@ type RestorePlan struct {
 	// RestoreConfig: Required. Configuration of Restores created via this
 	// RestorePlan.
 	RestoreConfig *RestoreConfig `json:"restoreConfig,omitempty"`
+
+	// State: Output only. State of the RestorePlan. This State field
+	// reflects the various stages a RestorePlan can be in during the Create
+	// operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default first value for Enums.
+	//   "CLUSTER_PENDING" - Waiting for cluster state to be RUNNING.
+	//   "READY" - The RestorePlan has successfully been created and is
+	// ready for Restores.
+	//   "FAILED" - RestorePlan creation has failed.
+	//   "DELETING" - The RestorePlan is in the process of being deleted.
+	State string `json:"state,omitempty"`
+
+	// StateReason: Output only. Human-readable description of why
+	// RestorePlan is in the current `state`
+	StateReason string `json:"stateReason,omitempty"`
 
 	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
@@ -2053,14 +2171,15 @@ func (s *RetentionPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Schedule: Schedule defines scheduling parameters for automatically
-// creating Backups via this BackupPlan.
+// Schedule: Defines scheduling parameters for automatically creating
+// Backups via this BackupPlan.
 type Schedule struct {
 	// CronSchedule: A standard cron (https://wikipedia.com/wiki/cron)
 	// string that defines a repeating schedule for creating Backups via
-	// this BackupPlan. If this is defined, then backup_retain_days must
-	// also be defined. Default (empty): no automatic backup creation will
-	// occur.
+	// this BackupPlan. This is mutually exclusive with the rpo_config field
+	// since at most one schedule can be defined for a BackupPlan. If this
+	// is defined, then backup_retain_days must also be defined. Default
+	// (empty): no automatic backup creation will occur.
 	CronSchedule string `json:"cronSchedule,omitempty"`
 
 	// Paused: This flag denotes whether automatic Backup creation is paused
@@ -2259,6 +2378,115 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TransformationRule: A transformation rule to be applied against
+// Kubernetes resources as they are selected for restoration from a
+// Backup. A rule contains both filtering logic (which resources are
+// subject to transform) and transformation logic.
+type TransformationRule struct {
+	// Description: The description is a user specified string description
+	// of the transformation rule.
+	Description string `json:"description,omitempty"`
+
+	// FieldActions: Required. A list of transformation rule actions to take
+	// against candidate resources. Actions are executed in order defined -
+	// this order matters, as they could potentially interfere with each
+	// other and the first operation could affect the outcome of the second
+	// operation.
+	FieldActions []*TransformationRuleAction `json:"fieldActions,omitempty"`
+
+	// ResourceFilter: This field is used to specify a set of fields that
+	// should be used to determine which resources in backup should be acted
+	// upon by the supplied transformation rule actions, and this will
+	// ensure that only specific resources are affected by transformation
+	// rule actions.
+	ResourceFilter *ResourceFilter `json:"resourceFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransformationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod TransformationRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TransformationRuleAction: TransformationRuleAction defines a
+// TransformationRule action based on the JSON Patch RFC
+// (https://www.rfc-editor.org/rfc/rfc6902)
+type TransformationRuleAction struct {
+	// FromPath: A string containing a JSON Pointer value that references
+	// the location in the target document to move the value from.
+	FromPath string `json:"fromPath,omitempty"`
+
+	// Op: Required. op specifies the operation to perform.
+	//
+	// Possible values:
+	//   "OP_UNSPECIFIED" - Unspecified operation
+	//   "REMOVE" - The "remove" operation removes the value at the target
+	// location.
+	//   "MOVE" - The "move" operation removes the value at a specified
+	// location and adds it to the target location.
+	//   "COPY" - The "copy" operation copies the value at a specified
+	// location to the target location.
+	//   "ADD" - The "add" operation performs one of the following
+	// functions, depending upon what the target location references: 1. If
+	// the target location specifies an array index, a new value is inserted
+	// into the array at the specified index. 2. If the target location
+	// specifies an object member that does not already exist, a new member
+	// is added to the object. 3. If the target location specifies an object
+	// member that does exist, that member's value is replaced.
+	//   "TEST" - The "test" operation tests that a value at the target
+	// location is equal to a specified value.
+	//   "REPLACE" - The "replace" operation replaces the value at the
+	// target location with a new value. The operation object MUST contain a
+	// "value" member whose content specifies the replacement value.
+	Op string `json:"op,omitempty"`
+
+	// Path: A string containing a JSON-Pointer value that references a
+	// location within the target document where the operation is performed.
+	Path string `json:"path,omitempty"`
+
+	// Value: A string that specifies the desired value in string format to
+	// use for transformation.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FromPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FromPath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransformationRuleAction) MarshalJSON() ([]byte, error) {
+	type NoMethod TransformationRuleAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

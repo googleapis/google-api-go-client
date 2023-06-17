@@ -1532,6 +1532,48 @@ func (s *DatabaseRole) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DdlStatementActionInfo: Action information extracted from a DDL
+// statement. This proto is used to display the brief info of the DDL
+// statement for the operation UpdateDatabaseDdl.
+type DdlStatementActionInfo struct {
+	// Action: The action for the DDL statement, e.g. CREATE, ALTER, DROP,
+	// GRANT, etc. This field is a non-empty string.
+	Action string `json:"action,omitempty"`
+
+	// EntityNames: The entity name(s) being operated on the DDL statement.
+	// E.g. 1. For statement "CREATE TABLE t1(...)", `entity_names` =
+	// ["t1"]. 2. For statement "GRANT ROLE r1, r2 ...", `entity_names` =
+	// ["r1", "r2"]. 3. For statement "ANALYZE", `entity_names` = [].
+	EntityNames []string `json:"entityNames,omitempty"`
+
+	// EntityType: The entity type for the DDL statement, e.g. TABLE, INDEX,
+	// VIEW, etc. This field can be empty string for some DDL statement,
+	// e.g. for statement "ANALYZE", `entity_type` = "".
+	EntityType string `json:"entityType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DdlStatementActionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DdlStatementActionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Delete: Arguments to delete operations.
 type Delete struct {
 	// KeySet: Required. The primary keys of the rows within table to
@@ -5774,6 +5816,10 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 // UpdateDatabaseDdlMetadata: Metadata type for the operation returned
 // by UpdateDatabaseDdl.
 type UpdateDatabaseDdlMetadata struct {
+	// Actions: The brief action info for the DDL statements. `actions[i]`
+	// is the brief info for `statements[i]`.
+	Actions []*DdlStatementActionInfo `json:"actions,omitempty"`
+
 	// CommitTimestamps: Reports the commit timestamps of all statements
 	// that have succeeded so far, where `commit_timestamps[i]` is the
 	// commit timestamp for the statement `statements[i]`.
@@ -5782,13 +5828,12 @@ type UpdateDatabaseDdlMetadata struct {
 	// Database: The database being modified.
 	Database string `json:"database,omitempty"`
 
-	// Progress: The progress of the UpdateDatabaseDdl operations.
-	// Currently, only index creation statements will have a continuously
-	// updating progress. For non-index creation statements, `progress[i]`
-	// will have start time and end time populated with commit timestamp of
-	// operation, as well as a progress of 100% once the operation has
-	// completed. `progress[i]` is the operation progress for
-	// `statements[i]`.
+	// Progress: The progress of the UpdateDatabaseDdl operations. All DDL
+	// statements will have continuously updating progress, and
+	// `progress[i]` is the operation progress for `statements[i]`. Also,
+	// `progress[i]` will have start time and end time populated with commit
+	// timestamp of operation, as well as a progress of 100% once the
+	// operation has completed.
 	Progress []*OperationProgress `json:"progress,omitempty"`
 
 	// Statements: For an update this list contains all the statements. For
@@ -5801,7 +5846,7 @@ type UpdateDatabaseDdlMetadata struct {
 	// again.
 	Throttled bool `json:"throttled,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CommitTimestamps") to
+	// ForceSendFields is a list of field names (e.g. "Actions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5809,13 +5854,12 @@ type UpdateDatabaseDdlMetadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CommitTimestamps") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

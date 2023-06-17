@@ -7579,7 +7579,7 @@
       }
     }
   },
-  "revision": "20230605",
+  "revision": "20230612",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -14116,7 +14116,7 @@
       "id": "GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest",
       "properties": {
         "requests": {
-          "description": "Required. A maximum of 1000 Messages can be created in a batch. CreateMessageRequest.message.send_time is required. All created messages will have identical Message.create_time.",
+          "description": "Required. A maximum of 300 messages can be created in a batch. CreateMessageRequest.message.send_time is required. All created messages will have identical Message.create_time.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1CreateMessageRequest"
           },
@@ -15700,7 +15700,7 @@
         },
         "gcsSource": {
           "$ref": "GoogleCloudDialogflowV2beta1GcsSources",
-          "description": "The Google Cloud Storage location for the documents. The path can include a wildcard. These URIs may have the forms `gs:///`. `gs:////*.`."
+          "description": "Optional. The Google Cloud Storage location for the documents. The path can include a wildcard. These URIs may have the forms `gs:///`. `gs:////*.`."
         },
         "importGcsCustomMetadata": {
           "description": "Whether to import custom metadata from Google Cloud Storage. Only valid when the document source is Google Cloud Storage URI.",
@@ -18621,6 +18621,10 @@
         "suggestDialogflowAssistsResponse": {
           "$ref": "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
           "description": "SuggestDialogflowAssistsResponse if request is for DIALOGFLOW_ASSIST."
+        },
+        "suggestEntityExtractionResponse": {
+          "$ref": "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
+          "description": "SuggestDialogflowAssistsResponse if request is for ENTITY_EXTRACTION."
         },
         "suggestFaqAnswersResponse": {
           "$ref": "GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse",

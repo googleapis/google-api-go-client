@@ -10209,7 +10209,7 @@ type GoogleCloudDialogflowV2Document struct {
 	// status can be tracked in `latest_reload_status`. If a reload fails,
 	// we will keep the document unchanged. If a reload fails with internal
 	// errors, the system will try to reload the document on the next day.
-	// If a reload fails with non-retriable errors (e.g. PERMISION_DENIED),
+	// If a reload fails with non-retriable errors (e.g. PERMISSION_DENIED),
 	// the system will not try to reload the document anymore. You need to
 	// manually reload the document successfully by calling `ReloadDocument`
 	// and clear the errors.
@@ -12264,9 +12264,9 @@ type GoogleCloudDialogflowV2ImportDocumentsRequest struct {
 	// the documents.
 	DocumentTemplate *GoogleCloudDialogflowV2ImportDocumentTemplate `json:"documentTemplate,omitempty"`
 
-	// GcsSource: The Google Cloud Storage location for the documents. The
-	// path can include a wildcard. These URIs may have the forms `gs:///`.
-	// `gs:////*.`.
+	// GcsSource: Optional. The Google Cloud Storage location for the
+	// documents. The path can include a wildcard. These URIs may have the
+	// forms `gs:///`. `gs:////*.`.
 	GcsSource *GoogleCloudDialogflowV2GcsSources `json:"gcsSource,omitempty"`
 
 	// ImportGcsCustomMetadata: Whether to import custom metadata from
@@ -20811,6 +20811,10 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// SuggestDialogflowAssistsResponse: SuggestDialogflowAssistsResponse if
 	// request is for DIALOGFLOW_ASSIST.
 	SuggestDialogflowAssistsResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestDialogflowAssistsResponse,omitempty"`
+
+	// SuggestEntityExtractionResponse: SuggestDialogflowAssistsResponse if
+	// request is for ENTITY_EXTRACTION.
+	SuggestEntityExtractionResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestEntityExtractionResponse,omitempty"`
 
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is
 	// for FAQ_ANSWER.

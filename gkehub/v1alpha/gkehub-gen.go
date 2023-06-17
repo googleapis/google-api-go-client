@@ -2320,6 +2320,9 @@ type ConfigManagementPolicyController struct {
 	// with Policy Controller.
 	TemplateLibraryInstalled bool `json:"templateLibraryInstalled,omitempty"`
 
+	// UpdateTime: Output only. Last time this membership spec was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AuditIntervalSeconds") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2348,6 +2351,9 @@ func (s *ConfigManagementPolicyController) MarshalJSON() ([]byte, error) {
 // ConfigManagementPolicyControllerMigration: State for the migration of
 // PolicyController from ACM -> PoCo Hub.
 type ConfigManagementPolicyControllerMigration struct {
+	// CopyTime: Last time this membership spec was copied to PoCo feature.
+	CopyTime string `json:"copyTime,omitempty"`
+
 	// Stage: Stage of the migration.
 	//
 	// Possible values:
@@ -2358,7 +2364,7 @@ type ConfigManagementPolicyControllerMigration struct {
 	// manages policycontroller.
 	Stage string `json:"stage,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Stage") to
+	// ForceSendFields is a list of field names (e.g. "CopyTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2366,8 +2372,8 @@ type ConfigManagementPolicyControllerMigration struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Stage") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CopyTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -5487,6 +5493,12 @@ type PolicyControllerPolicyContentState struct {
 	// BundleStates: The state of the any bundles included in the chosen
 	// version of the manifest
 	BundleStates map[string]PolicyControllerOnClusterState `json:"bundleStates,omitempty"`
+
+	// ReferentialSyncConfigState: The state of the referential data sync
+	// configuration. This could represent the state of either the syncSet
+	// object(s) or the config object, depending on the version of PoCo
+	// configured by the user.
+	ReferentialSyncConfigState *PolicyControllerOnClusterState `json:"referentialSyncConfigState,omitempty"`
 
 	// TemplateLibraryState: The state of the template library
 	TemplateLibraryState *PolicyControllerOnClusterState `json:"templateLibraryState,omitempty"`

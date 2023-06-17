@@ -691,6 +691,44 @@ func (s *Crop) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DashConfig: `DASH` manifest configuration.
+type DashConfig struct {
+	// SegmentReferenceScheme: The segment reference scheme for a `DASH`
+	// manifest. The default is `SEGMENT_LIST`
+	//
+	// Possible values:
+	//   "SEGMENT_REFERENCE_SCHEME_UNSPECIFIED" - The segment reference
+	// scheme is not specified.
+	//   "SEGMENT_LIST" - Lists the URLs of media files for each segment.
+	//   "SEGMENT_TEMPLATE_NUMBER" - Lists each segment from a template with
+	// $Number$ variable.
+	SegmentReferenceScheme string `json:"segmentReferenceScheme,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SegmentReferenceScheme") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SegmentReferenceScheme")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DashConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DashConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Deblock: Deblock preprocessing configuration. **Note:** This
 // configuration is not supported.
 type Deblock struct {
@@ -1613,6 +1651,9 @@ func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 
 // Manifest: Manifest configuration.
 type Manifest struct {
+	// Dash: `DASH` manifest configuration.
+	Dash *DashConfig `json:"dash,omitempty"`
+
 	// FileName: The name of the generated file. The default is `manifest`
 	// with the extension suffix corresponding to the `Manifest.type`.
 	FileName string `json:"fileName,omitempty"`
@@ -1633,7 +1674,7 @@ type Manifest struct {
 	// extension is `.mpd`.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FileName") to
+	// ForceSendFields is a list of field names (e.g. "Dash") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1641,8 +1682,8 @@ type Manifest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FileName") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Dash") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

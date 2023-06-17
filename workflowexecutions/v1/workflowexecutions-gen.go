@@ -642,6 +642,12 @@ type TriggerPubsubExecutionRequest struct {
 	// configuring triggers.
 	GCPCloudEventsMode string `json:"GCPCloudEventsMode,omitempty"`
 
+	// DeliveryAttempt: The number of attempts that have been made to
+	// deliver this message. This is set by Pub/Sub for subscriptions that
+	// have the "dead letter" feature enabled, and hence provided here for
+	// compatibility, but is ignored by Workflows.
+	DeliveryAttempt int64 `json:"deliveryAttempt,omitempty"`
+
 	// Message: Required. The message of the Pub/Sub push notification.
 	Message *PubsubMessage `json:"message,omitempty"`
 

@@ -1898,8 +1898,8 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldIn
 	// point. The third quartile (Q3) splits off the highest 25% of data
 	// from the lowest 75%. It is known as the upper or 75th empirical
 	// quartile, as 75% of the data lies below this point. Here, the
-	// quartiles is provided as an ordered list of quartile values for the
-	// scanned data, occurring in order Q1, median, Q3.
+	// quartiles is provided as an ordered list of approximate quartile
+	// values for the scanned data, occurring in order Q1, median, Q3.
 	Quartiles googleapi.Int64s `json:"quartiles,omitempty"`
 
 	// StandardDeviation: Standard deviation of non-null values in the
@@ -2844,6 +2844,10 @@ func (s *GoogleCloudDataplexV1DataScanEvent) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs: Applied
 // configs for data profile type data scan job.
 type GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs struct {
+	// ColumnFilterApplied: Boolean indicating whether a column filter was
+	// applied in the DataScan job.
+	ColumnFilterApplied bool `json:"columnFilterApplied,omitempty"`
+
 	// RowFilterApplied: Boolean indicating whether a row filter was applied
 	// in the DataScan job.
 	RowFilterApplied bool `json:"rowFilterApplied,omitempty"`
@@ -2853,15 +2857,15 @@ type GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs struct {
 	// or 100.0 imply that sampling was not applied.
 	SamplingPercent float64 `json:"samplingPercent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RowFilterApplied") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ColumnFilterApplied")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RowFilterApplied") to
+	// NullFields is a list of field names (e.g. "ColumnFilterApplied") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

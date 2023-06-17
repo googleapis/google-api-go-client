@@ -259,7 +259,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Evaluation: Message describing Evaluation object
+// Evaluation: LINT.IfChange Message describing Evaluation object
 type Evaluation struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
@@ -292,8 +292,9 @@ type Evaluation struct {
 	// exist.
 	RuleVersions []string `json:"ruleVersions,omitempty"`
 
-	// Schedule: crontab format schedule for scheduled evaluation, example:
-	// 0 */3 * * *
+	// Schedule: crontab format schedule for scheduled evaluation, currently
+	// only support the following schedule: "0 */1 * * *", "0 */6 * * *", "0
+	// */12 * * *", "0 0 */1 * *", "0 0 */7 * *",
 	Schedule string `json:"schedule,omitempty"`
 
 	// UpdateTime: Output only. [Output only] Update time stamp
@@ -469,6 +470,10 @@ func (s *GceInstanceFilter) MarshalJSON() ([]byte, error) {
 // Insight: A presentation of host resource usage where the workload
 // runs.
 type Insight struct {
+	// InstanceId: Required. The instance id where the insight is generated
+	// from
+	InstanceId string `json:"instanceId,omitempty"`
+
 	// SapDiscovery: The insights data for sap system discovery. This is a
 	// copy of SAP System proto and should get updated whenever that one
 	// changes.
@@ -484,7 +489,7 @@ type Insight struct {
 	// validation.
 	SqlserverValidation *SqlserverValidation `json:"sqlserverValidation,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SapDiscovery") to
+	// ForceSendFields is a list of field names (e.g. "InstanceId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -492,10 +497,10 @@ type Insight struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SapDiscovery") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "InstanceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1151,7 +1156,7 @@ func (s *RunEvaluationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SapDiscovery: The schema of SAP system discovery data.
+// SapDiscovery: LINT.IfChange The schema of SAP system discovery data.
 type SapDiscovery struct {
 	// ApplicationLayer: An SAP system may run without an application layer.
 	ApplicationLayer *SapDiscoveryComponent `json:"applicationLayer,omitempty"`
@@ -1581,10 +1586,6 @@ func (s *ViolationDetails) MarshalJSON() ([]byte, error) {
 type WriteInsightRequest struct {
 	// Insight: Required. The metrics data details.
 	Insight *Insight `json:"insight,omitempty"`
-
-	// InstanceId: Optional. The instance id where the insight is generated
-	// from
-	InstanceId string `json:"instanceId,omitempty"`
 
 	// RequestId: Optional. An optional request ID to identify requests.
 	// Specify a unique request ID so that if you must retry your request,

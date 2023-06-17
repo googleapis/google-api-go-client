@@ -1303,6 +1303,41 @@ func (s *DeployJobRunMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeployParameters: DeployParameters contains deploy parameters
+// information.
+type DeployParameters struct {
+	// MatchTargetLabels: Optional. Deploy parameters are applied to targets
+	// with match labels. If unspecified, deploy parameters are applied to
+	// all targets (including child targets of a multi-target).
+	MatchTargetLabels map[string]string `json:"matchTargetLabels,omitempty"`
+
+	// Values: Required. Values are deploy parameters in key-value pairs.
+	Values map[string]string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MatchTargetLabels")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MatchTargetLabels") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeployParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeploymentJobs: Deployment job composition.
 type DeploymentJobs struct {
 	// DeployJob: Output only. The deploy Job. This is the deploy job in the
@@ -2722,6 +2757,10 @@ type Release struct {
 	// pipeline taken at release creation time.
 	DeliveryPipelineSnapshot *DeliveryPipeline `json:"deliveryPipelineSnapshot,omitempty"`
 
+	// DeployParameters: Optional. The deploy parameters to use for all
+	// targets in this release.
+	DeployParameters map[string]string `json:"deployParameters,omitempty"`
+
 	// Description: Description of the `Release`. Max length is 255
 	// characters.
 	Description string `json:"description,omitempty"`
@@ -3484,6 +3523,10 @@ func (s *SkaffoldVersion) MarshalJSON() ([]byte, error) {
 
 // Stage: Stage specifies a location to which to deploy.
 type Stage struct {
+	// DeployParameters: Optional. The deploy parameters to use for the
+	// target in this stage.
+	DeployParameters []*DeployParameters `json:"deployParameters,omitempty"`
+
 	// Profiles: Skaffold profiles to use when rendering the manifest for
 	// this stage's `Target`.
 	Profiles []string `json:"profiles,omitempty"`
@@ -3500,7 +3543,7 @@ type Stage struct {
 	// of the `DeliveryPipeline` that contains this `Stage`.
 	TargetId string `json:"targetId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Profiles") to
+	// ForceSendFields is a list of field names (e.g. "DeployParameters") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3508,12 +3551,13 @@ type Stage struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Profiles") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DeployParameters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3643,6 +3687,10 @@ type Target struct {
 
 	// CreateTime: Output only. Time at which the `Target` was created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// DeployParameters: Optional. The deploy parameters to use for this
+	// target.
+	DeployParameters map[string]string `json:"deployParameters,omitempty"`
 
 	// Description: Optional. Description of the `Target`. Max length is 255
 	// characters.

@@ -286,6 +286,92 @@ func (s *ActionCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AgentContainer: Container runnable representation on the agent side.
+type AgentContainer struct {
+	// Commands: Overrides the `CMD` specified in the container. If there is
+	// an ENTRYPOINT (either in the container image or with the entrypoint
+	// field below) then commands are appended as arguments to the
+	// ENTRYPOINT.
+	Commands []string `json:"commands,omitempty"`
+
+	// Entrypoint: Overrides the `ENTRYPOINT` specified in the container.
+	Entrypoint string `json:"entrypoint,omitempty"`
+
+	// ImageUri: The URI to pull the container image from.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// Options: Arbitrary additional options to include in the "docker run"
+	// command when running this container, e.g. "--network host".
+	Options string `json:"options,omitempty"`
+
+	// Volumes: Volumes to mount (bind mount) from the host machine files or
+	// directories into the container, formatted to match docker run's
+	// --volume option, e.g. /foo:/bar, or /foo:/bar:ro
+	Volumes []string `json:"volumes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Commands") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Commands") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgentContainer) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentContainer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AgentEnvironment: AgentEnvironment is the Environment representation
+// between Agent and CLH communication. The environment is used in both
+// task level and agent level.
+type AgentEnvironment struct {
+	// EncryptedVariables: An encrypted JSON dictionary where the key/value
+	// pairs correspond to environment variable names and their values.
+	EncryptedVariables *AgentKMSEnvMap `json:"encryptedVariables,omitempty"`
+
+	// SecretVariables: A map of environment variable names to Secret
+	// Manager secret names. The VM will access the named secrets to set the
+	// value of each environment variable.
+	SecretVariables map[string]string `json:"secretVariables,omitempty"`
+
+	// Variables: A map of environment variable names to values.
+	Variables map[string]string `json:"variables,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptedVariables")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptedVariables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgentEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentEnvironment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AgentInfo: VM Agent Info.
 type AgentInfo struct {
 	// JobId: The assigned Job ID
@@ -330,6 +416,40 @@ type AgentInfo struct {
 
 func (s *AgentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AgentKMSEnvMap: AgentKMSEnvMap contains the encrypted key/value pair
+// to be used in the environment on the Agent side.
+type AgentKMSEnvMap struct {
+	// CipherText: The value of the cipherText response from the `encrypt`
+	// method.
+	CipherText string `json:"cipherText,omitempty"`
+
+	// KeyName: The name of the KMS key that will be used to decrypt the
+	// cipher text.
+	KeyName string `json:"keyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CipherText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CipherText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgentKMSEnvMap) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentKMSEnvMap
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -392,9 +512,57 @@ func (s *AgentMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AgentScript: Script runnable representation on the agent side.
+type AgentScript struct {
+	// Path: Script file path on the host VM. To specify an interpreter,
+	// please add a `#!`(also known as shebang line
+	// (https://en.wikipedia.org/wiki/Shebang_(Unix))) as the first line of
+	// the file.(For example, to execute the script using bash,
+	// `#!/bin/bash` should be the first line of the file. To execute the
+	// script using`Python3`, `#!/usr/bin/env python3` should be the first
+	// line of the file.) Otherwise, the file will by default be excuted by
+	// `/bin/sh`.
+	Path string `json:"path,omitempty"`
+
+	// Text: Shell script text. To specify an interpreter, please add a
+	// `#!\n` at the beginning of the text.(For example, to execute the
+	// script using bash, `#!/bin/bash\n` should be added. To execute the
+	// script using`Python3`, `#!/usr/bin/env python3\n` should be added.)
+	// Otherwise, the script will by default be excuted by `/bin/sh`.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgentScript) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentScript
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AgentTask: TODO(b/182501497) The message needs to be redefined when
 // the Agent API server updates data in storage per the backend design.
 type AgentTask struct {
+	// AgentTaskSpec: AgentTaskSpec is the taskSpec representation between
+	// Agent and CLH communication. This field will replace the TaskSpec
+	// field above in future to have a better separation between
+	// user-facaing API and internal API.
+	AgentTaskSpec *AgentTaskSpec `json:"agentTaskSpec,omitempty"`
+
 	// IntendedState: The intended state of the task.
 	//
 	// Possible values:
@@ -409,7 +577,8 @@ type AgentTask struct {
 	// task's TaskGroup.
 	ReachedBarrier int64 `json:"reachedBarrier,omitempty,string"`
 
-	// Spec: Task Spec.
+	// Spec: Task Spec. This field will be replaced by agent_task_spec below
+	// in future.
 	Spec *TaskSpec `json:"spec,omitempty"`
 
 	// Status: Task status.
@@ -431,7 +600,7 @@ type AgentTask struct {
 	// with "batch_task_logs" log name.
 	TaskSource string `json:"taskSource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IntendedState") to
+	// ForceSendFields is a list of field names (e.g. "AgentTaskSpec") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -439,7 +608,7 @@ type AgentTask struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IntendedState") to include
+	// NullFields is a list of field names (e.g. "AgentTaskSpec") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -487,6 +656,102 @@ type AgentTaskInfo struct {
 
 func (s *AgentTaskInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentTaskInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AgentTaskRunnable: AgentTaskRunnable is the Runnable representation
+// between Agent and CLH communication.
+type AgentTaskRunnable struct {
+	// AlwaysRun: By default, after a Runnable fails, no further Runnable
+	// are executed. This flag indicates that this Runnable must be run even
+	// if the Task has already failed. This is useful for Runnables that
+	// copy output files off of the VM or for debugging. The always_run flag
+	// does not override the Task's overall max_run_duration. If the
+	// max_run_duration has expired then no further Runnables will execute,
+	// not even always_run Runnables.
+	AlwaysRun bool `json:"alwaysRun,omitempty"`
+
+	// Background: This flag allows a Runnable to continue running in the
+	// background while the Task executes subsequent Runnables. This is
+	// useful to provide services to other Runnables (or to provide
+	// debugging support tools like SSH servers).
+	Background bool `json:"background,omitempty"`
+
+	// Container: Container runnable.
+	Container *AgentContainer `json:"container,omitempty"`
+
+	// Environment: Environment variables for this Runnable (overrides
+	// variables set for the whole Task or TaskGroup).
+	Environment *AgentEnvironment `json:"environment,omitempty"`
+
+	// IgnoreExitStatus: Normally, a non-zero exit status causes the Task to
+	// fail. This flag allows execution of other Runnables to continue
+	// instead.
+	IgnoreExitStatus bool `json:"ignoreExitStatus,omitempty"`
+
+	// Script: Script runnable.
+	Script *AgentScript `json:"script,omitempty"`
+
+	// Timeout: Timeout for this Runnable.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlwaysRun") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlwaysRun") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgentTaskRunnable) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentTaskRunnable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AgentTaskSpec: AgentTaskSpec is the user's TaskSpec representation
+// between Agent and CLH communication.
+type AgentTaskSpec struct {
+	// Environment: Environment variables to set before running the Task.
+	Environment *AgentEnvironment `json:"environment,omitempty"`
+
+	// MaxRunDuration: Maximum duration the task should run. The task will
+	// be killed and marked as FAILED if over this limit.
+	MaxRunDuration string `json:"maxRunDuration,omitempty"`
+
+	// Runnables: AgentTaskRunnable is runanbles that will be executed on
+	// the agent.
+	Runnables []*AgentTaskRunnable `json:"runnables,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgentTaskSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentTaskSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -765,7 +1030,8 @@ type Disk struct {
 	// Batch customized image in short names. The following image values are
 	// supported for a boot disk: * "batch-debian": use Batch Debian images.
 	// * "batch-centos": use Batch CentOS images. * "batch-cos": use Batch
-	// Container-Optimized images.
+	// Container-Optimized images. * "batch-hpc-centos": use Batch HPC
+	// CentOS images.
 	Image string `json:"image,omitempty"`
 
 	// SizeGb: Disk size in GB. For persistent disk, this field is ignored

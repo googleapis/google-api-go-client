@@ -1594,7 +1594,7 @@
       }
     }
   },
-  "revision": "20230606",
+  "revision": "20230609",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AnthosObservabilityFeatureSpec": {
@@ -2471,6 +2471,12 @@
         "templateLibraryInstalled": {
           "description": "Installs the default template library along with Policy Controller.",
           "type": "boolean"
+        },
+        "updateTime": {
+          "description": "Output only. Last time this membership spec was updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -2479,6 +2485,11 @@
       "description": "State for the migration of PolicyController from ACM -\u003e PoCo Hub.",
       "id": "ConfigManagementPolicyControllerMigration",
       "properties": {
+        "copyTime": {
+          "description": "Last time this membership spec was copied to PoCo feature.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "stage": {
           "description": "Stage of the migration.",
           "enum": [
@@ -3972,6 +3983,10 @@
           },
           "description": "The state of the any bundles included in the chosen version of the manifest",
           "type": "object"
+        },
+        "referentialSyncConfigState": {
+          "$ref": "PolicyControllerOnClusterState",
+          "description": "The state of the referential data sync configuration. This could represent the state of either the syncSet object(s) or the config object, depending on the version of PoCo configured by the user."
         },
         "templateLibraryState": {
           "$ref": "PolicyControllerOnClusterState",

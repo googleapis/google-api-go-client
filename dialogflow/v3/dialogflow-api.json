@@ -3820,7 +3820,7 @@
       }
     }
   },
-  "revision": "20230605",
+  "revision": "20230612",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -14367,6 +14367,10 @@
         "suggestDialogflowAssistsResponse": {
           "$ref": "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
           "description": "SuggestDialogflowAssistsResponse if request is for DIALOGFLOW_ASSIST."
+        },
+        "suggestEntityExtractionResponse": {
+          "$ref": "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
+          "description": "SuggestDialogflowAssistsResponse if request is for ENTITY_EXTRACTION."
         },
         "suggestFaqAnswersResponse": {
           "$ref": "GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse",

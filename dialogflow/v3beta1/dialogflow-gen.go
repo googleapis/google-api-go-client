@@ -19311,6 +19311,10 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// request is for DIALOGFLOW_ASSIST.
 	SuggestDialogflowAssistsResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestDialogflowAssistsResponse,omitempty"`
 
+	// SuggestEntityExtractionResponse: SuggestDialogflowAssistsResponse if
+	// request is for ENTITY_EXTRACTION.
+	SuggestEntityExtractionResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestEntityExtractionResponse,omitempty"`
+
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is
 	// for FAQ_ANSWER.
 	SuggestFaqAnswersResponse *GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse `json:"suggestFaqAnswersResponse,omitempty"`

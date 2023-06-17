@@ -1092,23 +1092,24 @@ type ProjectBillingInfo struct {
 	// `billingAccounts/012345-567890-ABCDEF`.
 	BillingAccountName string `json:"billingAccountName,omitempty"`
 
-	// BillingEnabled: True if the project is associated with an open
-	// billing account, to which usage on the project is charged. False if
-	// the project is associated with a closed billing account, or no
-	// billing account at all, and therefore cannot use paid services. This
-	// field is read-only.
+	// BillingEnabled: Output only. True if the project is associated with
+	// an open billing account, to which usage on the project is charged.
+	// False if the project is associated with a closed billing account, or
+	// no billing account at all, and therefore cannot use paid services.
+	// This field is read-only.
 	BillingEnabled bool `json:"billingEnabled,omitempty"`
 
-	// Name: The resource name for the `ProjectBillingInfo`; has the form
-	// `projects/{project_id}/billingInfo`. For example, the resource name
-	// for the billing information for project `tokyo-rain-123` would be
-	// `projects/tokyo-rain-123/billingInfo`. This field is read-only.
+	// Name: Output only. The resource name for the `ProjectBillingInfo`;
+	// has the form `projects/{project_id}/billingInfo`. For example, the
+	// resource name for the billing information for project
+	// `tokyo-rain-123` would be `projects/tokyo-rain-123/billingInfo`. This
+	// field is read-only.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The ID of the project that this `ProjectBillingInfo`
-	// represents, such as `tokyo-rain-123`. This is a convenience field so
-	// that you don't need to parse the `name` field to obtain a project ID.
-	// This field is read-only.
+	// ProjectId: Output only. The ID of the project that this
+	// `ProjectBillingInfo` represents, such as `tokyo-rain-123`. This is a
+	// convenience field so that you don't need to parse the `name` field to
+	// obtain a project ID. This field is read-only.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

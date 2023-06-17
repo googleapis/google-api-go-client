@@ -12457,7 +12457,7 @@ func (s *GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest) MarshalJSON() (
 // GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest: The request
 // message for Conversations.BatchCreateMessagesRequest.
 type GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest struct {
-	// Requests: Required. A maximum of 1000 Messages can be created in a
+	// Requests: Required. A maximum of 300 messages can be created in a
 	// batch. CreateMessageRequest.message.send_time is required. All
 	// created messages will have identical Message.create_time.
 	Requests []*GoogleCloudDialogflowV2beta1CreateMessageRequest `json:"requests,omitempty"`
@@ -15462,9 +15462,9 @@ type GoogleCloudDialogflowV2beta1ImportDocumentsRequest struct {
 	// the documents.
 	DocumentTemplate *GoogleCloudDialogflowV2beta1ImportDocumentTemplate `json:"documentTemplate,omitempty"`
 
-	// GcsSource: The Google Cloud Storage location for the documents. The
-	// path can include a wildcard. These URIs may have the forms `gs:///`.
-	// `gs:////*.`.
+	// GcsSource: Optional. The Google Cloud Storage location for the
+	// documents. The path can include a wildcard. These URIs may have the
+	// forms `gs:///`. `gs:////*.`.
 	GcsSource *GoogleCloudDialogflowV2beta1GcsSources `json:"gcsSource,omitempty"`
 
 	// ImportGcsCustomMetadata: Whether to import custom metadata from
@@ -20721,6 +20721,10 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// SuggestDialogflowAssistsResponse: SuggestDialogflowAssistsResponse if
 	// request is for DIALOGFLOW_ASSIST.
 	SuggestDialogflowAssistsResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestDialogflowAssistsResponse,omitempty"`
+
+	// SuggestEntityExtractionResponse: SuggestDialogflowAssistsResponse if
+	// request is for ENTITY_EXTRACTION.
+	SuggestEntityExtractionResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestEntityExtractionResponse,omitempty"`
 
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is
 	// for FAQ_ANSWER.

@@ -794,7 +794,8 @@ type AssetFrame struct {
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// PerformanceSamples: Asset performance data samples.
+	// PerformanceSamples: Asset performance data samples. Samples that are
+	// older than 40 days are ignored.
 	PerformanceSamples []*PerformanceSample `json:"performanceSamples,omitempty"`
 
 	// ReportTime: The time the data was reported.
@@ -4040,7 +4041,7 @@ type PerformanceSample struct {
 	// Network: Network usage sample.
 	Network *NetworkUsageSample `json:"network,omitempty"`
 
-	// SampleTime: Time the sample was collected.
+	// SampleTime: Required. Time the sample was collected.
 	SampleTime string `json:"sampleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cpu") to
@@ -4699,9 +4700,17 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// Preference Set
 	PricingTrack string `json:"pricingTrack,omitempty"`
 
+	// SoleTenantFinding: A set of findings that applies to Stole-Tenant
+	// machines in the input.
+	SoleTenantFinding *ReportSummarySoleTenantFinding `json:"soleTenantFinding,omitempty"`
+
 	// TopPriority: Text describing the business priority specified for this
 	// Preference Set
 	TopPriority string `json:"topPriority,omitempty"`
+
+	// VmwareEngineFinding: A set of findings that applies to VMWare
+	// machines in the input.
+	VmwareEngineFinding *ReportSummaryVMWareEngineFinding `json:"vmwareEngineFinding,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
@@ -4880,6 +4889,78 @@ func (s *ReportSummaryMachineSeriesAllocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReportSummarySoleTenantFinding: A set of findings that applies to
+// assets destined for Sole-Tenant nodes.
+type ReportSummarySoleTenantFinding struct {
+	// AllocatedAssetCount: Count of assets which are allocated
+	AllocatedAssetCount int64 `json:"allocatedAssetCount,omitempty,string"`
+
+	// AllocatedRegions: Set of regions in which the assets are allocated
+	AllocatedRegions []string `json:"allocatedRegions,omitempty"`
+
+	// NodeAllocations: Set of per-nodetype allocation records
+	NodeAllocations []*ReportSummarySoleTenantNodeAllocation `json:"nodeAllocations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllocatedAssetCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllocatedAssetCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportSummarySoleTenantFinding) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportSummarySoleTenantFinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportSummarySoleTenantNodeAllocation: Represents the assets
+// allocated to a specific Sole-Tenant node type.
+type ReportSummarySoleTenantNodeAllocation struct {
+	// AllocatedAssetCount: Count of assets allocated to these nodes
+	AllocatedAssetCount int64 `json:"allocatedAssetCount,omitempty,string"`
+
+	// Node: Sole Tenant node type, e.g. "m3-node-128-3904"
+	Node *SoleTenantNodeType `json:"node,omitempty"`
+
+	// NodeCount: Count of this node type to be provisioned
+	NodeCount int64 `json:"nodeCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AllocatedAssetCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllocatedAssetCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportSummarySoleTenantNodeAllocation) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportSummarySoleTenantNodeAllocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReportSummaryUtilizationChartData: Utilization Chart is a specific
 // type of visualization which displays a metric classified into "Used"
 // and "Free" buckets.
@@ -4909,6 +4990,109 @@ type ReportSummaryUtilizationChartData struct {
 
 func (s *ReportSummaryUtilizationChartData) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportSummaryUtilizationChartData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportSummaryVMWareEngineFinding: A set of findings that applies to
+// assets destined for VMWare Engine.
+type ReportSummaryVMWareEngineFinding struct {
+	// AllocatedAssetCount: Count of assets which are allocated
+	AllocatedAssetCount int64 `json:"allocatedAssetCount,omitempty,string"`
+
+	// AllocatedRegions: Set of regions in which the assets were allocated
+	AllocatedRegions []string `json:"allocatedRegions,omitempty"`
+
+	// NodeAllocations: Set of per-nodetype allocation records
+	NodeAllocations []*ReportSummaryVMWareNodeAllocation `json:"nodeAllocations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllocatedAssetCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllocatedAssetCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportSummaryVMWareEngineFinding) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportSummaryVMWareEngineFinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportSummaryVMWareNode: A VMWare Engine Node
+type ReportSummaryVMWareNode struct {
+	// Code: Code to identify VMware Engine node series, e.g.
+	// "ve1-standard-72". Based on the displayName of
+	// cloud.google.com/vmware-engine/docs/reference/rest/v1/projects.locatio
+	// ns.nodeTypes
+	Code string `json:"code,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportSummaryVMWareNode) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportSummaryVMWareNode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportSummaryVMWareNodeAllocation: Represents assets allocated to a
+// specific VMWare Node type.
+type ReportSummaryVMWareNodeAllocation struct {
+	// AllocatedAssetCount: Count of assets allocated to these nodes
+	AllocatedAssetCount int64 `json:"allocatedAssetCount,omitempty,string"`
+
+	// NodeCount: Count of this node type to be provisioned
+	NodeCount int64 `json:"nodeCount,omitempty,string"`
+
+	// VmwareNode: VMWare node type, e.g. "ve1-standard-72"
+	VmwareNode *ReportSummaryVMWareNode `json:"vmwareNode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllocatedAssetCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllocatedAssetCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportSummaryVMWareNodeAllocation) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportSummaryVMWareNodeAllocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5191,6 +5375,109 @@ type Settings struct {
 
 func (s *Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod Settings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SoleTenancyPreferences: Preferences concerning Sole Tenancy nodes and
+// VMs.
+type SoleTenancyPreferences struct {
+	// CommitmentPlan: Commitment plan to consider when calculating costs
+	// for virtual machine insights and recommendations. If you are unsure
+	// which value to set, a 3 year commitment plan is often a good value to
+	// start with.
+	//
+	// Possible values:
+	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
+	//   "ON_DEMAND" - No commitment plan (on-demand usage).
+	//   "COMMITMENT_1_YEAR" - 1 year commitment.
+	//   "COMMITMENT_3_YEAR" - 3 years commitment.
+	CommitmentPlan string `json:"commitmentPlan,omitempty"`
+
+	// CpuOvercommitRatio: CPU overcommit ratio. Acceptable values are
+	// between 1.0 and 2.0 inclusive.
+	CpuOvercommitRatio float64 `json:"cpuOvercommitRatio,omitempty"`
+
+	// HostMaintenancePolicy: Sole Tenancy nodes maintenance policy.
+	//
+	// Possible values:
+	//   "HOST_MAINTENANCE_POLICY_UNSPECIFIED" - Unspecified host
+	// maintenance policy.
+	//   "HOST_MAINTENANCE_POLICY_DEFAULT" - Default host maintenance
+	// policy.
+	//   "HOST_MAINTENANCE_POLICY_RESTART_IN_PLACE" - Restart in place host
+	// maintenance policy.
+	//   "HOST_MAINTENANCE_POLICY_MIGRATE_WITHIN_NODE_GROUP" - Migrate
+	// within node group host maintenance policy.
+	HostMaintenancePolicy string `json:"hostMaintenancePolicy,omitempty"`
+
+	// NodeTypes: A list of sole tenant node types. An empty list means that
+	// all possible node types will be considered.
+	NodeTypes []*SoleTenantNodeType `json:"nodeTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommitmentPlan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommitmentPlan") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SoleTenancyPreferences) MarshalJSON() ([]byte, error) {
+	type NoMethod SoleTenancyPreferences
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SoleTenancyPreferences) UnmarshalJSON(data []byte) error {
+	type NoMethod SoleTenancyPreferences
+	var s1 struct {
+		CpuOvercommitRatio gensupport.JSONFloat64 `json:"cpuOvercommitRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CpuOvercommitRatio = float64(s1.CpuOvercommitRatio)
+	return nil
+}
+
+// SoleTenantNodeType: A Sole Tenant node type.
+type SoleTenantNodeType struct {
+	// NodeName: Name of the Sole Tenant node. Consult
+	// https://cloud.google.com/compute/docs/nodes/sole-tenant-nodes
+	NodeName string `json:"nodeName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NodeName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NodeName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SoleTenantNodeType) MarshalJSON() ([]byte, error) {
+	type NoMethod SoleTenantNodeType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5780,6 +6067,28 @@ type VirtualMachinePreferences struct {
 	// can help reduce costs.
 	SizingOptimizationStrategy string `json:"sizingOptimizationStrategy,omitempty"`
 
+	// SoleTenancyPreferences: Preferences concerning Sole Tenant nodes and
+	// virtual machines.
+	SoleTenancyPreferences *SoleTenancyPreferences `json:"soleTenancyPreferences,omitempty"`
+
+	// TargetProduct: Target product for assets using this preference set.
+	// Specify either target product or business goal, but not both.
+	//
+	// Possible values:
+	//   "COMPUTE_MIGRATION_TARGET_PRODUCT_UNSPECIFIED" - Unspecified
+	// (default value).
+	//   "COMPUTE_MIGRATION_TARGET_PRODUCT_COMPUTE_ENGINE" - Prefer to
+	// migrate to Google Cloud Compute Engine.
+	//   "COMPUTE_MIGRATION_TARGET_PRODUCT_VMWARE_ENGINE" - Prefer to
+	// migrate to Google Cloud VMware Engine.
+	//   "COMPUTE_MIGRATION_TARGET_PRODUCT_SOLE_TENANCY" - Prefer to migrate
+	// to Google Cloud Sole Tenant Nodes.
+	TargetProduct string `json:"targetProduct,omitempty"`
+
+	// VmwareEnginePreferences: Preferences concerning insights and
+	// recommendations for Google Cloud VMware Engine.
+	VmwareEnginePreferences *VmwareEnginePreferences `json:"vmwareEnginePreferences,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommitmentPlan") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5856,6 +6165,88 @@ func (s *VmwareDiskConfig) MarshalJSON() ([]byte, error) {
 
 // VmwareEngineMigrationTarget: VMWare engine migration target.
 type VmwareEngineMigrationTarget struct {
+}
+
+// VmwareEnginePreferences: The user preferences relating to Google
+// Cloud VMware Engine target platform.
+type VmwareEnginePreferences struct {
+	// CommitmentPlan: Commitment plan to consider when calculating costs
+	// for virtual machine insights and recommendations. If you are unsure
+	// which value to set, a 3 year commitment plan is often a good value to
+	// start with.
+	//
+	// Possible values:
+	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
+	//   "ON_DEMAND" - No commitment plan (on-demand usage).
+	//   "COMMITMENT_1_YEAR_MONTHLY_PAYMENTS" - 1 year commitment (monthly
+	// payments).
+	//   "COMMITMENT_3_YEAR_MONTHLY_PAYMENTS" - 3 year commitment (monthly
+	// payments).
+	//   "COMMITMENT_1_YEAR_UPFRONT_PAYMENT" - 1 year commitment (upfront
+	// payment).
+	//   "COMMITMENT_3_YEAR_UPFRONT_PAYMENT" - 3 years commitment (upfront
+	// payment).
+	CommitmentPlan string `json:"commitmentPlan,omitempty"`
+
+	// CpuOvercommitRatio: CPU overcommit ratio. Acceptable values are
+	// between 1.0 and 8.0, with 0.1 increment.
+	CpuOvercommitRatio float64 `json:"cpuOvercommitRatio,omitempty"`
+
+	// MemoryOvercommitRatio: Memory overcommit ratio. Acceptable values are
+	// 1.0, 1.25, 1.5, 1.75 and 2.0.
+	MemoryOvercommitRatio float64 `json:"memoryOvercommitRatio,omitempty"`
+
+	// StorageDeduplicationCompressionRatio: The Deduplication and
+	// Compression ratio is based on the logical (Used Before) space
+	// required to store data before applying deduplication and compression,
+	// in relation to the physical (Used After) space required after
+	// applying deduplication and compression. Specifically, the ratio is
+	// the Used Before space divided by the Used After space. For example,
+	// if the Used Before space is 3 GB, but the physical Used After space
+	// is 1 GB, the deduplication and compression ratio is 3x. Acceptable
+	// values are between 1.0 and 4.0.
+	StorageDeduplicationCompressionRatio float64 `json:"storageDeduplicationCompressionRatio,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommitmentPlan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommitmentPlan") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareEnginePreferences) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareEnginePreferences
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *VmwareEnginePreferences) UnmarshalJSON(data []byte) error {
+	type NoMethod VmwareEnginePreferences
+	var s1 struct {
+		CpuOvercommitRatio                   gensupport.JSONFloat64 `json:"cpuOvercommitRatio"`
+		MemoryOvercommitRatio                gensupport.JSONFloat64 `json:"memoryOvercommitRatio"`
+		StorageDeduplicationCompressionRatio gensupport.JSONFloat64 `json:"storageDeduplicationCompressionRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CpuOvercommitRatio = float64(s1.CpuOvercommitRatio)
+	s.MemoryOvercommitRatio = float64(s1.MemoryOvercommitRatio)
+	s.StorageDeduplicationCompressionRatio = float64(s1.StorageDeduplicationCompressionRatio)
+	return nil
 }
 
 // VmwarePlatformDetails: VMware specific details.

@@ -1792,7 +1792,11 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// App Check metrics are collected to help you decide when to turn on
 	// enforcement for the service. Though the service is not protected by
 	// App Check in this mode, other applicable protections, such as user
-	// authorization, are still enforced.
+	// authorization, are still enforced. Some services require certain
+	// conditions to be met before they will work with App Check, such as
+	// requiring you to upgrade to a specific service tier. Until those
+	// requirements are met for a service, this `UNENFORCED` setting will
+	// have no effect and App Check will not work with that service.
 	//   "ENFORCED" - Firebase App Check is enforced for the service. The
 	// service will reject any request that attempts to access your
 	// project's resources if it does not have valid App Check token
@@ -1810,7 +1814,11 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// metrics can help you decide whether to enforce App Check on your
 	// Firebase services. If your app has not launched yet, you should
 	// enable enforcement immediately, since there are no outdated clients
-	// in use.
+	// in use. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
+	// specific service tier. Until those requirements are met for a
+	// service, this `ENFORCED` setting will have no effect and App Check
+	// will not work with that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 
 	// Name: Required. The relative resource name of the service
@@ -1820,7 +1828,9 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// following service IDs are supported: *
 	// `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
 	// `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-	// `firestore.googleapis.com` (Cloud Firestore)
+	// `firestore.googleapis.com` (Cloud Firestore) *
+	// `identitytoolkit.googleapis.com` (Firebase Authentication with
+	// Identity Platform)
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1862,7 +1872,12 @@ type GoogleFirebaseAppcheckV1betaUpdateServiceRequest struct {
 	// following service IDs are supported: *
 	// `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
 	// `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-	// `firestore.googleapis.com` (Cloud Firestore)
+	// `firestore.googleapis.com` (Cloud Firestore) *
+	// `identitytoolkit.googleapis.com` (Firebase Authentication with
+	// Identity Platform) For Firebase Authentication to work with App
+	// Check, you must first upgrade to Firebase Authentication with
+	// Identity Platform
+	// (https://firebase.google.com/docs/auth#identity-platform).
 	Service *GoogleFirebaseAppcheckV1betaService `json:"service,omitempty"`
 
 	// UpdateMask: Required. A comma-separated list of names of fields in
@@ -8971,7 +8986,9 @@ type ProjectsServicesGetCall struct {
 //     Currently, the following service IDs are supported: *
 //     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
 //     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-//     `firestore.googleapis.com` (Cloud Firestore).
+//     `firestore.googleapis.com` (Cloud Firestore) *
+//     `identitytoolkit.googleapis.com` (Firebase Authentication with
+//     Identity Platform).
 func (r *ProjectsServicesService) Get(name string) *ProjectsServicesGetCall {
 	c := &ProjectsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9087,7 +9104,7 @@ func (c *ProjectsServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFireb
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the Service to retrieve, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
+	//       "description": "Required. The relative resource name of the Service to retrieve, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) * `identitytoolkit.googleapis.com` (Firebase Authentication with Identity Platform)",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9332,7 +9349,9 @@ type ProjectsServicesPatchCall struct {
 //     following service IDs are supported: *
 //     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
 //     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-//     `firestore.googleapis.com` (Cloud Firestore).
+//     `firestore.googleapis.com` (Cloud Firestore) *
+//     `identitytoolkit.googleapis.com` (Firebase Authentication with
+//     Identity Platform).
 func (r *ProjectsServicesService) Patch(name string, googlefirebaseappcheckv1betaservice *GoogleFirebaseAppcheckV1betaService) *ProjectsServicesPatchCall {
 	c := &ProjectsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9449,7 +9468,7 @@ func (c *ProjectsServicesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFir
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the service configuration object, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
+	//       "description": "Required. The relative resource name of the service configuration object, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) * `identitytoolkit.googleapis.com` (Firebase Authentication with Identity Platform)",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/services/[^/]+$",
 	//       "required": true,

@@ -4314,7 +4314,7 @@ type ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the OS policy asssignment report for the specified Compute
+// Get: Get the OS policy assignment report for the specified Compute
 // Engine VM instance.
 //
 //   - name: API resource name for OS policy assignment report. Format:
@@ -4429,7 +4429,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the OS policy asssignment report for the specified Compute Engine VM instance.",
+	//   "description": "Get the OS policy assignment report for the specified Compute Engine VM instance.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/report",
 	//   "httpMethod": "GET",
 	//   "id": "osconfig.projects.locations.instances.osPolicyAssignments.reports.get",
@@ -4467,7 +4467,7 @@ type ProjectsLocationsInstancesOsPolicyAssignmentsReportsListCall struct {
 	header_      http.Header
 }
 
-// List: List OS policy asssignment reports for all Compute Engine VM
+// List: List OS policy assignment reports for all Compute Engine VM
 // instances in the specified zone.
 //
 //   - parent: The parent resource name. Format:
@@ -4620,7 +4620,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsListCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "List OS policy asssignment reports for all Compute Engine VM instances in the specified zone.",
+	//   "description": "List OS policy assignment reports for all Compute Engine VM instances in the specified zone.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/osPolicyAssignments/{osPolicyAssignmentsId}/reports",
 	//   "httpMethod": "GET",
 	//   "id": "osconfig.projects.locations.instances.osPolicyAssignments.reports.list",

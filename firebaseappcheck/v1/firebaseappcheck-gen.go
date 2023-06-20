@@ -1598,7 +1598,11 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// App Check metrics are collected to help you decide when to turn on
 	// enforcement for the service. Though the service is not protected by
 	// App Check in this mode, other applicable protections, such as user
-	// authorization, are still enforced.
+	// authorization, are still enforced. Some services require certain
+	// conditions to be met before they will work with App Check, such as
+	// requiring you to upgrade to a specific service tier. Until those
+	// requirements are met for a service, this `UNENFORCED` setting will
+	// have no effect and App Check will not work with that service.
 	//   "ENFORCED" - Firebase App Check is enforced for the service. The
 	// service will reject any request that attempts to access your
 	// project's resources if it does not have valid App Check token
@@ -1616,7 +1620,12 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// metrics can help you decide whether to enforce App Check on your
 	// Firebase services. If your app has not launched yet, you should
 	// enable enforcement immediately, since there are no outdated clients
-	// in use.
+	// in use. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
+	// specific service tier or requiring you to enable the service first.
+	// Until those requirements are met for a service, this `ENFORCED`
+	// setting will have no effect and App Check will not work with that
+	// service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 
 	// Name: Required. The relative resource name of the service

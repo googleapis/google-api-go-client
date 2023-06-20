@@ -2985,10 +2985,10 @@ func (r *PhotoSequencesService) List() *PhotoSequencesListCall {
 // For example: `imagery_type=SPHERICAL`. The filters supported are:
 // `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`,
 // `min_longitude`, `max_longitude`, `filename_query`,
-// `min_capture_time_seconds`, and `max_capture_time_seconds`. See
-// https://google.aip.dev/160 for more information. Filename queries
-// should sent as a Phrase in order to support multiple words and
-// special characters by adding escaped quotes. Ex:
+// `min_capture_time_seconds`, `max_capture_time_seconds`, and
+// `takedown`. See https://google.aip.dev/160 for more information.
+// Filename queries should sent as a Phrase in order to support multiple
+// words and special characters by adding escaped quotes. Ex:
 // filename_query="example of a phrase.mp4"
 func (c *PhotoSequencesListCall) Filter(filter string) *PhotoSequencesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -3116,7 +3116,7 @@ func (c *PhotoSequencesListCall) Do(opts ...googleapi.CallOption) (*ListPhotoSeq
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter expression. For example: `imagery_type=SPHERICAL`. The filters supported are: `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, `filename_query`, `min_capture_time_seconds`, and `max_capture_time_seconds`. See https://google.aip.dev/160 for more information. Filename queries should sent as a Phrase in order to support multiple words and special characters by adding escaped quotes. Ex: filename_query=\"example of a phrase.mp4\"",
+	//       "description": "Optional. The filter expression. For example: `imagery_type=SPHERICAL`. The filters supported are: `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, `filename_query`, `min_capture_time_seconds`, `max_capture_time_seconds`, and `takedown`. See https://google.aip.dev/160 for more information. Filename queries should sent as a Phrase in order to support multiple words and special characters by adding escaped quotes. Ex: filename_query=\"example of a phrase.mp4\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

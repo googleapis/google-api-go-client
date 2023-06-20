@@ -79,20 +79,8 @@ const apiVersion = "v1"
 const basePath = "https://essentialcontacts.googleapis.com/"
 const mtlsBasePath = "https://essentialcontacts.mtls.googleapis.com/"
 
-// OAuth2 scopes used by this API.
-const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
-	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
-)
-
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := internaloption.WithDefaultScopes(
-		"https://www.googleapis.com/auth/cloud-platform",
-	)
-	// NOTE: prepend, so we don't override user-specified scopes.
-	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -697,10 +685,7 @@ func (c *FoldersContactsComputeCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   "path": "v1/{+parent}/contacts:compute",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1ComputeContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -863,10 +848,7 @@ func (c *FoldersContactsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -998,10 +980,7 @@ func (c *FoldersContactsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePro
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1148,10 +1127,7 @@ func (c *FoldersContactsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudE
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1329,10 +1305,7 @@ func (c *FoldersContactsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//   "path": "v1/{+parent}/contacts",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1ListContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1509,10 +1482,7 @@ func (c *FoldersContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1656,10 +1626,7 @@ func (c *FoldersContactsSendTestMessageCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1915,10 +1882,7 @@ func (c *OrganizationsContactsComputeCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "path": "v1/{+parent}/contacts:compute",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1ComputeContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2081,10 +2045,7 @@ func (c *OrganizationsContactsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2216,10 +2177,7 @@ func (c *OrganizationsContactsDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2366,10 +2324,7 @@ func (c *OrganizationsContactsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2547,10 +2502,7 @@ func (c *OrganizationsContactsListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   "path": "v1/{+parent}/contacts",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1ListContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2727,10 +2679,7 @@ func (c *OrganizationsContactsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2874,10 +2823,7 @@ func (c *OrganizationsContactsSendTestMessageCall) Do(opts ...googleapi.CallOpti
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3133,10 +3079,7 @@ func (c *ProjectsContactsComputeCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//   "path": "v1/{+parent}/contacts:compute",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1ComputeContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3299,10 +3242,7 @@ func (c *ProjectsContactsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3434,10 +3374,7 @@ func (c *ProjectsContactsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePr
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3584,10 +3521,7 @@ func (c *ProjectsContactsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3765,10 +3699,7 @@ func (c *ProjectsContactsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   "path": "v1/{+parent}/contacts",
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1ListContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3945,10 +3876,7 @@ func (c *ProjectsContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudEssentialcontactsV1Contact"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -4092,10 +4020,7 @@ func (c *ProjectsContactsSendTestMessageCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }

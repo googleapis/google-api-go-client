@@ -682,6 +682,9 @@ type Function struct {
 	// `projects/*/locations/*/functions/*`
 	Name string `json:"name,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// ServiceConfig: Describes the Service being deployed. Currently
 	// deploys services to Cloud Run (fully managed).
 	ServiceConfig *ServiceConfig `json:"serviceConfig,omitempty"`

@@ -5986,6 +5986,10 @@ type GoogleCloudDocumentaiV1TrainProcessorVersionRequest struct {
 	// sorVersions/{processorVersion}`.
 	BaseProcessorVersion string `json:"baseProcessorVersion,omitempty"`
 
+	// CustomDocumentExtractionOptions: Options to control Custom Document
+	// Extraction (CDE) Processor.
+	CustomDocumentExtractionOptions *GoogleCloudDocumentaiV1TrainProcessorVersionRequestCustomDocumentExtractionOptions `json:"customDocumentExtractionOptions,omitempty"`
+
 	// DocumentSchema: Optional. The schema the processor version will be
 	// trained with.
 	DocumentSchema *GoogleCloudDocumentaiV1DocumentSchema `json:"documentSchema,omitempty"`
@@ -6018,6 +6022,42 @@ type GoogleCloudDocumentaiV1TrainProcessorVersionRequest struct {
 
 func (s *GoogleCloudDocumentaiV1TrainProcessorVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1TrainProcessorVersionRequestCustomDocumentExtra
+// ctionOptions: Options to control the training of the Custom Document
+// Extraction (CDE) Processor.
+type GoogleCloudDocumentaiV1TrainProcessorVersionRequestCustomDocumentExtractionOptions struct {
+	// TrainingMethod: Training method to use for CDE training.
+	//
+	// Possible values:
+	//   "TRAINING_METHOD_UNSPECIFIED"
+	//   "MODEL_BASED"
+	//   "TEMPLATE_BASED"
+	TrainingMethod string `json:"trainingMethod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TrainingMethod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TrainingMethod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1TrainProcessorVersionRequestCustomDocumentExtractionOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionRequestCustomDocumentExtractionOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -1449,6 +1449,20 @@ type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
 	// lookback window.
 	AcquisitionConversionEventLookbackWindow string `json:"acquisitionConversionEventLookbackWindow,omitempty"`
 
+	// AdsWebConversionDataExportScope: Required. The Conversion Export
+	// Scope for data exported to linked Ads Accounts.
+	//
+	// Possible values:
+	//   "ADS_WEB_CONVERSION_DATA_EXPORT_SCOPE_UNSPECIFIED" - Default value.
+	// This value is unused.
+	//   "NOT_SELECTED_YET" - No data export scope selected yet. Export
+	// scope can never be changed back to this value.
+	//   "CROSS_CHANNEL" - The Ads Web Conversion Data export scope is Cross
+	// Channel.
+	//   "ADS_PREFERRED" - The Ads Web Conversion Data export scope is Ads
+	// Preferred.
+	AdsWebConversionDataExportScope string `json:"adsWebConversionDataExportScope,omitempty"`
+
 	// Name: Output only. Resource name of this attribution settings
 	// resource. Format: properties/{property_id}/attributionSettings
 	// Example: "properties/1000/attributionSettings"

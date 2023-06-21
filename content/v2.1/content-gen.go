@@ -126,7 +126,6 @@ func New(client *http.Client) (*APIService, error) {
 	s.Collectionstatuses = NewCollectionstatusesService(s)
 	s.Conversionsources = NewConversionsourcesService(s)
 	s.Csses = NewCssesService(s)
-	s.Customers = NewCustomersService(s)
 	s.Datafeeds = NewDatafeedsService(s)
 	s.Datafeedstatuses = NewDatafeedstatusesService(s)
 	s.Freelistingsprogram = NewFreelistingsprogramService(s)
@@ -179,8 +178,6 @@ type APIService struct {
 	Conversionsources *ConversionsourcesService
 
 	Csses *CssesService
-
-	Customers *CustomersService
 
 	Datafeeds *DatafeedsService
 
@@ -353,15 +350,6 @@ func NewCssesService(s *APIService) *CssesService {
 }
 
 type CssesService struct {
-	s *APIService
-}
-
-func NewCustomersService(s *APIService) *CustomersService {
-	rs := &CustomersService{s: s}
-	return rs
-}
-
-type CustomersService struct {
 	s *APIService
 }
 
@@ -3853,74 +3841,6 @@ type CustomAttribute struct {
 
 func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAttribute
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Customer: The object representing a customer to update data for.
-// Includes a customer identifier (such as email address) and any
-// associated metadata to add. LoyaltyData triggers adding customer data
-// for the purpose of loyalty personalization.
-type Customer struct {
-	// EmailAddress: The customer's email address. No extra string
-	// processing needed.
-	EmailAddress string `json:"emailAddress,omitempty"`
-
-	// LoyaltyData: Loyalty data associated with the customer.
-	LoyaltyData *CustomerLoyaltyData `json:"loyaltyData,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EmailAddress") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Customer) MarshalJSON() ([]byte, error) {
-	type NoMethod Customer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CustomerLoyaltyData: The loyalty data of the customer.
-type CustomerLoyaltyData struct {
-	// LoyaltyTier: The tier information for the given user. Can be an empty
-	// string.
-	LoyaltyTier string `json:"loyaltyTier,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LoyaltyTier") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LoyaltyTier") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CustomerLoyaltyData) MarshalJSON() ([]byte, error) {
-	type NoMethod CustomerLoyaltyData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -28252,152 +28172,6 @@ func (c *CssesUpdatelabelsCall) Do(opts ...googleapi.CallOption) (*Css, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Css"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/content"
-	//   ]
-	// }
-
-}
-
-// method id "content.customers.create":
-
-type CustomersCreateCall struct {
-	s          *APIService
-	merchantId int64
-	customer   *Customer
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Create: Allows uploading one customer information entry. Adding a
-// customer with loyalty data enables the customer to see personalized
-// loyalty annotations on search. Uploading a previously existing
-// customer will overwrite the old entry.
-//
-//   - merchantId: The ID of the account that owns the customer
-//     information.
-func (r *CustomersService) Create(merchantId int64, customer *Customer) *CustomersCreateCall {
-	c := &CustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.merchantId = merchantId
-	c.customer = customer
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CustomersCreateCall) Fields(s ...googleapi.Field) *CustomersCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CustomersCreateCall) Context(ctx context.Context) *CustomersCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CustomersCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CustomersCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/customers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"merchantId": strconv.FormatInt(c.merchantId, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "content.customers.create" call.
-// Exactly one of *Customer or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Customer.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *CustomersCreateCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Customer{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Allows uploading one customer information entry. Adding a customer with loyalty data enables the customer to see personalized loyalty annotations on search. Uploading a previously existing customer will overwrite the old entry.",
-	//   "flatPath": "{merchantId}/customers",
-	//   "httpMethod": "POST",
-	//   "id": "content.customers.create",
-	//   "parameterOrder": [
-	//     "merchantId"
-	//   ],
-	//   "parameters": {
-	//     "merchantId": {
-	//       "description": "Required. The ID of the account that owns the customer information.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{merchantId}/customers",
-	//   "request": {
-	//     "$ref": "Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "Customer"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

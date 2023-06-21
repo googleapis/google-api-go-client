@@ -4322,7 +4322,7 @@
       }
     }
   },
-  "revision": "20230615",
+  "revision": "20230620",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -4862,6 +4862,22 @@
             "Lookback window size unspecified.",
             "7-day lookback window.",
             "30-day lookback window."
+          ],
+          "type": "string"
+        },
+        "adsWebConversionDataExportScope": {
+          "description": "Required. The Conversion Export Scope for data exported to linked Ads Accounts.",
+          "enum": [
+            "ADS_WEB_CONVERSION_DATA_EXPORT_SCOPE_UNSPECIFIED",
+            "NOT_SELECTED_YET",
+            "CROSS_CHANNEL",
+            "ADS_PREFERRED"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "No data export scope selected yet. Export scope can never be changed back to this value.",
+            "The Ads Web Conversion Data export scope is Cross Channel.",
+            "The Ads Web Conversion Data export scope is Ads Preferred."
           ],
           "type": "string"
         },

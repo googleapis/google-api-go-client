@@ -267,7 +267,7 @@ type AdminQuotaPolicy struct {
 
 	// Dimensions:  If this map is nonempty, then this policy applies only
 	// to specific values for dimensions defined in the limit unit. For
-	// example, an policy on a limit with the unit `1/{project}/{region}`
+	// example, a policy on a limit with the unit `1/{project}/{region}`
 	// could contain an entry with the key `region` and the value
 	// `us-east-1`; the policy is only applied to quota consumed in that
 	// region. This map has the following restrictions: * If `region`
@@ -6397,10 +6397,11 @@ type ServicesGenerateServiceIdentityCall struct {
 // GenerateServiceIdentity: Generates service identity for service.
 //
 //   - parent: Name of the consumer and service to generate an identity
-//     for. The `GenerateServiceIdentity` methods currently only support
-//     projects. An example name would be:
-//     `projects/123/services/example.googleapis.com` where `123` is the
-//     project number.
+//     for. The `GenerateServiceIdentity` methods currently support
+//     projects, folders, organizations. Example parents would be:
+//     `projects/123/services/example.googleapis.com`
+//     `folders/123/services/example.googleapis.com`
+//     `organizations/123/services/example.googleapis.com`.
 func (r *ServicesService) GenerateServiceIdentity(parent string) *ServicesGenerateServiceIdentityCall {
 	c := &ServicesGenerateServiceIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6502,7 +6503,7 @@ func (c *ServicesGenerateServiceIdentityCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Name of the consumer and service to generate an identity for. The `GenerateServiceIdentity` methods currently only support projects. An example name would be: `projects/123/services/example.googleapis.com` where `123` is the project number.",
+	//       "description": "Name of the consumer and service to generate an identity for. The `GenerateServiceIdentity` methods currently support projects, folders, organizations. Example parents would be: `projects/123/services/example.googleapis.com` `folders/123/services/example.googleapis.com` `organizations/123/services/example.googleapis.com`",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,

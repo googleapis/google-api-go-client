@@ -1386,6 +1386,79 @@ func (s *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaPurgeUserEventsMetadata: Metadata
+// related to the progress of the PurgeUserEvents operation. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaPurgeUserEventsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaPurgeUserEventsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaPurgeUserEventsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaPurgeUserEventsResponse: Response of
+// the PurgeUserEventsRequest. If the long running operation is
+// successfully done, then this message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudDiscoveryengineV1alphaPurgeUserEventsResponse struct {
+	// PurgeCount: The total count of events purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaPurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaPurgeUserEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSchema: Defines the structure and
 // layout of a type of document data.
 type GoogleCloudDiscoveryengineV1alphaSchema struct {
@@ -1705,10 +1778,10 @@ func (s *GoogleCloudDiscoveryengineV1betaDocument) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1betaDocumentInfo: Detailed document
 // information associated with a user event.
 type GoogleCloudDiscoveryengineV1betaDocumentInfo struct {
-	// Id: Required. The Document resource ID.
+	// Id: The Document resource ID.
 	Id string `json:"id,omitempty"`
 
-	// Name: Required. The Document resource full name, of the form:
+	// Name: The Document resource full name, of the form:
 	// `projects/{project_id}/locations/{location}/collections/{collection_id
 	// }/dataStores/{data_store_id}/branches/{branch_id}/documents/{document_
 	// id}`
@@ -1724,7 +1797,7 @@ type GoogleCloudDiscoveryengineV1betaDocumentInfo struct {
 	// events of the following event types: * `add-to-cart` * `purchase`
 	Quantity int64 `json:"quantity,omitempty"`
 
-	// Uri: Required. The Document url - only allowed for DataStores with
+	// Uri: The Document url - only allowed for DataStores with
 	// content_config PUBLIC_WEBSITE.
 	Uri string `json:"uri,omitempty"`
 
@@ -1762,6 +1835,9 @@ type GoogleCloudDiscoveryengineV1betaGcsSource struct {
 	// bits of SHA256(URI) encoded as a hex string. * `custom`: One custom
 	// data JSON per row in arbitrary format that conforms the defined
 	// Schema of the data store. This can only be used by the GENERIC Data
+	// Store vertical. * `csv`: A CSV file with header conforming the
+	// defined Schema of the data store. Each entry after the header will be
+	// imported as a Document. This can only be used by the GENERIC Data
 	// Store vertical. Supported values for user even imports: *
 	// `user_event` (default): One JSON UserEvent per line.
 	DataSchema string `json:"dataSchema,omitempty"`
@@ -1851,7 +1927,7 @@ type GoogleCloudDiscoveryengineV1betaImportDocumentsRequest struct {
 	// specified using id_field, otherwises, documents without IDs will fail
 	// to be imported. Only set this field when using GcsSource or
 	// BigQuerySource, and when GcsSource.data_schema or
-	// BigQuerySource.data_schema is `custom`. Otherwise, an
+	// BigQuerySource.data_schema is `custom` or `csv`. Otherwise, an
 	// INVALID_ARGUMENT error is thrown.
 	AutoGenerateIds bool `json:"autoGenerateIds,omitempty"`
 
@@ -2066,18 +2142,17 @@ func (s *GoogleCloudDiscoveryengineV1betaImportUserEventsMetadata) MarshalJSON()
 // GoogleCloudDiscoveryengineV1betaImportUserEventsRequest: Request
 // message for the ImportUserEvents request.
 type GoogleCloudDiscoveryengineV1betaImportUserEventsRequest struct {
-	// BigquerySource: Required. BigQuery input source.
+	// BigquerySource: BigQuery input source.
 	BigquerySource *GoogleCloudDiscoveryengineV1betaBigQuerySource `json:"bigquerySource,omitempty"`
 
 	// ErrorConfig: The desired location of errors incurred during the
 	// Import. Cannot be set for inline user event imports.
 	ErrorConfig *GoogleCloudDiscoveryengineV1betaImportErrorConfig `json:"errorConfig,omitempty"`
 
-	// GcsSource: Required. Cloud Storage location for the input content.
+	// GcsSource: Cloud Storage location for the input content.
 	GcsSource *GoogleCloudDiscoveryengineV1betaGcsSource `json:"gcsSource,omitempty"`
 
-	// InlineSource: Required. The Inline source for the input content for
-	// UserEvents.
+	// InlineSource: The Inline source for the input content for UserEvents.
 	InlineSource *GoogleCloudDiscoveryengineV1betaImportUserEventsRequestInlineSource `json:"inlineSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigquerySource") to

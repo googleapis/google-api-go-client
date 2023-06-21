@@ -67,8 +67,7 @@ var (
 
 // skipAPIGeneration is a set of APIs to not generate when generating all clients.
 var skipAPIGeneration = map[string]bool{
-	"integrations:v1alpha": true,
-	"sql:v1beta4":          true,
+	"sql:v1beta4": true,
 }
 
 // API represents an API to generate, as well as its state while it's

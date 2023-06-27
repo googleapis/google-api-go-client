@@ -2900,8 +2900,8 @@ type EnrollBareMetalAdminClusterRequest struct {
 	// BareMetalAdminClusterId: User provided OnePlatform identifier that is
 	// used as part of the resource name. This must be unique among all GKE
 	// on-prem clusters within a project and location and will return a 409
-	// if the cluster already exists. This value must be up to 40 characters
-	// and follow RFC-1123 (https://tools.ietf.org/html/rfc1123) format.
+	// if the cluster already exists. (https://tools.ietf.org/html/rfc1123)
+	// format.
 	BareMetalAdminClusterId string `json:"bareMetalAdminClusterId,omitempty"`
 
 	// Membership: Required. This is the full resource name of this admin
@@ -2946,14 +2946,14 @@ type EnrollBareMetalClusterRequest struct {
 	// BareMetalClusterId: User provided OnePlatform identifier that is used
 	// as part of the resource name. This must be unique among all bare
 	// metal clusters within a project and location and will return a 409 if
-	// the cluster already exists. This value must be up to 40 characters
-	// and follow RFC-1123 (https://tools.ietf.org/html/rfc1123) format.
+	// the cluster already exists. (https://tools.ietf.org/html/rfc1123)
+	// format.
 	BareMetalClusterId string `json:"bareMetalClusterId,omitempty"`
 
-	// LocalName: The object name of the bare metal cluster custom resource
-	// on the associated admin cluster. This field is used to support
-	// conflicting resource names when enrolling existing clusters to the
-	// API. When not provided, this field will resolve to the
+	// LocalName: Optional. The object name of the bare metal cluster custom
+	// resource on the associated admin cluster. This field is used to
+	// support conflicting resource names when enrolling existing clusters
+	// to the API. When not provided, this field will resolve to the
 	// bare_metal_cluster_id. Otherwise, it must match the object name of
 	// the bare metal cluster custom resource. It is not modifiable outside
 	// / beyond the enrollment operation.
@@ -2988,9 +2988,8 @@ func (s *EnrollBareMetalClusterRequest) MarshalJSON() ([]byte, error) {
 // bare metal node pool to the GKE on-prem API.
 type EnrollBareMetalNodePoolRequest struct {
 	// BareMetalNodePoolId: User provided OnePlatform identifier that is
-	// used as part of the resource name. This value must be up to 40
-	// characters and follow RFC-1123 (https://tools.ietf.org/html/rfc1123)
-	// format.
+	// used as part of the resource name.
+	// (https://tools.ietf.org/html/rfc1123) format.
 	BareMetalNodePoolId string `json:"bareMetalNodePoolId,omitempty"`
 
 	// ValidateOnly: If set, only validate the request, but do not actually
@@ -3031,8 +3030,8 @@ type EnrollVmwareAdminClusterRequest struct {
 	// VmwareAdminClusterId: User provided OnePlatform identifier that is
 	// used as part of the resource name. This must be unique among all GKE
 	// on-prem clusters within a project and location and will return a 409
-	// if the cluster already exists. This value must be up to 40 characters
-	// and follow RFC-1123 (https://tools.ietf.org/html/rfc1123) format.
+	// if the cluster already exists. (https://tools.ietf.org/html/rfc1123)
+	// format.
 	VmwareAdminClusterId string `json:"vmwareAdminClusterId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Membership") to
@@ -3068,12 +3067,12 @@ type EnrollVmwareClusterRequest struct {
 	// their own resources.
 	AdminClusterMembership string `json:"adminClusterMembership,omitempty"`
 
-	// LocalName: The object name of the VMware OnPremUserCluster custom
-	// resource on the associated admin cluster. This field is used to
-	// support conflicting resource names when enrolling existing clusters
-	// to the API. When not provided, this field will resolve to the
-	// vmware_cluster_id. Otherwise, it must match the object name of the
-	// VMware OnPremUserCluster custom resource. It is not modifiable
+	// LocalName: Optional. The object name of the VMware OnPremUserCluster
+	// custom resource on the associated admin cluster. This field is used
+	// to support conflicting resource names when enrolling existing
+	// clusters to the API. When not provided, this field will resolve to
+	// the vmware_cluster_id. Otherwise, it must match the object name of
+	// the VMware OnPremUserCluster custom resource. It is not modifiable
 	// outside / beyond the enrollment operation.
 	LocalName string `json:"localName,omitempty"`
 
@@ -3084,8 +3083,7 @@ type EnrollVmwareClusterRequest struct {
 	// VmwareClusterId: User provided OnePlatform identifier that is used as
 	// part of the resource name. This must be unique among all GKE on-prem
 	// clusters within a project and location and will return a 409 if the
-	// cluster already exists. This value must be up to 40 characters and
-	// follow RFC-1123 (https://tools.ietf.org/html/rfc1123) format.
+	// cluster already exists. (https://tools.ietf.org/html/rfc1123) format.
 	VmwareClusterId string `json:"vmwareClusterId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -5290,6 +5288,10 @@ type VmwareControlPlaneVsphereConfig struct {
 	// Datastore: The Vsphere datastore used by the control plane Node.
 	Datastore string `json:"datastore,omitempty"`
 
+	// StoragePolicyName: The Vsphere storage policy used by the control
+	// plane Node.
+	StoragePolicyName string `json:"storagePolicyName,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Datastore") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6036,6 +6038,10 @@ type VmwareVCenterConfig struct {
 	// cluster.
 	ResourcePool string `json:"resourcePool,omitempty"`
 
+	// StoragePolicyName: The name of the vCenter storage policy for the
+	// user cluster.
+	StoragePolicyName string `json:"storagePolicyName,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6140,6 +6146,10 @@ type VmwareVsphereConfig struct {
 	// Datastore: The name of the vCenter datastore. Inherited from the user
 	// cluster.
 	Datastore string `json:"datastore,omitempty"`
+
+	// StoragePolicyName: The name of the vCenter storage policy. Inherited
+	// from the user cluster.
+	StoragePolicyName string `json:"storagePolicyName,omitempty"`
 
 	// Tags: Tags to apply to VMs.
 	Tags []*VmwareVsphereTag `json:"tags,omitempty"`

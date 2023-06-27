@@ -772,6 +772,68 @@ func (s *Build) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type BuildDefinition struct {
+	BuildType string `json:"buildType,omitempty"`
+
+	ExternalParameters googleapi.RawMessage `json:"externalParameters,omitempty"`
+
+	InternalParameters googleapi.RawMessage `json:"internalParameters,omitempty"`
+
+	ResolvedDependencies []*ResourceDescriptor `json:"resolvedDependencies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuildDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildDefinition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BuildMetadata struct {
+	FinishedOn string `json:"finishedOn,omitempty"`
+
+	InvocationId string `json:"invocationId,omitempty"`
+
+	StartedOn string `json:"startedOn,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinishedOn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinishedOn") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuildMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BuildProvenance: Provenance of a build. Contains all information
 // needed to verify the full details about the build from source to
 // completion.
@@ -2067,6 +2129,7 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "N1_HIGHCPU_32" - Highcpu machine with 32 CPUs.
 	//   "E2_HIGHCPU_8" - Highcpu e2 machine with 8 CPUs.
 	//   "E2_HIGHCPU_32" - Highcpu e2 machine with 32 CPUs.
+	//   "E2_MEDIUM" - E2 machine with 1 CPU.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Pool: Optional. Specification for execution on a `WorkerPool`. See
@@ -3776,6 +3839,45 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExportSBOMRequest: The request to a call of ExportSBOM
+type ExportSBOMRequest struct {
+}
+
+// ExportSBOMResponse: The response from a call to ExportSBOM
+type ExportSBOMResponse struct {
+	// DiscoveryOccurrenceId: The id of the discovery occurrence that can be
+	// used to track the progression of the SBOM export.
+	DiscoveryOccurrenceId string `json:"discoveryOccurrenceId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DiscoveryOccurrenceId") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiscoveryOccurrenceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportSBOMResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportSBOMResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression
 // Language (CEL) syntax. CEL is a C-like expression language. The
 // syntax and semantics of CEL are documented at
@@ -4365,6 +4467,8 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata) MarshalJSON()
 
 // GrafeasV1beta1BuildDetails: Details of a build occurrence.
 type GrafeasV1beta1BuildDetails struct {
+	InTotoSlsaProvenanceV1 *InTotoSlsaProvenanceV1 `json:"inTotoSlsaProvenanceV1,omitempty"`
+
 	// Provenance: Required. The actual provenance for the build.
 	Provenance *BuildProvenance `json:"provenance,omitempty"`
 
@@ -4380,20 +4484,22 @@ type GrafeasV1beta1BuildDetails struct {
 	// changes.
 	ProvenanceBytes string `json:"provenanceBytes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Provenance") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "InTotoSlsaProvenanceV1") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Provenance") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InTotoSlsaProvenanceV1")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4842,6 +4948,38 @@ type InToto struct {
 
 func (s *InToto) MarshalJSON() ([]byte, error) {
 	type NoMethod InToto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InTotoSlsaProvenanceV1: Keep in sync with schema at
+// https://github.com/slsa-framework/slsa/blob/main/docs/provenance/schema/v1/provenance.proto
+// Builder renamed to ProvenanceBuilder because of Java conflicts.
+type InTotoSlsaProvenanceV1 struct {
+	BuildDefinition *BuildDefinition `json:"buildDefinition,omitempty"`
+
+	RunDetails *RunDetails `json:"runDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildDefinition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildDefinition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InTotoSlsaProvenanceV1) MarshalJSON() ([]byte, error) {
+	type NoMethod InTotoSlsaProvenanceV1
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6147,6 +6285,37 @@ func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ProvenanceBuilder struct {
+	BuilderDependencies []*ResourceDescriptor `json:"builderDependencies,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	Version map[string]string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuilderDependencies")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuilderDependencies") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProvenanceBuilder) MarshalJSON() ([]byte, error) {
+	type NoMethod ProvenanceBuilder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Publisher: Publisher contains information about the publisher of this
 // Note.
 type Publisher struct {
@@ -6579,6 +6748,74 @@ type Resource struct {
 
 func (s *Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod Resource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ResourceDescriptor struct {
+	Annotations googleapi.RawMessage `json:"annotations,omitempty"`
+
+	Content string `json:"content,omitempty"`
+
+	Digest map[string]string `json:"digest,omitempty"`
+
+	DownloadLocation string `json:"downloadLocation,omitempty"`
+
+	MediaType string `json:"mediaType,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceDescriptor) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceDescriptor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RunDetails struct {
+	Builder *ProvenanceBuilder `json:"builder,omitempty"`
+
+	Byproducts []*ResourceDescriptor `json:"byproducts,omitempty"`
+
+	Metadata *BuildMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Builder") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Builder") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod RunDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10829,6 +11066,150 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "containeranalysis.projects.resources.exportSBOM":
+
+type ProjectsResourcesExportSBOMCall struct {
+	s                 *Service
+	name              string
+	exportsbomrequest *ExportSBOMRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// ExportSBOM: Generates an SBOM and other dependency information for
+// the given resource.
+//
+//   - name: The name of the resource in the form of
+//     `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.
+func (r *ProjectsResourcesService) ExportSBOM(name string, exportsbomrequest *ExportSBOMRequest) *ProjectsResourcesExportSBOMCall {
+	c := &ProjectsResourcesExportSBOMCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exportsbomrequest = exportsbomrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsResourcesExportSBOMCall) Fields(s ...googleapi.Field) *ProjectsResourcesExportSBOMCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsResourcesExportSBOMCall) Context(ctx context.Context) *ProjectsResourcesExportSBOMCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsResourcesExportSBOMCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsResourcesExportSBOMCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportsbomrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:exportSBOM")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "containeranalysis.projects.resources.exportSBOM" call.
+// Exactly one of *ExportSBOMResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExportSBOMResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsResourcesExportSBOMCall) Do(opts ...googleapi.CallOption) (*ExportSBOMResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExportSBOMResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates an SBOM and other dependency information for the given resource.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/resources/{resourcesId}:exportSBOM",
+	//   "httpMethod": "POST",
+	//   "id": "containeranalysis.projects.resources.exportSBOM",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource in the form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/resources/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:exportSBOM",
+	//   "request": {
+	//     "$ref": "ExportSBOMRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ExportSBOMResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

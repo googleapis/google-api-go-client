@@ -3262,6 +3262,12 @@ type ExternalDataConfiguration struct {
 	// formats.
 	DecimalTargetTypes []string `json:"decimalTargetTypes,omitempty"`
 
+	// FileSetSpecType: [Optional] Specifies how source URIs are interpreted
+	// for constructing the file set to load. By default source URIs are
+	// expanded against the underlying storage. Other options include
+	// specifying manifest files. Only applicable to object storage systems.
+	FileSetSpecType string `json:"fileSetSpecType,omitempty"`
+
 	// GoogleSheetsOptions: [Optional] Additional options if sourceFormat is
 	// set to GOOGLE_SHEETS.
 	GoogleSheetsOptions *GoogleSheetsOptions `json:"googleSheetsOptions,omitempty"`
@@ -4482,6 +4488,12 @@ type JobConfigurationLoad struct {
 	// raw, binary state. BigQuery also supports the escape sequence "\t" to
 	// specify a tab separator. The default value is a comma (',').
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+
+	// FileSetSpecType: [Optional] Specifies how source URIs are interpreted
+	// for constructing the file set to load. By default source URIs are
+	// expanded against the underlying storage. Other options include
+	// specifying manifest files. Only applicable to object storage systems.
+	FileSetSpecType string `json:"fileSetSpecType,omitempty"`
 
 	// HivePartitioningOptions: [Optional] Options to configure hive
 	// partitioning support.
@@ -9554,12 +9566,6 @@ type TrainingOptions struct {
 	//   "NORMAL_EQUATION" - Uses a normal equation to solve linear
 	// regression problem.
 	OptimizationStrategy string `json:"optimizationStrategy,omitempty"`
-
-	// PreserveInputStructs: Whether to preserve the input structs in output
-	// feature names. Suppose there is a struct A with field b. When false
-	// (default), the output feature name is A_b. When true, the output
-	// feature name is A.b.
-	PreserveInputStructs bool `json:"preserveInputStructs,omitempty"`
 
 	// SampledShapleyNumPaths: Number of paths for the sampled Shapley
 	// explain method.

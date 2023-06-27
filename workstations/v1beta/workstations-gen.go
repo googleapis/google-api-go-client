@@ -439,7 +439,7 @@ type Container struct {
 	// If using a private image, the `host.gceInstance.serviceAccount` field
 	// must be specified in the workstation configuration and must have
 	// permission to pull the specified image. Otherwise, the image must be
-	// publicly accessible.s
+	// publicly accessible.
 	Image string `json:"image,omitempty"`
 
 	// RunAsUser: If set, overrides the USER specified in the image with the
@@ -633,6 +633,10 @@ type GceInstance struct {
 	// `*.gcr.io` and `*.pkg.dev`. Defaults to false (VMs have public IP
 	// addresses).
 	DisablePublicIpAddresses bool `json:"disablePublicIpAddresses,omitempty"`
+
+	// EnableNestedVirtualization: Whether to enable nested virtualization
+	// on instances.
+	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 
 	// MachineType: The type of machine to use for VM instances—for
 	// example, `e2-standard-4`. For more information about machine types
@@ -1903,9 +1907,9 @@ type WorkstationConfig struct {
 	// CreateTime: Output only. Time when this resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Degraded: Output only. Whether this resource is in degraded mode, in
-	// which case it may require user action to restore full functionality.
-	// Details can be found in the `conditions` field.
+	// Degraded: Output only. Whether this resource is degraded, in which
+	// case it may require user action to restore full functionality. See
+	// also the `conditions` field.
 	Degraded bool `json:"degraded,omitempty"`
 
 	// DeleteTime: Output only. Time when this resource was soft-deleted.

@@ -201,6 +201,7 @@ type ProjectsLocationsGlobalService struct {
 func NewProjectsLocationsGlobalHubsService(s *Service) *ProjectsLocationsGlobalHubsService {
 	rs := &ProjectsLocationsGlobalHubsService{s: s}
 	rs.Groups = NewProjectsLocationsGlobalHubsGroupsService(s)
+	rs.RouteTables = NewProjectsLocationsGlobalHubsRouteTablesService(s)
 	return rs
 }
 
@@ -208,6 +209,8 @@ type ProjectsLocationsGlobalHubsService struct {
 	s *Service
 
 	Groups *ProjectsLocationsGlobalHubsGroupsService
+
+	RouteTables *ProjectsLocationsGlobalHubsRouteTablesService
 }
 
 func NewProjectsLocationsGlobalHubsGroupsService(s *Service) *ProjectsLocationsGlobalHubsGroupsService {
@@ -216,6 +219,27 @@ func NewProjectsLocationsGlobalHubsGroupsService(s *Service) *ProjectsLocationsG
 }
 
 type ProjectsLocationsGlobalHubsGroupsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGlobalHubsRouteTablesService(s *Service) *ProjectsLocationsGlobalHubsRouteTablesService {
+	rs := &ProjectsLocationsGlobalHubsRouteTablesService{s: s}
+	rs.Routes = NewProjectsLocationsGlobalHubsRouteTablesRoutesService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalHubsRouteTablesService struct {
+	s *Service
+
+	Routes *ProjectsLocationsGlobalHubsRouteTablesRoutesService
+}
+
+func NewProjectsLocationsGlobalHubsRouteTablesRoutesService(s *Service) *ProjectsLocationsGlobalHubsRouteTablesRoutesService {
+	rs := &ProjectsLocationsGlobalHubsRouteTablesRoutesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalHubsRouteTablesRoutesService struct {
 	s *Service
 }
 
@@ -289,6 +313,46 @@ func NewProjectsLocationsSpokesService(s *Service) *ProjectsLocationsSpokesServi
 
 type ProjectsLocationsSpokesService struct {
 	s *Service
+}
+
+// AcceptSpokeRequest: The request for HubService.AcceptSpoke.
+type AcceptSpokeRequest struct {
+	// RequestId: Optional. A unique request ID (optional). If you specify
+	// this ID, you can use it in cases when you need to retry your request.
+	// When you need to retry, this ID lets the server know that it can
+	// ignore the request if it has already been completed. The server
+	// guarantees that for at least 60 minutes after the first request. For
+	// example, consider a situation where you make an initial request and
+	// the request times out. If you make the request again with the same
+	// request ID, the server can check to see whether the original
+	// operation was received. If it was, the server ignores the second
+	// request. This behavior prevents clients from mistakenly creating
+	// duplicate commitments. The request ID must be a valid UUID, with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceptSpokeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceptSpokeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -847,10 +911,25 @@ type Hub struct {
 	// `projects/{project_number}/locations/global/hubs/{hub_id}`
 	Name string `json:"name,omitempty"`
 
+	// RouteTables: Output only. The route tables that belong to this hub.
+	// They use the following form:
+	// `projects/{project_number}/locations/global/hubs/{hub_id}/routeTables/
+	// {route_table_id}` This field is read-only. Network Connectivity
+	// Center automatically populates it based on the route tables nested
+	// under the hub.
+	RouteTables []string `json:"routeTables,omitempty"`
+
 	// RoutingVpcs: The VPC networks associated with this hub's spokes. This
 	// field is read-only. Network Connectivity Center automatically
 	// populates it based on the set of spokes attached to the hub.
 	RoutingVpcs []*RoutingVPC `json:"routingVpcs,omitempty"`
+
+	// SpokeSummary: Output only. A summary of the spokes associated with a
+	// hub. The summary includes a count of spokes according to type and
+	// according to state. If any spokes are inactive, the summary also
+	// lists the reasons they are inactive, including a count for each
+	// reason.
+	SpokeSummary *SpokeSummary `json:"spokeSummary,omitempty"`
 
 	// State: Output only. The current lifecycle state of this hub.
 	//
@@ -859,7 +938,12 @@ type Hub struct {
 	//   "CREATING" - The resource's create operation is in progress.
 	//   "ACTIVE" - The resource is active
 	//   "DELETING" - The resource's delete operation is in progress.
+	//   "ACCEPTING" - The resource's accept operation is in progress.
+	//   "REJECTING" - The resource's reject operation is in progress.
 	//   "UPDATING" - The resource's update operation is in progress.
+	//   "INACTIVE" - The resource is inactive.
+	//   "OBSOLETE" - The hub associated with this spoke resource has been
+	// deleted. This state applies to spoke resources only.
 	State string `json:"state,omitempty"`
 
 	// UniqueId: Output only. The Google-generated UUID for the hub. This
@@ -1118,6 +1202,39 @@ func (s *LinkedRouterApplianceInstances) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LinkedVpcNetwork: An existing VPC network.
+type LinkedVpcNetwork struct {
+	// ExcludeExportRanges: Optional. IP Ranges encompassing the subnets to
+	// be excluded from peering.
+	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+
+	// Uri: Required. The URI of the VPC network resource
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExcludeExportRanges") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedVpcNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LinkedVpnTunnels: A collection of Cloud VPN tunnel resources. These
 // resources should be redundant HA VPN tunnels that all advertise the
 // same prefixes to Google Cloud. Alternatively, in a passive/active
@@ -1158,6 +1275,47 @@ type LinkedVpnTunnels struct {
 
 func (s *LinkedVpnTunnels) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedVpnTunnels
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListHubSpokesResponse: The response for HubService.ListHubSpokes.
+type ListHubSpokesResponse struct {
+	// NextPageToken: The token for the next page of the response. To see
+	// more results, use this value as the page_token for your next request.
+	// If this value is empty, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Spokes: The requested spokes. The spoke fields can be partially
+	// populated based on the `view` field in the request message.
+	Spokes []*Spoke `json:"spokes,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListHubSpokesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListHubSpokesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1277,6 +1435,87 @@ type ListLocationsResponse struct {
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListRouteTablesResponse: Response for HubService.ListRouteTables
+// method.
+type ListRouteTablesResponse struct {
+	// NextPageToken: The token for the next page of the response. To see
+	// more results, use this value as the page_token for your next request.
+	// If this value is empty, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RouteTables: The requested route tables.
+	RouteTables []*RouteTable `json:"routeTables,omitempty"`
+
+	// Unreachable: Hubs that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRouteTablesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRouteTablesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListRoutesResponse: Response for HubService.ListRoutes method.
+type ListRoutesResponse struct {
+	// NextPageToken: The token for the next page of the response. To see
+	// more results, use this value as the page_token for your next request.
+	// If this value is empty, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Routes: The requested routes.
+	Routes []*Route `json:"routes,omitempty"`
+
+	// Unreachable: RouteTables that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRoutesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRoutesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1571,6 +1810,33 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type NextHopVpcNetwork struct {
+	// Uri: The URI of the VPC network resource
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NextHopVpcNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod NextHopVpcNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OperationMetadata: Represents the metadata of the long-running
 // operation.
 type OperationMetadata struct {
@@ -1769,7 +2035,7 @@ func (s *ProducerPscConfig) MarshalJSON() ([]byte, error) {
 // PscConfig: Configuration used for Private Service Connect
 // connections. Used when Infrastructure is PSC.
 type PscConfig struct {
-	// Limit: Max number of PSC connections for this policy.
+	// Limit: Optional. Max number of PSC connections for this policy.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// Subnetworks: The resource paths of subnetworks to use for IP address
@@ -1873,6 +2139,216 @@ func (s *PscConnection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RejectSpokeRequest: The request for HubService.RejectSpoke.
+type RejectSpokeRequest struct {
+	// Details: Optional. Additional Details behind the rejection
+	Details string `json:"details,omitempty"`
+
+	// RequestId: Optional. A unique request ID (optional). If you specify
+	// this ID, you can use it in cases when you need to retry your request.
+	// When you need to retry, this ID lets the server know that it can
+	// ignore the request if it has already been completed. The server
+	// guarantees that for at least 60 minutes after the first request. For
+	// example, consider a situation where you make an initial request and
+	// the request times out. If you make the request again with the same
+	// request ID, the server can check to see whether the original
+	// operation was received. If it was, the server ignores the second
+	// request. This behavior prevents clients from mistakenly creating
+	// duplicate commitments. The request ID must be a valid UUID, with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RejectSpokeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RejectSpokeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Route: A route defines a path from VM instances within a spoke to a
+// specific destination resource. Only VPC spokes have routes.
+type Route struct {
+	// CreateTime: Output only. The time the route was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: An optional description of the route.
+	Description string `json:"description,omitempty"`
+
+	// IpCidrRange: The destination IP address range.
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// Labels: Optional labels in key:value format. For more information
+	// about labels, see Requirements for labels
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Location: Output only. The location of the route. Uses the following
+	// form: "projects/{project}/locations/{location}" Example:
+	// projects/1234/locations/us-central1
+	Location string `json:"location,omitempty"`
+
+	// Name: Immutable. The name of the route. Route names must be unique.
+	// They use the following form:
+	// `projects/{project_number}/locations/global/hubs/{hub}/routeTables/{ro
+	// ute_table_id}/routes/{route_id}`
+	Name string `json:"name,omitempty"`
+
+	// NextHopVpcNetwork: Immutable. The destination VPC network for packets
+	// on this route.
+	NextHopVpcNetwork *NextHopVpcNetwork `json:"nextHopVpcNetwork,omitempty"`
+
+	// Spoke: Immutable. The spoke that this route leads to. Example:
+	// projects/12345/locations/global/spokes/SPOKE
+	Spoke string `json:"spoke,omitempty"`
+
+	// State: Output only. The current lifecycle state of the route.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state information available
+	//   "CREATING" - The resource's create operation is in progress.
+	//   "ACTIVE" - The resource is active
+	//   "DELETING" - The resource's delete operation is in progress.
+	//   "ACCEPTING" - The resource's accept operation is in progress.
+	//   "REJECTING" - The resource's reject operation is in progress.
+	//   "UPDATING" - The resource's update operation is in progress.
+	//   "INACTIVE" - The resource is inactive.
+	//   "OBSOLETE" - The hub associated with this spoke resource has been
+	// deleted. This state applies to spoke resources only.
+	State string `json:"state,omitempty"`
+
+	// Type: Output only. The route's type. Its type is determined by the
+	// properties of its IP address range.
+	//
+	// Possible values:
+	//   "ROUTE_TYPE_UNSPECIFIED" - No route type information specified
+	//   "VPC_PRIMARY_SUBNET" - The route leads to a destination within the
+	// primary address range of the VPC network's subnet.
+	//   "VPC_SECONDARY_SUBNET" - The route leads to a destination within
+	// the secondary address range of the VPC network's subnet.
+	Type string `json:"type,omitempty"`
+
+	// Uid: Output only. The Google-generated UUID for the route. This value
+	// is unique across all Network Connectivity Center route resources. If
+	// a route is deleted and another with the same name is created, the new
+	// route is assigned a different unique_id.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The time the route was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Route) MarshalJSON() ([]byte, error) {
+	type NoMethod Route
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RouteTable struct {
+	// CreateTime: Output only. The time the route table was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: An optional description of the route table.
+	Description string `json:"description,omitempty"`
+
+	// Labels: Optional labels in key:value format. For more information
+	// about labels, see Requirements for labels
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Immutable. The name of the route table. Route Table names must
+	// be unique. They use the following form:
+	// `projects/{project_number}/locations/global/hubs/{hub}/routeTables/{ro
+	// ute_table_id}`
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The current lifecycle state of this route table.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state information available
+	//   "CREATING" - The resource's create operation is in progress.
+	//   "ACTIVE" - The resource is active
+	//   "DELETING" - The resource's delete operation is in progress.
+	//   "ACCEPTING" - The resource's accept operation is in progress.
+	//   "REJECTING" - The resource's reject operation is in progress.
+	//   "UPDATING" - The resource's update operation is in progress.
+	//   "INACTIVE" - The resource is inactive.
+	//   "OBSOLETE" - The hub associated with this spoke resource has been
+	// deleted. This state applies to spoke resources only.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. The Google-generated UUID for the route table. This
+	// value is unique across all route table resources. If a route table is
+	// deleted and another with the same name is created, the new route
+	// table is assigned a different unique_id.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The time the route table was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RouteTable) MarshalJSON() ([]byte, error) {
+	type NoMethod RouteTable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RouterApplianceInstance: A router appliance instance is a Compute
 // Engine virtual machine (VM) instance that acts as a BGP speaker. A
 // router appliance instance is specified by the URI of the VM and the
@@ -1946,13 +2422,18 @@ func (s *RoutingVPC) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ServiceClass: The ServiceClass resource. Next id: 8
+// ServiceClass: The ServiceClass resource. Next id: 9
 type ServiceClass struct {
 	// CreateTime: Output only. Time when the ServiceClass was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. The etag is computed by the server, and may be sent
+	// on update and delete requests to ensure the client has an up-to-date
+	// value before proceeding.
+	Etag string `json:"etag,omitempty"`
 
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2001,7 +2482,7 @@ func (s *ServiceClass) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ServiceConnectionMap: The ServiceConnectionMap resource. Next id: 14
+// ServiceConnectionMap: The ServiceConnectionMap resource. Next id: 15
 type ServiceConnectionMap struct {
 	// ConsumerPscConfigs: The PSC configurations on consumer side.
 	ConsumerPscConfigs []*ConsumerPscConfig `json:"consumerPscConfigs,omitempty"`
@@ -2016,6 +2497,11 @@ type ServiceConnectionMap struct {
 
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. The etag is computed by the server, and may be sent
+	// on update and delete requests to ensure the client has an up-to-date
+	// value before proceeding.
+	Etag string `json:"etag,omitempty"`
 
 	// Infrastructure: Output only. The infrastructure used for connections
 	// between consumers/producers.
@@ -2086,7 +2572,7 @@ func (s *ServiceConnectionMap) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceConnectionPolicy: The ServiceConnectionPolicy resource. Next
-// id: 11
+// id: 12
 type ServiceConnectionPolicy struct {
 	// CreateTime: Output only. Time when the ServiceConnectionMap was
 	// created.
@@ -2094,6 +2580,11 @@ type ServiceConnectionPolicy struct {
 
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. The etag is computed by the server, and may be sent
+	// on update and delete requests to ensure the client has an up-to-date
+	// value before proceeding.
+	Etag string `json:"etag,omitempty"`
 
 	// Infrastructure: Output only. The type of underlying resources used to
 	// create the connection.
@@ -2165,7 +2656,7 @@ func (s *ServiceConnectionPolicy) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceConnectionToken: The ServiceConnectionToken resource. Next id:
-// 9
+// 10
 type ServiceConnectionToken struct {
 	// CreateTime: Output only. Time when the ServiceConnectionToken was
 	// created.
@@ -2173,6 +2664,11 @@ type ServiceConnectionToken struct {
 
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. The etag is computed by the server, and may be sent
+	// on update and delete requests to ensure the client has an up-to-date
+	// value before proceeding.
+	Etag string `json:"etag,omitempty"`
 
 	// ExpireTime: Output only. The time to which this token is valid.
 	ExpireTime string `json:"expireTime,omitempty"`
@@ -2289,6 +2785,10 @@ type Spoke struct {
 	// associated with the spoke.
 	LinkedRouterApplianceInstances *LinkedRouterApplianceInstances `json:"linkedRouterApplianceInstances,omitempty"`
 
+	// LinkedVpcNetwork: Optional. VPC network that is associated with the
+	// spoke.
+	LinkedVpcNetwork *LinkedVpcNetwork `json:"linkedVpcNetwork,omitempty"`
+
 	// LinkedVpnTunnels: VPN tunnels that are associated with the spoke.
 	LinkedVpnTunnels *LinkedVpnTunnels `json:"linkedVpnTunnels,omitempty"`
 
@@ -2297,6 +2797,22 @@ type Spoke struct {
 	// `projects/{project_number}/locations/{region}/spokes/{spoke_id}`
 	Name string `json:"name,omitempty"`
 
+	// Reasons: Output only. The reasons for current state of the spoke.
+	Reasons []*StateReason `json:"reasons,omitempty"`
+
+	// SpokeType: Output only. The type of resource associated with the
+	// spoke.
+	//
+	// Possible values:
+	//   "SPOKE_TYPE_UNSPECIFIED" - Unspecified spoke type.
+	//   "VPN_TUNNEL" - Spokes associated with VPN tunnels.
+	//   "INTERCONNECT_ATTACHMENT" - Spokes associated with VLAN
+	// attachments.
+	//   "ROUTER_APPLIANCE" - Spokes associated with router appliance
+	// instances.
+	//   "VPC_NETWORK" - Spokes associated with VPC networks.
+	SpokeType string `json:"spokeType,omitempty"`
+
 	// State: Output only. The current lifecycle state of this spoke.
 	//
 	// Possible values:
@@ -2304,7 +2820,12 @@ type Spoke struct {
 	//   "CREATING" - The resource's create operation is in progress.
 	//   "ACTIVE" - The resource is active
 	//   "DELETING" - The resource's delete operation is in progress.
+	//   "ACCEPTING" - The resource's accept operation is in progress.
+	//   "REJECTING" - The resource's reject operation is in progress.
 	//   "UPDATING" - The resource's update operation is in progress.
+	//   "INACTIVE" - The resource is inactive.
+	//   "OBSOLETE" - The hub associated with this spoke resource has been
+	// deleted. This state applies to spoke resources only.
 	State string `json:"state,omitempty"`
 
 	// UniqueId: Output only. The Google-generated UUID for the spoke. This
@@ -2339,6 +2860,223 @@ type Spoke struct {
 
 func (s *Spoke) MarshalJSON() ([]byte, error) {
 	type NoMethod Spoke
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpokeStateCount: The number of spokes that are in a particular state
+// and associated with a given hub.
+type SpokeStateCount struct {
+	// Count: Output only. The total number of spokes that are in this state
+	// and associated with a given hub.
+	Count int64 `json:"count,omitempty,string"`
+
+	// State: Output only. The state of the spokes.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state information available
+	//   "CREATING" - The resource's create operation is in progress.
+	//   "ACTIVE" - The resource is active
+	//   "DELETING" - The resource's delete operation is in progress.
+	//   "ACCEPTING" - The resource's accept operation is in progress.
+	//   "REJECTING" - The resource's reject operation is in progress.
+	//   "UPDATING" - The resource's update operation is in progress.
+	//   "INACTIVE" - The resource is inactive.
+	//   "OBSOLETE" - The hub associated with this spoke resource has been
+	// deleted. This state applies to spoke resources only.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpokeStateCount) MarshalJSON() ([]byte, error) {
+	type NoMethod SpokeStateCount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpokeStateReasonCount: The number of spokes in the hub that are
+// inactive for this reason.
+type SpokeStateReasonCount struct {
+	// Count: Output only. The total number of spokes that are inactive for
+	// a particular reason and associated with a given hub.
+	Count int64 `json:"count,omitempty,string"`
+
+	// StateReasonCode: Output only. The reason that a spoke is inactive.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - No information available.
+	//   "PENDING_REVIEW" - The proposed spoke is pending review.
+	//   "REJECTED" - The proposed spoke has been rejected by the hub
+	// administrator.
+	//   "PAUSED" - The spoke has been deactivated internally.
+	//   "FAILED" - Network Connectivity Center encountered errors while
+	// accepting the spoke.
+	StateReasonCode string `json:"stateReasonCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpokeStateReasonCount) MarshalJSON() ([]byte, error) {
+	type NoMethod SpokeStateReasonCount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpokeSummary: Summarizes information about the spokes associated with
+// a hub. The summary includes a count of spokes according to type and
+// according to state. If any spokes are inactive, the summary also
+// lists the reasons they are inactive, including a count for each
+// reason.
+type SpokeSummary struct {
+	// SpokeStateCounts: Output only. Counts the number of spokes that are
+	// in each state and associated with a given hub.
+	SpokeStateCounts []*SpokeStateCount `json:"spokeStateCounts,omitempty"`
+
+	// SpokeStateReasonCounts: Output only. Counts the number of spokes that
+	// are inactive for each possible reason and associated with a given
+	// hub.
+	SpokeStateReasonCounts []*SpokeStateReasonCount `json:"spokeStateReasonCounts,omitempty"`
+
+	// SpokeTypeCounts: Output only. Counts the number of spokes of each
+	// type that are associated with a specific hub.
+	SpokeTypeCounts []*SpokeTypeCount `json:"spokeTypeCounts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SpokeStateCounts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SpokeStateCounts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpokeSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod SpokeSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpokeTypeCount: The number of spokes of a given type that are
+// associated with a specific hub. The type indicates what kind of
+// resource is associated with the spoke.
+type SpokeTypeCount struct {
+	// Count: Output only. The total number of spokes of this type that are
+	// associated with the hub.
+	Count int64 `json:"count,omitempty,string"`
+
+	// SpokeType: Output only. The type of the spokes.
+	//
+	// Possible values:
+	//   "SPOKE_TYPE_UNSPECIFIED" - Unspecified spoke type.
+	//   "VPN_TUNNEL" - Spokes associated with VPN tunnels.
+	//   "INTERCONNECT_ATTACHMENT" - Spokes associated with VLAN
+	// attachments.
+	//   "ROUTER_APPLIANCE" - Spokes associated with router appliance
+	// instances.
+	//   "VPC_NETWORK" - Spokes associated with VPC networks.
+	SpokeType string `json:"spokeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpokeTypeCount) MarshalJSON() ([]byte, error) {
+	type NoMethod SpokeTypeCount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StateReason: The reason a spoke is inactive.
+type StateReason struct {
+	// Code: The code associated with this reason.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - No information available.
+	//   "PENDING_REVIEW" - The proposed spoke is pending review.
+	//   "REJECTED" - The proposed spoke has been rejected by the hub
+	// administrator.
+	//   "PAUSED" - The spoke has been deactivated internally.
+	//   "FAILED" - Network Connectivity Center encountered errors while
+	// accepting the spoke.
+	Code string `json:"code,omitempty"`
+
+	// Message: Human-readable details about this reason.
+	Message string `json:"message,omitempty"`
+
+	// UserDetails: Additional information provided by the user in the
+	// RejectSpoke call.
+	UserDetails string `json:"userDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StateReason) MarshalJSON() ([]byte, error) {
+	type NoMethod StateReason
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3634,6 +4372,281 @@ func (c *ProjectsLocationsGlobalHubsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+// method id "networkconnectivity.projects.locations.global.hubs.listSpokes":
+
+type ProjectsLocationsGlobalHubsListSpokesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListSpokes: Lists the Network Connectivity Center spokes associated
+// with a specified hub and location. The list includes both spokes that
+// are attached to the hub and spokes that have been proposed but not
+// yet accepted.
+//
+// - name: The name of the hub.
+func (r *ProjectsLocationsGlobalHubsService) ListSpokes(name string) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c := &ProjectsLocationsGlobalHubsListSpokesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of results.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) Filter(filter string) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by
+// name or create_time.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) OrderBy(orderBy string) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return per page.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) PageSize(pageSize int64) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) PageToken(pageToken string) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SpokeLocations sets the optional parameter "spokeLocations": A list
+// of locations. Specify one of the following: `[global]`, a single
+// region (for example, `[us-central1]`), or a combination of values
+// (for example, `[global, us-central1, us-west1]`). If the
+// spoke_locations field is populated, the list of results includes only
+// spokes in the specified location. If the spoke_locations field is not
+// populated, the list of results includes spokes in all locations.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) SpokeLocations(spokeLocations ...string) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.urlParams_.SetMulti("spokeLocations", append([]string{}, spokeLocations...))
+	return c
+}
+
+// View sets the optional parameter "view": The view of the spoke to
+// return. The view you use determines which spoke fields are included
+// in the response.
+//
+// Possible values:
+//
+//	"SPOKE_VIEW_UNSPECIFIED" - The spoke view is unspecified. When the
+//
+// spoke view is unspecified, the API returns the same fields as the
+// `BASIC` view.
+//
+//	"BASIC" - Includes `name`, `create_time`, `hub`, `unique_id`,
+//
+// `state`, `reasons`, and `spoke_type`. This is the default value.
+//
+//	"DETAILED" - Includes all spoke fields except `labels`. You can use
+//
+// the `DETAILED` view only when you set the `spoke_locations` field to
+// `[global]`.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) View(view string) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsListSpokesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:listSpokes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.listSpokes" call.
+// Exactly one of *ListHubSpokesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListHubSpokesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) Do(opts ...googleapi.CallOption) (*ListHubSpokesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListHubSpokesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the Network Connectivity Center spokes associated with a specified hub and location. The list includes both spokes that are attached to the hub and spokes that have been proposed but not yet accepted.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}:listSpokes",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.listSpokes",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "An expression that filters the list of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the hub.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sort the results by name or create_time.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "spokeLocations": {
+	//       "description": "A list of locations. Specify one of the following: `[global]`, a single region (for example, `[us-central1]`), or a combination of values (for example, `[global, us-central1, us-west1]`). If the spoke_locations field is populated, the list of results includes only spokes in the specified location. If the spoke_locations field is not populated, the list of results includes spokes in all locations.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "The view of the spoke to return. The view you use determines which spoke fields are included in the response.",
+	//       "enum": [
+	//         "SPOKE_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "DETAILED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The spoke view is unspecified. When the spoke view is unspecified, the API returns the same fields as the `BASIC` view.",
+	//         "Includes `name`, `create_time`, `hub`, `unique_id`, `state`, `reasons`, and `spoke_type`. This is the default value.",
+	//         "Includes all spoke fields except `labels`. You can use the `DETAILED` view only when you set the `spoke_locations` field to `[global]`."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:listSpokes",
+	//   "response": {
+	//     "$ref": "ListHubSpokesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalHubsListSpokesCall) Pages(ctx context.Context, f func(*ListHubSpokesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "networkconnectivity.projects.locations.global.hubs.patch":
 
 type ProjectsLocationsGlobalHubsPatchCall struct {
@@ -4586,6 +5599,728 @@ func (c *ProjectsLocationsGlobalHubsGroupsTestIamPermissionsCall) Do(opts ...goo
 	//   ]
 	// }
 
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.routeTables.get":
+
+type ProjectsLocationsGlobalHubsRouteTablesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details about a Network Connectivity Center route table.
+//
+// - name: The name of the route table resource.
+func (r *ProjectsLocationsGlobalHubsRouteTablesService) Get(name string) *ProjectsLocationsGlobalHubsRouteTablesGetCall {
+	c := &ProjectsLocationsGlobalHubsRouteTablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsRouteTablesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsRouteTablesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalHubsRouteTablesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsRouteTablesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsRouteTablesGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsRouteTablesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsRouteTablesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsRouteTablesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.get" call.
+// Exactly one of *RouteTable or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *RouteTable.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsRouteTablesGetCall) Do(opts ...googleapi.CallOption) (*RouteTable, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RouteTable{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details about a Network Connectivity Center route table.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/routeTables/{routeTablesId}",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.routeTables.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the route table resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+/routeTables/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "RouteTable"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.routeTables.list":
+
+type ProjectsLocationsGlobalHubsRouteTablesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists route tables in a given project.
+//
+// - parent: The parent resource's name.
+func (r *ProjectsLocationsGlobalHubsRouteTablesService) List(parent string) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c := &ProjectsLocationsGlobalHubsRouteTablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of results.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) Filter(filter string) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by a
+// certain order.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return per page.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) PageToken(pageToken string) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsRouteTablesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/routeTables")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.list" call.
+// Exactly one of *ListRouteTablesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListRouteTablesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) Do(opts ...googleapi.CallOption) (*ListRouteTablesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRouteTablesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists route tables in a given project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/routeTables",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.routeTables.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "An expression that filters the list of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sort the results by a certain order.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/routeTables",
+	//   "response": {
+	//     "$ref": "ListRouteTablesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) Pages(ctx context.Context, f func(*ListRouteTablesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.routeTables.routes.get":
+
+type ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details about the specified route.
+//
+// - name: The name of the route resource.
+func (r *ProjectsLocationsGlobalHubsRouteTablesRoutesService) Get(name string) *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall {
+	c := &ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.routes.get" call.
+// Exactly one of *Route or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Route.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall) Do(opts ...googleapi.CallOption) (*Route, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Route{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details about the specified route.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/routeTables/{routeTablesId}/routes/{routesId}",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.routeTables.routes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the route resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+/routeTables/[^/]+/routes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Route"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.routeTables.routes.list":
+
+type ProjectsLocationsGlobalHubsRouteTablesRoutesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists routes in a given project.
+//
+// - parent: The parent resource's name.
+func (r *ProjectsLocationsGlobalHubsRouteTablesRoutesService) List(parent string) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c := &ProjectsLocationsGlobalHubsRouteTablesRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of results.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Filter(filter string) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by a
+// certain order.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return per page.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) PageToken(pageToken string) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/routes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.routes.list" call.
+// Exactly one of *ListRoutesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListRoutesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRoutesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists routes in a given project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/routeTables/{routeTablesId}/routes",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.routeTables.routes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "An expression that filters the list of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sort the results by a certain order.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+/routeTables/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/routes",
+	//   "response": {
+	//     "$ref": "ListRoutesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Pages(ctx context.Context, f func(*ListRoutesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "networkconnectivity.projects.locations.global.policyBasedRoutes.getIamPolicy":
@@ -6600,6 +8335,14 @@ func (r *ProjectsLocationsServiceClassesService) Delete(name string) *ProjectsLo
 	return c
 }
 
+// Etag sets the optional parameter "etag": The etag is computed by the
+// server, and may be sent on update and delete requests to ensure the
+// client has an up-to-date value before proceeding.
+func (c *ProjectsLocationsServiceClassesDeleteCall) Etag(etag string) *ProjectsLocationsServiceClassesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional
 // request ID to identify requests. Specify a unique request ID so that
 // if you must retry your request, the server will know to ignore the
@@ -6712,6 +8455,11 @@ func (c *ProjectsLocationsServiceClassesDeleteCall) Do(opts ...googleapi.CallOpt
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the ServiceClass to delete.",
 	//       "location": "path",
@@ -7954,6 +9702,14 @@ func (r *ProjectsLocationsServiceConnectionMapsService) Delete(name string) *Pro
 	return c
 }
 
+// Etag sets the optional parameter "etag": The etag is computed by the
+// server, and may be sent on update and delete requests to ensure the
+// client has an up-to-date value before proceeding.
+func (c *ProjectsLocationsServiceConnectionMapsDeleteCall) Etag(etag string) *ProjectsLocationsServiceConnectionMapsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional
 // request ID to identify requests. Specify a unique request ID so that
 // if you must retry your request, the server will know to ignore the
@@ -8066,6 +9822,11 @@ func (c *ProjectsLocationsServiceConnectionMapsDeleteCall) Do(opts ...googleapi.
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the ServiceConnectionMap to delete.",
 	//       "location": "path",
@@ -9308,6 +11069,14 @@ func (r *ProjectsLocationsServiceConnectionPoliciesService) Delete(name string) 
 	return c
 }
 
+// Etag sets the optional parameter "etag": The etag is computed by the
+// server, and may be sent on update and delete requests to ensure the
+// client has an up-to-date value before proceeding.
+func (c *ProjectsLocationsServiceConnectionPoliciesDeleteCall) Etag(etag string) *ProjectsLocationsServiceConnectionPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional
 // request ID to identify requests. Specify a unique request ID so that
 // if you must retry your request, the server will know to ignore the
@@ -9420,6 +11189,11 @@ func (c *ProjectsLocationsServiceConnectionPoliciesDeleteCall) Do(opts ...google
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the ServiceConnectionPolicy to delete.",
 	//       "location": "path",
@@ -10664,6 +12438,14 @@ func (r *ProjectsLocationsServiceConnectionTokensService) Delete(name string) *P
 	return c
 }
 
+// Etag sets the optional parameter "etag": The etag is computed by the
+// server, and may be sent on update and delete requests to ensure the
+// client has an up-to-date value before proceeding.
+func (c *ProjectsLocationsServiceConnectionTokensDeleteCall) Etag(etag string) *ProjectsLocationsServiceConnectionTokensDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional
 // request ID to identify requests. Specify a unique request ID so that
 // if you must retry your request, the server will know to ignore the
@@ -10776,6 +12558,11 @@ func (c *ProjectsLocationsServiceConnectionTokensDeleteCall) Do(opts ...googleap
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the ServiceConnectionToken to delete.",
 	//       "location": "path",
@@ -11160,6 +12947,149 @@ func (c *ProjectsLocationsServiceConnectionTokensListCall) Pages(ctx context.Con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "networkconnectivity.projects.locations.spokes.accept":
+
+type ProjectsLocationsSpokesAcceptCall struct {
+	s                  *Service
+	name               string
+	acceptspokerequest *AcceptSpokeRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Accept: Accepts a proposal to attach a Network Connectivity Center
+// spoke to the hub.
+//
+// - name: The name of the spoke to accept.
+func (r *ProjectsLocationsSpokesService) Accept(name string, acceptspokerequest *AcceptSpokeRequest) *ProjectsLocationsSpokesAcceptCall {
+	c := &ProjectsLocationsSpokesAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.acceptspokerequest = acceptspokerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSpokesAcceptCall) Fields(s ...googleapi.Field) *ProjectsLocationsSpokesAcceptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSpokesAcceptCall) Context(ctx context.Context) *ProjectsLocationsSpokesAcceptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSpokesAcceptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSpokesAcceptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acceptspokerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:accept")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.spokes.accept" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSpokesAcceptCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Accepts a proposal to attach a Network Connectivity Center spoke to the hub.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}:accept",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.spokes.accept",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the spoke to accept.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/spokes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:accept",
+	//   "request": {
+	//     "$ref": "AcceptSpokeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "networkconnectivity.projects.locations.spokes.create":
@@ -12204,6 +14134,150 @@ func (c *ProjectsLocationsSpokesPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Spoke"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.spokes.reject":
+
+type ProjectsLocationsSpokesRejectCall struct {
+	s                  *Service
+	name               string
+	rejectspokerequest *RejectSpokeRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Reject: Does one of the following: * Rejects a proposal to attach a
+// Network Connectivity Center spoke to the hub. * Rejects and removes a
+// previously attached spoke from the hub.
+//
+// - name: The name of the spoke to reject.
+func (r *ProjectsLocationsSpokesService) Reject(name string, rejectspokerequest *RejectSpokeRequest) *ProjectsLocationsSpokesRejectCall {
+	c := &ProjectsLocationsSpokesRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rejectspokerequest = rejectspokerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSpokesRejectCall) Fields(s ...googleapi.Field) *ProjectsLocationsSpokesRejectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSpokesRejectCall) Context(ctx context.Context) *ProjectsLocationsSpokesRejectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSpokesRejectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSpokesRejectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectspokerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.spokes.reject" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSpokesRejectCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Does one of the following: * Rejects a proposal to attach a Network Connectivity Center spoke to the hub. * Rejects and removes a previously attached spoke from the hub.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}:reject",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.spokes.reject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the spoke to reject.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/spokes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:reject",
+	//   "request": {
+	//     "$ref": "RejectSpokeRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"

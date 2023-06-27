@@ -3434,7 +3434,8 @@ type GoogleCloudContactcenterinsightsV1RedactionConfig struct {
 	DeidentifyTemplate string `json:"deidentifyTemplate,omitempty"`
 
 	// InspectTemplate: The fully-qualified DLP inspect template resource
-	// name. Format: `projects/{project}/inspectTemplates/{template}`
+	// name. Format:
+	// `projects/{project}/locations/{location}/inspectTemplates/{template}`
 	InspectTemplate string `json:"inspectTemplate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeidentifyTemplate")
@@ -6529,7 +6530,8 @@ type GoogleCloudContactcenterinsightsV1alpha1RedactionConfig struct {
 	DeidentifyTemplate string `json:"deidentifyTemplate,omitempty"`
 
 	// InspectTemplate: The fully-qualified DLP inspect template resource
-	// name. Format: `projects/{project}/inspectTemplates/{template}`
+	// name. Format:
+	// `projects/{project}/locations/{location}/inspectTemplates/{template}`
 	InspectTemplate string `json:"inspectTemplate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeidentifyTemplate")

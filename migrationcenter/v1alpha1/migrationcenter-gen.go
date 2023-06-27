@@ -1200,6 +1200,9 @@ type ComputeEngineShapeDescriptor struct {
 	// Series: Compute Engine machine series.
 	Series string `json:"series,omitempty"`
 
+	// Storage: Compute Engine storage. Never empty.
+	Storage []*ComputeStorageDescriptor `json:"storage,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "LogicalCoreCount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1220,6 +1223,45 @@ type ComputeEngineShapeDescriptor struct {
 
 func (s *ComputeEngineShapeDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeEngineShapeDescriptor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComputeStorageDescriptor: Compute Engine storage option descriptor.
+type ComputeStorageDescriptor struct {
+	// SizeGb: Disk size in GiB.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+
+	// Type: Disk type backing the storage.
+	//
+	// Possible values:
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
+	// Selecting this value allows the system to use any disk type according
+	// to reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SizeGb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SizeGb") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComputeStorageDescriptor) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeStorageDescriptor
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

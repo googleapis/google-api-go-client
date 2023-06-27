@@ -632,6 +632,12 @@ type Workflow struct {
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// UserEnvVars: Optional. User-defined environment variables associated
+	// with this workflow revision. This map has a maximum length of 20.
+	// Each string can take up to 40KiB. Keys cannot be empty strings and
+	// cannot start with “GOOGLE” or “WORKFLOWS".
+	UserEnvVars map[string]string `json:"userEnvVars,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

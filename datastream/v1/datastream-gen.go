@@ -2340,7 +2340,9 @@ func (s *Route) MarshalJSON() ([]byte, error) {
 // SingleTargetDataset: A single target dataset to which all data will
 // be streamed.
 type SingleTargetDataset struct {
-	// DatasetId: The dataset ID of the target dataset.
+	// DatasetId: The dataset ID of the target dataset. DatasetIds allowed
+	// characters:
+	// https://cloud.google.com/bigquery/docs/reference/rest/v2/datasets#datasetreference.
 	DatasetId string `json:"datasetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetId") to

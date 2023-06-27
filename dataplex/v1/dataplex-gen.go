@@ -1748,11 +1748,11 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo struct {
 	// StringProfile: String type field information.
 	StringProfile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo `json:"stringProfile,omitempty"`
 
-	// TopNValues: The list of top N non-null values and number of times
-	// they occur in the scanned data. N is 10 or equal to the number of
-	// distinct values in the field, whichever is smaller. Not available for
-	// complex non-groupable field type RECORD and fields with REPEATABLE
-	// mode.
+	// TopNValues: The list of top N non-null values, frequency and ratio
+	// with which they occur in the scanned data. N is 10 or equal to the
+	// number of distinct values in the field, whichever is smaller. Not
+	// available for complex non-groupable field type RECORD and fields with
+	// REPEATABLE mode.
 	TopNValues []*GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue `json:"topNValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DistinctRatio") to
@@ -2000,6 +2000,10 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue stru
 	// Count: Count of the corresponding value in the scanned data.
 	Count int64 `json:"count,omitempty,string"`
 
+	// Ratio: Ratio of the corresponding value in the field against the
+	// total number of rows in the scanned data.
+	Ratio float64 `json:"ratio,omitempty"`
+
 	// Value: String value of a top N non-null value.
 	Value string `json:"value,omitempty"`
 
@@ -2024,6 +2028,20 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue)
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue
+	var s1 struct {
+		Ratio gensupport.JSONFloat64 `json:"ratio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Ratio = float64(s1.Ratio)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataProfileSpec: DataProfileScan related
@@ -2199,6 +2217,10 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// against.
 	Column string `json:"column,omitempty"`
 
+	// Description: Optional. Description of the rule. The maximum length is
+	// 1,024 characters.
+	Description string `json:"description,omitempty"`
+
 	// Dimension: Required. The dimension a rule belongs to. Results are
 	// also aggregated at the dimension level. Supported dimensions are
 	// "COMPLETENESS", "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS",
@@ -2207,45 +2229,52 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 
 	// IgnoreNull: Optional. Rows with null values will automatically fail a
 	// rule, unless ignore_null is true. In that case, such null rows are
-	// trivially considered passing.Only applicable to ColumnMap rules.
+	// trivially considered passing.This field is only valid for row-level
+	// type rules.
 	IgnoreNull bool `json:"ignoreNull,omitempty"`
 
-	// NonNullExpectation: ColumnMap rule which evaluates whether each
+	// Name: Optional. A mutable name for the rule. The name must contain
+	// only letters (a-z, A-Z), numbers (0-9), or hyphens (-). The maximum
+	// length is 63 characters. Must start with a letter. Must end with a
+	// number or a letter.
+	Name string `json:"name,omitempty"`
+
+	// NonNullExpectation: Row-level rule which evaluates whether each
 	// column value is null.
 	NonNullExpectation *GoogleCloudDataplexV1DataQualityRuleNonNullExpectation `json:"nonNullExpectation,omitempty"`
 
-	// RangeExpectation: ColumnMap rule which evaluates whether each column
+	// RangeExpectation: Row-level rule which evaluates whether each column
 	// value lies between a specified range.
 	RangeExpectation *GoogleCloudDataplexV1DataQualityRuleRangeExpectation `json:"rangeExpectation,omitempty"`
 
-	// RegexExpectation: ColumnMap rule which evaluates whether each column
+	// RegexExpectation: Row-level rule which evaluates whether each column
 	// value matches a specified regex.
 	RegexExpectation *GoogleCloudDataplexV1DataQualityRuleRegexExpectation `json:"regexExpectation,omitempty"`
 
-	// RowConditionExpectation: Table rule which evaluates whether each row
-	// passes the specified condition.
+	// RowConditionExpectation: Row-level rule which evaluates whether each
+	// row in a table passes the specified condition.
 	RowConditionExpectation *GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation `json:"rowConditionExpectation,omitempty"`
 
-	// SetExpectation: ColumnMap rule which evaluates whether each column
+	// SetExpectation: Row-level rule which evaluates whether each column
 	// value is contained by a specified set.
 	SetExpectation *GoogleCloudDataplexV1DataQualityRuleSetExpectation `json:"setExpectation,omitempty"`
 
-	// StatisticRangeExpectation: ColumnAggregate rule which evaluates
-	// whether the column aggregate statistic lies between a specified
-	// range.
+	// StatisticRangeExpectation: Aggregate rule which evaluates whether the
+	// column aggregate statistic lies between a specified range.
 	StatisticRangeExpectation *GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation `json:"statisticRangeExpectation,omitempty"`
 
-	// TableConditionExpectation: Table rule which evaluates whether the
-	// provided expression is true.
+	// TableConditionExpectation: Aggregate rule which evaluates whether the
+	// provided expression is true for a table.
 	TableConditionExpectation *GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation `json:"tableConditionExpectation,omitempty"`
 
 	// Threshold: Optional. The minimum ratio of passing_rows / total_rows
 	// required to pass this rule, with a range of 0.0, 1.0.0 indicates
-	// default value (i.e. 1.0).
+	// default value (i.e. 1.0).This field is only valid for row-level type
+	// rules.
 	Threshold float64 `json:"threshold,omitempty"`
 
-	// UniquenessExpectation: ColumnAggregate rule which evaluates whether
-	// the column has duplicates.
+	// UniquenessExpectation: Aggregate rule which evaluates whether the
+	// column has duplicates.
 	UniquenessExpectation *GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation `json:"uniquenessExpectation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Column") to
@@ -2368,30 +2397,30 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRegexExpectation) MarshalJSON() ([]
 // GoogleCloudDataplexV1DataQualityRuleResult: DataQualityRuleResult
 // provides a more detailed, per-rule view of the results.
 type GoogleCloudDataplexV1DataQualityRuleResult struct {
-	// EvaluatedCount: The number of rows a rule was evaluated against. This
-	// field is only valid for ColumnMap type rules.Evaluated count can be
+	// EvaluatedCount: The number of rows a rule was evaluated against.This
+	// field is only valid for row-level type rules.Evaluated count can be
 	// configured to either include all rows (default) - with null rows
 	// automatically failing rule evaluation, or exclude null rows from the
 	// evaluated_count, by setting ignore_nulls = true.
 	EvaluatedCount int64 `json:"evaluatedCount,omitempty,string"`
 
-	// FailingRowsQuery: The query to find rows that did not pass this rule.
-	// Only applies to ColumnMap and RowCondition rules.
+	// FailingRowsQuery: The query to find rows that did not pass this
+	// rule.This field is only valid for row-level type rules.
 	FailingRowsQuery string `json:"failingRowsQuery,omitempty"`
 
 	// NullCount: The number of rows with null values in the specified
 	// column.
 	NullCount int64 `json:"nullCount,omitempty,string"`
 
-	// PassRatio: The ratio of passed_count / evaluated_count. This field is
-	// only valid for ColumnMap type rules.
+	// PassRatio: The ratio of passed_count / evaluated_count.This field is
+	// only valid for row-level type rules.
 	PassRatio float64 `json:"passRatio,omitempty"`
 
 	// Passed: Whether the rule passed or failed.
 	Passed bool `json:"passed,omitempty"`
 
-	// PassedCount: The number of rows which passed a rule evaluation. This
-	// field is only valid for ColumnMap type rules.
+	// PassedCount: The number of rows which passed a rule evaluation.This
+	// field is only valid for row-level type rules.
 	PassedCount int64 `json:"passedCount,omitempty,string"`
 
 	// Rule: The rule specified in the DataQualitySpec, as is.

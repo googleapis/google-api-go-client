@@ -659,27 +659,23 @@ type ConfigManagementConfigSync struct {
 
 	// Enabled: Enables the installation of ConfigSync. If set to true,
 	// ConfigSync resources will be created and the other ConfigSync fields
-	// will be applied if exist. If set to false and Managed Config Sync is
-	// disabled, all other ConfigSync fields will be ignored, ConfigSync
-	// resources will be deleted. Setting this field to false while enabling
-	// Managed Config Sync is invalid. If omitted, ConfigSync resources will
-	// be managed if: * the git or oci field is present; or * Managed Config
-	// Sync is enabled (i.e., managed.enabled is true).
+	// will be applied if exist. If set to false, all other ConfigSync
+	// fields will be ignored, ConfigSync resources will be deleted. If
+	// omitted, ConfigSync resources will be managed depends on the presence
+	// of the git or oci field.
 	Enabled bool `json:"enabled,omitempty"`
 
 	// Git: Git repo configuration for the cluster.
 	Git *ConfigManagementGitConfig `json:"git,omitempty"`
 
-	// Managed: Configuration for Managed Config Sync.
-	Managed *ConfigManagementManaged `json:"managed,omitempty"`
-
-	// MetricsGcpServiceAccountEmail: The Email of the GCP Service Account
-	// (GSA) used for exporting Config Sync metrics to Cloud Monitoring and
-	// Cloud Monarch when Workload Identity is enabled. The GSA should have
-	// the Monitoring Metric Writer (roles/monitoring.metricWriter) IAM
-	// role. The Kubernetes ServiceAccount `default` in the namespace
+	// MetricsGcpServiceAccountEmail: The Email of the Google Cloud Service
+	// Account (GSA) used for exporting Config Sync metrics to Cloud
+	// Monitoring and Cloud Monarch when Workload Identity is enabled. The
+	// GSA should have the Monitoring Metric Writer
+	// (roles/monitoring.metricWriter) IAM role. The Kubernetes
+	// ServiceAccount `default` in the namespace
 	// `config-management-monitoring` should be binded to the GSA. This
-	// field is required when Managed Config Sync is enabled.
+	// field is required when automatic Feature management is enabled.
 	MetricsGcpServiceAccountEmail string `json:"metricsGcpServiceAccountEmail,omitempty"`
 
 	// Oci: OCI repo configuration for the cluster
@@ -693,6 +689,11 @@ type ConfigManagementConfigSync struct {
 	// SourceFormat: Specifies whether the Config Sync Repo is in
 	// "hierarchical" or "unstructured" mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
+
+	// StopSyncing: Set to true to stop syncing configs for a single cluster
+	// when automatic Feature management is enabled. Default to false. The
+	// field will be ignored when automatic Feature management is disabled.
+	StopSyncing bool `json:"stopSyncing,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale")
 	// to unconditionally include in API requests. By default, fields with
@@ -1033,8 +1034,8 @@ func (s *ConfigManagementGatekeeperDeploymentState) MarshalJSON() ([]byte, error
 // ConfigManagementGitConfig: Git repo configuration for a single
 // cluster.
 type ConfigManagementGitConfig struct {
-	// GcpServiceAccountEmail: The GCP Service Account Email used for auth
-	// when secret_type is gcpServiceAccount.
+	// GcpServiceAccountEmail: The Google Cloud Service Account Email used
+	// for auth when secret_type is gcpServiceAccount.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 
 	// HttpsProxy: URL for the HTTPS proxy to be used when communicating
@@ -1304,41 +1305,6 @@ func (s *ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigManagementManaged: Configuration for Managed Config Sync.
-type ConfigManagementManaged struct {
-	// Enabled: Set to true to enable Managed Config Sync. Defaults to false
-	// which disables Managed Config Sync. Setting this field to true when
-	// configSync.enabled is false is invalid.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// StopSyncing: Set to true to stop syncing configs for a single
-	// cluster. Default to false. If set to true, Managed Config Sync will
-	// not upgrade Config Sync.
-	StopSyncing bool `json:"stopSyncing,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ConfigManagementManaged) MarshalJSON() ([]byte, error) {
-	type NoMethod ConfigManagementManaged
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ConfigManagementMembershipSpec: **Anthos Config Management**:
 // Configuration for a single cluster. Intended to parallel the
 // ConfigManagement CR.
@@ -1358,6 +1324,16 @@ type ConfigManagementMembershipSpec struct {
 	// HierarchyController: Hierarchy Controller configuration for the
 	// cluster.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
+
+	// Management: Enables automatic Feature management.
+	//
+	// Possible values:
+	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "MANAGEMENT_AUTOMATIC" - Google will manage the Feature for the
+	// cluster.
+	//   "MANAGEMENT_MANUAL" - User will manually manage the Feature for the
+	// cluster.
+	Management string `json:"management,omitempty"`
 
 	// PolicyController: Policy Controller configuration for the cluster.
 	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`
@@ -1439,8 +1415,8 @@ func (s *ConfigManagementMembershipState) MarshalJSON() ([]byte, error) {
 // ConfigManagementOciConfig: OCI repo configuration for a single
 // cluster
 type ConfigManagementOciConfig struct {
-	// GcpServiceAccountEmail: The GCP Service Account Email used for auth
-	// when secret_type is gcpServiceAccount.
+	// GcpServiceAccountEmail: The Google Cloud Service Account Email used
+	// for auth when secret_type is gcpServiceAccount.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 
 	// PolicyDir: The absolute path of the directory that contains the local
@@ -3361,10 +3337,6 @@ type MembershipFeatureSpec struct {
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
 
-	// FleetInherited: True if value of `feature_spec` was inherited from a
-	// fleet-level default.
-	FleetInherited bool `json:"fleetInherited,omitempty"`
-
 	// Fleetobservability: Fleet observability membership spec
 	Fleetobservability *FleetObservabilityMembershipSpec `json:"fleetobservability,omitempty"`
 
@@ -3373,6 +3345,12 @@ type MembershipFeatureSpec struct {
 
 	// Mesh: Anthos Service Mesh-specific spec
 	Mesh *ServiceMeshMembershipSpec `json:"mesh,omitempty"`
+
+	// Origin: Whether this per-Membership spec was inherited from a
+	// fleet-level default. This field can be updated by users by either
+	// overriding a Membership config (updated to USER implicitly) or
+	// setting to FLEET explicitly.
+	Origin *Origin `json:"origin,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
 	// unconditionally include in API requests. By default, fields with
@@ -3770,6 +3748,42 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Origin: Origin defines where this MembershipFeatureSpec originated
+// from.
+type Origin struct {
+	// Type: Type specifies which type of origin is set.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unknown or not set.
+	//   "FLEET" - Per-Membership spec was inherited from the fleet-level
+	// default.
+	//   "USER" - Per-Membership spec was inherited from a user
+	// specification.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Origin) MarshalJSON() ([]byte, error) {
+	type NoMethod Origin
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

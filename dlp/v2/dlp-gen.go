@@ -1514,6 +1514,170 @@ func (s *GooglePrivacyDlpV2Color) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GooglePrivacyDlpV2ColumnDataProfile: The profile for a scanned column
+// within a table.
+type GooglePrivacyDlpV2ColumnDataProfile struct {
+	// Column: The name of the column.
+	Column string `json:"column,omitempty"`
+
+	// ColumnInfoType: If it's been determined this column can be identified
+	// as a single type, this will be set. Otherwise the column either has
+	// unidentifiable content or mixed types.
+	ColumnInfoType *GooglePrivacyDlpV2InfoTypeSummary `json:"columnInfoType,omitempty"`
+
+	// ColumnType: The data type of a given column.
+	//
+	// Possible values:
+	//   "COLUMN_DATA_TYPE_UNSPECIFIED" - Invalid type.
+	//   "TYPE_INT64" - Encoded as a string in decimal format.
+	//   "TYPE_BOOL" - Encoded as a boolean "false" or "true".
+	//   "TYPE_FLOAT64" - Encoded as a number, or string "NaN", "Infinity"
+	// or "-Infinity".
+	//   "TYPE_STRING" - Encoded as a string value.
+	//   "TYPE_BYTES" - Encoded as a base64 string per RFC 4648, section 4.
+	//   "TYPE_TIMESTAMP" - Encoded as an RFC 3339 timestamp with mandatory
+	// "Z" time zone string: 1985-04-12T23:20:50.52Z
+	//   "TYPE_DATE" - Encoded as RFC 3339 full-date format string:
+	// 1985-04-12
+	//   "TYPE_TIME" - Encoded as RFC 3339 partial-time format string:
+	// 23:20:50.52
+	//   "TYPE_DATETIME" - Encoded as RFC 3339 full-date "T" partial-time:
+	// 1985-04-12T23:20:50.52
+	//   "TYPE_GEOGRAPHY" - Encoded as WKT
+	//   "TYPE_NUMERIC" - Encoded as a decimal string.
+	//   "TYPE_RECORD" - Container of ordered fields, each with a type and
+	// field name.
+	//   "TYPE_BIGNUMERIC" - Decimal type.
+	//   "TYPE_JSON" - Json type.
+	ColumnType string `json:"columnType,omitempty"`
+
+	// DataRiskLevel: The data risk level for this column.
+	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+
+	// DatasetId: The BigQuery dataset ID.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// DatasetLocation: The BigQuery location where the dataset's data is
+	// stored. See https://cloud.google.com/bigquery/docs/locations for
+	// supported locations.
+	DatasetLocation string `json:"datasetLocation,omitempty"`
+
+	// DatasetProjectId: The Google Cloud project ID that owns the BigQuery
+	// dataset.
+	DatasetProjectId string `json:"datasetProjectId,omitempty"`
+
+	// EstimatedNullPercentage: Approximate percentage of entries being null
+	// in the column.
+	//
+	// Possible values:
+	//   "NULL_PERCENTAGE_LEVEL_UNSPECIFIED" - Unused.
+	//   "NULL_PERCENTAGE_VERY_LOW" - Very few null entries.
+	//   "NULL_PERCENTAGE_LOW" - Some null entries.
+	//   "NULL_PERCENTAGE_MEDIUM"
+	//   "NULL_PERCENTAGE_HIGH" - A lot of null entries.
+	EstimatedNullPercentage string `json:"estimatedNullPercentage,omitempty"`
+
+	// EstimatedUniquenessScore: Approximate uniqueness of the column.
+	//
+	// Possible values:
+	//   "UNIQUENESS_SCORE_LEVEL_UNSPECIFIED" - Some columns do not have
+	// estimated uniqueness. Possible reasons include having too few values.
+	//   "UNIQUENESS_SCORE_LOW" - Low uniqueness, possibly a boolean, enum
+	// or similiarly typed column.
+	//   "UNIQUENESS_SCORE_MEDIUM" - Medium uniqueness.
+	//   "UNIQUENESS_SCORE_HIGH" - High uniqueness, possibly a column of
+	// free text or unique identifiers.
+	EstimatedUniquenessScore string `json:"estimatedUniquenessScore,omitempty"`
+
+	// FreeTextScore: The likelihood that this column contains free-form
+	// text. A value close to 1 may indicate the column is likely to contain
+	// free-form or natural language text. Range in 0-1.
+	FreeTextScore float64 `json:"freeTextScore,omitempty"`
+
+	// Name: The name of the profile.
+	Name string `json:"name,omitempty"`
+
+	// OtherMatches: Other types found within this column. List will be
+	// un-ordered.
+	OtherMatches []*GooglePrivacyDlpV2OtherInfoTypeSummary `json:"otherMatches,omitempty"`
+
+	// PolicyState: Indicates if a policy tag has been applied to the
+	// column.
+	//
+	// Possible values:
+	//   "COLUMN_POLICY_STATE_UNSPECIFIED" - No policy tags.
+	//   "COLUMN_POLICY_TAGGED" - Column has policy tag applied.
+	PolicyState string `json:"policyState,omitempty"`
+
+	// ProfileLastGenerated: The last time the profile was generated.
+	ProfileLastGenerated string `json:"profileLastGenerated,omitempty"`
+
+	// ProfileStatus: Success or error status from the most recent profile
+	// generation attempt. May be empty if the profile is still being
+	// generated.
+	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
+
+	// SensitivityScore: The sensitivity of this column.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+
+	// State: State of a profile.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unused.
+	//   "RUNNING" - The profile is currently running. Once a profile has
+	// finished it will transition to DONE.
+	//   "DONE" - The profile is no longer generating. If
+	// profile_status.status.code is 0, the profile succeeded, otherwise, it
+	// failed.
+	State string `json:"state,omitempty"`
+
+	// TableDataProfile: The resource name to the table data profile.
+	TableDataProfile string `json:"tableDataProfile,omitempty"`
+
+	// TableFullResource: The resource name of the table this column is
+	// within.
+	TableFullResource string `json:"tableFullResource,omitempty"`
+
+	// TableId: The BigQuery table ID.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ColumnDataProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ColumnDataProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GooglePrivacyDlpV2ColumnDataProfile) UnmarshalJSON(data []byte) error {
+	type NoMethod GooglePrivacyDlpV2ColumnDataProfile
+	var s1 struct {
+		FreeTextScore gensupport.JSONFloat64 `json:"freeTextScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FreeTextScore = float64(s1.FreeTextScore)
+	return nil
+}
+
 // GooglePrivacyDlpV2Condition: The field type of `value` and `field` do
 // not need to match to be considered equal, but not all comparisons are
 // possible. EQUAL_TO and NOT_EQUAL_TO attempt to compare even with
@@ -2325,6 +2489,38 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 
 func (s *GooglePrivacyDlpV2DataProfileAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfileAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DataProfileBigQueryRowSchema: The schema of data to
+// be saved to the BigQuery when the `DataProfileAction` is enabled.
+type GooglePrivacyDlpV2DataProfileBigQueryRowSchema struct {
+	// ColumnProfile: Column data profile column
+	ColumnProfile *GooglePrivacyDlpV2ColumnDataProfile `json:"columnProfile,omitempty"`
+
+	// TableProfile: Table data profile column
+	TableProfile *GooglePrivacyDlpV2TableDataProfile `json:"tableProfile,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnProfile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnProfile") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataProfileBigQueryRowSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataProfileBigQueryRowSchema
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6795,8 +6991,8 @@ func (s *GooglePrivacyDlpV2PrivacyMetric) MarshalJSON() ([]byte, error) {
 }
 
 type GooglePrivacyDlpV2ProfileStatus struct {
-	// Status: Profiling status code and optional message. status.code will
-	// be 0 (default value) for OK.
+	// Status: Profiling status code and optional message. The `status.code`
+	// value is 0 (default value) for OK.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// Timestamp: Time when the profile generation status was updated

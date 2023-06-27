@@ -767,6 +767,14 @@ type CloudSqlSettings struct {
 	//   "POSTGRES_15" - PostgreSQL 15.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
+	// Edition: Optional. The edition of the given Cloud SQL instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - The instance did not specify the edition.
+	//   "ENTERPRISE" - The instance is an enterprise edition.
+	//   "ENTERPRISE_PLUS" - The instance is an enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
+
 	// IpConfig: The settings for IP Management. This allows to enable or
 	// disable the instance IP and manage which external networks can
 	// connect to the instance. The IPv4 address cannot be disabled.
@@ -1954,6 +1962,52 @@ type GenerateSshScriptRequest struct {
 
 func (s *GenerateSshScriptRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateSshScriptRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateTcpProxyScriptRequest: Request message for
+// 'GenerateTcpProxyScript' request.
+type GenerateTcpProxyScriptRequest struct {
+	// VmMachineType: Required. The type of the Compute instance that will
+	// host the proxy.
+	VmMachineType string `json:"vmMachineType,omitempty"`
+
+	// VmName: Required. The name of the Compute instance that will host the
+	// proxy.
+	VmName string `json:"vmName,omitempty"`
+
+	// VmSubnet: Required. The name of the subnet the Compute instance will
+	// use for private connectivity. Must be supplied in the form of
+	// projects/{project}/regions/{region}/subnetworks/{subnetwork}. Note:
+	// the region for the subnet must match the Compute instance region.
+	VmSubnet string `json:"vmSubnet,omitempty"`
+
+	// VmZone: Optional. The Google Cloud Platform zone to create the VM in.
+	// The fully qualified name of the zone must be specified, including the
+	// region name, for example "us-central1-b". If not specified, uses the
+	// "-b" zone of the destination Connection Profile's region.
+	VmZone string `json:"vmZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VmMachineType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VmMachineType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateTcpProxyScriptRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateTcpProxyScriptRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3986,6 +4040,39 @@ type TableEntity struct {
 
 func (s *TableEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod TableEntity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TcpProxyScript: Response message for 'GenerateTcpProxyScript'
+// request.
+type TcpProxyScript struct {
+	// Script: The TCP Proxy configuration script.
+	Script string `json:"script,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Script") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Script") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TcpProxyScript) MarshalJSON() ([]byte, error) {
+	type NoMethod TcpProxyScript
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6886,6 +6973,14 @@ func (r *ProjectsLocationsConversionWorkspacesService) Delete(name string) *Proj
 	return c
 }
 
+// Force sets the optional parameter "force": Force delete the
+// conversion workspace, even if there's a running migration that is
+// using the workspace.
+func (c *ProjectsLocationsConversionWorkspacesDeleteCall) Force(force bool) *ProjectsLocationsConversionWorkspacesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique ID used
 // to identify the request. If the server receives two requests with the
 // same ID, then the second request is ignored. It is recommended to
@@ -6991,6 +7086,11 @@ func (c *ProjectsLocationsConversionWorkspacesDeleteCall) Do(opts ...googleapi.C
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "Force delete the conversion workspace, even if there's a running migration that is using the workspace.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. Name of the conversion workspace resource to delete.",
 	//       "location": "path",
@@ -9561,6 +9661,150 @@ func (c *ProjectsLocationsMigrationJobsGenerateSshScriptCall) Do(opts ...googlea
 	//   },
 	//   "response": {
 	//     "$ref": "SshScript"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datamigration.projects.locations.migrationJobs.generateTcpProxyScript":
+
+type ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall struct {
+	s                             *Service
+	migrationJob                  string
+	generatetcpproxyscriptrequest *GenerateTcpProxyScriptRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// GenerateTcpProxyScript: Generate a TCP Proxy configuration script to
+// configure a cloud-hosted VM running a TCP Proxy.
+//
+//   - migrationJob: Name of the migration job resource to generate the
+//     TCP Proxy script.
+func (r *ProjectsLocationsMigrationJobsService) GenerateTcpProxyScript(migrationJob string, generatetcpproxyscriptrequest *GenerateTcpProxyScriptRequest) *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall {
+	c := &ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.migrationJob = migrationJob
+	c.generatetcpproxyscriptrequest = generatetcpproxyscriptrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatetcpproxyscriptrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+migrationJob}:generateTcpProxyScript")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"migrationJob": c.migrationJob,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.generateTcpProxyScript" call.
+// Exactly one of *TcpProxyScript or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *TcpProxyScript.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMigrationJobsGenerateTcpProxyScriptCall) Do(opts ...googleapi.CallOption) (*TcpProxyScript, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TcpProxyScript{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generate a TCP Proxy configuration script to configure a cloud-hosted VM running a TCP Proxy.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/migrationJobs/{migrationJobsId}:generateTcpProxyScript",
+	//   "httpMethod": "POST",
+	//   "id": "datamigration.projects.locations.migrationJobs.generateTcpProxyScript",
+	//   "parameterOrder": [
+	//     "migrationJob"
+	//   ],
+	//   "parameters": {
+	//     "migrationJob": {
+	//       "description": "Name of the migration job resource to generate the TCP Proxy script.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/migrationJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+migrationJob}:generateTcpProxyScript",
+	//   "request": {
+	//     "$ref": "GenerateTcpProxyScriptRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TcpProxyScript"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

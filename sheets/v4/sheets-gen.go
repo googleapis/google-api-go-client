@@ -1747,16 +1747,21 @@ type BatchGetValuesByDataFilterRequest struct {
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
-	// reply according to the cell's formatting. Formatting is based on the
-	// spreadsheet's locale, not the requesting user's locale. For example,
-	// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-	// `A2` would return "$1.23".
+	// response according to the cell's formatting. Formatting is based on
+	// the spreadsheet's locale, not the requesting user's locale. For
+	// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency, then `A2` would return "$1.23".
 	//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 	// in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 	// formatted as currency, then `A2` would return the number `1.23`.
 	//   "FORMULA" - Values will not be calculated. The reply will include
 	// the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-	// formatted as currency, then A2 would return "=A1".
+	// formatted as currency, then A2 would return "=A1". Sheets treats
+	// date and time values as decimal values. This lets you perform
+	// arithmetic on them in formulas. For more information on interpreting
+	// date and time values, see [About date & time
+	// values](https://developers.google.com/sheets/api/guides/formats#about_
+	// date_time_values).
 	ValueRenderOption string `json:"valueRenderOption,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataFilters") to
@@ -1988,16 +1993,21 @@ type BatchUpdateValuesByDataFilterRequest struct {
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
-	// reply according to the cell's formatting. Formatting is based on the
-	// spreadsheet's locale, not the requesting user's locale. For example,
-	// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-	// `A2` would return "$1.23".
+	// response according to the cell's formatting. Formatting is based on
+	// the spreadsheet's locale, not the requesting user's locale. For
+	// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency, then `A2` would return "$1.23".
 	//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 	// in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 	// formatted as currency, then `A2` would return the number `1.23`.
 	//   "FORMULA" - Values will not be calculated. The reply will include
 	// the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-	// formatted as currency, then A2 would return "=A1".
+	// formatted as currency, then A2 would return "=A1". Sheets treats
+	// date and time values as decimal values. This lets you perform
+	// arithmetic on them in formulas. For more information on interpreting
+	// date and time values, see [About date & time
+	// values](https://developers.google.com/sheets/api/guides/formats#about_
+	// date_time_values).
 	ResponseValueRenderOption string `json:"responseValueRenderOption,omitempty"`
 
 	// ValueInputOption: How the input data should be interpreted.
@@ -2127,16 +2137,21 @@ type BatchUpdateValuesRequest struct {
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
-	// reply according to the cell's formatting. Formatting is based on the
-	// spreadsheet's locale, not the requesting user's locale. For example,
-	// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-	// `A2` would return "$1.23".
+	// response according to the cell's formatting. Formatting is based on
+	// the spreadsheet's locale, not the requesting user's locale. For
+	// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency, then `A2` would return "$1.23".
 	//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 	// in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 	// formatted as currency, then `A2` would return the number `1.23`.
 	//   "FORMULA" - Values will not be calculated. The reply will include
 	// the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-	// formatted as currency, then A2 would return "=A1".
+	// formatted as currency, then A2 would return "=A1". Sheets treats
+	// date and time values as decimal values. This lets you perform
+	// arithmetic on them in formulas. For more information on interpreting
+	// date and time values, see [About date & time
+	// values](https://developers.google.com/sheets/api/guides/formats#about_
+	// date_time_values).
 	ResponseValueRenderOption string `json:"responseValueRenderOption,omitempty"`
 
 	// ValueInputOption: How the input data should be interpreted.
@@ -2448,6 +2463,8 @@ type BooleanCondition struct {
 	//   "DATE_NOT_EQ" - The cell's value must be exactly not the
 	// condition's value. Supported by filters on data source objects.
 	// Requires at least one ConditionValue.
+	//   "FILTER_EXPRESSION" - The cell's value must follow the pattern
+	// specified. Requires a single ConditionValue.
 	Type string `json:"type,omitempty"`
 
 	// Values: The values of the condition. The number of supported values
@@ -3607,7 +3624,7 @@ func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
 // trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
 // method in iOS; and, with just a little work, it can be easily
 // formatted into a CSS `rgba()` string in JavaScript. This reference
-// page does not have information about the absolute color space that
+// page doesn't have information about the absolute color space that
 // should be used to interpret the RGB value—for example, sRGB, Adobe
 // RGB, DCI-P3, and BT.2020. By default, applications should assume the
 // sRGB color space. When color equality needs to be decided,
@@ -8826,7 +8843,7 @@ type Request struct {
 	// RandomizeRange: Randomizes the order of the rows in a range.
 	RandomizeRange *RandomizeRangeRequest `json:"randomizeRange,omitempty"`
 
-	// RefreshDataSource: Refreshs one or multiple data sources and
+	// RefreshDataSource: Refreshes one or multiple data sources and
 	// associated dbobjects.
 	RefreshDataSource *RefreshDataSourceRequest `json:"refreshDataSource,omitempty"`
 
@@ -12792,10 +12809,10 @@ func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDate
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -12805,7 +12822,12 @@ func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDate
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesAppendCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesAppendCall {
 	c.urlParams_.Set("responseValueRenderOption", responseValueRenderOption)
 	return c
@@ -12980,9 +13002,9 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13400,10 +13422,10 @@ func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsV
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -13413,7 +13435,12 @@ func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsV
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesBatchGetCall) ValueRenderOption(valueRenderOption string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.Set("valueRenderOption", valueRenderOption)
 	return c
@@ -13574,9 +13601,9 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -14271,10 +14298,10 @@ func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *Sprea
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -14284,7 +14311,12 @@ func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *Sprea
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesGetCall) ValueRenderOption(valueRenderOption string) *SpreadsheetsValuesGetCall {
 	c.urlParams_.Set("valueRenderOption", valueRenderOption)
 	return c
@@ -14447,9 +14479,9 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -14544,10 +14576,10 @@ func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDate
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -14557,7 +14589,12 @@ func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDate
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesUpdateCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesUpdateCall {
 	c.urlParams_.Set("responseValueRenderOption", responseValueRenderOption)
 	return c
@@ -14719,9 +14756,9 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

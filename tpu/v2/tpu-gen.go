@@ -980,7 +980,7 @@ type Node struct {
 	//   "REIMAGING" - TPU node is undergoing reimaging.
 	//   "DELETING" - TPU node is being deleted.
 	//   "REPAIRING" - TPU node is being repaired and may be unusable.
-	// Details can be found in the `help_description` field.
+	// Details can be found in the 'help_description' field.
 	//   "STOPPED" - TPU node is stopped.
 	//   "STOPPING" - TPU node is currently stopping.
 	//   "STARTING" - TPU node is currently starting.

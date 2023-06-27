@@ -92,6 +92,9 @@ const (
 	// in Google Chat
 	ChatDeleteScope = "https://www.googleapis.com/auth/chat.delete"
 
+	// Import spaces, messages, and memberships into Google Chat.
+	ChatImportScope = "https://www.googleapis.com/auth/chat.import"
+
 	// View, add, and remove members from conversations in Google Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
@@ -136,6 +139,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.delete",
+		"https://www.googleapis.com/auth/chat.import",
 		"https://www.googleapis.com/auth/chat.memberships",
 		"https://www.googleapis.com/auth/chat.memberships.app",
 		"https://www.googleapis.com/auth/chat.memberships.readonly",
@@ -526,6 +530,34 @@ type Annotation struct {
 
 func (s *Annotation) MarshalJSON() ([]byte, error) {
 	type NoMethod Annotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttachedGif: A GIF image that's specified by a URL.
+type AttachedGif struct {
+	// Uri: Output only. The URL that hosts the GIF image.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttachedGif) MarshalJSON() ([]byte, error) {
+	type NoMethod AttachedGif
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3814,6 +3846,10 @@ type Message struct {
 	// Chat app mentions stripped out.
 	ArgumentText string `json:"argumentText,omitempty"`
 
+	// AttachedGifs: Output only. GIF images that are attached to the
+	// message.
+	AttachedGifs []*AttachedGif `json:"attachedGifs,omitempty"`
+
 	// Attachment: User-uploaded attachment.
 	Attachment []*Attachment `json:"attachment,omitempty"`
 
@@ -3850,7 +3886,7 @@ type Message struct {
 	// field, which you can reference while processing later operations,
 	// like updating or deleting the message. For example usage, see Name a
 	// created message
-	// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+	// (https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message).
 	ClientAssignedMessageId string `json:"clientAssignedMessageId,omitempty"`
 
 	// CreateTime: For spaces created in Chat, the time at which the message
@@ -5202,6 +5238,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*UploadAttachmentRes
 	//     "$ref": "UploadAttachmentResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.create"
 	//   ],
@@ -5350,6 +5387,7 @@ func (c *SpacesCreateCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//     "$ref": "Space"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.spaces",
 	//     "https://www.googleapis.com/auth/chat.spaces.create"
 	//   ]
@@ -5492,7 +5530,8 @@ func (c *SpacesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.delete"
+	//     "https://www.googleapis.com/auth/chat.delete",
+	//     "https://www.googleapis.com/auth/chat.import"
 	//   ]
 	// }
 
@@ -6214,6 +6253,7 @@ func (c *SpacesPatchCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//     "$ref": "Space"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.spaces"
 	//   ]
 	// }
@@ -7165,7 +7205,7 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 // field, which you can reference while processing later operations,
 // like updating or deleting the message. For example usage, see Name a
 // created message
-// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+// (https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message).
 func (c *SpacesMessagesCreateCall) MessageId(messageId string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("messageId", messageId)
 	return c
@@ -7311,7 +7351,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "messageId": {
-	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. Assigning a custom name lets a a Chat app recall the message without saving the message `name` from the [response body](/chat/api/reference/rest/v1/spaces.messages/get#response-body) returned when creating the message. Assigning a custom name doesn't replace the generated `name` field, the message's resource name. Instead, it sets the custom name as the `clientAssignedMessageId` field, which you can reference while processing later operations, like updating or deleting the message. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. Assigning a custom name lets a a Chat app recall the message without saving the message `name` from the [response body](/chat/api/reference/rest/v1/spaces.messages/get#response-body) returned when creating the message. Assigning a custom name doesn't replace the generated `name` field, the message's resource name. Instead, it sets the custom name as the `clientAssignedMessageId` field, which you can reference while processing later operations, like updating or deleting the message. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7358,6 +7398,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chat.bot",
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.create"
 	//   ]
@@ -7521,6 +7562,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chat.bot",
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -7558,7 +7600,7 @@ type SpacesMessagesGetCall struct {
 //     created it with the Chat REST API. That Chat app (but not others)
 //     can pass the custom name to get, update, or delete the message. To
 //     learn more, see [create and name a message]
-//     (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+//     (https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message).
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7673,7 +7715,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to retrieve. Format: `spaces/{space}/messages/{message}` If the message begins with `client-`, then it has a custom name assigned by a Chat app that created it with the Chat REST API. That Chat app (but not others) can pass the custom name to get, update, or delete the message. To learn more, see [create and name a message] (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "description": "Required. Resource name of the message to retrieve. Format: `spaces/{space}/messages/{message}` If the message begins with `client-`, then it has a custom name assigned by a Chat app that created it with the Chat REST API. That Chat app (but not others) can pass the custom name to get, update, or delete the message. To learn more, see [create and name a message] (https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message).",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -7934,6 +7976,7 @@ func (c *SpacesMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessages
 	//     "$ref": "ListMessagesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly"
 	//   ]
@@ -8001,7 +8044,7 @@ func (r *SpacesMessagesService) Patch(name string, message *Message) *SpacesMess
 // and the message isn't found, a new message is created and
 // `updateMask` is ignored. The specified message ID must be
 // client-assigned
-// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message)
+// (https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message)
 // or the request fails.
 func (c *SpacesMessagesPatchCall) AllowMissing(allowMissing bool) *SpacesMessagesPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
@@ -8120,7 +8163,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "Optional. If `true` and the message isn't found, a new message is created and `updateMask` is ignored. The specified message ID must be [client-assigned](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message) or the request fails.",
+	//       "description": "Optional. If `true` and the message isn't found, a new message is created and `updateMask` is ignored. The specified message ID must be [client-assigned](https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message) or the request fails.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8147,6 +8190,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chat.bot",
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -8192,7 +8236,7 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 // and the message isn't found, a new message is created and
 // `updateMask` is ignored. The specified message ID must be
 // client-assigned
-// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message)
+// (https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message)
 // or the request fails.
 func (c *SpacesMessagesUpdateCall) AllowMissing(allowMissing bool) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
@@ -8311,7 +8355,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "Optional. If `true` and the message isn't found, a new message is created and `updateMask` is ignored. The specified message ID must be [client-assigned](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message) or the request fails.",
+	//       "description": "Optional. If `true` and the message isn't found, a new message is created and `updateMask` is ignored. The specified message ID must be [client-assigned](https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message) or the request fails.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8338,6 +8382,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chat.bot",
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -8641,6 +8686,7 @@ func (c *SpacesMessagesReactionsCreateCall) Do(opts ...googleapi.CallOption) (*R
 	//     "$ref": "Reaction"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.reactions",
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.create"
@@ -8781,6 +8827,7 @@ func (c *SpacesMessagesReactionsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.reactions"
 	//   ]

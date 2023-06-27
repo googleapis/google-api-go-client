@@ -5997,6 +5997,10 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentRequest struct {
 	// `projects//locations//agents//environments/`.
 	Environment string `json:"environment,omitempty"`
 
+	// IncludeBigqueryExportSettings: Optional. Whether to include BigQuery
+	// Export setting.
+	IncludeBigqueryExportSettings bool `json:"includeBigqueryExportSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AgentUri") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -8922,6 +8926,12 @@ type GoogleCloudDialogflowCxV3beta1QueryParameters struct {
 	// extend developer entity types with. The entity synonyms apply to all
 	// languages and persist for the session of this query.
 	SessionEntityTypes []*GoogleCloudDialogflowCxV3beta1SessionEntityType `json:"sessionEntityTypes,omitempty"`
+
+	// SessionTtl: Optional. Sets Dialogflow session life time. By default,
+	// a Dialogflow session remains active and its data is stored for 30
+	// minutes after the last request is sent for the session. This value
+	// should be no longer than 1 day.
+	SessionTtl string `json:"sessionTtl,omitempty"`
 
 	// TimeZone: The time zone of this conversational query from the time
 	// zone database (https://www.iana.org/time-zones), e.g.,

@@ -12243,6 +12243,12 @@ type GoogleCloudDialogflowV2beta1AutomatedAgentConfig struct {
 	// specified, the default `draft` environment is used.
 	Agent string `json:"agent,omitempty"`
 
+	// SessionTtl: Optional. Sets Dialogflow CX session life time. By
+	// default, a Dialogflow CX session remains active and its data is
+	// stored for 30 minutes after the last request is sent for the session.
+	// This value should be no longer than 1 day.
+	SessionTtl string `json:"sessionTtl,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -20124,6 +20130,10 @@ func (s *GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]b
 // GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest: The
 // request message for Conversations.SuggestConversationSummary.
 type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
+	// AssistQueryParams: Parameters for a human assist query. Only used for
+	// POC/demo purpose.
+	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
+
 	// ContextSize: Max number of messages prior to and including
 	// [latest_message] to use as context when compiling the suggestion. By
 	// default 500 and at most 1000.
@@ -20135,20 +20145,21 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
 	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ContextSize") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AssistQueryParams")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContextSize") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssistQueryParams") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

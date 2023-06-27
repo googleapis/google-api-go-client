@@ -2837,7 +2837,8 @@ type GoogleCloudRunV2VpcAccess struct {
 	// {project} can be project id or number.
 	Connector string `json:"connector,omitempty"`
 
-	// Egress: Traffic VPC egress settings.
+	// Egress: Traffic VPC egress settings. If not provided, it defaults to
+	// PRIVATE_RANGES_ONLY.
 	//
 	// Possible values:
 	//   "VPC_EGRESS_UNSPECIFIED" - Unspecified

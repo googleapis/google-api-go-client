@@ -1202,7 +1202,7 @@ type CourseWorkMaterial struct {
 	// is never returned.
 	//   "PUBLISHED" - Status for course work material that has been
 	// published. This is the default state.
-	//   "DRAFT" - Status for an course work material that is not yet
+	//   "DRAFT" - Status for a course work material that is not yet
 	// published. Course work material in this state is visible only to
 	// course teachers and domain administrators.
 	//   "DELETED" - Status for course work material that was published but
@@ -8807,7 +8807,7 @@ func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourse
 //
 // published. This is the default state.
 //
-//	"DRAFT" - Status for an course work material that is not yet
+//	"DRAFT" - Status for a course work material that is not yet
 //
 // published. Course work material in this state is visible only to
 // course teachers and domain administrators.
@@ -8993,7 +8993,7 @@ func (c *CoursesCourseWorkMaterialsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "enumDescriptions": [
 	//         "No state specified. This is never returned.",
 	//         "Status for course work material that has been published. This is the default state.",
-	//         "Status for an course work material that is not yet published. Course work material in this state is visible only to course teachers and domain administrators.",
+	//         "Status for a course work material that is not yet published. Course work material in this state is visible only to course teachers and domain administrators.",
 	//         "Status for course work material that was published but is now deleted. Course work material in this state is visible only to course teachers and domain administrators. Course work material in this state is deleted after some time."
 	//       ],
 	//       "location": "query",

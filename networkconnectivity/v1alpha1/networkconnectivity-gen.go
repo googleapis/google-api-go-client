@@ -719,6 +719,8 @@ type InternalRange struct {
 	//   "OVERLAP_UNSPECIFIED" - No overlap overrides.
 	//   "OVERLAP_ROUTE_RANGE" - Allow creation of static routes more
 	// specific than the current internal range.
+	//   "OVERLAP_EXISTING_SUBNET_RANGE" - Allow creation of internal ranges
+	// that overlap with existing subnets.
 	Overlaps []string `json:"overlaps,omitempty"`
 
 	// Peering: The type of peering set for this internal range.

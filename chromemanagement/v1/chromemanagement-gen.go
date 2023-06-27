@@ -6137,8 +6137,10 @@ func (r *CustomersTelemetryEventsService) List(parent string) *CustomersTelemetr
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter. Supported filter fields: - device_id - user_id
-// - device_org_unit_id - user_org_unit_id - timestamp - event_type The
+// that match the filter. Although this parameter is currently optional,
+// this parameter will be required- please specify at least 1 event
+// type. Supported filter fields: - device_id - user_id -
+// device_org_unit_id - user_org_unit_id - timestamp - event_type The
 // "timestamp" filter accepts either the Unix Epoch milliseconds format
 // or the RFC3339 UTC "Zulu" format with nanosecond resolution and up to
 // nine fractional digits. Both formats should be surrounded by simple
@@ -6164,7 +6166,9 @@ func (c *CustomersTelemetryEventsListCall) PageToken(pageToken string) *Customer
 }
 
 // ReadMask sets the optional parameter "readMask": Required. Read mask
-// to specify which fields to return.
+// to specify which fields to return. Although currently required, this
+// field will become optional, while the filter parameter with an event
+// type will be come required.
 func (c *CustomersTelemetryEventsListCall) ReadMask(readMask string) *CustomersTelemetryEventsListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -6280,7 +6284,7 @@ func (c *CustomersTelemetryEventsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - device_id - user_id - device_org_unit_id - user_org_unit_id - timestamp - event_type The \"timestamp\" filter accepts either the Unix Epoch milliseconds format or the RFC3339 UTC \"Zulu\" format with nanosecond resolution and up to nine fractional digits. Both formats should be surrounded by simple double quotes. Examples: \"2014-10-02T15:01:23Z\", \"2014-10-02T15:01:23.045123456Z\", \"1679283943823\".",
+	//       "description": "Optional. Only include resources that match the filter. Although this parameter is currently optional, this parameter will be required- please specify at least 1 event type. Supported filter fields: - device_id - user_id - device_org_unit_id - user_org_unit_id - timestamp - event_type The \"timestamp\" filter accepts either the Unix Epoch milliseconds format or the RFC3339 UTC \"Zulu\" format with nanosecond resolution and up to nine fractional digits. Both formats should be surrounded by simple double quotes. Examples: \"2014-10-02T15:01:23Z\", \"2014-10-02T15:01:23.045123456Z\", \"1679283943823\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6303,7 +6307,7 @@ func (c *CustomersTelemetryEventsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. Read mask to specify which fields to return.",
+	//       "description": "Required. Read mask to specify which fields to return. Although currently required, this field will become optional, while the filter parameter with an event type will be come required.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

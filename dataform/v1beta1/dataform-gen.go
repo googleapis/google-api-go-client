@@ -1039,8 +1039,9 @@ type GitRemoteSettings struct {
 	// DefaultBranch: Required. The Git remote's default branch name.
 	DefaultBranch string `json:"defaultBranch,omitempty"`
 
-	// TokenStatus: Output only. Indicates the status of the Git access
-	// token.
+	// TokenStatus: Output only. Deprecated: The field does not contain any
+	// token status information. Instead use
+	// https://cloud.google.com/dataform/reference/rest/v1beta1/projects.locations.repositories/computeAccessTokenStatus
 	//
 	// Possible values:
 	//   "TOKEN_STATUS_UNSPECIFIED" - Default value. This value is unused.
@@ -2786,7 +2787,7 @@ func (s *WorkflowConfig) MarshalJSON() ([]byte, error) {
 // result.
 type WorkflowInvocation struct {
 	// CompilationResult: Immutable. The name of the compilation result to
-	// compile. Must be in the format
+	// use for this invocation. Must be in the format
 	// `projects/*/locations/*/repositories/*/compilationResults/*`.
 	CompilationResult string `json:"compilationResult,omitempty"`
 

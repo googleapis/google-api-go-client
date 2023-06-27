@@ -1290,6 +1290,10 @@ type Instance struct {
 	// Cloud Storage path (`gs://path-to-file/file-name`).
 	PostStartupScript string `json:"postStartupScript,omitempty"`
 
+	// PreMigrationCheck: Output only. Check how possible a migration from
+	// UmN to WbI is.
+	PreMigrationCheck *PreMigrationCheck `json:"preMigrationCheck,omitempty"`
+
 	// ProxyUri: Output only. The proxy endpoint that is used to access the
 	// Jupyter notebook.
 	ProxyUri string `json:"proxyUri,omitempty"`
@@ -2170,6 +2174,47 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PreMigrationCheck: PreMigrationCheck checks how feasible a migration
+// from UmN is.
+type PreMigrationCheck struct {
+	// Message: Message provides a summary or workaround.
+	Message string `json:"message,omitempty"`
+
+	// Result: Result returns the result of the check.
+	//
+	// Possible values:
+	//   "RESULT_UNSPECIFIED" - Default type.
+	//   "IDENTICAL" - UmN can be migrated to WbI as is minus non-relevant
+	// parts.
+	//   "PARTIAL" - Part of the UmN won't be ported. The migration might
+	// default some values.
+	//   "NOT_RECOMMENDED" - UmN has too many unsupported options for a
+	// migration to WbI.
+	Result string `json:"result,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PreMigrationCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod PreMigrationCheck
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -5923,6 +5923,7 @@ func (c *FoldersAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsR
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Filters an organization's assets and groups them by their specified properties.",
 	//   "flatPath": "v1/folders/{foldersId}/assets:group",
 	//   "httpMethod": "POST",
@@ -6220,6 +6221,7 @@ func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRes
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Lists an organization's assets.",
 	//   "flatPath": "v1/folders/{foldersId}/assets",
 	//   "httpMethod": "GET",
@@ -12349,6 +12351,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Filters an organization's assets and groups them by their specified properties.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets:group",
 	//   "httpMethod": "POST",
@@ -12646,6 +12649,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Lists an organization's assets.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets",
 	//   "httpMethod": "GET",
@@ -12849,6 +12853,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Runs asset discovery. The discovery is tracked with a long-running operation. This API can only be called with limited frequency for an organization. If it is called too frequently the caller will receive a TOO_MANY_REQUESTS error.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets:runDiscovery",
 	//   "httpMethod": "POST",
@@ -20287,6 +20292,7 @@ func (c *ProjectsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssets
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Filters an organization's assets and groups them by their specified properties.",
 	//   "flatPath": "v1/projects/{projectsId}/assets:group",
 	//   "httpMethod": "POST",
@@ -20584,6 +20590,7 @@ func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRe
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Lists an organization's assets.",
 	//   "flatPath": "v1/projects/{projectsId}/assets",
 	//   "httpMethod": "GET",

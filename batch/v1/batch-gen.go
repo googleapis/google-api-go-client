@@ -1422,7 +1422,7 @@ type JobStatus struct {
 	// State: Job state
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Job state unspecified.
 	//   "QUEUED" - Job is admitted (validated and persisted) and waiting
 	// for resources.
 	//   "SCHEDULED" - Job is scheduled to run as soon as resource
@@ -1826,7 +1826,7 @@ type Message struct {
 	// NewJobState: The new job state.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - Job state unspecified.
 	//   "QUEUED" - Job is admitted (validated and persisted) and waiting
 	// for resources.
 	//   "SCHEDULED" - Job is scheduled to run as soon as resource

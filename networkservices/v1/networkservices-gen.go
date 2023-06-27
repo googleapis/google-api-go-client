@@ -781,10 +781,11 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // have reference to to Gateways to dictate how requests should be
 // routed by this Gateway.
 type Gateway struct {
-	// Addresses: Optional. Zero or one IPv4-address on which the Gateway
-	// will receive the traffic. When no address is provided, an IP from the
-	// subnetwork is allocated This field only applies to gateways of type
-	// 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0.
+	// Addresses: Optional. Zero or one IPv4 or IPv6 address on which the
+	// Gateway will receive the traffic. When no address is provided, an IP
+	// from the subnetwork is allocated This field only applies to gateways
+	// of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on
+	// 0.0.0.0 for IPv4 and :: for IPv6.
 	Addresses []string `json:"addresses,omitempty"`
 
 	// CertificateUrls: Optional. A fully-qualified Certificates URL
@@ -825,7 +826,8 @@ type Gateway struct {
 	// Ports: Required. One or more port numbers (1-65535), on which the
 	// Gateway will receive traffic. The proxy binds to the specified ports.
 	// Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port. Gateways
-	// of type 'OPEN_MESH' listen on 0.0.0.0 and support multiple ports.
+	// of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6 and
+	// support multiple ports.
 	Ports []int64 `json:"ports,omitempty"`
 
 	// Scope: Optional. Scope determines how configuration across multiple
@@ -2960,6 +2962,13 @@ type ServiceBinding struct {
 	// Service: Required. The full Service Directory Service name of the
 	// format projects/*/locations/*/namespaces/*/services/*
 	Service string `json:"service,omitempty"`
+
+	// ServiceId: Output only. The unique identifier of the Service
+	// Directory Service against which the Service Binding resource is
+	// validated. This is populated when the Service Binding resource is
+	// used in another resource (like Backend Service). This is of the UUID4
+	// format.
+	ServiceId string `json:"serviceId,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`

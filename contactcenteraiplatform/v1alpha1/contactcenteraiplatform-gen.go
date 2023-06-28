@@ -284,7 +284,7 @@ func (s *BasicAuthConfig) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// ContactCenter: Message describing ContactCenter object Next ID: 14
+// ContactCenter: Message describing ContactCenter object Next ID: 15
 type ContactCenter struct {
 	// AdminUser: Optional. Info about the first admin user, such as given
 	// name and family name.
@@ -308,6 +308,10 @@ type ContactCenter struct {
 	// InstanceConfig: The configuration of this instance, it is currently
 	// immutable once created.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
+
+	// KmsKey: Immutable. The KMS key name to encrypt the user input
+	// (`ContactCenter`).
+	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`

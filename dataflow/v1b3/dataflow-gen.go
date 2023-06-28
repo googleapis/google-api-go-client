@@ -4348,6 +4348,10 @@ type ParameterMetadata struct {
 	// parameter.
 	CustomMetadata map[string]string `json:"customMetadata,omitempty"`
 
+	// EnumOptions: Optional. The options shown when ENUM ParameterType is
+	// specified.
+	EnumOptions []*ParameterMetadataEnumOption `json:"enumOptions,omitempty"`
+
 	// GroupName: Optional. Specifies a group name for this parameter to be
 	// rendered under. Group header text will be rendered exactly as
 	// specified in this field. Only considered when parent_name is NOT
@@ -4397,6 +4401,8 @@ type ParameterMetadata struct {
 	//   "KMS_KEY_NAME" - The parameter specifies a KMS Key name.
 	//   "WORKER_REGION" - The parameter specifies a Worker Region.
 	//   "WORKER_ZONE" - The parameter specifies a Worker Zone.
+	//   "BOOLEAN" - The parameter specifies a boolean input.
+	//   "ENUM" - The parameter specifies an enum input.
 	ParamType string `json:"paramType,omitempty"`
 
 	// ParentName: Optional. Specifies the name of the parent parameter.
@@ -4435,6 +4441,42 @@ type ParameterMetadata struct {
 
 func (s *ParameterMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ParameterMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ParameterMetadataEnumOption: ParameterMetadataEnumOption specifies
+// the option shown in the enum form.
+type ParameterMetadataEnumOption struct {
+	// Description: Optional. The description to display for the enum
+	// option.
+	Description string `json:"description,omitempty"`
+
+	// Label: Optional. The label to display for the enum option.
+	Label string `json:"label,omitempty"`
+
+	// Value: Required. The value of the enum option.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ParameterMetadataEnumOption) MarshalJSON() ([]byte, error) {
+	type NoMethod ParameterMetadataEnumOption
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10157,8 +10199,8 @@ func (c *ProjectsJobsUpdateCall) Location(location string) *ProjectsJobsUpdateCa
 // will be considered for update. If the FieldMask is not empty and
 // RequestedJobState is none/empty, The fields specified in the update
 // mask will be the only ones considered for update. If both
-// RequestedJobState and update_mask are specified, we will first handle
-// RequestedJobState and then the update_mask fields.
+// RequestedJobState and update_mask are specified, an error will be
+// returned as we cannot update both state and mask.
 func (c *ProjectsJobsUpdateCall) UpdateMask(updateMask string) *ProjectsJobsUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10283,7 +10325,7 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, we will first handle RequestedJobState and then the update_mask fields.",
+	//       "description": "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, an error will be returned as we cannot update both state and mask.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -12961,8 +13003,8 @@ func (r *ProjectsLocationsJobsService) Update(projectId string, location string,
 // will be considered for update. If the FieldMask is not empty and
 // RequestedJobState is none/empty, The fields specified in the update
 // mask will be the only ones considered for update. If both
-// RequestedJobState and update_mask are specified, we will first handle
-// RequestedJobState and then the update_mask fields.
+// RequestedJobState and update_mask are specified, an error will be
+// returned as we cannot update both state and mask.
 func (c *ProjectsLocationsJobsUpdateCall) UpdateMask(updateMask string) *ProjectsLocationsJobsUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -13090,7 +13132,7 @@ func (c *ProjectsLocationsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, we will first handle RequestedJobState and then the update_mask fields.",
+	//       "description": "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, an error will be returned as we cannot update both state and mask.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

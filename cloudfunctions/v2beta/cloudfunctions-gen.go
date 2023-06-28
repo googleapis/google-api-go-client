@@ -1874,10 +1874,6 @@ type RepoSource struct {
 	// execution. eg. helloworld (no leading slash allowed)
 	Dir string `json:"dir,omitempty"`
 
-	// InvertRegex: Only trigger a build if the revision regex does NOT
-	// match the revision regex.
-	InvertRegex bool `json:"invertRegex,omitempty"`
-
 	// ProjectId: ID of the project that owns the Cloud Source Repository.
 	// If omitted, the project ID requesting the build is assumed.
 	ProjectId string `json:"projectId,omitempty"`

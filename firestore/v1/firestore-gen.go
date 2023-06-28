@@ -2668,6 +2668,62 @@ func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the
+// long-running operation from the RestoreDatabase request.
+type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
+	// Backup: The name of the backup restoring from.
+	Backup string `json:"backup,omitempty"`
+
+	// Database: The name of the database being restored to.
+	Database string `json:"database,omitempty"`
+
+	// EndTime: The time the restore finished, unset for ongoing restores.
+	EndTime string `json:"endTime,omitempty"`
+
+	// OperationState: The operation state of the restore.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
+	//   "FINALIZING" - Request has been processed and is in its
+	// finalization stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an
+	// error.
+	//   "CANCELLED" - Request has finished being cancelled after user
+	// called google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+
+	// StartTime: The time the restore was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1RestoreDatabaseRequest: The request message for
 // FirestoreAdmin.RestoreDatabase.
 type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
@@ -3615,7 +3671,8 @@ func (s *ReadOnly) MarshalJSON() ([]byte, error) {
 }
 
 // ReadWrite: Options for a transaction that can be used to read and
-// write documents.
+// write documents. Firestore does not allow 3rd party auth requests to
+// create read-write. transactions.
 type ReadWrite struct {
 	// RetryTransaction: An optional transaction to retry.
 	RetryTransaction string `json:"retryTransaction,omitempty"`
@@ -6649,7 +6706,7 @@ type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 // Currently, FirestoreAdmin.ListFields only supports listing fields
 // that have been explicitly overridden. To issue this query, call
 // FirestoreAdmin.ListFields with the filter set to
-// `indexConfig.usesAncestorConfig:false` .
+// `indexConfig.usesAncestorConfig:false or `ttlConfig:*`.
 //
 //   - parent: A parent name of the form
 //     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
@@ -6786,7 +6843,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the field configuration and metadata for this database. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false` .",
+	//   "description": "Lists the field configuration and metadata for this database. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false or `ttlConfig:*`.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/fields",
 	//   "httpMethod": "GET",
 	//   "id": "firestore.projects.databases.collectionGroups.fields.list",

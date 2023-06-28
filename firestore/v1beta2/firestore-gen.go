@@ -216,6 +216,62 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the
+// long-running operation from the RestoreDatabase request.
+type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
+	// Backup: The name of the backup restoring from.
+	Backup string `json:"backup,omitempty"`
+
+	// Database: The name of the database being restored to.
+	Database string `json:"database,omitempty"`
+
+	// EndTime: The time the restore finished, unset for ongoing restores.
+	EndTime string `json:"endTime,omitempty"`
+
+	// OperationState: The operation state of the restore.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
+	//   "FINALIZING" - Request has been processed and is in its
+	// finalization stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an
+	// error.
+	//   "CANCELLED" - Request has finished being cancelled after user
+	// called google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+
+	// StartTime: The time the restore was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the
 // update database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {

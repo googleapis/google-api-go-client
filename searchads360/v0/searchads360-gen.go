@@ -1257,6 +1257,48 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+// GoogleAdsSearchads360V0Common__MobileAppAsset: An asset representing
+// a mobile app.
+type GoogleAdsSearchads360V0Common__MobileAppAsset struct {
+	// AppId: Required. A string that uniquely identifies a mobile
+	// application. It should just contain the platform native id, like
+	// "com.android.ebay" for Android or "12345689" for iOS.
+	AppId string `json:"appId,omitempty"`
+
+	// AppStore: Required. The application store that distributes this
+	// specific app.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "APPLE_APP_STORE" - Mobile app vendor for Apple app store.
+	//   "GOOGLE_APP_STORE" - Mobile app vendor for Google app store.
+	AppStore string `json:"appStore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__MobileAppAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__MobileAppAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Common__PercentCpc: A bidding strategy where
 // bids are a fraction of the advertised price for some good or service.
 type GoogleAdsSearchads360V0Common__PercentCpc struct {
@@ -1499,6 +1541,19 @@ func (s *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo) MarshalJSON() ([
 
 // GoogleAdsSearchads360V0Common__Segments: Segment only fields.
 type GoogleAdsSearchads360V0Common__Segments struct {
+	// AdNetworkType: Ad network type.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - The value is unknown in this version.
+	//   "SEARCH" - Google search.
+	//   "SEARCH_PARTNERS" - Search partners.
+	//   "CONTENT" - Display Network.
+	//   "YOUTUBE_SEARCH" - YouTube Search.
+	//   "YOUTUBE_WATCH" - YouTube Videos
+	//   "MIXED" - Cross-network.
+	AdNetworkType string `json:"adNetworkType,omitempty"`
+
 	// ConversionAction: Resource name of the conversion action.
 	ConversionAction string `json:"conversionAction,omitempty"`
 
@@ -1602,7 +1657,7 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	// Year: Year, formatted as yyyy.
 	Year int64 `json:"year,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConversionAction") to
+	// ForceSendFields is a list of field names (e.g. "AdNetworkType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1610,13 +1665,12 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConversionAction") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdNetworkType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2297,6 +2351,15 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	//   "METRIC_ACCESS_DENIED" - The developer does not have access to the
 	// metrics queried.
 	AuthorizationError string `json:"authorizationError,omitempty"`
+
+	// CustomColumnError: The reasons for the custom column error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CUSTOM_COLUMN_NOT_FOUND" - The custom column has not been found.
+	//   "CUSTOM_COLUMN_NOT_AVAILABLE" - The custom column is not available.
+	CustomColumnError string `json:"customColumnError,omitempty"`
 
 	// DateError: The reasons for the date error
 	//
@@ -4123,6 +4186,159 @@ func (s *GoogleAdsSearchads360V0Resources__AgeRangeView) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__Asset: Asset is a part of an ad
+// which can be shared across multiple ads. It can be an image
+// (ImageAsset), a video (YoutubeVideoAsset), etc. Assets are immutable
+// and cannot be removed. To stop an asset from serving, remove the
+// asset from the entity that is using it.
+type GoogleAdsSearchads360V0Resources__Asset struct {
+	// CreationTime: Output only. The timestamp when this asset was created.
+	// The timestamp is in the customer's time zone and in "yyyy-MM-dd
+	// HH:mm:ss" format.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// EngineStatus: Output only. The Engine Status for an asset.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "SERVING" - The asset is active.
+	//   "SERVING_LIMITED" - The asset is active limited.
+	//   "DISAPPROVED" - The asset is disapproved (not eligible).
+	//   "DISABLED" - The asset is inactive (pending).
+	//   "REMOVED" - The asset has been removed.
+	EngineStatus string `json:"engineStatus,omitempty"`
+
+	// FinalUrls: A list of possible final URLs after all cross domain
+	// redirects.
+	FinalUrls []string `json:"finalUrls,omitempty"`
+
+	// Id: Output only. The ID of the asset.
+	Id int64 `json:"id,omitempty,string"`
+
+	// LastModifiedTime: Output only. The datetime when this asset was last
+	// modified. The datetime is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss.ssssss" format.
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// MobileAppAsset: A mobile app asset.
+	MobileAppAsset *GoogleAdsSearchads360V0Common__MobileAppAsset `json:"mobileAppAsset,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the asset. Asset
+	// resource names have the form:
+	// `customers/{customer_id}/assets/{asset_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: Output only. The status of the asset.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - The status has not been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This
+	// is a response-only value.
+	//   "ENABLED" - The asset is enabled.
+	//   "REMOVED" - The asset is removed.
+	//   "ARCHIVED" - The asset is archived.
+	//   "PENDING_SYSTEM_GENERATED" - The asset is system generated pending
+	// user review.
+	Status string `json:"status,omitempty"`
+
+	// TrackingUrlTemplate: URL template for constructing a tracking URL.
+	TrackingUrlTemplate string `json:"trackingUrlTemplate,omitempty"`
+
+	// Type: Output only. Type of the asset.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "YOUTUBE_VIDEO" - YouTube video asset.
+	//   "MEDIA_BUNDLE" - Media bundle asset.
+	//   "IMAGE" - Image asset.
+	//   "TEXT" - Text asset.
+	//   "LEAD_FORM" - Lead form asset.
+	//   "BOOK_ON_GOOGLE" - Book on Google asset.
+	//   "PROMOTION" - Promotion asset.
+	//   "CALLOUT" - Callout asset.
+	//   "STRUCTURED_SNIPPET" - Structured Snippet asset.
+	//   "SITELINK" - Sitelink asset.
+	//   "PAGE_FEED" - Page Feed asset.
+	//   "DYNAMIC_EDUCATION" - Dynamic Education asset.
+	//   "MOBILE_APP" - Mobile app asset.
+	//   "HOTEL_CALLOUT" - Hotel callout asset.
+	//   "CALL" - Call asset.
+	//   "PRICE" - Price asset.
+	//   "CALL_TO_ACTION" - Call to action asset.
+	//   "DYNAMIC_REAL_ESTATE" - Dynamic real estate asset.
+	//   "DYNAMIC_CUSTOM" - Dynamic custom asset.
+	//   "DYNAMIC_HOTELS_AND_RENTALS" - Dynamic hotels and rentals asset.
+	//   "DYNAMIC_FLIGHTS" - Dynamic flights asset.
+	//   "DISCOVERY_CAROUSEL_CARD" - Discovery Carousel Card asset.
+	//   "DYNAMIC_TRAVEL" - Dynamic travel asset.
+	//   "DYNAMIC_LOCAL" - Dynamic local asset.
+	//   "DYNAMIC_JOBS" - Dynamic jobs asset.
+	//   "LOCATION" - Location asset.
+	//   "HOTEL_PROPERTY" - Hotel property asset.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__Asset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__Asset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AssetSet: An asset set representing
+// a collection of assets. Use AssetSetAsset to link an asset to the
+// asset set.
+type GoogleAdsSearchads360V0Resources__AssetSet struct {
+	// Id: Output only. The ID of the asset set.
+	Id int64 `json:"id,omitempty,string"`
+
+	// ResourceName: Immutable. The resource name of the asset set. Asset
+	// set resource names have the form:
+	// `customers/{customer_id}/assetSets/{asset_set_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AssetSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AssetSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__BiddingStrategy: A bidding
 // strategy.
 type GoogleAdsSearchads360V0Resources__BiddingStrategy struct {
@@ -5270,6 +5486,14 @@ type GoogleAdsSearchads360V0Resources__ConversionAction struct {
 	//   "WEBPAGE_CODELESS" - Conversions created from website events (such
 	// as form submissions or page loads), that don't use individually coded
 	// event snippets.
+	//   "UNIVERSAL_ANALYTICS_GOAL" - Conversions that come from linked
+	// Universal Analytics goals.
+	//   "UNIVERSAL_ANALYTICS_TRANSACTION" - Conversions that come from
+	// linked Universal Analytics transactions.
+	//   "GOOGLE_ANALYTICS_4_CUSTOM" - Conversions that come from linked
+	// Google Analytics 4 custom event conversions.
+	//   "GOOGLE_ANALYTICS_4_PURCHASE" - Conversions that come from linked
+	// Google Analytics 4 purchase conversions.
 	Type string `json:"type,omitempty"`
 
 	// ValueSettings: Settings related to the value for conversion events
@@ -6246,6 +6470,40 @@ func (s *GoogleAdsSearchads360V0Services__CustomColumnHeader) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse:
+// Response message for CustomerService.ListAccessibleCustomers.
+type GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse struct {
+	// ResourceNames: Resource name of customers directly accessible by the
+	// user authenticating the call.
+	ResourceNames []string `json:"resourceNames,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Services__ListCustomColumnsResponse: Response
 // message for fetching all custom columns associated with a customer.
 type GoogleAdsSearchads360V0Services__ListCustomColumnsResponse struct {
@@ -6310,6 +6568,12 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 
 	// AgeRangeView: The age range view referenced in the query.
 	AgeRangeView *GoogleAdsSearchads360V0Resources__AgeRangeView `json:"ageRangeView,omitempty"`
+
+	// Asset: The asset referenced in the query.
+	Asset *GoogleAdsSearchads360V0Resources__Asset `json:"asset,omitempty"`
+
+	// AssetSet: The asset set referenced in the query.
+	AssetSet *GoogleAdsSearchads360V0Resources__AssetSet `json:"assetSet,omitempty"`
 
 	// BiddingStrategy: The bidding strategy referenced in the query.
 	BiddingStrategy *GoogleAdsSearchads360V0Resources__BiddingStrategy `json:"biddingStrategy,omitempty"`
@@ -6602,6 +6866,141 @@ func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360Response) MarshalJSO
 	type NoMethod GoogleAdsSearchads360V0Services__SearchSearchAds360Response
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "searchads360.customers.listAccessibleCustomers":
+
+type CustomersListAccessibleCustomersCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListAccessibleCustomers: Returns resource names of customers directly
+// accessible by the user authenticating the call. List of thrown
+// errors: AuthenticationError () [AuthorizationError]() HeaderError ()
+// [InternalError]() QuotaError () [RequestError]()
+func (r *CustomersService) ListAccessibleCustomers() *CustomersListAccessibleCustomersCall {
+	c := &CustomersListAccessibleCustomersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersListAccessibleCustomersCall) Fields(s ...googleapi.Field) *CustomersListAccessibleCustomersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersListAccessibleCustomersCall) IfNoneMatch(entityTag string) *CustomersListAccessibleCustomersCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersListAccessibleCustomersCall) Context(ctx context.Context) *CustomersListAccessibleCustomersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersListAccessibleCustomersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersListAccessibleCustomersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v0/customers:listAccessibleCustomers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "searchads360.customers.listAccessibleCustomers" call.
+// Exactly one of
+// *GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersListAccessibleCustomersCall) Do(opts ...googleapi.CallOption) (*GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns resource names of customers directly accessible by the user authenticating the call. List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QuotaError]() [RequestError]()",
+	//   "flatPath": "v0/customers:listAccessibleCustomers",
+	//   "httpMethod": "GET",
+	//   "id": "searchads360.customers.listAccessibleCustomers",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v0/customers:listAccessibleCustomers",
+	//   "response": {
+	//     "$ref": "GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
+	// }
+
 }
 
 // method id "searchads360.customers.customColumns.get":

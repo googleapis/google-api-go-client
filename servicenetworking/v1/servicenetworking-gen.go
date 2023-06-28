@@ -4215,7 +4215,10 @@ type PolicyBinding struct {
 	// the specified granularity. The role must be one of the following: -
 	// 'roles/container.hostServiceAgentUser' applied on the shared VPC host
 	// project - 'roles/compute.securityAdmin' applied on the shared VPC
-	// host project
+	// host project - 'roles/compute.networkAdmin' applied on the shared VPC
+	// host project - 'roles/compute.xpnAdmin' applied on the shared VPC
+	// host project - 'roles/dns.admin' applied on the shared VPC host
+	// project
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Member") to

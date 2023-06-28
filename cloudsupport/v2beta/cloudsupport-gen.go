@@ -2615,6 +2615,13 @@ func (c *CasesSearchCall) PageToken(pageToken string) *CasesSearchCall {
 	return c
 }
 
+// Parent sets the optional parameter "parent": The fully qualified name
+// of parent resource to search cases under.
+func (c *CasesSearchCall) Parent(parent string) *CasesSearchCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
 // Query sets the optional parameter "query": An expression written in
 // filter language. A query uses the following fields with the operators
 // equals (`=`) and `AND`: - `organization`: An organization name in the
@@ -2754,6 +2761,11 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The fully qualified name of parent resource to search cases under.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

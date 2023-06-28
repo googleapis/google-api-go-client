@@ -1531,6 +1531,42 @@ func (s *ClusterAutoscaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ClusterNetworkPerformanceConfig: Configuration of network bandwidth
+// tiers
+type ClusterNetworkPerformanceConfig struct {
+	// TotalEgressBandwidthTier: Specifies the total network bandwidth tier
+	// for NodePools in the cluster.
+	//
+	// Possible values:
+	//   "TIER_UNSPECIFIED" - Default value
+	//   "TIER_1" - Higher bandwidth, actual values based on VM size.
+	TotalEgressBandwidthTier string `json:"totalEgressBandwidthTier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TotalEgressBandwidthTier") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TotalEgressBandwidthTier")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterNetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterNetworkPerformanceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClusterUpdate: ClusterUpdate describes an update to the cluster.
 // Exactly one update can be applied to a cluster with each request, so
 // at most one field can be provided.
@@ -1676,6 +1712,10 @@ type ClusterUpdate struct {
 	// be used for GKE 1.14+ or `monitoring.googleapis.com` for earlier
 	// versions.
 	DesiredMonitoringService string `json:"desiredMonitoringService,omitempty"`
+
+	// DesiredNetworkPerformanceConfig: The desired network performance
+	// config.
+	DesiredNetworkPerformanceConfig *ClusterNetworkPerformanceConfig `json:"desiredNetworkPerformanceConfig,omitempty"`
 
 	// DesiredNodePoolAutoConfigNetworkTags: The desired network tags that
 	// apply to all auto-provisioned node pools in autopilot clusters and
@@ -2083,6 +2123,7 @@ type DNSConfig struct {
 	//   "PLATFORM_DEFAULT" - Use GKE default DNS provider(kube-dns) for DNS
 	// resolution.
 	//   "CLOUD_DNS" - Use CloudDNS for DNS resolution.
+	//   "KUBE_DNS" - Use KubeDNS for DNS resolution
 	ClusterDns string `json:"clusterDns,omitempty"`
 
 	// ClusterDnsDomain: cluster_dns_domain is the suffix used for all
@@ -4058,6 +4099,9 @@ type NetworkConfig struct {
 	// etworks) to which the cluster is connected. Example:
 	// projects/my-project/global/networks/my-network
 	Network string `json:"network,omitempty"`
+
+	// NetworkPerformanceConfig: Network bandwidth tier configuration.
+	NetworkPerformanceConfig *ClusterNetworkPerformanceConfig `json:"networkPerformanceConfig,omitempty"`
 
 	// PrivateIpv6GoogleAccess: The desired state of IPv6 connectivity to
 	// Google Services. By default, no private IPv6 access to or from Google

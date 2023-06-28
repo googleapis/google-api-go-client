@@ -2765,6 +2765,17 @@ type GoogleCloudContactcenterinsightsV1IssueModel struct {
 	// IssueCount: Output only. Number of issues in this issue model.
 	IssueCount int64 `json:"issueCount,omitempty,string"`
 
+	// LanguageCode: Language of the model.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ModelType: Type of the model.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - Unspecified model type.
+	//   "TYPE_V1" - Type V1.
+	//   "TYPE_V2" - Type V2.
+	ModelType string `json:"modelType,omitempty"`
+
 	// Name: Immutable. The resource name of the issue model. Format:
 	// projects/{project}/locations/{location}/issueModels/{issue_model}
 	Name string `json:"name,omitempty"`
@@ -6282,6 +6293,17 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModel struct {
 
 	// IssueCount: Output only. Number of issues in this issue model.
 	IssueCount int64 `json:"issueCount,omitempty,string"`
+
+	// LanguageCode: Language of the model.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ModelType: Type of the model.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - Unspecified model type.
+	//   "TYPE_V1" - Type V1.
+	//   "TYPE_V2" - Type V2.
+	ModelType string `json:"modelType,omitempty"`
 
 	// Name: Immutable. The resource name of the issue model. Format:
 	// projects/{project}/locations/{location}/issueModels/{issue_model}

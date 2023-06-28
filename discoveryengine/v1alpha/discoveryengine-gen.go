@@ -770,8 +770,8 @@ func (s *GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudDiscoveryengineV1ImportDocumentsMetadata: Metadata related
-// to the progress of the ImportDocuments operation. This will be
-// returned by the google.longrunning.Operation.metadata field.
+// to the progress of the ImportDocuments operation. This is returned by
+// the google.longrunning.Operation.metadata field.
 type GoogleCloudDiscoveryengineV1ImportDocumentsMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -851,9 +851,9 @@ func (s *GoogleCloudDiscoveryengineV1ImportDocumentsResponse) MarshalJSON() ([]b
 // destination for Import related errors.
 type GoogleCloudDiscoveryengineV1ImportErrorConfig struct {
 	// GcsPrefix: Cloud Storage prefix for import errors. This must be an
-	// empty, existing Cloud Storage directory. Import errors will be
-	// written to sharded files in this directory, one per line, as a
-	// JSON-encoded `google.rpc.Status` message.
+	// empty, existing Cloud Storage directory. Import errors are written to
+	// sharded files in this directory, one per line, as a JSON-encoded
+	// `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
@@ -880,8 +880,8 @@ func (s *GoogleCloudDiscoveryengineV1ImportErrorConfig) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDiscoveryengineV1ImportUserEventsMetadata: Metadata
-// related to the progress of the Import operation. This will be
-// returned by the google.longrunning.Operation.metadata field.
+// related to the progress of the Import operation. This is returned by
+// the google.longrunning.Operation.metadata field.
 type GoogleCloudDiscoveryengineV1ImportUserEventsMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1121,8 +1121,8 @@ type GoogleCloudDiscoveryengineV1alphaBigQuerySource struct {
 	// `document` (default): One Document format per row. Each document must
 	// have a valid Document.id and one of Document.json_data or
 	// Document.struct_data. * `custom`: One custom data per row in
-	// arbitrary format that conforms the defined Schema of the data store.
-	// This can only be used by the GENERIC Data Store vertical.
+	// arbitrary format that conforms to the defined Schema of the data
+	// store. This can only be used by the GENERIC Data Store vertical.
 	DataSchema string `json:"dataSchema,omitempty"`
 
 	// DatasetId: Required. The BigQuery data set to copy the data from with
@@ -1176,12 +1176,12 @@ func (s *GoogleCloudDiscoveryengineV1alphaBigQuerySource) MarshalJSON() ([]byte,
 // completion info.
 type GoogleCloudDiscoveryengineV1alphaCompletionInfo struct {
 	// SelectedPosition: End user selected
-	// CompleteQueryResponse.CompletionResult.suggestion position, starting
+	// CompleteQueryResponse.QuerySuggestion.suggestion position, starting
 	// from 0.
 	SelectedPosition int64 `json:"selectedPosition,omitempty"`
 
 	// SelectedSuggestion: End user selected
-	// CompleteQueryResponse.CompletionResult.suggestion.
+	// CompleteQueryResponse.QuerySuggestion.suggestion.
 	SelectedSuggestion string `json:"selectedSuggestion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SelectedPosition") to
@@ -1273,8 +1273,8 @@ type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	Id string `json:"id,omitempty"`
 
 	// JsonData: The JSON string representation of the document. It should
-	// conform to the registered Schema.schema or an `INVALID_ARGUMENT`
-	// error is thrown.
+	// conform to the registered Schema or an `INVALID_ARGUMENT` error is
+	// thrown.
 	JsonData string `json:"jsonData,omitempty"`
 
 	// Name: Immutable. The full resource name of the document. Format:
@@ -1295,8 +1295,8 @@ type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	SchemaId string `json:"schemaId,omitempty"`
 
 	// StructData: The structured JSON data for the document. It should
-	// conform to the registered Schema.schema or an `INVALID_ARGUMENT`
-	// error is thrown.
+	// conform to the registered Schema or an `INVALID_ARGUMENT` error is
+	// thrown.
 	StructData googleapi.RawMessage `json:"structData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1348,8 +1348,7 @@ type GoogleCloudDiscoveryengineV1alphaDocumentInfo struct {
 	// events of the following event types: * `add-to-cart` * `purchase`
 	Quantity int64 `json:"quantity,omitempty"`
 
-	// Uri: The Document url - only allowed for DataStores with
-	// content_config PUBLIC_WEBSITE.
+	// Uri: The Document URI - only allowed for website data stores.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -1382,15 +1381,14 @@ type GoogleCloudDiscoveryengineV1alphaGcsSource struct {
 	// Supported values for document imports: * `document` (default): One
 	// JSON Document per line. Each document must have a valid Document.id.
 	// * `content`: Unstructured data (e.g. PDF, HTML). Each file matched by
-	// `input_uris` will become a document, with the ID set to the first 128
+	// `input_uris` becomes a document, with the ID set to the first 128
 	// bits of SHA256(URI) encoded as a hex string. * `custom`: One custom
-	// data JSON per row in arbitrary format that conforms the defined
-	// Schema of the data store. This can only be used by the GENERIC Data
-	// Store vertical. * `csv`: A CSV file with header conforming the
-	// defined Schema of the data store. Each entry after the header will be
-	// imported as a Document. This can only be used by the GENERIC Data
-	// Store vertical. Supported values for user even imports: *
-	// `user_event` (default): One JSON UserEvent per line.
+	// data JSON per row in arbitrary format that conforms to the defined
+	// Schema of the data store. This can only be used by Gen App Builder. *
+	// `csv`: A CSV file with header conforming to the defined Schema of the
+	// data store. Each entry after the header is imported as a Document.
+	// This can only be used by Gen App Builder. Supported values for user
+	// even imports: * `user_event` (default): One JSON UserEvent per line.
 	DataSchema string `json:"dataSchema,omitempty"`
 
 	// InputUris: Required. Cloud Storage URIs to input files. URI can be up
@@ -1426,8 +1424,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaGcsSource) MarshalJSON() ([]byte, erro
 }
 
 // GoogleCloudDiscoveryengineV1alphaImportDocumentsMetadata: Metadata
-// related to the progress of the ImportDocuments operation. This will
-// be returned by the google.longrunning.Operation.metadata field.
+// related to the progress of the ImportDocuments operation. This is
+// returned by the google.longrunning.Operation.metadata field.
 type GoogleCloudDiscoveryengineV1alphaImportDocumentsMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1475,11 +1473,10 @@ type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
 	// consistent during multiple imports. In which case
 	// ReconciliationMode.FULL is highly recommended to avoid duplicate
 	// contents. If unset or set to `false`, Document.ids have to be
-	// specified using id_field, otherwises, documents without IDs will fail
-	// to be imported. Only set this field when using GcsSource or
-	// BigQuerySource, and when GcsSource.data_schema or
-	// BigQuerySource.data_schema is `custom` or `csv`. Otherwise, an
-	// INVALID_ARGUMENT error is thrown.
+	// specified using id_field, otherwise, documents without IDs fail to be
+	// imported. Only set this field when using GcsSource or BigQuerySource,
+	// and when GcsSource.data_schema or BigQuerySource.data_schema is
+	// `custom` or `csv`. Otherwise, an INVALID_ARGUMENT error is thrown.
 	AutoGenerateIds bool `json:"autoGenerateIds,omitempty"`
 
 	// BigquerySource: BigQuery input source.
@@ -1497,12 +1494,12 @@ type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
 	// key of the JSON field. For instance, `my_id` for JSON `{"my_id":
 	// "some_uuid"}`. For BigQuerySource it is the column name of the
 	// BigQuery table where the unique ids are stored. The values of the
-	// JSON field or the BigQuery column will be used as the Document.ids.
-	// The JSON field or the BigQuery column must be of string type, and the
+	// JSON field or the BigQuery column are used as the Document.ids. The
+	// JSON field or the BigQuery column must be of string type, and the
 	// values must be set as valid strings conform to RFC-1034
 	// (https://tools.ietf.org/html/rfc1034) with 1-63 characters.
-	// Otherwise, documents without valid IDs will fail to be imported. Only
-	// set this field when using GcsSource or BigQuerySource, and when
+	// Otherwise, documents without valid IDs fail to be imported. Only set
+	// this field when using GcsSource or BigQuerySource, and when
 	// GcsSource.data_schema or BigQuerySource.data_schema is `custom`. And
 	// only set this field when auto_generate_ids is unset or set as
 	// `false`. Otherwise, an INVALID_ARGUMENT error is thrown. If it is
@@ -1621,9 +1618,9 @@ func (s *GoogleCloudDiscoveryengineV1alphaImportDocumentsResponse) MarshalJSON()
 // destination for Import related errors.
 type GoogleCloudDiscoveryengineV1alphaImportErrorConfig struct {
 	// GcsPrefix: Cloud Storage prefix for import errors. This must be an
-	// empty, existing Cloud Storage directory. Import errors will be
-	// written to sharded files in this directory, one per line, as a
-	// JSON-encoded `google.rpc.Status` message.
+	// empty, existing Cloud Storage directory. Import errors are written to
+	// sharded files in this directory, one per line, as a JSON-encoded
+	// `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
@@ -1650,8 +1647,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaImportErrorConfig) MarshalJSON() ([]by
 }
 
 // GoogleCloudDiscoveryengineV1alphaImportUserEventsMetadata: Metadata
-// related to the progress of the Import operation. This will be
-// returned by the google.longrunning.Operation.metadata field.
+// related to the progress of the Import operation. This is returned by
+// the google.longrunning.Operation.metadata field.
 type GoogleCloudDiscoveryengineV1alphaImportUserEventsMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1905,16 +1902,16 @@ type GoogleCloudDiscoveryengineV1alphaPageInfo struct {
 	// different hierarchies. If '>' is part of the category name, please
 	// replace it with other character(s). Category pages include special
 	// pages such as sales or promotions. For instance, a special sale page
-	// may have the category hierarchy: "pageCategory" : "Sales > 2017 Black
-	// Friday Deals". Required for `view-category-page` events. Other event
-	// types should not set this field. Otherwise, an INVALID_ARGUMENT error
-	// is returned.
+	// may have the category hierarchy: "pageCategory" : "Sales > 2017
+	// Black Friday Deals". Required for `view-category-page` events. Other
+	// event types should not set this field. Otherwise, an
+	// `INVALID_ARGUMENT` error is returned.
 	PageCategory string `json:"pageCategory,omitempty"`
 
 	// PageviewId: A unique ID of a web page view. This should be kept the
 	// same for all user events triggered from the same pageview. For
 	// example, an item detail page view could trigger multiple events as
-	// the user is browsing the page. The `pageViewId` property should be
+	// the user is browsing the page. The `pageview_id` property should be
 	// kept the same for all these events so that they can be grouped
 	// together properly. When using the client side event reporting with
 	// JavaScript pixel and Google Tag Manager, this value is filled in
@@ -2457,25 +2454,25 @@ type GoogleCloudDiscoveryengineV1alphaSearchInfo struct {
 	// Offset: An integer that specifies the current offset for pagination
 	// (the 0-indexed starting location, amongst the products deemed by the
 	// API as relevant). See SearchRequest.offset for definition. If this
-	// field is negative, an INVALID_ARGUMENT is returned. This can only be
-	// set for `search` events. Other event types should not set this field.
-	// Otherwise, an INVALID_ARGUMENT error is returned.
+	// field is negative, an `INVALID_ARGUMENT` is returned. This can only
+	// be set for `search` events. Other event types should not set this
+	// field. Otherwise, an `INVALID_ARGUMENT` error is returned.
 	Offset int64 `json:"offset,omitempty"`
 
 	// OrderBy: The order in which products are returned, if applicable. See
 	// SearchRequest.order_by for definition and syntax. The value must be a
 	// UTF-8 encoded string with a length limit of 1,000 characters.
-	// Otherwise, an INVALID_ARGUMENT error is returned. This can only be
+	// Otherwise, an `INVALID_ARGUMENT` error is returned. This can only be
 	// set for `search` events. Other event types should not set this field.
-	// Otherwise, an INVALID_ARGUMENT error is returned.
+	// Otherwise, an `INVALID_ARGUMENT` error is returned.
 	OrderBy string `json:"orderBy,omitempty"`
 
 	// SearchQuery: The user's search query. See SearchRequest.query for
 	// definition. The value must be a UTF-8 encoded string with a length
-	// limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is
+	// limit of 5,000 characters. Otherwise, an `INVALID_ARGUMENT` error is
 	// returned. At least one of search_query or PageInfo.page_category is
 	// required for `search` events. Other event types should not set this
-	// field. Otherwise, an INVALID_ARGUMENT error is returned.
+	// field. Otherwise, an `INVALID_ARGUMENT` error is returned.
 	SearchQuery string `json:"searchQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Offset") to
@@ -2504,13 +2501,13 @@ func (s *GoogleCloudDiscoveryengineV1alphaSearchInfo) MarshalJSON() ([]byte, err
 // GoogleCloudDiscoveryengineV1alphaTargetSite: A target site for the
 // SiteSearchEngine.
 type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
-	// ExactMatch: Input only. If set to false, an uri_pattern will be
-	// generated to include all pages whose address contains the
-	// provided_uri_pattern. If set to true, an uri_pattern will be
-	// generated to try to be an exact match of the provided_uri_pattern or
-	// just the specific page if the provided_uri_pattern is a specific one.
-	// provided_uri_pattern will always be normalized to generate the uri
-	// pattern to be used by the search engine.
+	// ExactMatch: Input only. If set to false, a uri_pattern is generated
+	// to include all pages whose address contains the provided_uri_pattern.
+	// If set to true, an uri_pattern is generated to try to be an exact
+	// match of the provided_uri_pattern or just the specific page if the
+	// provided_uri_pattern is a specific one. provided_uri_pattern is
+	// always normalized to generate the URI pattern to be used by the
+	// search engine.
 	ExactMatch bool `json:"exactMatch,omitempty"`
 
 	// GeneratedUriPattern: Output only. This is system-generated based on
@@ -2524,7 +2521,7 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 	// `target_site_id` is system-generated.
 	Name string `json:"name,omitempty"`
 
-	// ProvidedUriPattern: Required. Input only. The user provided uri
+	// ProvidedUriPattern: Required. Input only. The user provided URI
 	// pattern from which the `generated_uri_pattern` is generated.
 	ProvidedUriPattern string `json:"providedUriPattern,omitempty"`
 
@@ -2661,7 +2658,7 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// allowed. Each value must be a UTF-8 encoded string with a length
 	// limit of 256 characters. * For number attributes, at most 400 values
 	// are allowed. For product recommendations, an example of extra user
-	// information is ` traffic_channel`, which is how a user arrives at the
+	// information is `traffic_channel`, which is how a user arrives at the
 	// site. Users can arrive at the site by coming to the site directly,
 	// coming through Google search, or in other ways.
 	Attributes map[string]GoogleCloudDiscoveryengineV1alphaCustomAttribute `json:"attributes,omitempty"`
@@ -2670,23 +2667,22 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// action(s) to trigger the event. Highly recommended for user events
 	// that are the result of RecommendationService.Recommend. This field
 	// enables accurate attribution of recommendation model performance. The
-	// value must be one of: * PredictResponse.attribution_token for events
-	// that are the result of RecommendationService.Recommend. *
+	// value must be one of: * RecommendResponse.attribution_token for
+	// events that are the result of RecommendationService.Recommend. *
 	// SearchResponse.attribution_token for events that are the result of
-	// SearchService.Search. * CompleteQueryResponse.attribution_token for
-	// events that are the result of CompletionService.CompleteQuery. This
-	// token enables us to accurately attribute page view or conversion
-	// completion back to the event and the particular predict response
-	// containing this clicked/purchased product. If user clicks on product
-	// K in the recommendation results, pass
-	// PredictResponse.attribution_token as a URL parameter to product K's
-	// page. When recording events on product K's page, log the
-	// PredictResponse.attribution_token to this field.
+	// SearchService.Search. This token enables us to accurately attribute
+	// page view or conversion completion back to the event and the
+	// particular predict response containing this clicked/purchased
+	// product. If user clicks on product K in the recommendation results,
+	// pass RecommendResponse.attribution_token as a URL parameter to
+	// product K's page. When recording events on product K's page, log the
+	// RecommendResponse.attribution_token to this field.
 	AttributionToken string `json:"attributionToken,omitempty"`
 
-	// CompletionInfo: CompleteQuery API details related to the event. This
-	// field should be set for `search` event when autocomplete function is
-	// enabled and the user clicks a suggestion for search.
+	// CompletionInfo: CompletionService.CompleteQuery details related to
+	// the event. This field should be set for `search` event when
+	// autocomplete function is enabled and the user clicks a suggestion for
+	// search.
 	CompletionInfo *GoogleCloudDiscoveryengineV1alphaCompletionInfo `json:"completionInfo,omitempty"`
 
 	// DirectUserRequest: Should set to true if the request is made directly
@@ -2734,7 +2730,7 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// directly from RecommendationService.RecommendRequest.filter
 	// conforming to https://google.aip.dev/160#filtering. The value must be
 	// a UTF-8 encoded string with a length limit of 1,000 characters.
-	// Otherwise, an INVALID_ARGUMENT error is returned.
+	// Otherwise, an `INVALID_ARGUMENT` error is returned.
 	Filter string `json:"filter,omitempty"`
 
 	// MediaInfo: Media-specific info.
@@ -2751,8 +2747,8 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// promotions. Currently, this field is restricted to at most one ID.
 	PromotionIds []string `json:"promotionIds,omitempty"`
 
-	// SearchInfo: Search API details related to the event. This field
-	// should be set for `search` event.
+	// SearchInfo: SearchService.Search details related to the event. This
+	// field should be set for `search` event.
 	SearchInfo *GoogleCloudDiscoveryengineV1alphaSearchInfo `json:"searchInfo,omitempty"`
 
 	// SessionId: A unique identifier for tracking a visitor session with a
@@ -2784,8 +2780,8 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// users. This mixes the event history of those users together, which
 	// results in degraded model quality. The field must be a UTF-8 encoded
 	// string with a length limit of 128 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned. The field should not contain PII
-	// or user-data. We recommend to use Google Analytics Client ID
+	// `INVALID_ARGUMENT` error is returned. The field should not contain
+	// PII or user-data. We recommend to use Google Analytics Client ID
 	// (https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#clientId)
 	// for this field.
 	UserPseudoId string `json:"userPseudoId,omitempty"`
@@ -2820,13 +2816,12 @@ func (s *GoogleCloudDiscoveryengineV1alphaUserEvent) MarshalJSON() ([]byte, erro
 // GoogleCloudDiscoveryengineV1alphaUserInfo: Information of an end
 // user.
 type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
-	// UserAgent: User agent as included in the HTTP header. Required for
-	// getting SearchResponse.sponsored_results. The field must be a UTF-8
-	// encoded string with a length limit of 1,000 characters. Otherwise, an
-	// `INVALID_ARGUMENT` error is returned. This should not be set when
-	// using the client side event reporting with GTM or JavaScript tag in
-	// UserEventService.CollectUserEvent or if UserEvent.direct_user_request
-	// is set.
+	// UserAgent: User agent as included in the HTTP header. The field must
+	// be a UTF-8 encoded string with a length limit of 1,000 characters.
+	// Otherwise, an `INVALID_ARGUMENT` error is returned. This should not
+	// be set when using the client side event reporting with GTM or
+	// JavaScript tag in UserEventService.CollectUserEvent or if
+	// UserEvent.direct_user_request is set.
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// UserId: Highly recommended for logged-in users. Unique identifier for
@@ -2862,8 +2857,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaUserInfo) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudDiscoveryengineV1betaImportDocumentsMetadata: Metadata
-// related to the progress of the ImportDocuments operation. This will
-// be returned by the google.longrunning.Operation.metadata field.
+// related to the progress of the ImportDocuments operation. This is
+// returned by the google.longrunning.Operation.metadata field.
 type GoogleCloudDiscoveryengineV1betaImportDocumentsMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2943,9 +2938,9 @@ func (s *GoogleCloudDiscoveryengineV1betaImportDocumentsResponse) MarshalJSON() 
 // destination for Import related errors.
 type GoogleCloudDiscoveryengineV1betaImportErrorConfig struct {
 	// GcsPrefix: Cloud Storage prefix for import errors. This must be an
-	// empty, existing Cloud Storage directory. Import errors will be
-	// written to sharded files in this directory, one per line, as a
-	// JSON-encoded `google.rpc.Status` message.
+	// empty, existing Cloud Storage directory. Import errors are written to
+	// sharded files in this directory, one per line, as a JSON-encoded
+	// `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
@@ -2972,8 +2967,8 @@ func (s *GoogleCloudDiscoveryengineV1betaImportErrorConfig) MarshalJSON() ([]byt
 }
 
 // GoogleCloudDiscoveryengineV1betaImportUserEventsMetadata: Metadata
-// related to the progress of the Import operation. This will be
-// returned by the google.longrunning.Operation.metadata field.
+// related to the progress of the Import operation. This is returned by
+// the google.longrunning.Operation.metadata field.
 type GoogleCloudDiscoveryengineV1betaImportUserEventsMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3997,7 +3992,7 @@ type ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall struct {
 //     `projects/{project}/locations/{location}/collections/{collection}/da
 //     taStores/{data_store}/branches/{branch}`. Use `default_branch` as
 //     the branch ID, to list documents under the default branch. If the
-//     caller does not have permission to list Documentss under this
+//     caller does not have permission to list Documents under this
 //     branch, regardless of whether or not this branch exists, a
 //     `PERMISSION_DENIED` error is returned.
 func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) List(parent string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
@@ -4148,7 +4143,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) Do(opt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a `PERMISSION_DENIED` error is returned.",
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documents under this branch, regardless of whether or not this branch exists, a `PERMISSION_DENIED` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+$",
 	//       "required": true,
@@ -6077,7 +6072,7 @@ type ProjectsLocationsCollectionsDataStoresUserEventsCollectCall struct {
 }
 
 // Collect: Writes a single user event from the browser. This uses a GET
-// request to due to browser restriction of POST-ing to a 3rd party
+// request to due to browser restriction of POST-ing to a third-party
 // domain. This method is used only by the Discovery Engine API
 // JavaScript pixel and Google Tag Manager. Users should not call this
 // method directly.
@@ -6102,7 +6097,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Ets(ets in
 // Uri sets the optional parameter "uri": The URL including
 // cgi-parameters but excluding the hash fragment with a length limit of
 // 5,000 characters. This is often more useful than the referer URL,
-// because many browsers only send the domain for 3rd party requests.
+// because many browsers only send the domain for third-party requests.
 func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Uri(uri string) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
 	c.urlParams_.Set("uri", uri)
 	return c
@@ -6214,7 +6209,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a 3rd party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.",
+	//   "description": "Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/userEvents:collect",
 	//   "httpMethod": "GET",
 	//   "id": "discoveryengine.projects.locations.collections.dataStores.userEvents.collect",
@@ -6236,7 +6231,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "uri": {
-	//       "description": "The URL including cgi-parameters but excluding the hash fragment with a length limit of 5,000 characters. This is often more useful than the referer URL, because many browsers only send the domain for 3rd party requests.",
+	//       "description": "The URL including cgi-parameters but excluding the hash fragment with a length limit of 5,000 characters. This is often more useful than the referer URL, because many browsers only send the domain for third-party requests.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8032,7 +8027,7 @@ type ProjectsLocationsDataStoresBranchesDocumentsListCall struct {
 //     `projects/{project}/locations/{location}/collections/{collection}/da
 //     taStores/{data_store}/branches/{branch}`. Use `default_branch` as
 //     the branch ID, to list documents under the default branch. If the
-//     caller does not have permission to list Documentss under this
+//     caller does not have permission to list Documents under this
 //     branch, regardless of whether or not this branch exists, a
 //     `PERMISSION_DENIED` error is returned.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) List(parent string) *ProjectsLocationsDataStoresBranchesDocumentsListCall {
@@ -8183,7 +8178,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a `PERMISSION_DENIED` error is returned.",
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documents under this branch, regardless of whether or not this branch exists, a `PERMISSION_DENIED` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+$",
 	//       "required": true,
@@ -9757,7 +9752,7 @@ type ProjectsLocationsDataStoresUserEventsCollectCall struct {
 }
 
 // Collect: Writes a single user event from the browser. This uses a GET
-// request to due to browser restriction of POST-ing to a 3rd party
+// request to due to browser restriction of POST-ing to a third-party
 // domain. This method is used only by the Discovery Engine API
 // JavaScript pixel and Google Tag Manager. Users should not call this
 // method directly.
@@ -9782,7 +9777,7 @@ func (c *ProjectsLocationsDataStoresUserEventsCollectCall) Ets(ets int64) *Proje
 // Uri sets the optional parameter "uri": The URL including
 // cgi-parameters but excluding the hash fragment with a length limit of
 // 5,000 characters. This is often more useful than the referer URL,
-// because many browsers only send the domain for 3rd party requests.
+// because many browsers only send the domain for third-party requests.
 func (c *ProjectsLocationsDataStoresUserEventsCollectCall) Uri(uri string) *ProjectsLocationsDataStoresUserEventsCollectCall {
 	c.urlParams_.Set("uri", uri)
 	return c
@@ -9894,7 +9889,7 @@ func (c *ProjectsLocationsDataStoresUserEventsCollectCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a 3rd party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.",
+	//   "description": "Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a third-party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/userEvents:collect",
 	//   "httpMethod": "GET",
 	//   "id": "discoveryengine.projects.locations.dataStores.userEvents.collect",
@@ -9916,7 +9911,7 @@ func (c *ProjectsLocationsDataStoresUserEventsCollectCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "uri": {
-	//       "description": "The URL including cgi-parameters but excluding the hash fragment with a length limit of 5,000 characters. This is often more useful than the referer URL, because many browsers only send the domain for 3rd party requests.",
+	//       "description": "The URL including cgi-parameters but excluding the hash fragment with a length limit of 5,000 characters. This is often more useful than the referer URL, because many browsers only send the domain for third-party requests.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

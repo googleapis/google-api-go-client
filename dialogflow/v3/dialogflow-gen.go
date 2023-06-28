@@ -35815,7 +35815,8 @@ type ProjectsLocationsAgentsTestCasesResultsListCall struct {
 	header_      http.Header
 }
 
-// List: Fetches a list of results for a given test case.
+// List: Fetches the list of run results for the given test case. A
+// maximum of 100 results are kept for each test case.
 //
 //   - parent: The test case to list results for. Format:
 //     `projects//locations//agents// testCases/`. Specify a `-` as a
@@ -35961,7 +35962,7 @@ func (c *ProjectsLocationsAgentsTestCasesResultsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetches a list of results for a given test case.",
+	//   "description": "Fetches the list of run results for the given test case. A maximum of 100 results are kept for each test case.",
 	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases/{testCasesId}/results",
 	//   "httpMethod": "GET",
 	//   "id": "dialogflow.projects.locations.agents.testCases.results.list",

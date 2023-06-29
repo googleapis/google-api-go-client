@@ -14892,7 +14892,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfi
 
 	// EnableEventBasedSuggestion: Automatically iterates all participants
 	// and tries to compile suggestions. Supported features:
-	// ARTICLE_SUGGESTION, FAQ, DIALOGFLOW_ASSIST.
+	// ARTICLE_SUGGESTION, FAQ, DIALOGFLOW_ASSIST, ENTITY_EXTRACTION.
 	EnableEventBasedSuggestion bool `json:"enableEventBasedSuggestion,omitempty"`
 
 	// QueryConfig: Configs of query.
@@ -14955,7 +14955,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig 
 	ContextFilterSettings *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigContextFilterSettings `json:"contextFilterSettings,omitempty"`
 
 	// DialogflowQuerySource: Query from Dialogflow agent. It is used by
-	// DIALOGFLOW_ASSIST.
+	// DIALOGFLOW_ASSIST, ENTITY_EXTRACTION.
 	DialogflowQuerySource *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource `json:"dialogflowQuerySource,omitempty"`
 
 	// DocumentQuerySource: Query from knowledge base document. It is used
@@ -15051,7 +15051,7 @@ func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryCon
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryCo
 // nfigDialogflowQuerySource: Dialogflow source setting. Supported
-// feature: DIALOGFLOW_ASSIST.
+// feature: DIALOGFLOW_ASSIST, ENTITY_EXTRACTION.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource struct {
 	// Agent: Required. The name of a dialogflow virtual agent used for end
 	// user side intent detection and suggestion. Format:

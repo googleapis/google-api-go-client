@@ -1692,9 +1692,9 @@ type ExecutionConfig struct {
 	// Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	// Defaults to 4 hours if not set. If both ttl and idle_ttl are
-	// specified, the conditions are treated as OR conditions: the workload
-	// will be terminated when it has been idle for idle_ttl or when ttl has
-	// been exceed, whichever occurs first.
+	// specified for an interactive session, the conditions are treated as
+	// OR conditions: the workload will be terminated when it has been idle
+	// for idle_ttl or when ttl has been exceeded, whichever occurs first.
 	IdleTtl string `json:"idleTtl,omitempty"`
 
 	// KmsKey: Optional. The Cloud KMS key to use for encryption.
@@ -1729,8 +1729,9 @@ type ExecutionConfig struct {
 	// finish. If ttl is not specified for a batch workload, the workload
 	// will be allowed to run until it exits naturally (or runs forever
 	// without exiting). If ttl is not specified for an interactive session,
-	// it defaults to 24h. Minimum value is 10 minutes; maximum value is 14
-	// days (see JSON representation of Duration
+	// it defaults to 24h. If ttl is not specified for a batch that uses
+	// 2.1+ runtime version, it defaults to 4h. Minimum value is 10 minutes;
+	// maximum value is 14 days (see JSON representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	// If both ttl and idle_ttl are specified (for an interactive session),
 	// the conditions are treated as OR conditions: the workload will be
@@ -3409,7 +3410,7 @@ func (s *ListAutoscalingPoliciesResponse) MarshalJSON() ([]byte, error) {
 
 // ListBatchesResponse: A list of batch workloads.
 type ListBatchesResponse struct {
-	// Batches: The batches from the specified collection.
+	// Batches: Output only. The batches from the specified collection.
 	Batches []*Batch `json:"batches,omitempty"`
 
 	// NextPageToken: A token, which can be sent as page_token to retrieve

@@ -271,6 +271,7 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "ISR_REGIONS" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
+	//   "IL5" - Information protection as per DoD IL5 requirements.
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -518,11 +519,6 @@ type GoogleCloudAssuredworkloadsV1Violation struct {
 	// folders/{folder_id}/policies/{constraint_name}
 	// organizations/{organization_id}/policies/{constraint_name}
 	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
-
-	// OrgPolicyConstraint: Output only. Immutable. The
-	// org-policy-constraint that was incorrectly changed, which resulted in
-	// this violation.
-	OrgPolicyConstraint string `json:"orgPolicyConstraint,omitempty"`
 
 	// Remediation: Output only. Compliance violation remediation
 	Remediation *GoogleCloudAssuredworkloadsV1ViolationRemediation `json:"remediation,omitempty"`
@@ -772,6 +768,7 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "ISR_REGIONS" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
+	//   "IL5" - Information protection as per DoD IL5 requirements.
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the

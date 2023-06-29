@@ -1633,7 +1633,7 @@
       }
     }
   },
-  "revision": "20230622",
+  "revision": "20230626",
   "rootUrl": "https://artifactregistry.googleapis.com/",
   "schemas": {
     "AptArtifact": {
@@ -2756,7 +2756,8 @@
             "YUM",
             "GOOGET",
             "PYTHON",
-            "KFP"
+            "KFP",
+            "GO"
           ],
           "enumDescriptions": [
             "Unspecified package format.",
@@ -2767,7 +2768,8 @@
             "YUM package format.",
             "GooGet package format.",
             "Python package format.",
-            "Kubeflow Pipelines package format."
+            "Kubeflow Pipelines package format.",
+            "Go package format."
           ],
           "type": "string"
         },

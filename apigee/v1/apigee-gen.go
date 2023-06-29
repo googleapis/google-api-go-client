@@ -170,6 +170,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Analytics = NewOrganizationsAnalyticsService(s)
 	rs.Apiproducts = NewOrganizationsApiproductsService(s)
 	rs.Apis = NewOrganizationsApisService(s)
+	rs.Appgroups = NewOrganizationsAppgroupsService(s)
 	rs.Apps = NewOrganizationsAppsService(s)
 	rs.Datacollectors = NewOrganizationsDatacollectorsService(s)
 	rs.Deployments = NewOrganizationsDeploymentsService(s)
@@ -199,6 +200,8 @@ type OrganizationsService struct {
 	Apiproducts *OrganizationsApiproductsService
 
 	Apis *OrganizationsApisService
+
+	Appgroups *OrganizationsAppgroupsService
 
 	Apps *OrganizationsAppsService
 
@@ -357,6 +360,51 @@ func NewOrganizationsApisRevisionsDeploymentsService(s *Service) *OrganizationsA
 }
 
 type OrganizationsApisRevisionsDeploymentsService struct {
+	s *Service
+}
+
+func NewOrganizationsAppgroupsService(s *Service) *OrganizationsAppgroupsService {
+	rs := &OrganizationsAppgroupsService{s: s}
+	rs.Apps = NewOrganizationsAppgroupsAppsService(s)
+	return rs
+}
+
+type OrganizationsAppgroupsService struct {
+	s *Service
+
+	Apps *OrganizationsAppgroupsAppsService
+}
+
+func NewOrganizationsAppgroupsAppsService(s *Service) *OrganizationsAppgroupsAppsService {
+	rs := &OrganizationsAppgroupsAppsService{s: s}
+	rs.Keys = NewOrganizationsAppgroupsAppsKeysService(s)
+	return rs
+}
+
+type OrganizationsAppgroupsAppsService struct {
+	s *Service
+
+	Keys *OrganizationsAppgroupsAppsKeysService
+}
+
+func NewOrganizationsAppgroupsAppsKeysService(s *Service) *OrganizationsAppgroupsAppsKeysService {
+	rs := &OrganizationsAppgroupsAppsKeysService{s: s}
+	rs.Apiproducts = NewOrganizationsAppgroupsAppsKeysApiproductsService(s)
+	return rs
+}
+
+type OrganizationsAppgroupsAppsKeysService struct {
+	s *Service
+
+	Apiproducts *OrganizationsAppgroupsAppsKeysApiproductsService
+}
+
+func NewOrganizationsAppgroupsAppsKeysApiproductsService(s *Service) *OrganizationsAppgroupsAppsKeysApiproductsService {
+	rs := &OrganizationsAppgroupsAppsKeysApiproductsService{s: s}
+	return rs
+}
+
+type OrganizationsAppgroupsAppsKeysApiproductsService struct {
 	s *Service
 }
 
@@ -1235,6 +1283,39 @@ type GoogleApiHttpBody struct {
 
 func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiHttpBody
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1APIProductAssociation: APIProductAssociation has
+// the API product and its administrative state association.
+type GoogleCloudApigeeV1APIProductAssociation struct {
+	// Apiproduct: API product to be associated with the credential.
+	Apiproduct string `json:"apiproduct,omitempty"`
+
+	// Status: The API product credential associated status. Valid values
+	// are `approved` or `revoked`.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Apiproduct") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Apiproduct") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1APIProductAssociation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1APIProductAssociation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2138,6 +2219,9 @@ type GoogleCloudApigeeV1App struct {
 	// ApiProducts: List of API products associated with the app.
 	ApiProducts []*GoogleCloudApigeeV1ApiProductRef `json:"apiProducts,omitempty"`
 
+	// AppGroup: Name of the AppGroup
+	AppGroup string `json:"appGroup,omitempty"`
+
 	// AppId: ID of the app.
 	AppId string `json:"appId,omitempty"`
 
@@ -2157,6 +2241,9 @@ type GoogleCloudApigeeV1App struct {
 	// Credentials: Output only. Set of credentials for the app. Credentials
 	// are API key/secret pairs associated with API products.
 	Credentials []*GoogleCloudApigeeV1Credential `json:"credentials,omitempty"`
+
+	// DeveloperEmail: Email of the developer.
+	DeveloperEmail string `json:"developerEmail,omitempty"`
 
 	// DeveloperId: ID of the developer.
 	DeveloperId string `json:"developerId,omitempty"`
@@ -2204,6 +2291,223 @@ type GoogleCloudApigeeV1App struct {
 
 func (s *GoogleCloudApigeeV1App) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1App
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroup: AppGroup contains the request/response
+// fields representing the logical grouping of apps. Note that
+// appgroup_id, create_time and update_time cannot be changed by the
+// user, and gets updated by the system. The name and the organization
+// once provided cannot be edited subsequently.
+type GoogleCloudApigeeV1AppGroup struct {
+	// AppGroupId: Output only. Internal identifier that cannot be edited
+	AppGroupId string `json:"appGroupId,omitempty"`
+
+	// Attributes: A list of attributes
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// ChannelId: channel identifier identifies the owner maintaing this
+	// grouping.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// ChannelUri: A reference to the associated storefront/marketplace.
+	ChannelUri string `json:"channelUri,omitempty"`
+
+	// CreatedAt: Output only. Created time as milliseconds since epoch.
+	CreatedAt int64 `json:"createdAt,omitempty,string"`
+
+	// DisplayName: app group name displayed in the UI
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LastModifiedAt: Output only. Modified time as milliseconds since
+	// epoch.
+	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+
+	// Name: Immutable. Name of the AppGroup. Characters you can use in the
+	// name are restricted to: A-Z0-9._\-$ %.
+	Name string `json:"name,omitempty"`
+
+	// Organization: Immutable. the org the app group is created
+	Organization string `json:"organization,omitempty"`
+
+	// Status: Valid values are `active` or `inactive`. Note that the status
+	// of the AppGroup should be updated via UpdateAppGroupRequest by
+	// setting the action as `active` or `inactive`.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppGroupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppGroupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AppGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroupApp: Response for
+// [GetAppGroupApp].[AppGroupApps.GetAppGroupApp],
+// [CreateAppGroupAppRequest].[AppGroupApp.CreateAppGroupAppRequest] and
+// [DeleteAppGroupApp].[AppGroupApp.DeleteAppGroupApp]
+type GoogleCloudApigeeV1AppGroupApp struct {
+	// ApiProducts: List of API products associated with the AppGroup app.
+	ApiProducts []string `json:"apiProducts,omitempty"`
+
+	// AppGroup: Immutable. Name of the parent AppGroup whose resource name
+	// format is of syntax (organizations/*/appgroups/*).
+	AppGroup string `json:"appGroup,omitempty"`
+
+	// AppId: Immutable. ID of the AppGroup app.
+	AppId string `json:"appId,omitempty"`
+
+	// Attributes: List of attributes for the AppGroup app.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// CallbackUrl: Callback URL used by OAuth 2.0 authorization servers to
+	// communicate authorization codes back to AppGroup apps.
+	CallbackUrl string `json:"callbackUrl,omitempty"`
+
+	// CreatedAt: Output only. Time the AppGroup app was created in
+	// milliseconds since epoch.
+	CreatedAt int64 `json:"createdAt,omitempty,string"`
+
+	// Credentials: Output only. Set of credentials for the AppGroup app
+	// consisting of the consumer key/secret pairs associated with the API
+	// products.
+	Credentials []*GoogleCloudApigeeV1Credential `json:"credentials,omitempty"`
+
+	// KeyExpiresIn: Immutable. Expiration time, in seconds, for the
+	// consumer key that is generated for the AppGroup app. If not set or
+	// left to the default value of `-1`, the API key never expires. The
+	// expiration time can't be updated after it is set.
+	KeyExpiresIn int64 `json:"keyExpiresIn,omitempty,string"`
+
+	// LastModifiedAt: Output only. Time the AppGroup app was modified in
+	// milliseconds since epoch.
+	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+
+	// Name: Immutable. Name of the AppGroup app whose resource name format
+	// is of syntax (organizations/*/appgroups/*/apps/*).
+	Name string `json:"name,omitempty"`
+
+	// Scopes: Scopes to apply to the AppGroup app. The specified scopes
+	// must already exist for the API product that you associate with the
+	// AppGroup app.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Status: Status of the App. Valid values include `approved` or
+	// `revoked`.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiProducts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiProducts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AppGroupApp) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupApp
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroupAppKey: AppGroupAppKey contains all the
+// information associated with the credentials.
+type GoogleCloudApigeeV1AppGroupAppKey struct {
+	// ApiProducts: Output only. List of API products and its status for
+	// which the credential can be used. **Note**: Use
+	// UpdateAppGroupAppKeyApiProductRequest API to make the association
+	// after the consumer key and secret are created.
+	ApiProducts []*GoogleCloudApigeeV1APIProductAssociation `json:"apiProducts,omitempty"`
+
+	// Attributes: List of attributes associated with the credential.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// ConsumerKey: Immutable. Consumer key.
+	ConsumerKey string `json:"consumerKey,omitempty"`
+
+	// ConsumerSecret: Secret key.
+	ConsumerSecret string `json:"consumerSecret,omitempty"`
+
+	// ExpiresAt: Output only. Time the AppGroup app expires in milliseconds
+	// since epoch.
+	ExpiresAt int64 `json:"expiresAt,omitempty,string"`
+
+	// ExpiresInSeconds: Immutable. Expiration time, in seconds, for the
+	// consumer key. If not set or left to the default value of `-1`, the
+	// API key never expires. The expiration time can't be updated after it
+	// is set.
+	ExpiresInSeconds int64 `json:"expiresInSeconds,omitempty,string"`
+
+	// IssuedAt: Output only. Time the AppGroup app was created in
+	// milliseconds since epoch.
+	IssuedAt int64 `json:"issuedAt,omitempty,string"`
+
+	// Scopes: Scopes to apply to the app. The specified scope names must
+	// already be defined for the API product that you associate with the
+	// app.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Status: Status of the credential. Valid values include `approved` or
+	// `revoked`.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiProducts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiProducts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AppGroupAppKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupAppKey
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6088,8 +6392,96 @@ func (s *GoogleCloudApigeeV1ListApiProxiesResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListAppGroupAppsResponse: Response for
+// ListAppGroupApps
+type GoogleCloudApigeeV1ListAppGroupAppsResponse struct {
+	// AppGroupApps: List of AppGroup apps and their credentials.
+	AppGroupApps []*GoogleCloudApigeeV1AppGroupApp `json:"appGroupApps,omitempty"`
+
+	// NextPageToken: Token that can be sent as `next_page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppGroupApps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppGroupApps") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListAppGroupAppsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListAppGroupAppsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListAppGroupsResponse: ListAppGroupsResponse
+// contains the 0 or more AppGroups, along with the optional page token
+// and the total count of apps.
+type GoogleCloudApigeeV1ListAppGroupsResponse struct {
+	// AppGroups: List of AppGroups.
+	AppGroups []*GoogleCloudApigeeV1AppGroup `json:"appGroups,omitempty"`
+
+	// NextPageToken: Token that can be sent as `next_page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: Total count of AppGroups.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListAppGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListAppGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1ListAppsResponse struct {
 	App []*GoogleCloudApigeeV1App `json:"app,omitempty"`
+
+	// NextPageToken: Token that can be sent as `next_page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: Total count of Apps.
+	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -8043,117 +8435,6 @@ func (s *GoogleCloudApigeeV1Point) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ProfileConfig: ProfileConfig defines a set of
-// categories and policies which will be used to compute security score.
-type GoogleCloudApigeeV1ProfileConfig struct {
-	// Categories: List of categories of profile config.
-	Categories []*GoogleCloudApigeeV1ProfileConfigCategory `json:"categories,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Categories") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Categories") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1ProfileConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ProfileConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudApigeeV1ProfileConfigAbuse: Checks for abuse, which
-// includes any requests sent to the API for purposes other than what it
-// is intended for, such as high volumes of requests, data scraping, and
-// abuse related to authorization.
-type GoogleCloudApigeeV1ProfileConfigAbuse struct {
-}
-
-// GoogleCloudApigeeV1ProfileConfigAuthorization: By default, following
-// policies will be included: - JWS - JWT - OAuth - BasicAuth - APIKey
-type GoogleCloudApigeeV1ProfileConfigAuthorization struct {
-}
-
-// GoogleCloudApigeeV1ProfileConfigCORS: Checks to see if you have CORS
-// policy in place.
-type GoogleCloudApigeeV1ProfileConfigCORS struct {
-}
-
-// GoogleCloudApigeeV1ProfileConfigCategory: Advanced API Security
-// provides security profile that scores the following categories.
-type GoogleCloudApigeeV1ProfileConfigCategory struct {
-	// Abuse: Checks for abuse, which includes any requests sent to the API
-	// for purposes other than what it is intended for, such as high volumes
-	// of requests, data scraping, and abuse related to authorization.
-	Abuse *GoogleCloudApigeeV1ProfileConfigAbuse `json:"abuse,omitempty"`
-
-	// Authorization: Checks to see if you have an authorization policy in
-	// place.
-	Authorization *GoogleCloudApigeeV1ProfileConfigAuthorization `json:"authorization,omitempty"`
-
-	// Cors: Checks to see if you have CORS policy in place.
-	Cors *GoogleCloudApigeeV1ProfileConfigCORS `json:"cors,omitempty"`
-
-	// Mediation: Checks to see if you have a mediation policy in place.
-	Mediation *GoogleCloudApigeeV1ProfileConfigMediation `json:"mediation,omitempty"`
-
-	// Mtls: Checks to see if you have configured mTLS for the target
-	// server.
-	Mtls *GoogleCloudApigeeV1ProfileConfigMTLS `json:"mtls,omitempty"`
-
-	// Threat: Checks to see if you have a threat protection policy in
-	// place.
-	Threat *GoogleCloudApigeeV1ProfileConfigThreat `json:"threat,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Abuse") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Abuse") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1ProfileConfigCategory) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ProfileConfigCategory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudApigeeV1ProfileConfigMTLS: Checks to see if you have
-// configured mTLS for the target server.
-type GoogleCloudApigeeV1ProfileConfigMTLS struct {
-}
-
-// GoogleCloudApigeeV1ProfileConfigMediation: By default, following
-// policies will be included: - OASValidation - SOAPMessageValidation
-type GoogleCloudApigeeV1ProfileConfigMediation struct {
-}
-
-// GoogleCloudApigeeV1ProfileConfigThreat: By default, following
-// policies will be included: - XMLThreatProtection -
-// JSONThreatProtection
-type GoogleCloudApigeeV1ProfileConfigThreat struct {
-}
-
 // GoogleCloudApigeeV1Properties: Message for compatibility with legacy
 // Edge specification for Java Properties object in JSON.
 type GoogleCloudApigeeV1Properties struct {
@@ -10056,10 +10337,6 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// organizations/{org}/securityProfiles/{profile}
 	Name string `json:"name,omitempty"`
 
-	// ProfileConfig: Customized profile configuration that computes the
-	// security score.
-	ProfileConfig *GoogleCloudApigeeV1ProfileConfig `json:"profileConfig,omitempty"`
-
 	// RevisionCreateTime: Output only. The time when revision was created.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
 
@@ -11457,6 +11734,46 @@ func (s *GoogleCloudApigeeV1TraceSamplingConfig) UnmarshalJSON(data []byte) erro
 	}
 	s.SamplingRate = float64(s1.SamplingRate)
 	return nil
+}
+
+// GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest: Request for
+// UpdateAppGroupAppKey
+type GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest struct {
+	// Action: Approve or revoke the consumer key by setting this value to
+	// `approve` or `revoke` respectively. The `Content-Type` header, if
+	// set, must be set to `application/octet-stream`, with empty body.
+	Action string `json:"action,omitempty"`
+
+	// ApiProducts: The list of API products that will be associated with
+	// the credential. This list will be appended to the existing list of
+	// associated API Products for this App Key. Duplicates will be ignored.
+	ApiProducts []string `json:"apiProducts,omitempty"`
+
+	// AppGroupAppKey: The new AppGroupKey to be amended. Note that the
+	// status can be updated only via action.
+	AppGroupAppKey *GoogleCloudApigeeV1AppGroupAppKey `json:"appGroupAppKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1UpdateError: Details on why a resource update
@@ -19954,6 +20271,2519 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "apigee.organizations.appgroups.create":
+
+type OrganizationsAppgroupsCreateCall struct {
+	s                           *Service
+	parent                      string
+	googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Create: Creates an AppGroup. Once created, user can register apps
+// under the AppGroup to obtain secret key and password. At creation
+// time, the AppGroup's state is set as `active`. The attribute
+// `Attribute` with key `attribute_name` as
+// `__apigee_reserved__developer_details` can be used to store
+// developers and their roles. The JSON format expected is: [ {
+// "developer_id":"", "roles":[ "" ] } ] and is dealt in base64encoded
+// format. Etag will be available in attribute `Attribute` with key
+// `attribute_name` as `__apigee_reserved__developer_details_etag` for
+// that AppGroup.
+//
+//   - parent: Name of the Apigee organization in which the AppGroup is
+//     created. Use the following structure in your request:
+//     `organizations/{org}`.
+func (r *OrganizationsAppgroupsService) Create(parent string, googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup) *OrganizationsAppgroupsCreateCall {
+	c := &OrganizationsAppgroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1appgroup = googlecloudapigeev1appgroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsCreateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsCreateCall) Context(ctx context.Context) *OrganizationsAppgroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/appgroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.create" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an AppGroup. Once created, user can register apps under the AppGroup to obtain secret key and password. At creation time, the AppGroup's state is set as `active`. The attribute `Attribute` with key `attribute_name` as `__apigee_reserved__developer_details` can be used to store developers and their roles. The JSON format expected is: [ { \"developer_id\":\"\", \"roles\":[ \"\" ] } ] and is dealt in base64encoded format. Etag will be available in attribute `Attribute` with key `attribute_name` as `__apigee_reserved__developer_details_etag` for that AppGroup.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the Apigee organization in which the AppGroup is created. Use the following structure in your request: `organizations/{org}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/appgroups",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.delete":
+
+type OrganizationsAppgroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an AppGroup. All app and API keys associations with
+// the AppGroup are also removed. **Warning**: This API will permanently
+// delete the AppGroup and related artifacts. **Note**: The delete
+// operation is asynchronous. The AppGroup app is deleted immediately,
+// but its associated resources, such as apps and API keys, may take
+// anywhere from a few seconds to a few minutes to be deleted.
+//
+//   - name: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsService) Delete(name string) *OrganizationsAppgroupsDeleteCall {
+	c := &OrganizationsAppgroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an AppGroup. All app and API keys associations with the AppGroup are also removed. **Warning**: This API will permanently delete the AppGroup and related artifacts. **Note**: The delete operation is asynchronous. The AppGroup app is deleted immediately, but its associated resources, such as apps and API keys, may take anywhere from a few seconds to a few minutes to be deleted.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.get":
+
+type OrganizationsAppgroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the AppGroup details for the provided AppGroup name in
+// the request URI.
+//
+//   - name: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsService) Get(name string) *OrganizationsAppgroupsGetCall {
+	c := &OrganizationsAppgroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsGetCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsGetCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsGetCall) Context(ctx context.Context) *OrganizationsAppgroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.get" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the AppGroup details for the provided AppGroup name in the request URI.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.list":
+
+type OrganizationsAppgroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all AppGroups in an organization. A maximum of 1000
+// AppGroups are returned in the response if PageSize is not specified,
+// or if the PageSize is greater than 1000.
+//
+//   - parent: Name of the Apigee organization. Use the following
+//     structure in your request: `organizations/{org}`.
+func (r *OrganizationsAppgroupsService) List(parent string) *OrganizationsAppgroupsListCall {
+	c := &OrganizationsAppgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to
+// be used to get the list of AppGroups, where filtering can be done on
+// name, correlationID or channelID of the app group. Example: filter =
+// "name = foobar"
+func (c *OrganizationsAppgroupsListCall) Filter(filter string) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Count of AppGroups a
+// single page can have in the response. If unspecified, at most 1000
+// AppGroups will be returned. The maximum value is 1000; values above
+// 1000 will be coerced to 1000.
+func (c *OrganizationsAppgroupsListCall) PageSize(pageSize int64) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The starting index
+// record for listing the AppGroups.
+func (c *OrganizationsAppgroupsListCall) PageToken(pageToken string) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsListCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsListCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsListCall) Context(ctx context.Context) *OrganizationsAppgroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/appgroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListAppGroupsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListAppGroupsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListAppGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListAppGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all AppGroups in an organization. A maximum of 1000 AppGroups are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression to be used to get the list of AppGroups, where filtering can be done on name, correlationID or channelID of the app group. Example: filter = \"name = foobar\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Count of AppGroups a single page can have in the response. If unspecified, at most 1000 AppGroups will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The starting index record for listing the AppGroups.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the Apigee organization. Use the following structure in your request: `organizations/{org}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/appgroups",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListAppGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsAppgroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListAppGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.appgroups.update":
+
+type OrganizationsAppgroupsUpdateCall struct {
+	s                           *Service
+	name                        string
+	googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Update: Updates an appGroup. This API replaces the existing appGroup
+// details with those specified in the request. Include or exclude any
+// existing details that you want to retain or delete, respectively.
+// Note that the state of the AppGroup should be updated using `action`,
+// and not via AppGroup. The custom attribute limit is 1000, and is how
+// `__apigee_reserved__developer_details` can be updated. **Note**:
+// OAuth access tokens and Key Management Service (KMS) entities (apps,
+// developers, and API products) are cached for 180 seconds (current
+// default). Any custom attributes associated with these entities are
+// cached for at least 180 seconds after the entity is accessed at
+// runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy
+// won't be able to expire an access token in less than 180 seconds.
+//
+//   - name: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsService) Update(name string, googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup) *OrganizationsAppgroupsUpdateCall {
+	c := &OrganizationsAppgroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1appgroup = googlecloudapigeev1appgroup
+	return c
+}
+
+// Action sets the optional parameter "action": Activate or de-activate
+// the appGroup by setting the action as `active` or `inactive`. The
+// `Content-Type` header must be set to `application/octet-stream`, with
+// empty body.
+func (c *OrganizationsAppgroupsUpdateCall) Action(action string) *OrganizationsAppgroupsUpdateCall {
+	c.urlParams_.Set("action", action)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsUpdateCall) Context(ctx context.Context) *OrganizationsAppgroupsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.update" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an appGroup. This API replaces the existing appGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup. The custom attribute limit is 1000, and is how `__apigee_reserved__developer_details` can be updated. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with these entities are cached for at least 180 seconds after the entity is accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.appgroups.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "action": {
+	//       "description": "Activate or de-activate the appGroup by setting the action as `active` or `inactive`. The `Content-Type` header must be set to `application/octet-stream`, with empty body.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.create":
+
+type OrganizationsAppgroupsAppsCreateCall struct {
+	s                              *Service
+	parent                         string
+	googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Creates an app and associates it with an AppGroup. This API
+// associates the AppGroup app with the specified API product and
+// auto-generates an API key for the app to use in calls to API proxies
+// inside that API product. The `name` is the unique ID of the app that
+// you can use in API calls.
+//
+//   - parent: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsAppsService) Create(parent string, googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp) *OrganizationsAppgroupsAppsCreateCall {
+	c := &OrganizationsAppgroupsAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1appgroupapp = googlecloudapigeev1appgroupapp
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsCreateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsCreateCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroupapp)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.create" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an app and associates it with an AppGroup. This API associates the AppGroup app with the specified API product and auto-generates an API key for the app to use in calls to API proxies inside that API product. The `name` is the unique ID of the app that you can use in API calls.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/apps",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.delete":
+
+type OrganizationsAppgroupsAppsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an AppGroup app. **Note**: The delete operation is
+// asynchronous. The AppGroup app is deleted immediately, but its
+// associated resources, such as app keys or access tokens, may take
+// anywhere from a few seconds to a few minutes to be deleted.
+//
+//   - name: Name of the AppGroup app. Use the following structure in your
+//     request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}`.
+func (r *OrganizationsAppgroupsAppsService) Delete(name string) *OrganizationsAppgroupsAppsDeleteCall {
+	c := &OrganizationsAppgroupsAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an AppGroup app. **Note**: The delete operation is asynchronous. The AppGroup app is deleted immediately, but its associated resources, such as app keys or access tokens, may take anywhere from a few seconds to a few minutes to be deleted.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.apps.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.get":
+
+type OrganizationsAppgroupsAppsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the details for an AppGroup app.
+//
+//   - name: Name of the AppGroup app. Use the following structure in your
+//     request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}`.
+func (r *OrganizationsAppgroupsAppsService) Get(name string) *OrganizationsAppgroupsAppsGetCall {
+	c := &OrganizationsAppgroupsAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsGetCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsAppsGetCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsAppsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsGetCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.get" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the details for an AppGroup app.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.apps.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.list":
+
+type OrganizationsAppgroupsAppsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all apps created by an AppGroup in an Apigee
+// organization. Optionally, you can request an expanded view of the
+// AppGroup apps. Lists all AppGroupApps in an AppGroup. A maximum of
+// 1000 AppGroup apps are returned in the response if PageSize is not
+// specified, or if the PageSize is greater than 1000.
+//
+//   - parent: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsAppsService) List(parent string) *OrganizationsAppgroupsAppsListCall {
+	c := &OrganizationsAppgroupsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number
+// entries to return. If unspecified, at most 1000 entries will be
+// returned.
+func (c *OrganizationsAppgroupsAppsListCall) PageSize(pageSize int64) *OrganizationsAppgroupsAppsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid AppGroup app returned from a previous call
+// that can be used to retrieve the next page.
+func (c *OrganizationsAppgroupsAppsListCall) PageToken(pageToken string) *OrganizationsAppgroupsAppsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsListCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsAppsListCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsAppsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsListCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListAppGroupAppsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListAppGroupAppsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListAppGroupAppsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListAppGroupAppsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all apps created by an AppGroup in an Apigee organization. Optionally, you can request an expanded view of the AppGroup apps. Lists all AppGroupApps in an AppGroup. A maximum of 1000 AppGroup apps are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.apps.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number entries to return. If unspecified, at most 1000 entries will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token. If provides, must be a valid AppGroup app returned from a previous call that can be used to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/apps",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListAppGroupAppsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsAppgroupsAppsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListAppGroupAppsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.appgroups.apps.update":
+
+type OrganizationsAppgroupsAppsUpdateCall struct {
+	s                              *Service
+	name                           string
+	googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Update: Updates the details for an AppGroup app. In addition, you can
+// add an API product to an AppGroup app and automatically generate an
+// API key for the app to use when calling APIs in the API product. If
+// you want to use an existing API key for the API product, add the API
+// product to the API key using the UpdateAppGroupAppKey API. Using this
+// API, you cannot update the app name, as it is the primary key used to
+// identify the app and cannot be changed. This API replaces the
+// existing attributes with those specified in the request. Include or
+// exclude any existing attributes that you want to retain or delete,
+// respectively.
+//
+//   - name: Name of the AppGroup app. Use the following structure in your
+//     request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}`.
+func (r *OrganizationsAppgroupsAppsService) Update(name string, googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp) *OrganizationsAppgroupsAppsUpdateCall {
+	c := &OrganizationsAppgroupsAppsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1appgroupapp = googlecloudapigeev1appgroupapp
+	return c
+}
+
+// Action sets the optional parameter "action": Approve or revoke the
+// consumer key by setting this value to `approve` or `revoke`. The
+// `Content-Type` header must be set to `application/octet-stream`, with
+// empty body.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Action(action string) *OrganizationsAppgroupsAppsUpdateCall {
+	c.urlParams_.Set("action", action)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroupapp)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.update" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the details for an AppGroup app. In addition, you can add an API product to an AppGroup app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateAppGroupAppKey API. Using this API, you cannot update the app name, as it is the primary key used to identify the app and cannot be changed. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.appgroups.apps.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "action": {
+	//       "description": "Approve or revoke the consumer key by setting this value to `approve` or `revoke`. The `Content-Type` header must be set to `application/octet-stream`, with empty body.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.create":
+
+type OrganizationsAppgroupsAppsKeysCreateCall struct {
+	s                                 *Service
+	parent                            string
+	googlecloudapigeev1appgroupappkey *GoogleCloudApigeeV1AppGroupAppKey
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: Creates a custom consumer key and secret for a AppGroup app.
+// This is particularly useful if you want to migrate existing consumer
+// keys and secrets to Apigee from another system. Consumer keys and
+// secrets can contain letters, numbers, underscores, and hyphens. No
+// other special characters are allowed. To avoid service disruptions, a
+// consumer key and secret should not exceed 2 KBs each. **Note**: When
+// creating the consumer key and secret, an association to API products
+// will not be made. Therefore, you should not specify the associated
+// API products in your request. Instead, use the
+// ProductizeAppGroupAppKey API to make the association after the
+// consumer key and secret are created. If a consumer key and secret
+// already exist, you can keep them or delete them using the
+// DeleteAppGroupAppKey API.
+//
+//   - parent: Parent of the AppGroup app key. Use the following structure
+//     in your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys`.
+func (r *OrganizationsAppgroupsAppsKeysService) Create(parent string, googlecloudapigeev1appgroupappkey *GoogleCloudApigeeV1AppGroupAppKey) *OrganizationsAppgroupsAppsKeysCreateCall {
+	c := &OrganizationsAppgroupsAppsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1appgroupappkey = googlecloudapigeev1appgroupappkey
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroupappkey)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keys")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.create" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a custom consumer key and secret for a AppGroup app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the ProductizeAppGroupAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteAppGroupAppKey API.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.keys.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/keys",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.delete":
+
+type OrganizationsAppgroupsAppsKeysDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an app's consumer key and removes all API products
+// associated with the app. After the consumer key is deleted, it cannot
+// be used to access any APIs.
+//
+//   - name: Name of the AppGroup app key. Use the following structure in
+//     your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }`.
+func (r *OrganizationsAppgroupsAppsKeysService) Delete(name string) *OrganizationsAppgroupsAppsKeysDeleteCall {
+	c := &OrganizationsAppgroupsAppsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an app's consumer key and removes all API products associated with the app. After the consumer key is deleted, it cannot be used to access any APIs.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.apps.keys.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.get":
+
+type OrganizationsAppgroupsAppsKeysGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details for a consumer key for a AppGroup app, including
+// the key and secret value, associated API products, and other
+// information.
+//
+//   - name: Name of the AppGroup app key. Use the following structure in
+//     your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }`.
+func (r *OrganizationsAppgroupsAppsKeysService) Get(name string) *OrganizationsAppgroupsAppsKeysGetCall {
+	c := &OrganizationsAppgroupsAppsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsAppsKeysGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.get" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details for a consumer key for a AppGroup app, including the key and secret value, associated API products, and other information.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.apps.keys.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.updateAppGroupAppKey":
+
+type OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudapigeev1updateappgroupappkeyrequest *GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// UpdateAppGroupAppKey: Adds an API product to an AppGroupAppKey,
+// enabling the app that holds the key to access the API resources
+// bundled in the API product. In addition, you can add attributes to
+// the AppGroupAppKey. This API replaces the existing attributes with
+// those specified in the request. Include or exclude any existing
+// attributes that you want to retain or delete, respectively. You can
+// use the same key to access all API products associated with the app.
+//
+//   - name: Name of the AppGroup app key. Use the following structure in
+//     your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }`.
+func (r *OrganizationsAppgroupsAppsKeysService) UpdateAppGroupAppKey(name string, googlecloudapigeev1updateappgroupappkeyrequest *GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest) *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall {
+	c := &OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1updateappgroupappkeyrequest = googlecloudapigeev1updateappgroupappkeyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1updateappgroupappkeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.updateAppGroupAppKey" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds an API product to an AppGroupAppKey, enabling the app that holds the key to access the API resources bundled in the API product. In addition, you can add attributes to the AppGroupAppKey. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. You can use the same key to access all API products associated with the app.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.keys.updateAppGroupAppKey",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.apiproducts.delete":
+
+type OrganizationsAppgroupsAppsKeysApiproductsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Removes an API product from an app's consumer key. After the
+// API product is removed, the app cannot access the API resources
+// defined in that API product. **Note**: The consumer key is not
+// removed, only its association with the API product.
+//
+//   - name: Parent of the AppGroup app key. Use the following structure
+//     in your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }/apiproducts/{apiproduct}`.
+func (r *OrganizationsAppgroupsAppsKeysApiproductsService) Delete(name string) *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall {
+	c := &OrganizationsAppgroupsAppsKeysApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.apiproducts.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes an API product from an app's consumer key. After the API product is removed, the app cannot access the API resources defined in that API product. **Note**: The consumer key is not removed, only its association with the API product.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}/apiproducts/{apiproductsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.apps.keys.apiproducts.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Parent of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+/apiproducts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.apiproducts.updateAppGroupAppKeyApiProduct":
+
+type OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateAppGroupAppKeyApiProduct: Approves or revokes the consumer key
+// for an API product. After a consumer key is approved, the app can use
+// it to access APIs. A consumer key that is revoked or pending cannot
+// be used to access an API. Any access tokens associated with a revoked
+// consumer key will remain active. However, Apigee checks the status of
+// the consumer key and if set to `revoked` will not allow access to the
+// API.
+//
+//   - name: Name of the API product in the developer app key in the
+//     following format:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }/apiproducts/{apiproduct}`.
+func (r *OrganizationsAppgroupsAppsKeysApiproductsService) UpdateAppGroupAppKeyApiProduct(name string) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c := &OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Action sets the optional parameter "action": Approve or revoke the
+// consumer key by setting this value to `approve` or `revoke`
+// respectively. The `Content-Type` header, if set, must be set to
+// `application/octet-stream`, with empty body.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Action(action string) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c.urlParams_.Set("action", action)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.apiproducts.updateAppGroupAppKeyApiProduct" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}/apiproducts/{apiproductsId}",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.keys.apiproducts.updateAppGroupAppKeyApiProduct",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "action": {
+	//       "description": "Approve or revoke the consumer key by setting this value to `approve` or `revoke` respectively. The `Content-Type` header, if set, must be set to `application/octet-stream`, with empty body.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Name of the API product in the developer app key in the following format: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+/apiproducts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.apps.get":
 
 type OrganizationsAppsGetCall struct {
@@ -20130,9 +22960,8 @@ func (c *OrganizationsAppsListCall) ApiProduct(apiProduct string) *Organizations
 	return c
 }
 
-// Apptype sets the optional parameter "apptype": Filter by the type of
-// the app. Valid values are `company` or `developer`. Defaults to
-// `developer`.
+// Apptype sets the optional parameter "apptype": 'apptype' is no longer
+// available. Use a 'filter' instead.
 func (c *OrganizationsAppsListCall) Apptype(apptype string) *OrganizationsAppsListCall {
 	c.urlParams_.Set("apptype", apptype)
 	return c
@@ -20143,6 +22972,17 @@ func (c *OrganizationsAppsListCall) Apptype(apptype string) *OrganizationsAppsLi
 // Defaults to `false`.
 func (c *OrganizationsAppsListCall) Expand(expand bool) *OrganizationsAppsListCall {
 	c.urlParams_.Set("expand", fmt.Sprint(expand))
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to
+// be used to get the list of apps, where filtering can be done on
+// developerEmail, apiProduct, consumerKey, status, appId, appName and
+// appType. Examples: "developerEmail=foo@bar.com", "appType=AppGroup",
+// or "appType=Developer" "filter" is supported from ver 1.10.0 and
+// above.
+func (c *OrganizationsAppsListCall) Filter(filter string) *OrganizationsAppsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -20165,6 +23005,24 @@ func (c *OrganizationsAppsListCall) IncludeCred(includeCred bool) *Organizations
 // `approved`.
 func (c *OrganizationsAppsListCall) KeyStatus(keyStatus string) *OrganizationsAppsListCall {
 	c.urlParams_.Set("keyStatus", keyStatus)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Count of apps a
+// single page can have in the response. If unspecified, at most 100
+// apps will be returned. The maximum value is 100; values above 100
+// will be coerced to 100. "page_size" is supported from ver 1.10.0 and
+// above.
+func (c *OrganizationsAppsListCall) PageSize(pageSize int64) *OrganizationsAppsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The starting index
+// record for listing the developers. "page_token" is supported from ver
+// 1.10.0 and above.
+func (c *OrganizationsAppsListCall) PageToken(pageToken string) *OrganizationsAppsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -20304,7 +23162,7 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "type": "string"
 	//     },
 	//     "apptype": {
-	//       "description": "Optional. Filter by the type of the app. Valid values are `company` or `developer`. Defaults to `developer`.",
+	//       "description": "Optional. 'apptype' is no longer available. Use a 'filter' instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20312,6 +23170,11 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "description": "Optional. Flag that specifies whether to return an expanded list of apps for the organization. Defaults to `false`.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "filter": {
+	//       "description": "Optional. The filter expression to be used to get the list of apps, where filtering can be done on developerEmail, apiProduct, consumerKey, status, appId, appName and appType. Examples: \"developerEmail=foo@bar.com\", \"appType=AppGroup\", or \"appType=Developer\" \"filter\" is supported from ver 1.10.0 and above.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "ids": {
 	//       "description": "Optional. Comma-separated list of app IDs on which to filter.",
@@ -20325,6 +23188,17 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//     },
 	//     "keyStatus": {
 	//       "description": "Optional. Key status of the app. Valid values include `approved` or `revoked`. Defaults to `approved`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Count of apps a single page can have in the response. If unspecified, at most 100 apps will be returned. The maximum value is 100; values above 100 will be coerced to 100. \"page_size\" is supported from ver 1.10.0 and above.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The starting index record for listing the developers. \"page_token\" is supported from ver 1.10.0 and above.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20361,6 +23235,27 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsAppsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListAppsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.datacollectors.create":
@@ -24666,7 +27561,10 @@ type OrganizationsDevelopersAppsKeysCreateCall struct {
 // API products in your request. Instead, use the UpdateDeveloperAppKey
 // API to make the association after the consumer key and secret are
 // created. If a consumer key and secret already exist, you can keep
-// them or delete them using the DeleteDeveloperAppKey API.
+// them or delete them using the DeleteDeveloperAppKey API. **Note**:
+// All keys start out with status=approved, even if status=revoked is
+// passed when the key is created. To revoke a key, use the
+// UpdateDeveloperAppKey API.
 //
 //   - parent: Parent of the developer app key. Use the following
 //     structure in your request:
@@ -24770,7 +27668,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
+	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API. **Note**: All keys start out with status=approved, even if status=revoked is passed when the key is created. To revoke a key, use the UpdateDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.create",
@@ -25727,7 +28625,10 @@ type OrganizationsDevelopersAppsKeysCreateCreateCall struct {
 // API products in your request. Instead, use the UpdateDeveloperAppKey
 // API to make the association after the consumer key and secret are
 // created. If a consumer key and secret already exist, you can keep
-// them or delete them using the DeleteDeveloperAppKey API.
+// them or delete them using the DeleteDeveloperAppKey API. **Note**:
+// All keys start out with status=approved, even if status=revoked is
+// passed when the key is created. To revoke a key, use the
+// UpdateDeveloperAppKey API.
 //
 //   - parent: Parent of the developer app key. Use the following
 //     structure in your request:
@@ -25831,7 +28732,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
+	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API. **Note**: All keys start out with status=approved, even if status=revoked is passed when the key is created. To revoke a key, use the UpdateDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/create",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.create.create",

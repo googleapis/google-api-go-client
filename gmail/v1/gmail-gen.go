@@ -2481,7 +2481,9 @@ func (s *VacationSettings) MarshalJSON() ([]byte, error) {
 // WatchRequest: Set up or update a new push notification watch on this
 // user's mailbox.
 type WatchRequest struct {
-	// LabelFilterAction: Filtering behavior of labelIds list specified.
+	// LabelFilterAction: Filtering behavior of `labelIds list` specified.
+	// This field is deprecated because it caused incorrect behavior in some
+	// cases; use `label_filter_behavior` instead.
 	//
 	// Possible values:
 	//   "include" - Only get push notifications for message changes
@@ -2490,9 +2492,9 @@ type WatchRequest struct {
 	// those relating to labelIds specified.
 	LabelFilterAction string `json:"labelFilterAction,omitempty"`
 
-	// LabelFilterBehavior: Filtering behavior of labelIds list specified.
-	// This field replaces label_filter_action; if set, label_filter_action
-	// is ignored.
+	// LabelFilterBehavior: Filtering behavior of `labelIds list` specified.
+	// This field replaces `label_filter_action`; if set,
+	// `label_filter_action` is ignored.
 	//
 	// Possible values:
 	//   "include" - Only get push notifications for message changes

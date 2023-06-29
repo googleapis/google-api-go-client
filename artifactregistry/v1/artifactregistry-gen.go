@@ -2373,6 +2373,7 @@ type Repository struct {
 	//   "GOOGET" - GooGet package format.
 	//   "PYTHON" - Python package format.
 	//   "KFP" - Kubeflow Pipelines package format.
+	//   "GO" - Go package format.
 	Format string `json:"format,omitempty"`
 
 	// KmsKeyName: The Cloud KMS resource name of the customer managed

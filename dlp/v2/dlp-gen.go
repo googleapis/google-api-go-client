@@ -1269,17 +1269,23 @@ func (s *GooglePrivacyDlpV2CloudStorageFileSet) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// BytesLimitPerFile: Max number of bytes to scan from a file. If a
 	// scanned file's size is bigger than this value then the rest of the
-	// bytes are omitted. Only one of bytes_limit_per_file and
-	// bytes_limit_per_file_percent can be specified. Cannot be set if
-	// de-identification is requested.
+	// bytes are omitted. Only one of `bytes_limit_per_file` and
+	// `bytes_limit_per_file_percent` can be specified. This field can't be
+	// set if de-identification is requested. For certain file types,
+	// setting this field has no effect. For more information, see Limits on
+	// bytes scanned per file
+	// (https://cloud.google.com/dlp/docs/supported-file-types#max-byte-size-per-file).
 	BytesLimitPerFile int64 `json:"bytesLimitPerFile,omitempty,string"`
 
 	// BytesLimitPerFilePercent: Max percentage of bytes to scan from a
 	// file. The rest are omitted. The number of bytes scanned is rounded
 	// down. Must be between 0 and 100, inclusively. Both 0 and 100 means no
 	// limit. Defaults to 0. Only one of bytes_limit_per_file and
-	// bytes_limit_per_file_percent can be specified. Cannot be set if
-	// de-identification is requested.
+	// bytes_limit_per_file_percent can be specified. This field can't be
+	// set if de-identification is requested. For certain file types,
+	// setting this field has no effect. For more information, see Limits on
+	// bytes scanned per file
+	// (https://cloud.google.com/dlp/docs/supported-file-types#max-byte-size-per-file).
 	BytesLimitPerFilePercent int64 `json:"bytesLimitPerFilePercent,omitempty"`
 
 	// FileSet: The set of one or more files to scan.
@@ -1298,7 +1304,7 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	//   "BINARY_FILE" - Includes all file extensions not covered by another
 	// entry. Binary scanning attempts to convert the content of the file to
 	// utf_8 to scan the file. If you wish to avoid this fall back, specify
-	// one or more of the other FileType's in your storage scan.
+	// one or more of the other file types in your storage scan.
 	//   "TEXT_FILE" - Included file extensions: asc,asp, aspx, brf, c,
 	// cc,cfm, cgi, cpp, csv, cxx, c++, cs, css, dart, dat, dot, eml,,
 	// epbub, ged, go, h, hh, hpp, hxx, h++, hs, html, htm, mkd, markdown,
@@ -1307,19 +1313,27 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// xhtml, lhs, ics, ini, java, js, json, kix, kml, ocaml, md, txt, text,
 	// tsv, vb, vcard, vcs, wml, xcodeproj, xml, xsl, xsd, yml, yaml.
 	//   "IMAGE" - Included file extensions: bmp, gif, jpg, jpeg, jpe, png.
-	// bytes_limit_per_file has no effect on image files. Image inspection
-	// is restricted to 'global', 'us', 'asia', and 'europe'.
-	//   "WORD" - Word files >30 MB will be scanned as binary files.
-	// Included file extensions: docx, dotx, docm, dotm
-	//   "PDF" - PDF files >30 MB will be scanned as binary files. Included
-	// file extensions: pdf
+	// Setting bytes_limit_per_file or bytes_limit_per_file_percent has no
+	// effect on image files. Image inspection is restricted to the
+	// `global`, `us`, `asia`, and `europe` regions.
+	//   "WORD" - Microsoft Word files larger than 30 MB will be scanned as
+	// binary files. Included file extensions: docx, dotx, docm, dotm.
+	// Setting `bytes_limit_per_file` or `bytes_limit_per_file_percent` has
+	// no effect on Word files.
+	//   "PDF" - PDF files larger than 30 MB will be scanned as binary
+	// files. Included file extensions: pdf. Setting `bytes_limit_per_file`
+	// or `bytes_limit_per_file_percent` has no effect on PDF files.
 	//   "AVRO" - Included file extensions: avro
 	//   "CSV" - Included file extensions: csv
 	//   "TSV" - Included file extensions: tsv
-	//   "POWERPOINT" - Powerpoint files >30 MB will be scanned as binary
-	// files. Included file extensions: pptx, pptm, potx, potm, pot
-	//   "EXCEL" - Excel files >30 MB will be scanned as binary files.
-	// Included file extensions: xlsx, xlsm, xltx, xltm
+	//   "POWERPOINT" - Microsoft PowerPoint files larger than 30 MB will be
+	// scanned as binary files. Included file extensions: pptx, pptm, potx,
+	// potm, pot. Setting `bytes_limit_per_file` or
+	// `bytes_limit_per_file_percent` has no effect on PowerPoint files.
+	//   "EXCEL" - Microsoft Excel files larger than 30 MB will be scanned
+	// as binary files. Included file extensions: xlsx, xlsm, xltx, xltm.
+	// Setting `bytes_limit_per_file` or `bytes_limit_per_file_percent` has
+	// no effect on Excel files.
 	FileTypes []string `json:"fileTypes,omitempty"`
 
 	// FilesLimitPercent: Limits the number of files to scan to this
@@ -2963,7 +2977,7 @@ type GooglePrivacyDlpV2Deidentify struct {
 	//   "BINARY_FILE" - Includes all file extensions not covered by another
 	// entry. Binary scanning attempts to convert the content of the file to
 	// utf_8 to scan the file. If you wish to avoid this fall back, specify
-	// one or more of the other FileType's in your storage scan.
+	// one or more of the other file types in your storage scan.
 	//   "TEXT_FILE" - Included file extensions: asc,asp, aspx, brf, c,
 	// cc,cfm, cgi, cpp, csv, cxx, c++, cs, css, dart, dat, dot, eml,,
 	// epbub, ged, go, h, hh, hpp, hxx, h++, hs, html, htm, mkd, markdown,
@@ -2972,19 +2986,27 @@ type GooglePrivacyDlpV2Deidentify struct {
 	// xhtml, lhs, ics, ini, java, js, json, kix, kml, ocaml, md, txt, text,
 	// tsv, vb, vcard, vcs, wml, xcodeproj, xml, xsl, xsd, yml, yaml.
 	//   "IMAGE" - Included file extensions: bmp, gif, jpg, jpeg, jpe, png.
-	// bytes_limit_per_file has no effect on image files. Image inspection
-	// is restricted to 'global', 'us', 'asia', and 'europe'.
-	//   "WORD" - Word files >30 MB will be scanned as binary files.
-	// Included file extensions: docx, dotx, docm, dotm
-	//   "PDF" - PDF files >30 MB will be scanned as binary files. Included
-	// file extensions: pdf
+	// Setting bytes_limit_per_file or bytes_limit_per_file_percent has no
+	// effect on image files. Image inspection is restricted to the
+	// `global`, `us`, `asia`, and `europe` regions.
+	//   "WORD" - Microsoft Word files larger than 30 MB will be scanned as
+	// binary files. Included file extensions: docx, dotx, docm, dotm.
+	// Setting `bytes_limit_per_file` or `bytes_limit_per_file_percent` has
+	// no effect on Word files.
+	//   "PDF" - PDF files larger than 30 MB will be scanned as binary
+	// files. Included file extensions: pdf. Setting `bytes_limit_per_file`
+	// or `bytes_limit_per_file_percent` has no effect on PDF files.
 	//   "AVRO" - Included file extensions: avro
 	//   "CSV" - Included file extensions: csv
 	//   "TSV" - Included file extensions: tsv
-	//   "POWERPOINT" - Powerpoint files >30 MB will be scanned as binary
-	// files. Included file extensions: pptx, pptm, potx, potm, pot
-	//   "EXCEL" - Excel files >30 MB will be scanned as binary files.
-	// Included file extensions: xlsx, xlsm, xltx, xltm
+	//   "POWERPOINT" - Microsoft PowerPoint files larger than 30 MB will be
+	// scanned as binary files. Included file extensions: pptx, pptm, potx,
+	// potm, pot. Setting `bytes_limit_per_file` or
+	// `bytes_limit_per_file_percent` has no effect on PowerPoint files.
+	//   "EXCEL" - Microsoft Excel files larger than 30 MB will be scanned
+	// as binary files. Included file extensions: xlsx, xlsm, xltx, xltm.
+	// Setting `bytes_limit_per_file` or `bytes_limit_per_file_percent` has
+	// no effect on Excel files.
 	FileTypesToTransform []string `json:"fileTypesToTransform,omitempty"`
 
 	// TransformationConfig: User specified deidentify templates and configs

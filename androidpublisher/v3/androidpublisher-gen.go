@@ -518,6 +518,74 @@ type UsersService struct {
 	s *Service
 }
 
+// Abi: Represents an Abi.
+type Abi struct {
+	// Alias: Alias for an abi.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_CPU_ARCHITECTURE" - Unspecified abi.
+	//   "ARMEABI" - ARMEABI abi.
+	//   "ARMEABI_V7A" - ARMEABI_V7A abi.
+	//   "ARM64_V8A" - ARM64_V8A abi.
+	//   "X86" - X86 abi.
+	//   "X86_64" - X86_64 abi.
+	Alias string `json:"alias,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Abi) MarshalJSON() ([]byte, error) {
+	type NoMethod Abi
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AbiTargeting: Targeting based on Abi.
+type AbiTargeting struct {
+	// Alternatives: Targeting of other sibling directories that were in the
+	// Bundle. For main splits this is targeting of other main splits.
+	Alternatives []*Abi `json:"alternatives,omitempty"`
+
+	// Value: Value of an abi.
+	Value []*Abi `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AbiTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod AbiTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AcquisitionTargetingRule: Represents a targeting rule of the form:
 // User never had {scope} before.
 type AcquisitionTargetingRule struct {
@@ -622,6 +690,128 @@ type ApkBinary struct {
 
 func (s *ApkBinary) MarshalJSON() ([]byte, error) {
 	type NoMethod ApkBinary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApkDescription: Description of the created apks.
+type ApkDescription struct {
+	// AssetSliceMetadata: Set only for asset slices.
+	AssetSliceMetadata *SplitApkMetadata `json:"assetSliceMetadata,omitempty"`
+
+	// InstantApkMetadata: Set only for Instant split APKs.
+	InstantApkMetadata *SplitApkMetadata `json:"instantApkMetadata,omitempty"`
+
+	// Path: Path of the Apk, will be in the following format: .apk where
+	// DownloadId is the ID used to download the apk using
+	// GeneratedApks.Download API.
+	Path string `json:"path,omitempty"`
+
+	// SplitApkMetadata: Set only for Split APKs.
+	SplitApkMetadata *SplitApkMetadata `json:"splitApkMetadata,omitempty"`
+
+	// StandaloneApkMetadata: Set only for standalone APKs.
+	StandaloneApkMetadata *StandaloneApkMetadata `json:"standaloneApkMetadata,omitempty"`
+
+	// Targeting: Apk-level targeting.
+	Targeting *ApkTargeting `json:"targeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetSliceMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssetSliceMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApkDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod ApkDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApkSet: A set of apks representing a module.
+type ApkSet struct {
+	// ApkDescription: Description of the generated apks.
+	ApkDescription []*ApkDescription `json:"apkDescription,omitempty"`
+
+	// ModuleMetadata: Metadata about the module represented by this ApkSet
+	ModuleMetadata *ModuleMetadata `json:"moduleMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApkDescription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApkDescription") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApkSet) MarshalJSON() ([]byte, error) {
+	type NoMethod ApkSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApkTargeting: Represents a set of apk-level targetings.
+type ApkTargeting struct {
+	// AbiTargeting: The abi that the apk targets
+	AbiTargeting *AbiTargeting `json:"abiTargeting,omitempty"`
+
+	// LanguageTargeting: The language that the apk targets
+	LanguageTargeting *LanguageTargeting `json:"languageTargeting,omitempty"`
+
+	// MultiAbiTargeting: Multi-api-level targeting.
+	MultiAbiTargeting *MultiAbiTargeting `json:"multiAbiTargeting,omitempty"`
+
+	// ScreenDensityTargeting: The screen density that this apk supports.
+	ScreenDensityTargeting *ScreenDensityTargeting `json:"screenDensityTargeting,omitempty"`
+
+	// SdkVersionTargeting: The sdk version that the apk targets
+	SdkVersionTargeting *SdkVersionTargeting `json:"sdkVersionTargeting,omitempty"`
+
+	// TextureCompressionFormatTargeting: Texture-compression-format-level
+	// targeting
+	TextureCompressionFormatTargeting *TextureCompressionFormatTargeting `json:"textureCompressionFormatTargeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AbiTargeting") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbiTargeting") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApkTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod ApkTargeting
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -810,6 +1000,81 @@ func (s *AppEdit) MarshalJSON() ([]byte, error) {
 
 // ArchiveSubscriptionRequest: Request message for ArchiveSubscription.
 type ArchiveSubscriptionRequest struct {
+}
+
+// AssetModuleMetadata: Metadata of an asset module.
+type AssetModuleMetadata struct {
+	// DeliveryType: Indicates the delivery type for persistent install.
+	//
+	// Possible values:
+	//   "UNKNOWN_DELIVERY_TYPE" - Unspecified delivery type.
+	//   "INSTALL_TIME" - This module will always be downloaded as part of
+	// the initial install of the app.
+	//   "ON_DEMAND" - This module is requested on-demand, which means it
+	// will not be part of the initial install, and will only be sent when
+	// requested by the client.
+	//   "FAST_FOLLOW" - This module will be downloaded immediately after
+	// initial install finishes. The app can be opened before these modules
+	// are downloaded.
+	DeliveryType string `json:"deliveryType,omitempty"`
+
+	// Name: Module name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeliveryType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeliveryType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssetModuleMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetModuleMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AssetSliceSet: Set of asset slices belonging to a single asset
+// module.
+type AssetSliceSet struct {
+	// ApkDescription: Asset slices.
+	ApkDescription []*ApkDescription `json:"apkDescription,omitempty"`
+
+	// AssetModuleMetadata: Module level metadata.
+	AssetModuleMetadata *AssetModuleMetadata `json:"assetModuleMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApkDescription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApkDescription") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssetSliceSet) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetSliceSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AutoRenewingBasePlanType: Represents a base plan that automatically
@@ -1506,6 +1771,67 @@ func (s *DeveloperComment) MarshalJSON() ([]byte, error) {
 // DeveloperInitiatedCancellation: Information specific to cancellations
 // initiated by developers.
 type DeveloperInitiatedCancellation struct {
+}
+
+// DeviceFeature: Represents a device feature.
+type DeviceFeature struct {
+	// FeatureName: Name of the feature.
+	FeatureName string `json:"featureName,omitempty"`
+
+	// FeatureVersion: The feature version specified by android:glEsVersion
+	// or android:version in in the AndroidManifest.
+	FeatureVersion int64 `json:"featureVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FeatureName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FeatureName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceFeature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceFeatureTargeting: Targeting for a device feature.
+type DeviceFeatureTargeting struct {
+	// RequiredFeature: Feature of the device.
+	RequiredFeature *DeviceFeature `json:"requiredFeature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequiredFeature") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequiredFeature") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceFeatureTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceFeatureTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DeviceGroup: A group of devices. A group is defined by a set of
@@ -2297,6 +2623,10 @@ type GeneratedApksPerSigningKey struct {
 	// universal APK was generated for this signing key.
 	GeneratedUniversalApk *GeneratedUniversalApk `json:"generatedUniversalApk,omitempty"`
 
+	// TargetingInfo: Contains targeting information about the generated
+	// apks.
+	TargetingInfo *TargetingInfo `json:"targetingInfo,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "CertificateSha256Hash") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2928,6 +3258,37 @@ func (s *IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LanguageTargeting: Targeting based on language.
+type LanguageTargeting struct {
+	// Alternatives: Alternative languages.
+	Alternatives []string `json:"alternatives,omitempty"`
+
+	// Value: ISO-639: 2 or 3 letter language code.
+	Value []string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LanguageTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod LanguageTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDeviceTierConfigsResponse: Response listing existing device tier
 // configs.
 type ListDeviceTierConfigsResponse struct {
@@ -3283,6 +3644,100 @@ type MigrateBasePlanPricesResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ModuleMetadata: Metadata of a module.
+type ModuleMetadata struct {
+	// DeliveryType: Indicates the delivery type (e.g. on-demand) of the
+	// module.
+	//
+	// Possible values:
+	//   "UNKNOWN_DELIVERY_TYPE" - Unspecified delivery type.
+	//   "INSTALL_TIME" - This module will always be downloaded as part of
+	// the initial install of the app.
+	//   "ON_DEMAND" - This module is requested on-demand, which means it
+	// will not be part of the initial install, and will only be sent when
+	// requested by the client.
+	//   "FAST_FOLLOW" - This module will be downloaded immediately after
+	// initial install finishes. The app can be opened before these modules
+	// are downloaded.
+	DeliveryType string `json:"deliveryType,omitempty"`
+
+	// Dependencies: Names of the modules that this module directly depends
+	// on. Each module implicitly depends on the base module.
+	Dependencies []string `json:"dependencies,omitempty"`
+
+	// ModuleType: Indicates the type of this feature module.
+	//
+	// Possible values:
+	//   "UNKNOWN_MODULE_TYPE" - Unknown feature module.
+	//   "FEATURE_MODULE" - Regular feature module.
+	ModuleType string `json:"moduleType,omitempty"`
+
+	// Name: Module name.
+	Name string `json:"name,omitempty"`
+
+	// Targeting: The targeting that makes a conditional module installed.
+	// Relevant only for Split APKs.
+	Targeting *ModuleTargeting `json:"targeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeliveryType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeliveryType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ModuleMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ModuleMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ModuleTargeting: Targeting on the module level.
+type ModuleTargeting struct {
+	// DeviceFeatureTargeting: Targeting for device features.
+	DeviceFeatureTargeting []*DeviceFeatureTargeting `json:"deviceFeatureTargeting,omitempty"`
+
+	// SdkVersionTargeting: The sdk version that the variant targets
+	SdkVersionTargeting *SdkVersionTargeting `json:"sdkVersionTargeting,omitempty"`
+
+	// UserCountriesTargeting: Countries-level targeting
+	UserCountriesTargeting *UserCountriesTargeting `json:"userCountriesTargeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DeviceFeatureTargeting") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceFeatureTargeting")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ModuleTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod ModuleTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Money: Represents an amount of money with its currency type.
 type Money struct {
 	// CurrencyCode: The three-letter currency code defined in ISO 4217.
@@ -3319,6 +3774,66 @@ type Money struct {
 
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MultiAbi: Represents a list of apis.
+type MultiAbi struct {
+	// Abi: A list of targeted ABIs, as represented by the Android Platform
+	Abi []*Abi `json:"abi,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Abi") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Abi") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiAbi) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiAbi
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MultiAbiTargeting: Targeting based on multiple abis.
+type MultiAbiTargeting struct {
+	// Alternatives: Targeting of other sibling directories that were in the
+	// Bundle. For main splits this is targeting of other main splits.
+	Alternatives []*MultiAbi `json:"alternatives,omitempty"`
+
+	// Value: Value of a multi abi.
+	Value []*MultiAbi `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiAbiTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiAbiTargeting
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4490,6 +5005,240 @@ func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ScreenDensity: Represents a screen density.
+type ScreenDensity struct {
+	// DensityAlias: Alias for a screen density.
+	//
+	// Possible values:
+	//   "DENSITY_UNSPECIFIED" - Unspecified screen density.
+	//   "NODPI" - NODPI screen density.
+	//   "LDPI" - LDPI screen density.
+	//   "MDPI" - MDPI screen density.
+	//   "TVDPI" - TVDPI screen density.
+	//   "HDPI" - HDPI screen density.
+	//   "XHDPI" - XHDPI screen density.
+	//   "XXHDPI" - XXHDPI screen density.
+	//   "XXXHDPI" - XXXHDPI screen density.
+	DensityAlias string `json:"densityAlias,omitempty"`
+
+	// DensityDpi: Value for density dpi.
+	DensityDpi int64 `json:"densityDpi,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DensityAlias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DensityAlias") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScreenDensity) MarshalJSON() ([]byte, error) {
+	type NoMethod ScreenDensity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ScreenDensityTargeting: Targeting based on screen density.
+type ScreenDensityTargeting struct {
+	// Alternatives: Targeting of other sibling directories that were in the
+	// Bundle. For main splits this is targeting of other main splits.
+	Alternatives []*ScreenDensity `json:"alternatives,omitempty"`
+
+	// Value: Value of a screen density.
+	Value []*ScreenDensity `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScreenDensityTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod ScreenDensityTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SdkVersion: Represents an sdk version.
+type SdkVersion struct {
+	// Min: Inclusive minimum value of an sdk version.
+	Min int64 `json:"min,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Min") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Min") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SdkVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod SdkVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SdkVersionTargeting: Targeting based on sdk version.
+type SdkVersionTargeting struct {
+	// Alternatives: Targeting of other sibling directories that were in the
+	// Bundle. For main splits this is targeting of other main splits.
+	Alternatives []*SdkVersion `json:"alternatives,omitempty"`
+
+	// Value: Value of an sdk version.
+	Value []*SdkVersion `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SdkVersionTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod SdkVersionTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SplitApkMetadata: Holds data specific to Split APKs.
+type SplitApkMetadata struct {
+	// IsMasterSplit: Indicates whether this APK is the main split of the
+	// module.
+	IsMasterSplit bool `json:"isMasterSplit,omitempty"`
+
+	// SplitId: Id of the split.
+	SplitId string `json:"splitId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsMasterSplit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsMasterSplit") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SplitApkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SplitApkMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SplitApkVariant: Variant is a group of APKs that covers a part of the
+// device configuration space. APKs from multiple variants are never
+// combined on one device.
+type SplitApkVariant struct {
+	// ApkSet: Set of APKs, one set per module.
+	ApkSet []*ApkSet `json:"apkSet,omitempty"`
+
+	// Targeting: Variant-level targeting.
+	Targeting *VariantTargeting `json:"targeting,omitempty"`
+
+	// VariantNumber: Number of the variant, starting at 0 (unless
+	// overridden). A device will receive APKs from the first variant that
+	// matches the device configuration, with higher variant numbers having
+	// priority over lower variant numbers.
+	VariantNumber int64 `json:"variantNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApkSet") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApkSet") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SplitApkVariant) MarshalJSON() ([]byte, error) {
+	type NoMethod SplitApkVariant
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StandaloneApkMetadata: Holds data specific to Standalone APKs.
+type StandaloneApkMetadata struct {
+	// FusedModuleName: Names of the modules fused in this standalone APK.
+	FusedModuleName []string `json:"fusedModuleName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FusedModuleName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FusedModuleName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StandaloneApkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StandaloneApkMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SubscribeWithGoogleInfo: Information associated with purchases made
 // with 'Subscribe with Google'.
 type SubscribeWithGoogleInfo struct {
@@ -5548,6 +6297,40 @@ func (s *SystemFeature) MarshalJSON() ([]byte, error) {
 type SystemInitiatedCancellation struct {
 }
 
+// TargetingInfo: Targeting information about the generated apks.
+type TargetingInfo struct {
+	// AssetSliceSet: List of created asset slices.
+	AssetSliceSet []*AssetSliceSet `json:"assetSliceSet,omitempty"`
+
+	// PackageName: The package name of this app.
+	PackageName string `json:"packageName,omitempty"`
+
+	// Variant: List of the created variants.
+	Variant []*SplitApkVariant `json:"variant,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetSliceSet") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssetSliceSet") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetingInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TargetingRuleScope: Defines the scope of subscriptions which a
 // targeting rule can match to target offers to users based on past or
 // current entitlement.
@@ -5616,6 +6399,80 @@ type Testers struct {
 
 func (s *Testers) MarshalJSON() ([]byte, error) {
 	type NoMethod Testers
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TextureCompressionFormat: Represents texture compression format.
+type TextureCompressionFormat struct {
+	// Alias: Alias for texture compression format.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_TEXTURE_COMPRESSION_FORMAT" - Unspecified format.
+	//   "ETC1_RGB8" - ETC1_RGB8 format.
+	//   "PALETTED" - PALETTED format.
+	//   "THREE_DC" - THREE_DC format.
+	//   "ATC" - ATC format.
+	//   "LATC" - LATC format.
+	//   "DXT1" - DXT1 format.
+	//   "S3TC" - S3TC format.
+	//   "PVRTC" - PVRTC format.
+	//   "ASTC" - ASTC format.
+	//   "ETC2" - ETC2 format.
+	Alias string `json:"alias,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextureCompressionFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod TextureCompressionFormat
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TextureCompressionFormatTargeting: Targeting by a texture compression
+// format.
+type TextureCompressionFormatTargeting struct {
+	// Alternatives: List of alternative TCFs (TCFs targeted by the sibling
+	// splits).
+	Alternatives []*TextureCompressionFormat `json:"alternatives,omitempty"`
+
+	// Value: The list of targeted TCFs. Should not be empty.
+	Value []*TextureCompressionFormat `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextureCompressionFormatTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod TextureCompressionFormatTargeting
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6150,6 +7007,39 @@ func (s *UserComment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UserCountriesTargeting: Describes an inclusive/exclusive list of
+// country codes that module targets.
+type UserCountriesTargeting struct {
+	// CountryCodes: List of country codes in the two-letter CLDR territory
+	// format.
+	CountryCodes []string `json:"countryCodes,omitempty"`
+
+	// Exclude: Indicates if the list above is exclusive.
+	Exclude bool `json:"exclude,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CountryCodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CountryCodes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserCountriesTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod UserCountriesTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserCountrySet: A set of user countries. A country set determines
 // what variation of app content gets served to a specific location.
 type UserCountrySet struct {
@@ -6287,6 +7177,48 @@ type Variant struct {
 
 func (s *Variant) MarshalJSON() ([]byte, error) {
 	type NoMethod Variant
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VariantTargeting: Targeting on the level of variants.
+type VariantTargeting struct {
+	// AbiTargeting: The abi that the variant targets
+	AbiTargeting *AbiTargeting `json:"abiTargeting,omitempty"`
+
+	// MultiAbiTargeting: Multi-api-level targeting
+	MultiAbiTargeting *MultiAbiTargeting `json:"multiAbiTargeting,omitempty"`
+
+	// ScreenDensityTargeting: The screen densities that this variant
+	// supports
+	ScreenDensityTargeting *ScreenDensityTargeting `json:"screenDensityTargeting,omitempty"`
+
+	// SdkVersionTargeting: The sdk version that the variant targets
+	SdkVersionTargeting *SdkVersionTargeting `json:"sdkVersionTargeting,omitempty"`
+
+	// TextureCompressionFormatTargeting: Texture-compression-format-level
+	// targeting
+	TextureCompressionFormatTargeting *TextureCompressionFormatTargeting `json:"textureCompressionFormatTargeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AbiTargeting") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbiTargeting") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VariantTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod VariantTargeting
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

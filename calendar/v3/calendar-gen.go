@@ -1548,8 +1548,8 @@ type Event struct {
 	// compatibility reasons.
 	Visibility string `json:"visibility,omitempty"`
 
-	// WorkingLocationProperties: Working Location event data. Read-only.
-	// Developer Preview.
+	// WorkingLocationProperties: Working Location event data. Developer
+	// Preview.
 	WorkingLocationProperties *EventWorkingLocationProperties `json:"workingLocationProperties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

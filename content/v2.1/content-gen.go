@@ -12928,6 +12928,12 @@ type Product struct {
 	// page.
 	CanonicalLink string `json:"canonicalLink,omitempty"`
 
+	// Certifications: Product certification
+	// (https://support.google.com/merchants/answer/13528839), introduced
+	// for EU energy efficiency labeling compliance using the EU EPREL
+	// (https://eprel.ec.europa.eu/screen/home) database.
+	Certifications []*ProductCertification `json:"certifications,omitempty"`
+
 	// Channel: Required. The item's channel (online or local). Acceptable
 	// values are: - "local" - "online"
 	Channel string `json:"channel,omitempty"`
@@ -13342,6 +13348,48 @@ type ProductAmount struct {
 
 func (s *ProductAmount) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductAmount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductCertification: Product certification
+// (https://support.google.com/merchants/answer/13528839), introduced
+// for EU energy efficiency labeling compliance using the EU EPREL
+// (https://eprel.ec.europa.eu/screen/home) database.
+type ProductCertification struct {
+	// CertificationAuthority: The certification authority, for example
+	// "European_Commission". Maximum length is 2000 characters.
+	CertificationAuthority string `json:"certificationAuthority,omitempty"`
+
+	// CertificationCode: The certification code, for eaxample "123456".
+	// Maximum length is 2000 characters.
+	CertificationCode string `json:"certificationCode,omitempty"`
+
+	// CertificationName: The name of the certification, for example
+	// "EPREL". Maximum length is 2000 characters.
+	CertificationName string `json:"certificationName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificationAuthority") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificationAuthority")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductCertification) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductCertification
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18275,6 +18323,16 @@ type ServiceStoreConfigCutoffConfig struct {
 	// LocalCutoffTime: Time in hours and minutes in the local timezone when
 	// local delivery ends.
 	LocalCutoffTime *ServiceStoreConfigCutoffConfigLocalCutoffTime `json:"localCutoffTime,omitempty"`
+
+	// NoDeliveryPostCutoff: Merchants can opt-out of showing n+1 day local
+	// delivery when they have a shipping service configured to n day local
+	// delivery. For example, if the shipping service defines same-day
+	// delivery, and it's past the cut-off, setting this field to `true`
+	// results in the calculated shipping service rate returning
+	// `NO_DELIVERY_POST_CUTOFF`. In the same example, setting this field to
+	// `false` results in the calculated shipping time being one day. This
+	// is only for local delivery.
+	NoDeliveryPostCutoff bool `json:"noDeliveryPostCutoff,omitempty"`
 
 	// StoreCloseOffsetHours: Represents cutoff time as the number of hours
 	// before store closing. Mutually exclusive with other fields (hour and

@@ -2806,6 +2806,9 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	// Message: The message describing the data scan job event.
 	Message string `json:"message,omitempty"`
 
+	// PostScanActionsResult: The result of post scan actions.
+	PostScanActionsResult *GoogleCloudDataplexV1DataScanEventPostScanActionsResult `json:"postScanActionsResult,omitempty"`
+
 	// Scope: The scope of the data scan (e.g. full, incremental).
 	//
 	// Possible values:
@@ -3038,6 +3041,76 @@ type GoogleCloudDataplexV1DataScanEventDataQualityResult struct {
 
 func (s *GoogleCloudDataplexV1DataScanEventDataQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventDataQualityResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataScanEventPostScanActionsResult: Post scan
+// actions result for data scan job.
+type GoogleCloudDataplexV1DataScanEventPostScanActionsResult struct {
+	// BigqueryExportResult: The result of BigQuery export post scan action.
+	BigqueryExportResult *GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult `json:"bigqueryExportResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BigqueryExportResult") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryExportResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataScanEventPostScanActionsResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanEventPostScanActionsResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportR
+// esult: The result of BigQuery export post scan action.
+type GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult struct {
+	// Message: Additional information about the BigQuery exporting.
+	Message string `json:"message,omitempty"`
+
+	// State: Execution state for the BigQuery exporting.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The exporting state is unspecified.
+	//   "SUCCEEDED" - The exporting completed successfully.
+	//   "FAILED" - The exporting is no longer running due to an error.
+	//   "SKIPPED" - The exporting is skipped due to no valid scan result to
+	// export (usually caused by scan failed).
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanEventPostScanActionsResultBigQueryExportResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

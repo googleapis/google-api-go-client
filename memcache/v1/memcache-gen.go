@@ -1042,6 +1042,11 @@ type Instance struct {
 	// on each node.
 	Parameters *MemcacheParameters `json:"parameters,omitempty"`
 
+	// ReservedIpRangeId: Optional. Contains the id of allocated IP address
+	// ranges associated with the private service access connection for
+	// example, "test-default" associated with IP range 10.0.0.0/29.
+	ReservedIpRangeId []string `json:"reservedIpRangeId,omitempty"`
+
 	// State: Output only. The state of this Memcached instance.
 	//
 	// Possible values:

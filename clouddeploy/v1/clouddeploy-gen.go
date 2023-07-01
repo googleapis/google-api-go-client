@@ -3682,7 +3682,7 @@ type Target struct {
 	// format and size limitations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// AnthosCluster: Information specifying an Anthos Cluster.
+	// AnthosCluster: Optional. Information specifying an Anthos Cluster.
 	AnthosCluster *AnthosCluster `json:"anthosCluster,omitempty"`
 
 	// CreateTime: Output only. Time at which the `Target` was created.
@@ -3710,7 +3710,7 @@ type Target struct {
 	// specified in `DefaultPool`.
 	ExecutionConfigs []*ExecutionConfig `json:"executionConfigs,omitempty"`
 
-	// Gke: Information specifying a GKE Cluster.
+	// Gke: Optional. Information specifying a GKE Cluster.
 	Gke *GkeCluster `json:"gke,omitempty"`
 
 	// Labels: Optional. Labels are attributes that can be set and used by
@@ -3723,7 +3723,7 @@ type Target struct {
 	// keys and values are additionally constrained to be <= 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MultiTarget: Information specifying a multiTarget.
+	// MultiTarget: Optional. Information specifying a multiTarget.
 	MultiTarget *MultiTarget `json:"multiTarget,omitempty"`
 
 	// Name: Optional. Name of the `Target`. Format is
@@ -3734,7 +3734,7 @@ type Target struct {
 	// approval.
 	RequireApproval bool `json:"requireApproval,omitempty"`
 
-	// Run: Information specifying a Cloud Run deployment target.
+	// Run: Optional. Information specifying a Cloud Run deployment target.
 	Run *CloudRunLocation `json:"run,omitempty"`
 
 	// TargetId: Output only. Resource id of the `Target`.

@@ -603,9 +603,6 @@ type Destination struct {
 	// running in the same project as the trigger.
 	Gke *GKE `json:"gke,omitempty"`
 
-	// HttpEndpoint: An HTTP endpoint destination described by an URI.
-	HttpEndpoint *HttpEndpoint `json:"httpEndpoint,omitempty"`
-
 	// Workflow: The resource name of the Workflow whose Executions are
 	// triggered by the events. The Workflow resource should be deployed in
 	// the same project as the trigger. Format:
@@ -1074,49 +1071,6 @@ type GoogleRpcStatus struct {
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HttpEndpoint: Represents a HTTP endpoint destination.
-type HttpEndpoint struct {
-	// ForwardDnsRequests: Optional. Forwards DNS requests to the VPC
-	// specified by network config to resolve the HTTP endpoint. Default to
-	// false. If set to true, Eventarc will create a peering zone to the
-	// consumer VPC and forward DNS requests. See:
-	// https://cloud.google.com/dns/docs/zones/zones-overview#peering_zones
-	// Enable this if the URI uses an internal DNS name or a private Cloud
-	// DNS zone.
-	ForwardDnsRequests bool `json:"forwardDnsRequests,omitempty"`
-
-	// Uri: Required. The URI of the HTTP enpdoint. The value must be a
-	// RFC2396 URI string. Examples: `http://10.10.10.8:80/route`,
-	// `http://svc.us-central1.p.local:8080/`. Only HTTP and HTTPS protocols
-	// are supported. The host can be either a static IP addressable from
-	// the VPC specified by the network config, or an internal DNS hostname
-	// of the service resolvable via Cloud DNS.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ForwardDnsRequests")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ForwardDnsRequests") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HttpEndpoint) MarshalJSON() ([]byte, error) {
-	type NoMethod HttpEndpoint
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

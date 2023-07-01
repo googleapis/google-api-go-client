@@ -1460,11 +1460,41 @@ func (s *SqlserverValidation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SqlserverValidationDetails: Message containing collected data names
+// and values.
+type SqlserverValidationDetails struct {
+	// Fields: Required. Collected data is in format.
+	Fields map[string]string `json:"fields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlserverValidationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlserverValidationDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SqlserverValidationValidationDetail: Message describing the Sqlserver
 // validation metrics.
 type SqlserverValidationValidationDetail struct {
-	// Fields:  pairs of metrics data: column name & column value.
-	Fields map[string]string `json:"fields,omitempty"`
+	// Details: Required. Details wraps map that represents collected data
+	// names and values.
+	Details []*SqlserverValidationDetails `json:"details,omitempty"`
 
 	// Type: The Sqlserver system that the validation data is from.
 	//
@@ -1480,7 +1510,7 @@ type SqlserverValidationValidationDetail struct {
 	//   "DB_MAX_SERVER_MEMORY" - The MAX_SERVER_MEMORY table
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// ForceSendFields is a list of field names (e.g. "Details") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1488,8 +1518,8 @@ type SqlserverValidationValidationDetail struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

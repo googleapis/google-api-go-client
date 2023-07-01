@@ -849,6 +849,10 @@ type CryptoKey struct {
 	// AsymmetricSign and GetPublicKey.
 	//   "ASYMMETRIC_DECRYPT" - CryptoKeys with this purpose may be used
 	// with AsymmetricDecrypt and GetPublicKey.
+	//   "RAW_ENCRYPT_DECRYPT" - CryptoKeys with this purpose may be used
+	// with RawEncrypt and RawDecrypt. This purpose is meant to be used for
+	// interoperable symmetric encryption and does not support automatic
+	// CryptoKey rotation.
 	//   "MAC" - CryptoKeys with this purpose may be used with MacSign.
 	Purpose string `json:"purpose,omitempty"`
 
@@ -907,6 +911,8 @@ type CryptoKeyVersion struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -1120,6 +1126,8 @@ type CryptoKeyVersionTemplate struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -1870,6 +1878,8 @@ type ImportCryptoKeyVersionRequest struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -2931,6 +2941,8 @@ type PublicKey struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -3048,6 +3060,417 @@ type PublicKey struct {
 
 func (s *PublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod PublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawDecryptRequest: Request message for
+// KeyManagementService.RawDecrypt.
+type RawDecryptRequest struct {
+	// AdditionalAuthenticatedData: Optional. Optional data that must match
+	// the data originally supplied in
+	// RawEncryptRequest.additional_authenticated_data.
+	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
+
+	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
+	// checksum of the RawDecryptRequest.additional_authenticated_data. If
+	// specified, KeyManagementService will verify the integrity of the
+	// received additional_authenticated_data using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(additional_authenticated_data) is equal to
+	// additional_authenticated_data_crc32c, and if so, perform a limited
+	// number of retries. A persistent mismatch may indicate an issue in
+	// your computation of the CRC32C checksum. Note: This field is defined
+	// as int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	AdditionalAuthenticatedDataCrc32c int64 `json:"additionalAuthenticatedDataCrc32c,omitempty,string"`
+
+	// Ciphertext: Required. The encrypted data originally returned in
+	// RawEncryptResponse.ciphertext.
+	Ciphertext string `json:"ciphertext,omitempty"`
+
+	// CiphertextCrc32c: Optional. An optional CRC32C checksum of the
+	// RawDecryptRequest.ciphertext. If specified, KeyManagementService will
+	// verify the integrity of the received ciphertext using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(ciphertext) is equal to ciphertext_crc32c,
+	// and if so, perform a limited number of retries. A persistent mismatch
+	// may indicate an issue in your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across different languages. However, it is a non-negative integer,
+	// which will never exceed 2^32-1, and can be safely downconverted to
+	// uint32 in languages that support this type.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
+
+	// InitializationVector: Required. The initialization vector (IV) used
+	// during encryption, which must match the data originally provided in
+	// RawEncryptResponse.initialization_vector.
+	InitializationVector string `json:"initializationVector,omitempty"`
+
+	// InitializationVectorCrc32c: Optional. An optional CRC32C checksum of
+	// the RawDecryptRequest.initialization_vector. If specified,
+	// KeyManagementService will verify the integrity of the received
+	// initialization_vector using this checksum. KeyManagementService will
+	// report an error if the checksum verification fails. If you receive a
+	// checksum error, your client should verify that
+	// CRC32C(initialization_vector) is equal to
+	// initialization_vector_crc32c, and if so, perform a limited number of
+	// retries. A persistent mismatch may indicate an issue in your
+	// computation of the CRC32C checksum. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	InitializationVectorCrc32c int64 `json:"initializationVectorCrc32c,omitempty,string"`
+
+	// TagLength: The length of the authentication tag that is appended to
+	// the end of the ciphertext. If unspecified (0), the default value for
+	// the key's algorithm will be used (for AES-GCM, the default value is
+	// 16).
+	TagLength int64 `json:"tagLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawDecryptRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RawDecryptRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawDecryptResponse: Response message for
+// KeyManagementService.RawDecrypt.
+type RawDecryptResponse struct {
+	// Plaintext: The decrypted data.
+	Plaintext string `json:"plaintext,omitempty"`
+
+	// PlaintextCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned RawDecryptResponse.plaintext. An integrity check of
+	// plaintext can be performed by computing the CRC32C checksum of
+	// plaintext and comparing your results to this field. Discard the
+	// response in case of non-matching checksum values, and perform a
+	// limited number of retries. A persistent mismatch may indicate an
+	// issue in your computation of the CRC32C checksum. Note: receiving
+	// this response message indicates that KeyManagementService is able to
+	// successfully decrypt the ciphertext. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	PlaintextCrc32c int64 `json:"plaintextCrc32c,omitempty,string"`
+
+	// ProtectionLevel: The ProtectionLevel of the CryptoKeyVersion used in
+	// decryption.
+	//
+	// Possible values:
+	//   "PROTECTION_LEVEL_UNSPECIFIED" - Not specified.
+	//   "SOFTWARE" - Crypto operations are performed in software.
+	//   "HSM" - Crypto operations are performed in a Hardware Security
+	// Module.
+	//   "EXTERNAL" - Crypto operations are performed by an external key
+	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
+	ProtectionLevel string `json:"protectionLevel,omitempty"`
+
+	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification
+	// field. A flag indicating whether
+	// RawDecryptRequest.additional_authenticated_data_crc32c was received
+	// by KeyManagementService and used for the integrity verification of
+	// additional_authenticated_data. A false value of this field indicates
+	// either that // RawDecryptRequest.additional_authenticated_data_crc32c
+	// was left unset or that it was not delivered to KeyManagementService.
+	// If you've set RawDecryptRequest.additional_authenticated_data_crc32c
+	// but this field is still false, discard the response and perform a
+	// limited number of retries.
+	VerifiedAdditionalAuthenticatedDataCrc32c bool `json:"verifiedAdditionalAuthenticatedDataCrc32c,omitempty"`
+
+	// VerifiedCiphertextCrc32c: Integrity verification field. A flag
+	// indicating whether RawDecryptRequest.ciphertext_crc32c was received
+	// by KeyManagementService and used for the integrity verification of
+	// the ciphertext. A false value of this field indicates either that
+	// RawDecryptRequest.ciphertext_crc32c was left unset or that it was not
+	// delivered to KeyManagementService. If you've set
+	// RawDecryptRequest.ciphertext_crc32c but this field is still false,
+	// discard the response and perform a limited number of retries.
+	VerifiedCiphertextCrc32c bool `json:"verifiedCiphertextCrc32c,omitempty"`
+
+	// VerifiedInitializationVectorCrc32c: Integrity verification field. A
+	// flag indicating whether
+	// RawDecryptRequest.initialization_vector_crc32c was received by
+	// KeyManagementService and used for the integrity verification of
+	// initialization_vector. A false value of this field indicates either
+	// that RawDecryptRequest.initialization_vector_crc32c was left unset or
+	// that it was not delivered to KeyManagementService. If you've set
+	// RawDecryptRequest.initialization_vector_crc32c but this field is
+	// still false, discard the response and perform a limited number of
+	// retries.
+	VerifiedInitializationVectorCrc32c bool `json:"verifiedInitializationVectorCrc32c,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Plaintext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Plaintext") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawDecryptResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RawDecryptResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawEncryptRequest: Request message for
+// KeyManagementService.RawEncrypt.
+type RawEncryptRequest struct {
+	// AdditionalAuthenticatedData: Optional. Optional data that, if
+	// specified, must also be provided during decryption through
+	// RawDecryptRequest.additional_authenticated_data. This field may only
+	// be used in conjunction with an algorithm that accepts additional
+	// authenticated data (for example, AES-GCM). The maximum size depends
+	// on the key version's protection_level. For SOFTWARE keys, the
+	// plaintext must be no larger than 64KiB. For HSM keys, the combined
+	// length of the plaintext and additional_authenticated_data fields must
+	// be no larger than 8KiB.
+	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
+
+	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
+	// checksum of the RawEncryptRequest.additional_authenticated_data. If
+	// specified, KeyManagementService will verify the integrity of the
+	// received additional_authenticated_data using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(additional_authenticated_data) is equal to
+	// additional_authenticated_data_crc32c, and if so, perform a limited
+	// number of retries. A persistent mismatch may indicate an issue in
+	// your computation of the CRC32C checksum. Note: This field is defined
+	// as int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	AdditionalAuthenticatedDataCrc32c int64 `json:"additionalAuthenticatedDataCrc32c,omitempty,string"`
+
+	// InitializationVector: Optional. A customer-supplied initialization
+	// vector that will be used for encryption. If it is not provided for
+	// AES-CBC and AES-CTR, one will be generated. It will be returned in
+	// RawEncryptResponse.initialization_vector.
+	InitializationVector string `json:"initializationVector,omitempty"`
+
+	// InitializationVectorCrc32c: Optional. An optional CRC32C checksum of
+	// the RawEncryptRequest.initialization_vector. If specified,
+	// KeyManagementService will verify the integrity of the received
+	// initialization_vector using this checksum. KeyManagementService will
+	// report an error if the checksum verification fails. If you receive a
+	// checksum error, your client should verify that
+	// CRC32C(initialization_vector) is equal to
+	// initialization_vector_crc32c, and if so, perform a limited number of
+	// retries. A persistent mismatch may indicate an issue in your
+	// computation of the CRC32C checksum. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	InitializationVectorCrc32c int64 `json:"initializationVectorCrc32c,omitempty,string"`
+
+	// Plaintext: Required. The data to encrypt. Must be no larger than
+	// 64KiB. The maximum size depends on the key version's
+	// protection_level. For SOFTWARE keys, the plaintext must be no larger
+	// than 64KiB. For HSM keys, the combined length of the plaintext and
+	// additional_authenticated_data fields must be no larger than 8KiB.
+	Plaintext string `json:"plaintext,omitempty"`
+
+	// PlaintextCrc32c: Optional. An optional CRC32C checksum of the
+	// RawEncryptRequest.plaintext. If specified, KeyManagementService will
+	// verify the integrity of the received plaintext using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(plaintext) is equal to plaintext_crc32c,
+	// and if so, perform a limited number of retries. A persistent mismatch
+	// may indicate an issue in your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across different languages. However, it is a non-negative integer,
+	// which will never exceed 2^32-1, and can be safely downconverted to
+	// uint32 in languages that support this type.
+	PlaintextCrc32c int64 `json:"plaintextCrc32c,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawEncryptRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RawEncryptRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawEncryptResponse: Response message for
+// KeyManagementService.RawEncrypt.
+type RawEncryptResponse struct {
+	// Ciphertext: The encrypted data. In the case of AES-GCM, the
+	// authentication tag is the tag_length bytes at the end of this field.
+	Ciphertext string `json:"ciphertext,omitempty"`
+
+	// CiphertextCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned RawEncryptResponse.ciphertext. An integrity check of
+	// ciphertext can be performed by computing the CRC32C checksum of
+	// ciphertext and comparing your results to this field. Discard the
+	// response in case of non-matching checksum values, and perform a
+	// limited number of retries. A persistent mismatch may indicate an
+	// issue in your computation of the CRC32C checksum. Note: This field is
+	// defined as int64 for reasons of compatibility across different
+	// languages. However, it is a non-negative integer, which will never
+	// exceed 2^32-1, and can be safely downconverted to uint32 in languages
+	// that support this type.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
+
+	// InitializationVector: The initialization vector (IV) generated by the
+	// service during encryption. This value must be stored and provided in
+	// RawDecryptRequest.initialization_vector at decryption time.
+	InitializationVector string `json:"initializationVector,omitempty"`
+
+	// InitializationVectorCrc32c: Integrity verification field. A CRC32C
+	// checksum of the returned RawEncryptResponse.initialization_vector. An
+	// integrity check of initialization_vector can be performed by
+	// computing the CRC32C checksum of initialization_vector and comparing
+	// your results to this field. Discard the response in case of
+	// non-matching checksum values, and perform a limited number of
+	// retries. A persistent mismatch may indicate an issue in your
+	// computation of the CRC32C checksum. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	InitializationVectorCrc32c int64 `json:"initializationVectorCrc32c,omitempty,string"`
+
+	// Name: The resource name of the CryptoKeyVersion used in encryption.
+	// Check this field to verify that the intended resource was used for
+	// encryption.
+	Name string `json:"name,omitempty"`
+
+	// ProtectionLevel: The ProtectionLevel of the CryptoKeyVersion used in
+	// encryption.
+	//
+	// Possible values:
+	//   "PROTECTION_LEVEL_UNSPECIFIED" - Not specified.
+	//   "SOFTWARE" - Crypto operations are performed in software.
+	//   "HSM" - Crypto operations are performed in a Hardware Security
+	// Module.
+	//   "EXTERNAL" - Crypto operations are performed by an external key
+	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
+	ProtectionLevel string `json:"protectionLevel,omitempty"`
+
+	// TagLength: The length of the authentication tag that is appended to
+	// the end of the ciphertext.
+	TagLength int64 `json:"tagLength,omitempty"`
+
+	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification
+	// field. A flag indicating whether
+	// RawEncryptRequest.additional_authenticated_data_crc32c was received
+	// by KeyManagementService and used for the integrity verification of
+	// additional_authenticated_data. A false value of this field indicates
+	// either that // RawEncryptRequest.additional_authenticated_data_crc32c
+	// was left unset or that it was not delivered to KeyManagementService.
+	// If you've set RawEncryptRequest.additional_authenticated_data_crc32c
+	// but this field is still false, discard the response and perform a
+	// limited number of retries.
+	VerifiedAdditionalAuthenticatedDataCrc32c bool `json:"verifiedAdditionalAuthenticatedDataCrc32c,omitempty"`
+
+	// VerifiedInitializationVectorCrc32c: Integrity verification field. A
+	// flag indicating whether
+	// RawEncryptRequest.initialization_vector_crc32c was received by
+	// KeyManagementService and used for the integrity verification of
+	// initialization_vector. A false value of this field indicates either
+	// that RawEncryptRequest.initialization_vector_crc32c was left unset or
+	// that it was not delivered to KeyManagementService. If you've set
+	// RawEncryptRequest.initialization_vector_crc32c but this field is
+	// still false, discard the response and perform a limited number of
+	// retries.
+	VerifiedInitializationVectorCrc32c bool `json:"verifiedInitializationVectorCrc32c,omitempty"`
+
+	// VerifiedPlaintextCrc32c: Integrity verification field. A flag
+	// indicating whether RawEncryptRequest.plaintext_crc32c was received by
+	// KeyManagementService and used for the integrity verification of the
+	// plaintext. A false value of this field indicates either that
+	// RawEncryptRequest.plaintext_crc32c was left unset or that it was not
+	// delivered to KeyManagementService. If you've set
+	// RawEncryptRequest.plaintext_crc32c but this field is still false,
+	// discard the response and perform a limited number of retries.
+	VerifiedPlaintextCrc32c bool `json:"verifiedPlaintextCrc32c,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Ciphertext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ciphertext") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawEncryptResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RawEncryptResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10262,6 +10685,298 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) Do(opts 
 	//   },
 	//   "response": {
 	//     "$ref": "CryptoKeyVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// method id "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawDecrypt":
+
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall struct {
+	s                 *Service
+	name              string
+	rawdecryptrequest *RawDecryptRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// RawDecrypt: Decrypts data that was originally encrypted using a raw
+// cryptographic mechanism. The CryptoKey.purpose must be
+// RAW_ENCRYPT_DECRYPT.
+//
+//   - name: The resource name of the CryptoKeyVersion to use for
+//     decryption.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) RawDecrypt(name string, rawdecryptrequest *RawDecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rawdecryptrequest = rawdecryptrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rawdecryptrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rawDecrypt")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawDecrypt" call.
+// Exactly one of *RawDecryptResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RawDecryptResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Do(opts ...googleapi.CallOption) (*RawDecryptResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RawDecryptResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Decrypts data that was originally encrypted using a raw cryptographic mechanism. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:rawDecrypt",
+	//   "httpMethod": "POST",
+	//   "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawDecrypt",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the CryptoKeyVersion to use for decryption.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:rawDecrypt",
+	//   "request": {
+	//     "$ref": "RawDecryptRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RawDecryptResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// method id "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawEncrypt":
+
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall struct {
+	s                 *Service
+	name              string
+	rawencryptrequest *RawEncryptRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// RawEncrypt: Encrypts data using portable cryptographic primitives.
+// Most users should choose Encrypt and Decrypt rather than their raw
+// counterparts. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.
+//
+//   - name: The resource name of the CryptoKeyVersion to use for
+//     encryption.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) RawEncrypt(name string, rawencryptrequest *RawEncryptRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rawencryptrequest = rawencryptrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rawencryptrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rawEncrypt")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawEncrypt" call.
+// Exactly one of *RawEncryptResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RawEncryptResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Do(opts ...googleapi.CallOption) (*RawEncryptResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RawEncryptResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Encrypts data using portable cryptographic primitives. Most users should choose Encrypt and Decrypt rather than their raw counterparts. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:rawEncrypt",
+	//   "httpMethod": "POST",
+	//   "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawEncrypt",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the CryptoKeyVersion to use for encryption.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:rawEncrypt",
+	//   "request": {
+	//     "$ref": "RawEncryptRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RawEncryptResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

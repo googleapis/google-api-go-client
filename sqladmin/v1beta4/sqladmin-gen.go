@@ -790,6 +790,11 @@ type CloneContext struct {
 	// the source instance is cloned.
 	PointInTime string `json:"pointInTime,omitempty"`
 
+	// PreferredZone: Optional. (Point-in-time recovery for PostgreSQL only)
+	// Clone to an instance in the specified zone. If no zone is specified,
+	// clone to the same zone as the source instance.
+	PreferredZone string `json:"preferredZone,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -941,6 +946,35 @@ type ConnectSettings struct {
 
 func (s *ConnectSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataCacheConfig: Data cache configurations.
+type DataCacheConfig struct {
+	// DataCacheEnabled: Whether data cache is enabled for the instance.
+	DataCacheEnabled bool `json:"dataCacheEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataCacheEnabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataCacheEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataCacheConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DataCacheConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3833,6 +3867,9 @@ type Settings struct {
 	// Generation instances.
 	CrashSafeReplicationEnabled bool `json:"crashSafeReplicationEnabled,omitempty"`
 
+	// DataCacheConfig: Configuration for data cache.
+	DataCacheConfig *DataCacheConfig `json:"dataCacheConfig,omitempty"`
+
 	// DataDiskSizeGb: The size of data disk, in GB. The data disk size
 	// minimum is 10GB.
 	DataDiskSizeGb int64 `json:"dataDiskSizeGb,omitempty,string"`
@@ -3863,6 +3900,14 @@ type Settings struct {
 
 	// DenyMaintenancePeriods: Deny maintenance periods
 	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
+
+	// Edition: Optional. The edition of the instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - The instance did not specify the edition.
+	//   "ENTERPRISE" - The instance is an enterprise edition.
+	//   "ENTERPRISE_PLUS" - The instance is an Enterprise Plus edition.
+	Edition string `json:"edition,omitempty"`
 
 	// InsightsConfig: Insights configuration, for now relevant only for
 	// Postgres.
@@ -4080,6 +4125,9 @@ type SqlExternalSyncSettingError struct {
 	// file or contains invalid file information.
 	//   "UNSUPPORTED_DATABASE_SETTINGS" - The source instance has
 	// unsupported database settings for migration.
+	//   "MYSQL_PARALLEL_IMPORT_INSUFFICIENT_PRIVILEGE" - The replication
+	// user is missing parallel import specific privileges. (e.g. LOCK
+	// TABLES) for MySQL.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -4141,6 +4189,43 @@ type SqlInstancesGetDiskShrinkConfigResponse struct {
 
 func (s *SqlInstancesGetDiskShrinkConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesGetDiskShrinkConfigResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlInstancesGetLatestRecoveryTimeResponse: Instance get latest
+// recovery time response.
+type SqlInstancesGetLatestRecoveryTimeResponse struct {
+	// Kind: This is always `sql#getLatestRecoveryTime`.
+	Kind string `json:"kind,omitempty"`
+
+	// LatestRecoveryTime: Timestamp, identifies the latest recovery time of
+	// the source instance.
+	LatestRecoveryTime string `json:"latestRecoveryTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlInstancesGetLatestRecoveryTimeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlInstancesGetLatestRecoveryTimeResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11246,6 +11331,166 @@ func (c *ProjectsInstancesGetDiskShrinkConfigCall) Do(opts ...googleapi.CallOpti
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/getDiskShrinkConfig",
 	//   "response": {
 	//     "$ref": "SqlInstancesGetDiskShrinkConfigResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.projects.instances.getLatestRecoveryTime":
+
+type ProjectsInstancesGetLatestRecoveryTimeCall struct {
+	s            *Service
+	project      string
+	instance     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetLatestRecoveryTime: Get Latest Recovery Time for a given instance.
+//
+//   - instance: Cloud SQL instance ID. This does not include the project
+//     ID.
+//   - project: Project ID of the project that contains the instance.
+func (r *ProjectsInstancesService) GetLatestRecoveryTime(project string, instance string) *ProjectsInstancesGetLatestRecoveryTimeCall {
+	c := &ProjectsInstancesGetLatestRecoveryTimeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesGetLatestRecoveryTimeCall) Fields(s ...googleapi.Field) *ProjectsInstancesGetLatestRecoveryTimeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesGetLatestRecoveryTimeCall) IfNoneMatch(entityTag string) *ProjectsInstancesGetLatestRecoveryTimeCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesGetLatestRecoveryTimeCall) Context(ctx context.Context) *ProjectsInstancesGetLatestRecoveryTimeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesGetLatestRecoveryTimeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesGetLatestRecoveryTimeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/getLatestRecoveryTime")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.projects.instances.getLatestRecoveryTime" call.
+// Exactly one of *SqlInstancesGetLatestRecoveryTimeResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *SqlInstancesGetLatestRecoveryTimeResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsInstancesGetLatestRecoveryTimeCall) Do(opts ...googleapi.CallOption) (*SqlInstancesGetLatestRecoveryTimeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SqlInstancesGetLatestRecoveryTimeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get Latest Recovery Time for a given instance.",
+	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/getLatestRecoveryTime",
+	//   "httpMethod": "GET",
+	//   "id": "sql.projects.instances.getLatestRecoveryTime",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID of the project that contains the instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/getLatestRecoveryTime",
+	//   "response": {
+	//     "$ref": "SqlInstancesGetLatestRecoveryTimeResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

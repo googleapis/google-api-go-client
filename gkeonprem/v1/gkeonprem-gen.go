@@ -3616,6 +3616,74 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Metric: Progress metric is (string, int|float|string) pair.
+type Metric struct {
+	// DoubleValue: For metrics with floating point value.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+
+	// IntValue: For metrics with integer value.
+	IntValue int64 `json:"intValue,omitempty,string"`
+
+	// Metric: Required. The metric name.
+	//
+	// Possible values:
+	//   "METRIC_ID_UNSPECIFIED" - Not set.
+	//   "NODES_TOTAL" - The total number of nodes being actuated.
+	//   "NODES_DRAINING" - The number of nodes draining.
+	//   "NODES_UPGRADING" - The number of nodes actively upgrading.
+	//   "NODES_PENDING_UPGRADE" - The number of nodes to be upgraded.
+	//   "NODES_UPGRADED" - The number of nodes upgraded.
+	//   "NODES_FAILED" - The number of nodes to fail actuation.
+	//   "NODES_HEALTHY" - The number of nodes healthy.
+	//   "NODES_RECONCILING" - The number of nodes reconciling.
+	//   "NODES_IN_MAINTENANCE" - The number of nodes in maintenance mode.
+	//   "PREFLIGHTS_COMPLETED" - The number of completed preflight checks.
+	//   "PREFLIGHTS_RUNNING" - The number of preflight checks running.
+	//   "PREFLIGHTS_FAILED" - The number of preflight checks failed.
+	//   "PREFLIGHTS_TOTAL" - The total number of preflight checks.
+	Metric string `json:"metric,omitempty"`
+
+	// StringValue: For metrics with custom values (ratios, visual progress,
+	// etc.).
+	StringValue string `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DoubleValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metric) MarshalJSON() ([]byte, error) {
+	type NoMethod Metric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Metric) UnmarshalJSON(data []byte) error {
+	type NoMethod Metric
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
+}
+
 // NodeTaint: NodeTaint applied to every Kubernetes node in a node pool.
 // Kubernetes taints can be used together with tolerations to control
 // how workloads are scheduled to your nodes. Node taints are permanent.
@@ -3744,6 +3812,10 @@ type OperationMetadata struct {
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
+	// Progress: Output only. Detailed progress information for the
+	// operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have
 	// successfully been cancelled have [Operation.error] value with a
@@ -3790,6 +3862,90 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationProgress: Information about operation progress.
+// LINT.IfChange
+type OperationProgress struct {
+	// Stages: The stages of the operation.
+	Stages []*OperationStage `json:"stages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Stages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stages") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationProgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationStage: Information about a particular stage of an operation.
+type OperationStage struct {
+	// EndTime: Time the stage ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Metrics: Progress metric bundle.
+	Metrics []*Metric `json:"metrics,omitempty"`
+
+	// Stage: The high-level stage of the operation.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - Not set.
+	//   "PREFLIGHT_CHECK" - Preflight checks are running.
+	//   "CONFIGURE" - Resource is being configured.
+	//   "DEPLOY" - Resource is being deployed.
+	//   "HEALTH_CHECK" - Waiting for the resource to become healthy.
+	//   "UPDATE" - Resource is being updated.
+	Stage string `json:"stage,omitempty"`
+
+	// StartTime: Time the stage started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: Output only. State of the stage.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "PENDING" - The stage is pending.
+	//   "RUNNING" - The stage is running
+	//   "SUCCEEDED" - The stage has completed successfully.
+	//   "FAILED" - The stage has failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationStage) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationStage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

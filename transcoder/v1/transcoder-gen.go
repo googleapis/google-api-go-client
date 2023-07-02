@@ -213,10 +213,6 @@ func (s *AdBreak) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Aes128Encryption: Configuration for AES-128 encryption.
-type Aes128Encryption struct {
-}
-
 // Animation: Animation types.
 type Animation struct {
 	// AnimationEnd: End previous animation.
@@ -594,10 +590,6 @@ func (s *BwdifConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Clearkey: Clearkey configuration.
-type Clearkey struct {
-}
-
 // Color: Color preprocessing configuration. **Note:** This
 // configuration is not supported.
 type Color struct {
@@ -865,43 +857,6 @@ func (s *Denoise) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DrmSystems: Defines configuration for DRM systems in use.
-type DrmSystems struct {
-	// Clearkey: Clearkey configuration.
-	Clearkey *Clearkey `json:"clearkey,omitempty"`
-
-	// Fairplay: Fairplay configuration.
-	Fairplay *Fairplay `json:"fairplay,omitempty"`
-
-	// Playready: Playready configuration.
-	Playready *Playready `json:"playready,omitempty"`
-
-	// Widevine: Widevine configuration.
-	Widevine *Widevine `json:"widevine,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Clearkey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Clearkey") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DrmSystems) MarshalJSON() ([]byte, error) {
-	type NoMethod DrmSystems
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // EditAtom: Edit atom.
 type EditAtom struct {
 	// EndTimeOffset: End time in seconds for the atom, relative to the
@@ -993,54 +948,6 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
-}
-
-// Encryption: Encryption settings.
-type Encryption struct {
-	// Aes128: Configuration for AES-128 encryption.
-	Aes128 *Aes128Encryption `json:"aes128,omitempty"`
-
-	// DrmSystems: Required. DRM system(s) to use; at least one must be
-	// specified. If a DRM system is omitted, it is considered disabled.
-	DrmSystems *DrmSystems `json:"drmSystems,omitempty"`
-
-	// Id: Required. Identifier for this set of encryption options.
-	Id string `json:"id,omitempty"`
-
-	// MpegCenc: Configuration for MPEG Common Encryption (MPEG-CENC).
-	MpegCenc *MpegCommonEncryption `json:"mpegCenc,omitempty"`
-
-	// SampleAes: Configuration for SAMPLE-AES encryption.
-	SampleAes *SampleAesEncryption `json:"sampleAes,omitempty"`
-
-	// SecretManagerKeySource: Keys are stored in Google Secret Manager.
-	SecretManagerKeySource *SecretManagerSource `json:"secretManagerKeySource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Aes128") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Aes128") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Encryption) MarshalJSON() ([]byte, error) {
-	type NoMethod Encryption
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Fairplay: Fairplay configuration.
-type Fairplay struct {
 }
 
 // H264CodecSettings: H264 codec settings.
@@ -1461,12 +1368,6 @@ func (s *Input) MarshalJSON() ([]byte, error) {
 
 // Job: Transcoding job resource.
 type Job struct {
-	// BatchModePriority: The processing priority of a batch job. This field
-	// can only be set for batch mode jobs, and the default value is 0. This
-	// value cannot be negative. Higher values correspond to higher
-	// priorities for the job.
-	BatchModePriority int64 `json:"batchModePriority,omitempty"`
-
 	// Config: The configuration for this job.
 	Config *JobConfig `json:"config,omitempty"`
 
@@ -1510,16 +1411,6 @@ type Job struct {
 	// `projects/{project_number}/locations/{location}/jobs/{job}`
 	Name string `json:"name,omitempty"`
 
-	// Optimization: Optional. The optimization strategy of the job. The
-	// default is `AUTODETECT`.
-	//
-	// Possible values:
-	//   "OPTIMIZATION_STRATEGY_UNSPECIFIED" - The optimization strategy is
-	// not specified.
-	//   "AUTODETECT" - Prioritize job processing speed.
-	//   "DISABLED" - Disable all optimizations.
-	Optimization string `json:"optimization,omitempty"`
-
 	// OutputUri: Input only. Specify the `output_uri` to populate an empty
 	// `Job.config.output.uri` or `JobTemplate.config.output.uri` when using
 	// template. URI for the output file(s). For example,
@@ -1558,21 +1449,20 @@ type Job struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "BatchModePriority")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BatchModePriority") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1594,12 +1484,6 @@ type JobConfig struct {
 
 	// ElementaryStreams: List of elementary streams.
 	ElementaryStreams []*ElementaryStream `json:"elementaryStreams,omitempty"`
-
-	// Encryptions: List of encryption configurations for the content. Each
-	// configuration has an ID. Specify this ID in the
-	// MuxStream.encryption_id field to indicate the configuration to use
-	// for that `MuxStream` output.
-	Encryptions []*Encryption `json:"encryptions,omitempty"`
 
 	// Inputs: List of input assets stored in Cloud Storage.
 	Inputs []*Input `json:"inputs,omitempty"`
@@ -1813,36 +1697,6 @@ func (s *Manifest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MpegCommonEncryption: Configuration for MPEG Common Encryption
-// (MPEG-CENC).
-type MpegCommonEncryption struct {
-	// Scheme: Required. Specify the encryption scheme. Supported encryption
-	// schemes: - `cenc` - `cbcs`
-	Scheme string `json:"scheme,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Scheme") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Scheme") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MpegCommonEncryption) MarshalJSON() ([]byte, error) {
-	type NoMethod MpegCommonEncryption
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // MuxStream: Multiplexing settings for output stream.
 type MuxStream struct {
 	// Container: The container format. The default is `mp4` Supported
@@ -1855,10 +1709,6 @@ type MuxStream struct {
 	// ElementaryStreams: List of `ElementaryStream.key`s multiplexed in
 	// this stream.
 	ElementaryStreams []string `json:"elementaryStreams,omitempty"`
-
-	// EncryptionId: Identifier of the encryption configuration to use. If
-	// omitted, output will be unencrypted.
-	EncryptionId string `json:"encryptionId,omitempty"`
 
 	// FileName: The name of the generated file. The default is
 	// `MuxStream.key` with the extension suffix corresponding to the
@@ -2050,10 +1900,6 @@ func (s *Pad) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Playready: Playready configuration.
-type Playready struct {
-}
-
 // PreprocessingConfig: Preprocessing configurations.
 type PreprocessingConfig struct {
 	// Audio: Audio preprocessing configuration.
@@ -2125,43 +1971,6 @@ type PubsubDestination struct {
 
 func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SampleAesEncryption: Configuration for SAMPLE-AES encryption.
-type SampleAesEncryption struct {
-}
-
-// SecretManagerSource: Configuration for secrets stored in Google
-// Secret Manager.
-type SecretManagerSource struct {
-	// SecretVersion: Required. The name of the Secret Version containing
-	// the encryption key in the following format:
-	// `projects/{project}/secrets/{secret_id}/versions/{version_number}`
-	// Note that only numbered versions are supported. Aliases like "latest"
-	// are not supported.
-	SecretVersion string `json:"secretVersion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SecretVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SecretVersion") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SecretManagerSource) MarshalJSON() ([]byte, error) {
-	type NoMethod SecretManagerSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2557,10 +2366,6 @@ func (s *Vp9CodecSettings) UnmarshalJSON(data []byte) error {
 	}
 	s.FrameRate = float64(s1.FrameRate)
 	return nil
-}
-
-// Widevine: Widevine configuration.
-type Widevine struct {
 }
 
 // YadifConfig: Yet Another Deinterlacing Filter Configuration.

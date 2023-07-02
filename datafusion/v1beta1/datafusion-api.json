@@ -935,7 +935,7 @@
       }
     }
   },
-  "revision": "20230627",
+  "revision": "20230508",
   "rootUrl": "https://datafusion.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -1278,7 +1278,6 @@
           "type": "boolean"
         },
         "serviceAccount": {
-          "deprecated": true,
           "description": "Output only. Deprecated. Use tenant_project_id instead to extract the tenant project ID.",
           "readOnly": true,
           "type": "string"

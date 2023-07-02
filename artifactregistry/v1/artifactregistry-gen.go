@@ -431,6 +431,40 @@ func (s *BatchDeleteVersionsMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchDeleteVersionsRequest: The request to delete multiple versions
+// across a repository.
+type BatchDeleteVersionsRequest struct {
+	// Names: Required. The names of the versions to delete. A maximum of
+	// 10000 versions can be deleted in a batch.
+	Names []string `json:"names,omitempty"`
+
+	// ValidateOnly: If true, the request is performed without deleting
+	// data, following AIP-163.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Names") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeleteVersionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteVersionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -505,6 +539,141 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CleanupPolicy: Artifact policy configuration for repository cleanup
+// policies.
+type CleanupPolicy struct {
+	// Action: Policy action.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Action not specified.
+	//   "DELETE" - Delete action.
+	//   "KEEP" - Keep action.
+	Action string `json:"action,omitempty"`
+
+	// Condition: Policy condition for matching versions.
+	Condition *CleanupPolicyCondition `json:"condition,omitempty"`
+
+	// Id: The user-provided ID of the cleanup policy.
+	Id string `json:"id,omitempty"`
+
+	// MostRecentVersions: Policy condition for retaining a minimum number
+	// of versions. May only be specified with a Keep action.
+	MostRecentVersions *CleanupPolicyMostRecentVersions `json:"mostRecentVersions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CleanupPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CleanupPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CleanupPolicyCondition: CleanupPolicyCondition is a set of conditions
+// attached to a CleanupPolicy. If multiple entries are set, all must be
+// satisfied for the condition to be satisfied.
+type CleanupPolicyCondition struct {
+	// NewerThan: Match versions newer than a duration.
+	NewerThan string `json:"newerThan,omitempty"`
+
+	// OlderThan: Match versions older than a duration.
+	OlderThan string `json:"olderThan,omitempty"`
+
+	// PackageNamePrefixes: Match versions by package prefix. Applied on any
+	// prefix match.
+	PackageNamePrefixes []string `json:"packageNamePrefixes,omitempty"`
+
+	// TagPrefixes: Match versions by tag prefix. Applied on any prefix
+	// match.
+	TagPrefixes []string `json:"tagPrefixes,omitempty"`
+
+	// TagState: Match versions by tag status.
+	//
+	// Possible values:
+	//   "TAG_STATE_UNSPECIFIED" - Tag status not specified.
+	//   "TAGGED" - Applies to tagged versions only.
+	//   "UNTAGGED" - Applies to untagged versions only.
+	//   "ANY" - Applies to all versions.
+	TagState string `json:"tagState,omitempty"`
+
+	// VersionAge: DEPRECATED: Use older_than.
+	VersionAge string `json:"versionAge,omitempty"`
+
+	// VersionNamePrefixes: Match versions by version name prefix. Applied
+	// on any prefix match.
+	VersionNamePrefixes []string `json:"versionNamePrefixes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewerThan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewerThan") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CleanupPolicyCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod CleanupPolicyCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CleanupPolicyMostRecentVersions: CleanupPolicyMostRecentVersions is
+// an alternate condition of a CleanupPolicy for retaining a minimum
+// number of versions.
+type CleanupPolicyMostRecentVersions struct {
+	// KeepCount: Minimum number of versions to keep.
+	KeepCount int64 `json:"keepCount,omitempty"`
+
+	// PackageNamePrefixes: List of package name prefixes that will apply
+	// this rule.
+	PackageNamePrefixes []string `json:"packageNamePrefixes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KeepCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeepCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CleanupPolicyMostRecentVersions) MarshalJSON() ([]byte, error) {
+	type NoMethod CleanupPolicyMostRecentVersions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2351,6 +2520,17 @@ func (s *RemoteRepositoryConfig) MarshalJSON() ([]byte, error) {
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
+	// CleanupPolicies: Optional. Cleanup policies for this repository.
+	// Cleanup policies indicate when certain package versions can be
+	// automatically deleted. Map keys are policy IDs supplied by users
+	// during policy creation. They must unique within a repository and be
+	// under 128 characters in length.
+	CleanupPolicies map[string]CleanupPolicy `json:"cleanupPolicies,omitempty"`
+
+	// CleanupPolicyDryRun: Optional. If true, the cleanup pipeline is
+	// prevented from deleting versions in this repository.
+	CleanupPolicyDryRun bool `json:"cleanupPolicyDryRun,omitempty"`
+
 	// CreateTime: Output only. The time when the repository was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2435,7 +2615,7 @@ type Repository struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CleanupPolicies") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2443,12 +2623,13 @@ type Repository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CleanupPolicies") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -9431,6 +9612,149 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "Tag"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.locations.repositories.packages.versions.batchDelete":
+
+type ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall struct {
+	s                          *Service
+	parent                     string
+	batchdeleteversionsrequest *BatchDeleteVersionsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchDelete: Deletes multiple versions across a repository. The
+// returned operation will complete once the versions have been deleted.
+//
+// - parent: The name of the repository holding all requested versions.
+func (r *ProjectsLocationsRepositoriesPackagesVersionsService) BatchDelete(parent string, batchdeleteversionsrequest *BatchDeleteVersionsRequest) *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall {
+	c := &ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchdeleteversionsrequest = batchdeleteversionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeleteversionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.packages.versions.batchDelete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes multiple versions across a repository. The returned operation will complete once the versions have been deleted.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/packages/{packagesId}/versions:batchDelete",
+	//   "httpMethod": "POST",
+	//   "id": "artifactregistry.projects.locations.repositories.packages.versions.batchDelete",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the repository holding all requested versions.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/versions:batchDelete",
+	//   "request": {
+	//     "$ref": "BatchDeleteVersionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

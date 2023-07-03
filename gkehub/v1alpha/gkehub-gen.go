@@ -3055,6 +3055,38 @@ func (s *FleetLifecycleState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FleetObservabilityFeatureError: All error details of the fleet
+// observability feature.
+type FleetObservabilityFeatureError struct {
+	// Code: The code of the error.
+	Code string `json:"code,omitempty"`
+
+	// Description: A human-readable description of the current status.
+	Description string `json:"description,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityFeatureError) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityFeatureError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FleetObservabilityFeatureSpec: **Fleet Observability**: The Hub-wide
 // input for the FleetObservability feature.
 type FleetObservabilityFeatureSpec struct {
@@ -3089,6 +3121,135 @@ func (s *FleetObservabilityFeatureSpec) MarshalJSON() ([]byte, error) {
 // FleetObservabilityFeatureState: **FleetObservability**: Hub-wide
 // Feature for FleetObservability feature. state.
 type FleetObservabilityFeatureState struct {
+	// Logging: The feature state of default logging.
+	Logging *FleetObservabilityFleetObservabilityLoggingState `json:"logging,omitempty"`
+
+	// Monitoring: The feature state of fleet monitoring.
+	Monitoring *FleetObservabilityFleetObservabilityMonitoringState `json:"monitoring,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Logging") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Logging") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityFeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FleetObservabilityFleetObservabilityBaseFeatureState: Base state for
+// fleet observability feature.
+type FleetObservabilityFleetObservabilityBaseFeatureState struct {
+	// Code: The high-level, machine-readable status of this Feature.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Unknown or not set.
+	//   "OK" - The Feature is operating normally.
+	//   "ERROR" - The Feature is encountering errors in the reconciliation.
+	// The Feature may need intervention to return to normal operation. See
+	// the description and any associated Feature-specific details for more
+	// information.
+	Code string `json:"code,omitempty"`
+
+	// Errors: Errors after reconciling the monitoring and logging feature
+	// if the code is not OK.
+	Errors []*FleetObservabilityFeatureError `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityFleetObservabilityBaseFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityFleetObservabilityBaseFeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FleetObservabilityFleetObservabilityLoggingState: Feature state for
+// logging feature.
+type FleetObservabilityFleetObservabilityLoggingState struct {
+	// DefaultLog: The base feature state of fleet default log.
+	DefaultLog *FleetObservabilityFleetObservabilityBaseFeatureState `json:"defaultLog,omitempty"`
+
+	// ScopeLog: The base feature state of fleet scope log.
+	ScopeLog *FleetObservabilityFleetObservabilityBaseFeatureState `json:"scopeLog,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultLog") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultLog") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityFleetObservabilityLoggingState) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityFleetObservabilityLoggingState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FleetObservabilityFleetObservabilityMonitoringState: Feature state
+// for monitoring feature.
+type FleetObservabilityFleetObservabilityMonitoringState struct {
+	// State: The base feature state of fleet monitoring feature.
+	State *FleetObservabilityFleetObservabilityBaseFeatureState `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityFleetObservabilityMonitoringState) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityFleetObservabilityMonitoringState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // FleetObservabilityLoggingConfig: LoggingConfig defines the
@@ -5205,19 +5366,9 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // PolicyControllerBundleInstallSpec: BundleInstallSpec is the
 // specification configuration for a single managed bundle.
 type PolicyControllerBundleInstallSpec struct {
-	// ExemptedNamespaces: the set of namespaces to be exempted from the
-	// bundle
+	// ExemptedNamespaces: The set of namespaces to be exempted from the
+	// bundle.
 	ExemptedNamespaces []string `json:"exemptedNamespaces,omitempty"`
-
-	// Management: Management specifies how the bundle will be managed by
-	// the controller.
-	//
-	// Possible values:
-	//   "MANAGEMENT_UNSPECIFIED" - No Management strategy has been
-	// specified.
-	//   "INSTALLED" - The entity should be insistently reconciled by the
-	// Hub controller
-	Management string `json:"management,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedNamespaces")
 	// to unconditionally include in API requests. By default, fields with
@@ -5298,10 +5449,6 @@ type PolicyControllerHubConfig struct {
 	// being evaluated.
 	ReferentialRulesEnabled bool `json:"referentialRulesEnabled,omitempty"`
 
-	// TemplateLibraryConfig: Configures the library templates to install
-	// along with Policy Controller.
-	TemplateLibraryConfig *PolicyControllerTemplateLibraryConfig `json:"templateLibraryConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "AuditIntervalSeconds") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -5368,10 +5515,6 @@ type PolicyControllerMembershipState struct {
 	// ComponentStates: Currently these include (also serving as map keys):
 	// 1. "admission" 2. "audit" 3. "mutation"
 	ComponentStates map[string]PolicyControllerOnClusterState `json:"componentStates,omitempty"`
-
-	// ContentStates: The state of the template library and any bundles
-	// included in the chosen version of the manifest
-	ContentStates map[string]PolicyControllerOnClusterState `json:"contentStates,omitempty"`
 
 	// PolicyContentState: The overall content state observed by the Hub
 	// Feature controller.
@@ -5630,6 +5773,17 @@ type PolicyControllerPolicyControllerDeploymentConfig struct {
 	// ContainerResources: Container resource requirements.
 	ContainerResources *PolicyControllerResourceRequirements `json:"containerResources,omitempty"`
 
+	// PodAffinity: Pod affinity configuration.
+	//
+	// Possible values:
+	//   "AFFINITY_UNSPECIFIED" - No affinity configuration has been
+	// specified.
+	//   "NO_AFFINITY" - Affinity configurations will be removed from the
+	// deployment.
+	//   "ANTI_AFFINITY" - Anti-affinity configuration will be applied to
+	// this deployment. Default for admissions deployment.
+	PodAffinity string `json:"podAffinity,omitempty"`
+
 	// PodAntiAffinity: Pod anti-affinity enablement.
 	PodAntiAffinity bool `json:"podAntiAffinity,omitempty"`
 
@@ -5732,10 +5886,6 @@ func (s *PolicyControllerResourceRequirements) MarshalJSON() ([]byte, error) {
 // PolicyControllerTemplateLibraryConfig: The config specifying which
 // default library templates to install.
 type PolicyControllerTemplateLibraryConfig struct {
-	// Included: Whether the standard template library should be installed
-	// or not.
-	Included bool `json:"included,omitempty"`
-
 	// Installation: Configures the manner in which the template library is
 	// installed on the cluster.
 	//
@@ -5746,7 +5896,7 @@ type PolicyControllerTemplateLibraryConfig struct {
 	//   "ALL" - Install the entire template library.
 	Installation string `json:"installation,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Included") to
+	// ForceSendFields is a list of field names (e.g. "Installation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5754,10 +5904,10 @@ type PolicyControllerTemplateLibraryConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Included") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Installation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

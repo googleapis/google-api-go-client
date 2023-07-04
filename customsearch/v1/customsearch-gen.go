@@ -2020,6 +2020,13 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//         "medium",
 	//         "off"
 	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         true,
+	//         false
+	//       ],
 	//       "enumDescriptions": [
 	//         "SafeSearch mode unspecified. (Falls back to engine's configuration.)",
 	//         "Turn SafeSearch on.",
@@ -2792,6 +2799,13 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//         "high",
 	//         "medium",
 	//         "off"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "SafeSearch mode unspecified. (Falls back to engine's configuration.)",

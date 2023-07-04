@@ -1096,6 +1096,15 @@ type ApplicationReport struct {
 	//   "INSTALLED" - App is installed on the device
 	State string `json:"state,omitempty"`
 
+	// UserFacingType: Whether the app is user facing.
+	//
+	// Possible values:
+	//   "USER_FACING_TYPE_UNSPECIFIED" - App user facing type is
+	// unspecified.
+	//   "NOT_USER_FACING" - App is not user facing.
+	//   "USER_FACING" - App is user facing.
+	UserFacingType string `json:"userFacingType,omitempty"`
+
 	// VersionCode: The app version code, which can be used to determine
 	// whether one version is more recent than another.
 	VersionCode int64 `json:"versionCode,omitempty"`
@@ -2193,6 +2202,60 @@ func (s *Device) MarshalJSON() ([]byte, error) {
 // DeviceConnectivityManagement: Covers controls for device connectivity
 // such as Wi-Fi, USB data access, keyboard/mouse connections, and more.
 type DeviceConnectivityManagement struct {
+	// ConfigureWifi: Controls Wi-Fi configuring privileges. Based on the
+	// option set, user will have either full or limited or no control in
+	// configuring Wi-Fi networks.
+	//
+	// Possible values:
+	//   "CONFIGURE_WIFI_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_CONFIGURING_WIFI unless wifiConfigDisabled is set to true. If
+	// wifiConfigDisabled is set to true, this is equivalent to
+	// DISALLOW_CONFIGURING_WIFI.
+	//   "ALLOW_CONFIGURING_WIFI" - The user is allowed to configure Wi-Fi.
+	// wifiConfigDisabled is ignored.
+	//   "DISALLOW_ADD_WIFI_CONFIG" - Adding new Wi-Fi configurations is
+	// disallowed. The user is only able to switch between already
+	// configured networks. Supported on Android 13 and above, on fully
+	// managed devices and work profiles on company-owned devices. If the
+	// setting is not supported, ALLOW_CONFIGURING_WIFI is set. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version
+	// is less than 13. wifiConfigDisabled is ignored.
+	//   "DISALLOW_CONFIGURING_WIFI" - Disallows configuring Wi-Fi networks.
+	// The setting wifiConfigDisabled is ignored when this value is set.
+	// Supported on fully managed devices and work profile on company-owned
+	// devices, on all supported API levels. For fully managed devices,
+	// setting this removes all configured networks and retains only the
+	// networks configured using openNetworkConfiguration policy. For work
+	// profiles on company-owned devices, existing configured networks are
+	// not affected and the user is not allowed to add, remove, or modify
+	// Wi-Fi networks. Note: If a network connection can't be made at boot
+	// time and configuring Wi-Fi is disabled then network escape hatch will
+	// be shown in order to refresh the device policy (see
+	// networkEscapeHatchEnabled).
+	ConfigureWifi string `json:"configureWifi,omitempty"`
+
+	// TetheringSettings: Controls tethering settings. Based on the value
+	// set, the user is partially or fully disallowed from using different
+	// forms of tethering.
+	//
+	// Possible values:
+	//   "TETHERING_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_ALL_TETHERING unless tetheringConfigDisabled is set to true. If
+	// tetheringConfigDisabled is set to true, this is equivalent to
+	// DISALLOW_ALL_TETHERING.
+	//   "ALLOW_ALL_TETHERING" - Allows configuration and use of all forms
+	// of tethering. tetheringConfigDisabled is ignored.
+	//   "DISALLOW_WIFI_TETHERING" - Disallows the user from using Wi-Fi
+	// tethering. Supported on company owned devices running Android 13 and
+	// above. If the setting is not supported, ALLOW_ALL_TETHERING will be
+	// set. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13. tetheringConfigDisabled is ignored.
+	//   "DISALLOW_ALL_TETHERING" - Disallows all forms of tethering.
+	// Supported on fully managed devices and work profile on company-owned
+	// devices, on all supported android versions. The setting
+	// tetheringConfigDisabled is ignored.
+	TetheringSettings string `json:"tetheringSettings,omitempty"`
+
 	// UsbDataAccess: Controls what files and/or data can be transferred via
 	// USB. Supported only on company-owned devices.
 	//
@@ -2216,7 +2279,20 @@ type DeviceConnectivityManagement struct {
 	// ignored.
 	UsbDataAccess string `json:"usbDataAccess,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "UsbDataAccess") to
+	// WifiDirectSettings: Controls configuring and using Wi-Fi direct
+	// settings. Supported on company-owned devices running Android 13 and
+	// above.
+	//
+	// Possible values:
+	//   "WIFI_DIRECT_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_WIFI_DIRECT
+	//   "ALLOW_WIFI_DIRECT" - The user is allowed to use Wi-Fi direct.
+	//   "DISALLOW_WIFI_DIRECT" - The user is not allowed to use Wi-Fi
+	// direct. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 13.
+	WifiDirectSettings string `json:"wifiDirectSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigureWifi") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2224,7 +2300,7 @@ type DeviceConnectivityManagement struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UsbDataAccess") to include
+	// NullFields is a list of field names (e.g. "ConfigureWifi") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -2235,6 +2311,46 @@ type DeviceConnectivityManagement struct {
 
 func (s *DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceConnectivityManagement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceRadioState: Controls for device radio settings.
+type DeviceRadioState struct {
+	// WifiState: Controls current state of Wi-Fi and if user can change its
+	// state.
+	//
+	// Possible values:
+	//   "WIFI_STATE_UNSPECIFIED" - Unspecified. Defaults to
+	// WIFI_STATE_USER_CHOICE
+	//   "WIFI_STATE_USER_CHOICE" - User is allowed to enable/disable Wi-Fi.
+	//   "WIFI_ENABLED" - Wi-Fi is on and the user is not allowed to turn it
+	// off. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13.
+	//   "WIFI_DISABLED" - Wi-Fi is off and the user is not allowed to turn
+	// it on. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 13.
+	WifiState string `json:"wifiState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WifiState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WifiState") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceRadioState) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceRadioState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4097,6 +4213,9 @@ type NonComplianceDetail struct {
 	// the API level of the Android version running on the device. fieldPath
 	// specifies which field value is not supported. oncWifiContext is set.
 	// nonComplianceReason is set to API_LEVEL.
+	//   "ONC_WIFI_INVALID_ENTERPRISE_CONFIG" - The enterprise Wi-Fi network
+	// is missing either the root CA or domain name. nonComplianceReason is
+	// set to INVALID_VALUE.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
@@ -5033,6 +5152,10 @@ type Policy struct {
 	// on the lock screen.
 	DeviceOwnerLockScreenInfo *UserFacingMessage `json:"deviceOwnerLockScreenInfo,omitempty"`
 
+	// DeviceRadioState: Covers controls for radio state such as Wi-Fi,
+	// bluetooth, and more.
+	DeviceRadioState *DeviceRadioState `json:"deviceRadioState,omitempty"`
+
 	// EncryptionPolicy: Whether encryption is enabled
 	//
 	// Possible values:
@@ -5193,7 +5316,10 @@ type Policy struct {
 	// an app in lock task mode, or the user is otherwise unable to reach
 	// device settings.Note: Setting wifiConfigDisabled to true will
 	// override this setting under specific circumstances. Please see
-	// wifiConfigDisabled for further details.
+	// wifiConfigDisabled for further details. Setting configureWifi to
+	// DISALLOW_CONFIGURING_WIFI will override this setting under specific
+	// circumstances. Please see DISALLOW_CONFIGURING_WIFI for further
+	// details.
 	NetworkEscapeHatchEnabled bool `json:"networkEscapeHatchEnabled,omitempty"`
 
 	// NetworkResetDisabled: Whether resetting network settings is disabled.
@@ -5368,7 +5494,8 @@ type Policy struct {
 	SystemUpdate *SystemUpdate `json:"systemUpdate,omitempty"`
 
 	// TetheringConfigDisabled: Whether configuring tethering and portable
-	// hotspots is disabled.
+	// hotspots is disabled. If tetheringSettings is set to anything other
+	// than TETHERING_SETTINGS_UNSPECIFIED, this setting is ignored.
 	TetheringConfigDisabled bool `json:"tetheringConfigDisabled,omitempty"`
 
 	// UninstallAppsDisabled: Whether user uninstallation of applications is
@@ -5406,10 +5533,12 @@ type Policy struct {
 	// configured networks and retains only the networks configured using
 	// openNetworkConfiguration. For work profiles on company-owned devices,
 	// existing configured networks are not affected and the user is not
-	// allowed to add, remove, or modify Wi-Fi networks. Note: If a network
-	// connection can't be made at boot time and configuring Wi-Fi is
-	// disabled then network escape hatch will be shown in order to refresh
-	// the device policy (see networkEscapeHatchEnabled).
+	// allowed to add, remove, or modify Wi-Fi networks. If configureWifi is
+	// set to anything other than CONFIGURE_WIFI_UNSPECIFIED, this setting
+	// is ignored. Note: If a network connection can't be made at boot time
+	// and configuring Wi-Fi is disabled then network escape hatch will be
+	// shown in order to refresh the device policy (see
+	// networkEscapeHatchEnabled).
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 
 	// WifiConfigsLockdownEnabled: DEPRECATED - Use wifi_config_disabled.

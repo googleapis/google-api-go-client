@@ -534,7 +534,7 @@
       }
     }
   },
-  "revision": "20230627",
+  "revision": "20230702",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -1154,11 +1154,6 @@
           "$ref": "LatLngBounds",
           "description": "Output only. A rectangular box that encapsulates every image in this photo sequence.",
           "readOnly": true
-        },
-        "takedown": {
-          "description": "Output only. Set if a Photo within the PhotoSequence contains a takedown.",
-          "readOnly": true,
-          "type": "boolean"
         },
         "uploadReference": {
           "$ref": "UploadRef",

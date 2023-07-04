@@ -5491,7 +5491,7 @@ func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeYear(intervalStartTimeY
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of reports to return. The service may return fewer than this value.
 // If unspecified, at most 50 reports will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// value is 100; values above 100 will be coerced to 100.
 func (c *VitalsErrorsReportsSearchCall) PageSize(pageSize int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5739,7 +5739,7 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "integer"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of reports to return. The service may return fewer than this value. If unspecified, at most 50 reports will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "The maximum number of reports to return. The service may return fewer than this value. If unspecified, at most 50 reports will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

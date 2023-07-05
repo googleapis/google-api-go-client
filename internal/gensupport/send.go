@@ -46,8 +46,10 @@ func (e wrappedCallErr) Is(target error) bool {
 func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
 	// Add headers set in context metadata.
 	headers := callctx.HeadersFromContext(ctx)
-	for k, v := range headers {
-		req.Header[k] = append(req.Header[k], v...)
+	for k, vals := range headers {
+		for _, v := range vals {
+			req.Header.Add(k, v)
+		}
 	}
 
 	// Disallow Accept-Encoding because it interferes with the automatic gzip handling
@@ -86,8 +88,10 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 func SendRequestWithRetry(ctx context.Context, client *http.Client, req *http.Request, retry *RetryConfig) (*http.Response, error) {
 	// Add headers set in context metadata.
 	headers := callctx.HeadersFromContext(ctx)
-	for k, v := range headers {
-		req.Header[k] = append(req.Header[k], v...)
+	for k, vals := range headers {
+		for _, v := range vals {
+			req.Header.Add(k, v)
+		}
 	}
 
 	// Disallow Accept-Encoding because it interferes with the automatic gzip handling

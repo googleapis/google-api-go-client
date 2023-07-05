@@ -40,8 +40,8 @@ type headerRoundTripper struct {
 
 func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 	// Ignore x-goog headers sent by SendRequestWithRetry
-	delete(r.Header, "X-Goog-Api-Client")
-	delete(r.Header, "X-Goog-Gcs-Idempotency-Token")
+	r.Header.Del("X-Goog-Api-Client")
+	r.Header.Del("X-Goog-Gcs-Idempotency-Token")
 	if diff := cmp.Diff(r.Header, rt.wantHeader); diff != "" {
 		return nil, fmt.Errorf("headers don't match: %v", diff)
 	}
@@ -54,7 +54,7 @@ func TestSendRequestHeader(t *testing.T) {
 	ctx = callctx.SetHeaders(ctx, "foo", "100", "bar", "200")
 	client := http.Client{
 		Transport: &headerRoundTripper{
-			wantHeader: map[string][]string{"foo": {"100"}, "bar": {"200"}},
+			wantHeader: map[string][]string{"Foo": {"100"}, "Bar": {"200"}},
 		},
 	}
 	req, _ := http.NewRequest("GET", "url", nil)

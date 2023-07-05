@@ -7,6 +7,9 @@ package gensupport
 import (
 	"context"
 	"errors"
+	"fmt"
+	"github.com/google/go-cmp/cmp"
+	"github.com/googleapis/gax-go/v2/callctx"
 	"net/http"
 	"testing"
 )
@@ -28,6 +31,39 @@ func TestSendRequestWithRetry(t *testing.T) {
 	_, err := SendRequestWithRetry(context.Background(), nil, req, nil)
 	if err == nil {
 		t.Error("got nil, want error")
+	}
+}
+
+type headerRoundTripper struct {
+	wantHeader http.Header
+}
+
+func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	// Ignore x-goog headers sent by SendRequestWithRetry
+	delete(r.Header, "X-Goog-Api-Client")
+	delete(r.Header, "X-Goog-Gcs-Idempotency-Token")
+	if diff := cmp.Diff(r.Header, rt.wantHeader); diff != "" {
+		return nil, fmt.Errorf("headers don't match: %v", diff)
+	}
+	return &http.Response{StatusCode: 200}, nil
+}
+
+// Ensure that headers set via the context are passed through to the request as expected.
+func TestSendRequestHeader(t *testing.T) {
+	ctx := context.Background()
+	ctx = callctx.SetHeaders(ctx, "foo", "100", "bar", "200")
+	client := http.Client{
+		Transport: &headerRoundTripper{
+			wantHeader: map[string][]string{"foo": {"100"}, "bar": {"200"}},
+		},
+	}
+	req, _ := http.NewRequest("GET", "url", nil)
+	if _, err := SendRequest(ctx, &client, req); err != nil {
+		t.Errorf("SendRequest: %v", err)
+	}
+	req2, _ := http.NewRequest("GET", "url", nil)
+	if _, err := SendRequestWithRetry(ctx, &client, req2, nil); err != nil {
+		t.Errorf("SendRequest: %v", err)
 	}
 }
 

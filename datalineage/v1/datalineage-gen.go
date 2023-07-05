@@ -374,7 +374,7 @@ type GoogleCloudDatacatalogLineageV1LineageEvent struct {
 	// contain characters in a set: `a-zA-Z0-9_-:.`
 	Name string `json:"name,omitempty"`
 
-	// StartTime: Optional. The beginning of the transformation which
+	// StartTime: Required. The beginning of the transformation which
 	// resulted in this lineage event. For streaming scenarios, it should be
 	// the beginning of the period from which the lineage is being reported.
 	StartTime string `json:"startTime,omitempty"`

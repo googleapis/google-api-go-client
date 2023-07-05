@@ -5396,8 +5396,7 @@ type QueryAssetsRequest struct {
 	ReadTimeWindow *TimeWindow `json:"readTimeWindow,omitempty"`
 
 	// Statement: Optional. A SQL statement that's compatible with BigQuery
-	// Standard SQL
-	// (http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql).
+	// SQL (https://cloud.google.com/bigquery/docs/introduction-sql).
 	Statement string `json:"statement,omitempty"`
 
 	// Timeout: Optional. Specifies the maximum amount of time that the
@@ -10948,16 +10947,16 @@ type V1QueryAssetsCall struct {
 }
 
 // QueryAssets: Issue a job that queries assets using a SQL statement
-// compatible with BigQuery Standard SQL
-// (http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql).
-// If the query execution finishes within timeout and there's no
-// pagination, the full query results will be returned in the
-// `QueryAssetsResponse`. Otherwise, full query results can be obtained
-// by issuing extra requests with the `job_reference` from the a
-// previous `QueryAssets` call. Note, the query result has approximately
-// 10 GB limitation enforced by BigQuery
-// https://cloud.google.com/bigquery/docs/best-practices-performance-output,
-// queries return larger results will result in errors.
+// compatible with BigQuery SQL
+// (https://cloud.google.com/bigquery/docs/introduction-sql). If the
+// query execution finishes within timeout and there's no pagination,
+// the full query results will be returned in the `QueryAssetsResponse`.
+// Otherwise, full query results can be obtained by issuing extra
+// requests with the `job_reference` from the a previous `QueryAssets`
+// call. Note, the query result has approximately 10 GB limitation
+// enforced by BigQuery
+// (https://cloud.google.com/bigquery/docs/best-practices-performance-output).
+// Queries return larger results will result in errors.
 //
 //   - parent: The relative name of the root asset. This can only be an
 //     organization number (such as "organizations/123"), a project ID
@@ -11062,7 +11061,7 @@ func (c *V1QueryAssetsCall) Do(opts ...googleapi.CallOption) (*QueryAssetsRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Issue a job that queries assets using a SQL statement compatible with [BigQuery Standard SQL](http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql). If the query execution finishes within timeout and there's no pagination, the full query results will be returned in the `QueryAssetsResponse`. Otherwise, full query results can be obtained by issuing extra requests with the `job_reference` from the a previous `QueryAssets` call. Note, the query result has approximately 10 GB limitation enforced by BigQuery https://cloud.google.com/bigquery/docs/best-practices-performance-output, queries return larger results will result in errors.",
+	//   "description": "Issue a job that queries assets using a SQL statement compatible with [BigQuery SQL](https://cloud.google.com/bigquery/docs/introduction-sql). If the query execution finishes within timeout and there's no pagination, the full query results will be returned in the `QueryAssetsResponse`. Otherwise, full query results can be obtained by issuing extra requests with the `job_reference` from the a previous `QueryAssets` call. Note, the query result has approximately 10 GB limitation enforced by [BigQuery](https://cloud.google.com/bigquery/docs/best-practices-performance-output). Queries return larger results will result in errors.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:queryAssets",
 	//   "httpMethod": "POST",
 	//   "id": "cloudasset.queryAssets",

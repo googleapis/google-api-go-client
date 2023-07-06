@@ -8,10 +8,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/google/go-cmp/cmp"
-	"github.com/googleapis/gax-go/v2/callctx"
 	"net/http"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
+	"github.com/googleapis/gax-go/v2/callctx"
 )
 
 func TestSendRequest(t *testing.T) {

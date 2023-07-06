@@ -8179,6 +8179,20 @@ type GoogleCloudApigeeV1Organization struct {
 	// Description: Description of the Apigee organization.
 	Description string `json:"description,omitempty"`
 
+	// DisableVpcPeering: Optional. Flag that specifies whether the VPC
+	// Peering through Private Google Access should be disabled between the
+	// consumer network and Apigee. Valid only when RuntimeType is set to
+	// CLOUD. Required if an authorizedNetwork on the consumer project is
+	// not provided, in which case the flag should be set to true. The value
+	// must be set before the creation of any Apigee runtime instance and
+	// can be updated only when there are no runtime instances. **Note:**
+	// Apigee will be deprecating the vpc peering model that requires you to
+	// provide 'authorizedNetwork', by making the non-peering model as the
+	// default way of provisioning Apigee organization in future. So, this
+	// will be a temporary flag to enable the transition. Not supported for
+	// Apigee hybrid.
+	DisableVpcPeering bool `json:"disableVpcPeering,omitempty"`
+
 	// DisplayName: Display name for the Apigee organization. Unused, but
 	// reserved for future use.
 	DisplayName string `json:"displayName,omitempty"`
@@ -8516,6 +8530,19 @@ type GoogleCloudApigeeV1ProvisionOrganizationRequest struct {
 	// `projects/{host-project-id}/{region}/networks/{network-name}`. For
 	// example: `projects/my-sharedvpc-host/global/networks/mynetwork`
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
+
+	// DisableVpcPeering: Optional. Flag that specifies whether the VPC
+	// Peering through Private Google Access should be disabled between the
+	// consumer network and Apigee. Required if an authorizedNetwork on the
+	// consumer project is not provided, in which case the flag should be
+	// set to true. The value must be set before the creation of any Apigee
+	// runtime instance and can be updated only when there are no runtime
+	// instances. **Note:** Apigee will be deprecating the vpc peering model
+	// that requires you to provide 'authorizedNetwork', by making the
+	// non-peering model as the default way of provisioning Apigee
+	// organization in future. So, this will be a temporary flag to enable
+	// the transition. Not supported for Apigee hybrid.
+	DisableVpcPeering bool `json:"disableVpcPeering,omitempty"`
 
 	// RuntimeLocation: Cloud Platform location for the runtime instance.
 	// Defaults to zone `us-west1-a`. If a region is provided, `EVAL`

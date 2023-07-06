@@ -2280,12 +2280,13 @@ type DicomStore struct {
 	// Supplied by the client.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
-	// StreamConfigs: A list of streaming configs used to configure the
-	// destination of streaming exports for every DICOM instance insertion
-	// in this DICOM store. After a new config is added to `stream_configs`,
-	// DICOM instance insertions are streamed to the new destination. When a
-	// config is removed from `stream_configs`, the server stops streaming
-	// to that destination. Each config must contain a unique destination.
+	// StreamConfigs: Optional. A list of streaming configs used to
+	// configure the destination of streaming exports for every DICOM
+	// instance insertion in this DICOM store. After a new config is added
+	// to `stream_configs`, DICOM instance insertions are streamed to the
+	// new destination. When a config is removed from `stream_configs`, the
+	// server stops streaming to that destination. Each config must contain
+	// a unique destination.
 	StreamConfigs []*GoogleCloudHealthcareV1beta1DicomStreamConfig `json:"streamConfigs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2839,8 +2840,55 @@ type ExportMessagesRequest struct {
 	// (inclusive) to `end_time` (exclusive) are exported.
 	EndTime string `json:"endTime,omitempty"`
 
+	// Filter: Restricts messages exported to those matching a filter, only
+	// applicable to PubsubDestination and GcsDestination. The following
+	// syntax is available: * A string field value can be written as text
+	// inside quotation marks, for example "query text". The only valid
+	// relational operation for text fields is equality (`=`), where text is
+	// searched within the field, rather than having the field be equal to
+	// the text. For example, "Comment = great" returns messages with
+	// `great` in the comment field. * A number field value can be written
+	// as an integer, a decimal, or an exponential. The valid relational
+	// operators for number fields are the equality operator (`=`), along
+	// with the less than/greater than operators (`<`, `<=`, `>`, `>=`).
+	// Note that there is no inequality (`!=`) operator. You can prepend the
+	// `NOT` operator to an expression to negate it. * A date field value
+	// must be written in the `yyyy-mm-dd` format. Fields with date and time
+	// use the RFC3339 time format. Leading zeros are required for one-digit
+	// months and days. The valid relational operators for date fields are
+	// the equality operator (`=`) , along with the less than/greater than
+	// operators (`<`, `<=`, `>`, `>=`). Note that there is no inequality
+	// (`!=`) operator. You can prepend the `NOT` operator to an expression
+	// to negate it. * Multiple field query expressions can be combined in
+	// one query by adding `AND` or `OR` operators between the expressions.
+	// If a boolean operator appears within a quoted string, it is not
+	// treated as special, and is just another part of the character string
+	// to be matched. You can prepend the `NOT` operator to an expression to
+	// negate it. The following fields and functions are available for
+	// filtering: * `message_type`, from the MSH-9.1 field. For example,
+	// `NOT message_type = "ADT". * `send_date` or `sendDate`, the
+	// YYYY-MM-DD date the message was sent in the dataset's time_zone, from
+	// the MSH-7 segment. For example, `send_date < "2017-01-02". *
+	// `send_time`, the timestamp when the message was sent, using the
+	// RFC3339 time format for comparisons, from the MSH-7 segment. For
+	// example, `send_time < "2017-01-02T00:00:00-05:00". * `create_time`,
+	// the timestamp when the message was created in the HL7v2 store. Use
+	// the RFC3339 time format for comparisons. For example, `create_time <
+	// "2017-01-02T00:00:00-05:00". * `send_facility`, the care center that
+	// the message came from, from the MSH-4 segment. For example,
+	// `send_facility = "ABC". Note: The filter will be applied to every
+	// message in the HL7v2 store whose `send_time` lies in the range
+	// defined by the `start_time` and the `end_time`. Even if the filter
+	// only matches a small set of messages, the export operation can still
+	// take a long time to finish when a lot of messages are between the
+	// specified `start_time` and `end_time` range.
+	Filter string `json:"filter,omitempty"`
+
 	// GcsDestination: Export to a Cloud Storage destination.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
+
+	// PubsubDestination: Export messages to a Pub/Sub topic.
+	PubsubDestination *PubsubDestination `json:"pubsubDestination,omitempty"`
 
 	// StartTime: The start of the range in `send_time` (MSH.7,
 	// https://www.hl7.org/documentcenter/public_temp_2E58C1F9-1C23-BA17-0C6126475344DA9D/wg/conf/HL7MSH.htm)
@@ -6474,6 +6522,49 @@ type ProgressCounter struct {
 
 func (s *ProgressCounter) MarshalJSON() ([]byte, error) {
 	type NoMethod ProgressCounter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PubsubDestination: The Pub/Sub output destination. The Cloud
+// Healthcare Service Agent requires the `roles/pubsub.publisher` Cloud
+// IAM role on the Pub/Sub topic.
+type PubsubDestination struct {
+	// PubsubTopic: The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that Pub/Sub messages are published on. Supplied by the client.
+	// The `PubsubMessage` contains the following fields: *
+	// `PubsubMessage.Data` contains the resource name. *
+	// `PubsubMessage.MessageId` is the ID of this notification. It is
+	// guaranteed to be unique within the topic. *
+	// `PubsubMessage.PublishTime` is the time when the message was
+	// published. Topic names
+	// (https://cloud.google.com/pubsub/docs/overview#names) must be scoped
+	// to a project. The Cloud Healthcare API service account,
+	// service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com,
+	// must have publisher permissions on the given Pub/Sub topic. Not
+	// having adequate permissions causes the calls that send notifications
+	// to fail.
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PubsubTopic") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod PubsubDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

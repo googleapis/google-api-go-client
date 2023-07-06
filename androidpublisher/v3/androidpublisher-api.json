@@ -4047,7 +4047,7 @@
       }
     }
   },
-  "revision": "20230628",
+  "revision": "20230704",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -5413,6 +5413,22 @@
               "CAN_VIEW_NON_FINANCIAL_DATA",
               "CAN_VIEW_APP_QUALITY"
             ],
+            "enumDeprecated": [
+              false,
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ],
             "enumDescriptions": [
               "Unknown or unspecified permission.",
               "View app information (read-only). Deprecated: Try defining a more granular capability. Otherwise, check AppLevelPermission.CAN_VIEW_NON_FINANCIAL_DATA.",
@@ -5630,6 +5646,7 @@
         },
         "pageInfo": {
           "$ref": "PageInfo",
+          "deprecated": true,
           "description": "Deprecated and unset."
         },
         "tokenPagination": {

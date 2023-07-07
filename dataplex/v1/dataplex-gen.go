@@ -2617,6 +2617,119 @@ func (s *GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation) MarshalJ
 type GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation struct {
 }
 
+// GoogleCloudDataplexV1DataQualityScanRuleResult: Information about the
+// result of a data quality rule for data quality scan. The monitored
+// resource is 'DataScan'.
+type GoogleCloudDataplexV1DataQualityScanRuleResult struct {
+	// Column: The column which this rule is evaluated against.
+	Column string `json:"column,omitempty"`
+
+	// DataSource: The data source of the data scan (e.g. BigQuery table
+	// name).
+	DataSource string `json:"dataSource,omitempty"`
+
+	// EvaluatedRowCount: The number of rows evaluated against the data
+	// quality rule. This field is only valid for rules of PER_ROW
+	// evaluation type.
+	EvaluatedRowCount int64 `json:"evaluatedRowCount,omitempty,string"`
+
+	// EvalutionType: The evaluation type of the data quality rule.
+	//
+	// Possible values:
+	//   "EVALUATION_TYPE_UNSPECIFIED" - An unspecified evaluation type.
+	//   "PER_ROW" - The rule evaluation is done at per row level.
+	//   "AGGREGATE" - The rule evaluation is done for an aggregate of rows.
+	EvalutionType string `json:"evalutionType,omitempty"`
+
+	// JobId: Identifier of the specific data scan job this log entry is
+	// for.
+	JobId string `json:"jobId,omitempty"`
+
+	// NullRowCount: The number of rows with null values in the specified
+	// column.
+	NullRowCount int64 `json:"nullRowCount,omitempty,string"`
+
+	// PassedRowCount: The number of rows which passed a rule evaluation.
+	// This field is only valid for rules of PER_ROW evaluation type.
+	PassedRowCount int64 `json:"passedRowCount,omitempty,string"`
+
+	// Result: The result of the data quality rule.
+	//
+	// Possible values:
+	//   "RESULT_UNSPECIFIED" - An unspecified result.
+	//   "PASSED" - The data quality rule passed.
+	//   "FAILED" - The data quality rule failed.
+	Result string `json:"result,omitempty"`
+
+	// RuleDimension: The dimension of the data quality rule.
+	RuleDimension string `json:"ruleDimension,omitempty"`
+
+	// RuleName: The name of the data quality rule.
+	RuleName string `json:"ruleName,omitempty"`
+
+	// RuleType: The type of the data quality rule.
+	//
+	// Possible values:
+	//   "RULE_TYPE_UNSPECIFIED" - An unspecified rule type.
+	//   "NON_NULL_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#nonnullexpectation.
+	//   "RANGE_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#rangeexpectation.
+	//   "REGEX_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#regexexpectation.
+	//   "ROW_CONDITION_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#rowconditionexpectation.
+	//   "SET_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#setexpectation.
+	//   "STATISTIC_RANGE_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#statisticrangeexpectation.
+	//   "TABLE_CONDITION_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#tableconditionexpectation.
+	//   "UNIQUENESS_EXPECTATION" - Please see
+	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#uniquenessexpectation.
+	RuleType string `json:"ruleType,omitempty"`
+
+	// ThresholdPercent: The passing threshold (0.0, 100.0) of the data
+	// quality rule.
+	ThresholdPercent float64 `json:"thresholdPercent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualityScanRuleResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityScanRuleResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualityScanRuleResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualityScanRuleResult
+	var s1 struct {
+		ThresholdPercent gensupport.JSONFloat64 `json:"thresholdPercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ThresholdPercent = float64(s1.ThresholdPercent)
+	return nil
+}
+
 // GoogleCloudDataplexV1DataQualitySpec: DataQualityScan related
 // setting.
 type GoogleCloudDataplexV1DataQualitySpec struct {
@@ -3787,7 +3900,6 @@ func (s *GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility) MarshalJSO
 
 // GoogleCloudDataplexV1Environment: Environment represents a
 // user-visible compute infrastructure for analytics within a lake.
-// LINT.IfChange
 type GoogleCloudDataplexV1Environment struct {
 	// CreateTime: Output only. Environment creation time.
 	CreateTime string `json:"createTime,omitempty"`

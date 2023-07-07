@@ -1531,12 +1531,18 @@ func (s *GoogleCloudDialogflowCxV3EventInput) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowCxV3ExportAgentResponse: The response message
 // for Agents.ExportAgent.
 type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
-	// AgentContent: Uncompressed raw byte content for agent.
+	// AgentContent: Uncompressed raw byte content for agent. This field is
+	// populated if none of `agent_uri` and `git_destination` are specified
+	// in ExportAgentRequest.
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
 	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// CommitSha: Commit SHA of the git push. This field is populated if
+	// `git_destination` are specified in ExportAgentRequest.
+	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
 	// unconditionally include in API requests. By default, fields with
@@ -5102,12 +5108,18 @@ func (s *GoogleCloudDialogflowCxV3beta1EventInput) MarshalJSON() ([]byte, error)
 // GoogleCloudDialogflowCxV3beta1ExportAgentResponse: The response
 // message for Agents.ExportAgent.
 type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
-	// AgentContent: Uncompressed raw byte content for agent.
+	// AgentContent: Uncompressed raw byte content for agent. This field is
+	// populated if none of `agent_uri` and `git_destination` are specified
+	// in ExportAgentRequest.
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
 	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// CommitSha: Commit SHA of the git push. This field is populated if
+	// `git_destination` are specified in ExportAgentRequest.
+	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
 	// unconditionally include in API requests. By default, fields with

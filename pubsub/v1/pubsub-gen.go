@@ -458,7 +458,8 @@ type CloudStorageConfig struct {
 
 	// FilenameSuffix: Optional. User-provided suffix for Cloud Storage
 	// filename. See the object naming requirements
-	// (https://cloud.google.com/storage/docs/objects#naming).
+	// (https://cloud.google.com/storage/docs/objects#naming). Must not end
+	// in "/".
 	FilenameSuffix string `json:"filenameSuffix,omitempty"`
 
 	// MaxBytes: Optional. The maximum bytes that can be written to a Cloud

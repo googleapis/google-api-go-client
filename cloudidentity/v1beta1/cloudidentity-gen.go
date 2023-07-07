@@ -2057,6 +2057,9 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	//   "NOT_ENCRYPTED" - Device is not encrypted.
 	EncryptionState string `json:"encryptionState,omitempty"`
 
+	// Hostname: Host name of the device.
+	Hostname string `json:"hostname,omitempty"`
+
 	// Imei: Output only. IMEI number of device if GSM device; empty
 	// otherwise.
 	Imei string `json:"imei,omitempty"`

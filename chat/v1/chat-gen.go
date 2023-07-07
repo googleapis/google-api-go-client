@@ -3929,6 +3929,11 @@ type Message struct {
 	// `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`
 	Name string `json:"name,omitempty"`
 
+	// QuotedMessageMetadata: Output only. Information about a message
+	// that's quoted by a Google Chat user in a space. Google Chat users can
+	// quote a message to reply to it.
+	QuotedMessageMetadata *QuotedMessageMetadata `json:"quotedMessageMetadata,omitempty"`
+
 	// Sender: Output only. The user who created the message. If your Chat
 	// app authenticates as a user
 	// (https://developers.google.com/chat/api/guides/auth/users), the
@@ -4048,6 +4053,40 @@ type OpenLink struct {
 
 func (s *OpenLink) MarshalJSON() ([]byte, error) {
 	type NoMethod OpenLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QuotedMessageMetadata: Information about a quoted message.
+type QuotedMessageMetadata struct {
+	// LastUpdateTime: Output only. The timestamp when the quoted message
+	// was created or when the quoted message was last updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// Name: Output only. Resource name of the quoted message. Format:
+	// `spaces/{space}/messages/{message}`
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastUpdateTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QuotedMessageMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod QuotedMessageMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

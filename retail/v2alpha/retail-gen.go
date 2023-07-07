@@ -142,6 +142,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.Operations = NewProjectsOperationsService(s)
+	rs.RetailProject = NewProjectsRetailProjectService(s)
 	return rs
 }
 
@@ -151,6 +152,8 @@ type ProjectsService struct {
 	Locations *ProjectsLocationsService
 
 	Operations *ProjectsOperationsService
+
+	RetailProject *ProjectsRetailProjectService
 }
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
@@ -360,6 +363,15 @@ func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 }
 
 type ProjectsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsRetailProjectService(s *Service) *ProjectsRetailProjectService {
+	rs := &ProjectsRetailProjectService{s: s}
+	return rs
+}
+
+type ProjectsRetailProjectService struct {
 	s *Service
 }
 
@@ -1448,6 +1460,11 @@ func (s *GoogleCloudRetailV2UserEventImportSummary) MarshalJSON() ([]byte, error
 	type NoMethod GoogleCloudRetailV2UserEventImportSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaAcceptTermsRequest: Request for AcceptTerms
+// method.
+type GoogleCloudRetailV2alphaAcceptTermsRequest struct {
 }
 
 // GoogleCloudRetailV2alphaAddCatalogAttributeRequest: Request for
@@ -2849,6 +2866,111 @@ func (s *GoogleCloudRetailV2alphaCustomAttribute) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+// GoogleCloudRetailV2alphaEnrollSolutionMetadata: Metadata related to
+// the EnrollSolution method. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2alphaEnrollSolutionMetadata struct {
+}
+
+// GoogleCloudRetailV2alphaEnrollSolutionRequest: Request for
+// EnrollSolution method.
+type GoogleCloudRetailV2alphaEnrollSolutionRequest struct {
+	// SearchSolutionUseCase: Solution use case to enroll. Currently
+	// settable for Browse to enroll. It should be only set when [solution]
+	// is set as SolutionType.SOLUTION_TYPE_SEARCH or an INVALID_ARGUMENT
+	// error is thrown.
+	//
+	// Possible values:
+	//   "SEARCH_SOLUTION_USE_CASE_UNSPECIFIED" - The value when it's
+	// unspecified. In this case, server behavior defaults to
+	// SEARCH_SOLUTION_USE_CASE_SEARCH.
+	//   "SEARCH_SOLUTION_USE_CASE_SEARCH" - Search use case. Expects the
+	// traffic has a non-empty query.
+	//   "SEARCH_SOLUTION_USE_CASE_BROWSE" - Browse use case. Expects the
+	// traffic has an empty query.
+	SearchSolutionUseCase string `json:"searchSolutionUseCase,omitempty"`
+
+	// Solution: Required. Solution to enroll.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Retail Search.
+	Solution string `json:"solution,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SearchSolutionUseCase") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SearchSolutionUseCase") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaEnrollSolutionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaEnrollSolutionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaEnrollSolutionResponse: Response for
+// EnrollSolution method.
+type GoogleCloudRetailV2alphaEnrollSolutionResponse struct {
+	// EnrolledSolution: Retail API solution that the project has enrolled.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Retail Search.
+	EnrolledSolution string `json:"enrolledSolution,omitempty"`
+
+	// SearchSolutionUseCase: Search solution use case that the project has
+	// enrolled.
+	//
+	// Possible values:
+	//   "SEARCH_SOLUTION_USE_CASE_UNSPECIFIED" - The value when it's
+	// unspecified. In this case, server behavior defaults to
+	// SEARCH_SOLUTION_USE_CASE_SEARCH.
+	//   "SEARCH_SOLUTION_USE_CASE_SEARCH" - Search use case. Expects the
+	// traffic has a non-empty query.
+	//   "SEARCH_SOLUTION_USE_CASE_BROWSE" - Browse use case. Expects the
+	// traffic has an empty query.
+	SearchSolutionUseCase string `json:"searchSolutionUseCase,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnrolledSolution") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnrolledSolution") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaEnrollSolutionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaEnrollSolutionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaExperimentInfo: Metadata for active A/B
 // testing Experiment.
 type GoogleCloudRetailV2alphaExperimentInfo struct {
@@ -3745,6 +3867,46 @@ type GoogleCloudRetailV2alphaListControlsResponse struct {
 
 func (s *GoogleCloudRetailV2alphaListControlsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaListControlsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaListEnrolledSolutionsResponse: Response for
+// ListEnrolledSolutions method.
+type GoogleCloudRetailV2alphaListEnrolledSolutionsResponse struct {
+	// EnrolledSolutions: Retail API solutions that the project has
+	// enrolled.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Retail Search.
+	EnrolledSolutions []string `json:"enrolledSolutions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EnrolledSolutions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnrolledSolutions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaListEnrolledSolutionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaListEnrolledSolutionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5576,6 +5738,50 @@ type GoogleCloudRetailV2alphaProductLevelConfig struct {
 
 func (s *GoogleCloudRetailV2alphaProductLevelConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaProductLevelConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaProject: Metadata that describes a Cloud
+// Retail Project.
+type GoogleCloudRetailV2alphaProject struct {
+	// EnrolledSolutions: Output only. Retail API solutions that the project
+	// has enrolled.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Retail Search.
+	EnrolledSolutions []string `json:"enrolledSolutions,omitempty"`
+
+	// Name: Output only. Full resource name of the retail project, such as
+	// `projects/{project_id_or_number}/retailProject`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EnrolledSolutions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnrolledSolutions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaProject) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaProject
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9766,6 +9972,450 @@ func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "retail.projects.enrollSolution":
+
+type ProjectsEnrollSolutionCall struct {
+	s                                             *Service
+	project                                       string
+	googlecloudretailv2alphaenrollsolutionrequest *GoogleCloudRetailV2alphaEnrollSolutionRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// EnrollSolution: Enrolls retail API solution for the project.
+// Recommendation solution is enrolled by default when your project
+// enables Retail API. You don't need to call this API for the
+// recommendation solution.
+//
+//   - project: Full resource name of parent. Format:
+//     `projects/{project_number_or_id}`.
+func (r *ProjectsService) EnrollSolution(project string, googlecloudretailv2alphaenrollsolutionrequest *GoogleCloudRetailV2alphaEnrollSolutionRequest) *ProjectsEnrollSolutionCall {
+	c := &ProjectsEnrollSolutionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.googlecloudretailv2alphaenrollsolutionrequest = googlecloudretailv2alphaenrollsolutionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEnrollSolutionCall) Fields(s ...googleapi.Field) *ProjectsEnrollSolutionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEnrollSolutionCall) Context(ctx context.Context) *ProjectsEnrollSolutionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEnrollSolutionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEnrollSolutionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphaenrollsolutionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+project}:enrollSolution")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.enrollSolution" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsEnrollSolutionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enrolls retail API solution for the project. Recommendation solution is enrolled by default when your project enables Retail API. You don't need to call this API for the recommendation solution.",
+	//   "flatPath": "v2alpha/projects/{projectsId}:enrollSolution",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.enrollSolution",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Required. Full resource name of parent. Format: `projects/{project_number_or_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+project}:enrollSolution",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2alphaEnrollSolutionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.getRetailProject":
+
+type ProjectsGetRetailProjectCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetRetailProject: Gets the project. Throws NOT_FOUND if the project
+// wasn't initialized for Retail API Service.
+//
+//   - name: Full resource name of the project. Format:
+//     `projects/{project_number_or_id}/retailProject`.
+func (r *ProjectsService) GetRetailProject(name string) *ProjectsGetRetailProjectCall {
+	c := &ProjectsGetRetailProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetRetailProjectCall) Fields(s ...googleapi.Field) *ProjectsGetRetailProjectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetRetailProjectCall) IfNoneMatch(entityTag string) *ProjectsGetRetailProjectCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetRetailProjectCall) Context(ctx context.Context) *ProjectsGetRetailProjectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetRetailProjectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetRetailProjectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.getRetailProject" call.
+// Exactly one of *GoogleCloudRetailV2alphaProject or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRetailV2alphaProject.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetRetailProjectCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaProject, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaProject{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the project. Throws NOT_FOUND if the project wasn't initialized for Retail API Service.",
+	//   "flatPath": "v2alpha/projects/{projectsId}/retailProject",
+	//   "httpMethod": "GET",
+	//   "id": "retail.projects.getRetailProject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of the project. Format: `projects/{project_number_or_id}/retailProject`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/retailProject$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2alphaProject"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.listEnrolledSolutions":
+
+type ProjectsListEnrolledSolutionsCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListEnrolledSolutions: Lists all the retail API solutions the project
+// has enrolled.
+//
+//   - parent: Full resource name of parent. Format:
+//     `projects/{project_number_or_id}`.
+func (r *ProjectsService) ListEnrolledSolutions(parent string) *ProjectsListEnrolledSolutionsCall {
+	c := &ProjectsListEnrolledSolutionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsListEnrolledSolutionsCall) Fields(s ...googleapi.Field) *ProjectsListEnrolledSolutionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsListEnrolledSolutionsCall) IfNoneMatch(entityTag string) *ProjectsListEnrolledSolutionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsListEnrolledSolutionsCall) Context(ctx context.Context) *ProjectsListEnrolledSolutionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsListEnrolledSolutionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsListEnrolledSolutionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}:enrolledSolutions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.listEnrolledSolutions" call.
+// Exactly one of *GoogleCloudRetailV2alphaListEnrolledSolutionsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudRetailV2alphaListEnrolledSolutionsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsListEnrolledSolutionsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaListEnrolledSolutionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaListEnrolledSolutionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the retail API solutions the project has enrolled.",
+	//   "flatPath": "v2alpha/projects/{projectsId}:enrolledSolutions",
+	//   "httpMethod": "GET",
+	//   "id": "retail.projects.listEnrolledSolutions",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Full resource name of parent. Format: `projects/{project_number_or_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+parent}:enrolledSolutions",
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2alphaListEnrolledSolutionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "retail.projects.locations.catalogs.completeQuery":
@@ -20524,4 +21174,149 @@ func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLo
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "retail.projects.retailProject.acceptTerms":
+
+type ProjectsRetailProjectAcceptTermsCall struct {
+	s                                          *Service
+	project                                    string
+	googlecloudretailv2alphaaccepttermsrequest *GoogleCloudRetailV2alphaAcceptTermsRequest
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// AcceptTerms: Accepts service terms for this project. By making
+// requests to this API, you agree to the terms of service linked below.
+// https://cloud.google.com/retail/data-use-terms
+//
+//   - project: Full resource name of the project. Format:
+//     `projects/{project_number_or_id}/retailProject`.
+func (r *ProjectsRetailProjectService) AcceptTerms(project string, googlecloudretailv2alphaaccepttermsrequest *GoogleCloudRetailV2alphaAcceptTermsRequest) *ProjectsRetailProjectAcceptTermsCall {
+	c := &ProjectsRetailProjectAcceptTermsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.googlecloudretailv2alphaaccepttermsrequest = googlecloudretailv2alphaaccepttermsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRetailProjectAcceptTermsCall) Fields(s ...googleapi.Field) *ProjectsRetailProjectAcceptTermsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRetailProjectAcceptTermsCall) Context(ctx context.Context) *ProjectsRetailProjectAcceptTermsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRetailProjectAcceptTermsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRetailProjectAcceptTermsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphaaccepttermsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+project}:acceptTerms")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.retailProject.acceptTerms" call.
+// Exactly one of *GoogleCloudRetailV2alphaProject or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRetailV2alphaProject.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsRetailProjectAcceptTermsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaProject, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaProject{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Accepts service terms for this project. By making requests to this API, you agree to the terms of service linked below. https://cloud.google.com/retail/data-use-terms",
+	//   "flatPath": "v2alpha/projects/{projectsId}/retailProject:acceptTerms",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.retailProject.acceptTerms",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Required. Full resource name of the project. Format: `projects/{project_number_or_id}/retailProject`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/retailProject$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+project}:acceptTerms",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2alphaAcceptTermsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2alphaProject"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }

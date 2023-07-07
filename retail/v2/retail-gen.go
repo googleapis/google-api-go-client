@@ -6695,6 +6695,60 @@ func (s *GoogleCloudRetailV2alphaCreateModelMetadata) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaEnrollSolutionMetadata: Metadata related to
+// the EnrollSolution method. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudRetailV2alphaEnrollSolutionMetadata struct {
+}
+
+// GoogleCloudRetailV2alphaEnrollSolutionResponse: Response for
+// EnrollSolution method.
+type GoogleCloudRetailV2alphaEnrollSolutionResponse struct {
+	// EnrolledSolution: Retail API solution that the project has enrolled.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Retail Search.
+	EnrolledSolution string `json:"enrolledSolution,omitempty"`
+
+	// SearchSolutionUseCase: Search solution use case that the project has
+	// enrolled.
+	//
+	// Possible values:
+	//   "SEARCH_SOLUTION_USE_CASE_UNSPECIFIED" - The value when it's
+	// unspecified. In this case, server behavior defaults to
+	// SEARCH_SOLUTION_USE_CASE_SEARCH.
+	//   "SEARCH_SOLUTION_USE_CASE_SEARCH" - Search use case. Expects the
+	// traffic has a non-empty query.
+	//   "SEARCH_SOLUTION_USE_CASE_BROWSE" - Browse use case. Expects the
+	// traffic has an empty query.
+	SearchSolutionUseCase string `json:"searchSolutionUseCase,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnrolledSolution") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnrolledSolution") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaEnrollSolutionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaEnrollSolutionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaExportErrorsConfig: Configuration of
 // destination for Export related errors.
 type GoogleCloudRetailV2alphaExportErrorsConfig struct {

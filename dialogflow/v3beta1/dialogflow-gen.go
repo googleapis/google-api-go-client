@@ -1171,12 +1171,18 @@ func (s *GoogleCloudDialogflowCxV3EventInput) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowCxV3ExportAgentResponse: The response message
 // for Agents.ExportAgent.
 type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
-	// AgentContent: Uncompressed raw byte content for agent.
+	// AgentContent: Uncompressed raw byte content for agent. This field is
+	// populated if none of `agent_uri` and `git_destination` are specified
+	// in ExportAgentRequest.
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
 	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// CommitSha: Commit SHA of the git push. This field is populated if
+	// `git_destination` are specified in ExportAgentRequest.
+	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
 	// unconditionally include in API requests. By default, fields with
@@ -4127,6 +4133,9 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// for the agent. Please use agent.advanced_settings instead.
 	EnableStackdriverLogging bool `json:"enableStackdriverLogging,omitempty"`
 
+	// GitIntegrationSettings: Git integration settings for this agent.
+	GitIntegrationSettings *GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettings `json:"gitIntegrationSettings,omitempty"`
+
 	// Locked: Indicates whether the agent is locked for changes. If the
 	// agent is locked, modifications to the agent will be rejected except
 	// for RestoreAgent.
@@ -4187,6 +4196,80 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1Agent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Agent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettings: Settings
+// for connecting to Git repository for an agent.
+type GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettings struct {
+	// GithubSettings: GitHub settings.
+	GithubSettings *GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSettings `json:"githubSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GithubSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GithubSettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSetting
+// s: Settings of integration with GitHub.
+type GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSettings struct {
+	// AccessToken: The access token used to authenticate the access to the
+	// GitHub repository.
+	AccessToken string `json:"accessToken,omitempty"`
+
+	// Branches: A list of branches configured to be used from Dialogflow.
+	Branches []string `json:"branches,omitempty"`
+
+	// DisplayName: The unique repository display name for the GitHub
+	// repository.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// RepositoryUri: The GitHub repository URI related to the agent.
+	RepositoryUri string `json:"repositoryUri,omitempty"`
+
+	// TrackingBranch: The branch of GitHub repository tracked for this
+	// agent.
+	TrackingBranch string `json:"trackingBranch,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5997,6 +6080,9 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentRequest struct {
 	// `projects//locations//agents//environments/`.
 	Environment string `json:"environment,omitempty"`
 
+	// GitDestination: Optional. The Git branch to export the agent to.
+	GitDestination *GoogleCloudDialogflowCxV3beta1ExportAgentRequestGitDestination `json:"gitDestination,omitempty"`
+
 	// IncludeBigqueryExportSettings: Optional. Whether to include BigQuery
 	// Export setting.
 	IncludeBigqueryExportSettings bool `json:"includeBigqueryExportSettings,omitempty"`
@@ -6024,15 +6110,53 @@ func (s *GoogleCloudDialogflowCxV3beta1ExportAgentRequest) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ExportAgentRequestGitDestination:
+// Settings for exporting to a git branch.
+type GoogleCloudDialogflowCxV3beta1ExportAgentRequestGitDestination struct {
+	// CommitMessage: Commit message for the git push.
+	CommitMessage string `json:"commitMessage,omitempty"`
+
+	// TrackingBranch: Tracking branch for the git push.
+	TrackingBranch string `json:"trackingBranch,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommitMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommitMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ExportAgentRequestGitDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ExportAgentRequestGitDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ExportAgentResponse: The response
 // message for Agents.ExportAgent.
 type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
-	// AgentContent: Uncompressed raw byte content for agent.
+	// AgentContent: Uncompressed raw byte content for agent. This field is
+	// populated if none of `agent_uri` and `git_destination` are specified
+	// in ExportAgentRequest.
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
 	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// CommitSha: Commit SHA of the git push. This field is populated if
+	// `git_destination` are specified in ExportAgentRequest.
+	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
 	// unconditionally include in API requests. By default, fields with
@@ -9575,6 +9699,9 @@ type GoogleCloudDialogflowCxV3beta1RestoreAgentRequest struct {
 	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
 	AgentUri string `json:"agentUri,omitempty"`
 
+	// GitSource: Setting for restoring from a git branch
+	GitSource *GoogleCloudDialogflowCxV3beta1RestoreAgentRequestGitSource `json:"gitSource,omitempty"`
+
 	// RestoreOption: Agent restore mode. If not specified, `KEEP` is
 	// assumed.
 	//
@@ -9606,6 +9733,36 @@ type GoogleCloudDialogflowCxV3beta1RestoreAgentRequest struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1RestoreAgentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1RestoreAgentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1RestoreAgentRequestGitSource: Settings
+// for restoring from a git branch
+type GoogleCloudDialogflowCxV3beta1RestoreAgentRequestGitSource struct {
+	// TrackingBranch: tracking branch for the git pull
+	TrackingBranch string `json:"trackingBranch,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TrackingBranch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TrackingBranch") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1RestoreAgentRequestGitSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1RestoreAgentRequestGitSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

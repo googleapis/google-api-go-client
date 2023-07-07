@@ -177,6 +177,7 @@ type ProjectsLocationsService struct {
 func NewProjectsLocationsConnectionsService(s *Service) *ProjectsLocationsConnectionsService {
 	rs := &ProjectsLocationsConnectionsService{s: s}
 	rs.ConnectionSchemaMetadata = NewProjectsLocationsConnectionsConnectionSchemaMetadataService(s)
+	rs.EventSubscriptions = NewProjectsLocationsConnectionsEventSubscriptionsService(s)
 	rs.RuntimeActionSchemas = NewProjectsLocationsConnectionsRuntimeActionSchemasService(s)
 	rs.RuntimeEntitySchemas = NewProjectsLocationsConnectionsRuntimeEntitySchemasService(s)
 	return rs
@@ -186,6 +187,8 @@ type ProjectsLocationsConnectionsService struct {
 	s *Service
 
 	ConnectionSchemaMetadata *ProjectsLocationsConnectionsConnectionSchemaMetadataService
+
+	EventSubscriptions *ProjectsLocationsConnectionsEventSubscriptionsService
 
 	RuntimeActionSchemas *ProjectsLocationsConnectionsRuntimeActionSchemasService
 
@@ -198,6 +201,15 @@ func NewProjectsLocationsConnectionsConnectionSchemaMetadataService(s *Service) 
 }
 
 type ProjectsLocationsConnectionsConnectionSchemaMetadataService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConnectionsEventSubscriptionsService(s *Service) *ProjectsLocationsConnectionsEventSubscriptionsService {
+	rs := &ProjectsLocationsConnectionsEventSubscriptionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConnectionsEventSubscriptionsService struct {
 	s *Service
 }
 
@@ -284,10 +296,22 @@ type ProjectsLocationsProvidersConnectorsService struct {
 
 func NewProjectsLocationsProvidersConnectorsVersionsService(s *Service) *ProjectsLocationsProvidersConnectorsVersionsService {
 	rs := &ProjectsLocationsProvidersConnectorsVersionsService{s: s}
+	rs.Eventtypes = NewProjectsLocationsProvidersConnectorsVersionsEventtypesService(s)
 	return rs
 }
 
 type ProjectsLocationsProvidersConnectorsVersionsService struct {
+	s *Service
+
+	Eventtypes *ProjectsLocationsProvidersConnectorsVersionsEventtypesService
+}
+
+func NewProjectsLocationsProvidersConnectorsVersionsEventtypesService(s *Service) *ProjectsLocationsProvidersConnectorsVersionsEventtypesService {
+	rs := &ProjectsLocationsProvidersConnectorsVersionsEventtypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsProvidersConnectorsVersionsEventtypesService struct {
 	s *Service
 }
 
@@ -775,6 +799,10 @@ type Connection struct {
 	// global location is supported for ConnectorVersion resource.
 	ConnectorVersion string `json:"connectorVersion,omitempty"`
 
+	// ConnectorVersionInfraConfig: Output only. Infra configs supported by
+	// Connector Version.
+	ConnectorVersionInfraConfig *ConnectorVersionInfraConfig `json:"connectorVersionInfraConfig,omitempty"`
+
 	// ConnectorVersionLaunchStage: Output only. Flag to mark the version
 	// indicating the launch stage.
 	//
@@ -800,6 +828,22 @@ type Connection struct {
 	// EnvoyImageLocation: Output only. GCR location where the envoy image
 	// is stored. formatted like: gcr.io/{bucketName}/{imageName}
 	EnvoyImageLocation string `json:"envoyImageLocation,omitempty"`
+
+	// EventingConfig: Optional. Eventing config of a connection
+	EventingConfig *EventingConfig `json:"eventingConfig,omitempty"`
+
+	// EventingEnablementType: Optional. Eventing enablement type. Will be
+	// nil if eventing is not enabled.
+	//
+	// Possible values:
+	//   "EVENTING_ENABLEMENT_TYPE_UNSPECIFIED" - Eventing Enablement Type
+	// Unspecifeied.
+	//   "EVENTING_AND_CONNECTION" - Both connection and eventing.
+	//   "ONLY_EVENTING" - Only Eventing.
+	EventingEnablementType string `json:"eventingEnablementType,omitempty"`
+
+	// EventingRuntimeData: Output only. Eventing Runtime Data.
+	EventingRuntimeData *EventingRuntimeData `json:"eventingRuntimeData,omitempty"`
 
 	// ImageLocation: Output only. GCR location where the runtime image is
 	// stored. formatted like: gcr.io/{bucketName}/{imageName}
@@ -1003,6 +1047,10 @@ type Connector struct {
 	// DocumentationUri: Output only. Link to documentation page.
 	DocumentationUri string `json:"documentationUri,omitempty"`
 
+	// EventingDetails: Output only. Eventing details. Will be null if
+	// eventing is not supported.
+	EventingDetails *EventingDetails `json:"eventingDetails,omitempty"`
+
 	// ExternalUri: Output only. Link to external page.
 	ExternalUri string `json:"externalUri,omitempty"`
 
@@ -1062,6 +1110,38 @@ func (s *Connector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConnectorInfraConfig: This cofiguration provides infra configs like
+// rate limit threshold which need to be configurable for every
+// connector version
+type ConnectorInfraConfig struct {
+	// RatelimitThreshold: Max QPS supported by the connector version before
+	// throttling of requests.
+	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "RatelimitThreshold")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RatelimitThreshold") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorInfraConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorInfraConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConnectorVersion: ConnectorVersion indicates a specific version of a
 // connector.
 type ConnectorVersion struct {
@@ -1072,6 +1152,10 @@ type ConnectorVersion struct {
 	// ConfigVariableTemplates: Output only. List of config variables needed
 	// to create a connection.
 	ConfigVariableTemplates []*ConfigVariableTemplate `json:"configVariableTemplates,omitempty"`
+
+	// ConnectorInfraConfig: Output only. Infra configs supported by
+	// Connector.
+	ConnectorInfraConfig *ConnectorInfraConfig `json:"connectorInfraConfig,omitempty"`
 
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1085,6 +1169,10 @@ type ConnectorVersion struct {
 
 	// EgressControlConfig: Output only. Configuration for Egress Control.
 	EgressControlConfig *EgressControlConfig `json:"egressControlConfig,omitempty"`
+
+	// EventingConfigTemplate: Output only. Eventing configuration supported
+	// by the Connector.
+	EventingConfigTemplate *EventingConfigTemplate `json:"eventingConfigTemplate,omitempty"`
 
 	// Labels: Output only. Resource labels to represent user-provided
 	// metadata. Refer to cloud documentation on labels for more details.
@@ -1155,6 +1243,38 @@ type ConnectorVersion struct {
 
 func (s *ConnectorVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorVersionInfraConfig: This cofiguration provides infra configs
+// like rate limit threshold which need to be configurable for every
+// connector version
+type ConnectorVersionInfraConfig struct {
+	// RatelimitThreshold: Output only. Max QPS supported by the connector
+	// version before throttling of requests.
+	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "RatelimitThreshold")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RatelimitThreshold") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorVersionInfraConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorVersionInfraConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1403,6 +1523,38 @@ func (s *EncryptionKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EndPoint: Endpoint message includes details of the Destination
+// endpoint.
+type EndPoint struct {
+	// EndpointUri: The URI of the Endpoint.
+	EndpointUri string `json:"endpointUri,omitempty"`
+
+	// Headers: List of Header to be added to the Endpoint.
+	Headers []*Header `json:"headers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndpointUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EndPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod EndPoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EndpointAttachment: represents the Connector's Endpoint Attachment
 // resource
 type EndpointAttachment struct {
@@ -1486,6 +1638,430 @@ type EnumOption struct {
 
 func (s *EnumOption) MarshalJSON() ([]byte, error) {
 	type NoMethod EnumOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventSubscription: represents the Connector's EventSubscription
+// resource
+type EventSubscription struct {
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Destinations: Optional. The destination to hit when we receive an
+	// event
+	Destinations *EventSubscriptionDestination `json:"destinations,omitempty"`
+
+	// EventTypeId: Optional. Event type id of the event of current
+	// EventSubscription.
+	EventTypeId string `json:"eventTypeId,omitempty"`
+
+	// Name: Required. Resource name of the EventSubscription. Format:
+	// projects/{project}/locations/{location}/connections/{connection}/event
+	// Subscriptions/{event_subscription}
+	Name string `json:"name,omitempty"`
+
+	// Status: Optional. Status indicates the status of the event
+	// subscription resource
+	Status *EventSubscriptionStatus `json:"status,omitempty"`
+
+	// Subscriber: Optional. name of the Subscriber for the current
+	// EventSubscription.
+	Subscriber string `json:"subscriber,omitempty"`
+
+	// SubscriberLink: Optional. Link for Subscriber of the current
+	// EventSubscription.
+	SubscriberLink string `json:"subscriberLink,omitempty"`
+
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod EventSubscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventSubscriptionDestination: Message for EventSubscription
+// Destination to act on receiving an event
+type EventSubscriptionDestination struct {
+	// Endpoint: OPTION 1: Hit an endpoint when we receive an event.
+	Endpoint *EndPoint `json:"endpoint,omitempty"`
+
+	// ServiceAccount: Service account needed for runtime plane to trigger
+	// IP workflow.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// Type: type of the destination
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default state.
+	//   "ENDPOINT" - Endpoint - Hit the value of endpoint when event is
+	// received
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventSubscriptionDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod EventSubscriptionDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventSubscriptionStatus: EventSubscription Status denotes the status
+// of the EventSubscription resource.
+type EventSubscriptionStatus struct {
+	// Description: Output only. Description of the state.
+	Description string `json:"description,omitempty"`
+
+	// State: Output only. State of Event Subscription resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default state.
+	//   "CREATING" - EventSubscription creation is in progress.
+	//   "UPDATING" - EventSubscription is in Updating status.
+	//   "ACTIVE" - EventSubscription is in Active state and is ready to
+	// receive events.
+	//   "SUSPENDED" - EventSubscription is currently suspended.
+	//   "ERROR" - EventSubscription is in Error state.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventSubscriptionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod EventSubscriptionStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventType: EventType includes fields.
+type EventType struct {
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EnrichedEventPayloadSchema: Output only. Schema of the event payload
+	// after enriched. Will be null if read before send is not supported.
+	EnrichedEventPayloadSchema string `json:"enrichedEventPayloadSchema,omitempty"`
+
+	// EntityType: Output only. Runtime entity type name. Will be null if
+	// entity type map is not available. Used for read before send feature.
+	EntityType string `json:"entityType,omitempty"`
+
+	// EventPayloadSchema: Output only. Schema of webhook event payload.
+	EventPayloadSchema string `json:"eventPayloadSchema,omitempty"`
+
+	// EventTypeId: Output only. Event type id. Example: `ticket.created`.
+	EventTypeId string `json:"eventTypeId,omitempty"`
+
+	// IdPath: Output only. Id path denotes the path of id in webhook
+	// payload.
+	IdPath string `json:"idPath,omitempty"`
+
+	// Name: Output only. Resource name of the eventtype. Format:
+	// projects/{project}/locations/{location}/providers/{provider}/connector
+	// s/{connector}/versions/{version}/eventtypes/{eventtype} Only global
+	// location is supported for Connector resource.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventType) MarshalJSON() ([]byte, error) {
+	type NoMethod EventType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventingConfig: Eventing Configuration of a connection
+type EventingConfig struct {
+	// AdditionalVariables: Additional eventing related field values
+	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
+
+	// AuthConfig: Auth details for the webhook adapter.
+	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
+
+	// EncryptionKey: Encryption key (can be either Google managed or CMEK).
+	EncryptionKey *ConfigVariable `json:"encryptionKey,omitempty"`
+
+	// EnrichmentEnabled: Enrichment Enabled.
+	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
+
+	// RegistrationDestinationConfig: Registration endpoint for auto
+	// regsitration.
+	RegistrationDestinationConfig *DestinationConfig `json:"registrationDestinationConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalVariables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EventingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventingConfigTemplate: Eventing Config details of a connector
+// version.
+type EventingConfigTemplate struct {
+	// AdditionalVariables: Additional fields that need to be rendered.
+	AdditionalVariables []*ConfigVariableTemplate `json:"additionalVariables,omitempty"`
+
+	// AuthConfigTemplates: AuthConfigTemplates represents the auth values
+	// for the webhook adapter.
+	AuthConfigTemplates []*AuthConfigTemplate `json:"authConfigTemplates,omitempty"`
+
+	// AutoRefresh: Auto refresh to extend webhook life.
+	AutoRefresh bool `json:"autoRefresh,omitempty"`
+
+	// AutoRegistrationSupported: Auto Registration supported.
+	AutoRegistrationSupported bool `json:"autoRegistrationSupported,omitempty"`
+
+	// EncryptionKeyTemplate: Encryption key (can be either Google managed
+	// or CMEK).
+	EncryptionKeyTemplate *ConfigVariableTemplate `json:"encryptionKeyTemplate,omitempty"`
+
+	// EnrichmentSupported: Enrichment Supported.
+	EnrichmentSupported bool `json:"enrichmentSupported,omitempty"`
+
+	// IsEventingSupported: Is Eventing Supported.
+	IsEventingSupported bool `json:"isEventingSupported,omitempty"`
+
+	// RegistrationDestinationConfig: Registration host destination config
+	// template.
+	RegistrationDestinationConfig *DestinationConfigTemplate `json:"registrationDestinationConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalVariables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventingConfigTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod EventingConfigTemplate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventingDetails: Eventing Details message.
+type EventingDetails struct {
+	// CustomEventTypes: Output only. Custom Event Types.
+	CustomEventTypes bool `json:"customEventTypes,omitempty"`
+
+	// Description: Output only. Description.
+	Description string `json:"description,omitempty"`
+
+	// DocumentationLink: Output only. Link to public documentation.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+
+	// IconLocation: Output only. Cloud storage location of the icon.
+	IconLocation string `json:"iconLocation,omitempty"`
+
+	// LaunchStage: Output only. Eventing Launch Stage.
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - LAUNCH_STAGE_UNSPECIFIED.
+	//   "PREVIEW" - PREVIEW.
+	//   "GA" - GA.
+	//   "DEPRECATED" - DEPRECATED.
+	//   "PRIVATE_PREVIEW" - PRIVATE_PREVIEW.
+	LaunchStage string `json:"launchStage,omitempty"`
+
+	// Name: Output only. Name of the Eventing trigger.
+	Name string `json:"name,omitempty"`
+
+	// SearchTags: Output only. Array of search keywords.
+	SearchTags []string `json:"searchTags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomEventTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomEventTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod EventingDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventingRuntimeData: Eventing runtime data has the details related to
+// eventing managed by the system.
+type EventingRuntimeData struct {
+	// EventsListenerEndpoint: Output only. Events listener endpoint. The
+	// value will populated after provisioning the events listener.
+	EventsListenerEndpoint string `json:"eventsListenerEndpoint,omitempty"`
+
+	// Status: Output only. Current status of eventing.
+	Status *EventingStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EventsListenerEndpoint") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventsListenerEndpoint")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventingRuntimeData) MarshalJSON() ([]byte, error) {
+	type NoMethod EventingRuntimeData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventingStatus: EventingStatus indicates the state of eventing.
+type EventingStatus struct {
+	// Description: Output only. Description of error if State is set to
+	// "ERROR".
+	Description string `json:"description,omitempty"`
+
+	// State: Output only. State.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default state.
+	//   "ACTIVE" - Eventing is enabled and ready to receive events.
+	//   "ERROR" - Eventing is not active due to an error.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod EventingStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1761,6 +2337,37 @@ type FieldComparison struct {
 
 func (s *FieldComparison) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldComparison
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Header: Header details for a given header to be added to Endpoint.
+type Header struct {
+	// Key: Key of Header.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value of Header.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Header) MarshalJSON() ([]byte, error) {
+	type NoMethod Header
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2046,6 +2653,82 @@ type ListEndpointAttachmentsResponse struct {
 
 func (s *ListEndpointAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEndpointAttachmentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEventSubscriptionsResponse: Response message for
+// ConnectorsService.ListEventSubscriptions
+type ListEventSubscriptionsResponse struct {
+	// EventSubscriptions: Subscriptions.
+	EventSubscriptions []*EventSubscription `json:"eventSubscriptions,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EventSubscriptions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventSubscriptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEventSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEventSubscriptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEventTypesResponse: Response message for
+// Connectors.ListEventTypes.
+type ListEventTypesResponse struct {
+	// EventTypes: A list of connector versions.
+	EventTypes []*EventType `json:"eventTypes,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EventTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEventTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEventTypesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2906,6 +3589,11 @@ func (s *Provider) MarshalJSON() ([]byte, error) {
 type RefreshConnectionSchemaMetadataRequest struct {
 }
 
+// RepairEventingRequest: Request message for
+// ConnectorsService.RepairEventing
+type RepairEventingRequest struct {
+}
+
 // Resource: Resource definition
 type Resource struct {
 	// PathTemplate: Template to uniquely represent a GCP resource in a
@@ -3031,6 +3719,11 @@ func (s *ResultMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RetryEventSubscriptionRequest: Request message for
+// ConnectorsService.RefreshEventSubscription
+type RetryEventSubscriptionRequest struct {
 }
 
 // RoleGrant: This configuration defines all the Cloud IAM roles that
@@ -5424,6 +6117,150 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 
 }
 
+// method id "connectors.projects.locations.connections.repairEventing":
+
+type ProjectsLocationsConnectionsRepairEventingCall struct {
+	s                     *Service
+	name                  string
+	repaireventingrequest *RepairEventingRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// RepairEventing: RepaiEventing tries to repair eventing related event
+// subscriptions.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/connections/*`.
+func (r *ProjectsLocationsConnectionsService) RepairEventing(name string, repaireventingrequest *RepairEventingRequest) *ProjectsLocationsConnectionsRepairEventingCall {
+	c := &ProjectsLocationsConnectionsRepairEventingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.repaireventingrequest = repaireventingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsRepairEventingCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsRepairEventingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsRepairEventingCall) Context(ctx context.Context) *ProjectsLocationsConnectionsRepairEventingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsRepairEventingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsRepairEventingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.repaireventingrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:repairEventing")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.repairEventing" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsRepairEventingCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "RepaiEventing tries to repair eventing related event subscriptions.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}:repairEventing",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.connections.repairEventing",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/connections/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:repairEventing",
+	//   "request": {
+	//     "$ref": "RepairEventingRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "connectors.projects.locations.connections.setIamPolicy":
 
 type ProjectsLocationsConnectionsSetIamPolicyCall struct {
@@ -5854,6 +6691,962 @@ func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataRefreshCall) Do(opt
 	//   "path": "v1/{+name}:refresh",
 	//   "request": {
 	//     "$ref": "RefreshConnectionSchemaMetadataRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.eventSubscriptions.create":
+
+type ProjectsLocationsConnectionsEventSubscriptionsCreateCall struct {
+	s                 *Service
+	parent            string
+	eventsubscription *EventSubscription
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates a new EventSubscription in a given project,location
+// and connection.
+//
+//   - parent: Parent resource of the EventSubscription, of the form:
+//     `projects/*/locations/*/connections/*`.
+func (r *ProjectsLocationsConnectionsEventSubscriptionsService) Create(parent string, eventsubscription *EventSubscription) *ProjectsLocationsConnectionsEventSubscriptionsCreateCall {
+	c := &ProjectsLocationsConnectionsEventSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.eventsubscription = eventsubscription
+	return c
+}
+
+// EventSubscriptionId sets the optional parameter
+// "eventSubscriptionId": Required. Identifier to assign to the Event
+// Subscription. Must be unique within scope of the parent resource.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsCreateCall) EventSubscriptionId(eventSubscriptionId string) *ProjectsLocationsConnectionsEventSubscriptionsCreateCall {
+	c.urlParams_.Set("eventSubscriptionId", eventSubscriptionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEventSubscriptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsCreateCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEventSubscriptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEventSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsubscription)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/eventSubscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.eventSubscriptions.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new EventSubscription in a given project,location and connection.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/eventSubscriptions",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.connections.eventSubscriptions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "eventSubscriptionId": {
+	//       "description": "Required. Identifier to assign to the Event Subscription. Must be unique within scope of the parent resource.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the EventSubscription, of the form: `projects/*/locations/*/connections/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/eventSubscriptions",
+	//   "request": {
+	//     "$ref": "EventSubscription"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.eventSubscriptions.delete":
+
+type ProjectsLocationsConnectionsEventSubscriptionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single EventSubscription.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/connections/*/eventsubscriptions/*`.
+func (r *ProjectsLocationsConnectionsEventSubscriptionsService) Delete(name string) *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall {
+	c := &ProjectsLocationsConnectionsEventSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.eventSubscriptions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single EventSubscription.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/eventSubscriptions/{eventSubscriptionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "connectors.projects.locations.connections.eventSubscriptions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/connections/*/eventsubscriptions/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/eventSubscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.eventSubscriptions.get":
+
+type ProjectsLocationsConnectionsEventSubscriptionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single EventSubscription.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/connections/*/eventSubscriptions/*`.
+func (r *ProjectsLocationsConnectionsEventSubscriptionsService) Get(name string) *ProjectsLocationsConnectionsEventSubscriptionsGetCall {
+	c := &ProjectsLocationsConnectionsEventSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEventSubscriptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsEventSubscriptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsGetCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEventSubscriptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEventSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.eventSubscriptions.get" call.
+// Exactly one of *EventSubscription or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *EventSubscription.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*EventSubscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventSubscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single EventSubscription.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/eventSubscriptions/{eventSubscriptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.eventSubscriptions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/connections/*/eventSubscriptions/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/eventSubscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EventSubscription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.eventSubscriptions.list":
+
+type ProjectsLocationsConnectionsEventSubscriptionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List EventSubscriptions in a given project,location and
+// connection.
+//
+//   - parent: Parent resource of the EventSubscription, of the form:
+//     `projects/*/locations/*/connections/*`.
+func (r *ProjectsLocationsConnectionsEventSubscriptionsService) List(parent string) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c := &ProjectsLocationsConnectionsEventSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter.
+// https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Filter(filter string) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by parameters.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) OrderBy(orderBy string) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/eventSubscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.eventSubscriptions.list" call.
+// Exactly one of *ListEventSubscriptionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListEventSubscriptionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListEventSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEventSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List EventSubscriptions in a given project,location and connection.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/eventSubscriptions",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.eventSubscriptions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter. https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Order by parameters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the EventSubscription, of the form: `projects/*/locations/*/connections/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/eventSubscriptions",
+	//   "response": {
+	//     "$ref": "ListEventSubscriptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Pages(ctx context.Context, f func(*ListEventSubscriptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.connections.eventSubscriptions.patch":
+
+type ProjectsLocationsConnectionsEventSubscriptionsPatchCall struct {
+	s                 *Service
+	name              string
+	eventsubscription *EventSubscription
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Patch: Updates the parameters of a single EventSubscription.
+//
+//   - name: Resource name of the EventSubscription. Format:
+//     projects/{project}/locations/{location}/connections/{connection}/eve
+//     ntSubscriptions/{event_subscription}.
+func (r *ProjectsLocationsConnectionsEventSubscriptionsService) Patch(name string, eventsubscription *EventSubscription) *ProjectsLocationsConnectionsEventSubscriptionsPatchCall {
+	c := &ProjectsLocationsConnectionsEventSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.eventsubscription = eventsubscription
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update. Fields are specified relative to the
+// Subscription. A field will be overwritten if it is in the mask. You
+// can modify only the fields listed below. To update the
+// EventSubscription details: * `serviceAccount`
+func (c *ProjectsLocationsConnectionsEventSubscriptionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsEventSubscriptionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEventSubscriptionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsPatchCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEventSubscriptionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEventSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsubscription)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.eventSubscriptions.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single EventSubscription.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/eventSubscriptions/{eventSubscriptionsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "connectors.projects.locations.connections.eventSubscriptions.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the EventSubscription. Format: projects/{project}/locations/{location}/connections/{connection}/eventSubscriptions/{event_subscription}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/eventSubscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update. Fields are specified relative to the Subscription. A field will be overwritten if it is in the mask. You can modify only the fields listed below. To update the EventSubscription details: * `serviceAccount`",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EventSubscription"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.eventSubscriptions.retry":
+
+type ProjectsLocationsConnectionsEventSubscriptionsRetryCall struct {
+	s                             *Service
+	name                          string
+	retryeventsubscriptionrequest *RetryEventSubscriptionRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Retry: RetryEventSubscription retries the registration of
+// Subscription.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/connections/*/eventSubscriptions/*`.
+func (r *ProjectsLocationsConnectionsEventSubscriptionsService) Retry(name string, retryeventsubscriptionrequest *RetryEventSubscriptionRequest) *ProjectsLocationsConnectionsEventSubscriptionsRetryCall {
+	c := &ProjectsLocationsConnectionsEventSubscriptionsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.retryeventsubscriptionrequest = retryeventsubscriptionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsRetryCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEventSubscriptionsRetryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsRetryCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEventSubscriptionsRetryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsRetryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEventSubscriptionsRetryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.retryeventsubscriptionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:retry")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.eventSubscriptions.retry" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEventSubscriptionsRetryCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "RetryEventSubscription retries the registration of Subscription.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/eventSubscriptions/{eventSubscriptionsId}:retry",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.connections.eventSubscriptions.retry",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/connections/*/eventSubscriptions/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/eventSubscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:retry",
+	//   "request": {
+	//     "$ref": "RetryEventSubscriptionRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -7227,6 +9020,162 @@ func (c *ProjectsLocationsGlobalGetSettingsCall) Do(opts ...googleapi.CallOption
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.updateSettings":
+
+type ProjectsLocationsGlobalUpdateSettingsCall struct {
+	s          *Service
+	name       string
+	settings   *Settings
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateSettings: Update the global settings of a project.
+//
+//   - name: Output only. Resource name of the Connection. Format:
+//     projects/{project}/locations/global/settings}.
+func (r *ProjectsLocationsGlobalService) UpdateSettings(name string, settings *Settings) *ProjectsLocationsGlobalUpdateSettingsCall {
+	c := &ProjectsLocationsGlobalUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.settings = settings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update.
+func (c *ProjectsLocationsGlobalUpdateSettingsCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalUpdateSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalUpdateSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalUpdateSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalUpdateSettingsCall) Context(ctx context.Context) *ProjectsLocationsGlobalUpdateSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalUpdateSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalUpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.settings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.updateSettings" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the global settings of a project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/settings",
+	//   "httpMethod": "PATCH",
+	//   "id": "connectors.projects.locations.global.updateSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the Connection. Format: projects/{project}/locations/global/settings}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/settings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Settings"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10235,6 +12184,346 @@ func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) Do(opts ...google
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) Pages(ctx context.Context, f func(*ListConnectorVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.providers.connectors.versions.eventtypes.get":
+
+type ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single event type.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/providers/*/connectors/*/versions/*/eventtyp
+//     es/*` Only global location is supported for EventType resource.
+func (r *ProjectsLocationsProvidersConnectorsVersionsEventtypesService) Get(name string) *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall {
+	c := &ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall) Context(ctx context.Context) *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.connectors.versions.eventtypes.get" call.
+// Exactly one of *EventType or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EventType.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesGetCall) Do(opts ...googleapi.CallOption) (*EventType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single event type.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}/connectors/{connectorsId}/versions/{versionsId}/eventtypes/{eventtypesId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.connectors.versions.eventtypes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*/eventtypes/*` Only global location is supported for EventType resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+/connectors/[^/]+/versions/[^/]+/eventtypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EventType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.providers.connectors.versions.eventtypes.list":
+
+type ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Event Types in a given Connector Version.
+//
+//   - parent: Parent resource of the connectors, of the form:
+//     `projects/*/locations/*/providers/*/connectors/*/versions/*` Only
+//     global location is supported for EventType resource.
+func (r *ProjectsLocationsProvidersConnectorsVersionsEventtypesService) List(parent string) *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall {
+	c := &ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) PageSize(pageSize int64) *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) PageToken(pageToken string) *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) Context(ctx context.Context) *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/eventtypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.connectors.versions.eventtypes.list" call.
+// Exactly one of *ListEventTypesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListEventTypesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) Do(opts ...googleapi.CallOption) (*ListEventTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEventTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Event Types in a given Connector Version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}/connectors/{connectorsId}/versions/{versionsId}/eventtypes",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.connectors.versions.eventtypes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the connectors, of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*` Only global location is supported for EventType resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+/connectors/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/eventtypes",
+	//   "response": {
+	//     "$ref": "ListEventTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProvidersConnectorsVersionsEventtypesListCall) Pages(ctx context.Context, f func(*ListEventTypesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

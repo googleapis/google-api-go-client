@@ -45,10 +45,12 @@ func (e wrappedCallErr) Is(target error) bool {
 // reverse order.
 func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
 	// Add headers set in context metadata.
-	headers := callctx.HeadersFromContext(ctx)
-	for k, vals := range headers {
-		for _, v := range vals {
-			req.Header.Add(k, v)
+	if ctx != nil {
+		headers := callctx.HeadersFromContext(ctx)
+		for k, vals := range headers {
+			for _, v := range vals {
+				req.Header.Add(k, v)
+			}
 		}
 	}
 
@@ -87,10 +89,12 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 // reverse order.
 func SendRequestWithRetry(ctx context.Context, client *http.Client, req *http.Request, retry *RetryConfig) (*http.Response, error) {
 	// Add headers set in context metadata.
-	headers := callctx.HeadersFromContext(ctx)
-	for k, vals := range headers {
-		for _, v := range vals {
-			req.Header.Add(k, v)
+	if ctx != nil {
+		headers := callctx.HeadersFromContext(ctx)
+		for k, vals := range headers {
+			for _, v := range vals {
+				req.Header.Add(k, v)
+			}
 		}
 	}
 

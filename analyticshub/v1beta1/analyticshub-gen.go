@@ -949,6 +949,10 @@ type Listing struct {
 	// Length: 1000 bytes.
 	RequestAccess string `json:"requestAccess,omitempty"`
 
+	// RestrictedExportConfig: Optional. If set, restricted export
+	// configuration will be propagated and enforced on the linked dataset.
+	RestrictedExportConfig *RestrictedExportConfig `json:"restrictedExportConfig,omitempty"`
+
 	// State: Output only. Current state of the listing.
 	//
 	// Possible values:
@@ -1176,6 +1180,43 @@ type Publisher struct {
 
 func (s *Publisher) MarshalJSON() ([]byte, error) {
 	type NoMethod Publisher
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestrictedExportConfig: Restricted export config, used to configure
+// restricted export on linked dataset.
+type RestrictedExportConfig struct {
+	// Enabled: Optional. If true, enable restricted export.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// RestrictDirectTableAccess: Output only. If true, restrict direct
+	// table access(read api/tabledata.list) on linked table.
+	RestrictDirectTableAccess bool `json:"restrictDirectTableAccess,omitempty"`
+
+	// RestrictQueryResult: Optional. If true, restrict export of query
+	// result derived from restricted linked dataset table.
+	RestrictQueryResult bool `json:"restrictQueryResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestrictedExportConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RestrictedExportConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

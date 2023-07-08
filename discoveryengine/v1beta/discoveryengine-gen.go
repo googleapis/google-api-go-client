@@ -1571,7 +1571,7 @@ type GoogleCloudDiscoveryengineV1betaBigQuerySource struct {
 	// have a valid Document.id and one of Document.json_data or
 	// Document.struct_data. * `custom`: One custom data per row in
 	// arbitrary format that conforms to the defined Schema of the data
-	// store. This can only be used by the GENERIC Data Store vertical.
+	// store. This can only be used by Gen App Builder.
 	DataSchema string `json:"dataSchema,omitempty"`
 
 	// DatasetId: Required. The BigQuery data set to copy the data from with
@@ -1964,7 +1964,7 @@ type GoogleCloudDiscoveryengineV1betaImportDocumentsRequest struct {
 	// ReconciliationMode.INCREMENTAL.
 	//
 	// Possible values:
-	//   "RECONCILIATION_MODE_UNSPECIFIED" - Defaults to INCREMENTAL.
+	//   "RECONCILIATION_MODE_UNSPECIFIED" - Defaults to `INCREMENTAL`.
 	//   "INCREMENTAL" - Inserts new documents or updates existing
 	// documents.
 	//   "FULL" - Calculates diff and replaces the entire document dataset.

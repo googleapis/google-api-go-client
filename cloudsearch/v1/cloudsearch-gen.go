@@ -506,52 +506,6 @@ type V1Service struct {
 	s *Service
 }
 
-// AclInfo: Next tag: 4
-type AclInfo struct {
-	// GroupsCount: Number of groups which have at least read access to the
-	// document.
-	GroupsCount int64 `json:"groupsCount,omitempty"`
-
-	// Scope: The scope to which the content was shared.
-	//
-	// Possible values:
-	//   "LIMITED" - Explicit set of people and groups.
-	//   "DASHER_DOMAIN_WITH_LINK" - Anybody at the same domain with the
-	// link.
-	//   "DASHER_DOMAIN" - Now it works only for google.com. Anybody at the
-	// same domain. Now it works only
-	//   "PUBLIC_WITH_LINK" - for google.com. Anybody with the link.
-	//   "PUBLIC" - Anybody.
-	//   "TEAM_DRIVE" - Special tag to indicate TeamDrive scope.
-	Scope string `json:"scope,omitempty"`
-
-	// UsersCount: Number of users which have at least read access to the
-	// document.
-	UsersCount int64 `json:"usersCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupsCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupsCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AclInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AclInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type Action struct {
 	// Title: [Required] Title of the action.
 	Title string `json:"title,omitempty"`
@@ -5001,140 +4955,6 @@ func (s *GetSearchApplicationUserStatsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDocsMetadata: The corpus specific metadata for office-type
-// documents, from Google Docs and other sources. This message is passed
-// to the scorer and beyond. Next tag: 9
-type GoogleDocsMetadata struct {
-	// AclInfo: Contains number of users and groups which can access the
-	// document.
-	AclInfo *AclInfo `json:"aclInfo,omitempty"`
-
-	// DocumentType: The conceptual type (presentation, document, etc.) of
-	// this document.
-	//
-	// Possible values:
-	//   "UNKNOWN" - If the type is unknown or not represented in this enum.
-	//   "DOCUMENT" - Writely, Word, etc.
-	//   "PRESENTATION" - Presently, PowerPoint, etc.
-	//   "SPREADSHEET" - Trix, Excel, etc.
-	//   "PDF" - File types for Gdrive objects are below.
-	//   "IMAGE"
-	//   "BINARY_BLOB" - Fall-back for unknown Gdrive types.
-	//   "FUSION_TABLE"
-	//   "FOLDER"
-	//   "DRAWING"
-	//   "VIDEO"
-	//   "FORM"
-	//   "DRAFT_SITE" - For Atari page and site drafts
-	//   "DRAFT_SITE_PAGE"
-	//   "JAM" - Jamboard Jams (go/jam)
-	//   "SHORTCUT" - Drive Shortcuts (go/shortcuts)
-	//   "SCRIPT"
-	DocumentType string `json:"documentType,omitempty"`
-
-	// FileExtension: The file extension of the document. NOTE: As of
-	// October 2018 this field is not backfilled for old documents.
-	FileExtension string `json:"fileExtension,omitempty"`
-
-	// LastContentModifiedTimestamp: The last time this document was
-	// modified, in seconds since epoch. Only counts content modifications.
-	LastContentModifiedTimestamp int64 `json:"lastContentModifiedTimestamp,omitempty,string"`
-
-	// NumSubscribers: Contains number of subscribers for the document.
-	NumSubscribers int64 `json:"numSubscribers,omitempty"`
-
-	// NumViewers: Size of untruncated viewers list.
-	NumViewers int64 `json:"numViewers,omitempty"`
-
-	// ResultInfo: Additional per-result information, akin to Gmail's
-	// SingleThreadResponse. Note: GWS no longer seems to use this field,
-	// but there's still one reference to it for Scribe, so we can't remove
-	// it.
-	ResultInfo *GoogleDocsResultInfo `json:"resultInfo,omitempty"`
-
-	// TypeInfo: Contains additional information about the document
-	// depending on its type.
-	TypeInfo *TypeInfo `json:"typeInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AclInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AclInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDocsMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDocsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleDocsResultInfo: A message containing information about a
-// specific result. This information is passed to the scorer and beyond;
-// in particular, GWS relies on it to format the result in the UI. Split
-// from GoogleDocsMetadata in case we later want to reuse the message.
-type GoogleDocsResultInfo struct {
-	// AttachmentSha1: The SHA1 hash of the object in Drive, if any.
-	AttachmentSha1 string `json:"attachmentSha1,omitempty"`
-
-	// CosmoId: The storage identifier for the object in Cosmo. This field
-	// is intended to used by Stratus/Moonshine integration only. It should
-	// not be exposed externally (please refer to encrypted_id for that
-	// purpose).
-	CosmoId *Id `json:"cosmoId,omitempty"`
-
-	// CosmoNameSpace: For Cosmo objects, the Cosmo namespace the object was
-	// in. This allows downstream clients to identify whether a document was
-	// created in Writely or Kix, Presently or Punch, or whether it was
-	// uploaded from GDrive. See storage_cosmo.Id.NAME_SPACE for a list of
-	// all Cosmo name spaces.
-	CosmoNameSpace int64 `json:"cosmoNameSpace,omitempty"`
-
-	// EncryptedId: The encrypted (user-visible) id of this object. Knowing
-	// the id is sufficient to create a canonical URL for this document.
-	EncryptedId string `json:"encryptedId,omitempty"`
-
-	// MimeType: The mimetype of the document.
-	MimeType string `json:"mimeType,omitempty"`
-
-	// ShareScope: The visibility indicator in the UI will be based upon
-	// this.
-	ShareScope *ShareScope `json:"shareScope,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AttachmentSha1") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttachmentSha1") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDocsResultInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDocsResultInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // HtmlOperatorOptions: Used to provide a search operator for html
 // properties. This is optional. Search operators let users restrict the
 // query to specific fields relevant to the type of item being searched.
@@ -5233,59 +5053,6 @@ type HtmlValues struct {
 
 func (s *HtmlValues) MarshalJSON() ([]byte, error) {
 	type NoMethod HtmlValues
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Id: Identifies a particular object, including both Users and
-// DirEntries. This Id is unique across the entire server instance, such
-// as the production or qa instance.
-type Id struct {
-	// CreatorUserId: The User account in which the DirEntry was originally
-	// created. If name_space==GAIA, then it's the gaia_id of the user this
-	// id is referring to. This field should really be called the "bucket
-	// ID", not the creator ID. In some circumstances, such as copying a
-	// Google Docs file, a user can create an item in a different user's
-	// bucket, so it should not be relied upon for anything other than
-	// bucket location. To look up the requesting user who initially created
-	// item, use the `creator_id` DirEntry field instead.
-	CreatorUserId uint64 `json:"creatorUserId,omitempty,string"`
-
-	// LocalId: The local identifier for the DirEntry (local to the
-	// creator's account). local_id + app_name is guaranteed to be unique
-	// within the creator account, but not across all User accounts. The
-	// string is case sensitive. Ignore if name_space==GAIA. NB For
-	// name_space==COSMO, all local_id's should be defined in
-	// google3/java/com/google/storage/cosmo/server/api/SpecialObjectIds.java
-	//  as they have a special predefined meaning. See
-	// cosmo.client.CosmoIdFactory.createObjectId(long,String) for IMPORTANT
-	// recommendations when generating IDs.
-	LocalId string `json:"localId,omitempty"`
-
-	// NameSpace: The name space in which this id is unique (typically the
-	// application that created it). Values should be drawn from the above
-	// enum, but for experimentation, use values greater than 1000.
-	NameSpace int64 `json:"nameSpace,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreatorUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreatorUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Id) MarshalJSON() ([]byte, error) {
-	type NoMethod Id
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8085,8 +7852,8 @@ type RequestOptions struct {
 	// the page. In the event that the user's language preference is known,
 	// set this field to the known user language. When specified, the
 	// documents in search results are biased towards the specified
-	// language. From Suggest API perspective, for 3p suggest this is used
-	// as a hint while making predictions to add language boosting.
+	// language. The Suggest API uses this field as a hint to make better
+	// third-party autocomplete predictions.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// SearchApplicationId: The ID generated when you create a search
@@ -9029,45 +8796,6 @@ func (s *SearchResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type ShareScope struct {
-	// Domain: If scope is DOMAIN, this field contains the dasher domain,
-	// for example "google.com".
-	Domain string `json:"domain,omitempty"`
-
-	// Scope: The scope to which the content was shared.
-	//
-	// Possible values:
-	//   "UNKNOWN"
-	//   "PRIVATE" - Only the author can view the post.
-	//   "LIMITED" - Viewable only by a set of people.
-	//   "EXTENDED" - Viewable by extended circles.
-	//   "DASHER_DOMAIN"
-	//   "PUBLIC"
-	Scope string `json:"scope,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Domain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Domain") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ShareScope) MarshalJSON() ([]byte, error) {
-	type NoMethod ShareScope
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Snippet: Snippet of the search result, which summarizes the content
 // of the resulting page.
 type Snippet struct {
@@ -9909,35 +9637,6 @@ func (s *TimestampValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TypeInfo: Next tag: 2
-type TypeInfo struct {
-	// VideoInfo: Contains additional video information only if
-	// document_type is VIDEO.
-	VideoInfo *VideoInfo `json:"videoInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "VideoInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "VideoInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TypeInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod TypeInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type UnmappedIdentity struct {
 	// ExternalIdentity: The resource name for an external user.
 	ExternalIdentity *Principal `json:"externalIdentity,omitempty"`
@@ -10270,35 +9969,6 @@ type ValueFilter struct {
 
 func (s *ValueFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ValueFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// VideoInfo: Next tag: 2
-type VideoInfo struct {
-	// Duration: Duration of the video in milliseconds. This field can be
-	// absent for recently uploaded video or inaccurate sometimes.
-	Duration int64 `json:"duration,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Duration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Duration") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VideoInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14361,8 +14031,8 @@ func (c *QuerySourcesListCall) RequestOptionsDebugOptionsEnableDebugging(request
 // the page. In the event that the user's language preference is known,
 // set this field to the known user language. When specified, the
 // documents in search results are biased towards the specified
-// language. From Suggest API perspective, for 3p suggest this is used
-// as a hint while making predictions to add language boosting.
+// language. The Suggest API uses this field as a hint to make better
+// third-party autocomplete predictions.
 func (c *QuerySourcesListCall) RequestOptionsLanguageCode(requestOptionsLanguageCode string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.languageCode", requestOptionsLanguageCode)
 	return c
@@ -14504,7 +14174,7 @@ func (c *QuerySourcesListCall) Do(opts ...googleapi.CallOption) (*ListQuerySourc
 	//       "type": "boolean"
 	//     },
 	//     "requestOptions.languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. For translations. Set this field using the language set in browser or for the page. In the event that the user's language preference is known, set this field to the known user language. When specified, the documents in search results are biased towards the specified language. From Suggest API perspective, for 3p suggest this is used as a hint while making predictions to add language boosting.",
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. For translations. Set this field using the language set in browser or for the page. In the event that the user's language preference is known, set this field to the known user language. When specified, the documents in search results are biased towards the specified language. The Suggest API uses this field as a hint to make better third-party autocomplete predictions.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

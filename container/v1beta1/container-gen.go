@@ -454,6 +454,45 @@ func (s *AddonsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdvancedDatapathObservabilityConfig:
+// AdvancedDatapathObservabilityConfig specifies configuration of
+// observability features of advanced datapath.
+type AdvancedDatapathObservabilityConfig struct {
+	// EnableMetrics: Expose flow metrics on nodes
+	EnableMetrics bool `json:"enableMetrics,omitempty"`
+
+	// RelayMode: Method used to make Relay available
+	//
+	// Possible values:
+	//   "RELAY_MODE_UNSPECIFIED" - Default value. This shouldn't be used.
+	//   "DISABLED" - disabled
+	//   "INTERNAL_VPC_LB" - exposed via internal load balancer
+	//   "EXTERNAL_LB" - exposed via external load balancer
+	RelayMode string `json:"relayMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnableMetrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableMetrics") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvancedDatapathObservabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvancedDatapathObservabilityConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AdvancedMachineFeatures: Specifies options for controlling advanced
 // machine features.
 type AdvancedMachineFeatures struct {
@@ -2293,7 +2332,7 @@ type DNSConfig struct {
 	//   "PLATFORM_DEFAULT" - Use GKE default DNS provider(kube-dns) for DNS
 	// resolution.
 	//   "CLOUD_DNS" - Use CloudDNS for DNS resolution.
-	//   "KUBE_DNS" - Use KubeDNS for DNS resolution
+	//   "KUBE_DNS" - Use KubeDNS for DNS resolution.
 	ClusterDns string `json:"clusterDns,omitempty"`
 
 	// ClusterDnsDomain: cluster_dns_domain is the suffix used for all
@@ -3234,8 +3273,8 @@ type IPAllocationPolicy struct {
 	CreateSubnetwork bool `json:"createSubnetwork,omitempty"`
 
 	// DefaultPodIpv4RangeUtilization: Output only. [Output only] The
-	// utilization of the cluster default IPv4 range for pod. The ratio is
-	// Usage/[Total number of IPs in the secondary range],
+	// utilization of the cluster default IPv4 range for the pod. The ratio
+	// is Usage/[Total number of IPs in the secondary range],
 	// Usage=numNodes*numZones*podIPsPerNode.
 	DefaultPodIpv4RangeUtilization float64 `json:"defaultPodIpv4RangeUtilization,omitempty"`
 
@@ -4482,6 +4521,10 @@ func (s *MonitoringComponentConfig) MarshalJSON() ([]byte, error) {
 // MonitoringConfig: MonitoringConfig is cluster monitoring
 // configuration.
 type MonitoringConfig struct {
+	// AdvancedDatapathObservabilityConfig: Configuration of Advanced
+	// Datapath Observability features.
+	AdvancedDatapathObservabilityConfig *AdvancedDatapathObservabilityConfig `json:"advancedDatapathObservabilityConfig,omitempty"`
+
 	// ComponentConfig: Monitoring components configuration
 	ComponentConfig *MonitoringComponentConfig `json:"componentConfig,omitempty"`
 
@@ -4489,21 +4532,22 @@ type MonitoringConfig struct {
 	// Prometheus in the cluster.
 	ManagedPrometheusConfig *ManagedPrometheusConfig `json:"managedPrometheusConfig,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ComponentConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdvancedDatapathObservabilityConfig") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ComponentConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AdvancedDatapathObservabilityConfig") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5212,8 +5256,8 @@ type NodeNetworkConfig struct {
 	PodIpv4CidrBlock string `json:"podIpv4CidrBlock,omitempty"`
 
 	// PodIpv4RangeUtilization: Output only. [Output only] The utilization
-	// of the IPv4 range for pod. The ratio is Usage/[Total number of IPs in
-	// the secondary range], Usage=numNodes*numZones*podIPsPerNode.
+	// of the IPv4 range for the pod. The ratio is Usage/[Total number of
+	// IPs in the secondary range], Usage=numNodes*numZones*podIPsPerNode.
 	PodIpv4RangeUtilization float64 `json:"podIpv4RangeUtilization,omitempty"`
 
 	// PodRange: The ID of the secondary range for pod IPs. If

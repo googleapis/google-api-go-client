@@ -1285,11 +1285,28 @@ type SapDiscoveryResource struct {
 	// RelatedResources: A list of resource URIs related to this resource.
 	RelatedResources []string `json:"relatedResources,omitempty"`
 
-	// ResourceKind: ComputeInstance, ComputeDisk, VPC, Bare Metal server,
-	// etc.
+	// ResourceKind: Required. ComputeInstance, ComputeDisk, VPC, Bare Metal
+	// server, etc.
+	//
+	// Possible values:
+	//   "RESOURCE_KIND_UNSPECIFIED" - Unspecified resource kind.
+	//   "RESOURCE_KIND_INSTANCE" - This is a compute instance.
+	//   "RESOURCE_KIND_DISK" - This is a compute disk.
+	//   "RESOURCE_KIND_ADDRESS" - This is a compute address.
+	//   "RESOURCE_KIND_FILESTORE" - This is a filestore instance.
+	//   "RESOURCE_KIND_HEALTH_CHECK" - This is a compute health check.
+	//   "RESOURCE_KIND_FORWARDING_RULE" - This is a compute forwarding
+	// rule.
+	//   "RESOURCE_KIND_BACKEND_SERVICE" - This is a compute backend
+	// service.
+	//   "RESOURCE_KIND_SUBNETWORK" - This is a compute subnetwork.
+	//   "RESOURCE_KIND_NETWORK" - This is a compute network.
+	//   "RESOURCE_KIND_PUBLIC_ADDRESS" - This is a public accessible IP
+	// Address.
+	//   "RESOURCE_KIND_INSTANCE_GROUP" - This is a compute instance group.
 	ResourceKind string `json:"resourceKind,omitempty"`
 
-	// ResourceType: The type of this resource.
+	// ResourceType: Required. The type of this resource.
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Undefined resource type.
@@ -1433,6 +1450,16 @@ func (s *ScannedResource) MarshalJSON() ([]byte, error) {
 type SqlserverValidation struct {
 	// AgentVersion: The agent version collected this data point
 	AgentVersion string `json:"agentVersion,omitempty"`
+
+	// Instance: Required. The instance_name of the instance that the
+	// Insight data comes from. According to
+	// https://linter.aip.dev/122/name-suffix: field names should not use
+	// the _name suffix unless the field would be ambiguous without it.
+	Instance string `json:"instance,omitempty"`
+
+	// ProjectId: Required. The project_id of the cloud project that the
+	// Insight data comes from.
+	ProjectId string `json:"projectId,omitempty"`
 
 	// ValidationDetails: A list of SqlServer validation metrics data.
 	ValidationDetails []*SqlserverValidationValidationDetail `json:"validationDetails,omitempty"`

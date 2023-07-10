@@ -1196,6 +1196,8 @@ type MigrationJobVerificationError struct {
 	//   "SOURCE_SIZE_EXCEEDS_THRESHOLD" - The source DB size in Bytes
 	// exceeds a certain threshold. The migration might require an increase
 	// of quota, or might not be supported.
+	//   "EXISTING_CONFLICTING_DATABASES" - The destination DB contains
+	// existing databases that are conflicting with those in the source DB.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

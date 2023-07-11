@@ -10477,7 +10477,9 @@ func (c *TagValuesListCall) PageToken(pageToken string) *TagValuesListCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": Required.
+// Parent sets the optional parameter "parent": Required. Resource name
+// for the parent of the TagValues to be listed, in the format
+// `tagKeys/123` or `tagValues/123`.
 func (c *TagValuesListCall) Parent(parent string) *TagValuesListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -10597,7 +10599,7 @@ func (c *TagValuesListCall) Do(opts ...googleapi.CallOption) (*ListTagValuesResp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required.",
+	//       "description": "Required. Resource name for the parent of the TagValues to be listed, in the format `tagKeys/123` or `tagValues/123`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

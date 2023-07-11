@@ -711,9 +711,7 @@ func (s *GoogleCloudRecommenderV1beta1InsightStateInfo) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommenderV1beta1InsightType: The type of insight. See
-// google3/googledata/devsite/site-cloud/en/recommender/docs/insights/ins
-// ight-types.md for more info.
+// GoogleCloudRecommenderV1beta1InsightType: The type of insight.
 type GoogleCloudRecommenderV1beta1InsightType struct {
 	// Name: The insight_type’s name in format insightTypes/{insight_type}
 	// eg: insightTypes/google.iam.policy.Insight
@@ -1591,9 +1589,7 @@ func (s *GoogleCloudRecommenderV1beta1RecommenderGenerationConfig) MarshalJSON()
 }
 
 // GoogleCloudRecommenderV1beta1RecommenderType: The type of a
-// recommender. See
-// google3/googledata/devsite/site-cloud/en/recommender/docs/recommenders
-// .md for more info.
+// recommender.
 type GoogleCloudRecommenderV1beta1RecommenderType struct {
 	// Name: The recommender's name in format
 	// RecommenderTypes/{recommender_type} eg:

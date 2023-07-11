@@ -13600,8 +13600,8 @@ type QueryRemoveActivityCall struct {
 }
 
 // RemoveActivity: Provides functionality to remove logged activity for
-// a user. Currently to be used only for dynamite 1p clients **Note:**
-// This API requires a standard end user account to execute. A service
+// a user. Currently to be used only for Chat 1p clients **Note:** This
+// API requires a standard end user account to execute. A service
 // account can't perform Remove Activity requests directly; to use a
 // service account to perform queries, set up Google Workspace
 // domain-wide delegation of authority
@@ -13700,7 +13700,7 @@ func (c *QueryRemoveActivityCall) Do(opts ...googleapi.CallOption) (*RemoveActiv
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides functionality to remove logged activity for a user. Currently to be used only for dynamite 1p clients **Note:** This API requires a standard end user account to execute. A service account can't perform Remove Activity requests directly; to use a service account to perform queries, set up [Google Workspace domain-wide delegation of authority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
+	//   "description": "Provides functionality to remove logged activity for a user. Currently to be used only for Chat 1p clients **Note:** This API requires a standard end user account to execute. A service account can't perform Remove Activity requests directly; to use a service account to perform queries, set up [Google Workspace domain-wide delegation of authority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
 	//   "flatPath": "v1/query:removeActivity",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.query.removeActivity",

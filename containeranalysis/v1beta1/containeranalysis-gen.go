@@ -3501,6 +3501,9 @@ type Discovered struct {
 	// resource. Deprecated, do not use.
 	LastAnalysisTime string `json:"lastAnalysisTime,omitempty"`
 
+	// SbomStatus: The status of an SBOM generation.
+	SbomStatus *SBOMStatus `json:"sbomStatus,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AnalysisCompleted")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3845,7 +3848,8 @@ type ExportSBOMRequest struct {
 
 // ExportSBOMResponse: The response from a call to ExportSBOM
 type ExportSBOMResponse struct {
-	// DiscoveryOccurrenceId: The id of the discovery occurrence that can be
+	// DiscoveryOccurrenceId: The name of the discovery occurrence in the
+	// form "projects/{project_id}/occurrences/{OCCURRENCE_ID} It can be
 	// used to track the progression of the SBOM export.
 	DiscoveryOccurrenceId string `json:"discoveryOccurrenceId,omitempty"`
 
@@ -4952,15 +4956,18 @@ func (s *InToto) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InTotoSlsaProvenanceV1: Keep in sync with schema at
-// https://github.com/slsa-framework/slsa/blob/main/docs/provenance/schema/v1/provenance.proto
-// Builder renamed to ProvenanceBuilder because of Java conflicts.
 type InTotoSlsaProvenanceV1 struct {
-	BuildDefinition *BuildDefinition `json:"buildDefinition,omitempty"`
+	// Type: InToto spec defined at
+	// https://github.com/in-toto/attestation/tree/main/spec#statement
+	Type string `json:"_type,omitempty"`
 
-	RunDetails *RunDetails `json:"runDetails,omitempty"`
+	Predicate *SlsaProvenanceV1 `json:"predicate,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BuildDefinition") to
+	PredicateType string `json:"predicateType,omitempty"`
+
+	Subject []*Subject `json:"subject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4968,13 +4975,12 @@ type InTotoSlsaProvenanceV1 struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BuildDefinition") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6893,6 +6899,43 @@ func (s *SBOMReferenceOccurrence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SBOMStatus: The status of an SBOM generation.
+type SBOMStatus struct {
+	// Error: If there was an error generating an SBOM, this will indicate
+	// what that error was.
+	Error string `json:"error,omitempty"`
+
+	// SbomState: The progress of the SBOM generation.
+	//
+	// Possible values:
+	//   "SBOM_STATE_UNSPECIFIED" - Default unknown state.
+	//   "PENDING" - SBOM scanning is pending.
+	//   "COMPLETE" - SBOM scanning has completed.
+	SbomState string `json:"sbomState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SBOMStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod SBOMStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SbomReferenceIntotoPayload: The actual payload that contains the SBOM
 // Reference data. The payload follows the intoto statement
 // specification. See
@@ -7116,6 +7159,38 @@ type SigningKey struct {
 
 func (s *SigningKey) MarshalJSON() ([]byte, error) {
 	type NoMethod SigningKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SlsaProvenanceV1: Keep in sync with schema at
+// https://github.com/slsa-framework/slsa/blob/main/docs/provenance/schema/v1/provenance.proto
+// Builder renamed to ProvenanceBuilder because of Java conflicts.
+type SlsaProvenanceV1 struct {
+	BuildDefinition *BuildDefinition `json:"buildDefinition,omitempty"`
+
+	RunDetails *RunDetails `json:"runDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildDefinition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildDefinition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SlsaProvenanceV1) MarshalJSON() ([]byte, error) {
+	type NoMethod SlsaProvenanceV1
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

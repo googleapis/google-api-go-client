@@ -849,11 +849,15 @@ type Empty struct {
 // EnableMigrationRequest: EnableMigrationRequest is the request message
 // for EnableMigration method.
 type EnableMigrationRequest struct {
+	// EnableDuration: Optional. Period after which the migration would be
+	// auto disabled. If unspecified, a default timeout of 48h is used.
+	EnableDuration string `json:"enableDuration,omitempty"`
+
 	// MigratingDomains: Required. List of the on-prem domains to be
 	// migrated.
 	MigratingDomains []*OnPremDomainDetails `json:"migratingDomains,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MigratingDomains") to
+	// ForceSendFields is a list of field names (e.g. "EnableDuration") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -861,7 +865,7 @@ type EnableMigrationRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MigratingDomains") to
+	// NullFields is a list of field names (e.g. "EnableDuration") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

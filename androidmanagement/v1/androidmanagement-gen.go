@@ -119,6 +119,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Enterprises = NewEnterprisesService(s)
+	s.ProvisioningInfo = NewProvisioningInfoService(s)
 	s.SignupUrls = NewSignupUrlsService(s)
 	return s, nil
 }
@@ -129,6 +130,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Enterprises *EnterprisesService
+
+	ProvisioningInfo *ProvisioningInfoService
 
 	SignupUrls *SignupUrlsService
 }
@@ -230,6 +233,15 @@ func NewEnterprisesWebTokensService(s *Service) *EnterprisesWebTokensService {
 }
 
 type EnterprisesWebTokensService struct {
+	s *Service
+}
+
+func NewProvisioningInfoService(s *Service) *ProvisioningInfoService {
+	rs := &ProvisioningInfoService{s: s}
+	return rs
+}
+
+type ProvisioningInfoService struct {
 	s *Service
 }
 
@@ -5723,6 +5735,76 @@ func (s *PowerManagementEvent) UnmarshalJSON(data []byte) error {
 	}
 	s.BatteryLevel = float64(s1.BatteryLevel)
 	return nil
+}
+
+// ProvisioningInfo: Information about a device that is available during
+// setup.
+type ProvisioningInfo struct {
+	// ApiLevel: The API level of the Android platform version running on
+	// the device.
+	ApiLevel int64 `json:"apiLevel,omitempty"`
+
+	// AuthenticatedUserEmail: The email address of the authenticated user
+	// (only present for Google Account provisioning method).
+	AuthenticatedUserEmail string `json:"authenticatedUserEmail,omitempty"`
+
+	// Brand: Brand of the device. For example, Google.
+	Brand string `json:"brand,omitempty"`
+
+	// Enterprise: The name of the enterprise in the form
+	// enterprises/{enterprise}.
+	Enterprise string `json:"enterprise,omitempty"`
+
+	// ManagementMode: The management mode of the device or profile.
+	//
+	// Possible values:
+	//   "MANAGEMENT_MODE_UNSPECIFIED" - This value is disallowed.
+	//   "DEVICE_OWNER" - Device owner. Android Device Policy has full
+	// control over the device.
+	//   "PROFILE_OWNER" - Profile owner. Android Device Policy has control
+	// over a managed profile on the device.
+	ManagementMode string `json:"managementMode,omitempty"`
+
+	// Model: The model of the device. For example, Asus Nexus 7.
+	Model string `json:"model,omitempty"`
+
+	// Name: The name of this resource in the form
+	// provisioningInfo/{provisioning_info}.
+	Name string `json:"name,omitempty"`
+
+	// Ownership: Ownership of the managed device.
+	//
+	// Possible values:
+	//   "OWNERSHIP_UNSPECIFIED" - Ownership is unspecified.
+	//   "COMPANY_OWNED" - Device is company-owned.
+	//   "PERSONALLY_OWNED" - Device is personally-owned.
+	Ownership string `json:"ownership,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProvisioningInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ProvisioningInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ProxyInfo: Configuration info for an HTTP proxy. For a direct proxy,
@@ -11582,6 +11664,154 @@ func (c *EnterprisesWebTokensCreateCall) Do(opts ...googleapi.CallOption) (*WebT
 	//   },
 	//   "response": {
 	//     "$ref": "WebToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// method id "androidmanagement.provisioningInfo.get":
+
+type ProvisioningInfoGetCall struct {
+	s            *Service
+	nameid       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the device provisioning info by the identifier provided via
+// the sign-in url.
+//
+//   - name: The identifier that Android Device Policy passes to the 3P
+//     sign-in page in the form of provisioningInfo/{provisioning_info}.
+func (r *ProvisioningInfoService) Get(nameid string) *ProvisioningInfoGetCall {
+	c := &ProvisioningInfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProvisioningInfoGetCall) Fields(s ...googleapi.Field) *ProvisioningInfoGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProvisioningInfoGetCall) IfNoneMatch(entityTag string) *ProvisioningInfoGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProvisioningInfoGetCall) Context(ctx context.Context) *ProvisioningInfoGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProvisioningInfoGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProvisioningInfoGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.provisioningInfo.get" call.
+// Exactly one of *ProvisioningInfo or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProvisioningInfo.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProvisioningInfoGetCall) Do(opts ...googleapi.CallOption) (*ProvisioningInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProvisioningInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the device provisioning info by the identifier provided via the sign-in url.",
+	//   "flatPath": "v1/provisioningInfo/{provisioningInfoId}",
+	//   "httpMethod": "GET",
+	//   "id": "androidmanagement.provisioningInfo.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The identifier that Android Device Policy passes to the 3P sign-in page in the form of provisioningInfo/{provisioning_info}.",
+	//       "location": "path",
+	//       "pattern": "^provisioningInfo/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ProvisioningInfo"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidmanagement"

@@ -1532,12 +1532,7 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 // resource name (https://google.aip.dev/122#full-resource-names)
 // populated because these resource types, such as Cloud SQL databases,
 // are not yet supported by Cloud Asset Inventory. In these cases only
-// the display name is provided. Some database resources may not have
-// the full resource name
-// (https://google.aip.dev/122#full-resource-names) populated because
-// these resource types are not yet supported by Cloud Asset Inventory
-// (e.g. Cloud SQL databases). In these cases only the display name will
-// be provided.
+// the display name is provided.
 type Database struct {
 	// DisplayName: The human-readable name of the database that the user
 	// connected to.
@@ -1547,7 +1542,11 @@ type Database struct {
 	// grant, which is not an IAM policy change.
 	Grantees []string `json:"grantees,omitempty"`
 
-	// Name: The full resource name
+	// Name: Some database resources may not have the full resource name
+	// (https://google.aip.dev/122#full-resource-names) populated because
+	// these resource types are not yet supported by Cloud Asset Inventory
+	// (e.g. Cloud SQL databases). In these cases only the display name will
+	// be provided. The full resource name
 	// (https://google.aip.dev/122#full-resource-names) of the database that
 	// the user connected to, if it is supported by Cloud Asset Inventory.
 	Name string `json:"name,omitempty"`
@@ -1558,6 +1557,11 @@ type Database struct {
 	// UserName: The username used to connect to the database. The username
 	// might not be an IAM principal and does not have a set format.
 	UserName string `json:"userName,omitempty"`
+
+	// Version: The version of the database, for example, POSTGRES_14. See
+	// the complete list
+	// (https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/SqlDatabaseVersion).
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -4526,6 +4530,7 @@ type MitreAttack struct {
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "DEFAULT_ACCOUNTS" - T1078.001
+	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -4594,6 +4599,7 @@ type MitreAttack struct {
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "DEFAULT_ACCOUNTS" - T1078.001
+	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.

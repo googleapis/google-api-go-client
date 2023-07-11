@@ -815,7 +815,7 @@
       }
     }
   },
-  "revision": "20230623",
+  "revision": "20230707",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -2241,6 +2241,14 @@
             "CLOUD_LOGGING_ONLY",
             "NONE"
           ],
+          "enumDeprecated": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
           "enumDescriptions": [
             "The service determines the logging mode. The default is `LEGACY`. Do not rely on the default logging behavior as it may change in the future.",
             "Build logs are stored in Cloud Logging and Cloud Storage.",
@@ -2333,6 +2341,7 @@
           "type": "array"
         },
         "workerPool": {
+          "deprecated": true,
           "description": "This field deprecated; please use `pool.name` instead.",
           "type": "string"
         }
@@ -3177,6 +3186,10 @@
           "description": "The last time continuous analysis was done for this resource. Deprecated, do not use.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "sbomStatus": {
+          "$ref": "SBOMStatus",
+          "description": "The status of an SBOM generation."
         }
       },
       "type": "object"
@@ -3395,7 +3408,7 @@
       "id": "ExportSBOMResponse",
       "properties": {
         "discoveryOccurrenceId": {
-          "description": "The id of the discovery occurrence that can be used to track the progression of the SBOM export.",
+          "description": "The name of the discovery occurrence in the form \"projects/{project_id}/occurrences/{OCCURRENCE_ID} It can be used to track the progression of the SBOM export.",
           "type": "string"
         }
       },
@@ -4040,14 +4053,23 @@
       "type": "object"
     },
     "InTotoSlsaProvenanceV1": {
-      "description": "Keep in sync with schema at https://github.com/slsa-framework/slsa/blob/main/docs/provenance/schema/v1/provenance.proto Builder renamed to ProvenanceBuilder because of Java conflicts.",
       "id": "InTotoSlsaProvenanceV1",
       "properties": {
-        "buildDefinition": {
-          "$ref": "BuildDefinition"
+        "_type": {
+          "description": "InToto spec defined at https://github.com/in-toto/attestation/tree/main/spec#statement",
+          "type": "string"
         },
-        "runDetails": {
-          "$ref": "RunDetails"
+        "predicate": {
+          "$ref": "SlsaProvenanceV1"
+        },
+        "predicateType": {
+          "type": "string"
+        },
+        "subject": {
+          "items": {
+            "$ref": "Subject"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -5291,9 +5313,11 @@
       "properties": {
         "contentHash": {
           "$ref": "Hash",
+          "deprecated": true,
           "description": "Deprecated, do not use. Use uri instead. The hash of the resource content. For example, the Docker digest."
         },
         "name": {
+          "deprecated": true,
           "description": "Deprecated, do not use. Use uri instead. The name of the resource. For example, the name of a Docker image - \"Debian\".",
           "type": "string"
         },
@@ -5389,6 +5413,31 @@
             "$ref": "EnvelopeSignature"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SBOMStatus": {
+      "description": "The status of an SBOM generation.",
+      "id": "SBOMStatus",
+      "properties": {
+        "error": {
+          "description": "If there was an error generating an SBOM, this will indicate what that error was.",
+          "type": "string"
+        },
+        "sbomState": {
+          "description": "The progress of the SBOM generation.",
+          "enum": [
+            "SBOM_STATE_UNSPECIFIED",
+            "PENDING",
+            "COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Default unknown state.",
+            "SBOM scanning is pending.",
+            "SBOM scanning has completed."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -5491,6 +5540,19 @@
         "publicKeyValue": {
           "description": "This field contains the actual public key.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SlsaProvenanceV1": {
+      "description": "Keep in sync with schema at https://github.com/slsa-framework/slsa/blob/main/docs/provenance/schema/v1/provenance.proto Builder renamed to ProvenanceBuilder because of Java conflicts.",
+      "id": "SlsaProvenanceV1",
+      "properties": {
+        "buildDefinition": {
+          "$ref": "BuildDefinition"
+        },
+        "runDetails": {
+          "$ref": "RunDetails"
         }
       },
       "type": "object"

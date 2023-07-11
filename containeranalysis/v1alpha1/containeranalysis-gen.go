@@ -3525,6 +3525,9 @@ type Discovered struct {
 	// current scan. This field is deprecated, do not use.
 	Operation *Operation `json:"operation,omitempty"`
 
+	// SbomStatus: Output only. The status of an SBOM generation.
+	SbomStatus *SBOMStatus `json:"sbomStatus,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AnalysisCompleted")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6875,6 +6878,43 @@ type SBOMReferenceOccurrence struct {
 
 func (s *SBOMReferenceOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod SBOMReferenceOccurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SBOMStatus: The status of an SBOM generation.
+type SBOMStatus struct {
+	// Error: Output only. If there was an error generating an SBOM, this
+	// will indicate what that error was.
+	Error string `json:"error,omitempty"`
+
+	// SbomState: Output only. The progress of the SBOM generation.
+	//
+	// Possible values:
+	//   "SBOM_STATE_UNSPECIFIED" - Default unknown state.
+	//   "PENDING" - SBOM scanning is pending.
+	//   "COMPLETE" - SBOM scanning has completed.
+	SbomState string `json:"sbomState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SBOMStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod SBOMStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

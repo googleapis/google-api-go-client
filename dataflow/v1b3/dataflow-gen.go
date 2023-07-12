@@ -4403,6 +4403,7 @@ type ParameterMetadata struct {
 	//   "WORKER_ZONE" - The parameter specifies a Worker Zone.
 	//   "BOOLEAN" - The parameter specifies a boolean input.
 	//   "ENUM" - The parameter specifies an enum input.
+	//   "NUMBER" - The parameter specifies a number input.
 	ParamType string `json:"paramType,omitempty"`
 
 	// ParentName: Optional. Specifies the name of the parent parameter.
@@ -5069,6 +5070,10 @@ type RuntimeEnvironment struct {
 	// BypassTempDirValidation: Optional. Whether to bypass the safety
 	// checks for the job's temporary directory. Use with caution.
 	BypassTempDirValidation bool `json:"bypassTempDirValidation,omitempty"`
+
+	// DiskSizeGb: Optional. The disk size, in gigabytes, to use on each
+	// remote Compute Engine worker instance.
+	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 
 	// EnableStreamingEngine: Optional. Whether to enable Streaming Engine
 	// for the job.

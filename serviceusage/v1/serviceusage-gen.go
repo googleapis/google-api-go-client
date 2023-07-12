@@ -4971,6 +4971,11 @@ type UpdateAdminQuotaPolicyMetadata struct {
 type UpdateConsumerPolicyLROMetadata struct {
 }
 
+// UpdateConsumerPolicyMetadata: Metadata for the `UpdateConsumerPolicy`
+// method.
+type UpdateConsumerPolicyMetadata struct {
+}
+
 // Usage: Configuration controlling usage of a service.
 type Usage struct {
 	// ProducerNotificationChannel: The full resource name of a channel used

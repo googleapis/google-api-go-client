@@ -331,6 +331,80 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdditionalNodeNetworkConfig: AdditionalNodeNetworkConfig is the
+// configuration for additional node networks within the
+// NodeNetworkConfig message
+type AdditionalNodeNetworkConfig struct {
+	// Network: Name of the VPC where the additional interface belongs
+	Network string `json:"network,omitempty"`
+
+	// Subnetwork: Name of the subnetwork where the additional interface
+	// belongs
+	Subnetwork string `json:"subnetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Network") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Network") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdditionalNodeNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdditionalNodeNetworkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdditionalPodNetworkConfig: AdditionalPodNetworkConfig is the
+// configuration for additional pod networks within the
+// NodeNetworkConfig message
+type AdditionalPodNetworkConfig struct {
+	// MaxPodsPerNode: The maximum number of pods per node which use this
+	// pod network
+	MaxPodsPerNode *MaxPodsConstraint `json:"maxPodsPerNode,omitempty"`
+
+	// SecondaryPodRange: The name of the secondary range on the subnet
+	// which provides IP address for this pod range
+	SecondaryPodRange string `json:"secondaryPodRange,omitempty"`
+
+	// Subnetwork: Name of the subnetwork where the additional pod network
+	// belongs
+	Subnetwork string `json:"subnetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxPodsPerNode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxPodsPerNode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdditionalPodNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdditionalPodNetworkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AdditionalPodRangesConfig: AdditionalPodRangesConfig is the
 // configuration for additional pod secondary ranges supporting the
 // ClusterUpdate message.
@@ -1826,6 +1900,10 @@ type ClusterUpdate struct {
 	// DesiredGcfsConfig: The desired GCFS config for the cluster.
 	DesiredGcfsConfig *GcfsConfig `json:"desiredGcfsConfig,omitempty"`
 
+	// DesiredHostMaintenancePolicy: HostMaintenancePolicy contains the
+	// desired maintenance policy for the Google Compute Engine hosts.
+	DesiredHostMaintenancePolicy *HostMaintenancePolicy `json:"desiredHostMaintenancePolicy,omitempty"`
+
 	// DesiredIdentityServiceConfig: The desired Identity Service component
 	// configuration.
 	DesiredIdentityServiceConfig *IdentityServiceConfig `json:"desiredIdentityServiceConfig,omitempty"`
@@ -3122,6 +3200,51 @@ type HorizontalPodAutoscaling struct {
 
 func (s *HorizontalPodAutoscaling) MarshalJSON() ([]byte, error) {
 	type NoMethod HorizontalPodAutoscaling
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HostMaintenancePolicy: HostMaintenancePolicy contains the maintenance
+// policy for the hosts on which the GKE VMs run on.
+type HostMaintenancePolicy struct {
+	// MaintenanceInterval: Specifies the frequency of planned maintenance
+	// events.
+	//
+	// Possible values:
+	//   "MAINTENANCE_INTERVAL_UNSPECIFIED" - The maintenance interval is
+	// not explicitly specified.
+	//   "AS_NEEDED" - Nodes are eligible to receive infrastructure and
+	// hypervisor updates as they become available. This may result in more
+	// maintenance operations (live migrations or terminations) for the node
+	// than the PERIODIC option.
+	//   "PERIODIC" - Nodes receive infrastructure and hypervisor updates on
+	// a periodic basis, minimizing the number of maintenance operations
+	// (live migrations or terminations) on an individual VM. This may mean
+	// underlying VMs will take longer to receive an update than if it was
+	// configured for AS_NEEDED. Security updates will still be applied as
+	// soon as they are available.
+	MaintenanceInterval string `json:"maintenanceInterval,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaintenanceInterval")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaintenanceInterval") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostMaintenancePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod HostMaintenancePolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4596,6 +4719,10 @@ type NetworkConfig struct {
 	// cluster.
 	EnableL4ilbSubsetting bool `json:"enableL4ilbSubsetting,omitempty"`
 
+	// EnableMultiNetworking: Whether multi-networking is enabled for this
+	// cluster.
+	EnableMultiNetworking bool `json:"enableMultiNetworking,omitempty"`
+
 	// GatewayApiConfig: GatewayAPIConfig contains the desired config of
 	// Gateway API on this cluster.
 	GatewayApiConfig *GatewayAPIConfig `json:"gatewayApiConfig,omitempty"`
@@ -4894,6 +5021,10 @@ type NodeConfig struct {
 	// Gvnic: Enable or disable gvnic on the node pool.
 	Gvnic *VirtualNIC `json:"gvnic,omitempty"`
 
+	// HostMaintenancePolicy: HostMaintenancePolicy contains the desired
+	// maintenance policy for the Google Compute Engine hosts.
+	HostMaintenancePolicy *HostMaintenancePolicy `json:"hostMaintenancePolicy,omitempty"`
+
 	// ImageType: The image type to use for this node. Note that for a given
 	// image type, the latest version of it will be used. Please see
 	// https://cloud.google.com/kubernetes-engine/docs/concepts/node-images
@@ -5063,6 +5194,10 @@ type NodeConfigDefaults struct {
 	// Riptide) options.
 	GcfsConfig *GcfsConfig `json:"gcfsConfig,omitempty"`
 
+	// HostMaintenancePolicy: HostMaintenancePolicy contains the desired
+	// maintenance policy for the Google Compute Engine hosts.
+	HostMaintenancePolicy *HostMaintenancePolicy `json:"hostMaintenancePolicy,omitempty"`
+
 	// LoggingConfig: Logging configuration for node pools.
 	LoggingConfig *NodePoolLoggingConfig `json:"loggingConfig,omitempty"`
 
@@ -5217,6 +5352,16 @@ func (s *NodeManagement) MarshalJSON() ([]byte, error) {
 
 // NodeNetworkConfig: Parameters for node pool-level network config.
 type NodeNetworkConfig struct {
+	// AdditionalNodeNetworkConfigs: We specify the additional node networks
+	// for this node pool using this list. Each node network corresponds to
+	// an additional interface
+	AdditionalNodeNetworkConfigs []*AdditionalNodeNetworkConfig `json:"additionalNodeNetworkConfigs,omitempty"`
+
+	// AdditionalPodNetworkConfigs: We specify the additional pod networks
+	// for this node pool using this list. Each pod network corresponds to
+	// an additional alias IP range for the node
+	AdditionalPodNetworkConfigs []*AdditionalPodNetworkConfig `json:"additionalPodNetworkConfigs,omitempty"`
+
 	// CreatePodRange: Input only. Whether to create a new range for pod IPs
 	// in this node pool. Defaults are provided for `pod_range` and
 	// `pod_ipv4_cidr_block` if they are not specified. If neither
@@ -5268,21 +5413,22 @@ type NodeNetworkConfig struct {
 	// created.
 	PodRange string `json:"podRange,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreatePodRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalNodeNetworkConfigs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreatePodRange") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AdditionalNodeNetworkConfigs") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5962,6 +6108,12 @@ func (s *OperationProgress) MarshalJSON() ([]byte, error) {
 // PlacementPolicy: PlacementPolicy defines the placement policy used by
 // the node pool.
 type PlacementPolicy struct {
+	// PolicyName: If set, refers to the name of a custom resource policy
+	// supplied by the user. The resource policy must be in the same project
+	// and region as the node pool. If not found, InvalidArgument error is
+	// returned.
+	PolicyName string `json:"policyName,omitempty"`
+
 	// TpuTopology: TPU placement topology for pod slice node pool.
 	// https://cloud.google.com/tpu/docs/types-topologies#tpu_topologies
 	TpuTopology string `json:"tpuTopology,omitempty"`
@@ -5975,7 +6127,7 @@ type PlacementPolicy struct {
 	// availability domain to ensure low communication latency.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TpuTopology") to
+	// ForceSendFields is a list of field names (e.g. "PolicyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5983,10 +6135,10 @@ type PlacementPolicy struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TpuTopology") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "PolicyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

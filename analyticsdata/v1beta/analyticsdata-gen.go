@@ -191,6 +191,10 @@ func (s *ActiveMetricRestriction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AudienceListMetadata: This metadata is currently blank.
+type AudienceListMetadata struct {
+}
+
 // BatchRunPivotReportsRequest: The batch request containing multiple
 // pivot report requests.
 type BatchRunPivotReportsRequest struct {

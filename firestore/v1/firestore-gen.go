@@ -4736,28 +4736,12 @@ func (r *ProjectsDatabasesService) Delete(name string) *ProjectsDatabasesDeleteC
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// true and the Database is not found, the request will succeed but no
-// action will be taken.
-func (c *ProjectsDatabasesDeleteCall) AllowMissing(allowMissing bool) *ProjectsDatabasesDeleteCall {
-	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
-	return c
-}
-
 // Etag sets the optional parameter "etag": The current etag of the
 // Database. If an etag is provided and does not match the current etag
 // of the database, deletion will be blocked and a FAILED_PRECONDITION
 // error will be returned.
 func (c *ProjectsDatabasesDeleteCall) Etag(etag string) *ProjectsDatabasesDeleteCall {
 	c.urlParams_.Set("etag", etag)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If set,
-// validate the request and preview the response, but do not actually
-// delete the database.
-func (c *ProjectsDatabasesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsDatabasesDeleteCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -4855,11 +4839,6 @@ func (c *ProjectsDatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//     "name"
 	//   ],
 	//   "parameters": {
-	//     "allowMissing": {
-	//       "description": "If set to true and the Database is not found, the request will succeed but no action will be taken.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
 	//     "etag": {
 	//       "description": "The current etag of the Database. If an etag is provided and does not match the current etag of the database, deletion will be blocked and a FAILED_PRECONDITION error will be returned.",
 	//       "location": "query",
@@ -4871,11 +4850,6 @@ func (c *ProjectsDatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the response, but do not actually delete the database.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+name}",

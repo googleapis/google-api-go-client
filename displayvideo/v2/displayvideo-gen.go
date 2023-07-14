@@ -10124,7 +10124,9 @@ type InsertionOrder struct {
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
 
 	// BillableOutcome: Immutable. The billable outcome of the insertion
-	// order.
+	// order. Outcome based buying will be deprecated on **August 1, 2023**.
+	// Read more on our Announced Deprecations page
+	// (/display-video/api/deprecations#features.obb).
 	//
 	// Possible values:
 	//   "BILLABLE_OUTCOME_UNSPECIFIED" - Unspecified billable outcome.

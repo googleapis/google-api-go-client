@@ -1231,7 +1231,6 @@ type EmptyDirVolumeSource struct {
 	// which means to use the node's default medium. Must be an empty string
 	// (default) or Memory. More info:
 	// https://kubernetes.io/docs/concepts/storage/volumes#emptydir
-	// +optional
 	Medium string `json:"medium,omitempty"`
 
 	// SizeLimit: Limit on the storage usable by this EmptyDir volume. The

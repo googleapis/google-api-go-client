@@ -5861,8 +5861,9 @@ type Model struct {
 	// models.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
-	// FeatureColumns: Output only. Input feature columns that were used to
-	// train this model.
+	// FeatureColumns: Output only. Input feature columns for the model
+	// inference. If the model is trained with TRANSFORM clause, these are
+	// the input of the TRANSFORM clause.
 	FeatureColumns []*StandardSqlField `json:"featureColumns,omitempty"`
 
 	// FriendlyName: Optional. A descriptive name for this model.
@@ -9158,6 +9159,9 @@ func (s *TimePartitioning) MarshalJSON() ([]byte, error) {
 
 // TrainingOptions: Options used in model training.
 type TrainingOptions struct {
+	// ActivationFn: Activation function of the neural nets.
+	ActivationFn string `json:"activationFn,omitempty"`
+
 	// AdjustStepChanges: If true, detect step changes and make data
 	// adjustment in the input time series.
 	AdjustStepChanges bool `json:"adjustStepChanges,omitempty"`
@@ -9175,6 +9179,10 @@ type TrainingOptions struct {
 	// AutoArimaMinOrder: The min value of the sum of non-seasonal p and q.
 	AutoArimaMinOrder int64 `json:"autoArimaMinOrder,omitempty,string"`
 
+	// AutoClassWeights: Whether to calculate class weights automatically
+	// based on the popularity of each label.
+	AutoClassWeights bool `json:"autoClassWeights,omitempty"`
+
 	// BatchSize: Batch size for dnn models.
 	BatchSize int64 `json:"batchSize,omitempty,string"`
 
@@ -9185,6 +9193,9 @@ type TrainingOptions struct {
 	//   "GBTREE" - Gbtree booster.
 	//   "DART" - Dart booster.
 	BoosterType string `json:"boosterType,omitempty"`
+
+	// BudgetHours: Budget in hours for AutoML training.
+	BudgetHours float64 `json:"budgetHours,omitempty"`
 
 	// CalculatePValues: Whether or not p-value test should be computed for
 	// this model. Only available for linear and logistic regression models.
@@ -9305,6 +9316,10 @@ type TrainingOptions struct {
 	//   "IMPLICIT" - Use weighted-als for implicit feedback problems.
 	//   "EXPLICIT" - Use nonweighted-als for explicit feedback problems.
 	FeedbackType string `json:"feedbackType,omitempty"`
+
+	// FitIntercept: Whether the model should include intercept during model
+	// training.
+	FitIntercept bool `json:"fitIntercept,omitempty"`
 
 	// HiddenUnits: Hidden units for dnn models.
 	HiddenUnits googleapi.Int64s `json:"hiddenUnits,omitempty"`
@@ -9470,6 +9485,9 @@ type TrainingOptions struct {
 	//   "KMEANS_PLUS_PLUS" - Initializes with kmeans++.
 	KmeansInitializationMethod string `json:"kmeansInitializationMethod,omitempty"`
 
+	// L1RegActivation: L1 regularization coefficient to activations.
+	L1RegActivation float64 `json:"l1RegActivation,omitempty"`
+
 	// L1Regularization: L1 regularization coefficient.
 	L1Regularization float64 `json:"l1Regularization,omitempty"`
 
@@ -9534,6 +9552,13 @@ type TrainingOptions struct {
 	// for boosted tree models.
 	MinTreeChildWeight int64 `json:"minTreeChildWeight,omitempty,string"`
 
+	// ModelRegistry: The model registry.
+	//
+	// Possible values:
+	//   "MODEL_REGISTRY_UNSPECIFIED"
+	//   "VERTEX_AI" - Vertex AI.
+	ModelRegistry string `json:"modelRegistry,omitempty"`
+
 	// ModelUri: Google Cloud Storage URI from which the model was imported.
 	// Only applicable for imported models.
 	ModelUri string `json:"modelUri,omitempty"`
@@ -9553,6 +9578,10 @@ type TrainingOptions struct {
 	// iteration for boosted tree models.
 	NumParallelTree int64 `json:"numParallelTree,omitempty,string"`
 
+	// NumPrincipalComponents: Number of principal components to keep in the
+	// PCA model. Must be <= the number of features.
+	NumPrincipalComponents int64 `json:"numPrincipalComponents,omitempty,string"`
+
 	// NumTrials: Number of trials to run this hyperparameter tuning job.
 	NumTrials int64 `json:"numTrials,omitempty,string"`
 
@@ -9567,9 +9596,33 @@ type TrainingOptions struct {
 	// regression problem.
 	OptimizationStrategy string `json:"optimizationStrategy,omitempty"`
 
+	// Optimizer: Optimizer used for training the neural nets.
+	Optimizer string `json:"optimizer,omitempty"`
+
+	// PcaExplainedVarianceRatio: The minimum ratio of cumulative explained
+	// variance that needs to be given by the PCA model.
+	PcaExplainedVarianceRatio float64 `json:"pcaExplainedVarianceRatio,omitempty"`
+
+	// PcaSolver: The solver for PCA.
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "FULL" - Full eigen-decoposition.
+	//   "RANDOMIZED" - Randomized SVD.
+	//   "AUTO" - Auto.
+	PcaSolver string `json:"pcaSolver,omitempty"`
+
 	// SampledShapleyNumPaths: Number of paths for the sampled Shapley
 	// explain method.
 	SampledShapleyNumPaths int64 `json:"sampledShapleyNumPaths,omitempty,string"`
+
+	// ScaleFeatures: If true, scale the feature values by dividing the
+	// feature standard deviation. Currently only apply to PCA.
+	ScaleFeatures bool `json:"scaleFeatures,omitempty"`
+
+	// StandardizeFeatures: Whether to standardize numerical features.
+	// Default to true.
+	StandardizeFeatures bool `json:"standardizeFeatures,omitempty"`
 
 	// Subsample: Subsample fraction of the training data to grow tree to
 	// prevent overfitting for boosted tree models.
@@ -9617,6 +9670,11 @@ type TrainingOptions struct {
 	// UserColumn: User column specified for matrix factorization models.
 	UserColumn string `json:"userColumn,omitempty"`
 
+	// VertexAiModelVersionAliases: The version aliases to apply in Vertex
+	// AI model registry. Always overwrite if the version aliases exists in
+	// a existing model.
+	VertexAiModelVersionAliases []string `json:"vertexAiModelVersionAliases,omitempty"`
+
 	// WalsAlpha: Hyperparameter for matrix factoration when implicit
 	// feedback type is specified.
 	WalsAlpha float64 `json:"walsAlpha,omitempty"`
@@ -9628,21 +9686,20 @@ type TrainingOptions struct {
 	// XGBoost models.
 	XgboostVersion string `json:"xgboostVersion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AdjustStepChanges")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ActivationFn") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AdjustStepChanges") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ActivationFn") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -9655,37 +9712,43 @@ func (s *TrainingOptions) MarshalJSON() ([]byte, error) {
 func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	type NoMethod TrainingOptions
 	var s1 struct {
-		ColsampleBylevel         gensupport.JSONFloat64 `json:"colsampleBylevel"`
-		ColsampleBynode          gensupport.JSONFloat64 `json:"colsampleBynode"`
-		ColsampleBytree          gensupport.JSONFloat64 `json:"colsampleBytree"`
-		DataSplitEvalFraction    gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
-		Dropout                  gensupport.JSONFloat64 `json:"dropout"`
-		InitialLearnRate         gensupport.JSONFloat64 `json:"initialLearnRate"`
-		L1Regularization         gensupport.JSONFloat64 `json:"l1Regularization"`
-		L2Regularization         gensupport.JSONFloat64 `json:"l2Regularization"`
-		LearnRate                gensupport.JSONFloat64 `json:"learnRate"`
-		MinRelativeProgress      gensupport.JSONFloat64 `json:"minRelativeProgress"`
-		MinSplitLoss             gensupport.JSONFloat64 `json:"minSplitLoss"`
-		Subsample                gensupport.JSONFloat64 `json:"subsample"`
-		TimeSeriesLengthFraction gensupport.JSONFloat64 `json:"timeSeriesLengthFraction"`
-		WalsAlpha                gensupport.JSONFloat64 `json:"walsAlpha"`
+		BudgetHours               gensupport.JSONFloat64 `json:"budgetHours"`
+		ColsampleBylevel          gensupport.JSONFloat64 `json:"colsampleBylevel"`
+		ColsampleBynode           gensupport.JSONFloat64 `json:"colsampleBynode"`
+		ColsampleBytree           gensupport.JSONFloat64 `json:"colsampleBytree"`
+		DataSplitEvalFraction     gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
+		Dropout                   gensupport.JSONFloat64 `json:"dropout"`
+		InitialLearnRate          gensupport.JSONFloat64 `json:"initialLearnRate"`
+		L1RegActivation           gensupport.JSONFloat64 `json:"l1RegActivation"`
+		L1Regularization          gensupport.JSONFloat64 `json:"l1Regularization"`
+		L2Regularization          gensupport.JSONFloat64 `json:"l2Regularization"`
+		LearnRate                 gensupport.JSONFloat64 `json:"learnRate"`
+		MinRelativeProgress       gensupport.JSONFloat64 `json:"minRelativeProgress"`
+		MinSplitLoss              gensupport.JSONFloat64 `json:"minSplitLoss"`
+		PcaExplainedVarianceRatio gensupport.JSONFloat64 `json:"pcaExplainedVarianceRatio"`
+		Subsample                 gensupport.JSONFloat64 `json:"subsample"`
+		TimeSeriesLengthFraction  gensupport.JSONFloat64 `json:"timeSeriesLengthFraction"`
+		WalsAlpha                 gensupport.JSONFloat64 `json:"walsAlpha"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.BudgetHours = float64(s1.BudgetHours)
 	s.ColsampleBylevel = float64(s1.ColsampleBylevel)
 	s.ColsampleBynode = float64(s1.ColsampleBynode)
 	s.ColsampleBytree = float64(s1.ColsampleBytree)
 	s.DataSplitEvalFraction = float64(s1.DataSplitEvalFraction)
 	s.Dropout = float64(s1.Dropout)
 	s.InitialLearnRate = float64(s1.InitialLearnRate)
+	s.L1RegActivation = float64(s1.L1RegActivation)
 	s.L1Regularization = float64(s1.L1Regularization)
 	s.L2Regularization = float64(s1.L2Regularization)
 	s.LearnRate = float64(s1.LearnRate)
 	s.MinRelativeProgress = float64(s1.MinRelativeProgress)
 	s.MinSplitLoss = float64(s1.MinSplitLoss)
+	s.PcaExplainedVarianceRatio = float64(s1.PcaExplainedVarianceRatio)
 	s.Subsample = float64(s1.Subsample)
 	s.TimeSeriesLengthFraction = float64(s1.TimeSeriesLengthFraction)
 	s.WalsAlpha = float64(s1.WalsAlpha)

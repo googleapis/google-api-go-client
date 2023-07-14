@@ -3089,6 +3089,21 @@ type GoogleCloudIdentitytoolkitV2PasswordPolicy struct {
 	// password policy.
 	CustomStrengthOptions *GoogleCloudIdentitytoolkitV2CustomStrengthOptions `json:"customStrengthOptions,omitempty"`
 
+	// EnforcementState: Output only. Which enforcement mode to use for the
+	// password policy.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been
+	// set.
+	//   "OFF" - Password Policy will not be used on the project.
+	//   "ENFORCE" - Passwords non-compliant with the password policy will
+	// be rejected with an error thrown.
+	EnforcementState string `json:"enforcementState,omitempty"`
+
+	// ForceUpgradeOnSignin: Users must have a password compliant with the
+	// password policy to sign-in.
+	ForceUpgradeOnSignin bool `json:"forceUpgradeOnSignin,omitempty"`
+
 	// SchemaVersion: Output only. schema version number for the password
 	// policy
 	SchemaVersion int64 `json:"schemaVersion,omitempty"`

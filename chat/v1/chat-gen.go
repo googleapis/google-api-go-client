@@ -885,6 +885,41 @@ func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ChatClientDataSourceMarkup: Chat apps only. For a `SelectionInput`
+// widget that uses a multi-select menu, a data source from Google Chat.
+// For example, a list of Google Chat spaces of which the user is a
+// member. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type ChatClientDataSourceMarkup struct {
+	// SpaceDataSource: A data source representing a Google Chat space.
+	// Format: spaces/{space} Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	SpaceDataSource *SpaceDataSource `json:"spaceDataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SpaceDataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SpaceDataSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChatClientDataSourceMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod ChatClientDataSourceMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Color: Represents a color in the RGBA color space. This
 // representation is designed for simplicity of conversion to and from
 // color representations in various languages over compactness. For
@@ -1879,6 +1914,15 @@ type GoogleAppsCardV1Card struct {
 	// Chat apps.
 	PeekCardHeader *GoogleAppsCardV1CardHeader `json:"peekCardHeader,omitempty"`
 
+	// SectionDividerStyle: The divider style between sections.
+	//
+	// Possible values:
+	//   "DIVIDER_STYLE_UNSPECIFIED" - Don't use. Unspecified.
+	//   "SOLID_DIVIDER" - Default option. Render a solid divider between
+	// sections.
+	//   "NO_DIVIDER" - If set, no divider is rendered between sections.
+	SectionDividerStyle string `json:"sectionDividerStyle,omitempty"`
+
 	// Sections: Contains a collection of widgets. Each section has its own,
 	// optional header. Sections are visually separated by a line divider.
 	Sections []*GoogleAppsCardV1Section `json:"sections,omitempty"`
@@ -2689,6 +2733,59 @@ func (s *GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1PlatformDataSource: Chat apps only. For a
+// `SelectionInput` widget that uses a multi-select menu, the data from
+// a Google Workspace host application
+// (https://developers.google.com/chat/api/reference/rest/v1/HostApp).
+// Used to populate the items in the multi-select menu. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type GoogleAppsCardV1PlatformDataSource struct {
+	// CommonDataSource: For a `SelectionInput` widget that uses a
+	// multi-select menu, a data source shared by all Google Workspace host
+	// applications, such as users in a Google Workspace organization.
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	//
+	// Possible values:
+	//   "UNKNOWN" - Default value. Don't use. [Developer
+	// Preview](https://developers.google.com/workspace/preview).
+	//   "USER" - A list of users provided by the Google Workspace host
+	// application. For example, to source users from Google Chat, use the
+	// resource name of the
+	// [user](https://developers.google.com/chat/api/reference/rest/v1/User).
+	//  Format: users/{user} [Developer
+	// Preview](https://developers.google.com/workspace/preview).
+	CommonDataSource string `json:"commonDataSource,omitempty"`
+
+	// HostAppDataSource: A data source that's unique to a Google Workspace
+	// host application, such as Gmail emails, Google Calendar events, or
+	// Google Chat messages. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonDataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonDataSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1PlatformDataSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1PlatformDataSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1Section: A section contains a collection of widgets
 // that are rendered vertically in the order that they're specified.
 type GoogleAppsCardV1Section struct {
@@ -2753,6 +2850,11 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // To collect undefined or abstract data from users, use the TextInput
 // widget.
 type GoogleAppsCardV1SelectionInput struct {
+	// ExternalDataSource: An external data source, such as a relational
+	// data base. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
+
 	// Items: An array of selectable items. For example, an array of radio
 	// buttons or checkboxes. Supports up to 100 items.
 	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`
@@ -2763,6 +2865,20 @@ type GoogleAppsCardV1SelectionInput struct {
 	// urgency of a work ticket from a drop-down menu, the label might be
 	// "Urgency" or "Select urgency".
 	Label string `json:"label,omitempty"`
+
+	// MultiSelectMaxSelectedItems: For multi-select menus, the maximum
+	// number of items that a user can select. Minimum value is 1 item. If
+	// unspecified, set to 3 items. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	MultiSelectMaxSelectedItems int64 `json:"multiSelectMaxSelectedItems,omitempty"`
+
+	// MultiSelectMinQueryLength: For multi-select menus, the number of text
+	// characters that a user inputs before the Chat app queries
+	// autocomplete and displays suggested items on the card. If
+	// unspecified, set to 0 characters for static data sources and 3
+	// characters for external data sources. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	MultiSelectMinQueryLength int64 `json:"multiSelectMinQueryLength,omitempty"`
 
 	// Name: The name that identifies the selection input in a form input
 	// event. For details about working with form inputs, see Receive form
@@ -2776,6 +2892,12 @@ type GoogleAppsCardV1SelectionInput struct {
 	// inputs, see Receive form data
 	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
+
+	// PlatformDataSource: A data source from a Google Workspace host
+	// application
+	// (https://developers.google.com/chat/api/reference/rest/v1/HostApp).
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	PlatformDataSource *GoogleAppsCardV1PlatformDataSource `json:"platformDataSource,omitempty"`
 
 	// Type: The type of items that are displayed to users in a
 	// `SelectionInput` widget. Selection types support different types of
@@ -2791,22 +2913,38 @@ type GoogleAppsCardV1SelectionInput struct {
 	// switches.
 	//   "DROPDOWN" - A dropdown menu. Users can select one item from the
 	// menu.
+	//   "MULTI_SELECT" - Supported by Chat apps, but not Google Workspace
+	// Add-ons. A multi-select menu for static or dynamic data. From the
+	// menu bar, users select one or more items. Users can also input values
+	// to populate dynamic data. For example, users can start typing the
+	// name of a Google Chat space and the widget autosuggests the space. To
+	// populate items for a multi-select menu, you can use one of the
+	// following types of data sources: * Static data: Items are specified
+	// as `SelectionItem` objects in the widget. Up to 100 items. * Google
+	// Workspace data: Items are populated using data from a Google
+	// Workspace application, such as Google Chat users or spaces. *
+	// External data: Items are populated from a dynamic external data
+	// source. For examples of how to implement multi-select menus, see the
+	// [`SelectionInput` widget
+	// page](https://developers.google.com/chat/ui/widgets/selection-input).
+	// [Developer Preview](https://developers.google.com/workspace/preview).
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ExternalDataSource")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExternalDataSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2819,10 +2957,22 @@ func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1SelectionItem: An item that users can select in a
 // selection input, such as a checkbox or switch.
 type GoogleAppsCardV1SelectionItem struct {
+	// BottomText: For multi-select menus, a text description or label
+	// that's displayed below the item's `text` field. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	BottomText string `json:"bottomText,omitempty"`
+
 	// Selected: Whether the item is selected by default. If the selection
 	// input only accepts one value (such as for radio buttons or a dropdown
 	// menu), only set this field for one item.
 	Selected bool `json:"selected,omitempty"`
+
+	// StartIconUri: For multi-select menus, the URL for the icon displayed
+	// next to the item's `text` field. Supports PNG and JPEG files. Must be
+	// an `HTTPS` URL. For example,
+	// `https://developers.google.com/chat/images/quickstart-app-avatar.png`.
+	//  Developer Preview (https://developers.google.com/workspace/preview).
+	StartIconUri string `json:"startIconUri,omitempty"`
 
 	// Text: The text that identifies or describes the item to users.
 	Text string `json:"text,omitempty"`
@@ -2833,7 +2983,7 @@ type GoogleAppsCardV1SelectionItem struct {
 	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Value string `json:"value,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Selected") to
+	// ForceSendFields is a list of field names (e.g. "BottomText") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2841,7 +2991,7 @@ type GoogleAppsCardV1SelectionItem struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Selected") to include in
+	// NullFields is a list of field names (e.g. "BottomText") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3287,6 +3437,39 @@ type GoogleAppsCardV1Widgets struct {
 
 func (s *GoogleAppsCardV1Widgets) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCardV1Widgets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HostAppDataSourceMarkup: Chat apps only. For a `SelectionInput`
+// widget that uses a multi-select menu, a data source from a Google
+// Workspace host application. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type HostAppDataSourceMarkup struct {
+	// ChatDataSource: The data source is Google Chat. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	ChatDataSource *ChatClientDataSourceMarkup `json:"chatDataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChatDataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChatDataSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostAppDataSourceMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod HostAppDataSourceMarkup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4410,6 +4593,40 @@ type Space struct {
 
 func (s *Space) MarshalJSON() ([]byte, error) {
 	type NoMethod Space
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpaceDataSource: A data source representing a Google Chat space.
+// Format: spaces/{space} Developer Preview
+// (https://developers.google.com/workspace/preview).
+type SpaceDataSource struct {
+	// DefaultToCurrentSpace: When `true`, uses the card's Google Chat space
+	// as the default selection. The default value is `false`. Developer
+	// Preview (https://developers.google.com/workspace/preview).
+	DefaultToCurrentSpace bool `json:"defaultToCurrentSpace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultToCurrentSpace") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultToCurrentSpace") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpaceDataSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceDataSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

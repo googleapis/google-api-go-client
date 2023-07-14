@@ -491,7 +491,7 @@ type GoogleIamV2Policy struct {
 	// Etag: An opaque tag that identifies the current version of the
 	// `Policy`. IAM uses this value to help manage concurrent updates, so
 	// they do not cause one update to be overwritten by another. If this
-	// field is present in a CreatePolicy request, the value is ignored.
+	// field is present in a CreatePolicyRequest, the value is ignored.
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: Output only. The kind of the `Policy`. Always contains the

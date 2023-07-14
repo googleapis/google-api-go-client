@@ -986,7 +986,7 @@ type CmekSettings struct {
 	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
 	// yptoKeys/my-key"To enable CMEK for the Log Router, set this field to
 	// a valid kms_key_name for which the associated service account has the
-	// required cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the
+	// needed cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the
 	// key.The Cloud KMS key used by the Log Router can be updated by
 	// changing the kms_key_name to a new valid key name or disabled by
 	// setting the key name to an empty string. Encryption operations that
@@ -3948,10 +3948,13 @@ type Settings struct {
 	// Name: Output only. The resource name of the settings.
 	Name string `json:"name,omitempty"`
 
-	// StorageLocation: Optional. The Cloud region that will be used for
-	// _Default and _Required log buckets for newly created projects and
-	// folders. For example europe-west1. This setting does not affect the
-	// location of custom log buckets.
+	// StorageLocation: Optional. The storage location that Cloud Logging
+	// will use to create new resources when a location is needed but not
+	// explicitly provided. The use cases includes: The location of _Default
+	// and _Required log bucket for newly created projects and
+	// folders.Example value: europe-west1.Note: this setting does not
+	// affect the location of resources where a location is explicitly
+	// provided when created, such as custom log buckets.
 	StorageLocation string `json:"storageLocation,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

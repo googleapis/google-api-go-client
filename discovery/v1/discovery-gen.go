@@ -283,11 +283,18 @@ type JsonSchema struct {
 	// Default: The default value of this property (if one exists).
 	Default string `json:"default,omitempty"`
 
+	// Deprecated -- Whether the parameter is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
+
 	// Description: A description of this object.
 	Description string `json:"description,omitempty"`
 
 	// Enum: Values this parameter may take (if it is an enum).
 	Enum []string `json:"enum,omitempty"`
+
+	// EnumDeprecated: The deprecation status for the enums. Each position
+	// maps to the corresponding value in the "enum" array.
+	EnumDeprecated []bool `json:"enumDeprecated,omitempty"`
 
 	// EnumDescriptions: The descriptions for the enums. Each position maps
 	// to the corresponding value in the "enum" array.
@@ -698,6 +705,9 @@ func (s *RestDescriptionIcons) MarshalJSON() ([]byte, error) {
 }
 
 type RestMethod struct {
+	// Deprecated -- Whether this method is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
+
 	// Description: Description of this method.
 	Description string `json:"description,omitempty"`
 
@@ -755,7 +765,7 @@ type RestMethod struct {
 	// if the method supports media download.
 	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -763,10 +773,10 @@ type RestMethod struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Deprecated") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -975,13 +985,16 @@ func (s *RestMethodResponse) MarshalJSON() ([]byte, error) {
 }
 
 type RestResource struct {
+	// Deprecated -- Whether this resource is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
+
 	// Methods: Methods on this resource.
 	Methods map[string]RestMethod `json:"methods,omitempty"`
 
 	// Resources: Sub-resources on this resource.
 	Resources map[string]RestResource `json:"resources,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Methods") to
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -989,7 +1002,7 @@ type RestResource struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Methods") to include in
+	// NullFields is a list of field names (e.g. "Deprecated") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

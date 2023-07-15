@@ -2160,6 +2160,9 @@ type Fleet struct {
 	// `Production Fleet`
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Labels: Optional. Labels for this Fleet.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: Output only. The full, unique resource name of this fleet in
 	// the format of
 	// `projects/{project}/locations/{location}/fleets/{fleet}`. Each Google
@@ -2640,7 +2643,7 @@ type IdentityServiceAuthMethod struct {
 	// AzureadConfig: AzureAD specific Configuration.
 	AzureadConfig *IdentityServiceAzureADConfig `json:"azureadConfig,omitempty"`
 
-	// GoogleConfig: GoogleConfig specific configuration
+	// GoogleConfig: GoogleConfig specific configuration.
 	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
 
 	// Name: Identifier for auth config.
@@ -2696,6 +2699,10 @@ type IdentityServiceAzureADConfig struct {
 	// Tenant: Kind of Azure AD account to be authenticated. Supported
 	// values are or for accounts belonging to a specific tenant.
 	Tenant string `json:"tenant,omitempty"`
+
+	// UserClaim: Optional. Claim in the AzureAD ID Token that holds the
+	// user details.
+	UserClaim string `json:"userClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
@@ -3435,6 +3442,9 @@ type MembershipBinding struct {
 	// this Membership should be bound to all Namespaces in this entire
 	// Fleet.
 	Fleet bool `json:"fleet,omitempty"`
+
+	// Labels: Optional. Labels for this MembershipBinding.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The resource name for the membershipbinding itself
 	// `projects/{project}/locations/{location}/memberships/{membership}/bind
@@ -4245,6 +4255,9 @@ type Scope struct {
 
 	// DeleteTime: Output only. When the scope was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// Labels: Optional. Labels for this Scope.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The resource name for the scope
 	// `projects/{project}/locations/{location}/scopes/{scope}`

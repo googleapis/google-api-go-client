@@ -246,6 +246,11 @@ type AbortInfo struct {
 	// proxy.
 	//   "RESOURCE_CONFIG_NOT_FOUND" - Aborted because expected resource
 	// configuration was missing.
+	//   "GOOGLE_MANAGED_SERVICE_AMBIGUOUS_PSC_ENDPOINT" - Aborted because a
+	// PSC endpoint selection for the Google-managed service is ambiguous
+	// (several PSC endpoints satisfy test input).
+	//   "SOURCE_PSC_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with a
+	// PSC-based Cloud SQL instance as a source are not supported.
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -1070,8 +1075,11 @@ type Endpoint struct {
 	// URI.
 	CloudSqlInstance string `json:"cloudSqlInstance,omitempty"`
 
-	// ForwardingRule: Forwarding rule URI. Forwarding rules are frontends
-	// for load balancers, PSC endpoints and Protocol Forwarding. Format:
+	// ForwardingRule: A forwarding rule and its corresponding IP address
+	// represent the frontend configuration of a Google Cloud load balancer.
+	// Forwarding rules are also used for protocol forwarding, Private
+	// Service Connect and other network services to provide forwarding
+	// information in the control plane. Format:
 	// projects/{project}/global/forwardingRules/{id} or
 	// projects/{project}/regions/{region}/forwardingRules/{id}
 	ForwardingRule string `json:"forwardingRule,omitempty"`
@@ -1340,6 +1348,10 @@ type FirewallInfo struct {
 	// rule. For details, see [Network firewall
 	// policies](https://cloud.google.com/vpc/docs/network-firewall-policies)
 	// .
+	//   "NETWORK_REGIONAL_FIREWALL_POLICY_RULE" - Regional network firewall
+	// policy rule. For details, see [Regional network firewall
+	// policies](https://cloud.google.com/firewall/docs/regional-firewall-pol
+	// icies).
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 
 	// NetworkUri: The URI of the VPC network that the firewall rule is

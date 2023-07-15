@@ -671,7 +671,7 @@ type GoogleCloudDialogflowCxV3AgentGitIntegrationSettingsGithubSettings struct {
 	// RepositoryUri: The GitHub repository URI related to the agent.
 	RepositoryUri string `json:"repositoryUri,omitempty"`
 
-	// TrackingBranch: The branch of the GitHub repository tracked for this
+	// TrackingBranch: The branch of GitHub repository tracked for this
 	// agent.
 	TrackingBranch string `json:"trackingBranch,omitempty"`
 
@@ -2576,7 +2576,7 @@ type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// CommitSha: Commit SHA of the git push. This field is populated if
-	// `git_destination` is specified in ExportAgentRequest.
+	// `git_destination` are specified in ExportAgentRequest.
 	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
@@ -5765,17 +5765,6 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	// However, Dialogflow itself does not try to read or process the URI in
 	// any way.
 	PlayAudio *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio `json:"playAudio,omitempty"`
-
-	// ResponseType: Response type.
-	//
-	// Possible values:
-	//   "RESPONSE_TYPE_UNSPECIFIED" - Not specified.
-	//   "ENTRY_PROMPT" - The response is from an entry prompt in the page.
-	//   "PARAMETER_PROMPT" - The response is from form-filling prompt in
-	// the page.
-	//   "HANDLER_PROMPT" - The response is from a transition route or an
-	// event handler in the page or flow or transition route group.
-	ResponseType string `json:"responseType,omitempty"`
 
 	// TelephonyTransferCall: A signal that the client should transfer the
 	// phone call connected to this agent to a third-party endpoint.
@@ -9393,7 +9382,7 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// CommitSha: Commit SHA of the git push. This field is populated if
-	// `git_destination` is specified in ExportAgentRequest.
+	// `git_destination` are specified in ExportAgentRequest.
 	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
@@ -12508,7 +12497,7 @@ type GoogleCloudDialogflowV2Context struct {
 	// `projects//agent/sessions//contexts/`, or
 	// `projects//agent/environments//users//sessions//contexts/`. The
 	// `Context ID` is always converted to lowercase, may only contain
-	// characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If
+	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
 	// user. The following context names are reserved for internal use by
@@ -12520,14 +12509,13 @@ type GoogleCloudDialogflowV2Context struct {
 	// Parameters: Optional. The collection of parameters associated with
 	// this context. Depending on your protocol or client library language,
 	// this is a map, associative array, symbol table, dictionary, or JSON
-	// object composed of a collection of (MapKey, MapValue) pairs: * MapKey
-	// type: string * MapKey value: parameter name * MapValue type: If
-	// parameter's entity type is a composite entity then use map,
-	// otherwise, depending on the parameter value type, it could be one of
-	// string, number, boolean, null, list or map. * MapValue value: If
-	// parameter's entity type is a composite entity then use map from
-	// composite entity property names to property values, otherwise, use
-	// parameter value.
+	// object composed of a collection of (MapKey, MapValue) pairs: - MapKey
+	// type: string - MapKey value: parameter name - MapValue type: - If
+	// parameter's entity type is a composite entity: map - Else: depending
+	// on parameter value type, could be one of string, number, boolean,
+	// null, list or map - MapValue value: - If parameter's entity type is a
+	// composite entity: map from composite entity property names to
+	// property values - Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LifespanCount") to
@@ -13032,13 +13020,13 @@ type GoogleCloudDialogflowV2EventInput struct {
 	// Parameters: The collection of parameters associated with the event.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -13197,7 +13185,7 @@ func (s *GoogleCloudDialogflowV2FaqAnswer) UnmarshalJSON(data []byte) error {
 // for the output.
 type GoogleCloudDialogflowV2GcsDestination struct {
 	// Uri: The Google Cloud Storage URIs for the output. A URI is of the
-	// form: `gs://bucket/object-prefix-or-name` Whether a prefix or name is
+	// form: gs://bucket/object-prefix-or-name Whether a prefix or name is
 	// used depends on the use case. The requesting user must have
 	// "write-permission" to the bucket.
 	Uri string `json:"uri,omitempty"`
@@ -15072,13 +15060,13 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	// Parameters: The collection of extracted parameters. Depending on your
 	// protocol or client library language, this is a map, associative
 	// array, symbol table, dictionary, or JSON object composed of a
-	// collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text: - If natural
@@ -16025,7 +16013,7 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// `projects//agent/environments//users//sessions//contexts/`, -
 	// `projects//locations//agent/environments//users//sessions//contexts/`,
 	//  The `Context ID` is always converted to lowercase, may only contain
-	// characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If
+	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
 	// user. The following context names are reserved for internal use by
@@ -16037,14 +16025,13 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// Parameters: Optional. The collection of parameters associated with
 	// this context. Depending on your protocol or client library language,
 	// this is a map, associative array, symbol table, dictionary, or JSON
-	// object composed of a collection of (MapKey, MapValue) pairs: * MapKey
-	// type: string * MapKey value: parameter name * MapValue type: If
-	// parameter's entity type is a composite entity then use map,
-	// otherwise, depending on the parameter value type, it could be one of
-	// string, number, boolean, null, list or map. * MapValue value: If
-	// parameter's entity type is a composite entity then use map from
-	// composite entity property names to property values, otherwise, use
-	// parameter value.
+	// object composed of a collection of (MapKey, MapValue) pairs: - MapKey
+	// type: string - MapKey value: parameter name - MapValue type: - If
+	// parameter's entity type is a composite entity: map - Else: depending
+	// on parameter value type, could be one of string, number, boolean,
+	// null, list or map - MapValue value: - If parameter's entity type is a
+	// composite entity: map from composite entity property names to
+	// property values - Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LifespanCount") to
@@ -16306,13 +16293,13 @@ type GoogleCloudDialogflowV2beta1EventInput struct {
 	// Parameters: The collection of parameters associated with the event.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -16471,7 +16458,7 @@ func (s *GoogleCloudDialogflowV2beta1FaqAnswer) UnmarshalJSON(data []byte) error
 // location for the output.
 type GoogleCloudDialogflowV2beta1GcsDestination struct {
 	// Uri: Required. The Google Cloud Storage URIs for the output. A URI is
-	// of the form: `gs://bucket/object-prefix-or-name` Whether a prefix or
+	// of the form: gs://bucket/object-prefix-or-name Whether a prefix or
 	// name is used depends on the use case. The requesting user must have
 	// "write-permission" to the bucket.
 	Uri string `json:"uri,omitempty"`
@@ -18945,13 +18932,13 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	// Parameters: The collection of extracted parameters. Depending on your
 	// protocol or client library language, this is a map, associative
 	// array, symbol table, dictionary, or JSON object composed of a
-	// collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text: - If natural

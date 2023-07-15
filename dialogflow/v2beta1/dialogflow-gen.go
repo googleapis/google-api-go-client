@@ -1541,7 +1541,7 @@ type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// CommitSha: Commit SHA of the git push. This field is populated if
-	// `git_destination` is specified in ExportAgentRequest.
+	// `git_destination` are specified in ExportAgentRequest.
 	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
@@ -2895,17 +2895,6 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	// However, Dialogflow itself does not try to read or process the URI in
 	// any way.
 	PlayAudio *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio `json:"playAudio,omitempty"`
-
-	// ResponseType: Response type.
-	//
-	// Possible values:
-	//   "RESPONSE_TYPE_UNSPECIFIED" - Not specified.
-	//   "ENTRY_PROMPT" - The response is from an entry prompt in the page.
-	//   "PARAMETER_PROMPT" - The response is from form-filling prompt in
-	// the page.
-	//   "HANDLER_PROMPT" - The response is from a transition route or an
-	// event handler in the page or flow or transition route group.
-	ResponseType string `json:"responseType,omitempty"`
 
 	// TelephonyTransferCall: A signal that the client should transfer the
 	// phone call connected to this agent to a third-party endpoint.
@@ -5129,7 +5118,7 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// CommitSha: Commit SHA of the git push. This field is populated if
-	// `git_destination` is specified in ExportAgentRequest.
+	// `git_destination` are specified in ExportAgentRequest.
 	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
@@ -8244,7 +8233,7 @@ type GoogleCloudDialogflowV2Context struct {
 	// `projects//agent/sessions//contexts/`, or
 	// `projects//agent/environments//users//sessions//contexts/`. The
 	// `Context ID` is always converted to lowercase, may only contain
-	// characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If
+	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
 	// user. The following context names are reserved for internal use by
@@ -8256,14 +8245,13 @@ type GoogleCloudDialogflowV2Context struct {
 	// Parameters: Optional. The collection of parameters associated with
 	// this context. Depending on your protocol or client library language,
 	// this is a map, associative array, symbol table, dictionary, or JSON
-	// object composed of a collection of (MapKey, MapValue) pairs: * MapKey
-	// type: string * MapKey value: parameter name * MapValue type: If
-	// parameter's entity type is a composite entity then use map,
-	// otherwise, depending on the parameter value type, it could be one of
-	// string, number, boolean, null, list or map. * MapValue value: If
-	// parameter's entity type is a composite entity then use map from
-	// composite entity property names to property values, otherwise, use
-	// parameter value.
+	// object composed of a collection of (MapKey, MapValue) pairs: - MapKey
+	// type: string - MapKey value: parameter name - MapValue type: - If
+	// parameter's entity type is a composite entity: map - Else: depending
+	// on parameter value type, could be one of string, number, boolean,
+	// null, list or map - MapValue value: - If parameter's entity type is a
+	// composite entity: map from composite entity property names to
+	// property values - Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LifespanCount") to
@@ -8768,13 +8756,13 @@ type GoogleCloudDialogflowV2EventInput struct {
 	// Parameters: The collection of parameters associated with the event.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -8933,7 +8921,7 @@ func (s *GoogleCloudDialogflowV2FaqAnswer) UnmarshalJSON(data []byte) error {
 // for the output.
 type GoogleCloudDialogflowV2GcsDestination struct {
 	// Uri: The Google Cloud Storage URIs for the output. A URI is of the
-	// form: `gs://bucket/object-prefix-or-name` Whether a prefix or name is
+	// form: gs://bucket/object-prefix-or-name Whether a prefix or name is
 	// used depends on the use case. The requesting user must have
 	// "write-permission" to the bucket.
 	Uri string `json:"uri,omitempty"`
@@ -10808,13 +10796,13 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	// Parameters: The collection of extracted parameters. Depending on your
 	// protocol or client library language, this is a map, associative
 	// array, symbol table, dictionary, or JSON object composed of a
-	// collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text: - If natural
@@ -11836,9 +11824,9 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// MessageSendTime: Optional. The send time of the message from end user
 	// or human agent's perspective. It is used for identifying the same
 	// message under one participant. Given two messages under the same
-	// participant: * If send time are different regardless of whether the
+	// participant: - If send time are different regardless of whether the
 	// content of the messages are exactly the same, the conversation will
-	// regard them as two distinct messages sent by the participant. * If
+	// regard them as two distinct messages sent by the participant. - If
 	// send time is the same regardless of whether the content of the
 	// messages are exactly the same, the conversation will regard them as
 	// same message, and ignore the message received later. If the value is
@@ -12409,13 +12397,13 @@ func (s *GoogleCloudDialogflowV2beta1AutomatedAgentReply) UnmarshalJSON(data []b
 // expected in this phase. The client provides this configuration in
 // terms of the durations of those two phases. The durations are
 // measured in terms of the audio length fromt the the start of the
-// input audio. The flow goes like below: ``` --> Time without speech
+// input audio. The flow goes like below: --> Time without speech
 // detection | utterance only | utterance or no-speech event | |
 // +-------------+ | +------------+ | +---------------+ ----------+ no
 // barge-in +-|-+ barge-in +-|-+ normal period +-----------
-// +-------------+ | +------------+ | +---------------+ ``` No-speech
-// event is a response with END_OF_UTTERANCE without any transcript
-// following up.
+// +-------------+ | +------------+ | +---------------+ No-speech event
+// is a response with END_OF_UTTERANCE without any transcript following
+// up.
 type GoogleCloudDialogflowV2beta1BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
 	// beginning of the input audio.
@@ -13071,7 +13059,7 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// `projects//agent/environments//users//sessions//contexts/`, -
 	// `projects//locations//agent/environments//users//sessions//contexts/`,
 	//  The `Context ID` is always converted to lowercase, may only contain
-	// characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If
+	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
 	// user. The following context names are reserved for internal use by
@@ -13083,14 +13071,13 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// Parameters: Optional. The collection of parameters associated with
 	// this context. Depending on your protocol or client library language,
 	// this is a map, associative array, symbol table, dictionary, or JSON
-	// object composed of a collection of (MapKey, MapValue) pairs: * MapKey
-	// type: string * MapKey value: parameter name * MapValue type: If
-	// parameter's entity type is a composite entity then use map,
-	// otherwise, depending on the parameter value type, it could be one of
-	// string, number, boolean, null, list or map. * MapValue value: If
-	// parameter's entity type is a composite entity then use map from
-	// composite entity property names to property values, otherwise, use
-	// parameter value.
+	// object composed of a collection of (MapKey, MapValue) pairs: - MapKey
+	// type: string - MapKey value: parameter name - MapValue type: - If
+	// parameter's entity type is a composite entity: map - Else: depending
+	// on parameter value type, could be one of string, number, boolean,
+	// null, list or map - MapValue value: - If parameter's entity type is a
+	// composite entity: map from composite entity property names to
+	// property values - Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -14099,13 +14086,13 @@ type GoogleCloudDialogflowV2beta1EventInput struct {
 	// Parameters: The collection of parameters associated with the event.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -14443,7 +14430,7 @@ func (s *GoogleCloudDialogflowV2beta1FulfillmentGenericWebService) MarshalJSON()
 // location for the output.
 type GoogleCloudDialogflowV2beta1GcsDestination struct {
 	// Uri: Required. The Google Cloud Storage URIs for the output. A URI is
-	// of the form: `gs://bucket/object-prefix-or-name` Whether a prefix or
+	// of the form: gs://bucket/object-prefix-or-name Whether a prefix or
 	// name is used depends on the use case. The requesting user must have
 	// "write-permission" to the bucket.
 	Uri string `json:"uri,omitempty"`
@@ -14475,7 +14462,7 @@ func (s *GoogleCloudDialogflowV2beta1GcsDestination) MarshalJSON() ([]byte, erro
 // for single input.
 type GoogleCloudDialogflowV2beta1GcsSource struct {
 	// Uri: Required. The Google Cloud Storage URIs for the inputs. A URI is
-	// of the form: `gs://bucket/object-prefix-or-name` Whether a prefix or
+	// of the form: gs://bucket/object-prefix-or-name Whether a prefix or
 	// name is used depends on the use case.
 	Uri string `json:"uri,omitempty"`
 
@@ -14506,8 +14493,8 @@ func (s *GoogleCloudDialogflowV2beta1GcsSource) MarshalJSON() ([]byte, error) {
 // locations for the inputs.
 type GoogleCloudDialogflowV2beta1GcsSources struct {
 	// Uris: Required. Google Cloud Storage URIs for the inputs. A URI is of
-	// the form: `gs://bucket/object-prefix-or-name` Whether a prefix or
-	// name is used depends on the use case.
+	// the form: gs://bucket/object-prefix-or-name Whether a prefix or name
+	// is used depends on the use case.
 	Uris []string `json:"uris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uris") to
@@ -15672,9 +15659,9 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// Cloud Speech documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics#phrase-hints)
 	// for more details. This field is deprecated. Please use
-	// `speech_contexts` () instead. If you specify both `phrase_hints` ()
-	// and `speech_contexts` (), Dialogflow will treat the `phrase_hints` ()
-	// as a single additional `SpeechContext` ().
+	// speech_contexts () instead. If you specify both phrase_hints () and
+	// speech_contexts (), Dialogflow will treat the phrase_hints () as a
+	// single additional SpeechContext ().
 	PhraseHints []string `json:"phraseHints,omitempty"`
 
 	// SampleRateHertz: Required. Sample rate (in Hertz) of the audio
@@ -19133,13 +19120,13 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	// Parameters: The collection of extracted parameters. Depending on your
 	// protocol or client library language, this is a map, associative
 	// array, symbol table, dictionary, or JSON object composed of a
-	// collection of (MapKey, MapValue) pairs: * MapKey type: string *
-	// MapKey value: parameter name * MapValue type: If parameter's entity
-	// type is a composite entity then use map, otherwise, depending on the
-	// parameter value type, it could be one of string, number, boolean,
-	// null, list or map. * MapValue value: If parameter's entity type is a
-	// composite entity then use map from composite entity property names to
-	// property values, otherwise, use parameter value.
+	// collection of (MapKey, MapValue) pairs: - MapKey type: string -
+	// MapKey value: parameter name - MapValue type: - If parameter's entity
+	// type is a composite entity: map - Else: depending on parameter value
+	// type, could be one of string, number, boolean, null, list or map -
+	// MapValue value: - If parameter's entity type is a composite entity:
+	// map from composite entity property names to property values - Else:
+	// parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text: - If natural
@@ -20706,13 +20693,13 @@ type GoogleCloudDialogflowV2beta1SuggestionInput struct {
 	// current page. The form parameters are specified via the parameters
 	// field. Depending on your protocol or client library language, this is
 	// a map, associative array, symbol table, dictionary, or JSON object
-	// composed of a collection of (MapKey, MapValue) pairs: * MapKey type:
-	// string * MapKey value: parameter name * MapValue type: If parameter's
-	// entity type is a composite entity then use map, otherwise, depending
-	// on the parameter value type, it could be one of string, number,
-	// boolean, null, list or map. * MapValue value: If parameter's entity
-	// type is a composite entity then use map from composite entity
-	// property names to property values, otherwise, use parameter value.
+	// composed of a collection of (MapKey, MapValue) pairs: - MapKey type:
+	// string - MapKey value: parameter name - MapValue type: - If
+	// parameter's entity type is a composite entity: map - Else: depending
+	// on parameter value type, could be one of string, number, boolean,
+	// null, list or map - MapValue value: - If parameter's entity type is a
+	// composite entity: map from composite entity property names to
+	// property values - Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// TextOverride: Optional. If the customer edited the suggestion before
@@ -21032,13 +21019,13 @@ type GoogleCloudDialogflowV2beta1TrainAgentRequest struct {
 // validation error.
 type GoogleCloudDialogflowV2beta1ValidationError struct {
 	// Entries: The names of the entries that the error is associated with.
-	// Format: - `projects//agent`, if the error is associated with the
-	// entire agent. - `projects//agent/intents/`, if the error is
+	// Format: - "projects//agent", if the error is associated with the
+	// entire agent. - "projects//agent/intents/", if the error is
 	// associated with certain intents. -
-	// `projects//agent/intents//trainingPhrases/`, if the error is
+	// "projects//agent/intents//trainingPhrases/", if the error is
 	// associated with certain intent training phrases. -
-	// `projects//agent/intents//parameters/`, if the error is associated
-	// with certain intent parameters. - `projects//agent/entities/`, if the
+	// "projects//agent/intents//parameters/", if the error is associated
+	// with certain intent parameters. - "projects//agent/entities/", if the
 	// error is associated with certain entities.
 	Entries []string `json:"entries,omitempty"`
 
@@ -27636,7 +27623,7 @@ type ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
+//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -27758,7 +27745,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -32722,7 +32709,7 @@ type ProjectsAgentSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
+//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -32844,7 +32831,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -36313,7 +36300,7 @@ func (r *ProjectsConversationsService) Create(parentid string, googleclouddialog
 // Identifier of the conversation. Generally it's auto generated by
 // Google. Only set it if you cannot wait for the response to return a
 // auto-generated one to you. The conversation ID must be compliant with
-// the regression fomula `a-zA-Z*` with the characters length in range
+// the regression fomula "a-zA-Z*" with the characters length in range
 // of [3,64]. If the field is provided, the caller is resposible for 1.
 // the uniqueness of the ID, otherwise the request will be rejected. 2.
 // the consistency for whether to use custom ID or not under a project
@@ -36425,7 +36412,7 @@ func (c *ProjectsConversationsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "conversationId": {
-	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula `a-zA-Z*` with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
+	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula \"a-zA-Z*\" with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -46931,7 +46918,7 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
+//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -47053,7 +47040,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -50182,7 +50169,7 @@ type ProjectsLocationsAgentSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
+//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -50304,7 +50291,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -53773,7 +53760,7 @@ func (r *ProjectsLocationsConversationsService) Create(parentid string, googlecl
 // Identifier of the conversation. Generally it's auto generated by
 // Google. Only set it if you cannot wait for the response to return a
 // auto-generated one to you. The conversation ID must be compliant with
-// the regression fomula `a-zA-Z*` with the characters length in range
+// the regression fomula "a-zA-Z*" with the characters length in range
 // of [3,64]. If the field is provided, the caller is resposible for 1.
 // the uniqueness of the ID, otherwise the request will be rejected. 2.
 // the consistency for whether to use custom ID or not under a project
@@ -53885,7 +53872,7 @@ func (c *ProjectsLocationsConversationsCreateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "conversationId": {
-	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula `a-zA-Z*` with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
+	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula \"a-zA-Z*\" with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

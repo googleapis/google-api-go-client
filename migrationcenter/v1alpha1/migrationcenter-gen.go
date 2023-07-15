@@ -795,7 +795,7 @@ type AssetFrame struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// PerformanceSamples: Asset performance data samples. Samples that are
-	// older than 40 days are ignored.
+	// from more than 40 days ago or after tomorrow are ignored.
 	PerformanceSamples []*PerformanceSample `json:"performanceSamples,omitempty"`
 
 	// ReportTime: The time the data was reported.
@@ -4083,7 +4083,7 @@ type PerformanceSample struct {
 	// Network: Network usage sample.
 	Network *NetworkUsageSample `json:"network,omitempty"`
 
-	// SampleTime: Required. Time the sample was collected.
+	// SampleTime: Time the sample was collected.
 	SampleTime string `json:"sampleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cpu") to

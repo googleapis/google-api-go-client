@@ -253,7 +253,7 @@ type AcceleratorType struct {
 	// Name: The resource name.
 	Name string `json:"name,omitempty"`
 
-	// Type: the accelerator type.
+	// Type: The accelerator type.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -885,7 +885,7 @@ type Node struct {
 	// AcceleratorConfig: The AccleratorConfig for the TPU Node.
 	AcceleratorConfig *AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
-	// AcceleratorType: Required. The type of hardware accelerators
+	// AcceleratorType: Optional. The type of hardware accelerators
 	// associated with this node.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 
@@ -945,6 +945,10 @@ type Node struct {
 	// startup-script and shutdown-script
 	Metadata map[string]string `json:"metadata,omitempty"`
 
+	// MultisliceNode: Output only. Whether the Node belongs to a Multislice
+	// group.
+	MultisliceNode bool `json:"multisliceNode,omitempty"`
+
 	// Name: Output only. Immutable. The name of the TPU.
 	Name string `json:"name,omitempty"`
 
@@ -955,6 +959,10 @@ type Node struct {
 	// workers can be accessed and sent work. It is recommended that runtime
 	// clients of the node reach out to the 0th entry in this map first.
 	NetworkEndpoints []*NetworkEndpoint `json:"networkEndpoints,omitempty"`
+
+	// QueuedResource: Output only. The qualified name of the QueuedResource
+	// that requested this Node.
+	QueuedResource string `json:"queuedResource,omitempty"`
 
 	// RuntimeVersion: Required. The runtime version running in the Node.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`

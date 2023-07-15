@@ -344,7 +344,7 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // capture of some portion of the state of a GKE cluster, the record of
 // the backup operation itself, and an anchor for the underlying
 // artifacts that comprise the Backup (the config backup and
-// VolumeBackups). Next id: 28
+// VolumeBackups). Next id: 29
 type Backup struct {
 	// AllNamespaces: Output only. If True, all namespaces were included in
 	// the Backup.

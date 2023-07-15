@@ -1368,7 +1368,7 @@ type QueuedResource struct {
 	// BestEffort: The BestEffort tier.
 	BestEffort *BestEffort `json:"bestEffort,omitempty"`
 
-	// Guaranteed: The Guaranteed tier
+	// Guaranteed: The Guaranteed tier.
 	Guaranteed *Guaranteed `json:"guaranteed,omitempty"`
 
 	// Name: Output only. Immutable. The name of the QueuedResource.
@@ -1381,6 +1381,9 @@ type QueuedResource struct {
 	// be provisioned. Format:
 	// projects/{project}/locations/{zone}/reservations/{reservation}
 	ReservationName string `json:"reservationName,omitempty"`
+
+	// Spot: Optional. The Spot tier.
+	Spot *Spot `json:"spot,omitempty"`
 
 	// State: Output only. State of the QueuedResource request.
 	State *QueuedResourceState `json:"state,omitempty"`
@@ -1727,6 +1730,10 @@ func (s *SimulateMaintenanceEventRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SimulateMaintenanceEventRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Spot: Spot tier definition.
+type Spot struct {
 }
 
 // StartNodeRequest: Request for StartNode.

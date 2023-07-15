@@ -246,6 +246,11 @@ type AbortInfo struct {
 	// proxy.
 	//   "RESOURCE_CONFIG_NOT_FOUND" - Aborted because expected resource
 	// configuration was missing.
+	//   "GOOGLE_MANAGED_SERVICE_AMBIGUOUS_PSC_ENDPOINT" - Aborted because a
+	// PSC endpoint selection for the Google-managed service is ambiguous
+	// (several PSC endpoints satisfy test input).
+	//   "SOURCE_PSC_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with a
+	// PSC-based Cloud SQL instance as a source are not supported.
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -1029,6 +1034,15 @@ type Endpoint struct {
 	// CloudSqlInstance: A Cloud SQL (https://cloud.google.com/sql) instance
 	// URI.
 	CloudSqlInstance string `json:"cloudSqlInstance,omitempty"`
+
+	// ForwardingRule: A forwarding rule and its corresponding IP address
+	// represent the frontend configuration of a Google Cloud load balancer.
+	// Forwarding rules are also used for protocol forwarding, Private
+	// Service Connect and other network services to provide forwarding
+	// information in the control plane. Format:
+	// projects/{project}/global/forwardingRules/{id} or
+	// projects/{project}/regions/{region}/forwardingRules/{id}
+	ForwardingRule string `json:"forwardingRule,omitempty"`
 
 	// GkeMasterCluster: A cluster URI for Google Kubernetes Engine master
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).

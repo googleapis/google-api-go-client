@@ -1200,6 +1200,10 @@ type InvocationConfig struct {
 	// IncludedTargets: Optional. The set of action identifiers to include.
 	IncludedTargets []*Target `json:"includedTargets,omitempty"`
 
+	// ServiceAccount: Optional. The service account to run workflow
+	// invocations under.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
 	// TransitiveDependenciesIncluded: Optional. When set to true,
 	// transitive dependencies of included actions will be executed.
 	TransitiveDependenciesIncluded bool `json:"transitiveDependenciesIncluded,omitempty"`
@@ -2362,6 +2366,10 @@ type Repository struct {
 	// the format `projects/*/secrets/*/versions/*`. The file itself must be
 	// in a JSON format.
 	NpmrcEnvironmentVariablesSecretVersion string `json:"npmrcEnvironmentVariablesSecretVersion,omitempty"`
+
+	// ServiceAccount: Optional. The service account to run workflow
+	// invocations under.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// WorkspaceCompilationOverrides: Optional. If set, fields of
 	// `workspace_compilation_overrides` override the default compilation

@@ -1256,6 +1256,10 @@ type Instance struct {
 	// Metadata: Custom metadata to apply to this instance.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
+	// Migrated: Output only. Bool indicating whether this notebook has been
+	// migrated to a Workbench Instance
+	Migrated bool `json:"migrated,omitempty"`
+
 	// Name: Output only. The name of this notebook instance. Format:
 	// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 	Name string `json:"name,omitempty"`
@@ -2559,6 +2563,10 @@ type Runtime struct {
 	// Metrics: Output only. Contains Runtime daemon metrics such as Service
 	// status and JupyterLab stats.
 	Metrics *RuntimeMetrics `json:"metrics,omitempty"`
+
+	// Migrated: Output only. Bool indicating whether this notebook has been
+	// migrated to a Workbench Instance
+	Migrated bool `json:"migrated,omitempty"`
 
 	// Name: Output only. The resource name of the runtime. Format:
 	// `projects/{project}/locations/{location}/runtimes/{runtimeId}`

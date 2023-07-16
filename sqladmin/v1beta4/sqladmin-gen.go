@@ -1765,9 +1765,10 @@ type ExportContextBakExportOptions struct {
 	// Server only
 	//
 	// Possible values:
-	//   "BAK_TYPE_UNSPECIFIED" - default type.
+	//   "BAK_TYPE_UNSPECIFIED" - Default type.
 	//   "FULL" - Full backup.
 	//   "DIFF" - Differential backup.
+	//   "TLOG" - SQL Server Transaction Log
 	BakType string `json:"bakType,omitempty"`
 
 	// CopyOnly: Deprecated: copy_only is deprecated. Use differential_base
@@ -2284,9 +2285,10 @@ type ImportContextBakImportOptions struct {
 	// BakType: Type of the bak content, FULL or DIFF.
 	//
 	// Possible values:
-	//   "BAK_TYPE_UNSPECIFIED" - default type.
+	//   "BAK_TYPE_UNSPECIFIED" - Default type.
 	//   "FULL" - Full backup.
 	//   "DIFF" - Differential backup.
+	//   "TLOG" - SQL Server Transaction Log
 	BakType string `json:"bakType,omitempty"`
 
 	EncryptionOptions *ImportContextBakImportOptionsEncryptionOptions `json:"encryptionOptions,omitempty"`
@@ -2300,6 +2302,14 @@ type ImportContextBakImportOptions struct {
 	// "no_recovery" and "recovery_only" can be true otherwise error will
 	// return. Applies only to Cloud SQL for SQL Server.
 	RecoveryOnly bool `json:"recoveryOnly,omitempty"`
+
+	// StopAt: Optional. StopAt keyword for transaction log import, Applies
+	// to Cloud SQL for SQL Server only
+	StopAt string `json:"stopAt,omitempty"`
+
+	// StopAtMark: Optional. StopAtMark keyword for transaction log import,
+	// Applies to Cloud SQL for SQL Server only
+	StopAtMark string `json:"stopAtMark,omitempty"`
 
 	// Striped: Whether or not the backup set being restored is striped.
 	// Applies only to Cloud SQL for SQL Server.

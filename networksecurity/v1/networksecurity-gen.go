@@ -2353,14 +2353,82 @@ type TlsInspectionPolicy struct {
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CustomTlsFeatures: Optional. List of custom TLS cipher suites
+	// selected. This field is valid only if the selected
+	// tls_feature_profile is CUSTOM. The
+	// compute.SslPoliciesService.ListAvailableFeatures method returns the
+	// set of features that can be specified in this list. Note that Secure
+	// Web Proxy does not yet honor this field.
+	CustomTlsFeatures []string `json:"customTlsFeatures,omitempty"`
+
 	// Description: Optional. Free-text description of the resource.
 	Description string `json:"description,omitempty"`
+
+	// ExcludePublicCaSet: Optional. If FALSE (the default), use our default
+	// set of public CAs in addition to any CAs specified in trust_config.
+	// These public CAs are currently based on the Mozilla Root Program and
+	// are subject to change over time. If TRUE, do not accept our default
+	// set of public CAs. Only CAs specified in trust_config will be
+	// accepted. This defaults to FALSE (use public CAs in addition to
+	// trust_config) for backwards compatibility, but trusting public root
+	// CAs is *not recommended* unless the traffic in question is outbound
+	// to public web servers. When possible, prefer setting this to "false"
+	// and explicitly specifying trusted CAs and certificates in a
+	// TrustConfig. Note that Secure Web Proxy does not yet honor this
+	// field.
+	ExcludePublicCaSet bool `json:"excludePublicCaSet,omitempty"`
+
+	// MinTlsVersion: Optional. Minimum TLS version that the firewall should
+	// use when negotiating connections with both clients and servers. If
+	// this is not set, then the default value is to allow the broadest set
+	// of clients and servers (TLS 1.0 or higher). Setting this to more
+	// restrictive values may improve security, but may also prevent the
+	// firewall from connecting to some clients or servers. Note that Secure
+	// Web Proxy does not yet honor this field.
+	//
+	// Possible values:
+	//   "TLS_VERSION_UNSPECIFIED" - Indicates no TLS version was specified.
+	//   "TLS_1_0" - TLS 1.0
+	//   "TLS_1_1" - TLS 1.1
+	//   "TLS_1_2" - TLS 1.2
+	//   "TLS_1_3" - TLS 1.3
+	MinTlsVersion string `json:"minTlsVersion,omitempty"`
 
 	// Name: Required. Name of the resource. Name is of the form
 	// projects/{project}/locations/{location}/tlsInspectionPolicies/{tls_ins
 	// pection_policy} tls_inspection_policy should match the pattern:(^a-z
 	// ([a-z0-9-]{0,61}[a-z0-9])?$).
 	Name string `json:"name,omitempty"`
+
+	// TlsFeatureProfile: Optional. The selected Profile. If this is not
+	// set, then the default value is to allow the broadest set of clients
+	// and servers ("PROFILE_COMPATIBLE"). Setting this to more restrictive
+	// values may improve security, but may also prevent the TLS inspection
+	// proxy from connecting to some clients or servers. Note that Secure
+	// Web Proxy does not yet honor this field.
+	//
+	// Possible values:
+	//   "PROFILE_UNSPECIFIED" - Indicates no profile was specified.
+	//   "PROFILE_COMPATIBLE" - Compatible profile. Allows the broadest set
+	// of clients, even those which support only out-of-date SSL features to
+	// negotiate with the TLS inspection proxy.
+	//   "PROFILE_MODERN" - Modern profile. Supports a wide set of SSL
+	// features, allowing modern clients to negotiate SSL with the TLS
+	// inspection proxy.
+	//   "PROFILE_RESTRICTED" - Restricted profile. Supports a reduced set
+	// of SSL features, intended to meet stricter compliance requirements.
+	//   "PROFILE_CUSTOM" - Custom profile. Allow only the set of allowed
+	// SSL features specified in the custom_features field of SslPolicy.
+	TlsFeatureProfile string `json:"tlsFeatureProfile,omitempty"`
+
+	// TrustConfig: Optional. A TrustConfig resource used when making a
+	// connection to the TLS server. This is a relative resource path
+	// following the form
+	// "projects/{project}/locations/{location}/trustConfigs/{trust_config}".
+	//  This is necessary to intercept TLS connections to servers with
+	// certificates signed by a private CA or self-signed certificates. Note
+	// that Secure Web Proxy does not yet honor this field.
+	TrustConfig string `json:"trustConfig,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`

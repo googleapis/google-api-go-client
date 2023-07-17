@@ -3838,6 +3838,7 @@ type OperationMetadata struct {
 	//   "DELETE" - The resource is being deleted.
 	//   "UPDATE" - The resource is being updated.
 	//   "UPGRADE" - The resource is being upgraded.
+	//   "PLATFORM_UPGRADE" - The platform is being upgraded.
 	Type string `json:"type,omitempty"`
 
 	// Verb: Output only. Name of the verb executed by the operation.
@@ -5444,10 +5445,6 @@ type VmwareControlPlaneVsphereConfig struct {
 	// Datastore: The Vsphere datastore used by the control plane Node.
 	Datastore string `json:"datastore,omitempty"`
 
-	// StoragePolicyName: The Vsphere storage policy used by the control
-	// plane Node.
-	StoragePolicyName string `json:"storagePolicyName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Datastore") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6194,10 +6191,6 @@ type VmwareVCenterConfig struct {
 	// cluster.
 	ResourcePool string `json:"resourcePool,omitempty"`
 
-	// StoragePolicyName: The name of the vCenter storage policy for the
-	// user cluster.
-	StoragePolicyName string `json:"storagePolicyName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6302,10 +6295,6 @@ type VmwareVsphereConfig struct {
 	// Datastore: The name of the vCenter datastore. Inherited from the user
 	// cluster.
 	Datastore string `json:"datastore,omitempty"`
-
-	// StoragePolicyName: The name of the vCenter storage policy. Inherited
-	// from the user cluster.
-	StoragePolicyName string `json:"storagePolicyName,omitempty"`
 
 	// Tags: Tags to apply to VMs.
 	Tags []*VmwareVsphereTag `json:"tags,omitempty"`

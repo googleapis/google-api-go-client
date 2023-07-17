@@ -2450,6 +2450,12 @@ type VlanAttachment struct {
 	// Id: Immutable. The identifier of the attachment within vrf.
 	Id string `json:"id,omitempty"`
 
+	// InterconnectAttachment: Optional. The name of the vlan attachment
+	// within vrf. This is of the form
+	// projects/{project_number}/regions/{region}/interconnectAttachments/{in
+	// terconnect_attachment}
+	InterconnectAttachment string `json:"interconnectAttachment,omitempty"`
+
 	// PairingKey: Input only. Pairing key.
 	PairingKey string `json:"pairingKey,omitempty"`
 

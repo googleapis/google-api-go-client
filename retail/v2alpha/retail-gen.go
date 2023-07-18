@@ -2875,21 +2875,6 @@ type GoogleCloudRetailV2alphaEnrollSolutionMetadata struct {
 // GoogleCloudRetailV2alphaEnrollSolutionRequest: Request for
 // EnrollSolution method.
 type GoogleCloudRetailV2alphaEnrollSolutionRequest struct {
-	// SearchSolutionUseCase: Solution use case to enroll. Currently
-	// settable for Browse to enroll. It should be only set when [solution]
-	// is set as SolutionType.SOLUTION_TYPE_SEARCH or an INVALID_ARGUMENT
-	// error is thrown.
-	//
-	// Possible values:
-	//   "SEARCH_SOLUTION_USE_CASE_UNSPECIFIED" - The value when it's
-	// unspecified. In this case, server behavior defaults to
-	// SEARCH_SOLUTION_USE_CASE_SEARCH.
-	//   "SEARCH_SOLUTION_USE_CASE_SEARCH" - Search use case. Expects the
-	// traffic has a non-empty query.
-	//   "SEARCH_SOLUTION_USE_CASE_BROWSE" - Browse use case. Expects the
-	// traffic has an empty query.
-	SearchSolutionUseCase string `json:"searchSolutionUseCase,omitempty"`
-
 	// Solution: Required. Solution to enroll.
 	//
 	// Possible values:
@@ -2898,22 +2883,20 @@ type GoogleCloudRetailV2alphaEnrollSolutionRequest struct {
 	//   "SOLUTION_TYPE_SEARCH" - Used for Retail Search.
 	Solution string `json:"solution,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "SearchSolutionUseCase") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Solution") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SearchSolutionUseCase") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Solution") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5265,10 +5248,10 @@ type GoogleCloudRetailV2alphaProduct struct {
 	AvailableTime string `json:"availableTime,omitempty"`
 
 	// Brands: The brands of the product. A maximum of 30 brands are allowed
-	// unless overridden via pantheon UI. Each brand must be a UTF-8 encoded
-	// string with a length limit of 1,000 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned. Corresponding properties: Google
-	// Merchant Center property brand
+	// unless overridden through the Google Cloud console. Each brand must
+	// be a UTF-8 encoded string with a length limit of 1,000 characters.
+	// Otherwise, an INVALID_ARGUMENT error is returned. Corresponding
+	// properties: Google Merchant Center property brand
 	// (https://support.google.com/merchants/answer/6324351). Schema.org
 	// property Product.brand (https://schema.org/brand).
 	Brands []string `json:"brands,omitempty"`
@@ -9985,10 +9968,10 @@ type ProjectsEnrollSolutionCall struct {
 	header_                                       http.Header
 }
 
-// EnrollSolution: Enrolls retail API solution for the project.
-// Recommendation solution is enrolled by default when your project
-// enables Retail API. You don't need to call this API for the
-// recommendation solution.
+// EnrollSolution: The method enrolls a solution of type Retail Search
+// into a project. The Recommendations AI solution type is enrolled by
+// default when your project enables Retail API, so you don't need to
+// call the enrollSolution method for recommendations.
 //
 //   - project: Full resource name of parent. Format:
 //     `projects/{project_number_or_id}`.
@@ -10090,7 +10073,7 @@ func (c *ProjectsEnrollSolutionCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	}
 	return ret, nil
 	// {
-	//   "description": "Enrolls retail API solution for the project. Recommendation solution is enrolled by default when your project enables Retail API. You don't need to call this API for the recommendation solution.",
+	//   "description": "The method enrolls a solution of type Retail Search into a project. The Recommendations AI solution type is enrolled by default when your project enables Retail API, so you don't need to call the enrollSolution method for recommendations.",
 	//   "flatPath": "v2alpha/projects/{projectsId}:enrollSolution",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.enrollSolution",
@@ -10131,8 +10114,8 @@ type ProjectsGetRetailProjectCall struct {
 	header_      http.Header
 }
 
-// GetRetailProject: Gets the project. Throws NOT_FOUND if the project
-// wasn't initialized for Retail API Service.
+// GetRetailProject: Gets the project. Throws `NOT_FOUND` if the project
+// wasn't initialized for the Retail API service.
 //
 //   - name: Full resource name of the project. Format:
 //     `projects/{project_number_or_id}/retailProject`.
@@ -10241,7 +10224,7 @@ func (c *ProjectsGetRetailProjectCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the project. Throws NOT_FOUND if the project wasn't initialized for Retail API Service.",
+	//   "description": "Gets the project. Throws `NOT_FOUND` if the project wasn't initialized for the Retail API service.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/retailProject",
 	//   "httpMethod": "GET",
 	//   "id": "retail.projects.getRetailProject",

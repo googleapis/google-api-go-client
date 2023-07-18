@@ -1457,10 +1457,14 @@ type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
 	// This value is unused.
 	//   "NOT_SELECTED_YET" - No data export scope selected yet. Export
 	// scope can never be changed back to this value.
-	//   "CROSS_CHANNEL" - The Ads Web Conversion Data export scope is Cross
-	// Channel.
-	//   "ADS_PREFERRED" - The Ads Web Conversion Data export scope is Ads
-	// Preferred.
+	//   "CROSS_CHANNEL" - Paid and organic channels are eligible to receive
+	// conversion credit, but only credit assigned to Google Ads channels
+	// will appear in your Ads accounts. To learn more, see [Paid and
+	// Organic
+	// channels](https://support.google.com/analytics/answer/10632359).
+	//   "ADS_PREFERRED" - Only Google Ads paid channels are eligible to
+	// receive conversion credit. To learn more, see [Google Paid
+	// channels](https://support.google.com/analytics/answer/10632359).
 	AdsWebConversionDataExportScope string `json:"adsWebConversionDataExportScope,omitempty"`
 
 	// Name: Output only. Resource name of this attribution settings

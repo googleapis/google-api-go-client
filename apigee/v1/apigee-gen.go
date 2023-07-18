@@ -1799,6 +1799,14 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// operation type.
 	GraphqlOperationGroup *GoogleCloudApigeeV1GraphQLOperationGroup `json:"graphqlOperationGroup,omitempty"`
 
+	// GrpcOperationGroup: Optional. Configuration used to group Apigee
+	// proxies with gRPC services and method names. This grouping allows us
+	// to set quota for a particular proxy with the gRPC service name and
+	// method. If a method name is not set, this implies quota and
+	// authorization are applied to all gRPC methods implemented by that
+	// proxy for that particular gRPC service.
+	GrpcOperationGroup *GoogleCloudApigeeV1GrpcOperationGroup `json:"grpcOperationGroup,omitempty"`
+
 	// LastModifiedAt: Response only. Modified time of this environment as
 	// milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
@@ -4921,6 +4929,8 @@ type GoogleCloudApigeeV1Environment struct {
 	// or "https", and port must be supplied.
 	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
 
+	HasAttachedFlowHooks bool `json:"hasAttachedFlowHooks,omitempty"`
+
 	// LastModifiedAt: Output only. Last modification time of this
 	// environment as milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
@@ -5751,6 +5761,89 @@ type GoogleCloudApigeeV1GraphQLOperationGroup struct {
 
 func (s *GoogleCloudApigeeV1GraphQLOperationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1GraphQLOperationGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1GrpcOperationConfig: Binds the resources in a
+// proxy or remote service with the gRPC operation and its associated
+// quota enforcement.
+type GoogleCloudApigeeV1GrpcOperationConfig struct {
+	// ApiSource: Required. Name of the API proxy with which the gRPC
+	// operation and quota are associated.
+	ApiSource string `json:"apiSource,omitempty"`
+
+	// Attributes: Custom attributes associated with the operation.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// Methods: List of unqualified gRPC method names for the proxy to which
+	// quota will be applied. If this field is empty, the Quota will apply
+	// to all operations on the gRPC service defined on the proxy. Example:
+	// Given a proxy that is configured to serve com.petstore.PetService,
+	// the methods com.petstore.PetService.ListPets and
+	// com.petstore.PetService.GetPet would be specified here as simply
+	// ["ListPets", "GetPet"].
+	Methods []string `json:"methods,omitempty"`
+
+	// Quota: Quota parameters to be enforced for the methods and API source
+	// combination. If none are specified, quota enforcement will not be
+	// done.
+	Quota *GoogleCloudApigeeV1Quota `json:"quota,omitempty"`
+
+	// Service: Required. gRPC Service name associated to be associated with
+	// the API proxy, on which quota rules can be applied upon.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1GrpcOperationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1GrpcOperationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1GrpcOperationGroup: List of gRPC operation
+// configuration details associated with Apigee API proxies.
+type GoogleCloudApigeeV1GrpcOperationGroup struct {
+	// OperationConfigs: Required. List of operation configurations for
+	// either Apigee API proxies that are associated with this API product.
+	OperationConfigs []*GoogleCloudApigeeV1GrpcOperationConfig `json:"operationConfigs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OperationConfigs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OperationConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1GrpcOperationGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1GrpcOperationGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11326,9 +11419,13 @@ type GoogleCloudApigeeV1TargetServer struct {
 	//   "PROTOCOL_UNSPECIFIED" - UNSPECIFIED defaults to HTTP for backwards
 	// compatibility.
 	//   "HTTP" - The TargetServer uses HTTP.
+	//   "HTTP2" - The TargetSever uses HTTP2.
+	//   "GRPC_TARGET" - The TargetServer uses GRPC.
 	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy.
 	// Prefer to use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate
 	// once EXTERNAL _CALLOUT generally available.
+	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the
+	// ExternalCallout Policy
 	Protocol string `json:"protocol,omitempty"`
 
 	// SSLInfo: Optional. Specifies TLS configuration info for this
@@ -11386,9 +11483,13 @@ type GoogleCloudApigeeV1TargetServerConfig struct {
 	//   "PROTOCOL_UNSPECIFIED" - UNSPECIFIED defaults to HTTP for backwards
 	// compatibility.
 	//   "HTTP" - The TargetServer uses HTTP.
+	//   "HTTP2" - The TargetSever uses HTTP2.
+	//   "GRPC_TARGET" - The TargetServer uses GRPC.
 	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy.
 	// Prefer to use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate
 	// once EXTERNAL _CALLOUT generally available.
+	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the
+	// ExternalCallout Policy
 	Protocol string `json:"protocol,omitempty"`
 
 	// TlsInfo: TLS settings for the target server.

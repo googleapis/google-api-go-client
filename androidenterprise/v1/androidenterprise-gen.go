@@ -890,6 +890,11 @@ type AppVersion struct {
 	// IsProduction: True if this version is a production APK.
 	IsProduction bool `json:"isProduction,omitempty"`
 
+	// TargetSdkVersion: The SDK version this app targets, as specified in
+	// the manifest of the APK. See
+	// http://developer.android.com/guide/topics/manifest/uses-sdk-element.html
+	TargetSdkVersion int64 `json:"targetSdkVersion,omitempty"`
+
 	// Track: Deprecated, use trackId instead.
 	//
 	// Possible values:

@@ -1252,8 +1252,8 @@ type GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo struct {
 	//
 	// Possible values:
 	//   "INTERVAL_UNSPECIFIED" - Default unspecified value.
-	//   "MONTHLY" - Usage is aggregated every month.
-	//   "DAILY" - Usage is aggregated every day.
+	//   "INTERVAL_MONTHLY" - Usage is aggregated every month.
+	//   "INTERVAL_DAILY" - Usage is aggregated every day.
 	Interval string `json:"interval,omitempty"`
 
 	// Level: Level at which usage is aggregated to compute cost. Example:
@@ -1262,8 +1262,8 @@ type GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo struct {
 	//
 	// Possible values:
 	//   "LEVEL_UNSPECIFIED" - Default unspecified value.
-	//   "ACCOUNT" - Usage is aggregated at an account level.
-	//   "PROJECT" - Usage is aggregated at a project level.
+	//   "LEVEL_ACCOUNT" - Usage is aggregated at an account level.
+	//   "LEVEL_PROJECT" - Usage is aggregated at a project level.
 	Level string `json:"level,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Interval") to
@@ -1950,10 +1950,10 @@ type GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. Unspecified type.
-	//   "GLOBAL" - Global geographic taxonomy with no regions.
-	//   "REGIONAL" - Regional geographic taxonomy with 1 region.
-	//   "MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2 or
-	// more regions.
+	//   "TYPE_GLOBAL" - Global geographic taxonomy with no regions.
+	//   "TYPE_REGIONAL" - Regional geographic taxonomy with 1 region.
+	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2
+	// or more regions.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GlobalMetadata") to
@@ -2256,10 +2256,10 @@ type GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomy struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. Unspecified type.
-	//   "GLOBAL" - Global geographic taxonomy with no regions.
-	//   "REGIONAL" - Regional geographic taxonomy with 1 region.
-	//   "MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2 or
-	// more regions.
+	//   "TYPE_GLOBAL" - Global geographic taxonomy with no regions.
+	//   "TYPE_REGIONAL" - Regional geographic taxonomy with 1 region.
+	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2
+	// or more regions.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GlobalMetadata") to
@@ -2490,8 +2490,8 @@ type GoogleCloudBillingPricesV1betaAggregationInfo struct {
 	//
 	// Possible values:
 	//   "INTERVAL_UNSPECIFIED" - Default unspecified value.
-	//   "MONTHLY" - Usage is aggregated every month.
-	//   "DAILY" - Usage is aggregated every day.
+	//   "INTERVAL_MONTHLY" - Usage is aggregated every month.
+	//   "INTERVAL_DAILY" - Usage is aggregated every day.
 	Interval string `json:"interval,omitempty"`
 
 	// Level: Level at which usage is aggregated to compute cost. Example:
@@ -2500,8 +2500,8 @@ type GoogleCloudBillingPricesV1betaAggregationInfo struct {
 	//
 	// Possible values:
 	//   "LEVEL_UNSPECIFIED" - Default unspecified value.
-	//   "ACCOUNT" - Usage is aggregated at an account level.
-	//   "PROJECT" - Usage is aggregated at a project level.
+	//   "LEVEL_ACCOUNT" - Usage is aggregated at an account level.
+	//   "LEVEL_PROJECT" - Usage is aggregated at a project level.
 	Level string `json:"level,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Interval") to
@@ -2777,10 +2777,10 @@ type GoogleCloudBillingSkugroupskusV1betaGeoTaxonomy struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. Unspecified type.
-	//   "GLOBAL" - Global geographic taxonomy with no regions.
-	//   "REGIONAL" - Regional geographic taxonomy with 1 region.
-	//   "MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2 or
-	// more regions.
+	//   "TYPE_GLOBAL" - Global geographic taxonomy with no regions.
+	//   "TYPE_REGIONAL" - Regional geographic taxonomy with 1 region.
+	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2
+	// or more regions.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GlobalMetadata") to

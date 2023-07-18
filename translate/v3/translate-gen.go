@@ -359,6 +359,10 @@ type BatchTranslateDocumentRequest struct {
 	// https://cloud.google.com/translate/attribution#attribution_and_logos
 	CustomizedAttribution string `json:"customizedAttribution,omitempty"`
 
+	// EnableRotationCorrection: Optional. If true, enable auto rotation
+	// correction in DVS.
+	EnableRotationCorrection bool `json:"enableRotationCorrection,omitempty"`
+
 	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
 	// server to remove the shadow text on background image for native pdf
 	// translation. Shadow removal feature can only be enabled when

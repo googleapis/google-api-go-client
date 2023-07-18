@@ -547,6 +547,12 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
 	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
 	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit
+	// keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit
+	// keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -758,6 +764,12 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
 	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
 	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit
+	// keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit
+	// keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256

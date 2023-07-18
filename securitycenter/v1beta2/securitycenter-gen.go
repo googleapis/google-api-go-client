@@ -839,6 +839,9 @@ func (s *ContactDetails) MarshalJSON() ([]byte, error) {
 
 // Container: Container associated with the finding.
 type Container struct {
+	// CreateTime: The time that the container was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// ImageId: Optional container image ID, if provided by the container
 	// runtime. Uniquely identifies the container image launched using a
 	// container image digest.
@@ -855,7 +858,7 @@ type Container struct {
 	// mutable tags.
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ImageId") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -863,7 +866,7 @@ type Container struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ImageId") to include in
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

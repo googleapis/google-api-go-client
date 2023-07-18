@@ -4584,6 +4584,18 @@ type RegionalPriceMigrationConfig struct {
 	// subscription ended at the next renewal.
 	OldestAllowedPriceVersionTime string `json:"oldestAllowedPriceVersionTime,omitempty"`
 
+	// PriceIncreaseType: Optional. The behavior the caller wants users to
+	// see if there is a price increase during migration. If left unset, the
+	// behavior defaults to PRICE_INCREASE_TYPE_OPT_IN.
+	//
+	// Possible values:
+	//   "PRICE_INCREASE_TYPE_UNSPECIFIED" - Unspecified state.
+	//   "PRICE_INCREASE_TYPE_OPT_IN" - Price increase will be presented to
+	// users on an opt-in basis.
+	//   "PRICE_INCREASE_TYPE_OPT_OUT" - Price increase will be presented to
+	// users on an opt-out basis.
+	PriceIncreaseType string `json:"priceIncreaseType,omitempty"`
+
 	// RegionCode: Required. Region code this configuration applies to, as
 	// defined by ISO 3166-2, e.g. "US".
 	RegionCode string `json:"regionCode,omitempty"`

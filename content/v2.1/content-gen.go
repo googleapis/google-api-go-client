@@ -3694,6 +3694,138 @@ func (s *CollectionStatusItemLevelIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CompetitiveVisibility: Fields related to [competitive visibility
+// reports] (https://support.google.com/merchants/answer/11366442).
+type CompetitiveVisibility struct {
+	// AdsOrganicRatio: [Ads / organic ratio]
+	// (https://support.google.com/merchants/answer/11366442#zippy=%2Cadsfree-ratio)
+	// shows how often a merchant receives impressions from Shopping ads
+	// compared to organic traffic. The number is rounded and bucketed.
+	// Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be
+	// filtered on in the 'WHERE' clause.
+	AdsOrganicRatio float64 `json:"adsOrganicRatio,omitempty"`
+
+	// CategoryBenchmarkVisibilityTrend: Change in visibility based on
+	// impressions with respect to the start of the selected time range (or
+	// first day with non-zero impressions) for a combined set of merchants
+	// with highest visibility approximating the market. Available only in
+	// `CompetitiveVisibilityBenchmarkView`. Cannot be filtered on in the
+	// 'WHERE' clause.
+	CategoryBenchmarkVisibilityTrend float64 `json:"categoryBenchmarkVisibilityTrend,omitempty"`
+
+	// CategoryId: Google product category ID to calculate the report for,
+	// represented in Google's product taxonomy
+	// (https://support.google.com/merchants/answer/6324436). Required in
+	// the `SELECT` clause. A `WHERE` condition on
+	// `competitive_visibility.category_id` is required in the query.
+	CategoryId int64 `json:"categoryId,omitempty,string"`
+
+	// CountryCode: The country where impression appeared. Required in the
+	// `SELECT` clause. A `WHERE` condition on
+	// `competitive_visibility.country_code` is required in the query.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// Date: Date of this row. Available only in
+	// `CompetitiveVisibilityBenchmarkView`. Required in the `SELECT` clause
+	// for `CompetitiveVisibilityMarketBenchmarkView`.
+	Date *Date `json:"date,omitempty"`
+
+	// Domain: Domain of your competitor or your domain, if 'is_your_domain'
+	// is true. Available only in `CompetitiveVisibilityTopMerchantView`.
+	// Required in the `SELECT` clause for
+	// `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the
+	// 'WHERE' clause.
+	Domain string `json:"domain,omitempty"`
+
+	// HigherPositionRate: Higher position rate shows how often a
+	// competitor’s offer got placed in a higher position on the page than
+	// your offer. Available only in `CompetitiveVisibilityTopMerchantView`.
+	// Cannot be filtered on in the 'WHERE' clause.
+	HigherPositionRate float64 `json:"higherPositionRate,omitempty"`
+
+	// IsYourDomain: True if this row contains data for your domain.
+	// Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be
+	// filtered on in the 'WHERE' clause.
+	IsYourDomain bool `json:"isYourDomain,omitempty"`
+
+	// PageOverlapRate: Page overlap rate describes how frequently competing
+	// retailers’ offers are shown together with your offers on the same
+	// page. Available only in `CompetitiveVisibilityTopMerchantView`.
+	// Cannot be filtered on in the 'WHERE' clause.
+	PageOverlapRate float64 `json:"pageOverlapRate,omitempty"`
+
+	// Rank: Position of the domain in the top merchants ranking for the
+	// selected keys (`date`, `category_id`, `country_code`, `listing_type`)
+	// based on impressions. 1 is the highest. Available only in
+	// `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the
+	// 'WHERE' clause.
+	Rank uint64 `json:"rank,omitempty,string"`
+
+	// TrafficSource: Type of impression listing. Required in the `SELECT`
+	// clause for `CompetitiveVisibilityTopMerchantView` and
+	// `CompetitiveVisibilityMarketBenchmarkView`. Cannot be filtered on in
+	// the 'WHERE' clause.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Traffic source is unknown.
+	//   "ORGANIC" - Organic traffic.
+	//   "ADS" - Traffic from Ads.
+	//   "ALL" - Organic and Ads traffic.
+	TrafficSource string `json:"trafficSource,omitempty"`
+
+	// YourDomainVisibilityTrend: Change in visibility based on impressions
+	// for your domain with respect to the start of the selected time range
+	// (or first day with non-zero impressions). Available only in
+	// `CompetitiveVisibilityBenchmarkView`. Cannot be filtered on in the
+	// 'WHERE' clause.
+	YourDomainVisibilityTrend float64 `json:"yourDomainVisibilityTrend,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdsOrganicRatio") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdsOrganicRatio") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompetitiveVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod CompetitiveVisibility
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CompetitiveVisibility) UnmarshalJSON(data []byte) error {
+	type NoMethod CompetitiveVisibility
+	var s1 struct {
+		AdsOrganicRatio                  gensupport.JSONFloat64 `json:"adsOrganicRatio"`
+		CategoryBenchmarkVisibilityTrend gensupport.JSONFloat64 `json:"categoryBenchmarkVisibilityTrend"`
+		HigherPositionRate               gensupport.JSONFloat64 `json:"higherPositionRate"`
+		PageOverlapRate                  gensupport.JSONFloat64 `json:"pageOverlapRate"`
+		YourDomainVisibilityTrend        gensupport.JSONFloat64 `json:"yourDomainVisibilityTrend"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AdsOrganicRatio = float64(s1.AdsOrganicRatio)
+	s.CategoryBenchmarkVisibilityTrend = float64(s1.CategoryBenchmarkVisibilityTrend)
+	s.HigherPositionRate = float64(s1.HigherPositionRate)
+	s.PageOverlapRate = float64(s1.PageOverlapRate)
+	s.YourDomainVisibilityTrend = float64(s1.YourDomainVisibilityTrend)
+	return nil
+}
+
 // ConversionSource: Represents a conversion source owned by a Merchant
 // account. A merchant account can have up to 200 conversion sources.
 type ConversionSource struct {
@@ -3810,6 +3942,11 @@ func (s *Css) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CustomAttribute: A message that represents custom attributes. Exactly
+// one of `value` or `groupValues` must be provided. Maximum allowed
+// number of characters for each custom attribute is 10240 (represents
+// sum of characters for name and value). Maximum 2500 custom attributes
+// can be set per merchant, with total size of 102.4kB.
 type CustomAttribute struct {
 	// GroupValues: Subattributes within this attribute group. Exactly one
 	// of value or groupValues must be provided.
@@ -13275,6 +13412,10 @@ type Product struct {
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *ProductUnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
 
+	// VirtualModelLink: URL of the 3D model of the item to provide more
+	// visuals.
+	VirtualModelLink string `json:"virtualModelLink,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -16100,6 +16241,12 @@ type ReportRow struct {
 	// Brand: Brand fields requested by the merchant in the query. Field
 	// values are only set if the merchant queries `BestSellersBrandView`.
 	Brand *Brand `json:"brand,omitempty"`
+
+	// CompetitiveVisibility: Competitive visibility fields requested by the
+	// merchant in the query. Field values are only set if the merchant
+	// queries `CompetitiveVisibilityTopMerchantView` or
+	// `CompetitiveVisibilityBenchmarkView`.
+	CompetitiveVisibility *CompetitiveVisibility `json:"competitiveVisibility,omitempty"`
 
 	// Metrics: Metrics requested by the merchant in the query. Metric
 	// values are only set for metrics requested explicitly in the query.

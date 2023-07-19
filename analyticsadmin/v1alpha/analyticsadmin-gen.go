@@ -23011,8 +23011,8 @@ func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name stri
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated. Omitted fields will not be updated.
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Omitted fields will not be updated.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -23127,7 +23127,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to be updated. Omitted fields will not be updated.",
+	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

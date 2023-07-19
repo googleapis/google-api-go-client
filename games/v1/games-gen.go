@@ -6794,6 +6794,11 @@ func (c *PlayersListCall) Do(opts ...googleapi.CallOption) (*PlayerListResponse,
 	//         "VISIBLE",
 	//         "FRIENDS_ALL"
 	//       ],
+	//       "enumDeprecated": [
+	//         true,
+	//         true,
+	//         false
+	//       ],
 	//       "enumDescriptions": [
 	//         "Retrieve a list of players that are also playing this game in reverse chronological order.",
 	//         "Retrieve a list of players in the user's social graph that are visible to this game.",
@@ -7196,6 +7201,13 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//         "SOCIAL",
 	//         "FRIENDS"
 	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         false,
+	//         true,
+	//         false
+	//       ],
 	//       "enumDescriptions": [
 	//         "Default value. Should be unused.",
 	//         "Retrieve all supported ranks. In HTTP, this parameter value can also be specified as `ALL`.",
@@ -7452,6 +7464,12 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//         "PUBLIC",
 	//         "SOCIAL",
 	//         "FRIENDS"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value. This value is unused.",
@@ -7720,6 +7738,12 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//         "PUBLIC",
 	//         "SOCIAL",
 	//         "FRIENDS"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value. This value is unused.",

@@ -135,6 +135,47 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/xapi.zoo"
                   ]
+                },
+                "list": {
+                  "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
+                  "flatPath": "v1alpha/accounts/{accountsId}/apps/{appsId}/operations",
+                  "httpMethod": "GET",
+                  "id": "checks.accounts.apps.operations.list",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "The standard list filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "The name of the operation's parent resource.",
+                      "location": "path",
+                      "pattern": "^accounts/[^/]+/apps/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "The standard list page size.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The standard list page token.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha/{+name}/operations",
+                  "response": {
+                    "$ref": "ListOperationsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/xapi.zoo"
+                  ]
                 }
               }
             }
@@ -199,7 +240,7 @@
       }
     }
   },
-  "revision": "20230716",
+  "revision": "20230717",
   "rootUrl": "https://checks.googleapis.com/",
   "schemas": {
     "AnalyzePrivacyPolicyRequest": {
@@ -296,6 +337,24 @@
         "textContent": {
           "description": "The bytes of actual text content in the section. NOTE: - This will correspond to the whole sentence that includes the date. - This field might contain HTML and it is not sanitized.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListOperationsResponse": {
+      "description": "The response message for Operations.ListOperations.",
+      "id": "ListOperationsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
+        },
+        "operations": {
+          "description": "A list of operations that matches the specified filter in the request.",
+          "items": {
+            "$ref": "Operation"
+          },
+          "type": "array"
         }
       },
       "type": "object"

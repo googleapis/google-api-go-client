@@ -639,6 +639,32 @@
                 "https://www.googleapis.com/auth/service.management"
               ]
             },
+            "list": {
+              "description": "* Service producers can use this method to retrieve a list of available DNS zones in the shared producer host project and the matching peering zones in the consumer project. *",
+              "flatPath": "v1/services/{servicesId}/dnsZones:list",
+              "httpMethod": "GET",
+              "id": "servicenetworking.services.dnsZones.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. Parent resource identifying the connection which owns this collection of DNS zones in the format services/{service}/projects/{project}/global/networks/{network} Service: The service that is managing connectivity for the service producer's organization. For Google services that support this functionality, this value is `servicenetworking.googleapis.com`. Projects: the consumer project containing the consumer network. Network: The consumer network accessible from the tenant project.",
+                  "location": "path",
+                  "pattern": "^services/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/dnsZones:list",
+              "response": {
+                "$ref": "ListDnsZonesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/service.management"
+              ]
+            },
             "remove": {
               "description": "Service producers can use this method to remove private DNS zones in the shared producer host project and matching peering zones in the consumer project.",
               "flatPath": "v1/services/{servicesId}/dnsZones:remove",
@@ -865,7 +891,7 @@
       }
     }
   },
-  "revision": "20230703",
+  "revision": "20230717",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -1766,6 +1792,21 @@
       },
       "type": "object"
     },
+    "DnsZonePair": {
+      "description": "* Represents a pair of private and peering DNS zone resources. *",
+      "id": "DnsZonePair",
+      "properties": {
+        "consumerPeeringZone": {
+          "$ref": "DnsZone",
+          "description": "The DNS peering zone in the consumer project."
+        },
+        "producerPrivateZone": {
+          "$ref": "DnsZone",
+          "description": "The private DNS zone in the shared producer host project."
+        }
+      },
+      "type": "object"
+    },
     "Documentation": {
       "description": "`Documentation` provides the information for describing a service. Example: documentation: summary: \u003e The Google Calendar API gives access to most calendar features. pages: - name: Overview content: (== include google/foo/overview.md ==) - name: Tutorial content: (== include google/foo/tutorial.md ==) subpages: - name: Java content: (== include google/foo/tutorial_java.md ==) rules: - selector: google.calendar.Calendar.Get description: \u003e ... - selector: google.calendar.Calendar.Put description: \u003e ... Documentation is provided in markdown syntax. In addition to standard markdown features, definition lists, tables and fenced code blocks are supported. Section headers can be provided and are interpreted relative to the section nesting of the context where a documentation fragment is embedded. Documentation from the IDL is merged with documentation defined via the config at normalization time, where documentation provided by config rules overrides IDL provided. A number of constructs specific to the API platform are supported in documentation text. In order to reference a proto element, the following notation can be used: [fully.qualified.proto.name][] To override the display text used for the link, this can be used: [display text][fully.qualified.proto.name] Text can be excluded from doc using the following notation: (-- internal comment --) A few directives are available in documentation. Note that directives must appear on a single line to be properly identified. The `include` directive includes a markdown file from an external source: (== include path/to/file ==) The `resource_for` directive marks a message to be the resource of a collection in REST view. If it is not specified, tools attempt to infer the resource from the operations in a collection: (== resource_for v1.shelves.books ==) The directive `suppress_warning` does not directly affect documentation and is documented together with service config validation.",
       "id": "Documentation",
@@ -2329,6 +2370,20 @@
           "description": "The list of Connections.",
           "items": {
             "$ref": "Connection"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListDnsZonesResponse": {
+      "description": "Represents all DNS zones in the shared producer host project and the matching peering zones in the consumer project.",
+      "id": "ListDnsZonesResponse",
+      "properties": {
+        "dnsZonePairs": {
+          "description": "All pairs of private DNS zones in the shared producer host project and the matching peering zones in the consumer project..",
+          "items": {
+            "$ref": "DnsZonePair"
           },
           "type": "array"
         }

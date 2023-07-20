@@ -433,6 +433,10 @@ type BuildConfig struct {
 	// source.
 	SourceProvenance *SourceProvenance `json:"sourceProvenance,omitempty"`
 
+	// SourceToken: An identifier for Firebase function sources. Disclaimer:
+	// This field is only supported for Firebase function deployments.
+	SourceToken string `json:"sourceToken,omitempty"`
+
 	// WorkerPool: Name of the Cloud Build Custom Worker Pool that should be
 	// used to build the function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}`
@@ -917,6 +921,10 @@ type GoogleCloudFunctionsV2OperationMetadata struct {
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
 
+	// SourceToken: An identifier for Firebase function sources. Disclaimer:
+	// This field is only supported for Firebase function deployments.
+	SourceToken string `json:"sourceToken,omitempty"`
+
 	// Stages: Mechanism for reporting in-progress stages
 	Stages []*GoogleCloudFunctionsV2Stage `json:"stages,omitempty"`
 
@@ -1105,6 +1113,10 @@ type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
+
+	// SourceToken: An identifier for Firebase function sources. Disclaimer:
+	// This field is only supported for Firebase function deployments.
+	SourceToken string `json:"sourceToken,omitempty"`
 
 	// Stages: Mechanism for reporting in-progress stages
 	Stages []*GoogleCloudFunctionsV2alphaStage `json:"stages,omitempty"`
@@ -1295,6 +1307,10 @@ type GoogleCloudFunctionsV2betaOperationMetadata struct {
 
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
+
+	// SourceToken: An identifier for Firebase function sources. Disclaimer:
+	// This field is only supported for Firebase function deployments.
+	SourceToken string `json:"sourceToken,omitempty"`
 
 	// Stages: Mechanism for reporting in-progress stages
 	Stages []*GoogleCloudFunctionsV2betaStage `json:"stages,omitempty"`

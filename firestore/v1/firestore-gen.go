@@ -386,8 +386,10 @@ type BatchGetDocumentsRequest struct {
 	// returned as the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// Transaction: Reads documents in a transaction.
@@ -1792,6 +1794,11 @@ type GoogleFirestoreAdminV1ExportDocumentsMetadata struct {
 	// ProgressDocuments: The progress, in documents, of this operation.
 	ProgressDocuments *GoogleFirestoreAdminV1Progress `json:"progressDocuments,omitempty"`
 
+	// SnapshotTime: The timestamp that corresponds to the version of the
+	// database that is being exported. If unspecified, there are no
+	// guarantees about the consistency of the documents being exported.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+
 	// StartTime: The time this operation started.
 	StartTime string `json:"startTime,omitempty"`
 
@@ -3095,8 +3102,10 @@ type ListCollectionIdsRequest struct {
 	// ListCollectionIdsResponse.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
@@ -3461,8 +3470,10 @@ type PartitionQueryRequest struct {
 	// fewer than the number of workers or compute instances available.
 	PartitionCount int64 `json:"partitionCount,omitempty,string"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredQuery: A structured query. Query must specify collection
@@ -3643,8 +3654,10 @@ func (s *QueryTarget) MarshalJSON() ([]byte, error) {
 // ReadOnly: Options for a transaction that can only be used to read
 // documents.
 type ReadOnly struct {
-	// ReadTime: Reads documents at the given time. This may not be older
-	// than 60 seconds.
+	// ReadTime: Reads documents at the given time. This must be a
+	// microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReadTime") to
@@ -3737,8 +3750,10 @@ type RunAggregationQueryRequest struct {
 	// the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Executes the query at the given timestamp. Requires: *
-	// Cannot be more than 270 seconds in the past.
+	// ReadTime: Executes the query at the given timestamp. This must be a
+	// microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredAggregationQuery: An aggregation query.
@@ -3827,8 +3842,10 @@ type RunQueryRequest struct {
 	// returned as the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredQuery: A structured query.
@@ -8678,8 +8695,10 @@ func (c *ProjectsDatabasesDocumentsGetCall) MaskFieldPaths(maskFieldPaths ...str
 }
 
 // ReadTime sets the optional parameter "readTime": Reads the version of
-// the document at the given time. This may not be older than 270
-// seconds.
+// the document at the given time. This must be a microsecond precision
+// timestamp within the past one hour, or if Point-in-Time Recovery is
+// enabled, can additionally be a whole minute timestamp within the past
+// 7 days.
 func (c *ProjectsDatabasesDocumentsGetCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsGetCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -8813,7 +8832,7 @@ func (c *ProjectsDatabasesDocumentsGetCall) Do(opts ...googleapi.CallOption) (*D
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads the version of the document at the given time. This may not be older than 270 seconds.",
+	//       "description": "Reads the version of the document at the given time. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -8906,7 +8925,9 @@ func (c *ProjectsDatabasesDocumentsListCall) PageToken(pageToken string) *Projec
 }
 
 // ReadTime sets the optional parameter "readTime": Perform the read at
-// the provided time. This may not be older than 270 seconds.
+// the provided time. This must be a microsecond precision timestamp
+// within the past one hour, or if Point-in-Time Recovery is enabled,
+// can additionally be a whole minute timestamp within the past 7 days.
 func (c *ProjectsDatabasesDocumentsListCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -9075,7 +9096,7 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Perform the read at the provided time. This may not be older than 270 seconds.",
+	//       "description": "Perform the read at the provided time. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -9363,7 +9384,9 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageToken(pageToken string
 }
 
 // ReadTime sets the optional parameter "readTime": Perform the read at
-// the provided time. This may not be older than 270 seconds.
+// the provided time. This must be a microsecond precision timestamp
+// within the past one hour, or if Point-in-Time Recovery is enabled,
+// can additionally be a whole minute timestamp within the past 7 days.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -9532,7 +9555,7 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Perform the read at the provided time. This may not be older than 270 seconds.",
+	//       "description": "Perform the read at the provided time. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"

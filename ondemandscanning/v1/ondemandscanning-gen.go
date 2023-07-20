@@ -3928,7 +3928,8 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 // information that is related to this vulnerability.
 type VexAssessment struct {
 	// Cve: Holds the MITRE standard Common Vulnerabilities and Exposures
-	// (CVE) tracking number for the vulnerability.
+	// (CVE) tracking number for the vulnerability. Deprecated: Use
+	// vulnerability_id instead to denote CVEs.
 	Cve string `json:"cve,omitempty"`
 
 	// Impacts: Contains information about the impact of this vulnerability,
@@ -3965,6 +3966,10 @@ type VexAssessment struct {
 	// are or are not affected by the vulnerability. However, it is still
 	// under investigation.
 	State string `json:"state,omitempty"`
+
+	// VulnerabilityId: The vulnerability identifier for this Assessment.
+	// Will hold one of common identifiers e.g. CVE, GHSA etc.
+	VulnerabilityId string `json:"vulnerabilityId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cve") to
 	// unconditionally include in API requests. By default, fields with

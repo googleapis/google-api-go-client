@@ -4002,8 +4002,8 @@ type GoogleCloudChannelV1RepricingConfig struct {
 	Adjustment *GoogleCloudChannelV1RepricingAdjustment `json:"adjustment,omitempty"`
 
 	// ChannelPartnerGranularity: Applies the repricing configuration at the
-	// channel partner level. This is the only supported value for
-	// ChannelPartnerRepricingConfig.
+	// channel partner level. Only ChannelPartnerRepricingConfig supports
+	// this value.
 	ChannelPartnerGranularity *GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity `json:"channelPartnerGranularity,omitempty"`
 
 	// ConditionalOverrides: The conditional overrides to apply for this
@@ -4018,8 +4018,12 @@ type GoogleCloudChannelV1RepricingConfig struct {
 	EffectiveInvoiceMonth *GoogleTypeDate `json:"effectiveInvoiceMonth,omitempty"`
 
 	// EntitlementGranularity: Applies the repricing configuration at the
-	// entitlement level. This is the only supported value for
-	// CustomerRepricingConfig.
+	// entitlement level. Note: If a ChannelPartnerRepricingConfig using
+	// RepricingConfig.EntitlementGranularity becomes effective, then no
+	// existing or future RepricingConfig.ChannelPartnerGranularity will
+	// apply to the RepricingConfig.EntitlementGranularity.entitlement. This
+	// is the recommended value for both CustomerRepricingConfig and
+	// ChannelPartnerRepricingConfig.
 	EntitlementGranularity *GoogleCloudChannelV1RepricingConfigEntitlementGranularity `json:"entitlementGranularity,omitempty"`
 
 	// RebillingBasis: Required. The RebillingBasis to use for this bill.
@@ -8273,8 +8277,9 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall struct 
 // exports used with other configs. Changes to the config may be
 // immediate, but may take up to 24 hours. * There is a limit of ten
 // configs for any ChannelPartner or
+// RepricingConfig.EntitlementGranularity.entitlement, for any
 // RepricingConfig.effective_invoice_month. * The contained
-// ChannelPartnerRepricingConfig.repricing_config vaule must be
+// ChannelPartnerRepricingConfig.repricing_config value must be
 // different from the value used in the current config for a
 // ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the
 // account making the request and the account being queried are
@@ -8390,7 +8395,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Do
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a ChannelPartnerRepricingConfig. Call this method to set modifications for a specific ChannelPartner's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any ChannelPartner or RepricingConfig.effective_invoice_month. * The contained ChannelPartnerRepricingConfig.repricing_config vaule must be different from the value used in the current config for a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated ChannelPartnerRepricingConfig resource, otherwise returns an error.",
+	//   "description": "Creates a ChannelPartnerRepricingConfig. Call this method to set modifications for a specific ChannelPartner's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any ChannelPartner or RepricingConfig.EntitlementGranularity.entitlement, for any RepricingConfig.effective_invoice_month. * The contained ChannelPartnerRepricingConfig.repricing_config value must be different from the value used in the current config for a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated ChannelPartnerRepricingConfig resource, otherwise returns an error.",
 	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create",
@@ -12294,9 +12299,9 @@ type AccountsCustomersCustomerRepricingConfigsCreateCall struct {
 // be used for regular business cases. * The new config will not modify
 // exports used with other configs. Changes to the config may be
 // immediate, but may take up to 24 hours. * There is a limit of ten
-// configs for any RepricingConfig.EntitlementGranularity.entitlement or
-// RepricingConfig.effective_invoice_month. * The contained
-// CustomerRepricingConfig.repricing_config vaule must be different from
+// configs for any RepricingConfig.EntitlementGranularity.entitlement,
+// for any RepricingConfig.effective_invoice_month. * The contained
+// CustomerRepricingConfig.repricing_config value must be different from
 // the value used in the current config for a
 // RepricingConfig.EntitlementGranularity.entitlement. Possible Error
 // Codes: * PERMISSION_DENIED: If the account making the request and the
@@ -12412,7 +12417,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a CustomerRepricingConfig. Call this method to set modifications for a specific customer's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any RepricingConfig.EntitlementGranularity.entitlement or RepricingConfig.effective_invoice_month. * The contained CustomerRepricingConfig.repricing_config vaule must be different from the value used in the current config for a RepricingConfig.EntitlementGranularity.entitlement. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated CustomerRepricingConfig resource, otherwise returns an error.",
+	//   "description": "Creates a CustomerRepricingConfig. Call this method to set modifications for a specific customer's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any RepricingConfig.EntitlementGranularity.entitlement, for any RepricingConfig.effective_invoice_month. * The contained CustomerRepricingConfig.repricing_config value must be different from the value used in the current config for a RepricingConfig.EntitlementGranularity.entitlement. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated CustomerRepricingConfig resource, otherwise returns an error.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.create",

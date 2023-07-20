@@ -1260,8 +1260,14 @@ type MysqlColumn struct {
 	// OrdinalPosition: The ordinal position of the column in the table.
 	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
 
+	// Precision: Column precision.
+	Precision int64 `json:"precision,omitempty"`
+
 	// PrimaryKey: Whether or not the column represents a primary key.
 	PrimaryKey bool `json:"primaryKey,omitempty"`
+
+	// Scale: Column scale.
+	Scale int64 `json:"scale,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Collation") to
 	// unconditionally include in API requests. By default, fields with

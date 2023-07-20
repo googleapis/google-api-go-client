@@ -196,6 +196,7 @@ func NewProjectsLocationsCollectionsDataStoresService(s *Service) *ProjectsLocat
 	rs.Operations = NewProjectsLocationsCollectionsDataStoresOperationsService(s)
 	rs.Schemas = NewProjectsLocationsCollectionsDataStoresSchemasService(s)
 	rs.ServingConfigs = NewProjectsLocationsCollectionsDataStoresServingConfigsService(s)
+	rs.SiteSearchEngine = NewProjectsLocationsCollectionsDataStoresSiteSearchEngineService(s)
 	rs.UserEvents = NewProjectsLocationsCollectionsDataStoresUserEventsService(s)
 	return rs
 }
@@ -212,6 +213,8 @@ type ProjectsLocationsCollectionsDataStoresService struct {
 	Schemas *ProjectsLocationsCollectionsDataStoresSchemasService
 
 	ServingConfigs *ProjectsLocationsCollectionsDataStoresServingConfigsService
+
+	SiteSearchEngine *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService
 
 	UserEvents *ProjectsLocationsCollectionsDataStoresUserEventsService
 }
@@ -306,6 +309,51 @@ func NewProjectsLocationsCollectionsDataStoresServingConfigsService(s *Service) 
 }
 
 type ProjectsLocationsCollectionsDataStoresServingConfigsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresSiteSearchEngineService(s *Service) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService {
+	rs := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineService{s: s}
+	rs.Operations = NewProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService(s)
+	rs.TargetSites = NewProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineService struct {
+	s *Service
+
+	Operations *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService
+
+	TargetSites *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService
+}
+
+func NewProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService(s *Service) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService {
+	rs := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService(s *Service) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService {
+	rs := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService{s: s}
+	rs.Operations = NewProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService struct {
+	s *Service
+
+	Operations *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService
+}
+
+func NewProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService(s *Service) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService {
+	rs := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService struct {
 	s *Service
 }
 
@@ -6010,6 +6058,716 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) Do(o
 	//   ]
 	// }
 
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.get":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService) Get(name string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.list":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService) List(name string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/operations",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}/operations",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.get":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService) Get(name string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.list":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsService) List(name string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/operations",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}/operations",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "discoveryengine.projects.locations.collections.dataStores.userEvents.collect":

@@ -2341,8 +2341,10 @@ func (s *QueryResultBatch) MarshalJSON() ([]byte, error) {
 
 // ReadOnly: Options specific to read-only transactions.
 type ReadOnly struct {
-	// ReadTime: Reads entities at the given time. This may not be older
-	// than 60 seconds.
+	// ReadTime: Reads entities at the given time. This must be a
+	// microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReadTime") to
@@ -2379,9 +2381,11 @@ type ReadOptions struct {
 	//   "EVENTUAL" - Eventual consistency.
 	ReadConsistency string `json:"readConsistency,omitempty"`
 
-	// ReadTime: Reads entities as they were at the given time. This may not
-	// be older than 270 seconds. This value is only supported for Cloud
-	// Firestore in Datastore mode.
+	// ReadTime: Reads entities as they were at the given time. This value
+	// is only supported for Cloud Firestore in Datastore mode. This must be
+	// a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// Transaction: The identifier of the transaction in which to read. A

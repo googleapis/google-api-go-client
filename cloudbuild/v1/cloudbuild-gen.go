@@ -1384,8 +1384,8 @@ type BuildOptions struct {
 	//   "DEFAULT_LOGS_BUCKET_BEHAVIOR_UNSPECIFIED" - Unspecified.
 	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned
 	// project in the same region as the build. The builder service account
-	// must have access to create and write to GCS buckets in the build
-	// project.
+	// must have access to create and write to Cloud Storage buckets in the
+	// build project.
 	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
 
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note

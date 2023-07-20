@@ -4083,7 +4083,8 @@ type PerformanceSample struct {
 	// Network: Network usage sample.
 	Network *NetworkUsageSample `json:"network,omitempty"`
 
-	// SampleTime: Time the sample was collected.
+	// SampleTime: Time the sample was collected. If omitted, the frame
+	// report time will be used.
 	SampleTime string `json:"sampleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cpu") to

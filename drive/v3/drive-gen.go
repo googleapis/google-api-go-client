@@ -809,6 +809,12 @@ func (s *CommentList) MarshalJSON() ([]byte, error) {
 // ContentRestriction: A restriction for accessing the content of the
 // file.
 type ContentRestriction struct {
+	// OwnerRestricted: Whether the content restriction can only be modified
+	// or removed by a user who owns the file. For files in shared drives,
+	// any user with `organizer` capabilities can modify or remove this
+	// content restriction.
+	OwnerRestricted bool `json:"ownerRestricted,omitempty"`
+
 	// ReadOnly: Whether the content of the file is read-only. If a file is
 	// read-only, a new revision of the file may not be added, comments may
 	// not be added or modified, and the title of the file may not be
@@ -831,7 +837,7 @@ type ContentRestriction struct {
 	// only possible value is `globalContentRestriction`.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ReadOnly") to
+	// ForceSendFields is a list of field names (e.g. "OwnerRestricted") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -839,12 +845,13 @@ type ContentRestriction struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ReadOnly") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "OwnerRestricted") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1617,13 +1624,24 @@ type FileCapabilities struct {
 	// the content of this file.
 	CanModifyContent bool `json:"canModifyContent,omitempty"`
 
-	// CanModifyContentRestriction: Output only. Whether the current user
-	// can modify restrictions on content of this file.
+	// CanModifyContentRestriction: Deprecated: Output only. Use one of
+	// `canModifyEditorContentRestriction`,
+	// `canModifyOwnerContentRestriction` or `canRemoveContentRestriction`.
 	CanModifyContentRestriction bool `json:"canModifyContentRestriction,omitempty"`
+
+	// CanModifyEditorContentRestriction: Output only. Whether the current
+	// user can add or modify content restrictions on the file which are
+	// editor restricted.
+	CanModifyEditorContentRestriction bool `json:"canModifyEditorContentRestriction,omitempty"`
 
 	// CanModifyLabels: Output only. Whether the current user can modify the
 	// labels on the file.
 	CanModifyLabels bool `json:"canModifyLabels,omitempty"`
+
+	// CanModifyOwnerContentRestriction: Output only. Whether the current
+	// user can add or modify content restrictions which are owner
+	// restricted.
+	CanModifyOwnerContentRestriction bool `json:"canModifyOwnerContentRestriction,omitempty"`
 
 	// CanMoveChildrenOutOfDrive: Output only. Whether the current user can
 	// move children of this folder outside of the shared drive. This is
@@ -1698,6 +1716,10 @@ type FileCapabilities struct {
 	// a folder. For a folder in a shared drive, use `canDeleteChildren` or
 	// `canTrashChildren` instead.
 	CanRemoveChildren bool `json:"canRemoveChildren,omitempty"`
+
+	// CanRemoveContentRestriction: Output only. Whether there is a content
+	// restriction on the file that can be removed by the current user.
+	CanRemoveContentRestriction bool `json:"canRemoveContentRestriction,omitempty"`
 
 	// CanRemoveMyDriveParent: Output only. Whether the current user can
 	// remove a parent from the item without adding another parent in the

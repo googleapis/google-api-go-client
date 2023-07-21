@@ -1907,6 +1907,9 @@ type GoogleCloudDocumentaiV1BatchDocumentsInputConfig struct {
 	// Storage `gcs_prefix`.
 	GcsPrefix *GoogleCloudDocumentaiV1GcsPrefix `json:"gcsPrefix,omitempty"`
 
+	// RawDocuments: The set of documents specified inline.
+	RawDocuments *GoogleCloudDocumentaiV1RawDocuments `json:"rawDocuments,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "GcsDocuments") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5707,8 +5710,8 @@ type GoogleCloudDocumentaiV1ProcessorVersion struct {
 	// output.
 	DocumentSchema *GoogleCloudDocumentaiV1DocumentSchema `json:"documentSchema,omitempty"`
 
-	// GoogleManaged: Denotes that this `ProcessorVersion` is managed by
-	// Google.
+	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is
+	// managed by Google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
 
 	// KmsKeyName: The KMS key name used for encryption.
@@ -5835,6 +5838,35 @@ type GoogleCloudDocumentaiV1RawDocument struct {
 
 func (s *GoogleCloudDocumentaiV1RawDocument) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1RawDocument
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1RawDocuments: Specifies a set of raw
+// documents.
+type GoogleCloudDocumentaiV1RawDocuments struct {
+	// Documents: Specifies raw document content and mime type.
+	Documents []*GoogleCloudDocumentaiV1RawDocument `json:"documents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Documents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Documents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1RawDocuments) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1RawDocuments
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

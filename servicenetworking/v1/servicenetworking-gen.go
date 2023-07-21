@@ -1601,6 +1601,10 @@ type Control struct {
 	// recommended value for most services is servicecontrol.googleapis.com
 	Environment string `json:"environment,omitempty"`
 
+	// MethodPolicies: Defines policies applying to the API methods of the
+	// service.
+	MethodPolicies []*MethodPolicy `json:"methodPolicies,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2419,6 +2423,57 @@ type Field struct {
 
 func (s *Field) MarshalJSON() ([]byte, error) {
 	type NoMethod Field
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FieldPolicy: Google API Policy Annotation This message defines a
+// simple API policy annotation that can be used to annotate API request
+// and response message fields with applicable policies. One field may
+// have multiple applicable policies that must all be satisfied before a
+// request can be processed. This policy annotation is used to generate
+// the overall policy that will be used for automatic runtime policy
+// enforcement and documentation generation.
+type FieldPolicy struct {
+	// ResourcePermission: Specifies the required permission(s) for the
+	// resource referred to by the field. It requires the field contains a
+	// valid resource reference, and the request must pass the permission
+	// checks to proceed. For example, "resourcemanager.projects.get".
+	ResourcePermission string `json:"resourcePermission,omitempty"`
+
+	// ResourceType: Specifies the resource type for the resource referred
+	// to by the field.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// Selector: Selects one or more request or response message fields to
+	// apply this `FieldPolicy`. When a `FieldPolicy` is used in proto
+	// annotation, the selector must be left as empty. The service config
+	// generator will automatically fill the correct value. When a
+	// `FieldPolicy` is used in service config, the selector must be a
+	// comma-separated string with valid request or response field paths,
+	// such as "foo.bar" or "foo.bar,foo.baz".
+	Selector string `json:"selector,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourcePermission")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourcePermission") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FieldPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3353,6 +3408,43 @@ type Method struct {
 
 func (s *Method) MarshalJSON() ([]byte, error) {
 	type NoMethod Method
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MethodPolicy: Defines policies applying to an RPC method.
+type MethodPolicy struct {
+	// RequestPolicies: Policies that are applicable to the request message.
+	RequestPolicies []*FieldPolicy `json:"requestPolicies,omitempty"`
+
+	// Selector: Selects a method to which these policies should be
+	// enforced, for example,
+	// "google.pubsub.v1.Subscriber.CreateSubscription". Refer to selector
+	// for syntax details. NOTE: This field must not be set in the proto
+	// annotation. It will be automatically filled by the service config
+	// compiler .
+	Selector string `json:"selector,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestPolicies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestPolicies") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MethodPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod MethodPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

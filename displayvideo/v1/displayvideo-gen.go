@@ -10754,6 +10754,9 @@ type LineItem struct {
 	// integration to directly exclude any first-party audiences using
 	// audience targeting before **March 25, 2023** to account for the
 	// sunset of the exclude_first_party_audience field.
+	//   "NO_INPUT_REVENUE_MODEL_TYPE_SPECIFIED" - The partner revenue model
+	// of the line item was updated without specifying the revenue model
+	// type, which is required for updating any of the revenue model fields.
 	WarningMessages []string `json:"warningMessages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -702,10 +702,11 @@ type AlertPolicy struct {
 	// dashboards, notifications, and incidents. To avoid confusion, don't
 	// use the same display name for multiple policies in the same project.
 	// The name is limited to 512 Unicode characters.The convention for the
-	// display_name of a PrometheusQueryLanguageCondition is "/", where the
-	// and should be taken from the corresponding Prometheus configuration
-	// file. This convention is not enforced. In any case the display_name
-	// is not a unique key of the AlertPolicy.
+	// display_name of a PrometheusQueryLanguageCondition is "{rule group
+	// name}/{alert name}", where the {rule group name} and {alert name}
+	// should be taken from the corresponding Prometheus configuration file.
+	// This convention is not enforced. In any case the display_name is not
+	// a unique key of the AlertPolicy.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Documentation: Documentation that is included with notifications and
@@ -752,10 +753,10 @@ type AlertPolicy struct {
 	// 64 entries. Each key and value is limited to 63 Unicode characters or
 	// 128 bytes, whichever is smaller. Labels and values can contain only
 	// lowercase letters, numerals, underscores, and dashes. Keys must begin
-	// with a letter.Note that Prometheus and are valid Prometheus label
-	// names
+	// with a letter.Note that Prometheus {rule group name} and {alert name}
+	// are valid Prometheus label names
 	// (https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels).
-	// This means that they cannot be stored as is in user labels, because
+	// This means that they cannot be stored as-is in user labels, because
 	// Prometheus labels may contain upper-case letters.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
 
@@ -1077,6 +1078,44 @@ type CloudEndpoints struct {
 
 func (s *CloudEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudEndpoints
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudFunctionV2Target: A Synthetic Monitor deployed to a Cloud
+// Functions V2 instance.
+type CloudFunctionV2Target struct {
+	// CloudRunRevision: Output only. The cloud_run_revision Monitored
+	// Resource associated with the GCFv2. The Synthetic Monitor execution
+	// results (metrics, logs, and spans) are reported against this
+	// Monitored Resource. This field is output only.
+	CloudRunRevision *MonitoredResource `json:"cloudRunRevision,omitempty"`
+
+	// Name: Required. Fully qualified GCFv2 resource name i.e.
+	// projects/{project}/locations/{location}/functions/{function}
+	// Required.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudRunRevision") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudRunRevision") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudFunctionV2Target) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudFunctionV2Target
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5795,6 +5834,36 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SyntheticMonitorTarget: Describes a Synthetic Monitor to be invoked
+// by Uptime.
+type SyntheticMonitorTarget struct {
+	// CloudFunctionV2: Target a Synthetic Monitor GCFv2 instance.
+	CloudFunctionV2 *CloudFunctionV2Target `json:"cloudFunctionV2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudFunctionV2") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudFunctionV2") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SyntheticMonitorTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod SyntheticMonitorTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TcpCheck: Information required for a TCP Uptime check request.
 type TcpCheck struct {
 	// PingConfig: Contains information needed to add pings to a TCP check.
@@ -6403,6 +6472,9 @@ type UptimeCheckConfig struct {
 	//   "USA_VIRGINIA" - Allows checks to run from locations within the
 	// eastern United States of America
 	SelectedRegions []string `json:"selectedRegions,omitempty"`
+
+	// SyntheticMonitor: Specifies a Synthetic Monitor to invoke.
+	SyntheticMonitor *SyntheticMonitorTarget `json:"syntheticMonitor,omitempty"`
 
 	// TcpCheck: Contains information needed to make a TCP check.
 	TcpCheck *TcpCheck `json:"tcpCheck,omitempty"`

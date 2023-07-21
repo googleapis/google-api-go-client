@@ -4585,8 +4585,10 @@ type RegionalPriceMigrationConfig struct {
 	OldestAllowedPriceVersionTime string `json:"oldestAllowedPriceVersionTime,omitempty"`
 
 	// PriceIncreaseType: Optional. The behavior the caller wants users to
-	// see if there is a price increase during migration. If left unset, the
-	// behavior defaults to PRICE_INCREASE_TYPE_OPT_IN.
+	// see when there is a price increase during migration. If left unset,
+	// the behavior defaults to PRICE_INCREASE_TYPE_OPT_IN. Note that the
+	// first opt-out price increase migration for each app must be initiated
+	// in Play Console.
 	//
 	// Possible values:
 	//   "PRICE_INCREASE_TYPE_UNSPECIFIED" - Unspecified state.

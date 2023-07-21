@@ -490,6 +490,7 @@ type DataSourceParameter struct {
 	//   "BOOLEAN" - Boolean parameter.
 	//   "RECORD" - Deprecated. This field has no effect.
 	//   "PLUS_PAGE" - Page ID for a Google+ Page.
+	//   "LIST" - List of strings parameter.
 	Type string `json:"type,omitempty"`
 
 	// ValidationDescription: Description of the requirements for this
@@ -977,12 +978,16 @@ func (s *ScheduleTransferRunsResponse) MarshalJSON() ([]byte, error) {
 // StartManualTransferRunsRequest: A request to start manual transfer
 // runs.
 type StartManualTransferRunsRequest struct {
-	// RequestedRunTime: Specific run_time for a transfer run to be started.
-	// The requested_run_time must not be in the future.
+	// RequestedRunTime: A run_time timestamp for historical data files or
+	// reports that are scheduled to be transferred by the scheduled
+	// transfer run. requested_run_time must be a past time and cannot
+	// include future time values.
 	RequestedRunTime string `json:"requestedRunTime,omitempty"`
 
-	// RequestedTimeRange: Time range for the transfer runs that should be
-	// started.
+	// RequestedTimeRange: A time_range start and end timestamp for
+	// historical data files or reports that are scheduled to be transferred
+	// by the scheduled transfer run. requested_time_range must be a past
+	// time and cannot include future time values.
 	RequestedTimeRange *TimeRange `json:"requestedTimeRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequestedRunTime") to

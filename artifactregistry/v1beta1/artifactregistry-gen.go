@@ -4315,8 +4315,9 @@ type ProjectsLocationsRepositoriesPackagesTagsListCall struct {
 // List: Lists tags.
 //
 //   - parent: The name of the parent package whose tags will be listed.
-//     Example:
-//     "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1.
+//     For example:
+//     `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`
+//     .
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) List(parent string) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4473,7 +4474,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent package whose tags will be listed. Example: \"projects/p1/locations/us-central1/repositories/repo1/packages/pkg1",
+	//       "description": "The name of the parent package whose tags will be listed. For example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
 	//       "required": true,

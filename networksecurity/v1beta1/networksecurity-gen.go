@@ -158,6 +158,8 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 	rs.AddressGroups = NewOrganizationsLocationsAddressGroupsService(s)
 	rs.FirewallEndpoints = NewOrganizationsLocationsFirewallEndpointsService(s)
 	rs.Operations = NewOrganizationsLocationsOperationsService(s)
+	rs.SecurityProfileGroups = NewOrganizationsLocationsSecurityProfileGroupsService(s)
+	rs.SecurityProfiles = NewOrganizationsLocationsSecurityProfilesService(s)
 	return rs
 }
 
@@ -169,6 +171,10 @@ type OrganizationsLocationsService struct {
 	FirewallEndpoints *OrganizationsLocationsFirewallEndpointsService
 
 	Operations *OrganizationsLocationsOperationsService
+
+	SecurityProfileGroups *OrganizationsLocationsSecurityProfileGroupsService
+
+	SecurityProfiles *OrganizationsLocationsSecurityProfilesService
 }
 
 func NewOrganizationsLocationsAddressGroupsService(s *Service) *OrganizationsLocationsAddressGroupsService {
@@ -195,6 +201,24 @@ func NewOrganizationsLocationsOperationsService(s *Service) *OrganizationsLocati
 }
 
 type OrganizationsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsSecurityProfileGroupsService(s *Service) *OrganizationsLocationsSecurityProfileGroupsService {
+	rs := &OrganizationsLocationsSecurityProfileGroupsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsSecurityProfileGroupsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsSecurityProfilesService(s *Service) *OrganizationsLocationsSecurityProfilesService {
+	rs := &OrganizationsLocationsSecurityProfilesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsSecurityProfilesService struct {
 	s *Service
 }
 
@@ -1980,6 +2004,84 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSecurityProfileGroupsResponse: Response returned by the
+// ListSecurityProfileGroups method.
+type ListSecurityProfileGroupsResponse struct {
+	// NextPageToken: If there might be more results than those appearing in
+	// this response, then `next_page_token` is included. To get the next
+	// set of results, call this method again using the value of
+	// `next_page_token` as `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityProfileGroups: List of SecurityProfileGroups resources.
+	SecurityProfileGroups []*SecurityProfileGroup `json:"securityProfileGroups,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSecurityProfileGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSecurityProfileGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSecurityProfilesResponse: Response returned by the
+// ListSecurityProfiles method.
+type ListSecurityProfilesResponse struct {
+	// NextPageToken: If there might be more results than those appearing in
+	// this response, then `next_page_token` is included. To get the next
+	// set of results, call this method again using the value of
+	// `next_page_token` as `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityProfiles: List of SecurityProfile resources.
+	SecurityProfiles []*SecurityProfile `json:"securityProfiles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSecurityProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSecurityProfilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListServerTlsPoliciesResponse: Response returned by the
 // ListServerTlsPolicies method.
 type ListServerTlsPoliciesResponse struct {
@@ -2407,6 +2509,133 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SecurityProfile: SecurityProfile is a resource that defines the
+// behavior for one of many ProfileTypes. Next ID: 9
+type SecurityProfile struct {
+	// CreateTime: Output only. Resource creation timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. An optional description of the profile. Max
+	// length 512 characters.
+	Description string `json:"description,omitempty"`
+
+	// Etag: Output only. This checksum is computed by the server based on
+	// the value of other fields, and may be sent on update and delete
+	// requests to ensure the client has an up-to-date value before
+	// proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Labels: Optional. Labels as key value pairs.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Immutable. Name of the SecurityProfile resource. It matches
+	// pattern
+	// `projects|organizations/*/locations/{location}/securityProfiles/{secur
+	// ity_profile}`.
+	Name string `json:"name,omitempty"`
+
+	// ThreatPreventionProfile: The threat prevention configuration for the
+	// SecurityProfile.
+	ThreatPreventionProfile *ThreatPreventionProfile `json:"threatPreventionProfile,omitempty"`
+
+	// Type: Immutable. The single ProfileType that the SecurityProfile
+	// resource configures.
+	//
+	// Possible values:
+	//   "PROFILE_TYPE_UNSPECIFIED" - Profile type not specified.
+	//   "THREAT_PREVENTION" - Profile type for threat prevention.
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Output only. Last resource update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecurityProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecurityProfileGroup: SecurityProfileGroup is a resource that defines
+// the behavior for various ProfileTypes. Next ID: 8
+type SecurityProfileGroup struct {
+	// CreateTime: Output only. Resource creation timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. An optional description of the profile group.
+	// Max length 2048 characters.
+	Description string `json:"description,omitempty"`
+
+	// Etag: Output only. This checksum is computed by the server based on
+	// the value of other fields, and may be sent on update and delete
+	// requests to ensure the client has an up-to-date value before
+	// proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Labels: Optional. Labels as key value pairs.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Immutable. Name of the SecurityProfileGroup resource. It
+	// matches pattern
+	// `projects|organizations/*/locations/{location}/securityProfileGroups/{
+	// security_profile_group}`.
+	Name string `json:"name,omitempty"`
+
+	// ThreatPreventionProfile: Optional. Reference to a SecurityProfile
+	// with the threat prevention configuration for the
+	// SecurityProfileGroup.
+	ThreatPreventionProfile string `json:"threatPreventionProfile,omitempty"`
+
+	// UpdateTime: Output only. Last resource update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecurityProfileGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityProfileGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServerTlsPolicy: ServerTlsPolicy is a resource that specifies how a
 // server should authenticate incoming requests. This resource itself
 // does not affect configuration unless it is attached to a target HTTPS
@@ -2487,6 +2716,76 @@ type ServerTlsPolicy struct {
 
 func (s *ServerTlsPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ServerTlsPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SeverityOverride: Defines what action to take for a specific severity
+// match.
+type SeverityOverride struct {
+	// Action: Required. Threat action override.
+	//
+	// Possible values:
+	//   "THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "DEFAULT_ACTION" - The default action (as specified by the vendor)
+	// is taken.
+	//   "ALLOW" - The packet matching this rule will be allowed to
+	// transmit.
+	//   "ALERT" - The packet matching this rule will be allowed to
+	// transmit, but a threat_log entry will be sent to the consumer
+	// project.
+	//   "DENY" - The packet matching this rule will be dropped, and a
+	// threat_log entry will be sent to the consumer project.
+	Action string `json:"action,omitempty"`
+
+	// Severity: Required. Severity level to match.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Severity level not specified.
+	//   "INFORMATIONAL" - Suspicious events that do not pose an immediate
+	// threat, but that are reported to call attention to deeper problems
+	// that could possibly exist.
+	//   "LOW" - Warning-level threats that have very little impact on an
+	// organization's infrastructure. They usually require local or physical
+	// system access and may often result in victim privacy issues and
+	// information leakage.
+	//   "MEDIUM" - Minor threats in which impact is minimized, that do not
+	// compromise the target or exploits that require an attacker to reside
+	// on the same local network as the victim, affect only non-standard
+	// configurations or obscure applications, or provide very limited
+	// access.
+	//   "HIGH" - Threats that have the ability to become critical but have
+	// mitigating factors; for example, they may be difficult to exploit, do
+	// not result in elevated privileges, or do not have a large victim
+	// pool.
+	//   "CRITICAL" - Serious threats, such as those that affect default
+	// installations of widely deployed software, result in root compromise
+	// of servers, and the exploit code is widely available to attackers.
+	// The attacker usually does not need any special authentication
+	// credentials or knowledge about the individual victims and the target
+	// does not need to be manipulated into performing any special
+	// functions.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SeverityOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod SeverityOverride
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2572,6 +2871,105 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThreatOverride: Defines what action to take for a specific threat_id
+// match.
+type ThreatOverride struct {
+	// Action: Required. Threat action override. For some threat types, only
+	// a subset of actions applies.
+	//
+	// Possible values:
+	//   "THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "DEFAULT_ACTION" - The default action (as specified by the vendor)
+	// is taken.
+	//   "ALLOW" - The packet matching this rule will be allowed to
+	// transmit.
+	//   "ALERT" - The packet matching this rule will be allowed to
+	// transmit, but a threat_log entry will be sent to the consumer
+	// project.
+	//   "DENY" - The packet matching this rule will be dropped, and a
+	// threat_log entry will be sent to the consumer project.
+	Action string `json:"action,omitempty"`
+
+	// ThreatId: Required. Vendor-specific ID of a threat to override.
+	ThreatId string `json:"threatId,omitempty"`
+
+	// Type: Output only. Type of the threat (read only).
+	//
+	// Possible values:
+	//   "THREAT_TYPE_UNSPECIFIED" - Type of threat not specified.
+	//   "UNKNOWN" - Type of threat is not derivable from threat ID. An
+	// override will be created for all types. Firewall will ignore
+	// overridden signature ID's that don't exist in the specific type.
+	//   "VULNERABILITY" - Threats related to system flaws that an attacker
+	// might otherwise attempt to exploit.
+	//   "ANTIVIRUS" - Threats related to viruses and malware found in
+	// executables and file types.
+	//   "SPYWARE" - Threats related to command-and-control (C2) activity,
+	// where spyware on an infected client is collecting data without the
+	// user's consent and/or communicating with a remote attacker.
+	//   "DNS" - Threats related to DNS.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThreatOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod ThreatOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThreatPreventionProfile: ThreatPreventionProfile defines an action
+// for specific threat signatures or severity levels.
+type ThreatPreventionProfile struct {
+	// SeverityOverrides: Optional. Configuration for overriding threats
+	// actions by severity match.
+	SeverityOverrides []*SeverityOverride `json:"severityOverrides,omitempty"`
+
+	// ThreatOverrides: Optional. Configuration for overriding threats
+	// actions by threat_id match. If a threat is matched both by
+	// configuration provided in severity_overrides and threat_overrides,
+	// the threat_overrides action is applied.
+	ThreatOverrides []*ThreatOverride `json:"threatOverrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SeverityOverrides")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SeverityOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThreatPreventionProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod ThreatPreventionProfile
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5791,6 +6189,1632 @@ func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "networksecurity.organizations.locations.securityProfileGroups.create":
+
+type OrganizationsLocationsSecurityProfileGroupsCreateCall struct {
+	s                    *Service
+	parent               string
+	securityprofilegroup *SecurityProfileGroup
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Creates a new SecurityProfileGroup in a given organization
+// and location.
+//
+//   - parent: The parent resource of the SecurityProfileGroup. Must be in
+//     the format `projects|organizations/*/locations/{location}`.
+func (r *OrganizationsLocationsSecurityProfileGroupsService) Create(parent string, securityprofilegroup *SecurityProfileGroup) *OrganizationsLocationsSecurityProfileGroupsCreateCall {
+	c := &OrganizationsLocationsSecurityProfileGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.securityprofilegroup = securityprofilegroup
+	return c
+}
+
+// SecurityProfileGroupId sets the optional parameter
+// "securityProfileGroupId": Required. Short name of the
+// SecurityProfileGroup resource to be created. This value should be
+// 1-63 characters long, containing only letters, numbers, hyphens, and
+// underscores, and should not start with a number. E.g.
+// "security_profile_group1".
+func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) SecurityProfileGroupId(securityProfileGroupId string) *OrganizationsLocationsSecurityProfileGroupsCreateCall {
+	c.urlParams_.Set("securityProfileGroupId", securityProfileGroupId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfileGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfileGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofilegroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/securityProfileGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfileGroups.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SecurityProfileGroup in a given organization and location.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfileGroups",
+	//   "httpMethod": "POST",
+	//   "id": "networksecurity.organizations.locations.securityProfileGroups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource of the SecurityProfileGroup. Must be in the format `projects|organizations/*/locations/{location}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "securityProfileGroupId": {
+	//       "description": "Required. Short name of the SecurityProfileGroup resource to be created. This value should be 1-63 characters long, containing only letters, numbers, hyphens, and underscores, and should not start with a number. E.g. \"security_profile_group1\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/securityProfileGroups",
+	//   "request": {
+	//     "$ref": "SecurityProfileGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networksecurity.organizations.locations.securityProfileGroups.delete":
+
+type OrganizationsLocationsSecurityProfileGroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single SecurityProfileGroup.
+//
+//   - name: A name of the SecurityProfileGroup to delete. Must be in the
+//     format
+//     `projects|organizations/*/locations/{location}/securityProfileGroups
+//     /{security_profile_group}`.
+func (r *OrganizationsLocationsSecurityProfileGroupsService) Delete(name string) *OrganizationsLocationsSecurityProfileGroupsDeleteCall {
+	c := &OrganizationsLocationsSecurityProfileGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": If client provided etag is
+// out of date, delete will return FAILED_PRECONDITION error.
+func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) Etag(etag string) *OrganizationsLocationsSecurityProfileGroupsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfileGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfileGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfileGroups.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single SecurityProfileGroup.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfileGroups/{securityProfileGroupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "networksecurity.organizations.locations.securityProfileGroups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. If client provided etag is out of date, delete will return FAILED_PRECONDITION error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. A name of the SecurityProfileGroup to delete. Must be in the format `projects|organizations/*/locations/{location}/securityProfileGroups/{security_profile_group}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfileGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networksecurity.organizations.locations.securityProfileGroups.get":
+
+type OrganizationsLocationsSecurityProfileGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single SecurityProfileGroup.
+//
+//   - name: A name of the SecurityProfileGroup to get. Must be in the
+//     format
+//     `projects|organizations/*/locations/{location}/securityProfileGroups
+//     /{security_profile_group}`.
+func (r *OrganizationsLocationsSecurityProfileGroupsService) Get(name string) *OrganizationsLocationsSecurityProfileGroupsGetCall {
+	c := &OrganizationsLocationsSecurityProfileGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfileGroupsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfileGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsSecurityProfileGroupsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSecurityProfileGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfileGroupsGetCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfileGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfileGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfileGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfileGroups.get" call.
+// Exactly one of *SecurityProfileGroup or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SecurityProfileGroup.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfileGroupsGetCall) Do(opts ...googleapi.CallOption) (*SecurityProfileGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecurityProfileGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single SecurityProfileGroup.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfileGroups/{securityProfileGroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "networksecurity.organizations.locations.securityProfileGroups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. A name of the SecurityProfileGroup to get. Must be in the format `projects|organizations/*/locations/{location}/securityProfileGroups/{security_profile_group}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfileGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "SecurityProfileGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networksecurity.organizations.locations.securityProfileGroups.list":
+
+type OrganizationsLocationsSecurityProfileGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SecurityProfileGroups in a given organization and
+// location.
+//
+//   - parent: The project or organization and location from which the
+//     SecurityProfileGroups should be listed, specified in the format
+//     `projects|organizations/*/locations/{location}`.
+func (r *OrganizationsLocationsSecurityProfileGroupsService) List(parent string) *OrganizationsLocationsSecurityProfileGroupsListCall {
+	c := &OrganizationsLocationsSecurityProfileGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// SecurityProfileGroups to return per call.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) PageSize(pageSize int64) *OrganizationsLocationsSecurityProfileGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListSecurityProfileGroupsResponse` Indicates that this
+// is a continuation of a prior `ListSecurityProfileGroups` call, and
+// that the system should return the next page of data.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) PageToken(pageToken string) *OrganizationsLocationsSecurityProfileGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfileGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSecurityProfileGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfileGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/securityProfileGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfileGroups.list" call.
+// Exactly one of *ListSecurityProfileGroupsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListSecurityProfileGroupsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) Do(opts ...googleapi.CallOption) (*ListSecurityProfileGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityProfileGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists SecurityProfileGroups in a given organization and location.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfileGroups",
+	//   "httpMethod": "GET",
+	//   "id": "networksecurity.organizations.locations.securityProfileGroups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of SecurityProfileGroups to return per call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListSecurityProfileGroupsResponse` Indicates that this is a continuation of a prior `ListSecurityProfileGroups` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project or organization and location from which the SecurityProfileGroups should be listed, specified in the format `projects|organizations/*/locations/{location}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/securityProfileGroups",
+	//   "response": {
+	//     "$ref": "ListSecurityProfileGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsSecurityProfileGroupsListCall) Pages(ctx context.Context, f func(*ListSecurityProfileGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "networksecurity.organizations.locations.securityProfileGroups.patch":
+
+type OrganizationsLocationsSecurityProfileGroupsPatchCall struct {
+	s                    *Service
+	name                 string
+	securityprofilegroup *SecurityProfileGroup
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Patch: Updates the parameters of a single SecurityProfileGroup.
+//
+//   - name: Immutable. Name of the SecurityProfileGroup resource. It
+//     matches pattern
+//     `projects|organizations/*/locations/{location}/securityProfileGroups
+//     /{security_profile_group}`.
+func (r *OrganizationsLocationsSecurityProfileGroupsService) Patch(name string, securityprofilegroup *SecurityProfileGroup) *OrganizationsLocationsSecurityProfileGroupsPatchCall {
+	c := &OrganizationsLocationsSecurityProfileGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.securityprofilegroup = securityprofilegroup
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// SecurityProfileGroup resource by the update. The fields specified in
+// the update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask.
+func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsSecurityProfileGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfileGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfileGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofilegroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfileGroups.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single SecurityProfileGroup.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfileGroups/{securityProfileGroupsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "networksecurity.organizations.locations.securityProfileGroups.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Name of the SecurityProfileGroup resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfileGroups/{security_profile_group}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfileGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the SecurityProfileGroup resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "SecurityProfileGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networksecurity.organizations.locations.securityProfiles.create":
+
+type OrganizationsLocationsSecurityProfilesCreateCall struct {
+	s               *Service
+	parent          string
+	securityprofile *SecurityProfile
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new SecurityProfile in a given organization and
+// location.
+//
+//   - parent: The parent resource of the SecurityProfile. Must be in the
+//     format `projects|organizations/*/locations/{location}`.
+func (r *OrganizationsLocationsSecurityProfilesService) Create(parent string, securityprofile *SecurityProfile) *OrganizationsLocationsSecurityProfilesCreateCall {
+	c := &OrganizationsLocationsSecurityProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.securityprofile = securityprofile
+	return c
+}
+
+// SecurityProfileId sets the optional parameter "securityProfileId":
+// Required. Short name of the SecurityProfile resource to be created.
+// This value should be 1-63 characters long, containing only letters,
+// numbers, hyphens, and underscores, and should not start with a
+// number. E.g. "security_profile1".
+func (c *OrganizationsLocationsSecurityProfilesCreateCall) SecurityProfileId(securityProfileId string) *OrganizationsLocationsSecurityProfilesCreateCall {
+	c.urlParams_.Set("securityProfileId", securityProfileId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfilesCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfilesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfilesCreateCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfilesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfilesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/securityProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfiles.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfilesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SecurityProfile in a given organization and location.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfiles",
+	//   "httpMethod": "POST",
+	//   "id": "networksecurity.organizations.locations.securityProfiles.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource of the SecurityProfile. Must be in the format `projects|organizations/*/locations/{location}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "securityProfileId": {
+	//       "description": "Required. Short name of the SecurityProfile resource to be created. This value should be 1-63 characters long, containing only letters, numbers, hyphens, and underscores, and should not start with a number. E.g. \"security_profile1\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/securityProfiles",
+	//   "request": {
+	//     "$ref": "SecurityProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networksecurity.organizations.locations.securityProfiles.delete":
+
+type OrganizationsLocationsSecurityProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single SecurityProfile.
+//
+//   - name: A name of the SecurityProfile to delete. Must be in the
+//     format
+//     `projects|organizations/*/locations/{location}/securityProfiles/{sec
+//     urity_profile_id}`.
+func (r *OrganizationsLocationsSecurityProfilesService) Delete(name string) *OrganizationsLocationsSecurityProfilesDeleteCall {
+	c := &OrganizationsLocationsSecurityProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": If client provided etag is
+// out of date, delete will return FAILED_PRECONDITION error.
+func (c *OrganizationsLocationsSecurityProfilesDeleteCall) Etag(etag string) *OrganizationsLocationsSecurityProfilesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfilesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfilesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfiles.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single SecurityProfile.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "networksecurity.organizations.locations.securityProfiles.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. If client provided etag is out of date, delete will return FAILED_PRECONDITION error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. A name of the SecurityProfile to delete. Must be in the format `projects|organizations/*/locations/{location}/securityProfiles/{security_profile_id}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networksecurity.organizations.locations.securityProfiles.get":
+
+type OrganizationsLocationsSecurityProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single SecurityProfile.
+//
+//   - name: A name of the SecurityProfile to get. Must be in the format
+//     `projects|organizations/*/locations/{location}/securityProfiles/{sec
+//     urity_profile_id}`.
+func (r *OrganizationsLocationsSecurityProfilesService) Get(name string) *OrganizationsLocationsSecurityProfilesGetCall {
+	c := &OrganizationsLocationsSecurityProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfilesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsSecurityProfilesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSecurityProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfilesGetCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfiles.get" call.
+// Exactly one of *SecurityProfile or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SecurityProfile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfilesGetCall) Do(opts ...googleapi.CallOption) (*SecurityProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecurityProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single SecurityProfile.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "GET",
+	//   "id": "networksecurity.organizations.locations.securityProfiles.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. A name of the SecurityProfile to get. Must be in the format `projects|organizations/*/locations/{location}/securityProfiles/{security_profile_id}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "SecurityProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networksecurity.organizations.locations.securityProfiles.list":
+
+type OrganizationsLocationsSecurityProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SecurityProfiles in a given organization and location.
+//
+//   - parent: The project or organization and location from which the
+//     SecurityProfiles should be listed, specified in the format
+//     `projects|organizations/*/locations/{location}`.
+func (r *OrganizationsLocationsSecurityProfilesService) List(parent string) *OrganizationsLocationsSecurityProfilesListCall {
+	c := &OrganizationsLocationsSecurityProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// SecurityProfiles to return per call.
+func (c *OrganizationsLocationsSecurityProfilesListCall) PageSize(pageSize int64) *OrganizationsLocationsSecurityProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListSecurityProfilesResponse` Indicates that this is a
+// continuation of a prior `ListSecurityProfiles` call, and that the
+// system should return the next page of data.
+func (c *OrganizationsLocationsSecurityProfilesListCall) PageToken(pageToken string) *OrganizationsLocationsSecurityProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfilesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsSecurityProfilesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSecurityProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfilesListCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/securityProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfiles.list" call.
+// Exactly one of *ListSecurityProfilesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListSecurityProfilesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfilesListCall) Do(opts ...googleapi.CallOption) (*ListSecurityProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists SecurityProfiles in a given organization and location.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfiles",
+	//   "httpMethod": "GET",
+	//   "id": "networksecurity.organizations.locations.securityProfiles.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of SecurityProfiles to return per call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListSecurityProfilesResponse` Indicates that this is a continuation of a prior `ListSecurityProfiles` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project or organization and location from which the SecurityProfiles should be listed, specified in the format `projects|organizations/*/locations/{location}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/securityProfiles",
+	//   "response": {
+	//     "$ref": "ListSecurityProfilesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsSecurityProfilesListCall) Pages(ctx context.Context, f func(*ListSecurityProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "networksecurity.organizations.locations.securityProfiles.patch":
+
+type OrganizationsLocationsSecurityProfilesPatchCall struct {
+	s               *Service
+	name            string
+	securityprofile *SecurityProfile
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates the parameters of a single SecurityProfile.
+//
+//   - name: Immutable. Name of the SecurityProfile resource. It matches
+//     pattern
+//     `projects|organizations/*/locations/{location}/securityProfiles/{sec
+//     urity_profile}`.
+func (r *OrganizationsLocationsSecurityProfilesService) Patch(name string, securityprofile *SecurityProfile) *OrganizationsLocationsSecurityProfilesPatchCall {
+	c := &OrganizationsLocationsSecurityProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.securityprofile = securityprofile
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// SecurityProfile resource by the update. The fields specified in the
+// update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask.
+func (c *OrganizationsLocationsSecurityProfilesPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsSecurityProfilesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSecurityProfilesPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSecurityProfilesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSecurityProfilesPatchCall) Context(ctx context.Context) *OrganizationsLocationsSecurityProfilesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSecurityProfilesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSecurityProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securityprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.securityProfiles.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSecurityProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single SecurityProfile.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "networksecurity.organizations.locations.securityProfiles.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Name of the SecurityProfile resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfiles/{security_profile}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the SecurityProfile resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "SecurityProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "networksecurity.projects.locations.get":

@@ -3101,6 +3101,14 @@ func (s *GoogleCloudDatacatalogV1Schema) MarshalJSON() ([]byte, error) {
 // GoogleCloudDatacatalogV1SearchCatalogRequest: Request message for
 // SearchCatalog.
 type GoogleCloudDatacatalogV1SearchCatalogRequest struct {
+	// AdminSearch: Optional. If set, use searchAll permission granted on
+	// organizations from `include_org_ids` and projects from
+	// `include_project_ids` instead of the fine grained per resource
+	// permissions when filtering the search results. The only allowed
+	// `order_by` criteria for admin_search mode is `default`. Using this
+	// flags guarantees a full recall of the search results.
+	AdminSearch bool `json:"adminSearch,omitempty"`
+
 	// OrderBy: Specifies the order of results. Currently supported
 	// case-sensitive values are: * `relevance` that can only be descending
 	// * `last_modified_timestamp [asc|desc]` with descending (`desc`) as
@@ -3140,7 +3148,7 @@ type GoogleCloudDatacatalogV1SearchCatalogRequest struct {
 	// request returns an error.
 	Scope *GoogleCloudDatacatalogV1SearchCatalogRequestScope `json:"scope,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OrderBy") to
+	// ForceSendFields is a list of field names (e.g. "AdminSearch") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3148,10 +3156,10 @@ type GoogleCloudDatacatalogV1SearchCatalogRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OrderBy") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AdminSearch") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

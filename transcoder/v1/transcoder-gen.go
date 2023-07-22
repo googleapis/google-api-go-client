@@ -252,7 +252,7 @@ func (s *Animation) MarshalJSON() ([]byte, error) {
 }
 
 // AnimationEnd: End previous overlay animation from the video. Without
-// AnimationEnd, the overlay object will keep the state of previous
+// `AnimationEnd`, the overlay object will keep the state of previous
 // animation until the end of the video.
 type AnimationEnd struct {
 	// StartTimeOffset: The time to end overlay object, in seconds. Default:
@@ -425,11 +425,11 @@ func (s *Audio) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AudioMapping: The mapping for the `Job.edit_list` atoms with audio
-// `EditAtom.inputs`.
+// AudioMapping: The mapping for the JobConfig.edit_list atoms with
+// audio EditAtom.inputs.
 type AudioMapping struct {
-	// AtomKey: Required. The `EditAtom.key` that references the atom with
-	// audio inputs in the `Job.edit_list`.
+	// AtomKey: Required. The EditAtom.key that references the atom with
+	// audio inputs in the JobConfig.edit_list.
 	AtomKey string `json:"atomKey,omitempty"`
 
 	// GainDb: Audio volume control in dB. Negative values decrease volume,
@@ -440,7 +440,7 @@ type AudioMapping struct {
 	// input audio stream.
 	InputChannel int64 `json:"inputChannel,omitempty"`
 
-	// InputKey: Required. The `Input.key` that identifies the input file.
+	// InputKey: Required. The Input.key that identifies the input file.
 	InputKey string `json:"inputKey,omitempty"`
 
 	// InputTrack: Required. The zero-based index of the track in the input
@@ -521,8 +521,8 @@ type AudioStream struct {
 	// supported in MP4 files.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Mapping: The mapping for the `Job.edit_list` atoms with audio
-	// `EditAtom.inputs`.
+	// Mapping: The mapping for the JobConfig.edit_list atoms with audio
+	// EditAtom.inputs.
 	Mapping []*AudioMapping `json:"mapping,omitempty"`
 
 	// SampleRateHertz: The audio sample rate in Hertz. The default is 48000
@@ -702,14 +702,19 @@ func (s *Crop) MarshalJSON() ([]byte, error) {
 // DashConfig: `DASH` manifest configuration.
 type DashConfig struct {
 	// SegmentReferenceScheme: The segment reference scheme for a `DASH`
-	// manifest. The default is `SEGMENT_LIST`
+	// manifest. The default is `SEGMENT_LIST`.
 	//
 	// Possible values:
 	//   "SEGMENT_REFERENCE_SCHEME_UNSPECIFIED" - The segment reference
 	// scheme is not specified.
-	//   "SEGMENT_LIST" - Lists the URLs of media files for each segment.
-	//   "SEGMENT_TEMPLATE_NUMBER" - Lists each segment from a template with
-	// $Number$ variable.
+	//   "SEGMENT_LIST" - Explicitly lists the URLs of media files for each
+	// segment. For example, if SegmentSettings.individual_segments is
+	// `true`, then the manifest contains fields similar to the following:
+	// ```xml ... ```
+	//   "SEGMENT_TEMPLATE_NUMBER" - SegmentSettings.individual_segments
+	// must be set to `true` to use this segment reference scheme. Uses the
+	// DASH specification `` tag to determine the URLs of media files for
+	// each segment. For example: ```xml ... ```
 	SegmentReferenceScheme string `json:"segmentReferenceScheme,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -909,8 +914,8 @@ type EditAtom struct {
 	// `inputs` are used until the end of the atom.
 	EndTimeOffset string `json:"endTimeOffset,omitempty"`
 
-	// Inputs: List of `Input.key`s identifying files that should be used in
-	// this atom. The listed `inputs` must have the same timeline.
+	// Inputs: List of Input.key values identifying files that should be
+	// used in this atom. The listed `inputs` must have the same timeline.
 	Inputs []string `json:"inputs,omitempty"`
 
 	// Key: A unique key for this atom. Must be specified when using
@@ -1056,8 +1061,8 @@ type H264CodecSettings struct {
 	AqStrength float64 `json:"aqStrength,omitempty"`
 
 	// BFrameCount: The number of consecutive B-frames. Must be greater than
-	// or equal to zero. Must be less than `VideoStream.gop_frame_count` if
-	// set. The default is 0.
+	// or equal to zero. Must be less than H264CodecSettings.gop_frame_count
+	// if set. The default is 0.
 	BFrameCount int64 `json:"bFrameCount,omitempty"`
 
 	// BPyramid: Allow B-pyramid for reference frame selection. This may not
@@ -1074,8 +1079,8 @@ type H264CodecSettings struct {
 	CrfLevel int64 `json:"crfLevel,omitempty"`
 
 	// EnableTwoPass: Use two-pass encoding strategy to achieve better video
-	// quality. `VideoStream.rate_control_mode` must be `vbr`. The default
-	// is `false`.
+	// quality. H264CodecSettings.rate_control_mode must be `vbr`. The
+	// default is `false`.
 	EnableTwoPass bool `json:"enableTwoPass,omitempty"`
 
 	// EntropyCoder: The entropy coder to use. The default is `cabac`.
@@ -1134,9 +1139,9 @@ type H264CodecSettings struct {
 	// fields you set in the `H264CodecSettings` message.
 	Profile string `json:"profile,omitempty"`
 
-	// RateControlMode: Specify the `rate_control_mode`. The default is
-	// `vbr`. Supported rate control modes: - `vbr` - variable bitrate -
-	// `crf` - constant rate factor
+	// RateControlMode: Specify the mode. The default is `vbr`. Supported
+	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
+	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
@@ -1147,12 +1152,12 @@ type H264CodecSettings struct {
 
 	// VbvFullnessBits: Initial fullness of the Video Buffering Verifier
 	// (VBV) buffer in bits. Must be greater than zero. The default is equal
-	// to 90% of `VideoStream.vbv_size_bits`.
+	// to 90% of H264CodecSettings.vbv_size_bits.
 	VbvFullnessBits int64 `json:"vbvFullnessBits,omitempty"`
 
 	// VbvSizeBits: Size of the Video Buffering Verifier (VBV) buffer in
 	// bits. Must be greater than zero. The default is equal to
-	// `VideoStream.bitrate_bps`.
+	// H264CodecSettings.bitrate_bps.
 	VbvSizeBits int64 `json:"vbvSizeBits,omitempty"`
 
 	// WidthPixels: The width of the video in pixels. Must be an even
@@ -1217,8 +1222,8 @@ type H265CodecSettings struct {
 	AqStrength float64 `json:"aqStrength,omitempty"`
 
 	// BFrameCount: The number of consecutive B-frames. Must be greater than
-	// or equal to zero. Must be less than `VideoStream.gop_frame_count` if
-	// set. The default is 0.
+	// or equal to zero. Must be less than H265CodecSettings.gop_frame_count
+	// if set. The default is 0.
 	BFrameCount int64 `json:"bFrameCount,omitempty"`
 
 	// BPyramid: Allow B-pyramid for reference frame selection. This may not
@@ -1235,8 +1240,8 @@ type H265CodecSettings struct {
 	CrfLevel int64 `json:"crfLevel,omitempty"`
 
 	// EnableTwoPass: Use two-pass encoding strategy to achieve better video
-	// quality. `VideoStream.rate_control_mode` must be `vbr`. The default
-	// is `false`.
+	// quality. H265CodecSettings.rate_control_mode must be `vbr`. The
+	// default is `false`.
 	EnableTwoPass bool `json:"enableTwoPass,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
@@ -1295,9 +1300,9 @@ type H265CodecSettings struct {
 	// the `H265CodecSettings` message.
 	Profile string `json:"profile,omitempty"`
 
-	// RateControlMode: Specify the `rate_control_mode`. The default is
-	// `vbr`. Supported rate control modes: - `vbr` - variable bitrate -
-	// `crf` - constant rate factor
+	// RateControlMode: Specify the mode. The default is `vbr`. Supported
+	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
+	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
@@ -1308,7 +1313,7 @@ type H265CodecSettings struct {
 
 	// VbvFullnessBits: Initial fullness of the Video Buffering Verifier
 	// (VBV) buffer in bits. Must be greater than zero. The default is equal
-	// to 90% of `VideoStream.vbv_size_bits`.
+	// to 90% of H265CodecSettings.vbv_size_bits.
 	VbvFullnessBits int64 `json:"vbvFullnessBits,omitempty"`
 
 	// VbvSizeBits: Size of the Video Buffering Verifier (VBV) buffer in
@@ -1432,7 +1437,7 @@ type Input struct {
 	// Uri: URI of the media. Input files must be at least 5 seconds in
 	// duration and stored in Cloud Storage (for example,
 	// `gs://bucket/inputs/file.mp4`). If empty, the value is populated from
-	// `Job.input_uri`. See Supported input and output formats
+	// Job.input_uri. See Supported input and output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 
@@ -1462,7 +1467,7 @@ func (s *Input) MarshalJSON() ([]byte, error) {
 // Job: Transcoding job resource.
 type Job struct {
 	// BatchModePriority: The processing priority of a batch job. This field
-	// can only be set for batch mode jobs, and the default value is 0. This
+	// can only be set for batch mode jobs. The default value is 0. This
 	// value cannot be negative. Higher values correspond to higher
 	// priorities for the job.
 	BatchModePriority int64 `json:"batchModePriority,omitempty"`
@@ -1477,7 +1482,8 @@ type Job struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Error: Output only. An error object that describes the reason for the
-	// failure. This property is always present when `state` is `FAILED`.
+	// failure. This property is always present when ProcessingState is
+	// `FAILED`.
 	Error *Status `json:"error,omitempty"`
 
 	// InputUri: Input only. Specify the `input_uri` to populate empty `uri`
@@ -1540,7 +1546,8 @@ type Job struct {
 	//   "RUNNING" - The job is being processed.
 	//   "SUCCEEDED" - The job has been completed successfully.
 	//   "FAILED" - The job has failed. For additional information, see
-	// `failure_reason` and `failure_details`
+	// [Troubleshooting](https://cloud.google.com/transcoder/docs/troubleshoo
+	// ting).
 	State string `json:"state,omitempty"`
 
 	// TemplateId: Input only. Specify the `template_id` to use for
@@ -1588,7 +1595,7 @@ type JobConfig struct {
 	// in the output manifests.
 	AdBreaks []*AdBreak `json:"adBreaks,omitempty"`
 
-	// EditList: List of `Edit atom`s. Defines the ultimate timeline of the
+	// EditList: List of edit atoms. Defines the ultimate timeline of the
 	// resulting file or manifest.
 	EditList []*EditAtom `json:"editList,omitempty"`
 
@@ -1771,13 +1778,13 @@ type Manifest struct {
 	Dash *DashConfig `json:"dash,omitempty"`
 
 	// FileName: The name of the generated file. The default is `manifest`
-	// with the extension suffix corresponding to the `Manifest.type`.
+	// with the extension suffix corresponding to the Manifest.type.
 	FileName string `json:"fileName,omitempty"`
 
-	// MuxStreams: Required. List of user given `MuxStream.key`s that should
-	// appear in this manifest. When `Manifest.type` is `HLS`, a media
-	// manifest with name `MuxStream.key` and `.m3u8` extension is generated
-	// for each element of the `Manifest.mux_streams`.
+	// MuxStreams: Required. List of user supplied MuxStream.key values that
+	// should appear in this manifest. When Manifest.type is `HLS`, a media
+	// manifest with name MuxStream.key and `.m3u8` extension is generated
+	// for each element in this list.
 	MuxStreams []string `json:"muxStreams,omitempty"`
 
 	// Type: Required. Type of the manifest.
@@ -1852,7 +1859,7 @@ type MuxStream struct {
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats)
 	Container string `json:"container,omitempty"`
 
-	// ElementaryStreams: List of `ElementaryStream.key`s multiplexed in
+	// ElementaryStreams: List of ElementaryStream.key values multiplexed in
 	// this stream.
 	ElementaryStreams []string `json:"elementaryStreams,omitempty"`
 
@@ -1861,14 +1868,13 @@ type MuxStream struct {
 	EncryptionId string `json:"encryptionId,omitempty"`
 
 	// FileName: The name of the generated file. The default is
-	// `MuxStream.key` with the extension suffix corresponding to the
-	// `MuxStream.container`. Individual segments also have an incremental
+	// MuxStream.key with the extension suffix corresponding to the
+	// MuxStream.container. Individual segments also have an incremental
 	// 10-digit zero-padded suffix starting from 0 before the extension,
 	// such as `mux_stream0000000123.ts`.
 	FileName string `json:"fileName,omitempty"`
 
-	// Key: A unique key for this multiplexed stream. HLS media manifests
-	// will be named `MuxStream.key` with the `.m3u8` extension suffix.
+	// Key: A unique key for this multiplexed stream.
 	Key string `json:"key,omitempty"`
 
 	// SegmentSettings: Segment settings for `ts`, `fmp4` and `vtt`.
@@ -1949,7 +1955,7 @@ func (s *NormalizedCoordinate) UnmarshalJSON(data []byte) error {
 type Output struct {
 	// Uri: URI for the output file(s). For example,
 	// `gs://my-bucket/outputs/`. If empty, the value is populated from
-	// `Job.output_uri`. See Supported input and output formats
+	// Job.output_uri. See Supported input and output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 
@@ -1978,7 +1984,7 @@ func (s *Output) MarshalJSON() ([]byte, error) {
 
 // Overlay: Overlay configuration.
 type Overlay struct {
-	// Animations: List of Animations. The list should be chronological,
+	// Animations: List of animations. The list should be chronological,
 	// without any time overlap.
 	Animations []*Animation `json:"animations,omitempty"`
 
@@ -2336,14 +2342,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TextMapping: The mapping for the `Job.edit_list` atoms with text
-// `EditAtom.inputs`.
+// TextMapping: The mapping for the JobConfig.edit_list atoms with text
+// EditAtom.inputs.
 type TextMapping struct {
-	// AtomKey: Required. The `EditAtom.key` that references atom with text
-	// inputs in the `Job.edit_list`.
+	// AtomKey: Required. The EditAtom.key that references atom with text
+	// inputs in the JobConfig.edit_list.
 	AtomKey string `json:"atomKey,omitempty"`
 
-	// InputKey: Required. The `Input.key` that identifies the input file.
+	// InputKey: Required. The Input.key that identifies the input file.
 	InputKey string `json:"inputKey,omitempty"`
 
 	// InputTrack: Required. The zero-based index of the track in the input
@@ -2391,8 +2397,8 @@ type TextStream struct {
 	// supported in MP4 files.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Mapping: The mapping for the `Job.edit_list` atoms with text
-	// `EditAtom.inputs`.
+	// Mapping: The mapping for the JobConfig.edit_list atoms with text
+	// EditAtom.inputs.
 	Mapping []*TextMapping `json:"mapping,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Codec") to
@@ -2508,8 +2514,8 @@ type Vp9CodecSettings struct {
 	// set in the `Vp9CodecSettings` message.
 	Profile string `json:"profile,omitempty"`
 
-	// RateControlMode: Specify the `rate_control_mode`. The default is
-	// `vbr`. Supported rate control modes: - `vbr` - variable bitrate
+	// RateControlMode: Specify the mode. The default is `vbr`. Supported
+	// rate control modes: - `vbr` - variable bitrate
 	RateControlMode string `json:"rateControlMode,omitempty"`
 
 	// WidthPixels: The width of the video in pixels. Must be an even

@@ -1518,6 +1518,11 @@ type GatewayServiceMesh struct {
 	// HttpRoute: Required. Name of the Gateway API HTTPRoute.
 	HttpRoute string `json:"httpRoute,omitempty"`
 
+	// RouteUpdateWaitTime: Optional. The time to wait for route updates to
+	// propagate. The maximum configurable time is 3 hours, in seconds
+	// format. If unspecified, there is no wait time.
+	RouteUpdateWaitTime string `json:"routeUpdateWaitTime,omitempty"`
+
 	// Service: Required. Name of the Kubernetes Service.
 	Service string `json:"service,omitempty"`
 

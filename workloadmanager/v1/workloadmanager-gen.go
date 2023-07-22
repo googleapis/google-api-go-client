@@ -1200,11 +1200,11 @@ func (s *SapDiscovery) MarshalJSON() ([]byte, error) {
 
 // SapDiscoveryComponent: Message describing the system component.
 type SapDiscoveryComponent struct {
-	// ApplicationType: The component is a SAP application.
-	ApplicationType string `json:"applicationType,omitempty"`
+	// ApplicationProperties: Optional. The component is a SAP application.
+	ApplicationProperties *SapDiscoveryComponentApplicationProperties `json:"applicationProperties,omitempty"`
 
-	// DatabaseType: The component is a SAP database.
-	DatabaseType string `json:"databaseType,omitempty"`
+	// DatabaseProperties: Optional. The component is a SAP database.
+	DatabaseProperties *SapDiscoveryComponentDatabaseProperties `json:"databaseProperties,omitempty"`
 
 	// HostProject: Pantheon Project in which the resources reside.
 	HostProject string `json:"hostProject,omitempty"`
@@ -1215,6 +1215,50 @@ type SapDiscoveryComponent struct {
 	// Sid: The sap identifier, used by the SAP software and helps
 	// differentiate systems for customers.
 	Sid string `json:"sid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplicationProperties") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationProperties") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryComponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryComponentApplicationProperties: A set of properties
+// describing an SAP Application layer.
+type SapDiscoveryComponentApplicationProperties struct {
+	// ApplicationType: Required. Type of the application. Netweaver, etc.
+	//
+	// Possible values:
+	//   "APPLICATION_TYPE_UNSPECIFIED" - Unspecified application type
+	//   "NETWEAVER" - SAP Netweaver
+	ApplicationType string `json:"applicationType,omitempty"`
+
+	// AscsUri: Required. Resource URI of the recognized ASCS host of the
+	// application.
+	AscsUri string `json:"ascsUri,omitempty"`
+
+	// NfsUri: Optional. Resource URI of the recognized shared NFS of the
+	// application. May be empty if the application server has only a single
+	// node.
+	NfsUri string `json:"nfsUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationType") to
 	// unconditionally include in API requests. By default, fields with
@@ -1234,8 +1278,51 @@ type SapDiscoveryComponent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
-	type NoMethod SapDiscoveryComponent
+func (s *SapDiscoveryComponentApplicationProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryComponentApplicationProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryComponentDatabaseProperties: A set of properties
+// describing an SAP Database layer.
+type SapDiscoveryComponentDatabaseProperties struct {
+	// DatabaseType: Required. Type of the database. HANA, DB2, etc.
+	//
+	// Possible values:
+	//   "DATABASE_TYPE_UNSPECIFIED" - Unspecified database type.
+	//   "HANA" - SAP HANA
+	//   "MAX_DB" - SAP MAX_DB
+	//   "DB2" - IBM DB2
+	DatabaseType string `json:"databaseType,omitempty"`
+
+	// PrimaryInstanceUri: Required. URI of the recognized primary instance
+	// of the database.
+	PrimaryInstanceUri string `json:"primaryInstanceUri,omitempty"`
+
+	// SharedNfsUri: Optional. URI of the recognized shared NFS of the
+	// database. May be empty if the database has only a single node.
+	SharedNfsUri string `json:"sharedNfsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryComponentDatabaseProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryComponentDatabaseProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1310,9 +1397,9 @@ type SapDiscoveryResource struct {
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Undefined resource type.
-	//   "COMPUTE" - This is a compute resource.
-	//   "STORAGE" - This a storage resource.
-	//   "NETWORK" - This is a network resource.
+	//   "RESOURCE_TYPE_COMPUTE" - This is a compute resource.
+	//   "RESOURCE_TYPE_STORAGE" - This a storage resource.
+	//   "RESOURCE_TYPE_NETWORK" - This is a network resource.
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ResourceUri: URI of the resource, includes project, location, and

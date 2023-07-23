@@ -1466,6 +1466,17 @@ type QueuedResourceState struct {
 	// have been deleted.
 	State string `json:"state,omitempty"`
 
+	// StateInitiator: Output only. The initiator of the QueuedResources's
+	// current state.
+	//
+	// Possible values:
+	//   "STATE_INITIATOR_UNSPECIFIED" - The state initiator is unspecified.
+	//   "USER" - The current QueuedResource state was initiated by the
+	// user.
+	//   "SERVICE" - The current QueuedResource state was initiated by the
+	// service.
+	StateInitiator string `json:"stateInitiator,omitempty"`
+
 	// SuspendedData: Further data for the suspended state.
 	SuspendedData *SuspendedData `json:"suspendedData,omitempty"`
 

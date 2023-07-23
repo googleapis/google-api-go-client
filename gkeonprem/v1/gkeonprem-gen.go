@@ -2461,8 +2461,8 @@ func (s *BareMetalOsEnvironmentConfig) MarshalJSON() ([]byte, error) {
 // BareMetalParallelUpgradeConfig: BareMetalParallelUpgradeConfig
 // defines the parallel upgrade settings for worker node pools.
 type BareMetalParallelUpgradeConfig struct {
-	// ConcurrentNodes: Required. The maximum number of nodes that can be
-	// upgraded at once. Defaults to 1.
+	// ConcurrentNodes: The maximum number of nodes that can be upgraded at
+	// once.
 	ConcurrentNodes int64 `json:"concurrentNodes,omitempty"`
 
 	// MinimumAvailableNodes: The minimum number of nodes that should be
@@ -4815,6 +4815,10 @@ type VmwareAdminControlPlaneNodeConfig struct {
 	// of the admin cluster.
 	Memory int64 `json:"memory,omitempty,string"`
 
+	// Replicas: The number of control plane nodes for this VMware admin
+	// cluster. (default: 1 replica).
+	Replicas int64 `json:"replicas,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "Cpus") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4875,6 +4879,37 @@ func (s *VmwareAdminF5BigIpConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VmwareAdminHAControlPlaneConfig: Specifies HA admin control plane
+// config.
+type VmwareAdminHAControlPlaneConfig struct {
+	// ControlPlaneIpBlock: Static IP addresses for the admin control plane
+	// nodes.
+	ControlPlaneIpBlock *VmwareIpBlock `json:"controlPlaneIpBlock,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ControlPlaneIpBlock")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ControlPlaneIpBlock") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareAdminHAControlPlaneConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareAdminHAControlPlaneConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VmwareAdminLoadBalancerConfig: VmwareAdminLoadBalancerConfig contains
 // load balancer configuration for VMware admin cluster.
 type VmwareAdminLoadBalancerConfig struct {
@@ -4886,6 +4921,10 @@ type VmwareAdminLoadBalancerConfig struct {
 
 	// MetalLbConfig: MetalLB load balancers.
 	MetalLbConfig *VmwareAdminMetalLbConfig `json:"metalLbConfig,omitempty"`
+
+	// SeesawConfig: Output only. Configuration for Seesaw typed load
+	// balancers.
+	SeesawConfig *VmwareAdminSeesawConfig `json:"seesawConfig,omitempty"`
 
 	// VipConfig: The VIPs used by the load balancer.
 	VipConfig *VmwareAdminVipConfig `json:"vipConfig,omitempty"`
@@ -4972,6 +5011,10 @@ type VmwareAdminNetworkConfig struct {
 	// DhcpIpConfig: Configuration settings for a DHCP IP configuration.
 	DhcpIpConfig *VmwareDhcpIpConfig `json:"dhcpIpConfig,omitempty"`
 
+	// HaControlPlaneConfig: Configuration for HA admin cluster control
+	// plane.
+	HaControlPlaneConfig *VmwareAdminHAControlPlaneConfig `json:"haControlPlaneConfig,omitempty"`
+
 	// HostConfig: Represents common network settings irrespective of the
 	// host's IP address.
 	HostConfig *VmwareHostConfig `json:"hostConfig,omitempty"`
@@ -5011,6 +5054,66 @@ type VmwareAdminNetworkConfig struct {
 
 func (s *VmwareAdminNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminNetworkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmwareAdminSeesawConfig: VmwareSeesawConfig represents configuration
+// parameters for an already existing Seesaw load balancer. IMPORTANT:
+// Please note that the Anthos On-Prem API will not generate or update
+// Seesaw configurations it can only bind a pre-existing configuration
+// to a new user cluster. IMPORTANT: When attempting to create a user
+// cluster with a pre-existing Seesaw load balancer you will need to
+// follow some preparation steps before calling the
+// 'CreateVmwareCluster' API method. First you will need to create the
+// user cluster's namespace via kubectl. The namespace will need to use
+// the following naming convention : -gke-onprem-mgmt or
+// -gke-onprem-mgmt depending on whether you used the
+// 'VmwareCluster.local_name' to disambiguate collisions; for more
+// context see the documentation of 'VmwareCluster.local_name'. Once the
+// namespace is created you will need to create a secret resource via
+// kubectl. This secret will contain copies of your Seesaw credentials.
+// The Secret must be called 'user-cluster-creds' and contain Seesaw's
+// SSH and Cert credentials. The credentials must be keyed with the
+// following names: 'seesaw-ssh-private-key', 'seesaw-ssh-public-key',
+// 'seesaw-ssh-ca-key', 'seesaw-ssh-ca-cert'.
+type VmwareAdminSeesawConfig struct {
+	// EnableHa: Enable two load balancer VMs to achieve a highly-available
+	// Seesaw load balancer.
+	EnableHa bool `json:"enableHa,omitempty"`
+
+	// Group: In general the following format should be used for the Seesaw
+	// group name: seesaw-for-[cluster_name].
+	Group string `json:"group,omitempty"`
+
+	// IpBlocks: The IP Blocks to be used by the Seesaw load balancer
+	IpBlocks []*VmwareIpBlock `json:"ipBlocks,omitempty"`
+
+	// MasterIp: MasterIP is the IP announced by the master of Seesaw group.
+	MasterIp string `json:"masterIp,omitempty"`
+
+	// Vms: Names of the VMs created for this Seesaw group.
+	Vms []string `json:"vms,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnableHa") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableHa") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareAdminSeesawConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareAdminSeesawConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5384,7 +5487,7 @@ type VmwareControlPlaneNodeConfig struct {
 	// cluster. (default: 1 replica).
 	Replicas int64 `json:"replicas,omitempty,string"`
 
-	// VsphereConfig: Output only. Vsphere-specific config.
+	// VsphereConfig: Vsphere-specific config.
 	VsphereConfig *VmwareControlPlaneVsphereConfig `json:"vsphereConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoResizeConfig") to
@@ -5897,8 +6000,7 @@ type VmwareNodeConfig struct {
 	// Taints: The initial taints assigned to nodes of this node pool.
 	Taints []*NodeTaint `json:"taints,omitempty"`
 
-	// VsphereConfig: Output only. Specifies the vSphere config for node
-	// pool.
+	// VsphereConfig: Specifies the vSphere config for node pool.
 	VsphereConfig *VmwareVsphereConfig `json:"vsphereConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to

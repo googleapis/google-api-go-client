@@ -7219,9 +7219,11 @@ func (c *EventsListCall) SingleEvents(singleEvents bool) *EventsListCall {
 // - sharedExtendedProperty
 // - timeMin
 // - timeMax
-// - updatedMin If the syncToken expires, the server will respond with a
-// 410 GONE response code and the client should clear its storage and
-// perform a full synchronization without any syncToken.
+// - updatedMin All other query parameters should be the same as for the
+// initial synchronization to avoid undefined behavior. If the syncToken
+// expires, the server will respond with a 410 GONE response code and
+// the client should clear its storage and perform a full
+// synchronization without any syncToken.
 // Learn more about incremental synchronization.
 //
 //	The default is to return all entries.
@@ -7463,7 +7465,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "boolean"
 	//     },
 	//     "syncToken": {
-	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin All other query parameters should be the same as for the initial synchronization to avoid undefined behavior. If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8643,9 +8645,11 @@ func (c *EventsWatchCall) SingleEvents(singleEvents bool) *EventsWatchCall {
 // - sharedExtendedProperty
 // - timeMin
 // - timeMax
-// - updatedMin If the syncToken expires, the server will respond with a
-// 410 GONE response code and the client should clear its storage and
-// perform a full synchronization without any syncToken.
+// - updatedMin All other query parameters should be the same as for the
+// initial synchronization to avoid undefined behavior. If the syncToken
+// expires, the server will respond with a 410 GONE response code and
+// the client should clear its storage and perform a full
+// synchronization without any syncToken.
 // Learn more about incremental synchronization.
 //
 //	The default is to return all entries.
@@ -8879,7 +8883,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "boolean"
 	//     },
 	//     "syncToken": {
-	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin All other query parameters should be the same as for the initial synchronization to avoid undefined behavior. If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

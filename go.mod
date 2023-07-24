@@ -14,8 +14,8 @@ require (
 	golang.org/x/oauth2 v0.10.0
 	golang.org/x/sync v0.3.0
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto/googleapis/bytestream v0.0.0-20230711160842-782d3b101e98
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230711160842-782d3b101e98
+	google.golang.org/genproto/googleapis/bytestream v0.0.0-20230720185612-659f7aaaa771
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230720185612-659f7aaaa771
 	google.golang.org/grpc v1.56.2
 	google.golang.org/protobuf v1.31.0
 )

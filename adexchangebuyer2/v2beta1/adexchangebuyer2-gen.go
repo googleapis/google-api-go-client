@@ -5014,6 +5014,7 @@ type PublisherProfileMobileApplication struct {
 	//   "SAMSUNG" - Samsung Galaxy Store
 	//   "VIVO" - VIVO App Store
 	//   "XIAOMI" - Xiaomi GetApps
+	//   "LG_TV" - LG TV
 	AppStore string `json:"appStore,omitempty"`
 
 	// ExternalAppId: The external ID for the app from its app store.

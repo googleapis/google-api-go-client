@@ -2273,8 +2273,8 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// rules.
 	Threshold float64 `json:"threshold,omitempty"`
 
-	// UniquenessExpectation: Aggregate rule which evaluates whether the
-	// column has duplicates.
+	// UniquenessExpectation: Row-level rule which evaluates whether each
+	// column value is unique.
 	UniquenessExpectation *GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation `json:"uniquenessExpectation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Column") to
@@ -2892,8 +2892,11 @@ func (s *GoogleCloudDataplexV1DataScan) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDataplexV1DataScanEvent: These messages contain
 // information about the execution of a datascan. The monitored resource
-// is 'DataScan'
+// is 'DataScan' Next ID: 13
 type GoogleCloudDataplexV1DataScanEvent struct {
+	// CreateTime: The time when the data scan job was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// DataProfile: Data profile result for data profile type data scan.
 	DataProfile *GoogleCloudDataplexV1DataScanEventDataProfileResult `json:"dataProfile,omitempty"`
 
@@ -2941,10 +2944,11 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified job state.
-	//   "STARTED" - Data scan started.
-	//   "SUCCEEDED" - Data scan successfully completed.
-	//   "FAILED" - Data scan was unsuccessful.
-	//   "CANCELLED" - Data scan was cancelled.
+	//   "STARTED" - Data scan job started.
+	//   "SUCCEEDED" - Data scan job successfully completed.
+	//   "FAILED" - Data scan job was unsuccessful.
+	//   "CANCELLED" - Data scan job was cancelled.
+	//   "CREATED" - Data scan job was createed.
 	State string `json:"state,omitempty"`
 
 	// Trigger: The trigger type of the data scan job.
@@ -2963,7 +2967,7 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	//   "DATA_QUALITY" - Data scan for data quality.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataProfile") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2971,10 +2975,10 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataProfile") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

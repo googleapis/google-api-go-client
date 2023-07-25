@@ -500,6 +500,9 @@ func (s *VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
 // VerifyChallengeResponseResult: Result message for
 // VerifiedAccess.VerifyChallengeResponse.
 type VerifyChallengeResponseResult struct {
+	// AttestedDeviceId: Attested device ID (ADID).
+	AttestedDeviceId string `json:"attestedDeviceId,omitempty"`
+
 	// CustomerId: Unique customer id that this device belongs to, as
 	// defined by the Google Admin SDK at
 	// https://developers.google.com/admin-sdk/directory/v1/guides/manage-customers
@@ -567,7 +570,7 @@ type VerifyChallengeResponseResult struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomerId") to
+	// ForceSendFields is a list of field names (e.g. "AttestedDeviceId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -575,12 +578,13 @@ type VerifyChallengeResponseResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AttestedDeviceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

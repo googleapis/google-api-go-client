@@ -6,7 +6,7 @@
 
 // Package cloudbilling provides access to the Cloud Billing API.
 //
-// For product documentation, see: https://cloud.google.com/billing/
+// For product documentation, see: https://cloud.google.com/billing/docs/apis
 //
 // # Creating a client
 //

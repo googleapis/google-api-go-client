@@ -2238,6 +2238,9 @@ type TagKey struct {
 	// `https://www.googleapis.com/compute/staging_v1/projects/fail-closed-lo
 	// ad-testing/global/networks/6992953698831725600` -
 	// `fail-closed-load-testing/load-testing-network`
+	//   "DATA_GOVERNANCE" - Purpose for data governance. Tag Values created
+	// under a key with this purpose may have Tag Value children. No
+	// `purpose_data` should be set.
 	Purpose string `json:"purpose,omitempty"`
 
 	// PurposeData: Optional. Purpose data corresponds to the policy system

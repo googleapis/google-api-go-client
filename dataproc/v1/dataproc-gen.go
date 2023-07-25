@@ -1685,11 +1685,11 @@ func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 
 // ExecutionConfig: Execution configuration for a workload.
 type ExecutionConfig struct {
-	// IdleTtl: Optional. The duration to keep the session alive while it's
-	// idling. Exceeding this threshold causes the session to terminate.
-	// This field cannot be set on a batch workload. Minimum value is 10
-	// minutes; maximum value is 14 days (see JSON representation of
-	// Duration
+	// IdleTtl: Optional. Applies to sessions only. The duration to keep the
+	// session alive while it's idling. Exceeding this threshold causes the
+	// session to terminate. This field cannot be set on a batch workload.
+	// Minimum value is 10 minutes; maximum value is 14 days (see JSON
+	// representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	// Defaults to 4 hours if not set. If both ttl and idle_ttl are
 	// specified for an interactive session, the conditions are treated as
@@ -1822,6 +1822,63 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FlinkJob: A Dataproc job for running Apache Flink
+// (https://flink.apache.org/) applications on YARN.
+type FlinkJob struct {
+	// Args: Optional. The arguments to pass to the driver. Do not include
+	// arguments, such as --conf, that can be set as job properties, since a
+	// collision may occur that causes an incorrect job submission.
+	Args []string `json:"args,omitempty"`
+
+	// JarFileUris: Optional. HCFS URIs of jar files to add to the
+	// CLASSPATHs of the Flink driver and tasks.
+	JarFileUris []string `json:"jarFileUris,omitempty"`
+
+	// LoggingConfig: Optional. The runtime log config for job execution.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
+
+	// MainClass: The name of the driver's main class. The jar file that
+	// contains the class must be in the default CLASSPATH or specified in
+	// jar_file_uris.
+	MainClass string `json:"mainClass,omitempty"`
+
+	// MainJarFileUri: The HCFS URI of the jar file that contains the main
+	// class.
+	MainJarFileUri string `json:"mainJarFileUri,omitempty"`
+
+	// Properties: Optional. A mapping of property names to values, used to
+	// configure Flink. Properties that conflict with values set by the
+	// Dataproc API may beoverwritten. Can include properties set
+	// in/etc/flink/conf/flink-defaults.conf and classes in user code.
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// SavepointUri: Optional. HCFS URI of the savepoint which contains the
+	// last saved progress for this job
+	SavepointUri string `json:"savepointUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FlinkJob) MarshalJSON() ([]byte, error) {
+	type NoMethod FlinkJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GceClusterConfig: Common config settings for resources of Compute
 // Engine cluster instances, applicable to all instances in the cluster.
 type GceClusterConfig struct {
@@ -1839,8 +1896,8 @@ type GceClusterConfig struct {
 	// without external IP addresses.
 	InternalIpOnly bool `json:"internalIpOnly,omitempty"`
 
-	// Metadata: The Compute Engine metadata entries to add to all instances
-	// (see Project and instance metadata
+	// Metadata: Optional. The Compute Engine metadata entries to add to all
+	// instances (see Project and instance metadata
 	// (https://cloud.google.com/compute/docs/storing-retrieving-metadata#project_and_instance_metadata)).
 	Metadata map[string]string `json:"metadata,omitempty"`
 
@@ -2820,6 +2877,9 @@ type Job struct {
 
 	// DriverSchedulingConfig: Optional. Driver scheduling configuration.
 	DriverSchedulingConfig *DriverSchedulingConfig `json:"driverSchedulingConfig,omitempty"`
+
+	// FlinkJob: Optional. Job is a Flink job.
+	FlinkJob *FlinkJob `json:"flinkJob,omitempty"`
 
 	// HadoopJob: Optional. Job is a Hadoop job.
 	HadoopJob *HadoopJob `json:"hadoopJob,omitempty"`
@@ -4871,9 +4931,14 @@ func (s *RuntimeConfig) MarshalJSON() ([]byte, error) {
 
 // RuntimeInfo: Runtime information about workload execution.
 type RuntimeInfo struct {
-	// ApproximateUsage: Output only. Approximate workload resource usage
-	// calculated after workload finishes (see Dataproc Serverless pricing
-	// (https://cloud.google.com/dataproc-serverless/pricing)).
+	// ApproximateUsage: Output only. Approximate workload resource usage,
+	// calculated when the workload completes (see Dataproc Serverless
+	// pricing (https://cloud.google.com/dataproc-serverless/pricing)).Note:
+	// This metric calculation may change in the future, for example, to
+	// capture cumulative workload resource consumption during workload
+	// execution (see the Dataproc Serverless release notes
+	// (https://cloud.google.com/dataproc-serverless/docs/release-notes) for
+	// announcements, changes, fixes and other Dataproc developments).
 	ApproximateUsage *UsageMetrics `json:"approximateUsage,omitempty"`
 
 	// CurrentUsage: Output only. Snapshot of current workload resource
@@ -6011,18 +6076,28 @@ func (s *UsageMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UsageSnapshot: The usage snaphot represents the resources consumed by
-// a workload at a specified time.
+// UsageSnapshot: The usage snapshot represents the resources consumed
+// by a workload at a specified time.
 type UsageSnapshot struct {
 	// MilliDcu: Optional. Milli (one-thousandth) Dataproc Compute Units
 	// (DCUs) (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	MilliDcu int64 `json:"milliDcu,omitempty,string"`
 
+	// MilliDcuPremium: Optional. Milli (one-thousandth) Dataproc Compute
+	// Units (DCUs) charged at premium tier (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
+	MilliDcuPremium int64 `json:"milliDcuPremium,omitempty,string"`
+
 	// ShuffleStorageGb: Optional. Shuffle Storage in gigabytes (GB). (see
 	// Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing))
 	ShuffleStorageGb int64 `json:"shuffleStorageGb,omitempty,string"`
+
+	// ShuffleStorageGbPremium: Optional. Shuffle Storage in gigabytes (GB)
+	// charged at premium tier. (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing))
+	ShuffleStorageGbPremium int64 `json:"shuffleStorageGbPremium,omitempty,string"`
 
 	// SnapshotTime: Optional. The timestamp of the usage snapshot.
 	SnapshotTime string `json:"snapshotTime,omitempty"`
@@ -7915,9 +7990,9 @@ type ProjectsLocationsBatchesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the batch workload resource. If the batch is not in
-// terminal state, the delete fails and the response returns
-// FAILED_PRECONDITION.
+// Delete: Deletes the batch workload resource. If the batch is not in a
+// CANCELLED, SUCCEEDED or FAILED State, the delete operation fails and
+// the response returns FAILED_PRECONDITION.
 //
 //   - name: The fully qualified name of the batch to retrieve in the
 //     format
@@ -8014,7 +8089,7 @@ func (c *ProjectsLocationsBatchesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the batch workload resource. If the batch is not in terminal state, the delete fails and the response returns FAILED_PRECONDITION.",
+	//   "description": "Deletes the batch workload resource. If the batch is not in a CANCELLED, SUCCEEDED or FAILED State, the delete operation fails and the response returns FAILED_PRECONDITION.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dataproc.projects.locations.batches.delete",

@@ -1668,6 +1668,9 @@ type OSPolicy struct {
 	// to 1024 characters.
 	Description string `json:"description,omitempty"`
 
+	// Fingerprint: OSPolicy fingerprint (checksum)
+	Fingerprint string `json:"fingerprint,omitempty"`
+
 	// Id: Required. The id of the OS policy with the following
 	// restrictions: * Must contain only lowercase letters, numbers, and
 	// hyphens. * Must start with a letter. * Must be between 1-63

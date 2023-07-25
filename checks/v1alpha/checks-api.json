@@ -309,6 +309,31 @@
                 "$ref": "Empty"
               }
             },
+            "find": {
+              "description": "Finds the privacy policy of a given website.",
+              "flatPath": "v1alpha/projects/{projectsId}/privacyPolicies:find",
+              "httpMethod": "POST",
+              "id": "checks.projects.privacyPolicies.find",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. Resource name of the GCP project to which PrivacyPolicy resources will be added, in the format: `projects/{projectNumber}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+parent}/privacyPolicies:find",
+              "request": {
+                "$ref": "FindPrivacyPolicyRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              }
+            },
             "get": {
               "description": "Gets a privacy policy.",
               "flatPath": "v1alpha/projects/{projectsId}/privacyPolicies/{privacyPoliciesId}",
@@ -491,7 +516,7 @@
       }
     }
   },
-  "revision": "20230720",
+  "revision": "20230723",
   "rootUrl": "https://checks.googleapis.com/",
   "schemas": {
     "AnalyzePrivacyPolicyRequest": {
@@ -577,6 +602,17 @@
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "FindPrivacyPolicyRequest": {
+      "description": "Request message for `FindPrivacyPolicy`.",
+      "id": "FindPrivacyPolicyRequest",
+      "properties": {
+        "websiteUri": {
+          "description": "Required. URI for the website from where to find the privacy policy.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "LastUpdatedDate": {

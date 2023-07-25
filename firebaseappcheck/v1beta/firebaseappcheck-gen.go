@@ -1833,6 +1833,10 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// Identity Platform)
 	Name string `json:"name,omitempty"`
 
+	// UpdateTime: Output only. Timestamp when this service configuration
+	// object was most recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

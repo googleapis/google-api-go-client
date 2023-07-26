@@ -1419,10 +1419,14 @@ type CaseClassificationsSearchCall struct {
 // classification containing all levels of the hierarchy, separated by
 // " > ". For example "Technical Issue > Compute > Compute Engine".
 // Classification IDs returned by `caseClassifications.search` are
-// guaranteed to be valid for at least 6 months. If a given
-// classification is deactiveated, it will immediately stop being
-// returned. After 6 months, `case.create` requests using the
-// classification ID will fail.
+// guaranteed to be valid for at least six months. If a given
+// classification is deactivated, it immediately stops being returned.
+// After six months, `case.create` requests using the classification ID
+// will fail. Here is an example of calling this endpoint using cURL:
+// ```shell curl \ --header "Authorization: Bearer $(gcloud auth
+// print-access-token)" \
+// 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?que
+// ry=display_name:"*Compute%20Engine*"' ```
 func (r *CaseClassificationsService) Search() *CaseClassificationsSearchCall {
 	c := &CaseClassificationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1549,7 +1553,7 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve valid classifications to be used when creating a support case. The classications are hierarchical, with each classification containing all levels of the hierarchy, separated by `\" \u003e \"`. For example `\"Technical Issue \u003e Compute \u003e Compute Engine\"`. Classification IDs returned by `caseClassifications.search` are guaranteed to be valid for at least 6 months. If a given classification is deactiveated, it will immediately stop being returned. After 6 months, `case.create` requests using the classification ID will fail.",
+	//   "description": "Retrieve valid classifications to be used when creating a support case. The classications are hierarchical, with each classification containing all levels of the hierarchy, separated by `\" \u003e \"`. For example `\"Technical Issue \u003e Compute \u003e Compute Engine\"`. Classification IDs returned by `caseClassifications.search` are guaranteed to be valid for at least six months. If a given classification is deactivated, it immediately stops being returned. After six months, `case.create` requests using the classification ID will fail. Here is an example of calling this endpoint using cURL: ```shell curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=display_name:\"*Compute%20Engine*\"' ```",
 	//   "flatPath": "v2/caseClassifications:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.caseClassifications.search",
@@ -1615,7 +1619,12 @@ type CasesCloseCall struct {
 	header_          http.Header
 }
 
-// Close: Close the specified case.
+// Close: Close the specified case. Here is an example of calling this
+// endpoint using cURL: ```shell
+// case="projects/cloud-support-qa-premium/cases/43595344" curl \
+// --request POST \ --header "Authorization: Bearer $(gcloud auth
+// print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$case:close" ```
 //
 // - name: The fully qualified name of the case resource to be closed.
 func (r *CasesService) Close(name string, closecaserequest *CloseCaseRequest) *CasesCloseCall {
@@ -1716,7 +1725,7 @@ func (c *CasesCloseCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Close the specified case.",
+	//   "description": "Close the specified case. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/cloud-support-qa-premium/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case:close\" ```",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}:close",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.close",
@@ -1759,7 +1768,18 @@ type CasesCreateCall struct {
 
 // Create: Create a new case and associate it with the given Google
 // Cloud Resource. The case object must have the following fields set:
-// `display_name`, `description`, `classification`, and `priority`.
+// `display_name`, `description`, `classification`, and `priority`. Here
+// is an example of calling this endpoint using cURL: ```shell
+// parent="projects/some-project" curl \ --request POST \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \ --header
+// 'Content-Type: application/json' \ --data '{ "display_name": "Test
+// case created by me.", "description": "a random test case, feel free
+// to close", "classification": { "id":
+// "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2
+// TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8" }, "time_zone":
+// "-07:00", "subscriber_email_addresses": [ "foo@domain.com",
+// "bar@domain.com" ], "testCase": true, "priority": "P3" }' \
+// "https://cloudsupport.googleapis.com/v2/$parent/cases" ```
 //
 //   - parent: The name of the Google Cloud Resource under which the case
 //     should be created.
@@ -1861,7 +1881,7 @@ func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new case and associate it with the given Google Cloud Resource. The case object must have the following fields set: `display_name`, `description`, `classification`, and `priority`.",
+	//   "description": "Create a new case and associate it with the given Google Cloud Resource. The case object must have the following fields set: `display_name`, `description`, `classification`, and `priority`. Here is an example of calling this endpoint using cURL: ```shell parent=\"projects/some-project\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header 'Content-Type: application/json' \\ --data '{ \"display_name\": \"Test case created by me.\", \"description\": \"a random test case, feel free to close\", \"classification\": { \"id\": \"100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8\" }, \"time_zone\": \"-07:00\", \"subscriber_email_addresses\": [ \"foo@domain.com\", \"bar@domain.com\" ], \"testCase\": true, \"priority\": \"P3\" }' \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ```",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.create",
@@ -1902,12 +1922,19 @@ type CasesEscalateCall struct {
 	header_             http.Header
 }
 
-// Escalate: Escalate a case. Escalating a case will initiate the Google
+// Escalate: Escalate a case. Escalating a case initiates the Google
 // Cloud Support escalation management process. This operation is only
-// available to certain Customer Care tiers. Go to
+// available to certain Customer Care support services. Go to
 // https://cloud.google.com/support and look for 'Technical support
-// escalations' in the feature list to find out which tiers are able to
-// perform escalations.
+// escalations' in the feature list to find out which support services
+// let you perform escalations. Here is an example of calling this
+// endpoint using cURL: ```shell
+// case="projects/some-project/cases/43595344" curl \ --request POST \
+// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+// --header "Content-Type: application/json" \ --data '{ "escalation": {
+// "reason": "BUSINESS_IMPACT", "justification": "This is a test
+// escalation." } }' \
+// "https://cloudsupport.googleapis.com/v2/$case:escalate" ```
 //
 //   - name: The fully qualified name of the Case resource to be
 //     escalated.
@@ -2009,7 +2036,7 @@ func (c *CasesEscalateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Escalate a case. Escalating a case will initiate the Google Cloud Support escalation management process. This operation is only available to certain Customer Care tiers. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which tiers are able to perform escalations.",
+	//   "description": "Escalate a case. Escalating a case initiates the Google Cloud Support escalation management process. This operation is only available to certain Customer Care support services. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which support services let you perform escalations. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"escalation\": { \"reason\": \"BUSINESS_IMPACT\", \"justification\": \"This is a test escalation.\" } }' \\ \"https://cloudsupport.googleapis.com/v2/$case:escalate\" ```",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}:escalate",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.escalate",
@@ -2050,7 +2077,11 @@ type CasesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve the specified case.
+// Get: Retrieve the specified case. Here is an example of calling this
+// endpoint using cURL: ```shell
+// case="projects/some-project/cases/16033687" curl \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$case" ```
 //
 // - name: The fully qualified name of a case to be retrieved.
 func (r *CasesService) Get(name string) *CasesGetCall {
@@ -2158,7 +2189,7 @@ func (c *CasesGetCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve the specified case.",
+	//   "description": "Retrieve the specified case. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/16033687\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case\" ```",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.get",
@@ -2197,10 +2228,13 @@ type CasesListCall struct {
 }
 
 // List: Retrieve all cases under the specified parent. Note: Listing
-// cases under an Organization returns only the cases directly parented
+// cases under an organization returns only the cases directly parented
 // by that organization. To retrieve all cases under an organization,
 // including cases parented by projects under that organization, use
-// `cases.search`.
+// `cases.search`. Here is an example of calling this endpoint using
+// cURL: ```shell parent="projects/some-project" curl \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$parent/cases" ```
 //
 //   - parent: The fully qualified name of parent resource to list cases
 //     under.
@@ -2340,7 +2374,7 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve all cases under the specified parent. Note: Listing cases under an Organization returns only the cases directly parented by that organization. To retrieve all cases under an organization, including cases parented by projects under that organization, use `cases.search`.",
+	//   "description": "Retrieve all cases under the specified parent. Note: Listing cases under an organization returns only the cases directly parented by that organization. To retrieve all cases under an organization, including cases parented by projects under that organization, use `cases.search`. Here is an example of calling this endpoint using cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ```",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.list",
@@ -2416,7 +2450,13 @@ type CasesPatchCall struct {
 }
 
 // Patch: Update the specified case. Only a subset of fields can be
-// updated.
+// updated. Here is an example of calling this endpoint using cURL:
+// ```shell case="projects/some-project/cases/43595344" curl \ --request
+// PATCH \ --header "Authorization: Bearer $(gcloud auth
+// print-access-token)" \ --header "Content-Type: application/json" \
+// --data '{ "priority": "P1" }' \
+// "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority"
+// ```
 //
 // - name: The resource name for the case.
 func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
@@ -2531,7 +2571,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the specified case. Only a subset of fields can be updated.",
+	//   "description": "Update the specified case. Only a subset of fields can be updated. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request PATCH \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"priority\": \"P1\" }' \\ \"https://cloudsupport.googleapis.com/v2/$case?updateMask=priority\" ```",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudsupport.cases.patch",
@@ -2578,7 +2618,11 @@ type CasesSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search cases using the specified query.
+// Search: Search cases using the specified query. Here is an example of
+// calling this endpoint using cURL: ```shell
+// parent="projects/some-project" curl \ --header "Authorization: Bearer
+// $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$parent/cases:search" ```
 //
 //   - parent: The fully qualified name of parent resource to search cases
 //     under.
@@ -2731,7 +2775,7 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Search cases using the specified query.",
+	//   "description": "Search cases using the specified query. Here is an example of calling this endpoint using cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases:search\" ```",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.search",

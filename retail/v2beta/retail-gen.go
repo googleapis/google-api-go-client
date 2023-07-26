@@ -1556,19 +1556,6 @@ type GoogleCloudRetailV2alphaEnrollSolutionResponse struct {
 	//   "SOLUTION_TYPE_SEARCH" - Used for Retail Search.
 	EnrolledSolution string `json:"enrolledSolution,omitempty"`
 
-	// SearchSolutionUseCase: Search solution use case that the project has
-	// enrolled.
-	//
-	// Possible values:
-	//   "SEARCH_SOLUTION_USE_CASE_UNSPECIFIED" - The value when it's
-	// unspecified. In this case, server behavior defaults to
-	// SEARCH_SOLUTION_USE_CASE_SEARCH.
-	//   "SEARCH_SOLUTION_USE_CASE_SEARCH" - Search use case. Expects the
-	// traffic has a non-empty query.
-	//   "SEARCH_SOLUTION_USE_CASE_BROWSE" - Browse use case. Expects the
-	// traffic has an empty query.
-	SearchSolutionUseCase string `json:"searchSolutionUseCase,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EnrolledSolution") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

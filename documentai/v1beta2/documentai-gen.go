@@ -210,7 +210,7 @@ type ProjectsOperationsService struct {
 // GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata: Metadata of
 // the auto-labeling documents operation.
 type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// IndividualAutoLabelStatuses: The list of individual auto-labeling
@@ -284,7 +284,7 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsResponse struct {
 }
 
 type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// ErrorDocumentCount: Total number of documents that failed to be
@@ -361,14 +361,14 @@ type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse struct {
 }
 
 type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// DestDatasetType: The destination dataset split type.
 	//
 	// Possible values:
 	//   "DATASET_SPLIT_TYPE_UNSPECIFIED" - Default value if the enum is not
-	// set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum
+	// set.
 	//   "DATASET_SPLIT_TRAIN" - Identifies the train documents.
 	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
 	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
@@ -378,7 +378,7 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
 	//
 	// Possible values:
 	//   "DATASET_SPLIT_TYPE_UNSPECIFIED" - Default value if the enum is not
-	// set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum
+	// set.
 	//   "DATASET_SPLIT_TRAIN" - Identifies the train documents.
 	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
 	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
@@ -890,7 +890,7 @@ func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) Marshal
 // GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata: Metadata of
 // the batch export documents operation.
 type GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// IndividualExportStatuses: The list of response details of each
@@ -967,7 +967,7 @@ type GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat struct
 	//
 	// Possible values:
 	//   "DATASET_SPLIT_TYPE_UNSPECIFIED" - Default value if the enum is not
-	// set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum
+	// set.
 	//   "DATASET_SPLIT_TRAIN" - Identifies the train documents.
 	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
 	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
@@ -1069,7 +1069,7 @@ func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse) MarshalJS
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata: Metadata of
 // the import document operation.
 type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// ImportConfigValidationResults: Validation statuses of the batch
@@ -1110,9 +1110,9 @@ func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([
 
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValid
 // ationResult: The validation status of each import config. Status is
-// set to errors if there is no documents to import in the
-// import_config, or OK if the operation will try to proceed at least
-// one document.
+// set to an error if there are no documents to import in the
+// `import_config`, or `OK` if the operation will try to proceed with at
+// least one document.
 type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult struct {
 	// InputGcsSource: The source Cloud Storage URI specified in the import
 	// config.
@@ -1255,7 +1255,7 @@ func (s *GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse) MarshalJS
 // GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata: The metadata
 // proto of ResyncDataset method.
 type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// DatasetResyncStatuses: The list of dataset resync statuses. Not
@@ -1398,8 +1398,8 @@ type GoogleCloudDocumentaiUiv1beta3RevisionRef struct {
 	// RevisionCase: Reads the revision by the predefined case.
 	//
 	// Possible values:
-	//   "REVISION_CASE_UNSPECIFIED" - Unspecified case, fallback to read
-	// the LATEST_HUMAN_REVIEW.
+	//   "REVISION_CASE_UNSPECIFIED" - Unspecified case, fall back to read
+	// the `LATEST_HUMAN_REVIEW`.
 	//   "LATEST_HUMAN_REVIEW" - The latest revision made by a human.
 	//   "LATEST_TIMESTAMP" - The latest revision based on timestamp.
 	//   "BASE_OCR_REVISION" - The first (OCR) revision.
@@ -1436,7 +1436,7 @@ func (s *GoogleCloudDocumentaiUiv1beta3RevisionRef) MarshalJSON() ([]byte, error
 // GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata: Metadata of
 // the sample documents operation.
 type GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
@@ -1712,7 +1712,7 @@ type GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse struct {
 }
 
 type GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
@@ -7338,7 +7338,7 @@ func (s *GoogleCloudDocumentaiV1beta2Vertex) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// ErrorDocumentCount: Total number of documents that failed to be
@@ -8122,7 +8122,7 @@ func (s *GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, e
 // GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata: Metadata of the
 // import document operation.
 type GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// ImportConfigValidationResults: Validation statuses of the batch
@@ -8163,8 +8163,9 @@ func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata) MarshalJSON() ([]b
 
 // GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidat
 // ionResult: The validation status of each import config. Status is set
-// to errors if there is no documents to import in the import_config, or
-// OK if the operation will try to proceed at least one document.
+// to an error if there are no documents to import in the
+// `import_config`, or `OK` if the operation will try to proceed with at
+// least one document.
 type GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidationResult struct {
 	// InputGcsSource: The source Cloud Storage URI specified in the import
 	// config.
@@ -8411,8 +8412,8 @@ type GoogleCloudDocumentaiV1beta3RevisionRef struct {
 	// RevisionCase: Reads the revision by the predefined case.
 	//
 	// Possible values:
-	//   "REVISION_CASE_UNSPECIFIED" - Unspecified case, fallback to read
-	// the LATEST_HUMAN_REVIEW.
+	//   "REVISION_CASE_UNSPECIFIED" - Unspecified case, fall back to read
+	// the `LATEST_HUMAN_REVIEW`.
 	//   "LATEST_HUMAN_REVIEW" - The latest revision made by a human.
 	//   "LATEST_TIMESTAMP" - The latest revision based on timestamp.
 	//   "BASE_OCR_REVISION" - The first (OCR) revision.
@@ -8631,7 +8632,7 @@ type GoogleCloudDocumentaiV1beta3UndeployProcessorVersionResponse struct {
 }
 
 type GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
+	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to

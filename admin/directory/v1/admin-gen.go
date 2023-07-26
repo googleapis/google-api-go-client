@@ -1591,6 +1591,23 @@ type ChromeOsDevice struct {
 	// DeviceId: The unique ID of the Chrome device.
 	DeviceId string `json:"deviceId,omitempty"`
 
+	// DeviceLicenseType: Output only. Device license type.
+	//
+	// Possible values:
+	//   "deviceLicenseTypeUnspecified" - UNSPECIFIED type.
+	//   "enterprise" - Indicating the device is a
+	// Chromebook/Chromebox/Chromebase enterprise, which is packaged with an
+	// upgrade(license).
+	//   "enterpriseUpgrade" - Indicating the device is consuming standalone
+	// Chrome Enterprise Upgrade, a Chrome Enterprise license.
+	//   "educationUpgrade" - Indicating the device is consuming Chrome
+	// Education Upgrade(AKA Chrome EDU perpetual license).
+	//   "education" - Packaged with a license as education.
+	//   "terminal" - Packaged with a license as terminal.
+	//   "kioskUpgrade" - Indicating the device is consuming standalone
+	// Chrome Kiosk Upgrade, a Chrome Kiosk (annual) license.
+	DeviceLicenseType string `json:"deviceLicenseType,omitempty"`
+
 	// DiskVolumeReports: Reports of disk space and other info about
 	// mounted/connected volumes.
 	DiskVolumeReports []*ChromeOsDeviceDiskVolumeReports `json:"diskVolumeReports,omitempty"`

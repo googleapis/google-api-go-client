@@ -2329,6 +2329,19 @@ func (s *DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
 
 // DeviceRadioState: Controls for device radio settings.
 type DeviceRadioState struct {
+	// AirplaneModeState: Controls whether airplane mode can be toggled by
+	// the user or not
+	//
+	// Possible values:
+	//   "AIRPLANE_MODE_STATE_UNSPECIFIED" - Unspecified. Defaults to
+	// AIRPLANE_MODE_USER_CHOICE
+	//   "AIRPLANE_MODE_USER_CHOICE" - The user is allowed to toggle
+	// airplane mode on or off.
+	//   "AIRPLANE_MODE_DISABLED" - Airplane mode is disabled. The user is
+	// not allowed to toggle airplane mode on. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 9.
+	AirplaneModeState string `json:"airplaneModeState,omitempty"`
+
 	// WifiState: Controls current state of Wi-Fi and if user can change its
 	// state.
 	//
@@ -2344,20 +2357,21 @@ type DeviceRadioState struct {
 	// Android version is less than 13.
 	WifiState string `json:"wifiState,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "WifiState") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AirplaneModeState")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "WifiState") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AirplaneModeState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

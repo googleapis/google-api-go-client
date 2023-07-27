@@ -3351,6 +3351,11 @@ type MigrationJob struct {
 	// projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
 	Name string `json:"name,omitempty"`
 
+	// PerformanceConfig: Optional. Data dump parallelism settings used by
+	// the migration. Currently applicable only for MySQL to Cloud SQL for
+	// MySQL migrations only.
+	PerformanceConfig *PerformanceConfig `json:"performanceConfig,omitempty"`
+
 	// Phase: Output only. The current migration job phase.
 	//
 	// Possible values:
@@ -3876,6 +3881,42 @@ type PackageEntity struct {
 
 func (s *PackageEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageEntity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceConfig: Performance configuration definition.
+type PerformanceConfig struct {
+	// DumpParallelLevel: Initial dump parallelism level.
+	//
+	// Possible values:
+	//   "DUMP_PARALLEL_LEVEL_UNSPECIFIED" - Unknown dump parallel level.
+	// Will be defaulted to OPTIMAL.
+	//   "MIN" - Minimal parallel level.
+	//   "OPTIMAL" - Optimal parallel level.
+	//   "MAX" - Maximum parallel level.
+	DumpParallelLevel string `json:"dumpParallelLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DumpParallelLevel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DumpParallelLevel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerformanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

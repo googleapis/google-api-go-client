@@ -4504,6 +4504,11 @@ type Space struct {
 	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ExternalUserAllowed: Immutable. Whether this space permits any Google
+	// Chat user as a member. Input when creating a space. For existing
+	// spaces, this field is output only.
+	ExternalUserAllowed bool `json:"externalUserAllowed,omitempty"`
+
 	// Name: Resource name of the space. Format: `spaces/{space}`
 	Name string `json:"name,omitempty"`
 
@@ -8007,9 +8012,7 @@ type SpacesMessagesListCall struct {
 // see List messages (/chat/api/guides/v1/messages/list). Requires user
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.messages` or `chat.messages.readonly` authorization scope. This
-// method is only supported in spaces that don't allow users from
-// outside the Workspace organization to join.
+// `chat.messages` or `chat.messages.readonly` authorization scope.
 //
 //   - parent: The resource name of the space to list messages from.
 //     Format: `spaces/{space}`.
@@ -8185,7 +8188,7 @@ func (c *SpacesMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessages
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists messages in a space that the caller is a member of, including messages from blocked members and spaces. For an example, see [List messages](/chat/api/guides/v1/messages/list). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.readonly` authorization scope. This method is only supported in spaces that don't allow users from outside the Workspace organization to join.",
+	//   "description": "Lists messages in a space that the caller is a member of, including messages from blocked members and spaces. For an example, see [List messages](/chat/api/guides/v1/messages/list). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.readonly` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.list",

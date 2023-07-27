@@ -1638,9 +1638,8 @@ type CasesCloseCall struct {
 
 // Close: Close the specified case. Here is an example of calling this
 // endpoint using cURL: ```shell
-// case="projects/cloud-support-qa-premium/cases/43595344" curl \
-// --request POST \ --header "Authorization: Bearer $(gcloud auth
-// print-access-token)" \
+// case="projects/some-project/cases/43595344" curl \ --request POST \
+// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
 // "https://cloudsupport.googleapis.com/v2/$case:close" ```
 //
 // - name: The fully qualified name of the case resource to be closed.
@@ -1742,7 +1741,7 @@ func (c *CasesCloseCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Close the specified case. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/cloud-support-qa-premium/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case:close\" ```",
+	//   "description": "Close the specified case. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case:close\" ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}:close",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.close",
@@ -2862,7 +2861,11 @@ type CasesAttachmentsListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieve all attachments associated with a support case.
+// List: Retrieve all attachments associated with a support case. Here
+// is an example of calling this endpoint using cURL: ```shell
+// case="projects/some-project/cases/23598314" curl \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$case/attachments" ```
 //
 //   - parent: The resource name of Case object for which attachments
 //     should be listed.
@@ -2987,7 +2990,7 @@ func (c *CasesAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListAttach
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve all attachments associated with a support case.",
+	//   "description": "Retrieve all attachments associated with a support case. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/23598314\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case/attachments\" ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}/attachments",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.attachments.list",
@@ -3058,7 +3061,13 @@ type CasesCommentsCreateCall struct {
 }
 
 // Create: Add a new comment to the specified Case. The comment object
-// must have the following fields set: body.
+// must have the following fields set: body. Here is an example of
+// calling this endpoint using cURL: ```shell
+// case="projects/some-project/cases/43591344" curl \ --request POST \
+// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+// --header 'Content-Type: application/json' \ --data '{ "body": "This
+// is a test comment." }' \
+// "https://cloudsupport.googleapis.com/v2/$case/comments" ```
 //
 //   - parent: The resource name of Case to which this comment should be
 //     added.
@@ -3160,7 +3169,7 @@ func (c *CasesCommentsCreateCall) Do(opts ...googleapi.CallOption) (*Comment, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Add a new comment to the specified Case. The comment object must have the following fields set: body.",
+	//   "description": "Add a new comment to the specified Case. The comment object must have the following fields set: body. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/43591344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header 'Content-Type: application/json' \\ --data '{ \"body\": \"This is a test comment.\" }' \\ \"https://cloudsupport.googleapis.com/v2/$case/comments\" ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}/comments",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.comments.create",
@@ -3201,7 +3210,11 @@ type CasesCommentsListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieve all Comments associated with the Case object.
+// List: Retrieve all comments associated with the Case object. Here is
+// an example of calling this endpoint using cURL: ```shell
+// case="projects/cloud-support-qa-premium/cases/43595344" curl \
+// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$case/comments" ```
 //
 //   - parent: The resource name of Case object for which comments should
 //     be listed.
@@ -3325,7 +3338,7 @@ func (c *CasesCommentsListCall) Do(opts ...googleapi.CallOption) (*ListCommentsR
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve all Comments associated with the Case object.",
+	//   "description": "Retrieve all comments associated with the Case object. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/cloud-support-qa-premium/cases/43595344\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case/comments\" ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}/comments",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.comments.list",
@@ -3396,7 +3409,12 @@ type MediaDownloadCall struct {
 }
 
 // Download: Download a file attachment on a case. Note: HTTP requests
-// must append "?alt=media" to the URL.
+// must append "?alt=media" to the URL. Here is an example of calling
+// this endpoint using cURL: ```shell
+// name="projects/some-project/cases/43594844/attachments/0674M00000WijAn
+// ZAJ" curl \ --header "Authorization: Bearer $(gcloud auth
+// print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$name:download?alt=media" ```
 //
 // - name: The resource name of the attachment to be downloaded.
 func (r *MediaService) Download(name string) *MediaDownloadCall {
@@ -3520,7 +3538,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Download a file attachment on a case. Note: HTTP requests must append \"?alt=media\" to the URL.",
+	//   "description": "Download a file attachment on a case. Note: HTTP requests must append \"?alt=media\" to the URL. Here is an example of calling this endpoint using cURL: ```shell name=\"projects/some-project/cases/43594844/attachments/0674M00000WijAnZAJ\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$name:download?alt=media\" ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}/attachments/{attachmentsId}:download",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.media.download",
@@ -3562,7 +3580,14 @@ type MediaUploadCall struct {
 }
 
 // Upload: Create a file attachment on a case or Cloud resource. The
-// attachment object must have the following fields set: filename.
+// attachment object must have the following fields set: filename. Here
+// is an example of calling this endpoint using cURL: ```shell echo
+// "This text is in a file I'm uploading using CSAPI." \ >
+// "./example_file.txt" case="projects/some-project/cases/43594844" curl
+// \ --header "Authorization: Bearer $(gcloud auth print-access-token)"
+// \ --data-binary @"./example_file.txt" \
+// "https://cloudsupport.googleapis.com/upload/v2beta/$case/attachments?a
+// ttachment.filename=uploaded_via_curl.txt" ```
 //
 //   - parent: The resource name of the case (or case parent) to which the
 //     attachment should be attached.
@@ -3731,7 +3756,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Attachment, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a file attachment on a case or Cloud resource. The attachment object must have the following fields set: filename.",
+	//   "description": "Create a file attachment on a case or Cloud resource. The attachment object must have the following fields set: filename. Here is an example of calling this endpoint using cURL: ```shell echo \"This text is in a file I'm uploading using CSAPI.\" \\ \u003e \"./example_file.txt\" case=\"projects/some-project/cases/43594844\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --data-binary @\"./example_file.txt\" \\ \"https://cloudsupport.googleapis.com/upload/v2beta/$case/attachments?attachment.filename=uploaded_via_curl.txt\" ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}/attachments",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.media.upload",

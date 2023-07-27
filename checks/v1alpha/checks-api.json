@@ -355,6 +355,44 @@
               "response": {
                 "$ref": "PrivacyPolicy"
               }
+            },
+            "list": {
+              "description": "Lists privacy policies.",
+              "flatPath": "v1alpha/projects/{projectsId}/privacyPolicies",
+              "httpMethod": "GET",
+              "id": "checks.projects.privacyPolicies.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "Optional. A filter string to filters results. The filter syntax is defined by AIP-160 (https://google.aip.dev/160).",
+                  "location": "query",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "Optional. The maximum number of results to return. If unspecified, at most 50 results will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "Optional. A page token, received from a previous `ListPrivacyPoliciesRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPrivacyPoliciesRequest` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. Resource name of the parent project, in the format `projects/{projectNumber}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+parent}/privacyPolicies",
+              "response": {
+                "$ref": "ListPrivacyPoliciesResponse"
+              }
             }
           }
         },
@@ -516,7 +554,7 @@
       }
     }
   },
-  "revision": "20230723",
+  "revision": "20230725",
   "rootUrl": "https://checks.googleapis.com/",
   "schemas": {
     "AnalyzePrivacyPolicyRequest": {
@@ -652,6 +690,24 @@
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "Operation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListPrivacyPoliciesResponse": {
+      "description": "Response message for `ListPrivacyPolicies`.",
+      "id": "ListPrivacyPoliciesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "The pagination token to retrieve the next page of results. If the value is an empty string, it means there are no further results for the request.",
+          "type": "string"
+        },
+        "privacyPolicies": {
+          "description": "The privacy policies.",
+          "items": {
+            "$ref": "PrivacyPolicy"
           },
           "type": "array"
         }

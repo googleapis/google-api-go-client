@@ -15203,6 +15203,11 @@ type GoogleCloudDialogflowV2QueryParameters struct {
 	// your webhook.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
+	// Platform: The platform of the virtual agent response messages. If not
+	// empty, only emits messages from this platform in the response. Valid
+	// values are the enum names of platform.
+	Platform string `json:"platform,omitempty"`
+
 	// ResetContexts: Specifies whether to delete all contexts in the
 	// current session before the new ones are activated.
 	ResetContexts bool `json:"resetContexts,omitempty"`

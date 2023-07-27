@@ -587,6 +587,36 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfiguration: Represents the encryption configuration for
+// a transfer.
+type EncryptionConfiguration struct {
+	// KmsKeyName: The name of the KMS key used for encrypting BigQuery
+	// data.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EnrollDataSourcesRequest: A request to enroll a set of data sources
 // so they are visible in the BigQuery UI's `Transfer` tab.
 type EnrollDataSourcesRequest struct {
@@ -1169,6 +1199,14 @@ type TransferConfig struct {
 	// preferences to the email address of the user who owns this transfer
 	// config.
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
+
+	// EncryptionConfiguration: The encryption configuration part.
+	// Currently, it is only used for the optional KMS key name. The
+	// BigQuery service account of your project must be granted permissions
+	// to use the key. Read methods will return the key name applied in
+	// effect. Write methods will apply the key if it is present, or
+	// otherwise try to apply project default keys if it is absent.
+	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
 	// Name: The resource name of the transfer config. Transfer config names
 	// have the form

@@ -830,7 +830,7 @@ type BigQueryOptions struct {
 	UsePartitionedTables bool `json:"usePartitionedTables,omitempty"`
 
 	// UsesTimestampColumnPartitioning: Output only. True if new timestamp
-	// column based partitioning is in use, false if legacy ingestion-time
+	// column based partitioning is in use, false if legacy ingress-time
 	// partitioning is in use.All new sinks will have this field set true
 	// and will use timestamp column based partitioning. If
 	// use_partitioned_tables is false, this value has no meaning and will
@@ -2515,7 +2515,7 @@ type LogEntry struct {
 	// include the following characters: upper and lower case alphanumeric
 	// characters, forward-slash, underscore, hyphen, and period.For
 	// backward compatibility, if log_name begins with a forward-slash, such
-	// as /projects/..., then the log entry is ingested as usual, but the
+	// as /projects/..., then the log entry is processed as usual, but the
 	// forward-slash is removed. Listing the log entry will not show the
 	// leading slash and filtering for a log name with a leading slash will
 	// never return any results.
@@ -2610,7 +2610,7 @@ type LogEntry struct {
 	// must have timestamps that don't exceed the logs retention period
 	// (https://cloud.google.com/logging/quotas#logs_retention_periods) in
 	// the past, and that don't exceed 24 hours in the future. Log entries
-	// outside those time boundaries aren't ingested by Logging.
+	// outside those time boundaries are rejected by Logging.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// Trace: Optional. The REST resource name of the trace being written to
@@ -3021,10 +3021,12 @@ type LogSink struct {
 	// "storage.googleapis.com/[GCS_BUCKET]"
 	// "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
 	// "pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]"
-	// "logging.googleapis.com/projects/[PROJECT_ID]" The sink's
-	// writer_identity, set when the sink is created, must have permission
-	// to write to the destination or else the log entries are not exported.
-	// For more information, see Exporting Logs with Sinks
+	// "logging.googleapis.com/projects/[PROJECT_ID]"
+	// "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/
+	// buckets/[BUCKET_ID]" The sink's writer_identity, set when the sink is
+	// created, must have permission to write to the destination or else the
+	// log entries are not exported. For more information, see Exporting
+	// Logs with Sinks
 	// (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
 	Destination string `json:"destination,omitempty"`
 
@@ -3905,7 +3907,7 @@ func (s *RequestLog) UnmarshalJSON(data []byte) error {
 type Settings struct {
 	// DisableDefaultSink: Optional. If set to true, the _Default sink in
 	// newly created projects and folders will created in a disabled state.
-	// This can be used to automatically disable log ingestion if there is
+	// This can be used to automatically disable log storage if there is
 	// already an aggregated sink configured in the hierarchy. The _Default
 	// sink can be re-enabled manually if needed.
 	DisableDefaultSink bool `json:"disableDefaultSink,omitempty"`
@@ -9824,10 +9826,9 @@ type BillingAccountsSinksCreateCall struct {
 }
 
 // Create: Creates a sink that exports specified log entries to a
-// destination. The export of newly-ingested log entries begins
-// immediately, unless the sink's writer_identity is not permitted to
-// write to the destination. A sink can export log entries only from the
-// resource owning the sink.
+// destination. The export begins upon ingress, unless the sink's
+// writer_identity is not permitted to write to the destination. A sink
+// can export log entries only from the resource owning the sink.
 //
 //   - parent: The resource in which to create the sink:
 //     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -9959,7 +9960,7 @@ func (c *BillingAccountsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogS
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a sink that exports specified log entries to a destination. The export of newly-ingested log entries begins immediately, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
+	//   "description": "Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks",
 	//   "httpMethod": "POST",
 	//   "id": "logging.billingAccounts.sinks.create",
@@ -11203,7 +11204,7 @@ type EntriesTailCall struct {
 	header_               http.Header
 }
 
-// Tail: Streaming read of log entries as they are ingested. Until the
+// Tail: Streaming read of log entries as they are received. Until the
 // stream is terminated, it will continue reading logs.
 func (r *EntriesService) Tail(taillogentriesrequest *TailLogEntriesRequest) *EntriesTailCall {
 	c := &EntriesTailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11299,7 +11300,7 @@ func (c *EntriesTailCall) Do(opts ...googleapi.CallOption) (*TailLogEntriesRespo
 	}
 	return ret, nil
 	// {
-	//   "description": "Streaming read of log entries as they are ingested. Until the stream is terminated, it will continue reading logs.",
+	//   "description": "Streaming read of log entries as they are received. Until the stream is terminated, it will continue reading logs.",
 	//   "flatPath": "v2/entries:tail",
 	//   "httpMethod": "POST",
 	//   "id": "logging.entries.tail",
@@ -17877,10 +17878,9 @@ type FoldersSinksCreateCall struct {
 }
 
 // Create: Creates a sink that exports specified log entries to a
-// destination. The export of newly-ingested log entries begins
-// immediately, unless the sink's writer_identity is not permitted to
-// write to the destination. A sink can export log entries only from the
-// resource owning the sink.
+// destination. The export begins upon ingress, unless the sink's
+// writer_identity is not permitted to write to the destination. A sink
+// can export log entries only from the resource owning the sink.
 //
 //   - parent: The resource in which to create the sink:
 //     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -18012,7 +18012,7 @@ func (c *FoldersSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a sink that exports specified log entries to a destination. The export of newly-ingested log entries begins immediately, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
+	//   "description": "Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
 	//   "flatPath": "v2/folders/{foldersId}/sinks",
 	//   "httpMethod": "POST",
 	//   "id": "logging.folders.sinks.create",
@@ -29002,10 +29002,9 @@ type OrganizationsSinksCreateCall struct {
 }
 
 // Create: Creates a sink that exports specified log entries to a
-// destination. The export of newly-ingested log entries begins
-// immediately, unless the sink's writer_identity is not permitted to
-// write to the destination. A sink can export log entries only from the
-// resource owning the sink.
+// destination. The export begins upon ingress, unless the sink's
+// writer_identity is not permitted to write to the destination. A sink
+// can export log entries only from the resource owning the sink.
 //
 //   - parent: The resource in which to create the sink:
 //     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -29137,7 +29136,7 @@ func (c *OrganizationsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a sink that exports specified log entries to a destination. The export of newly-ingested log entries begins immediately, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
+	//   "description": "Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
 	//   "flatPath": "v2/organizations/{organizationsId}/sinks",
 	//   "httpMethod": "POST",
 	//   "id": "logging.organizations.sinks.create",
@@ -36310,10 +36309,9 @@ type ProjectsSinksCreateCall struct {
 }
 
 // Create: Creates a sink that exports specified log entries to a
-// destination. The export of newly-ingested log entries begins
-// immediately, unless the sink's writer_identity is not permitted to
-// write to the destination. A sink can export log entries only from the
-// resource owning the sink.
+// destination. The export begins upon ingress, unless the sink's
+// writer_identity is not permitted to write to the destination. A sink
+// can export log entries only from the resource owning the sink.
 //
 //   - parent: The resource in which to create the sink:
 //     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -36445,7 +36443,7 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a sink that exports specified log entries to a destination. The export of newly-ingested log entries begins immediately, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
+	//   "description": "Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
 	//   "flatPath": "v2/projects/{projectsId}/sinks",
 	//   "httpMethod": "POST",
 	//   "id": "logging.projects.sinks.create",
@@ -37412,10 +37410,9 @@ type SinksCreateCall struct {
 }
 
 // Create: Creates a sink that exports specified log entries to a
-// destination. The export of newly-ingested log entries begins
-// immediately, unless the sink's writer_identity is not permitted to
-// write to the destination. A sink can export log entries only from the
-// resource owning the sink.
+// destination. The export begins upon ingress, unless the sink's
+// writer_identity is not permitted to write to the destination. A sink
+// can export log entries only from the resource owning the sink.
 //
 //   - parent: The resource in which to create the sink:
 //     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -37547,7 +37544,7 @@ func (c *SinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a sink that exports specified log entries to a destination. The export of newly-ingested log entries begins immediately, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
+	//   "description": "Creates a sink that exports specified log entries to a destination. The export begins upon ingress, unless the sink's writer_identity is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/sinks",
 	//   "httpMethod": "POST",
 	//   "id": "logging.sinks.create",

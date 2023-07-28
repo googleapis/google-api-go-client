@@ -1472,6 +1472,9 @@ type BareMetalCluster struct {
 	// was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// UpgradePolicy: The cluster upgrade policy.
+	UpgradePolicy *BareMetalClusterUpgradePolicy `json:"upgradePolicy,omitempty"`
+
 	// ValidationCheck: Output only. The result of the preflight check.
 	ValidationCheck *ValidationCheck `json:"validationCheck,omitempty"`
 
@@ -1532,6 +1535,40 @@ type BareMetalClusterOperationsConfig struct {
 
 func (s *BareMetalClusterOperationsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalClusterOperationsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BareMetalClusterUpgradePolicy: BareMetalClusterUpgradePolicy defines
+// the cluster upgrade policy.
+type BareMetalClusterUpgradePolicy struct {
+	// Policy: Specifies which upgrade policy to use.
+	//
+	// Possible values:
+	//   "NODE_POOL_POLICY_UNSPECIFIED" - No upgrade policy selected.
+	//   "SERIAL" - Upgrade worker node pools sequentially.
+	//   "CONCURRENT" - Upgrade all worker node pools in parallel.
+	Policy string `json:"policy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Policy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BareMetalClusterUpgradePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalClusterUpgradePolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6397,6 +6434,9 @@ type VmwareVsphereConfig struct {
 	// Datastore: The name of the vCenter datastore. Inherited from the user
 	// cluster.
 	Datastore string `json:"datastore,omitempty"`
+
+	// HostGroups: Vsphere host groups to apply to all VMs in the node pool
+	HostGroups []string `json:"hostGroups,omitempty"`
 
 	// Tags: Tags to apply to VMs.
 	Tags []*VmwareVsphereTag `json:"tags,omitempty"`

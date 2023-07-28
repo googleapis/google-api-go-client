@@ -425,6 +425,15 @@ func (s *ActivateConsentRequest) MarshalJSON() ([]byte, error) {
 // AnalyzeEntitiesRequest: The request to analyze healthcare entities in
 // a document.
 type AnalyzeEntitiesRequest struct {
+	// AlternativeOutputFormat: Optional. Alternative output format to be
+	// generated based on the results of analysis.
+	//
+	// Possible values:
+	//   "ALTERNATIVE_OUTPUT_FORMAT_UNSPECIFIED" - No alternative output
+	// format is specified.
+	//   "FHIR_BUNDLE" - FHIR bundle output.
+	AlternativeOutputFormat string `json:"alternativeOutputFormat,omitempty"`
+
 	// DocumentContent: document_content is a document to be annotated.
 	DocumentContent string `json:"documentContent,omitempty"`
 
@@ -438,18 +447,19 @@ type AnalyzeEntitiesRequest struct {
 	//   "SNOMEDCT_US" - SNOMED CT (US version) vocabulary
 	LicensedVocabularies []string `json:"licensedVocabularies,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DocumentContent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AlternativeOutputFormat") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DocumentContent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AlternativeOutputFormat")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -474,6 +484,11 @@ type AnalyzeEntitiesResponse struct {
 	// annotated medical entities that were mentioned in the provided
 	// document.
 	EntityMentions []*EntityMention `json:"entityMentions,omitempty"`
+
+	// FhirBundle: The FHIR bundle (`R4`
+	// (http://hl7.org/fhir/R4/bundle.html)) that includes all the entities,
+	// the entity mentions, and the relationships in JSON format.
+	FhirBundle string `json:"fhirBundle,omitempty"`
 
 	// Relationships: relationships contains all the binary relationships
 	// that were identified between entity mentions within the provided

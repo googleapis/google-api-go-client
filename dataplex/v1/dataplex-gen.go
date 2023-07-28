@@ -1621,6 +1621,9 @@ func (s *GoogleCloudDataplexV1DataAttributeBindingPath) MarshalJSON() ([]byte, e
 // output of DataProfileScan. Each field of the table will have field
 // type specific profile result.
 type GoogleCloudDataplexV1DataProfileResult struct {
+	// PostScanActionsResult: Output only. The result of post scan actions.
+	PostScanActionsResult *GoogleCloudDataplexV1DataProfileResultPostScanActionsResult `json:"postScanActionsResult,omitempty"`
+
 	// Profile: The profile information per field.
 	Profile *GoogleCloudDataplexV1DataProfileResultProfile `json:"profile,omitempty"`
 
@@ -1630,7 +1633,81 @@ type GoogleCloudDataplexV1DataProfileResult struct {
 	// ScannedData: The data scanned for this result.
 	ScannedData *GoogleCloudDataplexV1ScannedData `json:"scannedData,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Profile") to
+	// ForceSendFields is a list of field names (e.g.
+	// "PostScanActionsResult") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostScanActionsResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataProfileResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProfileResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataProfileResultPostScanActionsResult: The
+// result of post scan actions of DataProfileScan job.
+type GoogleCloudDataplexV1DataProfileResultPostScanActionsResult struct {
+	// BigqueryExportResult: Output only. The result of BigQuery export post
+	// scan action.
+	BigqueryExportResult *GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResult `json:"bigqueryExportResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BigqueryExportResult") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryExportResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataProfileResultPostScanActionsResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProfileResultPostScanActionsResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExp
+// ortResult: The result of BigQuery export post scan action.
+type GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResult struct {
+	// Message: Output only. Additional information about the BigQuery
+	// exporting.
+	Message string `json:"message,omitempty"`
+
+	// State: Output only. Execution state for the BigQuery exporting.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The exporting state is unspecified.
+	//   "SUCCEEDED" - The exporting completed successfully.
+	//   "FAILED" - The exporting is no longer running due to an error.
+	//   "SKIPPED" - The exporting is skipped due to no valid scan result to
+	// export (usually caused by scan failed).
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1638,7 +1715,7 @@ type GoogleCloudDataplexV1DataProfileResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Profile") to include in
+	// NullFields is a list of field names (e.g. "Message") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1647,8 +1724,8 @@ type GoogleCloudDataplexV1DataProfileResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDataplexV1DataProfileResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDataplexV1DataProfileResult
+func (s *GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExportResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2057,6 +2134,9 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 	// included, except for ones listed in exclude_fields.
 	IncludeFields *GoogleCloudDataplexV1DataProfileSpecSelectedFields `json:"includeFields,omitempty"`
 
+	// PostScanActions: Optional. Actions to take upon job completion..
+	PostScanActions *GoogleCloudDataplexV1DataProfileSpecPostScanActions `json:"postScanActions,omitempty"`
+
 	// RowFilter: Optional. A filter applied to all rows in a single
 	// DataScan job. The filter needs to be a valid SQL expression for a
 	// WHERE clause in BigQuery standard SQL syntax. Example: col1 >= 0 AND
@@ -2104,6 +2184,68 @@ func (s *GoogleCloudDataplexV1DataProfileSpec) UnmarshalJSON(data []byte) error 
 	}
 	s.SamplingPercent = float64(s1.SamplingPercent)
 	return nil
+}
+
+// GoogleCloudDataplexV1DataProfileSpecPostScanActions: The
+// configuration of post scan actions of DataProfileScan job.
+type GoogleCloudDataplexV1DataProfileSpecPostScanActions struct {
+	// BigqueryExport: Optional. If set, results will be exported to the
+	// provided BigQuery table.
+	BigqueryExport *GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport `json:"bigqueryExport,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryExport") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryExport") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataProfileSpecPostScanActions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProfileSpecPostScanActions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport:
+// The configuration of BigQuery export post scan action.
+type GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport struct {
+	// ResultsTable: Optional. The BigQuery table to export DataProfileScan
+	// results to. Format:
+	// projects/{project}/datasets/{dataset}/tables/{table}
+	ResultsTable string `json:"resultsTable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResultsTable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResultsTable") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataProfileSpecSelectedFields: The specification
@@ -2178,6 +2320,9 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	// Passed: Overall data quality result -- true if all rules passed.
 	Passed bool `json:"passed,omitempty"`
 
+	// PostScanActionsResult: Output only. The result of post scan actions.
+	PostScanActionsResult *GoogleCloudDataplexV1DataQualityResultPostScanActionsResult `json:"postScanActionsResult,omitempty"`
+
 	// RowCount: The count of rows processed.
 	RowCount int64 `json:"rowCount,omitempty,string"`
 
@@ -2206,6 +2351,78 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 
 func (s *GoogleCloudDataplexV1DataQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityResultPostScanActionsResult: The
+// result of post scan actions of DataQualityScan job.
+type GoogleCloudDataplexV1DataQualityResultPostScanActionsResult struct {
+	// BigqueryExportResult: Output only. The result of BigQuery export post
+	// scan action.
+	BigqueryExportResult *GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResult `json:"bigqueryExportResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BigqueryExportResult") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryExportResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualityResultPostScanActionsResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityResultPostScanActionsResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExp
+// ortResult: The result of BigQuery export post scan action.
+type GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResult struct {
+	// Message: Output only. Additional information about the BigQuery
+	// exporting.
+	Message string `json:"message,omitempty"`
+
+	// State: Output only. Execution state for the BigQuery exporting.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The exporting state is unspecified.
+	//   "SUCCEEDED" - The exporting completed successfully.
+	//   "FAILED" - The exporting is no longer running due to an error.
+	//   "SKIPPED" - The exporting is skipped due to no valid scan result to
+	// export (usually caused by scan failed).
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExportResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2733,6 +2950,9 @@ func (s *GoogleCloudDataplexV1DataQualityScanRuleResult) UnmarshalJSON(data []by
 // GoogleCloudDataplexV1DataQualitySpec: DataQualityScan related
 // setting.
 type GoogleCloudDataplexV1DataQualitySpec struct {
+	// PostScanActions: Optional. Actions to take upon job completion.
+	PostScanActions *GoogleCloudDataplexV1DataQualitySpecPostScanActions `json:"postScanActions,omitempty"`
+
 	// RowFilter: Optional. A filter applied to all rows in a single
 	// DataScan job. The filter needs to be a valid SQL expression for a
 	// WHERE clause in BigQuery standard SQL syntax. Example: col1 >= 0 AND
@@ -2749,7 +2969,7 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	// applied if sampling_percent is not specified, 0 or 100.
 	SamplingPercent float64 `json:"samplingPercent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RowFilter") to
+	// ForceSendFields is a list of field names (e.g. "PostScanActions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2757,12 +2977,13 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RowFilter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PostScanActions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2784,6 +3005,68 @@ func (s *GoogleCloudDataplexV1DataQualitySpec) UnmarshalJSON(data []byte) error 
 	}
 	s.SamplingPercent = float64(s1.SamplingPercent)
 	return nil
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActions: The
+// configuration of post scan actions of DataQualityScan.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActions struct {
+	// BigqueryExport: Optional. If set, results will be exported to the
+	// provided BigQuery table.
+	BigqueryExport *GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport `json:"bigqueryExport,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryExport") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryExport") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport:
+// The configuration of BigQuery export post scan action.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport struct {
+	// ResultsTable: Optional. The BigQuery table to export DataQualityScan
+	// results to. Format:
+	// projects/{project}/datasets/{dataset}/tables/{table}
+	ResultsTable string `json:"resultsTable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResultsTable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResultsTable") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataScan: Represents a user-visible job which
@@ -3432,6 +3715,9 @@ type GoogleCloudDataplexV1DataTaxonomy struct {
 	// AttributeCount: Output only. The number of attributes in the
 	// DataTaxonomy.
 	AttributeCount int64 `json:"attributeCount,omitempty"`
+
+	// ClassCount: Output only. The number of classes in the DataTaxonomy.
+	ClassCount int64 `json:"classCount,omitempty"`
 
 	// CreateTime: Output only. The time when the DataTaxonomy was created.
 	CreateTime string `json:"createTime,omitempty"`

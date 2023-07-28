@@ -524,6 +524,11 @@ type GoogleCloudAssuredworkloadsV1Violation struct {
 	// organizations/{organization_id}/policies/{constraint_name}
 	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
 
+	// OrgPolicyConstraint: Output only. Immutable. The
+	// org-policy-constraint that was incorrectly changed, which resulted in
+	// this violation.
+	OrgPolicyConstraint string `json:"orgPolicyConstraint,omitempty"`
+
 	// Remediation: Output only. Compliance violation remediation
 	Remediation *GoogleCloudAssuredworkloadsV1ViolationRemediation `json:"remediation,omitempty"`
 
@@ -1105,6 +1110,10 @@ type GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions struct {
 	// RemediateFolderViolations: Allow partner to monitor folder and
 	// remediate violations
 	RemediateFolderViolations bool `json:"remediateFolderViolations,omitempty"`
+
+	// ServiceAccessApprover: Optional. Allow partner to view access
+	// approval logs.
+	ServiceAccessApprover bool `json:"serviceAccessApprover,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataLogsViewer") to
 	// unconditionally include in API requests. By default, fields with

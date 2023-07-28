@@ -1558,9 +1558,9 @@ type GoogleFirestoreAdminV1BackupSchedule struct {
 	// ule}`
 	Name string `json:"name,omitempty"`
 
-	// Retention: At what relative time in the future, compared to the
-	// creation time of the backup should the backup be deleted, i.e. keep
-	// backups for 7 days.
+	// Retention: At what relative time in the future, compared to its
+	// creation time, the backup should be deleted, e.g. keep backups for 7
+	// days.
 	Retention string `json:"retention,omitempty"`
 
 	// UpdateTime: Output only. The timestamp at which this backup schedule

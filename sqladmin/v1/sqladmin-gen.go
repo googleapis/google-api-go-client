@@ -916,6 +916,9 @@ type ConnectSettings struct {
 	// Kind: This is always `sql#connectSettings`.
 	Kind string `json:"kind,omitempty"`
 
+	// PscEnabled: Whether PSC connectivity is enabled for this instance.
+	PscEnabled bool `json:"pscEnabled,omitempty"`
+
 	// Region: The cloud region for the instance. For example,
 	// `us-central1`, `europe-west1`. The region cannot be changed after
 	// instance creation.
@@ -1190,6 +1193,9 @@ type DatabaseInstance struct {
 	// DiskEncryptionStatus: Disk encryption status specific to an instance.
 	DiskEncryptionStatus *DiskEncryptionStatus `json:"diskEncryptionStatus,omitempty"`
 
+	// DnsName: Output only. The dns name of the instance.
+	DnsName string `json:"dnsName,omitempty"`
+
 	// Etag: This field is deprecated and will be removed from a future
 	// version of the API. Use the `settings.settingsVersion` field instead.
 	Etag string `json:"etag,omitempty"`
@@ -1254,6 +1260,10 @@ type DatabaseInstance struct {
 	// Project: The project ID of the project containing the Cloud SQL
 	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
+
+	// PscServiceAttachmentLink: Output only. The link to service attachment
+	// of PSC instance.
+	PscServiceAttachmentLink string `json:"pscServiceAttachmentLink,omitempty"`
 
 	// Region: The geographical region. Can be: * `us-central` (`FIRST_GEN`
 	// instances only) * `us-central1` (`SECOND_GEN` instances only) *
@@ -2888,6 +2898,9 @@ type IpConfiguration struct {
 	// updated, but it cannot be removed after it is set.
 	PrivateNetwork string `json:"privateNetwork,omitempty"`
 
+	// PscConfig: PSC settings for this instance.
+	PscConfig *PscConfig `json:"pscConfig,omitempty"`
+
 	// RequireSsl: Whether SSL connections over IP are enforced or not.
 	RequireSsl bool `json:"requireSsl,omitempty"`
 
@@ -3639,6 +3652,43 @@ type PerformDiskShrinkContext struct {
 
 func (s *PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformDiskShrinkContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PscConfig: PSC settings for a Cloud SQL instance.
+type PscConfig struct {
+	// AllowedConsumerProjects: List of consumer projects that are
+	// allow-listed for PSC connections to this instance. This instance can
+	// be connected to with PSC from any network in these projects. Each
+	// consumer project in this list may be represented by a project number
+	// (numeric) or by a project id (alphanumeric).
+	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+
+	// PscEnabled: Whether PSC connectivity is enabled for this instance.
+	PscEnabled bool `json:"pscEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedConsumerProjects") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedConsumerProjects")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

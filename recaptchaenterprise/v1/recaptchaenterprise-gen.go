@@ -1004,8 +1004,9 @@ type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment struct {
 	// stolen instrument.
 	StolenInstrumentVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict `json:"stolenInstrumentVerdict,omitempty"`
 
-	// TransactionRisk: Probability (0-1) of this transaction being
-	// fraudulent. Summarizes the combined risk of attack vectors below.
+	// TransactionRisk: Probability of this transaction being fraudulent.
+	// Summarizes the combined risk of attack vectors below. Values are from
+	// 0.0 (lowest) to 1.0 (highest).
 	TransactionRisk float64 `json:"transactionRisk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1050,8 +1051,9 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) UnmarshalJSO
 // GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTru
 // stVerdict: Information about behavioral trust of the transaction.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict struct {
-	// Trust: Probability (0-1) of this transaction attempt being executed
-	// in a behaviorally trustworthy way.
+	// Trust: Probability of this transaction attempt being executed in a
+	// behaviorally trustworthy way. Values are from 0.0 (lowest) to 1.0
+	// (highest).
 	Trust float64 `json:"trust,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Trust") to
@@ -1095,8 +1097,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrus
 // rdict: Information about card testing fraud, where an adversary is
 // testing fraudulently obtained cards or brute forcing their details.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict struct {
-	// Risk: Probability (0-1) of this transaction attempt being part of a
-	// card testing attack.
+	// Risk: Probability of this transaction attempt being part of a card
+	// testing attack. Values are from 0.0 (lowest) to 1.0 (highest).
 	Risk float64 `json:"risk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Risk") to
@@ -1141,8 +1143,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVer
 // is not the legitimate owner of the instrument being used for the
 // purchase.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict struct {
-	// Risk: Probability (0-1) of this transaction being executed with a
-	// stolen instrument.
+	// Risk: Probability of this transaction being executed with a stolen
+	// instrument. Values are from 0.0 (lowest) to 1.0 (highest).
 	Risk float64 `json:"risk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Risk") to

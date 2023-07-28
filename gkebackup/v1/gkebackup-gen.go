@@ -375,11 +375,11 @@ type Backup struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DeleteLockDays: Minimum age for this Backup (in days). If this field
-	// is set to a non-zero value, the Backup will be "locked" against
-	// deletion (either manual or automatic deletion) for the number of days
-	// provided (measured from the creation time of the Backup). MUST be an
-	// integer value between 0-90 (inclusive). Defaults to parent
+	// DeleteLockDays: Optional. Minimum age for this Backup (in days). If
+	// this field is set to a non-zero value, the Backup will be "locked"
+	// against deletion (either manual or automatic deletion) for the number
+	// of days provided (measured from the creation time of the Backup).
+	// MUST be an integer value between 0-90 (inclusive). Defaults to parent
 	// BackupPlan's backup_delete_lock_days setting and may only be
 	// increased (either at creation time or in a subsequent update).
 	DeleteLockDays int64 `json:"deleteLockDays,omitempty"`
@@ -389,7 +389,8 @@ type Backup struct {
 	// + delete_lock_days).
 	DeleteLockExpireTime string `json:"deleteLockExpireTime,omitempty"`
 
-	// Description: User specified descriptive string for this Backup.
+	// Description: Optional. User specified descriptive string for this
+	// Backup.
 	Description string `json:"description,omitempty"`
 
 	// EncryptionKey: Output only. The customer managed encryption key that
@@ -408,7 +409,7 @@ type Backup struct {
 	// resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: A set of custom labels supplied by user.
+	// Labels: Optional. A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Manual: Output only. This flag indicates whether this Backup resource
@@ -428,8 +429,8 @@ type Backup struct {
 	// included in the Backup.
 	ResourceCount int64 `json:"resourceCount,omitempty"`
 
-	// RetainDays: The age (in days) after which this Backup will be
-	// automatically deleted. Must be an integer value >= 0: - If 0, no
+	// RetainDays: Optional. The age (in days) after which this Backup will
+	// be automatically deleted. Must be an integer value >= 0: - If 0, no
 	// automatic deletion will occur for this Backup. - If not 0, this must
 	// be >= delete_lock_days and <= 365. Once a Backup is created, this
 	// value may only be increased. Defaults to the parent BackupPlan's
@@ -517,20 +518,20 @@ type BackupConfig struct {
 	// AllNamespaces: If True, include all namespaced resources
 	AllNamespaces bool `json:"allNamespaces,omitempty"`
 
-	// EncryptionKey: This defines a customer managed encryption key that
-	// will be used to encrypt the "config" portion (the Kubernetes
+	// EncryptionKey: Optional. This defines a customer managed encryption
+	// key that will be used to encrypt the "config" portion (the Kubernetes
 	// resources) of Backups created via this plan. Default (empty): Config
 	// backup artifacts will not be encrypted.
 	EncryptionKey *EncryptionKey `json:"encryptionKey,omitempty"`
 
-	// IncludeSecrets: This flag specifies whether Kubernetes Secret
-	// resources should be included when they fall into the scope of
+	// IncludeSecrets: Optional. This flag specifies whether Kubernetes
+	// Secret resources should be included when they fall into the scope of
 	// Backups. Default: False
 	IncludeSecrets bool `json:"includeSecrets,omitempty"`
 
-	// IncludeVolumeData: This flag specifies whether volume data should be
-	// backed up when PVCs are included in the scope of a Backup. Default:
-	// False
+	// IncludeVolumeData: Optional. This flag specifies whether volume data
+	// should be backed up when PVCs are included in the scope of a Backup.
+	// Default: False
 	IncludeVolumeData bool `json:"includeVolumeData,omitempty"`
 
 	// SelectedApplications: If set, include just the resources referenced
@@ -567,12 +568,12 @@ func (s *BackupConfig) MarshalJSON() ([]byte, error) {
 // BackupPlan: Defines the configuration and scheduling for a "line" of
 // Backups.
 type BackupPlan struct {
-	// BackupConfig: Defines the configuration of Backups created via this
-	// BackupPlan.
+	// BackupConfig: Optional. Defines the configuration of Backups created
+	// via this BackupPlan.
 	BackupConfig *BackupConfig `json:"backupConfig,omitempty"`
 
-	// BackupSchedule: Defines a schedule for automatic Backup creation via
-	// this BackupPlan.
+	// BackupSchedule: Optional. Defines a schedule for automatic Backup
+	// creation via this BackupPlan.
 	BackupSchedule *Schedule `json:"backupSchedule,omitempty"`
 
 	// Cluster: Required. Immutable. The source cluster from which Backups
@@ -584,15 +585,16 @@ type BackupPlan struct {
 	// was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Deactivated: This flag indicates whether this BackupPlan has been
-	// deactivated. Setting this field to True locks the BackupPlan such
-	// that no further updates will be allowed (except deletes), including
-	// the deactivated field itself. It also prevents any new Backups from
-	// being created via this BackupPlan (including scheduled Backups).
-	// Default: False
+	// Deactivated: Optional. This flag indicates whether this BackupPlan
+	// has been deactivated. Setting this field to True locks the BackupPlan
+	// such that no further updates will be allowed (except deletes),
+	// including the deactivated field itself. It also prevents any new
+	// Backups from being created via this BackupPlan (including scheduled
+	// Backups). Default: False
 	Deactivated bool `json:"deactivated,omitempty"`
 
-	// Description: User specified descriptive string for this BackupPlan.
+	// Description: Optional. User specified descriptive string for this
+	// BackupPlan.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Output only. `etag` is used for optimistic concurrency control
@@ -606,7 +608,7 @@ type BackupPlan struct {
 	// same version of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: A set of custom labels supplied by user.
+	// Labels: Optional. A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The full name of the BackupPlan resource. Format:
@@ -617,8 +619,8 @@ type BackupPlan struct {
 	// up in the last successful Backup created via this BackupPlan.
 	ProtectedPodCount int64 `json:"protectedPodCount,omitempty"`
 
-	// RetentionPolicy: RetentionPolicy governs lifecycle of Backups created
-	// under this plan.
+	// RetentionPolicy: Optional. RetentionPolicy governs lifecycle of
+	// Backups created under this plan.
 	RetentionPolicy *RetentionPolicy `json:"retentionPolicy,omitempty"`
 
 	// State: Output only. State of the BackupPlan. This State field
@@ -757,23 +759,24 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // ClusterMetadata: Information about the GKE cluster from which this
 // Backup was created.
 type ClusterMetadata struct {
-	// AnthosVersion: Anthos version
+	// AnthosVersion: Output only. Anthos version
 	AnthosVersion string `json:"anthosVersion,omitempty"`
 
-	// BackupCrdVersions: A list of the Backup for GKE CRD versions found in
-	// the cluster.
+	// BackupCrdVersions: Output only. A list of the Backup for GKE CRD
+	// versions found in the cluster.
 	BackupCrdVersions map[string]string `json:"backupCrdVersions,omitempty"`
 
-	// Cluster: The source cluster from which this Backup was created. Valid
-	// formats: - `projects/*/locations/*/clusters/*` -
+	// Cluster: Output only. The source cluster from which this Backup was
+	// created. Valid formats: - `projects/*/locations/*/clusters/*` -
 	// `projects/*/zones/*/clusters/*` This is inherited from the parent
 	// BackupPlan's cluster field.
 	Cluster string `json:"cluster,omitempty"`
 
-	// GkeVersion: GKE version
+	// GkeVersion: Output only. GKE version
 	GkeVersion string `json:"gkeVersion,omitempty"`
 
-	// K8sVersion: The Kubernetes server version of the source cluster.
+	// K8sVersion: Output only. The Kubernetes server version of the source
+	// cluster.
 	K8sVersion string `json:"k8sVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnthosVersion") to
@@ -812,25 +815,26 @@ func (s *ClusterMetadata) MarshalJSON() ([]byte, error) {
 // configuration elsewhere, and will cause an error if selected here. -
 // Namespace - PersistentVolume
 type ClusterResourceRestoreScope struct {
-	// AllGroupKinds: If True, all valid cluster-scoped resources will be
-	// restored. Mutually exclusive to any other field in the message.
-	AllGroupKinds bool `json:"allGroupKinds,omitempty"`
-
-	// ExcludedGroupKinds: A list of cluster-scoped resource group kinds to
-	// NOT restore from the backup. If specified, all valid cluster-scoped
-	// resources will be restored except for those specified in the list.
-	// Mutually exclusive to any other field in the message.
-	ExcludedGroupKinds []*GroupKind `json:"excludedGroupKinds,omitempty"`
-
-	// NoGroupKinds: If True, no cluster-scoped resources will be restored.
-	// This has the same restore scope as if the message is not defined.
-	// Mutually exclusive to any other field in the message.
-	NoGroupKinds bool `json:"noGroupKinds,omitempty"`
-
-	// SelectedGroupKinds: A list of cluster-scoped resource group kinds to
-	// restore from the backup. If specified, only the selected resources
+	// AllGroupKinds: Optional. If True, all valid cluster-scoped resources
 	// will be restored. Mutually exclusive to any other field in the
 	// message.
+	AllGroupKinds bool `json:"allGroupKinds,omitempty"`
+
+	// ExcludedGroupKinds: Optional. A list of cluster-scoped resource group
+	// kinds to NOT restore from the backup. If specified, all valid
+	// cluster-scoped resources will be restored except for those specified
+	// in the list. Mutually exclusive to any other field in the message.
+	ExcludedGroupKinds []*GroupKind `json:"excludedGroupKinds,omitempty"`
+
+	// NoGroupKinds: Optional. If True, no cluster-scoped resources will be
+	// restored. This has the same restore scope as if the message is not
+	// defined. Mutually exclusive to any other field in the message.
+	NoGroupKinds bool `json:"noGroupKinds,omitempty"`
+
+	// SelectedGroupKinds: Optional. A list of cluster-scoped resource group
+	// kinds to restore from the backup. If specified, only the selected
+	// resources will be restored. Mutually exclusive to any other field in
+	// the message.
 	SelectedGroupKinds []*GroupKind `json:"selectedGroupKinds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllGroupKinds") to
@@ -870,8 +874,8 @@ type Empty struct {
 // EncryptionKey: Defined a customer managed encryption key that will be
 // used to encrypt Backup artifacts.
 type EncryptionKey struct {
-	// GcpKmsEncryptionKey: Google Cloud KMS encryption key. Format:
-	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+	// GcpKmsEncryptionKey: Optional. Google Cloud KMS encryption key.
+	// Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
 	GcpKmsEncryptionKey string `json:"gcpKmsEncryptionKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcpKmsEncryptionKey")
@@ -1111,12 +1115,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // (https://godoc.org/k8s.io/apimachinery/pkg/runtime/schema#GroupKind)
 // and is used for identifying specific "types" of resources to restore.
 type GroupKind struct {
-	// ResourceGroup: API group string of a Kubernetes resource, e.g.
-	// "apiextensions.k8s.io", "storage.k8s.io", etc. Note: use empty string
-	// for core API group
+	// ResourceGroup: Optional. API group string of a Kubernetes resource,
+	// e.g. "apiextensions.k8s.io", "storage.k8s.io", etc. Note: use empty
+	// string for core API group
 	ResourceGroup string `json:"resourceGroup,omitempty"`
 
-	// ResourceKind: Kind of a Kubernetes resource, e.g.
+	// ResourceKind: Optional. Kind of a Kubernetes resource, e.g.
 	// "CustomResourceDefinition", "StorageClass", etc.
 	ResourceKind string `json:"resourceKind,omitempty"`
 
@@ -1470,10 +1474,10 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 
 // NamespacedName: A reference to a namespaced resource in Kubernetes.
 type NamespacedName struct {
-	// Name: The name of the Kubernetes resource.
+	// Name: Optional. The name of the Kubernetes resource.
 	Name string `json:"name,omitempty"`
 
-	// Namespace: The Namespace of the Kubernetes resource.
+	// Namespace: Optional. The Namespace of the Kubernetes resource.
 	Namespace string `json:"namespace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1501,7 +1505,7 @@ func (s *NamespacedName) MarshalJSON() ([]byte, error) {
 
 // NamespacedNames: A list of namespaced Kubernetes resources.
 type NamespacedNames struct {
-	// NamespacedNames: A list of namespaced Kubernetes resources.
+	// NamespacedNames: Optional. A list of namespaced Kubernetes resources.
 	NamespacedNames []*NamespacedName `json:"namespacedNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NamespacedNames") to
@@ -1530,7 +1534,7 @@ func (s *NamespacedNames) MarshalJSON() ([]byte, error) {
 
 // Namespaces: A list of Kubernetes Namespaces
 type Namespaces struct {
-	// Namespaces: A list of Kubernetes Namespaces
+	// Namespaces: Optional. A list of Kubernetes Namespaces
 	Namespaces []string `json:"namespaces,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Namespaces") to
@@ -1722,21 +1726,21 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // the scope of a change to a specific set of kubernetes resources that
 // are selected for restoration from a backup.
 type ResourceFilter struct {
-	// GroupKinds: (Filtering parameter) Any resource subject to
+	// GroupKinds: Optional. (Filtering parameter) Any resource subject to
 	// transformation must belong to one of the listed "types". If this
 	// field is not provided, no type filtering will be performed (all
 	// resources of all types matching previous filtering parameters will be
 	// candidates for transformation).
 	GroupKinds []*GroupKind `json:"groupKinds,omitempty"`
 
-	// JsonPath: This is a [JSONPath]
+	// JsonPath: Optional. This is a [JSONPath]
 	// (https://github.com/json-path/JsonPath/blob/master/README.md)
 	// expression that matches specific fields of candidate resources and it
 	// operates as a filtering parameter (resources that are not matched
 	// with this expression will not be candidates for transformation).
 	JsonPath string `json:"jsonPath,omitempty"`
 
-	// Namespaces: (Filtering parameter) Any resource subject to
+	// Namespaces: Optional. (Filtering parameter) Any resource subject to
 	// transformation must be contained within one of the listed Kubernetes
 	// Namespace in the Backup. If this field is not provided, no namespace
 	// filtering will be performed (all resources in all Namespaces,
@@ -1896,10 +1900,10 @@ type RestoreConfig struct {
 	// to "True". Specifying this field to "False" is an error.
 	AllNamespaces bool `json:"allNamespaces,omitempty"`
 
-	// ClusterResourceConflictPolicy: Defines the behavior for handling the
-	// situation where cluster-scoped resources being restored already exist
-	// in the target cluster. This MUST be set to a value other than
-	// CLUSTER_RESOURCE_CONFLICT_POLICY_UNSPECIFIED if
+	// ClusterResourceConflictPolicy: Optional. Defines the behavior for
+	// handling the situation where cluster-scoped resources being restored
+	// already exist in the target cluster. This MUST be set to a value
+	// other than CLUSTER_RESOURCE_CONFLICT_POLICY_UNSPECIFIED if
 	// cluster_resource_restore_scope is not empty.
 	//
 	// Possible values:
@@ -1914,9 +1918,9 @@ type RestoreConfig struct {
 	// that type.
 	ClusterResourceConflictPolicy string `json:"clusterResourceConflictPolicy,omitempty"`
 
-	// ClusterResourceRestoreScope: Identifies the cluster-scoped resources
-	// to restore from the Backup. Not specifying it means NO cluster
-	// resource will be restored.
+	// ClusterResourceRestoreScope: Optional. Identifies the cluster-scoped
+	// resources to restore from the Backup. Not specifying it means NO
+	// cluster resource will be restored.
 	ClusterResourceRestoreScope *ClusterResourceRestoreScope `json:"clusterResourceRestoreScope,omitempty"`
 
 	// ExcludedNamespaces: A list of selected namespaces excluded from
@@ -1924,10 +1928,10 @@ type RestoreConfig struct {
 	// restored.
 	ExcludedNamespaces *Namespaces `json:"excludedNamespaces,omitempty"`
 
-	// NamespacedResourceRestoreMode: Defines the behavior for handling the
-	// situation where sets of namespaced resources being restored already
-	// exist in the target cluster. This MUST be set to a value other than
-	// NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED.
+	// NamespacedResourceRestoreMode: Optional. Defines the behavior for
+	// handling the situation where sets of namespaced resources being
+	// restored already exist in the target cluster. This MUST be set to a
+	// value other than NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED.
 	//
 	// Possible values:
 	//   "NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED" - Unspecified
@@ -1962,23 +1966,26 @@ type RestoreConfig struct {
 	// will be restored.
 	SelectedNamespaces *Namespaces `json:"selectedNamespaces,omitempty"`
 
-	// SubstitutionRules: A list of transformation rules to be applied
-	// against Kubernetes resources as they are selected for restoration
-	// from a Backup. Rules are executed in order defined - this order
-	// matters, as changes made by a rule may impact the filtering logic of
-	// subsequent rules. An empty list means no substitution will occur.
+	// SubstitutionRules: Optional. A list of transformation rules to be
+	// applied against Kubernetes resources as they are selected for
+	// restoration from a Backup. Rules are executed in order defined - this
+	// order matters, as changes made by a rule may impact the filtering
+	// logic of subsequent rules. An empty list means no substitution will
+	// occur.
 	SubstitutionRules []*SubstitutionRule `json:"substitutionRules,omitempty"`
 
-	// TransformationRules: A list of transformation rules to be applied
-	// against Kubernetes resources as they are selected for restoration
-	// from a Backup. Rules are executed in order defined - this order
-	// matters, as changes made by a rule may impact the filtering logic of
-	// subsequent rules. An empty list means no transformation will occur.
+	// TransformationRules: Optional. A list of transformation rules to be
+	// applied against Kubernetes resources as they are selected for
+	// restoration from a Backup. Rules are executed in order defined - this
+	// order matters, as changes made by a rule may impact the filtering
+	// logic of subsequent rules. An empty list means no transformation will
+	// occur.
 	TransformationRules []*TransformationRule `json:"transformationRules,omitempty"`
 
-	// VolumeDataRestorePolicy: Specifies the mechanism to be used to
-	// restore volume data. Default: VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED
-	// (will be treated as NO_VOLUME_DATA_RESTORATION).
+	// VolumeDataRestorePolicy: Optional. Specifies the mechanism to be used
+	// to restore volume data. Default:
+	// VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED (will be treated as
+	// NO_VOLUME_DATA_RESTORATION).
 	//
 	// Possible values:
 	//   "VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED" - Unspecified (illegal).
@@ -2038,7 +2045,8 @@ type RestorePlan struct {
 	// was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: User specified descriptive string for this RestorePlan.
+	// Description: Optional. User specified descriptive string for this
+	// RestorePlan.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Output only. `etag` is used for optimistic concurrency control
@@ -2052,7 +2060,7 @@ type RestorePlan struct {
 	// the same version of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: A set of custom labels supplied by user.
+	// Labels: Optional. A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The full name of the RestorePlan resource. Format:
@@ -2118,20 +2126,20 @@ func (s *RestorePlan) MarshalJSON() ([]byte, error) {
 // RetentionPolicy: RetentionPolicy defines a Backup retention policy
 // for a BackupPlan.
 type RetentionPolicy struct {
-	// BackupDeleteLockDays: Minimum age for Backups created via this
-	// BackupPlan (in days). This field MUST be an integer value between
-	// 0-90 (inclusive). A Backup created under this BackupPlan will NOT be
-	// deletable until it reaches Backup's (create_time +
+	// BackupDeleteLockDays: Optional. Minimum age for Backups created via
+	// this BackupPlan (in days). This field MUST be an integer value
+	// between 0-90 (inclusive). A Backup created under this BackupPlan will
+	// NOT be deletable until it reaches Backup's (create_time +
 	// backup_delete_lock_days). Updating this field of a BackupPlan does
 	// NOT affect existing Backups under it. Backups created AFTER a
 	// successful update will inherit the new value. Default: 0 (no delete
 	// blocking)
 	BackupDeleteLockDays int64 `json:"backupDeleteLockDays,omitempty"`
 
-	// BackupRetainDays: The default maximum age of a Backup created via
-	// this BackupPlan. This field MUST be an integer value >= 0 and <= 365.
-	// If specified, a Backup created under this BackupPlan will be
-	// automatically deleted after its age reaches (create_time +
+	// BackupRetainDays: Optional. The default maximum age of a Backup
+	// created via this BackupPlan. This field MUST be an integer value >= 0
+	// and <= 365. If specified, a Backup created under this BackupPlan will
+	// be automatically deleted after its age reaches (create_time +
 	// backup_retain_days). If not specified, Backups created under this
 	// BackupPlan will NOT be subject to automatic deletion. Updating this
 	// field does NOT affect existing Backups under it. Backups created
@@ -2141,9 +2149,10 @@ type RetentionPolicy struct {
 	// interval. Default: 0 (no automatic deletion)
 	BackupRetainDays int64 `json:"backupRetainDays,omitempty"`
 
-	// Locked: This flag denotes whether the retention policy of this
-	// BackupPlan is locked. If set to True, no further update is allowed on
-	// this policy, including the `locked` field itself. Default: False
+	// Locked: Optional. This flag denotes whether the retention policy of
+	// this BackupPlan is locked. If set to True, no further update is
+	// allowed on this policy, including the `locked` field itself. Default:
+	// False
 	Locked bool `json:"locked,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2174,16 +2183,17 @@ func (s *RetentionPolicy) MarshalJSON() ([]byte, error) {
 // Schedule: Defines scheduling parameters for automatically creating
 // Backups via this BackupPlan.
 type Schedule struct {
-	// CronSchedule: A standard cron (https://wikipedia.com/wiki/cron)
-	// string that defines a repeating schedule for creating Backups via
-	// this BackupPlan. This is mutually exclusive with the rpo_config field
-	// since at most one schedule can be defined for a BackupPlan. If this
-	// is defined, then backup_retain_days must also be defined. Default
-	// (empty): no automatic backup creation will occur.
+	// CronSchedule: Optional. A standard cron
+	// (https://wikipedia.com/wiki/cron) string that defines a repeating
+	// schedule for creating Backups via this BackupPlan. This is mutually
+	// exclusive with the rpo_config field since at most one schedule can be
+	// defined for a BackupPlan. If this is defined, then backup_retain_days
+	// must also be defined. Default (empty): no automatic backup creation
+	// will occur.
 	CronSchedule string `json:"cronSchedule,omitempty"`
 
-	// Paused: This flag denotes whether automatic Backup creation is paused
-	// for this BackupPlan. Default: False
+	// Paused: Optional. This flag denotes whether automatic Backup creation
+	// is paused for this BackupPlan. Default: False
 	Paused bool `json:"paused,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CronSchedule") to
@@ -2251,27 +2261,28 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // Backup. A rule contains both filtering logic (which resources are
 // subject to substitution) and substitution logic.
 type SubstitutionRule struct {
-	// NewValue: This is the new value to set for any fields that pass the
-	// filtering and selection criteria. To remove a value from a Kubernetes
-	// resource, either leave this field unspecified, or set it to the empty
-	// string ("").
+	// NewValue: Optional. This is the new value to set for any fields that
+	// pass the filtering and selection criteria. To remove a value from a
+	// Kubernetes resource, either leave this field unspecified, or set it
+	// to the empty string ("").
 	NewValue string `json:"newValue,omitempty"`
 
-	// OriginalValuePattern: (Filtering parameter) This is a [regular
-	// expression] (https://en.wikipedia.org/wiki/Regular_expression) that
-	// is compared against the fields matched by the target_json_path
-	// expression (and must also have passed the previous filters).
-	// Substitution will not be performed against fields whose value does
-	// not match this expression. If this field is NOT specified, then ALL
-	// fields matched by the target_json_path expression will undergo
-	// substitution. Note that an empty (e.g., "", rather than unspecified)
-	// value for this field will only match empty fields.
+	// OriginalValuePattern: Optional. (Filtering parameter) This is a
+	// [regular expression]
+	// (https://en.wikipedia.org/wiki/Regular_expression) that is compared
+	// against the fields matched by the target_json_path expression (and
+	// must also have passed the previous filters). Substitution will not be
+	// performed against fields whose value does not match this expression.
+	// If this field is NOT specified, then ALL fields matched by the
+	// target_json_path expression will undergo substitution. Note that an
+	// empty (e.g., "", rather than unspecified) value for this field will
+	// only match empty fields.
 	OriginalValuePattern string `json:"originalValuePattern,omitempty"`
 
-	// TargetGroupKinds: (Filtering parameter) Any resource subject to
-	// substitution must belong to one of the listed "types". If this field
-	// is not provided, no type filtering will be performed (all resources
-	// of all types matching previous filtering parameters will be
+	// TargetGroupKinds: Optional. (Filtering parameter) Any resource
+	// subject to substitution must belong to one of the listed "types". If
+	// this field is not provided, no type filtering will be performed (all
+	// resources of all types matching previous filtering parameters will be
 	// candidates for substitution).
 	TargetGroupKinds []*GroupKind `json:"targetGroupKinds,omitempty"`
 
@@ -2284,13 +2295,14 @@ type SubstitutionRule struct {
 	// candidate resources will be modified).
 	TargetJsonPath string `json:"targetJsonPath,omitempty"`
 
-	// TargetNamespaces: (Filtering parameter) Any resource subject to
-	// substitution must be contained within one of the listed Kubernetes
-	// Namespace in the Backup. If this field is not provided, no namespace
-	// filtering will be performed (all resources in all Namespaces,
-	// including all cluster-scoped resources, will be candidates for
-	// substitution). To mix cluster-scoped and namespaced resources in the
-	// same rule, use an empty string ("") as one of the target namespaces.
+	// TargetNamespaces: Optional. (Filtering parameter) Any resource
+	// subject to substitution must be contained within one of the listed
+	// Kubernetes Namespace in the Backup. If this field is not provided, no
+	// namespace filtering will be performed (all resources in all
+	// Namespaces, including all cluster-scoped resources, will be
+	// candidates for substitution). To mix cluster-scoped and namespaced
+	// resources in the same rule, use an empty string ("") as one of the
+	// target namespaces.
 	TargetNamespaces []string `json:"targetNamespaces,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
@@ -2387,8 +2399,8 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // Backup. A rule contains both filtering logic (which resources are
 // subject to transform) and transformation logic.
 type TransformationRule struct {
-	// Description: The description is a user specified string description
-	// of the transformation rule.
+	// Description: Optional. The description is a user specified string
+	// description of the transformation rule.
 	Description string `json:"description,omitempty"`
 
 	// FieldActions: Required. A list of transformation rule actions to take
@@ -2398,11 +2410,11 @@ type TransformationRule struct {
 	// operation.
 	FieldActions []*TransformationRuleAction `json:"fieldActions,omitempty"`
 
-	// ResourceFilter: This field is used to specify a set of fields that
-	// should be used to determine which resources in backup should be acted
-	// upon by the supplied transformation rule actions, and this will
-	// ensure that only specific resources are affected by transformation
-	// rule actions.
+	// ResourceFilter: Optional. This field is used to specify a set of
+	// fields that should be used to determine which resources in backup
+	// should be acted upon by the supplied transformation rule actions, and
+	// this will ensure that only specific resources are affected by
+	// transformation rule actions.
 	ResourceFilter *ResourceFilter `json:"resourceFilter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2432,8 +2444,9 @@ func (s *TransformationRule) MarshalJSON() ([]byte, error) {
 // TransformationRule action based on the JSON Patch RFC
 // (https://www.rfc-editor.org/rfc/rfc6902)
 type TransformationRuleAction struct {
-	// FromPath: A string containing a JSON Pointer value that references
-	// the location in the target document to move the value from.
+	// FromPath: Optional. A string containing a JSON Pointer value that
+	// references the location in the target document to move the value
+	// from.
 	FromPath string `json:"fromPath,omitempty"`
 
 	// Op: Required. op specifies the operation to perform.
@@ -2460,12 +2473,13 @@ type TransformationRuleAction struct {
 	// "value" member whose content specifies the replacement value.
 	Op string `json:"op,omitempty"`
 
-	// Path: A string containing a JSON-Pointer value that references a
-	// location within the target document where the operation is performed.
+	// Path: Optional. A string containing a JSON-Pointer value that
+	// references a location within the target document where the operation
+	// is performed.
 	Path string `json:"path,omitempty"`
 
-	// Value: A string that specifies the desired value in string format to
-	// use for transformation.
+	// Value: Optional. A string that specifies the desired value in string
+	// format to use for transformation.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FromPath") to
@@ -3470,7 +3484,7 @@ func (c *ProjectsLocationsBackupPlansDeleteCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If provided, this value must match the current value of the target BackupPlan's etag field or the request is rejected.",
+	//       "description": "Optional. If provided, this value must match the current value of the target BackupPlan's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3853,9 +3867,9 @@ func (c *ProjectsLocationsBackupPlansListCall) OrderBy(orderBy string) *Projects
 // PageSize sets the optional parameter "pageSize": The target number of
 // results to return in a single response. If not specified, a default
 // value will be chosen by the service. Note that the response may
-// inclue a partial list and a caller should only rely on the response's
-// next_page_token to determine if there are more instances left to be
-// queried.
+// include a partial list and a caller should only rely on the
+// response's next_page_token to determine if there are more instances
+// left to be queried.
 func (c *ProjectsLocationsBackupPlansListCall) PageSize(pageSize int64) *ProjectsLocationsBackupPlansListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3979,23 +3993,23 @@ func (c *ProjectsLocationsBackupPlansListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Field match expression used to filter the results.",
+	//       "description": "Optional. Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the results.",
+	//       "description": "Optional. Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may inclue a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
+	//       "description": "Optional. The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may include a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of next_page_token received from a previous `ListBackupPlans` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListBackupPlans` must match the call that provided the page token.",
+	//       "description": "Optional. The value of next_page_token received from a previous `ListBackupPlans` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListBackupPlans` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4183,7 +4197,7 @@ func (c *ProjectsLocationsBackupPlansPatchCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "This is used to specify the fields to be overwritten in the BackupPlan targeted for update. The values for each of these updated fields will be taken from the `backup_plan` provided with this request. Field names are relative to the root of the resource (e.g., `description`, `backup_config.include_volume_data`, etc.) If no `update_mask` is provided, all fields in `backup_plan` will be written to the target BackupPlan resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `backup_plan` are ignored and are not used to update the target BackupPlan.",
+	//       "description": "Optional. This is used to specify the fields to be overwritten in the BackupPlan targeted for update. The values for each of these updated fields will be taken from the `backup_plan` provided with this request. Field names are relative to the root of the resource (e.g., `description`, `backup_config.include_volume_data`, etc.) If no `update_mask` is provided, all fields in `backup_plan` will be written to the target BackupPlan resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `backup_plan` are ignored and are not used to update the target BackupPlan.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4633,7 +4647,7 @@ func (c *ProjectsLocationsBackupPlansBackupsCreateCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "backupId": {
-	//       "description": "The client-provided short name for the Backup resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of Backups in this BackupPlan",
+	//       "description": "Optional. The client-provided short name for the Backup resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of Backups in this BackupPlan",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4790,12 +4804,12 @@ func (c *ProjectsLocationsBackupPlansBackupsDeleteCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If provided, this value must match the current value of the target Backup's etag field or the request is rejected.",
+	//       "description": "Optional. If provided, this value must match the current value of the target Backup's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set to true, any VolumeBackups below this Backup will also be deleted. Otherwise, the request will only succeed if the Backup has no VolumeBackups.",
+	//       "description": "Optional. If set to true, any VolumeBackups below this Backup will also be deleted. Otherwise, the request will only succeed if the Backup has no VolumeBackups.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5178,9 +5192,9 @@ func (c *ProjectsLocationsBackupPlansBackupsListCall) OrderBy(orderBy string) *P
 // PageSize sets the optional parameter "pageSize": The target number of
 // results to return in a single response. If not specified, a default
 // value will be chosen by the service. Note that the response may
-// inclue a partial list and a caller should only rely on the response's
-// next_page_token to determine if there are more instances left to be
-// queried.
+// include a partial list and a caller should only rely on the
+// response's next_page_token to determine if there are more instances
+// left to be queried.
 func (c *ProjectsLocationsBackupPlansBackupsListCall) PageSize(pageSize int64) *ProjectsLocationsBackupPlansBackupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5304,23 +5318,23 @@ func (c *ProjectsLocationsBackupPlansBackupsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Field match expression used to filter the results.",
+	//       "description": "Optional. Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the results.",
+	//       "description": "Optional. Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may inclue a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
+	//       "description": "Optional. The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may include a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of next_page_token received from a previous `ListBackups` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListBackups` must match the call that provided the page token.",
+	//       "description": "Optional. The value of next_page_token received from a previous `ListBackups` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListBackups` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5506,7 +5520,7 @@ func (c *ProjectsLocationsBackupPlansBackupsPatchCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "This is used to specify the fields to be overwritten in the Backup targeted for update. The values for each of these updated fields will be taken from the `backup_plan` provided with this request. Field names are relative to the root of the resource. If no `update_mask` is provided, all fields in `backup` will be written to the target Backup resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `backup` are ignored and are not used to update the target Backup.",
+	//       "description": "Optional. This is used to specify the fields to be overwritten in the Backup targeted for update. The values for each of these updated fields will be taken from the `backup_plan` provided with this request. Field names are relative to the root of the resource. If no `update_mask` is provided, all fields in `backup` will be written to the target Backup resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `backup` are ignored and are not used to update the target Backup.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6183,9 +6197,9 @@ func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall) OrderBy(order
 // PageSize sets the optional parameter "pageSize": The target number of
 // results to return in a single response. If not specified, a default
 // value will be chosen by the service. Note that the response may
-// inclue a partial list and a caller should only rely on the response's
-// next_page_token to determine if there are more instances left to be
-// queried.
+// include a partial list and a caller should only rely on the
+// response's next_page_token to determine if there are more instances
+// left to be queried.
 func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall) PageSize(pageSize int64) *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6309,23 +6323,23 @@ func (c *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Field match expression used to filter the results.",
+	//       "description": "Optional. Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the results.",
+	//       "description": "Optional. Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may inclue a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
+	//       "description": "Optional. The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may include a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of next_page_token received from a previous `ListVolumeBackups` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListVolumeBackups` must match the call that provided the page token.",
+	//       "description": "Optional. The value of next_page_token received from a previous `ListVolumeBackups` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListVolumeBackups` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7462,12 +7476,12 @@ func (c *ProjectsLocationsRestorePlansDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If provided, this value must match the current value of the target RestorePlan's etag field or the request is rejected.",
+	//       "description": "Optional. If provided, this value must match the current value of the target RestorePlan's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set to true, any Restores below this RestorePlan will also be deleted. Otherwise, the request will only succeed if the RestorePlan has no Restores.",
+	//       "description": "Optional. If set to true, any Restores below this RestorePlan will also be deleted. Otherwise, the request will only succeed if the RestorePlan has no Restores.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7850,9 +7864,9 @@ func (c *ProjectsLocationsRestorePlansListCall) OrderBy(orderBy string) *Project
 // PageSize sets the optional parameter "pageSize": The target number of
 // results to return in a single response. If not specified, a default
 // value will be chosen by the service. Note that the response may
-// inclue a partial list and a caller should only rely on the response's
-// next_page_token to determine if there are more instances left to be
-// queried.
+// include a partial list and a caller should only rely on the
+// response's next_page_token to determine if there are more instances
+// left to be queried.
 func (c *ProjectsLocationsRestorePlansListCall) PageSize(pageSize int64) *ProjectsLocationsRestorePlansListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7976,23 +7990,23 @@ func (c *ProjectsLocationsRestorePlansListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Field match expression used to filter the results.",
+	//       "description": "Optional. Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the results.",
+	//       "description": "Optional. Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may inclue a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
+	//       "description": "Optional. The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may include a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of next_page_token received from a previous `ListRestorePlans` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListRestorePlans` must match the call that provided the page token.",
+	//       "description": "Optional. The value of next_page_token received from a previous `ListRestorePlans` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListRestorePlans` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8179,7 +8193,7 @@ func (c *ProjectsLocationsRestorePlansPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "This is used to specify the fields to be overwritten in the RestorePlan targeted for update. The values for each of these updated fields will be taken from the `restore_plan` provided with this request. Field names are relative to the root of the resource. If no `update_mask` is provided, all fields in `restore_plan` will be written to the target RestorePlan resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `restore_plan` are ignored and are not used to update the target RestorePlan.",
+	//       "description": "Optional. This is used to specify the fields to be overwritten in the RestorePlan targeted for update. The values for each of these updated fields will be taken from the `restore_plan` provided with this request. Field names are relative to the root of the resource. If no `update_mask` is provided, all fields in `restore_plan` will be written to the target RestorePlan resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `restore_plan` are ignored and are not used to update the target RestorePlan.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8786,12 +8800,12 @@ func (c *ProjectsLocationsRestorePlansRestoresDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If provided, this value must match the current value of the target Restore's etag field or the request is rejected.",
+	//       "description": "Optional. If provided, this value must match the current value of the target Restore's etag field or the request is rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set to true, any VolumeRestores below this restore will also be deleted. Otherwise, the request will only succeed if the restore has no VolumeRestores.",
+	//       "description": "Optional. If set to true, any VolumeRestores below this restore will also be deleted. Otherwise, the request will only succeed if the restore has no VolumeRestores.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9174,9 +9188,9 @@ func (c *ProjectsLocationsRestorePlansRestoresListCall) OrderBy(orderBy string) 
 // PageSize sets the optional parameter "pageSize": The target number of
 // results to return in a single response. If not specified, a default
 // value will be chosen by the service. Note that the response may
-// inclue a partial list and a caller should only rely on the response's
-// next_page_token to determine if there are more instances left to be
-// queried.
+// include a partial list and a caller should only rely on the
+// response's next_page_token to determine if there are more instances
+// left to be queried.
 func (c *ProjectsLocationsRestorePlansRestoresListCall) PageSize(pageSize int64) *ProjectsLocationsRestorePlansRestoresListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9300,23 +9314,23 @@ func (c *ProjectsLocationsRestorePlansRestoresListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Field match expression used to filter the results.",
+	//       "description": "Optional. Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the results.",
+	//       "description": "Optional. Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may inclue a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
+	//       "description": "Optional. The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may include a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of next_page_token received from a previous `ListRestores` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListRestores` must match the call that provided the page token.",
+	//       "description": "Optional. The value of next_page_token received from a previous `ListRestores` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListRestores` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9502,7 +9516,7 @@ func (c *ProjectsLocationsRestorePlansRestoresPatchCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "This is used to specify the fields to be overwritten in the Restore targeted for update. The values for each of these updated fields will be taken from the `restore` provided with this request. Field names are relative to the root of the resource. If no `update_mask` is provided, all fields in `restore` will be written to the target Restore resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `restore` are ignored and are not used to update the target Restore.",
+	//       "description": "Optional. This is used to specify the fields to be overwritten in the Restore targeted for update. The values for each of these updated fields will be taken from the `restore` provided with this request. Field names are relative to the root of the resource. If no `update_mask` is provided, all fields in `restore` will be written to the target Restore resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `restore` are ignored and are not used to update the target Restore.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10179,9 +10193,9 @@ func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall) OrderBy(or
 // PageSize sets the optional parameter "pageSize": The target number of
 // results to return in a single response. If not specified, a default
 // value will be chosen by the service. Note that the response may
-// inclue a partial list and a caller should only rely on the response's
-// next_page_token to determine if there are more instances left to be
-// queried.
+// include a partial list and a caller should only rely on the
+// response's next_page_token to determine if there are more instances
+// left to be queried.
 func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall) PageSize(pageSize int64) *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10306,23 +10320,23 @@ func (c *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Field match expression used to filter the results.",
+	//       "description": "Optional. Field match expression used to filter the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the results.",
+	//       "description": "Optional. Field by which to sort the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may inclue a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
+	//       "description": "Optional. The target number of results to return in a single response. If not specified, a default value will be chosen by the service. Note that the response may include a partial list and a caller should only rely on the response's next_page_token to determine if there are more instances left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of next_page_token received from a previous `ListVolumeRestores` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListVolumeRestores` must match the call that provided the page token.",
+	//       "description": "Optional. The value of next_page_token received from a previous `ListVolumeRestores` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListVolumeRestores` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

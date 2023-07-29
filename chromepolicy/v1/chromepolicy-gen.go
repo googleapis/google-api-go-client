@@ -1162,7 +1162,8 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	Definition *Proto2FileDescriptorProto `json:"definition,omitempty"`
 
 	// FieldDescriptions: Output only. Detailed description of each field
-	// that is part of the schema.
+	// that is part of the schema. Fields are suggested to be displayed by
+	// the ordering in this list, not by field number.
 	FieldDescriptions []*GoogleChromePolicyVersionsV1PolicySchemaFieldDescription `json:"fieldDescriptions,omitempty"`
 
 	// Name: Format:
@@ -1301,7 +1302,8 @@ type GoogleChromePolicyVersionsV1PolicySchemaFieldDescription struct {
 
 	// NestedFieldDescriptions: Output only. Provides the description of the
 	// fields nested in this field, if the field is a message type that
-	// defines multiple fields.
+	// defines multiple fields. Fields are suggested to be displayed by the
+	// ordering in this list, not by field number.
 	NestedFieldDescriptions []*GoogleChromePolicyVersionsV1PolicySchemaFieldDescription `json:"nestedFieldDescriptions,omitempty"`
 
 	// RequiredItems: Output only. Provides a list of fields that are

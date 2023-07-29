@@ -387,6 +387,45 @@ type BigQueryProfile struct {
 type CancelOperationRequest struct {
 }
 
+// CdcStrategy: The strategy that the stream uses for CDC replication.
+type CdcStrategy struct {
+	// MostRecentStartPosition: Optional. Start replicating from the most
+	// recent position in the source.
+	MostRecentStartPosition *MostRecentStartPosition `json:"mostRecentStartPosition,omitempty"`
+
+	// NextAvailableStartPosition: Optional. Resume replication from the
+	// next available position in the source.
+	NextAvailableStartPosition *NextAvailableStartPosition `json:"nextAvailableStartPosition,omitempty"`
+
+	// SpecificStartPosition: Optional. Start replicating from a specific
+	// position in the source.
+	SpecificStartPosition *SpecificStartPosition `json:"specificStartPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MostRecentStartPosition") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MostRecentStartPosition")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CdcStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod CdcStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConnectionProfile: A set of reusable connection configurations to be
 // used as a source or destination for a stream.
 type ConnectionProfile struct {
@@ -1239,6 +1278,11 @@ func (s *LookupStreamObjectRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MostRecentStartPosition: CDC strategy to start replicating from the
+// most recent position in the source.
+type MostRecentStartPosition struct {
+}
+
 // MysqlColumn: MySQL Column.
 type MysqlColumn struct {
 	// Collation: Column collation.
@@ -1319,6 +1363,38 @@ type MysqlDatabase struct {
 
 func (s *MysqlDatabase) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlDatabase
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlLogPosition: MySQL log position
+type MysqlLogPosition struct {
+	// LogFile: The binary log file name.
+	LogFile string `json:"logFile,omitempty"`
+
+	// LogPosition: The position within the binary log file. Default is head
+	// of file.
+	LogPosition int64 `json:"logPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogFile") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlLogPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlLogPosition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1547,6 +1623,11 @@ func (s *MysqlTable) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlTable
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NextAvailableStartPosition: CDC strategy to resume replication from
+// the next available position in the source.
+type NextAvailableStartPosition struct {
 }
 
 // Operation: This resource represents a long-running operation that is
@@ -2343,6 +2424,35 @@ func (s *Route) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RunStreamRequest: Request message for running a stream.
+type RunStreamRequest struct {
+	// CdcStrategy: Optional. The CDC strategy of the stream. If not set,
+	// the system's default value will be used.
+	CdcStrategy *CdcStrategy `json:"cdcStrategy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CdcStrategy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CdcStrategy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunStreamRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunStreamRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SingleTargetDataset: A single target dataset to which all data will
 // be streamed.
 type SingleTargetDataset struct {
@@ -2478,6 +2588,37 @@ type SourceObjectIdentifier struct {
 
 func (s *SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceObjectIdentifier
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpecificStartPosition: CDC strategy to start replicating from a
+// specific position in the source.
+type SpecificStartPosition struct {
+	// MysqlLogPosition: MySQL specific log position to start replicating
+	// from.
+	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlLogPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlLogPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpecificStartPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod SpecificStartPosition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7531,6 +7672,150 @@ func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Stream"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.run":
+
+type ProjectsLocationsStreamsRunCall struct {
+	s                *Service
+	name             string
+	runstreamrequest *RunStreamRequest
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Run: Use this method to start, resume or recover a stream with a non
+// default CDC strategy.
+//
+//   - name: Name of the stream resource to start, in the format:
+//     projects/{project_id}/locations/{location}/streams/{stream_name}.
+func (r *ProjectsLocationsStreamsService) Run(name string, runstreamrequest *RunStreamRequest) *ProjectsLocationsStreamsRunCall {
+	c := &ProjectsLocationsStreamsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.runstreamrequest = runstreamrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsRunCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsRunCall) Context(ctx context.Context) *ProjectsLocationsStreamsRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsRunCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsRunCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runstreamrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.run" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to start, resume or recover a stream with a non default CDC strategy.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}:run",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.streams.run",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the stream resource to start, in the format: projects/{project_id}/locations/{location}/streams/{stream_name}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:run",
+	//   "request": {
+	//     "$ref": "RunStreamRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

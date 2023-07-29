@@ -287,6 +287,8 @@ type Execution struct {
 	//   "CANCELLED" - The execution was stopped intentionally.
 	//   "UNAVAILABLE" - Execution data is unavailable. See the
 	// `state_error` field.
+	//   "QUEUED" - Request has been placed in the backlog for processing at
+	// a later time.
 	State string `json:"state,omitempty"`
 
 	// StateError: Output only. Error regarding the state of the Execution

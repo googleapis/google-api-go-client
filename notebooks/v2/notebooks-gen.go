@@ -521,6 +521,10 @@ type DiagnoseInstanceRequest struct {
 	// diagnostic tool
 	DiagnosticConfig *DiagnosticConfig `json:"diagnosticConfig,omitempty"`
 
+	// TimeoutMinutes: Optional. Maxmium amount of time in minutes before
+	// the operation times out.
+	TimeoutMinutes int64 `json:"timeoutMinutes,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DiagnosticConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

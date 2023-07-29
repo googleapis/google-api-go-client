@@ -1475,8 +1475,8 @@ type ConfigManagementConfigSync struct {
 	// GSA should have the Monitoring Metric Writer
 	// (roles/monitoring.metricWriter) IAM role. The Kubernetes
 	// ServiceAccount `default` in the namespace
-	// `config-management-monitoring` should be binded to the GSA. This
-	// field is required when automatic Feature management is enabled.
+	// `config-management-monitoring` should be bound to the GSA. This field
+	// is required when automatic Feature management is enabled.
 	MetricsGcpServiceAccountEmail string `json:"metricsGcpServiceAccountEmail,omitempty"`
 
 	// Oci: OCI repo configuration for the cluster
@@ -3585,10 +3585,6 @@ type IdentityServiceAzureADConfig struct {
 	// Tenant: Kind of Azure AD account to be authenticated. Supported
 	// values are or for accounts belonging to a specific tenant.
 	Tenant string `json:"tenant,omitempty"`
-
-	// UserClaim: Optional. Claim in the AzureAD ID Token that holds the
-	// user details.
-	UserClaim string `json:"userClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with

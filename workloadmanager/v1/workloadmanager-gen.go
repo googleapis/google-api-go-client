@@ -1614,14 +1614,15 @@ type SqlserverValidationValidationDetail struct {
 	//
 	// Possible values:
 	//   "SQLSERVER_VALIDATION_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "OS" - The Sqlserver system named OS
-	//   "DB_LOG_DISK_SEPARATION" - The LOG_DISK_SEPARATION table
-	//   "DB_MAX_PARALLELISM" - The MAX_PARALLELISM table
-	//   "DB_CXPACKET_WAITS" - The CXPACKET_WAITS table
-	//   "DB_TRANSACTION_LOG_HANDLING" - The TRANSACTION_LOG_HANDLING table
-	//   "DB_VIRTUAL_LOG_FILE_COUNT" - The VIRTUAL_LOG_FILE_COUNT table
-	//   "DB_BUFFER_POOL_EXTENSION" - The BUFFER_POOL_EXTENSION table
-	//   "DB_MAX_SERVER_MEMORY" - The MAX_SERVER_MEMORY table
+	//   "OS" - The Sqlserver system named OS.
+	//   "DB_LOG_DISK_SEPARATION" - The LOG_DISK_SEPARATION table.
+	//   "DB_MAX_PARALLELISM" - The MAX_PARALLELISM table.
+	//   "DB_CXPACKET_WAITS" - The CXPACKET_WAITS table.
+	//   "DB_TRANSACTION_LOG_HANDLING" - The TRANSACTION_LOG_HANDLING table.
+	//   "DB_VIRTUAL_LOG_FILE_COUNT" - The VIRTUAL_LOG_FILE_COUNT table.
+	//   "DB_BUFFER_POOL_EXTENSION" - The BUFFER_POOL_EXTENSION table.
+	//   "DB_MAX_SERVER_MEMORY" - The MAX_SERVER_MEMORY table.
+	//   "INSTANCE_METRICS" - The INSTANCE_METRICS table.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to

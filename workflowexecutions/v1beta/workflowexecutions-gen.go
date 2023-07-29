@@ -272,6 +272,9 @@ type Execution struct {
 	//   "SUCCEEDED" - The execution finished successfully.
 	//   "FAILED" - The execution failed with an error.
 	//   "CANCELLED" - The execution was stopped intentionally.
+	//   "UNAVAILABLE" - Reserved for future use.
+	//   "QUEUED" - Request has been placed in the backlog for processing at
+	// a later time.
 	State string `json:"state,omitempty"`
 
 	// Status: Output only. Status tracks the current steps and progress

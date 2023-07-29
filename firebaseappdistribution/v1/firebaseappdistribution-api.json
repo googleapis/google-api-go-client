@@ -342,34 +342,6 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
-                },
-                "test": {
-                  "description": "Run automated test(s) on release.",
-                  "flatPath": "v1/projects/{projectsId}/apps/{appsId}/releases/{releasesId}:test",
-                  "httpMethod": "POST",
-                  "id": "firebaseappdistribution.projects.apps.releases.test",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The name of the release resource to test. Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}`",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/apps/[^/]+/releases/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+name}:test",
-                  "request": {
-                    "$ref": "GoogleFirebaseAppdistroV1alphaTestReleaseRequest"
-                  },
-                  "response": {
-                    "$ref": "GoogleFirebaseAppdistroV1alphaTestReleaseResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
                 }
               },
               "resources": {
@@ -969,7 +941,7 @@
       }
     }
   },
-  "revision": "20230726",
+  "revision": "20230728",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "GdataBlobstore2Info": {
@@ -1853,23 +1825,6 @@
             "Upload binary updated an existing release",
             "Upload binary resulted in a no-op. A release with the exact same binary already exists."
           ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleFirebaseAppdistroV1alphaTestReleaseRequest": {
-      "description": "The request message for `TestRelease`.",
-      "id": "GoogleFirebaseAppdistroV1alphaTestReleaseRequest",
-      "properties": {},
-      "type": "object"
-    },
-    "GoogleFirebaseAppdistroV1alphaTestReleaseResponse": {
-      "description": "The response message for `TestRelease`.",
-      "id": "GoogleFirebaseAppdistroV1alphaTestReleaseResponse",
-      "properties": {
-        "testMatrix": {
-          "description": "Resource name of the test matrix Format: `v1/projects/{project_id}/testMatrices/{test_matrix_id}`",
           "type": "string"
         }
       },

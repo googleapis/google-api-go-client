@@ -529,15 +529,15 @@ func (s *AuthConfigTemplate) MarshalJSON() ([]byte, error) {
 // required to render an authorization link for the OAuth Authorization
 // Code Flow.
 type AuthorizationCodeLink struct {
-	// ClientId: The client ID assigned to the GCP Connectors OAuth app for
-	// the connector data source.
+	// ClientId: The client ID assigned to the Google Cloud Connectors OAuth
+	// app for the connector data source.
 	ClientId string `json:"clientId,omitempty"`
 
 	// EnablePkce: Whether to enable PKCE for the auth code flow.
 	EnablePkce bool `json:"enablePkce,omitempty"`
 
-	// Scopes: The scopes for which the user will authorize GCP Connectors
-	// on the connector data source.
+	// Scopes: The scopes for which the user will authorize Google Cloud
+	// Connectors on the connector data source.
 	Scopes []string `json:"scopes,omitempty"`
 
 	// Uri: The base URI the user must click to trigger the authorization
@@ -869,7 +869,7 @@ type Connection struct {
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
 	// ServiceAccount: Optional. Service account needed for runtime plane to
-	// access GCP resources.
+	// access Google Cloud resources.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ServiceDirectory: Output only. The name of the Service Directory
@@ -3596,20 +3596,21 @@ type RepairEventingRequest struct {
 
 // Resource: Resource definition
 type Resource struct {
-	// PathTemplate: Template to uniquely represent a GCP resource in a
-	// format IAM expects This is a template that can have references to
-	// other values provided in the config variable template.
+	// PathTemplate: Template to uniquely represent a Google Cloud resource
+	// in a format IAM expects This is a template that can have references
+	// to other values provided in the config variable template.
 	PathTemplate string `json:"pathTemplate,omitempty"`
 
 	// Type: Different types of resource supported.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Value type is not specified.
-	//   "GCP_PROJECT" - GCP Project Resource.
-	//   "GCP_RESOURCE" - Any GCP Resource which is identified uniquely by
-	// IAM.
-	//   "GCP_SECRETMANAGER_SECRET" - GCP Secret Resource.
-	//   "GCP_SECRETMANAGER_SECRET_VERSION" - GCP Secret Version Resource.
+	//   "GCP_PROJECT" - Google Cloud Project Resource.
+	//   "GCP_RESOURCE" - Any Google Cloud Resource which is identified
+	// uniquely by IAM.
+	//   "GCP_SECRETMANAGER_SECRET" - Google Cloud Secret Resource.
+	//   "GCP_SECRETMANAGER_SECRET_VERSION" - Google Cloud Secret Version
+	// Resource.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PathTemplate") to
@@ -3727,11 +3728,11 @@ type RetryEventSubscriptionRequest struct {
 }
 
 // RoleGrant: This configuration defines all the Cloud IAM roles that
-// needs to be granted to a particular GCP resource for the selected
-// principal like service account. These configurations will let UI
-// display to customers what IAM roles need to be granted by them. Or
-// these configurations can be used by the UI to render a 'grant' button
-// to do the same on behalf of the user.
+// needs to be granted to a particular Google Cloud resource for the
+// selected principal like service account. These configurations will
+// let UI display to customers what IAM roles need to be granted by
+// them. Or these configurations can be used by the UI to render a
+// 'grant' button to do the same on behalf of the user.
 type RoleGrant struct {
 	// HelperTextTemplate: Template that UI can use to provide helper text
 	// to customers.
@@ -4285,10 +4286,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // SupportedRuntimeFeatures: Supported runtime features of a connector
-// version. This is passed to the management layer to add a new
-// connector version by the connector developer. Details about how this
-// proto is passed to the management layer is covered in this doc -
-// go/runtime-manifest.
+// version.
 type SupportedRuntimeFeatures struct {
 	// ActionApis: Specifies if the connector supports action apis like
 	// 'executeAction'.
@@ -7163,7 +7161,6 @@ func (r *ProjectsLocationsConnectionsEventSubscriptionsService) List(parent stri
 }
 
 // Filter sets the optional parameter "filter": Filter.
-// https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.
 func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Filter(filter string) *ProjectsLocationsConnectionsEventSubscriptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7295,7 +7292,7 @@ func (c *ProjectsLocationsConnectionsEventSubscriptionsListCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter. https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.",
+	//       "description": "Filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8529,7 +8526,6 @@ func (r *ProjectsLocationsEndpointAttachmentsService) List(parent string) *Proje
 }
 
 // Filter sets the optional parameter "filter": Filter.
-// https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.
 func (c *ProjectsLocationsEndpointAttachmentsListCall) Filter(filter string) *ProjectsLocationsEndpointAttachmentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8661,7 +8657,7 @@ func (c *ProjectsLocationsEndpointAttachmentsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter. https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.",
+	//       "description": "Filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9643,7 +9639,6 @@ func (r *ProjectsLocationsGlobalManagedZonesService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": Filter.
-// https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.
 func (c *ProjectsLocationsGlobalManagedZonesListCall) Filter(filter string) *ProjectsLocationsGlobalManagedZonesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9775,7 +9770,7 @@ func (c *ProjectsLocationsGlobalManagedZonesListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter. https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.",
+	//       "description": "Filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

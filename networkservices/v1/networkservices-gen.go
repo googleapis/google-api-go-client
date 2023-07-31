@@ -2038,7 +2038,9 @@ type HttpRouteRouteAction struct {
 
 	// RequestHeaderModifier: The specification for modifying the headers of
 	// a matching request prior to delivery of the request to the
-	// destination.
+	// destination. If HeaderModifiers are set on both the Destination and
+	// the RouteAction, they will be merged. Conflicts between the two will
+	// not be resolved on the configuration.
 	RequestHeaderModifier *HttpRouteHeaderModifier `json:"requestHeaderModifier,omitempty"`
 
 	// RequestMirrorPolicy: Specifies the policy on how requests intended
@@ -2050,7 +2052,10 @@ type HttpRouteRouteAction struct {
 	RequestMirrorPolicy *HttpRouteRequestMirrorPolicy `json:"requestMirrorPolicy,omitempty"`
 
 	// ResponseHeaderModifier: The specification for modifying the headers
-	// of a response prior to sending the response back to the client.
+	// of a response prior to sending the response back to the client. If
+	// HeaderModifiers are set on both the Destination and the RouteAction,
+	// they will be merged. Conflicts between the two will not be resolved
+	// on the configuration.
 	ResponseHeaderModifier *HttpRouteHeaderModifier `json:"responseHeaderModifier,omitempty"`
 
 	// RetryPolicy: Specifies the retry policy associated with this route.

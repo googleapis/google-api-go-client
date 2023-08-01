@@ -1328,33 +1328,34 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings) MarshalJSON() ([
 // Permissions granted to the AW Partner SA account for the customer
 // workload
 type GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions struct {
+	// AssuredWorkloadsMonitoring: Optional. Allow partner to view violation
+	// alerts.
+	AssuredWorkloadsMonitoring bool `json:"assuredWorkloadsMonitoring,omitempty"`
+
 	// DataLogsViewer: Allow the partner to view inspectability logs and
 	// monitoring violations.
 	DataLogsViewer bool `json:"dataLogsViewer,omitempty"`
-
-	// RemediateFolderViolations: Allow partner to monitor folder and
-	// remediate violations
-	RemediateFolderViolations bool `json:"remediateFolderViolations,omitempty"`
 
 	// ServiceAccessApprover: Optional. Allow partner to view access
 	// approval logs.
 	ServiceAccessApprover bool `json:"serviceAccessApprover,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataLogsViewer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AssuredWorkloadsMonitoring") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataLogsViewer") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AssuredWorkloadsMonitoring") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3017,14 +3018,14 @@ type OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorklo
 }
 
 // AnalyzeWorkloadMove: Analyzes a hypothetical move of a source project
-// or project-based workload to a target (destination) folder-based
-// workload.
+// to a target (destination) folder-based workload.
 //
 //   - source: The source type is a project-based workload. Specify the
 //     workloads's relative resource name, formatted as:
 //     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
 //     WORKLOAD_ID}" For example:
-//     "organizations/123/locations/us-east1/workloads/assured-workload-1".
+//     "organizations/123/locations/us-east1/workloads/assured-workload-1"
+//     This option is now deprecated.
 //   - target: The resource ID of the folder-based destination workload.
 //     This workload is where the source project will hypothetically be
 //     moved to. Specify the workload's relative resource name, formatted
@@ -3153,7 +3154,7 @@ func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWo
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes a hypothetical move of a source project or project-based workload to a target (destination) folder-based workload.",
+	//   "description": "Analyzes a hypothetical move of a source project to a target (destination) folder-based workload.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}/organizations/{organizationsId1}/locations/{locationsId1}/workloads/{workloadsId1}:analyzeWorkloadMove",
 	//   "httpMethod": "GET",
 	//   "id": "assuredworkloads.organizations.locations.workloads.organizations.locations.workloads.analyzeWorkloadMove",
@@ -3168,7 +3169,7 @@ func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWo
 	//       "type": "string"
 	//     },
 	//     "source": {
-	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\"",
+	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\" This option is now deprecated",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
 	//       "required": true,
@@ -3746,8 +3747,7 @@ type ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
 }
 
 // AnalyzeWorkloadMove: Analyzes a hypothetical move of a source project
-// or project-based workload to a target (destination) folder-based
-// workload.
+// to a target (destination) folder-based workload.
 //
 //   - project: The source type is a project. Specify the project's
 //     relative resource name, formatted as either a project number or a
@@ -3774,6 +3774,7 @@ func (r *ProjectsOrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(pro
 // "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WO
 // RKLOAD_ID}" For example:
 // "organizations/123/locations/us-east1/workloads/assured-workload-1"
+// This option is now deprecated
 func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Source(source string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
 	c.urlParams_.Set("source", source)
 	return c
@@ -3882,7 +3883,7 @@ func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes a hypothetical move of a source project or project-based workload to a target (destination) folder-based workload.",
+	//   "description": "Analyzes a hypothetical move of a source project to a target (destination) folder-based workload.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
 	//   "httpMethod": "GET",
 	//   "id": "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove",
@@ -3899,7 +3900,8 @@ func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts
 	//       "type": "string"
 	//     },
 	//     "source": {
-	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\"",
+	//       "deprecated": true,
+	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\" This option is now deprecated",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

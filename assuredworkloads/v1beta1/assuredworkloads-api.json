@@ -381,7 +381,7 @@
                         "workloads": {
                           "methods": {
                             "analyzeWorkloadMove": {
-                              "description": "Analyzes a hypothetical move of a source project or project-based workload to a target (destination) folder-based workload.",
+                              "description": "Analyzes a hypothetical move of a source project to a target (destination) folder-based workload.",
                               "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}/organizations/{organizationsId1}/locations/{locationsId1}/workloads/{workloadsId1}:analyzeWorkloadMove",
                               "httpMethod": "GET",
                               "id": "assuredworkloads.organizations.locations.workloads.organizations.locations.workloads.analyzeWorkloadMove",
@@ -396,7 +396,7 @@
                                   "type": "string"
                                 },
                                 "source": {
-                                  "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\"",
+                                  "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\" This option is now deprecated",
                                   "location": "path",
                                   "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
                                   "required": true,
@@ -549,7 +549,7 @@
                 "workloads": {
                   "methods": {
                     "analyzeWorkloadMove": {
-                      "description": "Analyzes a hypothetical move of a source project or project-based workload to a target (destination) folder-based workload.",
+                      "description": "Analyzes a hypothetical move of a source project to a target (destination) folder-based workload.",
                       "flatPath": "v1beta1/projects/{projectsId}/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
                       "httpMethod": "GET",
                       "id": "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove",
@@ -566,7 +566,8 @@
                           "type": "string"
                         },
                         "source": {
-                          "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\"",
+                          "deprecated": true,
+                          "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\" This option is now deprecated",
                           "location": "query",
                           "type": "string"
                         },
@@ -595,7 +596,7 @@
       }
     }
   },
-  "revision": "20230721",
+  "revision": "20230731",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest": {
@@ -1333,13 +1334,12 @@
       "description": "Permissions granted to the AW Partner SA account for the customer workload",
       "id": "GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions",
       "properties": {
-        "dataLogsViewer": {
-          "description": "Allow the partner to view inspectability logs and monitoring violations.",
+        "assuredWorkloadsMonitoring": {
+          "description": "Optional. Allow partner to view violation alerts.",
           "type": "boolean"
         },
-        "remediateFolderViolations": {
-          "deprecated": true,
-          "description": "Allow partner to monitor folder and remediate violations",
+        "dataLogsViewer": {
+          "description": "Allow the partner to view inspectability logs and monitoring violations.",
           "type": "boolean"
         },
         "serviceAccessApprover": {

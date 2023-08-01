@@ -79,19 +79,8 @@ const apiVersion = "v1alpha"
 const basePath = "https://checks.googleapis.com/"
 const mtlsBasePath = "https://checks.mtls.googleapis.com/"
 
-// OAuth2 scopes used by this API.
-const (
-	// Test scope for access to the Zoo service
-	XapiZooScope = "https://www.googleapis.com/auth/xapi.zoo"
-)
-
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := internaloption.WithDefaultScopes(
-		"https://www.googleapis.com/auth/xapi.zoo",
-	)
-	// NOTE: prepend, so we don't override user-specified scopes.
-	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -187,7 +176,6 @@ type PrivacypolicyService struct {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
-	rs.PrivacyPolicies = NewProjectsPrivacyPoliciesService(s)
 	rs.Privacypolicy = NewProjectsPrivacypolicyService(s)
 	return rs
 }
@@ -195,18 +183,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
-	PrivacyPolicies *ProjectsPrivacyPoliciesService
-
 	Privacypolicy *ProjectsPrivacypolicyService
-}
-
-func NewProjectsPrivacyPoliciesService(s *Service) *ProjectsPrivacyPoliciesService {
-	rs := &ProjectsPrivacyPoliciesService{s: s}
-	return rs
-}
-
-type ProjectsPrivacyPoliciesService struct {
-	s *Service
 }
 
 func NewProjectsPrivacypolicyService(s *Service) *ProjectsPrivacypolicyService {
@@ -379,13 +356,13 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// FindPrivacyPolicyRequest: Request message for `FindPrivacyPolicy`.
-type FindPrivacyPolicyRequest struct {
-	// WebsiteUri: Required. URI for the website from where to find the
-	// privacy policy.
-	WebsiteUri string `json:"websiteUri,omitempty"`
+// FindPrivacyPolicyResponse: Operation response for
+// `FindPrivacyPolicy`.
+type FindPrivacyPolicyResponse struct {
+	// PrivacyPolicy: Resource name of the PrivacyPolicy that was found.
+	PrivacyPolicy string `json:"privacyPolicy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "WebsiteUri") to
+	// ForceSendFields is a list of field names (e.g. "PrivacyPolicy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -393,17 +370,17 @@ type FindPrivacyPolicyRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "WebsiteUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "PrivacyPolicy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *FindPrivacyPolicyRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod FindPrivacyPolicyRequest
+func (s *FindPrivacyPolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FindPrivacyPolicyResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -483,44 +460,6 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListPrivacyPoliciesResponse: Response message for
-// `ListPrivacyPolicies`.
-type ListPrivacyPoliciesResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If the value is an empty string, it means there are no
-	// further results for the request.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// PrivacyPolicies: The privacy policies.
-	PrivacyPolicies []*PrivacyPolicy `json:"privacyPolicies,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListPrivacyPoliciesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListPrivacyPoliciesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -983,68 +922,6 @@ func (s *PolicySectionAnnotation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PrivacyPolicy: Privacy policy.
-type PrivacyPolicy struct {
-	// HtmlContent: HTML content for the privacy policy page.
-	HtmlContent string `json:"htmlContent,omitempty"`
-
-	// Name: Resource name. Example: projects/123/privacyPolicies/456
-	Name string `json:"name,omitempty"`
-
-	// PrivacyPolicyUri: URI of the privacy policy corresponding to this
-	// resource.
-	PrivacyPolicyUri string `json:"privacyPolicyUri,omitempty"`
-
-	// Score: Confidence that the privacy policy URI is indeed from a
-	// privacy policy.
-	Score float64 `json:"score,omitempty"`
-
-	// WebsiteUri: URI of the original website used to find this privacy
-	// policy. Only populated for resources created by the FindPrivacyPolicy
-	// API.
-	WebsiteUri string `json:"websiteUri,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "HtmlContent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HtmlContent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivacyPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivacyPolicy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *PrivacyPolicy) UnmarshalJSON(data []byte) error {
-	type NoMethod PrivacyPolicy
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
-}
-
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -1264,10 +1141,7 @@ func (c *AccountsAppsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Em
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1399,10 +1273,7 @@ func (c *AccountsAppsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1547,10 +1418,7 @@ func (c *AccountsAppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1732,10 +1600,7 @@ func (c *AccountsAppsOperationsListCall) Do(opts ...googleapi.CallOption) (*List
 	//   "path": "v1alpha/{+name}/operations",
 	//   "response": {
 	//     "$ref": "ListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1904,10 +1769,7 @@ func (c *AccountsAppsOperationsWaitCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2033,626 +1895,6 @@ func (c *PrivacypolicyAnalyzeCall) Do(opts ...googleapi.CallOption) (*AnalyzePri
 	//   }
 	// }
 
-}
-
-// method id "checks.projects.privacyPolicies.delete":
-
-type ProjectsPrivacyPoliciesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a privacy policy.
-//
-// - name: Resource name of the privacy policy.
-func (r *ProjectsPrivacyPoliciesService) Delete(name string) *ProjectsPrivacyPoliciesDeleteCall {
-	c := &ProjectsPrivacyPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsPrivacyPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsPrivacyPoliciesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsPrivacyPoliciesDeleteCall) Context(ctx context.Context) *ProjectsPrivacyPoliciesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsPrivacyPoliciesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsPrivacyPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "checks.projects.privacyPolicies.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsPrivacyPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a privacy policy.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacyPolicies/{privacyPoliciesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "checks.projects.privacyPolicies.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the privacy policy.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/privacyPolicies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
-}
-
-// method id "checks.projects.privacyPolicies.find":
-
-type ProjectsPrivacyPoliciesFindCall struct {
-	s                        *Service
-	parent                   string
-	findprivacypolicyrequest *FindPrivacyPolicyRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// Find: Finds the privacy policy of a given website.
-//
-//   - parent: Resource name of the GCP project to which PrivacyPolicy
-//     resources will be added, in the format: `projects/{projectNumber}`.
-func (r *ProjectsPrivacyPoliciesService) Find(parent string, findprivacypolicyrequest *FindPrivacyPolicyRequest) *ProjectsPrivacyPoliciesFindCall {
-	c := &ProjectsPrivacyPoliciesFindCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.findprivacypolicyrequest = findprivacypolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsPrivacyPoliciesFindCall) Fields(s ...googleapi.Field) *ProjectsPrivacyPoliciesFindCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsPrivacyPoliciesFindCall) Context(ctx context.Context) *ProjectsPrivacyPoliciesFindCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsPrivacyPoliciesFindCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsPrivacyPoliciesFindCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.findprivacypolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/privacyPolicies:find")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "checks.projects.privacyPolicies.find" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsPrivacyPoliciesFindCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Finds the privacy policy of a given website.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacyPolicies:find",
-	//   "httpMethod": "POST",
-	//   "id": "checks.projects.privacyPolicies.find",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Resource name of the GCP project to which PrivacyPolicy resources will be added, in the format: `projects/{projectNumber}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/privacyPolicies:find",
-	//   "request": {
-	//     "$ref": "FindPrivacyPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   }
-	// }
-
-}
-
-// method id "checks.projects.privacyPolicies.get":
-
-type ProjectsPrivacyPoliciesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a privacy policy.
-//
-// - name: Resource name of the privacy policy.
-func (r *ProjectsPrivacyPoliciesService) Get(name string) *ProjectsPrivacyPoliciesGetCall {
-	c := &ProjectsPrivacyPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsPrivacyPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsPrivacyPoliciesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsPrivacyPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsPrivacyPoliciesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsPrivacyPoliciesGetCall) Context(ctx context.Context) *ProjectsPrivacyPoliciesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsPrivacyPoliciesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsPrivacyPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "checks.projects.privacyPolicies.get" call.
-// Exactly one of *PrivacyPolicy or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *PrivacyPolicy.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsPrivacyPoliciesGetCall) Do(opts ...googleapi.CallOption) (*PrivacyPolicy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &PrivacyPolicy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a privacy policy.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacyPolicies/{privacyPoliciesId}",
-	//   "httpMethod": "GET",
-	//   "id": "checks.projects.privacyPolicies.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the privacy policy.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/privacyPolicies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "PrivacyPolicy"
-	//   }
-	// }
-
-}
-
-// method id "checks.projects.privacyPolicies.list":
-
-type ProjectsPrivacyPoliciesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists privacy policies.
-//
-//   - parent: Resource name of the parent project, in the format
-//     `projects/{projectNumber}`.
-func (r *ProjectsPrivacyPoliciesService) List(parent string) *ProjectsPrivacyPoliciesListCall {
-	c := &ProjectsPrivacyPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": A filter string to
-// filters results. The filter syntax is defined by AIP-160
-// (https://google.aip.dev/160).
-func (c *ProjectsPrivacyPoliciesListCall) Filter(filter string) *ProjectsPrivacyPoliciesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If unspecified, at most 50 results will be
-// returned. The maximum value is 1000; values above 1000 will be
-// coerced to 1000.
-func (c *ProjectsPrivacyPoliciesListCall) PageSize(pageSize int64) *ProjectsPrivacyPoliciesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListPrivacyPoliciesRequest` call. Provide
-// this to retrieve the subsequent page. When paginating, all other
-// parameters provided to `ListPrivacyPoliciesRequest` must match the
-// call that provided the page token.
-func (c *ProjectsPrivacyPoliciesListCall) PageToken(pageToken string) *ProjectsPrivacyPoliciesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsPrivacyPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsPrivacyPoliciesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsPrivacyPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsPrivacyPoliciesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsPrivacyPoliciesListCall) Context(ctx context.Context) *ProjectsPrivacyPoliciesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsPrivacyPoliciesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsPrivacyPoliciesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/privacyPolicies")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "checks.projects.privacyPolicies.list" call.
-// Exactly one of *ListPrivacyPoliciesResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListPrivacyPoliciesResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsPrivacyPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListPrivacyPoliciesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListPrivacyPoliciesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists privacy policies.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacyPolicies",
-	//   "httpMethod": "GET",
-	//   "id": "checks.projects.privacyPolicies.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. A filter string to filters results. The filter syntax is defined by AIP-160 (https://google.aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return. If unspecified, at most 50 results will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListPrivacyPoliciesRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPrivacyPoliciesRequest` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Resource name of the parent project, in the format `projects/{projectNumber}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/privacyPolicies",
-	//   "response": {
-	//     "$ref": "ListPrivacyPoliciesResponse"
-	//   }
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsPrivacyPoliciesListCall) Pages(ctx context.Context, f func(*ListPrivacyPoliciesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 // method id "checks.projects.privacypolicy.operations.cancel":
@@ -2788,10 +2030,7 @@ func (c *ProjectsPrivacypolicyOperationsCancelCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1alpha/{+name}:cancel",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2923,10 +2162,7 @@ func (c *ProjectsPrivacypolicyOperationsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3071,10 +2307,7 @@ func (c *ProjectsPrivacypolicyOperationsGetCall) Do(opts ...googleapi.CallOption
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3256,10 +2489,7 @@ func (c *ProjectsPrivacypolicyOperationsListCall) Do(opts ...googleapi.CallOptio
 	//   "path": "v1alpha/{+name}/privacypolicy/operations",
 	//   "response": {
 	//     "$ref": "ListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -3433,10 +2663,7 @@ func (c *ProjectsPrivacypolicyOperationsWaitCall) Do(opts ...googleapi.CallOptio
 	//   "path": "v1alpha/{+name}:wait",
 	//   "response": {
 	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }

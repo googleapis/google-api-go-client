@@ -308,10 +308,6 @@ type GoogleHomeEnterpriseSdmV1ListDevicesResponse struct {
 	// Devices: The list of devices.
 	Devices []*GoogleHomeEnterpriseSdmV1Device `json:"devices,omitempty"`
 
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -342,10 +338,6 @@ func (s *GoogleHomeEnterpriseSdmV1ListDevicesResponse) MarshalJSON() ([]byte, er
 // GoogleHomeEnterpriseSdmV1ListRoomsResponse: Response message for
 // SmartDeviceManagementService.ListRooms
 type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rooms: The list of rooms.
 	Rooms []*GoogleHomeEnterpriseSdmV1Room `json:"rooms,omitempty"`
 
@@ -353,7 +345,7 @@ type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "Rooms") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -361,10 +353,10 @@ type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Rooms") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -379,10 +371,6 @@ func (s *GoogleHomeEnterpriseSdmV1ListRoomsResponse) MarshalJSON() ([]byte, erro
 // GoogleHomeEnterpriseSdmV1ListStructuresResponse: Response message for
 // SmartDeviceManagementService.ListStructures
 type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Structures: The list of structures.
 	Structures []*GoogleHomeEnterpriseSdmV1Structure `json:"structures,omitempty"`
 
@@ -390,7 +378,7 @@ type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "Structures") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -398,10 +386,10 @@ type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Structures") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -849,21 +837,6 @@ func (c *EnterprisesDevicesListCall) Filter(filter string) *EnterprisesDevicesLi
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Optional requested
-// page size. Server may return fewer devices than requested. If
-// unspecified, server will pick an appropriate default.
-func (c *EnterprisesDevicesListCall) PageSize(pageSize int64) *EnterprisesDevicesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Optional token of
-// the page to retrieve.
-func (c *EnterprisesDevicesListCall) PageToken(pageToken string) *EnterprisesDevicesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -978,17 +951,6 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "pageSize": {
-	//       "description": "Optional requested page size. Server may return fewer devices than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional token of the page to retrieve.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent enterprise to list devices under. E.g. \"enterprises/XYZ\".",
 	//       "location": "path",
@@ -1007,27 +969,6 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//   ]
 	// }
 
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *EnterprisesDevicesListCall) Pages(ctx context.Context, f func(*GoogleHomeEnterpriseSdmV1ListDevicesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 // method id "smartdevicemanagement.enterprises.structures.get":
@@ -1207,21 +1148,6 @@ func (c *EnterprisesStructuresListCall) Filter(filter string) *EnterprisesStruct
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer structures than requested. If unspecified,
-// server will pick an appropriate default.
-func (c *EnterprisesStructuresListCall) PageSize(pageSize int64) *EnterprisesStructuresListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The token of the
-// page to retrieve.
-func (c *EnterprisesStructuresListCall) PageToken(pageToken string) *EnterprisesStructuresListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1338,17 +1264,6 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer structures than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token of the page to retrieve.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent enterprise to list structures under. E.g. \"enterprises/XYZ\".",
 	//       "location": "path",
@@ -1367,27 +1282,6 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ]
 	// }
 
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *EnterprisesStructuresListCall) Pages(ctx context.Context, f func(*GoogleHomeEnterpriseSdmV1ListStructuresResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 // method id "smartdevicemanagement.enterprises.structures.rooms.get":
@@ -1559,21 +1453,6 @@ func (r *EnterprisesStructuresRoomsService) List(parent string) *EnterprisesStru
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer rooms than requested. If unspecified, server
-// will pick an appropriate default.
-func (c *EnterprisesStructuresRoomsListCall) PageSize(pageSize int64) *EnterprisesStructuresRoomsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The token of the
-// page to retrieve.
-func (c *EnterprisesStructuresRoomsListCall) PageToken(pageToken string) *EnterprisesStructuresRoomsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1683,17 +1562,6 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer rooms than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token of the page to retrieve.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent resource name of the rooms requested. For example: \"enterprises/XYZ/structures/ABC\".",
 	//       "location": "path",
@@ -1712,25 +1580,4 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ]
 	// }
 
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *EnterprisesStructuresRoomsListCall) Pages(ctx context.Context, f func(*GoogleHomeEnterpriseSdmV1ListRoomsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }

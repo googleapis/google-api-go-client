@@ -1740,8 +1740,10 @@ func (s *GoogleAppsCardV1BorderStyle) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Button: A text, icon, or text and icon button that
-// users can click. To make an image a clickable button, specify an
-// `Image` (not an `ImageComponent`) and set an `onClick` action.
+// users can click. For an example in Google Chat apps, see Button list
+// (https://developers.google.com/chat/ui/widgets/button-list). To make
+// an image a clickable button, specify an `Image` (not an
+// `ImageComponent`) and set an `onClick` action.
 type GoogleAppsCardV1Button struct {
 	// AltText: The alternative text that's used for accessibility. Set
 	// descriptive text that lets users know what the button does. For
@@ -1807,6 +1809,8 @@ func (s *GoogleAppsCardV1Button) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1ButtonList: A list of buttons layed out horizontally.
+// For an example in Google Chat apps, see Button list
+// (https://developers.google.com/chat/ui/widgets/button-list).
 type GoogleAppsCardV1ButtonList struct {
 	// Buttons: An array of buttons.
 	Buttons []*GoogleAppsCardV1Button `json:"buttons,omitempty"`
@@ -1845,7 +1849,9 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // the contact's name, job title, and avatar picture. - A section with
 // the contact information, including formatted text. - Buttons that
 // users can click to share the contact, or see more or less
-// information. !Example contact card
+// information. For more examples, see Design dynamic, interactive, and
+// consistent UIs with cards (https://developers.google.com/chat/ui).
+// !Example contact card
 // (https://developers.google.com/chat/images/card_api_reference.png)
 // ``` { "cardsV2": [ { "cardId": "unique-card-id", "card": { "header":
 // { "title": "Sasha", "subtitle": "Software Engineer", "imageUrl":
@@ -1925,6 +1931,8 @@ type GoogleAppsCardV1Card struct {
 
 	// Sections: Contains a collection of widgets. Each section has its own,
 	// optional header. Sections are visually separated by a line divider.
+	// For an example in Google Chat apps, see Card section
+	// (https://developers.google.com/chat/ui/widgets/card-section).
 	Sections []*GoogleAppsCardV1Section `json:"sections,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CardActions") to
@@ -1985,12 +1993,14 @@ func (s *GoogleAppsCardV1CardAction) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1CardFixedFooter: A persistent (sticky) footer that
-// that appears at the bottom of the card. Setting `fixedFooter` without
-// specifying a `primaryButton` or a `secondaryButton` causes an error.
-// Supported by Google Workspace Add-ons and Chat apps. For Chat apps,
-// you can use fixed footers in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs), but not card
-// messages
+// that appears at the bottom of the card. For an example in Google Chat
+// apps, see Card footer
+// (https://developers.google.com/chat/ui/widgets/card-fixed-footer).
+// Setting `fixedFooter` without specifying a `primaryButton` or a
+// `secondaryButton` causes an error. Supported by Google Workspace
+// Add-ons and Chat apps. For Chat apps, you can use fixed footers in
+// dialogs (https://developers.google.com/chat/how-tos/dialogs), but not
+// card messages
 // (https://developers.google.com/chat/api/guides/message-formats/cards).
 type GoogleAppsCardV1CardFixedFooter struct {
 	// PrimaryButton: The primary button of the fixed footer. The button
@@ -2025,7 +2035,9 @@ func (s *GoogleAppsCardV1CardFixedFooter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1CardHeader: Represents a card header.
+// GoogleAppsCardV1CardHeader: Represents a card header. For an example
+// in Google Chat apps, see Card header
+// (https://developers.google.com/chat/ui/widgets/card-header).
 type GoogleAppsCardV1CardHeader struct {
 	// ImageAltText: The alternative text of this image that's used for
 	// accessibility.
@@ -2143,21 +2155,23 @@ func (s *GoogleAppsCardV1Column) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Columns: The `Columns` widget displays up to 2
 // columns in a card message or dialog. You can add widgets to each
-// column; the widgets appear in the order that they are specified. The
-// height of each column is determined by the taller column. For
-// example, if the first column is taller than the second column, both
-// columns have the height of the first column. Because each column can
-// contain a different number of widgets, you can't define rows or align
-// widgets between the columns. Columns are displayed side-by-side. You
-// can customize the width of each column using the
-// `HorizontalSizeStyle` field. If the user's screen width is too
-// narrow, the second column wraps below the first: * On web, the second
-// column wraps if the screen width is less than or equal to 480 pixels.
-// * On iOS devices, the second column wraps if the screen width is less
-// than or equal to 300 pt. * On Android devices, the second column
-// wraps if the screen width is less than or equal to 320 dp. To include
-// more than 2 columns, or to use rows, use the `Grid` widget. Supported
-// by Chat apps, but not Google Workspace Add-ons.
+// column; the widgets appear in the order that they are specified. For
+// an example in Google Chat apps, see Columns
+// (https://developers.google.com/chat/ui/widgets/columns). The height
+// of each column is determined by the taller column. For example, if
+// the first column is taller than the second column, both columns have
+// the height of the first column. Because each column can contain a
+// different number of widgets, you can't define rows or align widgets
+// between the columns. Columns are displayed side-by-side. You can
+// customize the width of each column using the `HorizontalSizeStyle`
+// field. If the user's screen width is too narrow, the second column
+// wraps below the first: * On web, the second column wraps if the
+// screen width is less than or equal to 480 pixels. * On iOS devices,
+// the second column wraps if the screen width is less than or equal to
+// 300 pt. * On Android devices, the second column wraps if the screen
+// width is less than or equal to 320 dp. To include more than 2
+// columns, or to use rows, use the `Grid` widget. Supported by Chat
+// apps, but not Google Workspace Add-ons.
 type GoogleAppsCardV1Columns struct {
 	// ColumnItems: An array of columns. You can include up to 2 columns in
 	// a card or dialog.
@@ -2187,10 +2201,12 @@ func (s *GoogleAppsCardV1Columns) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1DateTimePicker: Lets users input a date, a time, or
-// both a date and a time. Users can input text or use the picker to
-// select dates and times. If users input an invalid date or time, the
-// picker shows an error that prompts users to input the information
-// correctly.
+// both a date and a time. For an example in Google Chat apps, see Date
+// time picker
+// (https://developers.google.com/chat/ui/widgets/date-time-picker).
+// Users can input text or use the picker to select dates and times. If
+// users input an invalid date or time, the picker shows an error that
+// prompts users to input the information correctly.
 type GoogleAppsCardV1DateTimePicker struct {
 	// Label: The text that prompts users to input a date, a time, or a date
 	// and time. For example, if users are scheduling an appointment, use a
@@ -2199,8 +2215,7 @@ type GoogleAppsCardV1DateTimePicker struct {
 
 	// Name: The name by which the `DateTimePicker` is identified in a form
 	// input event. For details about working with form inputs, see Receive
-	// form data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// form data (https://developers.google.com/chat/ui/read-form-data).
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: Triggered when the user clicks **Save** or **Clear**
@@ -2259,6 +2274,8 @@ func (s *GoogleAppsCardV1DateTimePicker) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1DecoratedText: A widget that displays text with
 // optional decorations such as a label above or below the text, an icon
 // in front of the text, a selection widget, or a button after the text.
+// For an example in Google Chat apps, see Decorated text
+// (https://developers.google.com/chat/ui/widgets/decorated-text).
 type GoogleAppsCardV1DecoratedText struct {
 	// BottomLabel: The text that appears below `text`. Always wraps.
 	BottomLabel string `json:"bottomLabel,omitempty"`
@@ -2290,7 +2307,7 @@ type GoogleAppsCardV1DecoratedText struct {
 	// Text: Required. The primary text. Supports simple formatting. For
 	// more information about formatting text, see Formatting text in Google
 	// Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Text string `json:"text,omitempty"`
@@ -2327,17 +2344,20 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Divider: Displays a divider between widgets as a
-// horizontal line. For example, the following JSON creates a divider:
-// ``` "divider": {} ```
+// horizontal line. For an example in Google Chat apps, see Divider
+// (https://developers.google.com/chat/ui/widgets/divider). For example,
+// the following JSON creates a divider: ``` "divider": {} ```
 type GoogleAppsCardV1Divider struct {
 }
 
 // GoogleAppsCardV1Grid: Displays a grid with a collection of items.
-// Items can only include text or images. A grid supports any number of
-// columns and items. The number of rows is determined by items divided
-// by columns. A grid with 10 items and 2 columns has 5 rows. A grid
-// with 11 items and 2 columns has 6 rows. For responsive columns, or to
-// include more than text or images, use `Columns`. For example, the
+// Items can only include text or images. For responsive columns, or to
+// include more than text or images, use `Columns`. For an example in
+// Google Chat apps, see Grid
+// (https://developers.google.com/chat/ui/widgets/grid). A grid supports
+// any number of columns and items. The number of rows is determined by
+// items divided by columns. A grid with 10 items and 2 columns has 5
+// rows. A grid with 11 items and 2 columns has 6 rows. For example, the
 // following JSON creates a 2 column grid with a single item: ```
 // "grid": { "title": "A fine collection of items", "columnCount": 2,
 // "borderStyle": { "type": "STROKE", "cornerRadius": 4 }, "items": [ {
@@ -2438,8 +2458,10 @@ func (s *GoogleAppsCardV1GridItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Icon: An icon displayed in a widget on a card.
-// Supports built-in
+// GoogleAppsCardV1Icon: An icon displayed in a widget on a card. For an
+// example in Google Chat apps, see Icon
+// (https://developers.google.com/chat/ui/widgets/icon). Supports
+// built-in
 // (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons)
 // and custom
 // (https://developers.google.com/chat/api/guides/message-formats/cards#customicons)
@@ -2505,7 +2527,8 @@ func (s *GoogleAppsCardV1Icon) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Image: An image that is specified by a URL and can
-// have an `onClick` action.
+// have an `onClick` action. For an example, see Image
+// (https://developers.google.com/chat/ui/widgets/image).
 type GoogleAppsCardV1Image struct {
 	// AltText: The alternative text of this image that's used for
 	// accessibility.
@@ -2800,7 +2823,7 @@ type GoogleAppsCardV1Section struct {
 	// Header: Text that appears at the top of a section. Supports simple
 	// HTML formatted text. For more information about formatting text, see
 	// Formatting text in Google Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Header string `json:"header,omitempty"`
@@ -2843,12 +2866,13 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1SelectionInput: A widget that creates one or more UI
 // items that users can select. For example, a dropdown menu or
 // checkboxes. You can use this widget to collect data that can be
-// predicted or enumerated. Chat apps can process the value of items
-// that users select or input. For details about working with form
-// inputs, see Receive form data
-// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
-// To collect undefined or abstract data from users, use the TextInput
-// widget.
+// predicted or enumerated. For an example in Google Chat apps, see
+// Selection input
+// (https://developers.google.com/chat/ui/widgets/selection-input). Chat
+// apps can process the value of items that users select or input. For
+// details about working with form inputs, see Receive form data
+// (https://developers.google.com/chat/ui/read-form-data). To collect
+// undefined or abstract data from users, use the TextInput widget.
 type GoogleAppsCardV1SelectionInput struct {
 	// ExternalDataSource: An external data source, such as a relational
 	// data base. Developer Preview
@@ -2882,15 +2906,14 @@ type GoogleAppsCardV1SelectionInput struct {
 
 	// Name: The name that identifies the selection input in a form input
 	// event. For details about working with form inputs, see Receive form
-	// data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// data (https://developers.google.com/chat/ui/read-form-data).
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: If specified, the form is submitted when the
 	// selection changes. If not specified, you must specify a separate
 	// button that submits the form. For details about working with form
 	// inputs, see Receive form data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// (https://developers.google.com/chat/ui/read-form-data).
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
 	// PlatformDataSource: A data source from a Google Workspace host
@@ -2980,7 +3003,7 @@ type GoogleAppsCardV1SelectionItem struct {
 	// Value: The value associated with this item. The client should use
 	// this as a form input value. For details about working with form
 	// inputs, see Receive form data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// (https://developers.google.com/chat/ui/read-form-data).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BottomText") to
@@ -3090,8 +3113,7 @@ type GoogleAppsCardV1SwitchControl struct {
 
 	// Name: The name by which the switch widget is identified in a form
 	// input event. For details about working with form inputs, see Receive
-	// form data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// form data (https://developers.google.com/chat/ui/read-form-data).
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: The action to perform when the switch state is
@@ -3103,8 +3125,7 @@ type GoogleAppsCardV1SwitchControl struct {
 
 	// Value: The value entered by a user, returned as part of a form input
 	// event. For details about working with form inputs, see Receive form
-	// data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// data (https://developers.google.com/chat/ui/read-form-data).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ControlType") to
@@ -3131,12 +3152,14 @@ func (s *GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1TextInput: A field in which users can enter text.
-// Supports suggestions and on-change actions. Chat apps receive and can
-// process the value of entered text during form input events. For
-// details about working with form inputs, see Receive form data
-// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
-// When you need to collect undefined or abstract data from users, use a
-// text input. To collect defined or enumerated data from users, use the
+// Supports suggestions and on-change actions. For an example in Google
+// Chat apps, see Text input
+// (https://developers.google.com/chat/ui/widgets/text-input). Chat apps
+// receive and can process the value of entered text during form input
+// events. For details about working with form inputs, see Receive form
+// data (https://developers.google.com/chat/ui/read-form-data). When you
+// need to collect undefined or abstract data from users, use a text
+// input. To collect defined or enumerated data from users, use the
 // SelectionInput widget.
 type GoogleAppsCardV1TextInput struct {
 	// AutoCompleteAction: Optional. Specify what action to take when the
@@ -3176,8 +3199,7 @@ type GoogleAppsCardV1TextInput struct {
 
 	// Name: The name by which the text input is identified in a form input
 	// event. For details about working with form inputs, see Receive form
-	// data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// data (https://developers.google.com/chat/ui/read-form-data).
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: What to do when a change occurs in the text input
@@ -3199,8 +3221,7 @@ type GoogleAppsCardV1TextInput struct {
 
 	// Value: The value entered by a user, returned as part of a form input
 	// event. For details about working with form inputs, see Receive form
-	// data
-	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+	// data (https://developers.google.com/chat/ui/read-form-data).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoCompleteAction")
@@ -3228,9 +3249,11 @@ func (s *GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1TextParagraph: A paragraph of text that supports
-// formatting. For more information about formatting text, see
-// Formatting text in Google Chat apps
-// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+// formatting. For an example in Google Chat apps, see Text paragraph
+// (https://developers.google.com/chat/ui/widgets/text-paragraph). For
+// more information about formatting text, see Formatting text in Google
+// Chat apps
+// (https://developers.google.com/chat/api/guides/message-formats/cards##card-formatting)
 // and Formatting text in Google Workspace Add-ons
 // (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 type GoogleAppsCardV1TextParagraph struct {
@@ -3364,7 +3387,7 @@ type GoogleAppsCardV1Widget struct {
 	// TextParagraph: Displays a text paragraph. Supports simple HTML
 	// formatted text. For more information about formatting text, see
 	// Formatting text in Google Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	// For example, the following JSON creates a bolded text: ```
@@ -4974,7 +4997,11 @@ func (s *UploadAttachmentResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// User: A user in Google Chat.
+// User: A user in Google Chat. When returned as an output from a
+// request, if your Chat app authenticates as a user
+// (https://developers.google.com/chat/api/guides/auth/users), the
+// output for a User resource only populates the user's `name` and
+// `type`.
 type User struct {
 	// DisplayName: Output only. The user's display name.
 	DisplayName string `json:"displayName,omitempty"`
@@ -7687,7 +7714,9 @@ type SpacesMessagesDeleteCall struct {
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` authorization scope.
+// the `chat.messages` authorization scope. Requests authenticated with
+// service accounts can only delete messages created by the calling Chat
+// app.
 //
 //   - name: Resource name of the message that you want to delete, in the
 //     form `spaces/*/messages/*` Example:
@@ -7796,7 +7825,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
+	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope. Requests authenticated with service accounts can only delete messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.delete",
@@ -8288,7 +8317,9 @@ type SpacesMessagesPatchCall struct {
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` authorization scope.
+// the `chat.messages` authorization scope. Requests authenticated with
+// service accounts can only update messages created by the calling Chat
+// app.
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
 //     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
@@ -8413,7 +8444,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope. Requests authenticated with service accounts can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "chat.spaces.messages.patch",
@@ -8480,7 +8511,9 @@ type SpacesMessagesUpdateCall struct {
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` authorization scope.
+// the `chat.messages` authorization scope. Requests authenticated with
+// service accounts can only update messages created by the calling Chat
+// app.
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
 //     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
@@ -8605,7 +8638,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope. Requests authenticated with service accounts can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",

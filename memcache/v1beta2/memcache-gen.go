@@ -1969,9 +1969,9 @@ type UpdatePolicy struct {
 	Channel string `json:"channel,omitempty"`
 
 	// DenyMaintenancePeriods: Deny Maintenance Period that is applied to
-	// resource to indicate when maintenance is forbidden. User can specify
-	// zero or more non-overlapping deny periods. Maximum number of
-	// deny_maintenance_periods expected is one.
+	// resource to indicate when maintenance is forbidden. The protocol
+	// supports zero-to-many such periods, but the current SLM Rollout
+	// implementation only supports zero-to-one.
 	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
 
 	// Window: Optional. Maintenance window that is applied to resources

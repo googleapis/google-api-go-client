@@ -2439,7 +2439,7 @@ func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaGroup) MarshalJSON() ([]byte
 // GoogleCloudBeyondcorpPartnerservicesV1alphaListBrowserDlpRulesResponse
 // : Message for response to listing BrowserDlpRules.
 type GoogleCloudBeyondcorpPartnerservicesV1alphaListBrowserDlpRulesResponse struct {
-	// BrowserDlpRules: The list of ProxyConfig objects.
+	// BrowserDlpRules: The list of BrowserDlpRule objects.
 	BrowserDlpRules []*GoogleCloudBeyondcorpPartnerservicesV1alphaBrowserDlpRule `json:"browserDlpRules,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

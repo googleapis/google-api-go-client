@@ -2546,6 +2546,49 @@ func (s *GoogleCloudDiscoveryengineV1alphaSearchInfo) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo: Verification
+// information for target sites in advanced site search.
+type GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo struct {
+	// SiteVerificationState: Site verification state indicating the
+	// ownership and validity.
+	//
+	// Possible values:
+	//   "SITE_VERIFICATION_STATE_UNSPECIFIED" - Defaults to VERIFIED.
+	//   "VERIFIED" - Site ownership verified.
+	//   "UNVERIFIED" - Site ownership pending verification or verification
+	// failed.
+	//   "EXEMPTED" - Site exempt from verification, e.g. a public website
+	// that opens to all.
+	SiteVerificationState string `json:"siteVerificationState,omitempty"`
+
+	// VerifyTime: Latest site verification time.
+	VerifyTime string `json:"verifyTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SiteVerificationState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SiteVerificationState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaTargetSite: A target site for the
 // SiteSearchEngine.
 type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
@@ -2572,6 +2615,10 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 	// ProvidedUriPattern: Required. Input only. The user provided URI
 	// pattern from which the `generated_uri_pattern` is generated.
 	ProvidedUriPattern string `json:"providedUriPattern,omitempty"`
+
+	// SiteVerificationInfo: Output only. Site ownership and validity
+	// verification status.
+	SiteVerificationInfo *GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo `json:"siteVerificationInfo,omitempty"`
 
 	// Type: The type of the target site, e.g. whether the site is to be
 	// included or excluded.

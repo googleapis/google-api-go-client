@@ -519,7 +519,7 @@
       }
     }
   },
-  "revision": "20230721",
+  "revision": "20230731",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest": {
@@ -1188,13 +1188,12 @@
       "description": "Permissions granted to the AW Partner SA account for the customer workload",
       "id": "GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions",
       "properties": {
-        "dataLogsViewer": {
-          "description": "Allow the partner to view inspectability logs and monitoring violations.",
+        "assuredWorkloadsMonitoring": {
+          "description": "Optional. Allow partner to view violation alerts.",
           "type": "boolean"
         },
-        "remediateFolderViolations": {
-          "deprecated": true,
-          "description": "Allow partner to monitor folder and remediate violations",
+        "dataLogsViewer": {
+          "description": "Allow the partner to view inspectability logs and monitoring violations.",
           "type": "boolean"
         },
         "serviceAccessApprover": {

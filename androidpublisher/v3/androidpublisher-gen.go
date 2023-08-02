@@ -19358,11 +19358,12 @@ type MonetizationSubscriptionsBasePlansOffersListCall struct {
 //
 //   - basePlanId: The parent base plan (ID) for which the offers should
 //     be read. May be specified as '-' to read all offers under a
-//     subscription.
+//     subscription or an app. Must be specified as '-' if product_id is
+//     specified as '-'.
 //   - packageName: The parent app (package name) for which the
 //     subscriptions should be read.
 //   - productId: The parent subscription (ID) for which the offers should
-//     be read.
+//     be read. May be specified as '-' to read all offers under an app.
 func (r *MonetizationSubscriptionsBasePlansOffersService) List(packageName string, productId string, basePlanId string) *MonetizationSubscriptionsBasePlansOffersListCall {
 	c := &MonetizationSubscriptionsBasePlansOffersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -19502,7 +19503,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersListCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "basePlanId": {
-	//       "description": "Required. The parent base plan (ID) for which the offers should be read. May be specified as '-' to read all offers under a subscription.",
+	//       "description": "Required. The parent base plan (ID) for which the offers should be read. May be specified as '-' to read all offers under a subscription or an app. Must be specified as '-' if product_id is specified as '-'.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19525,7 +19526,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "Required. The parent subscription (ID) for which the offers should be read.",
+	//       "description": "Required. The parent subscription (ID) for which the offers should be read. May be specified as '-' to read all offers under an app.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

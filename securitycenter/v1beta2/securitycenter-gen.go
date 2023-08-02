@@ -567,6 +567,83 @@ func (s *AccessReview) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AttackExposure: An attack exposure contains the results of an attack
+// path simulation run.
+type AttackExposure struct {
+	// AttackExposureResult: The resource name of the attack path simulation
+	// result that contains the details regarding this attack exposure
+	// score. Example: organizations/123/attackExposureResults/456
+	AttackExposureResult string `json:"attackExposureResult,omitempty"`
+
+	// ExposedHighValueResourcesCount: The number of high value resources
+	// that are exposed as a result of this finding.
+	ExposedHighValueResourcesCount int64 `json:"exposedHighValueResourcesCount,omitempty"`
+
+	// ExposedLowValueResourcesCount: The number of high value resources
+	// that are exposed as a result of this finding.
+	ExposedLowValueResourcesCount int64 `json:"exposedLowValueResourcesCount,omitempty"`
+
+	// ExposedMediumValueResourcesCount: The number of medium value
+	// resources that are exposed as a result of this finding.
+	ExposedMediumValueResourcesCount int64 `json:"exposedMediumValueResourcesCount,omitempty"`
+
+	// LatestCalculationTime: The most recent time the attack exposure was
+	// updated on this finding.
+	LatestCalculationTime string `json:"latestCalculationTime,omitempty"`
+
+	// Score: A number between 0 (inclusive) and infinity that represents
+	// how important this finding is to remediate. The higher the score, the
+	// more important it is to remediate.
+	Score float64 `json:"score,omitempty"`
+
+	// State: What state this AttackExposure is in. This captures whether or
+	// not an attack exposure has been calculated or not.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is not specified.
+	//   "CALCULATED" - The attack exposure has been calculated.
+	//   "NOT_CALCULATED" - The attack exposure has not been calculated.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AttackExposureResult") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttackExposureResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttackExposure) MarshalJSON() ([]byte, error) {
+	type NoMethod AttackExposure
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *AttackExposure) UnmarshalJSON(data []byte) error {
+	type NoMethod AttackExposure
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // CloudDlpDataProfile: The data profile
 // (https://cloud.google.com/dlp/docs/data-profiles) associated with the
 // finding.
@@ -1576,6 +1653,10 @@ type Finding struct {
 	// information on the caller, which method was accessed, and from where.
 	Access *Access `json:"access,omitempty"`
 
+	// AttackExposure: The results of an attack path simulation relevant to
+	// this finding.
+	AttackExposure *AttackExposure `json:"attackExposure,omitempty"`
+
 	// CanonicalName: The canonical name of the finding. It's either
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}",
@@ -2457,6 +2538,83 @@ type GoogleCloudSecuritycenterV1ResourceSelector struct {
 
 func (s *GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1ResourceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1ResourceValueConfig: A resource value
+// config is a mapping configuration of user's tag values to resource
+// values. Used by the attack path simulation.
+type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
+	// CreateTime: Output only. Timestamp this resource value config was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Description of the resource value config.
+	Description string `json:"description,omitempty"`
+
+	// Name: Name for the resource value config
+	Name string `json:"name,omitempty"`
+
+	// ResourceLabelsSelector: List of resource labels to search for,
+	// evaluated with AND. E.g. "resource_labels_selector": {"key": "value",
+	// "env": "prod"} will match resources with labels "key": "value" AND
+	// "env": "prod"
+	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
+	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
+
+	// ResourceType: Apply resource_value only to resources that match
+	// resource_type. resource_type will be checked with "AND" of other
+	// resources. E.g. "storage.googleapis.com/Bucket" with resource_value
+	// "HIGH" will apply "HIGH" value only to
+	// "storage.googleapis.com/Bucket" resources.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ResourceValue: Required. Resource value level this expression
+	// represents
+	//
+	// Possible values:
+	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
+	//   "HIGH" - High resource value
+	//   "MEDIUM" - Medium resource value
+	//   "LOW" - Low resource value
+	//   "NONE" - No resource value, e.g. ignore these resources
+	ResourceValue string `json:"resourceValue,omitempty"`
+
+	// Scope: Project or folder to scope this config to. For example,
+	// "project/456" would apply this config only to resources in
+	// "project/456" scope will be checked with "AND" of other resources.
+	Scope string `json:"scope,omitempty"`
+
+	// TagValues: Required. Tag values combined with AND to check against.
+	// Values in the form "tagValues/123" E.g. [ "tagValues/123",
+	// "tagValues/456", "tagValues/789" ]
+	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
+	TagValues []string `json:"tagValues,omitempty"`
+
+	// UpdateTime: Output only. Timestamp this resource value config was
+	// last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ResourceValueConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ResourceValueConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

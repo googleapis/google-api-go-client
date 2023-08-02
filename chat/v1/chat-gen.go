@@ -4376,20 +4376,24 @@ func (s *Section) MarshalJSON() ([]byte, error) {
 }
 
 type SetUpSpaceRequest struct {
-	// Memberships: Optional. The initial set of in-domain users invited to
-	// join the space. The calling user is automatically added to the space,
-	// and shouldn't be specified as a membership. The set currently allows
-	// up to 20 memberships (in addition to the caller). The
-	// `Membership.member` field must contain a user with `name` populated
-	// and `User.Type.HUMAN`. All other fields are ignored. Optional when
-	// setting `Space.spaceType` to `SPACE`. Required when setting
-	// `Space.spaceType` to `GROUP_CHAT`, along with at least two
-	// memberships. Required when setting `Space.spaceType` to
+	// Memberships: Optional. The Google Chat users to invite to join the
+	// space. Omit the calling user, as they are added automatically. The
+	// set currently allows up to 20 memberships (in addition to the
+	// caller). The `Membership.member` field must contain a `user` with
+	// `name` populated (format: `users/{user}`) and `type` set to
+	// `User.Type.HUMAN`. You can only add human users when setting up a
+	// space (adding Chat apps is only supported for direct message setup
+	// with the calling app). You can also add members using the user's
+	// email as an alias for {user}. For example, the `user.name` can be
+	// `users/example@gmail.com`." To invite Gmail users or users from
+	// external Google Workspace domains, user's email must be used for
+	// `{user}`. Optional when setting `Space.spaceType` to `SPACE`.
+	// Required when setting `Space.spaceType` to `GROUP_CHAT`, along with
+	// at least two memberships. Required when setting `Space.spaceType` to
 	// `DIRECT_MESSAGE` with a human user, along with exactly one
 	// membership. Must be empty when creating a 1:1 conversation between a
 	// human and the calling Chat app (when setting `Space.spaceType` to
-	// `DIRECT_MESSAGE` and `Space.singleUserBotDm` to `true`). Not
-	// supported: Inviting guest users, or adding other Chat apps.
+	// `DIRECT_MESSAGE` and `Space.singleUserBotDm` to `true`).
 	Memberships []*Membership `json:"memberships,omitempty"`
 
 	// RequestId: Optional. A unique identifier for this request. A random
@@ -5000,7 +5004,7 @@ func (s *UploadAttachmentResponse) MarshalJSON() ([]byte, error) {
 // User: A user in Google Chat. When returned as an output from a
 // request, if your Chat app authenticates as a user
 // (https://developers.google.com/chat/api/guides/auth/users), the
-// output for a User resource only populates the user's `name` and
+// output for a `User` resource only populates the user's `name` and
 // `type`.
 type User struct {
 	// DisplayName: Output only. The user's display name.
@@ -5863,6 +5867,11 @@ func (r *SpacesService) FindDirectMessage() *SpacesFindDirectMessageCall {
 // in the Directory API. For example, if the People API
 // `Person.resourceName` is `people/123456789`, you can find a direct
 // message with that person by using `users/123456789` as the `name`.
+// When authenticated as a user
+// (https://developers.google.com/chat/api/guides/auth/users), you can
+// use the email as an alias for `{user}`. For example,
+// `users/example@gmail.com` where `example@gmail.com` is the email of
+// the Google Chat user.
 func (c *SpacesFindDirectMessageCall) Name(name string) *SpacesFindDirectMessageCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -5971,7 +5980,7 @@ func (c *SpacesFindDirectMessageCall) Do(opts ...googleapi.CallOption) (*Space, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the user to find direct message with. Format: `users/{user}`, where `{user}` is either the `{person_id}` for the [person](https://developers.google.com/people/api/rest/v1/people) from the People API, or the `id` for the [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Directory API. For example, if the People API `Person.resourceName` is `people/123456789`, you can find a direct message with that person by using `users/123456789` as the `name`.",
+	//       "description": "Required. Resource name of the user to find direct message with. Format: `users/{user}`, where `{user}` is either the `{person_id}` for the [person](https://developers.google.com/people/api/rest/v1/people) from the People API, or the `id` for the [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Directory API. For example, if the People API `Person.resourceName` is `people/123456789`, you can find a direct message with that person by using `users/123456789` as the `name`. When [authenticated as a user](https://developers.google.com/chat/api/guides/auth/users), you can use the email as an alias for `{user}`. For example, `users/example@gmail.com` where `example@gmail.com` is the email of the Google Chat user.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6564,16 +6573,15 @@ type SpacesSetupCall struct {
 // (https://developers.google.com/chat/api/guides/v1/spaces/set-up). To
 // specify the human members to add, add memberships with the
 // appropriate `member.name` in the `SetUpSpaceRequest`. To add a human
-// user, use `users/{user}`, where `{user}` is either the `{person_id}`
-// for the person
-// (https://developers.google.com/people/api/rest/v1/people) from the
-// People API, or the `id` for the user
-// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
-// in the Admin SDK Directory API. For example, if the People API
-// `Person` `resourceName` is `people/123456789`, you can add the user
-// to the space by including a membership with `users/123456789` as the
-// `member.name`. For a space or group chat, if the caller blocks or is
-// blocked by some members, then those members aren't added to the
+// user, use `users/{user}`, where `{user}` can be the email address for
+// the user. For users in the same Workspace organization `{user}` can
+// also be the `{person_id}` for the person from the People API, or the
+// `id` for the user in the Directory API. For example, if the People
+// API Person `resourceName` for `user@example.com` is
+// `people/123456789`, you can add the user to the space by setting the
+// `membership.member.name` to `users/user@example.com` or
+// `users/123456789`. For a space or group chat, if the caller blocks or
+// is blocked by some members, then those members aren't added to the
 // created space. To create a direct message (DM) between the calling
 // user and another human user, specify exactly one membership to
 // represent the human user. If one user blocks the other, the request
@@ -6684,7 +6692,7 @@ func (c *SpacesSetupCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a space and adds specified users to it. The calling user is automatically added to the space, and shouldn't be specified as a membership in the request. For an example, see [Set up a space](https://developers.google.com/chat/api/guides/v1/spaces/set-up). To specify the human members to add, add memberships with the appropriate `member.name` in the `SetUpSpaceRequest`. To add a human user, use `users/{user}`, where `{user}` is either the `{person_id}` for the [person](https://developers.google.com/people/api/rest/v1/people) from the People API, or the `id` for the [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Admin SDK Directory API. For example, if the People API `Person` `resourceName` is `people/123456789`, you can add the user to the space by including a membership with `users/123456789` as the `member.name`. For a space or group chat, if the caller blocks or is blocked by some members, then those members aren't added to the created space. To create a direct message (DM) between the calling user and another human user, specify exactly one membership to represent the human user. If one user blocks the other, the request fails and the DM isn't created. To create a DM between the calling user and the calling app, set `Space.singleUserBotDm` to `true` and don't specify any memberships. You can only use this method to set up a DM with the calling app. To add the calling app as a member of a space or an existing DM between two human users, see [create a membership](https://developers.google.com/chat/api/guides/v1/members/create). If a DM already exists between two users, even when one user blocks the other at the time a request is made, then the existing DM is returned. Spaces with threaded replies or guest access aren't supported. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
+	//   "description": "Creates a space and adds specified users to it. The calling user is automatically added to the space, and shouldn't be specified as a membership in the request. For an example, see [Set up a space](https://developers.google.com/chat/api/guides/v1/spaces/set-up). To specify the human members to add, add memberships with the appropriate `member.name` in the `SetUpSpaceRequest`. To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`. For a space or group chat, if the caller blocks or is blocked by some members, then those members aren't added to the created space. To create a direct message (DM) between the calling user and another human user, specify exactly one membership to represent the human user. If one user blocks the other, the request fails and the DM isn't created. To create a DM between the calling user and the calling app, set `Space.singleUserBotDm` to `true` and don't specify any memberships. You can only use this method to set up a DM with the calling app. To add the calling app as a member of a space or an existing DM between two human users, see [create a membership](https://developers.google.com/chat/api/guides/v1/members/create). If a DM already exists between two users, even when one user blocks the other at the time a request is made, then the existing DM is returned. Spaces with threaded replies or guest access aren't supported. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
 	//   "flatPath": "v1/spaces:setup",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.setup",
@@ -6731,14 +6739,14 @@ type SpacesMembersCreateCall struct {
 // `membership.member.name` in the `CreateMembershipRequest`: - To add
 // the calling app to a space or a direct message between two human
 // users, use `users/app`. Unable to add other apps to the space. - To
-// add a human user, use `users/{user}`, where `{user}` is either the
-// `{person_id}` for the person
-// (https://developers.google.com/people/api/rest/v1/people) from the
-// People API, or the `id` for the user
-// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
-// in the Directory API. For example, if the People API `Person`
-// `resourceName` is `people/123456789`, you can add the user to the
-// space by setting the `membership.member.name` to `users/123456789`.
+// add a human user, use `users/{user}`, where `{user}` can be the email
+// address for the user. For users in the same Workspace organization
+// `{user}` can also be the `{person_id}` for the person from the People
+// API, or the `id` for the user in the Directory API. For example, if
+// the People API Person `resourceName` for `user@example.com` is
+// `people/123456789`, you can add the user to the space by setting the
+// `membership.member.name` to `users/user@example.com` or
+// `users/123456789`.
 //
 //   - parent: The resource name of the space for which to create the
 //     membership. Format: spaces/{space}.
@@ -6840,7 +6848,7 @@ func (c *SpacesMembersCreateCall) Do(opts ...googleapi.CallOption) (*Membership,
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a human membership or app membership for the calling app. Creating memberships for other apps isn't supported. For an example, see [ Create a membership](https://developers.google.com/chat/api/guides/v1/members/create). When creating a membership, if the specified member has their auto-accept policy turned off, then they're invited, and must accept the space invitation before joining. Otherwise, creating a membership adds the member directly to the specified space. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.memberships` (for human membership) or `chat.memberships.app` (for app membership) scope. To specify the member to add, set the `membership.member.name` in the `CreateMembershipRequest`: - To add the calling app to a space or a direct message between two human users, use `users/app`. Unable to add other apps to the space. - To add a human user, use `users/{user}`, where `{user}` is either the `{person_id}` for the [person](https://developers.google.com/people/api/rest/v1/people) from the People API, or the `id` for the [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Directory API. For example, if the People API `Person` `resourceName` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/123456789`.",
+	//   "description": "Creates a human membership or app membership for the calling app. Creating memberships for other apps isn't supported. For an example, see [ Create a membership](https://developers.google.com/chat/api/guides/v1/members/create). When creating a membership, if the specified member has their auto-accept policy turned off, then they're invited, and must accept the space invitation before joining. Otherwise, creating a membership adds the member directly to the specified space. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.memberships` (for human membership) or `chat.memberships.app` (for app membership) scope. To specify the member to add, set the `membership.member.name` in the `CreateMembershipRequest`: - To add the calling app to a space or a direct message between two human users, use `users/app`. Unable to add other apps to the space. - To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`.",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.members.create",
@@ -6891,9 +6899,12 @@ type SpacesMembersDeleteCall struct {
 //     delete human users' or their own memberships. Chat apps can't
 //     delete other apps' memberships. When deleting a human membership,
 //     requires the `chat.memberships` scope and
-//     `spaces/{space}/members/{member}` format. When deleting an app
-//     membership, requires the `chat.memberships.app` scope and
-//     `spaces/{space}/members/app` format. Format:
+//     `spaces/{space}/members/{member}` format. You can use the email as
+//     an alias for `{member}`. For example,
+//     `spaces/{space}/members/example@gmail.com` where
+//     `example@gmail.com` is the email of the Google Chat user. When
+//     deleting an app membership, requires the `chat.memberships.app`
+//     scope and `spaces/{space}/members/app` format. Format:
 //     `spaces/{space}/members/{member}` or `spaces/{space}/members/app`.
 func (r *SpacesMembersService) Delete(name string) *SpacesMembersDeleteCall {
 	c := &SpacesMembersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6996,7 +7007,7 @@ func (c *SpacesMembersDeleteCall) Do(opts ...googleapi.CallOption) (*Membership,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to delete. Chat apps can delete human users' or their own memberships. Chat apps can't delete other apps' memberships. When deleting a human membership, requires the `chat.memberships` scope and `spaces/{space}/members/{member}` format. When deleting an app membership, requires the `chat.memberships.app` scope and `spaces/{space}/members/app` format. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app`",
+	//       "description": "Required. Resource name of the membership to delete. Chat apps can delete human users' or their own memberships. Chat apps can't delete other apps' memberships. When deleting a human membership, requires the `chat.memberships` scope and `spaces/{space}/members/{member}` format. You can use the email as an alias for `{member}`. For example, `spaces/{space}/members/example@gmail.com` where `example@gmail.com` is the email of the Google Chat user. When deleting an app membership, requires the `chat.memberships.app` scope and `spaces/{space}/members/app` format. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app`.",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -7043,7 +7054,12 @@ type SpacesMembersGetCall struct {
 //   - name: Resource name of the membership to retrieve. To get the app's
 //     own membership, you can optionally use
 //     `spaces/{space}/members/app`. Format:
-//     `spaces/{space}/members/{member}` or `spaces/{space}/members/app`.
+//     `spaces/{space}/members/{member}` or `spaces/{space}/members/app`
+//     When authenticated as a user
+//     (https://developers.google.com/chat/api/guides/auth/users), you can
+//     use the user's email as an alias for `{member}`. For example,
+//     `spaces/{space}/members/example@gmail.com` where
+//     `example@gmail.com` is the email of the Google Chat user.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7158,7 +7174,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to retrieve. To get the app's own membership, you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app`",
+	//       "description": "Required. Resource name of the membership to retrieve. To get the app's own membership, you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app` When [authenticated as a user](https://developers.google.com/chat/api/guides/auth/users), you can use the user's email as an alias for `{member}`. For example, `spaces/{space}/members/example@gmail.com` where `example@gmail.com` is the email of the Google Chat user.",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,

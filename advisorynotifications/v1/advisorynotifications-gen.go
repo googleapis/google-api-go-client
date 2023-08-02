@@ -396,6 +396,8 @@ type GoogleCloudAdvisorynotificationsV1Notification struct {
 	// privacy advisory notifications
 	//   "NOTIFICATION_TYPE_SENSITIVE_ACTIONS" - Sensitive action
 	// notifications
+	//   "NOTIFICATION_TYPE_SECURITY_MSA" - General security MSA
+	//   "NOTIFICATION_TYPE_THREAT_HORIZONS" - Threat horizons MSA
 	NotificationType string `json:"notificationType,omitempty"`
 
 	// Subject: The subject line of the notification.

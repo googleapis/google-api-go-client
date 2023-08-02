@@ -508,6 +508,9 @@ type VerifyChallengeResponseResult struct {
 	// https://developers.google.com/admin-sdk/directory/v1/guides/manage-customers
 	CustomerId string `json:"customerId,omitempty"`
 
+	// DeviceEnrollmentId: Device enrollment id for ChromeOS devices.
+	DeviceEnrollmentId string `json:"deviceEnrollmentId,omitempty"`
+
 	// DevicePermanentId: Device permanent id is returned in this field (for
 	// the machine response only).
 	DevicePermanentId string `json:"devicePermanentId,omitempty"`

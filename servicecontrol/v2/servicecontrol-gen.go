@@ -488,6 +488,10 @@ type AuthenticationInfo struct {
 	// keys/{key}"
 	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
 
+	// ServiceDelegationHistory: Records the history of delegated resource
+	// access across Google services.
+	ServiceDelegationHistory *ServiceDelegationHistory `json:"serviceDelegationHistory,omitempty"`
+
 	// ThirdPartyPrincipal: The third party identification (if any) of the
 	// authenticated user making the request. When the JSON object
 	// represented here has a proto equivalent, the proto name will be
@@ -1270,6 +1274,94 @@ type ServiceAccountDelegationInfo struct {
 
 func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccountDelegationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceDelegationHistory: The history of delegation across multiple
+// services as the result of the original user's action. Such as
+// "service A uses its own account to do something for user B". This
+// differs from ServiceAccountDelegationInfo, which only tracks the
+// history of direct token exchanges (impersonation).
+type ServiceDelegationHistory struct {
+	// OriginalPrincipal: The original end user who initiated the request to
+	// GCP.
+	OriginalPrincipal string `json:"originalPrincipal,omitempty"`
+
+	// ServiceMetadata: Data identifying the service specific jobs or units
+	// of work that were involved in a chain of service calls.
+	ServiceMetadata []*ServiceMetadata `json:"serviceMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OriginalPrincipal")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OriginalPrincipal") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceDelegationHistory) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceDelegationHistory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMetadata: Metadata describing the service and additional
+// service specific information used to identify the job or unit of work
+// at hand.
+type ServiceMetadata struct {
+	// JobMetadata: Additional metadata provided by service teams to
+	// describe service specific job information that was triggered by the
+	// original principal.
+	JobMetadata googleapi.RawMessage `json:"jobMetadata,omitempty"`
+
+	// PrincipalSubject: A string representing the principal_subject
+	// associated with the identity. For most identities, the format will be
+	// `principal://iam.googleapis.com/{identity pool
+	// name}/subject/{subject)` except for some GKE identities
+	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
+	// legacy format `serviceAccount:{identity pool name}[{subject}]` If the
+	// identity is a Google account (e.g. workspace user account or service
+	// account), this will be the email of the prefixed by
+	// `serviceAccount:`. For example:
+	// `serviceAccount:my-service-account@project-1.iam.gserviceaccount.com`.
+	//  If the identity is an individual user, the identity will be
+	// formatted as: `user:user_ABC@email.com`.
+	PrincipalSubject string `json:"principalSubject,omitempty"`
+
+	// ServiceDomain: The service's fully qualified domain name, e.g.
+	// "dataproc.googleapis.com".
+	ServiceDomain string `json:"serviceDomain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobMetadata") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

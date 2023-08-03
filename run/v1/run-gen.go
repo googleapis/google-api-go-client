@@ -1004,16 +1004,18 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 
 // ContainerOverride: Per container override specification.
 type ContainerOverride struct {
-	// Args: Arguments to the entrypoint. Will replace existing args for
-	// override if present. Must be empty if `clear_args` is set to true.
+	// Args: Arguments to the entrypoint. The specified arguments replace
+	// and override any existing entrypoint arguments. Must be empty if
+	// `clear_args` is set to true.
 	Args []string `json:"args,omitempty"`
 
-	// ClearArgs: Optional. True if the intention is to clear out existing
-	// args list.
+	// ClearArgs: Optional. Set to True to clear all existing arguments.
 	ClearArgs bool `json:"clearArgs,omitempty"`
 
-	// Env: List of environment variables to set in the container. Will be
-	// merged with existing env for override.
+	// Env: List of environment variables to set in the container. All
+	// specified environment variables are merged with existing environment
+	// variables. When the specified environment variables exist, these
+	// values override any existing values.
 	Env []*EnvVar `json:"env,omitempty"`
 
 	// Name: The name of the container specified as a DNS_LABEL.
@@ -1221,11 +1223,9 @@ func (s *DomainMappingStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EmptyDirVolumeSource: Ephemeral storage which can be backed by real
-// disks (HD, SSD), network storage or memory (i.e. tmpfs). For now only
-// in memory (tmpfs) is supported. It is ephemeral in the sense that
-// when the sandbox is taken down, the data is destroyed with it (it
-// does not persist across sandbox runs).
+// EmptyDirVolumeSource: In memory (tmpfs) ephemeral storage. It is
+// ephemeral in the sense that when the sandbox is taken down, the data
+// is destroyed with it (it does not persist across sandbox runs).
 type EmptyDirVolumeSource struct {
 	// Medium: The medium on which the data is stored. The default is ""
 	// which means to use the node's default medium. Must be an empty string
@@ -1237,11 +1237,11 @@ type EmptyDirVolumeSource struct {
 	// size limit is also applicable for memory medium. The maximum usage on
 	// memory medium EmptyDir would be the minimum value between the
 	// SizeLimit specified here and the sum of memory limits of all
-	// containers in a pod. This field's values are of the 'Quantity' k8s
-	// type:
-	// https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.
-	// The default is nil which means that the limit is undefined. More
-	// info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+	// containers. The default is nil which means that the limit is
+	// undefined. More info:
+	// https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume.
+	// Info in Kubernetes:
+	// https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
 	SizeLimit string `json:"sizeLimit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Medium") to
@@ -3479,8 +3479,8 @@ func (s *RouteStatus) MarshalJSON() ([]byte, error) {
 type RunJobRequest struct {
 	// Overrides: Optional. Private preview feature. Currently only
 	// available by invitation. Overrides specification for a given
-	// execution of a job. If provided, overrides will be applied to update
-	// the execution or task spec.
+	// execution of a job. The specified values update the specification of
+	// the created execution.
 	Overrides *Overrides `json:"overrides,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Overrides") to

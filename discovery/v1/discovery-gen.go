@@ -492,6 +492,11 @@ type RestDescription struct {
 	// API.
 	DocumentationLink string `json:"documentationLink,omitempty"`
 
+	// Endpoints: A list of location-based endpoint objects for this API.
+	// Each object contains the endpoint URL, location, description and
+	// deprecation status.
+	Endpoints []*RestDescriptionEndpoints `json:"endpoints,omitempty"`
+
 	// Etag: The ETag for this response.
 	Etag string `json:"etag,omitempty"`
 
@@ -668,6 +673,43 @@ type RestDescriptionAuthOauth2Scopes struct {
 
 func (s *RestDescriptionAuthOauth2Scopes) MarshalJSON() ([]byte, error) {
 	type NoMethod RestDescriptionAuthOauth2Scopes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestDescriptionEndpoints: A single endpoint object
+type RestDescriptionEndpoints struct {
+	// Deprecated -- Whether this endpoint is deprecated
+	Deprecated bool `json:"deprecated,omitempty"`
+
+	// Description: A string describing the host designated by the URL
+	Description string `json:"description,omitempty"`
+
+	// EndpointUrl: The URL of the endpoint target host
+	EndpointUrl string `json:"endpointUrl,omitempty"`
+
+	// Location: The location of the endpoint
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Deprecated") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestDescriptionEndpoints) MarshalJSON() ([]byte, error) {
+	type NoMethod RestDescriptionEndpoints
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

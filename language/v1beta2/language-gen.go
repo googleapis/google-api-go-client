@@ -1526,14 +1526,15 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TextSpan: Represents an output piece of text.
+// TextSpan: Represents a text span in the input document.
 type TextSpan struct {
 	// BeginOffset: The API calculates the beginning offset of the content
 	// in the original document according to the EncodingType specified in
 	// the API request.
 	BeginOffset int64 `json:"beginOffset,omitempty"`
 
-	// Content: The content of the output text.
+	// Content: The content of the text span, which is a substring of the
+	// document.
 	Content string `json:"content,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BeginOffset") to

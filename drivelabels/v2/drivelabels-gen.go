@@ -23,6 +23,10 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//	drivelabelsService, err := drivelabels.NewService(ctx, option.WithScopes(drivelabels.DriveLabelsReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //	drivelabelsService, err := drivelabels.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -79,8 +83,34 @@ const apiVersion = "v2"
 const basePath = "https://drivelabels.googleapis.com/"
 const mtlsBasePath = "https://drivelabels.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See, edit, create, and delete all Google Drive labels in your
+	// organization, and see your organization's label-related admin
+	// policies
+	DriveAdminLabelsScope = "https://www.googleapis.com/auth/drive.admin.labels"
+
+	// See all Google Drive labels and label-related admin policies in your
+	// organization
+	DriveAdminLabelsReadonlyScope = "https://www.googleapis.com/auth/drive.admin.labels.readonly"
+
+	// See, edit, create, and delete your Google Drive labels
+	DriveLabelsScope = "https://www.googleapis.com/auth/drive.labels"
+
+	// See your Google Drive labels
+	DriveLabelsReadonlyScope = "https://www.googleapis.com/auth/drive.labels.readonly"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/drive.admin.labels",
+		"https://www.googleapis.com/auth/drive.admin.labels.readonly",
+		"https://www.googleapis.com/auth/drive.labels",
+		"https://www.googleapis.com/auth/drive.labels.readonly",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -3716,7 +3746,11 @@ func (c *LabelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLab
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2Label"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -3875,7 +3909,11 @@ func (c *LabelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpt
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -4022,7 +4060,11 @@ func (c *LabelsDeltaCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabe
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -4166,7 +4208,11 @@ func (c *LabelsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLa
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2Label"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -4309,7 +4355,11 @@ func (c *LabelsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLab
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2Label"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -4514,7 +4564,13 @@ func (c *LabelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabels
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2Label"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -4800,7 +4856,13 @@ func (c *LabelsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabel
 	//   "path": "v2/labels",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -4973,7 +5035,11 @@ func (c *LabelsPublishCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLa
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2Label"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5114,7 +5180,11 @@ func (c *LabelsUpdateLabelCopyModeCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2Label"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5271,7 +5341,11 @@ func (c *LabelsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5441,7 +5515,13 @@ func (c *LabelsLocksListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDrive
 	//   "path": "v2/{+parent}/locks",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelLocksResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -5606,7 +5686,11 @@ func (c *LabelsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5755,7 +5839,11 @@ func (c *LabelsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5913,7 +6001,11 @@ func (c *LabelsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6057,7 +6149,11 @@ func (c *LabelsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6241,7 +6337,13 @@ func (c *LabelsPermissionsListCall) Do(opts ...googleapi.CallOption) (*GoogleApp
 	//   "path": "v2/{+parent}/permissions",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -6419,7 +6521,11 @@ func (c *LabelsRevisionsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6589,7 +6695,13 @@ func (c *LabelsRevisionsLocksListCall) Do(opts ...googleapi.CallOption) (*Google
 	//   "path": "v2/{+parent}/locks",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelLocksResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -6754,7 +6866,11 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6903,7 +7019,11 @@ func (c *LabelsRevisionsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -7061,7 +7181,11 @@ func (c *LabelsRevisionsPermissionsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -7205,7 +7329,11 @@ func (c *LabelsRevisionsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -7389,7 +7517,13 @@ func (c *LabelsRevisionsPermissionsListCall) Do(opts ...googleapi.CallOption) (*
 	//   "path": "v2/{+parent}/permissions",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -7552,7 +7686,13 @@ func (c *LimitsGetLabelCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveL
 	//   "path": "v2/limits/label",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2LabelLimits"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -7710,7 +7850,13 @@ func (c *UsersGetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*GoogleApps
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2UserCapabilities"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }

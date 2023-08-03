@@ -373,10 +373,22 @@ type DatafeedstatusesService struct {
 
 func NewFreelistingsprogramService(s *APIService) *FreelistingsprogramService {
 	rs := &FreelistingsprogramService{s: s}
+	rs.Checkoutsettings = NewFreelistingsprogramCheckoutsettingsService(s)
 	return rs
 }
 
 type FreelistingsprogramService struct {
+	s *APIService
+
+	Checkoutsettings *FreelistingsprogramCheckoutsettingsService
+}
+
+func NewFreelistingsprogramCheckoutsettingsService(s *APIService) *FreelistingsprogramCheckoutsettingsService {
+	rs := &FreelistingsprogramCheckoutsettingsService{s: s}
+	return rs
+}
+
+type FreelistingsprogramCheckoutsettingsService struct {
 	s *APIService
 }
 
@@ -3310,6 +3322,108 @@ func (s *CarriersCarrier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CheckoutSettings: `CheckoutSettings` for a specific merchant ID.
+type CheckoutSettings struct {
+	// EffectiveEnrollmentState: Output only. The effective value of
+	// enrollment state for a given merchant ID. If account level settings
+	// are present then this value will be a copy of the account level
+	// settings. Otherwise, it will have the value of the parent account.
+	//
+	// Possible values:
+	//   "CHECKOUT_ON_MERCHANT_ENROLLMENT_STATE_UNSPECIFIED" - Default
+	// enrollment state when enrollment state is not specified.
+	//   "INACTIVE" - Merchant has not enrolled into the feature.
+	//   "ENROLLED" - Merchant has enrolled into the feature by providing
+	// either an account level URL or checkout URLs as part of their feed.
+	EffectiveEnrollmentState string `json:"effectiveEnrollmentState,omitempty"`
+
+	// EffectiveReviewState: Output only. The effective value of review
+	// state for a given merchant ID. If account level settings are present
+	// then this value will be a copy of the account level settings.
+	// Otherwise, it will have the value of the parent account.
+	//
+	// Possible values:
+	//   "CHECKOUT_ON_MERCHANT_REVIEW_STATE_UNSPECIFIED" - Default review
+	// state when review state is not specified.
+	//   "IN_REVIEW" - Merchant provided URLs are being reviewed for data
+	// quality issues.
+	//   "APPROVED" - Merchant account has been approved. Indicates the data
+	// quality checks have passed.
+	//   "DISAPPROVED" - Merchant account has been disapproved due to data
+	// quality issues.
+	EffectiveReviewState string `json:"effectiveReviewState,omitempty"`
+
+	// EffectiveUriSettings: The effective value of `url_settings` for a
+	// given merchant ID. If account level settings are present then this
+	// value will be a copy of the account level settings. Otherwise, it
+	// will have the value of the parent account.
+	EffectiveUriSettings *UrlSettings `json:"effectiveUriSettings,omitempty"`
+
+	// EnrollmentState: Output only. Reflects the merchant enrollment state
+	// in `Checkout` feature.
+	//
+	// Possible values:
+	//   "CHECKOUT_ON_MERCHANT_ENROLLMENT_STATE_UNSPECIFIED" - Default
+	// enrollment state when enrollment state is not specified.
+	//   "INACTIVE" - Merchant has not enrolled into the feature.
+	//   "ENROLLED" - Merchant has enrolled into the feature by providing
+	// either an account level URL or checkout URLs as part of their feed.
+	EnrollmentState string `json:"enrollmentState,omitempty"`
+
+	// MerchantId: Required. The ID of the account.
+	MerchantId int64 `json:"merchantId,omitempty,string"`
+
+	// ReviewState: Output only. Reflects the merchant review state in
+	// `Checkout` feature. This is set based on the data quality reviews of
+	// the URL provided by the merchant. A merchant with enrollment state as
+	// `ENROLLED` can be in the following review states: `IN_REVIEW`,
+	// `APPROVED` or `DISAPPROVED`. A merchant must be in an
+	// enrollment_state of `ENROLLED` before a review can begin for the
+	// merchant.
+	//
+	// Possible values:
+	//   "CHECKOUT_ON_MERCHANT_REVIEW_STATE_UNSPECIFIED" - Default review
+	// state when review state is not specified.
+	//   "IN_REVIEW" - Merchant provided URLs are being reviewed for data
+	// quality issues.
+	//   "APPROVED" - Merchant account has been approved. Indicates the data
+	// quality checks have passed.
+	//   "DISAPPROVED" - Merchant account has been disapproved due to data
+	// quality issues.
+	ReviewState string `json:"reviewState,omitempty"`
+
+	// UriSettings: URL settings for cart or checkout URL.
+	UriSettings *UrlSettings `json:"uriSettings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveEnrollmentState") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EffectiveEnrollmentState")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckoutSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckoutSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CloudExportAdditionalProperties: Product property for the Cloud
 // Retail API. For example, properties for a TV product could be
 // "Screen-Resolution" or "Screen-Size".
@@ -5791,6 +5905,36 @@ type InapplicabilityDetails struct {
 
 func (s *InapplicabilityDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InapplicabilityDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InsertCheckoutSettingsRequest: Request message for the
+// `InsertCheckoutSettings` method.
+type InsertCheckoutSettingsRequest struct {
+	// UriSettings: Required. The `UrlSettings` for the request. The
+	// presence of URL settings indicates `Checkout` enrollment.
+	UriSettings *UrlSettings `json:"uriSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UriSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UriSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertCheckoutSettingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertCheckoutSettingsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12326,6 +12470,20 @@ type PosInventory struct {
 	// string "content#posInventory"
 	Kind string `json:"kind,omitempty"`
 
+	// PickupMethod: Optional. Supported pickup method for this offer.
+	// Unless the value is "not supported", this field must be submitted
+	// together with `pickupSla`. For accepted attribute values, see the
+	// local product inventory feed specification
+	// (https://support.google.com/merchants/answer/3061342).
+	PickupMethod string `json:"pickupMethod,omitempty"`
+
+	// PickupSla: Optional. Expected date that an order will be ready for
+	// pickup relative to the order date. Must be submitted together with
+	// `pickupMethod`. For accepted attribute values, see the local product
+	// inventory feed specification
+	// (https://support.google.com/merchants/answer/3061342).
+	PickupSla string `json:"pickupSla,omitempty"`
+
 	// Price: Required. The current price of the item.
 	Price *Price `json:"price,omitempty"`
 
@@ -12377,6 +12535,20 @@ type PosInventoryRequest struct {
 
 	// ItemId: Required. A unique identifier for the item.
 	ItemId string `json:"itemId,omitempty"`
+
+	// PickupMethod: Optional. Supported pickup method for this offer.
+	// Unless the value is "not supported", this field must be submitted
+	// together with `pickupSla`. For accepted attribute values, see the
+	// local product inventory feed specification
+	// (https://support.google.com/merchants/answer/3061342).
+	PickupMethod string `json:"pickupMethod,omitempty"`
+
+	// PickupSla: Optional. Expected date that an order will be ready for
+	// pickup relative to the order date. Must be submitted together with
+	// `pickupMethod`. For accepted attribute values, see the local product
+	// inventory feed specification
+	// (https://support.google.com/merchants/answer/3061342).
+	PickupSla string `json:"pickupSla,omitempty"`
 
 	// Price: Required. The current price of the item.
 	Price *Price `json:"price,omitempty"`
@@ -12433,6 +12605,20 @@ type PosInventoryResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#posInventoryResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// PickupMethod: Optional. Supported pickup method for this offer.
+	// Unless the value is "not supported", this field must be submitted
+	// together with `pickupSla`. For accepted attribute values, see the
+	// local product inventory feed specification
+	// (https://support.google.com/merchants/answer/3061342).
+	PickupMethod string `json:"pickupMethod,omitempty"`
+
+	// PickupSla: Optional. Expected date that an order will be ready for
+	// pickup relative to the order date. Must be submitted together with
+	// `pickupMethod`. For accepted attribute values, see the local product
+	// inventory feed specification
+	// (https://support.google.com/merchants/answer/3061342).
+	PickupSla string `json:"pickupSla,omitempty"`
 
 	// Price: Required. The current price of the item.
 	Price *Price `json:"price,omitempty"`
@@ -20205,6 +20391,47 @@ type UnitInvoiceTaxLine struct {
 
 func (s *UnitInvoiceTaxLine) MarshalJSON() ([]byte, error) {
 	type NoMethod UnitInvoiceTaxLine
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UrlSettings: Specifications related to the `Checkout` URL. The
+// `UriTemplate` is of the form
+// `https://www.mystore.com/checkout?item_id={id}` where `{id}` will be
+// automatically replaced with data from the merchant account with this
+// attribute offer_id
+// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.offer_id)
+type UrlSettings struct {
+	// CartUriTemplate: URL template when the placeholders are expanded will
+	// redirect the buyer to the cart page on the merchant website with the
+	// selected item in cart.
+	CartUriTemplate string `json:"cartUriTemplate,omitempty"`
+
+	// CheckoutUriTemplate: URL template when the placeholders are expanded
+	// will redirect the buyer to the merchant checkout page with the item
+	// in the cart.
+	CheckoutUriTemplate string `json:"checkoutUriTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CartUriTemplate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CartUriTemplate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UrlSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod UrlSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -30216,6 +30443,400 @@ func (c *FreelistingsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "{merchantId}/freelistingsprogram/requestreview",
 	//   "request": {
 	//     "$ref": "RequestReviewFreeListingsRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.freelistingsprogram.checkoutsettings.delete":
+
+type FreelistingsprogramCheckoutsettingsDeleteCall struct {
+	s          *APIService
+	merchantId int64
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes `Checkout` settings and unenrolls merchant from
+// `Checkout` program.
+//
+// - merchantId: The ID of the account.
+func (r *FreelistingsprogramCheckoutsettingsService) Delete(merchantId int64) *FreelistingsprogramCheckoutsettingsDeleteCall {
+	c := &FreelistingsprogramCheckoutsettingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FreelistingsprogramCheckoutsettingsDeleteCall) Fields(s ...googleapi.Field) *FreelistingsprogramCheckoutsettingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FreelistingsprogramCheckoutsettingsDeleteCall) Context(ctx context.Context) *FreelistingsprogramCheckoutsettingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FreelistingsprogramCheckoutsettingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FreelistingsprogramCheckoutsettingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/freelistingsprogram/checkoutsettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.freelistingsprogram.checkoutsettings.delete" call.
+func (c *FreelistingsprogramCheckoutsettingsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Deletes `Checkout` settings and unenrolls merchant from `Checkout` program.",
+	//   "flatPath": "{merchantId}/freelistingsprogram/checkoutsettings",
+	//   "httpMethod": "DELETE",
+	//   "id": "content.freelistingsprogram.checkoutsettings.delete",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/freelistingsprogram/checkoutsettings",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.freelistingsprogram.checkoutsettings.get":
+
+type FreelistingsprogramCheckoutsettingsGetCall struct {
+	s            *APIService
+	merchantId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets Checkout settings for the given merchant. This includes
+// information about review state, enrollment state and URL settings.
+//
+// - merchantId: The ID of the account.
+func (r *FreelistingsprogramCheckoutsettingsService) Get(merchantId int64) *FreelistingsprogramCheckoutsettingsGetCall {
+	c := &FreelistingsprogramCheckoutsettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FreelistingsprogramCheckoutsettingsGetCall) Fields(s ...googleapi.Field) *FreelistingsprogramCheckoutsettingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FreelistingsprogramCheckoutsettingsGetCall) IfNoneMatch(entityTag string) *FreelistingsprogramCheckoutsettingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FreelistingsprogramCheckoutsettingsGetCall) Context(ctx context.Context) *FreelistingsprogramCheckoutsettingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FreelistingsprogramCheckoutsettingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FreelistingsprogramCheckoutsettingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/freelistingsprogram/checkoutsettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.freelistingsprogram.checkoutsettings.get" call.
+// Exactly one of *CheckoutSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CheckoutSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FreelistingsprogramCheckoutsettingsGetCall) Do(opts ...googleapi.CallOption) (*CheckoutSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckoutSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets Checkout settings for the given merchant. This includes information about review state, enrollment state and URL settings.",
+	//   "flatPath": "{merchantId}/freelistingsprogram/checkoutsettings",
+	//   "httpMethod": "GET",
+	//   "id": "content.freelistingsprogram.checkoutsettings.get",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/freelistingsprogram/checkoutsettings",
+	//   "response": {
+	//     "$ref": "CheckoutSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.freelistingsprogram.checkoutsettings.insert":
+
+type FreelistingsprogramCheckoutsettingsInsertCall struct {
+	s                             *APIService
+	merchantId                    int64
+	insertcheckoutsettingsrequest *InsertCheckoutSettingsRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Insert: Enrolls merchant in `Checkout` program.
+//
+// - merchantId: The ID of the account.
+func (r *FreelistingsprogramCheckoutsettingsService) Insert(merchantId int64, insertcheckoutsettingsrequest *InsertCheckoutSettingsRequest) *FreelistingsprogramCheckoutsettingsInsertCall {
+	c := &FreelistingsprogramCheckoutsettingsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.insertcheckoutsettingsrequest = insertcheckoutsettingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FreelistingsprogramCheckoutsettingsInsertCall) Fields(s ...googleapi.Field) *FreelistingsprogramCheckoutsettingsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FreelistingsprogramCheckoutsettingsInsertCall) Context(ctx context.Context) *FreelistingsprogramCheckoutsettingsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FreelistingsprogramCheckoutsettingsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FreelistingsprogramCheckoutsettingsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.insertcheckoutsettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/freelistingsprogram/checkoutsettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.freelistingsprogram.checkoutsettings.insert" call.
+// Exactly one of *CheckoutSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CheckoutSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FreelistingsprogramCheckoutsettingsInsertCall) Do(opts ...googleapi.CallOption) (*CheckoutSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckoutSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enrolls merchant in `Checkout` program.",
+	//   "flatPath": "{merchantId}/freelistingsprogram/checkoutsettings",
+	//   "httpMethod": "POST",
+	//   "id": "content.freelistingsprogram.checkoutsettings.insert",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/freelistingsprogram/checkoutsettings",
+	//   "request": {
+	//     "$ref": "InsertCheckoutSettingsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CheckoutSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

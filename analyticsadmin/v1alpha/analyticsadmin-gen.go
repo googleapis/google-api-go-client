@@ -2790,6 +2790,10 @@ type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
 	// linked Google Cloud project.
 	DailyExportEnabled bool `json:"dailyExportEnabled,omitempty"`
 
+	// EnterpriseExportEnabled: If set true, enables enterprise export to
+	// the linked Google Cloud project.
+	EnterpriseExportEnabled bool `json:"enterpriseExportEnabled,omitempty"`
+
 	// ExcludedEvents: The list of event names that will be excluded from
 	// exports.
 	ExcludedEvents []string `json:"excludedEvents,omitempty"`
@@ -2803,10 +2807,6 @@ type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
 	// IncludeAdvertisingId: If set true, exported data will include
 	// advertising identifiers for mobile app streams.
 	IncludeAdvertisingId bool `json:"includeAdvertisingId,omitempty"`
-
-	// IntradayExportEnabled: If set true, enables intraday export to the
-	// linked Google Cloud project.
-	IntradayExportEnabled bool `json:"intradayExportEnabled,omitempty"`
 
 	// Name: Output only. Resource name of this BigQuery link. Format:
 	// 'properties/{property_id}/bigQueryLinks/{bigquery_link_id}' Format:

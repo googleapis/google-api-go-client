@@ -1505,8 +1505,9 @@ type GoogleIdentityAccesscontextmanagerV1Condition struct {
 	Members []string `json:"members,omitempty"`
 
 	// Negate: Whether to negate the Condition. If true, the Condition
-	// becomes a NAND over its non-empty fields, each field must be false
-	// for the Condition overall to be satisfied. Defaults to false.
+	// becomes a NAND over its non-empty fields. Any non-empty field
+	// criteria evaluating to false will result in the Condition to be
+	// satisfied. Defaults to false.
 	Negate bool `json:"negate,omitempty"`
 
 	// Regions: The request must originate from one of the provided

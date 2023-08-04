@@ -1548,6 +1548,28 @@ type Command struct {
 	//   "LOCK_NOW" - Lock the device after password reset.
 	ResetPasswordFlags []string `json:"resetPasswordFlags,omitempty"`
 
+	// StartLostModeParams: Parameters for the START_LOST_MODE command to
+	// put the device into lost mode. See StartLostModeParams. If this is
+	// set, then it is suggested that type should not be set. In this case,
+	// the server automatically sets it to START_LOST_MODE. It is also
+	// acceptable to explicitly set type to START_LOST_MODE.
+	StartLostModeParams *StartLostModeParams `json:"startLostModeParams,omitempty"`
+
+	// StartLostModeStatus: Output only. Status of the START_LOST_MODE
+	// command to put the device into lost mode. See StartLostModeStatus.
+	StartLostModeStatus *StartLostModeStatus `json:"startLostModeStatus,omitempty"`
+
+	// StopLostModeParams: Parameters for the STOP_LOST_MODE command to take
+	// the device out of lost mode. See StopLostModeParams. If this is set,
+	// then it is suggested that type should not be set. In this case, the
+	// server automatically sets it to STOP_LOST_MODE. It is also acceptable
+	// to explicitly set type to STOP_LOST_MODE.
+	StopLostModeParams *StopLostModeParams `json:"stopLostModeParams,omitempty"`
+
+	// StopLostModeStatus: Output only. Status of the STOP_LOST_MODE command
+	// to take the device out of lost mode. See StopLostModeStatus.
+	StopLostModeStatus *StopLostModeStatus `json:"stopLostModeStatus,omitempty"`
+
 	// Type: The type of the command.
 	//
 	// Possible values:
@@ -1567,6 +1589,12 @@ type Command struct {
 	// can store data outside of its application data, for example in
 	// external storage or in a user dictionary. See also
 	// clear_apps_data_params.
+	//   "START_LOST_MODE" - Puts the device into lost mode. Only supported
+	// on fully managed devices or organization-owned devices with a managed
+	// profile. See also start_lost_mode_params.
+	//   "STOP_LOST_MODE" - Takes the device out of lost mode. Only
+	// supported on fully managed devices or organization-owned devices with
+	// a managed profile. See also stop_lost_mode_params.
 	Type string `json:"type,omitempty"`
 
 	// UserName: The resource name of the user that owns the device in the
@@ -2027,6 +2055,8 @@ type Device struct {
 	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
+	//   "LOST" - The device is lost. This state is only possible on
+	// organization-owned devices.
 	AppliedState string `json:"appliedState,omitempty"`
 
 	// CommonCriteriaModeInfo: Information about Common Criteria
@@ -2170,6 +2200,8 @@ type Device struct {
 	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
+	//   "LOST" - The device is lost. This state is only possible on
+	// organization-owned devices.
 	State string `json:"state,omitempty"`
 
 	// SystemProperties: Map of selected system properties name and value
@@ -3789,6 +3821,53 @@ func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Location: The device location containing the latitude and longitude.
+type Location struct {
+	// Latitude: The latitude position of the location
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: The longitude position of the location
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Latitude") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Location) UnmarshalJSON(data []byte) error {
+	type NoMethod Location
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
 // LogBufferSizeCriticalEvent: The usageLog buffer on the device has
 // reached 90% of its capacity, therefore older events may be dropped.
 // Intentionally empty.
@@ -3803,6 +3882,45 @@ type LoggingStartedEvent struct {
 // LoggingStoppedEvent: usageLog policy has been disabled. Intentionally
 // empty.
 type LoggingStoppedEvent struct {
+}
+
+// LostModeLocationEvent: A lost mode event containing the device
+// location and battery level as a percentage.
+type LostModeLocationEvent struct {
+	// BatteryLevel: The battery level as a number between 0 and 100
+	// inclusive
+	BatteryLevel int64 `json:"batteryLevel,omitempty"`
+
+	// Location: The device location
+	Location *Location `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatteryLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatteryLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LostModeLocationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod LostModeLocationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LostModeOutgoingPhoneCallEvent: An event indicating an outgoing phone
+// call has been made when a device is in lost mode. Intentionally
+// empty.
+type LostModeOutgoingPhoneCallEvent struct {
 }
 
 // ManagedConfigurationTemplate: The managed configurations template for
@@ -5758,10 +5876,6 @@ type ProvisioningInfo struct {
 	// the device.
 	ApiLevel int64 `json:"apiLevel,omitempty"`
 
-	// AuthenticatedUserEmail: The email address of the authenticated user
-	// (only present for Google Account provisioning method).
-	AuthenticatedUserEmail string `json:"authenticatedUserEmail,omitempty"`
-
 	// Brand: Brand of the device. For example, Google.
 	Brand string `json:"brand,omitempty"`
 
@@ -6188,6 +6302,93 @@ func (s *SpecificNonComplianceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StartLostModeParams: Parameters associated with the START_LOST_MODE
+// command to put the device into lost mode. At least one of the
+// parameters, not including the organization name, must be provided in
+// order for the device to be put into lost mode.
+type StartLostModeParams struct {
+	// LostEmailAddress: The email address displayed to the user when the
+	// device is in lost mode.
+	LostEmailAddress string `json:"lostEmailAddress,omitempty"`
+
+	// LostMessage: The message displayed to the user when the device is in
+	// lost mode.
+	LostMessage *UserFacingMessage `json:"lostMessage,omitempty"`
+
+	// LostOrganization: The organization name displayed to the user when
+	// the device is in lost mode.
+	LostOrganization *UserFacingMessage `json:"lostOrganization,omitempty"`
+
+	// LostPhoneNumber: The phone number displayed to the user when the
+	// device is in lost mode.
+	LostPhoneNumber *UserFacingMessage `json:"lostPhoneNumber,omitempty"`
+
+	// LostStreetAddress: The street address displayed to the user when the
+	// device is in lost mode.
+	LostStreetAddress *UserFacingMessage `json:"lostStreetAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LostEmailAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LostEmailAddress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartLostModeParams) MarshalJSON() ([]byte, error) {
+	type NoMethod StartLostModeParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StartLostModeStatus: Status of the START_LOST_MODE command to put the
+// device into lost mode.
+type StartLostModeStatus struct {
+	// Status: The status. See StartLostModeStatus.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "SUCCESS" - The device was put into lost mode.
+	//   "RESET_PASSWORD_RECENTLY" - The device could not be put into lost
+	// mode because the admin reset the device's password recently.
+	//   "USER_EXIT_LOST_MODE_RECENTLY" - The device could not be put into
+	// lost mode because the user exited lost mode recently.
+	//   "ALREADY_IN_LOST_MODE" - The device is already in lost mode.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartLostModeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod StartLostModeStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The Status type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -6298,6 +6499,81 @@ type StatusReportingSettings struct {
 
 func (s *StatusReportingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusReportingSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StopLostModeParams: Parameters associated with the STOP_LOST_MODE
+// command to take the device out of lost mode.
+type StopLostModeParams struct {
+}
+
+// StopLostModeStatus: Status of the STOP_LOST_MODE command to take the
+// device out of lost mode.
+type StopLostModeStatus struct {
+	// Status: The status. See StopLostModeStatus.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "SUCCESS" - The device was taken out of lost mode.
+	//   "NOT_IN_LOST_MODE" - The device is not in lost mode.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StopLostModeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod StopLostModeStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StopLostModeUserAttemptEvent: A lost mode event indicating the user
+// has attempted to stop lost mode.
+type StopLostModeUserAttemptEvent struct {
+	// Status: The status of the attempt to stop lost mode.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - This value is not used.
+	//   "ATTEMPT_SUCCEEDED" - Indicates that the user successfully stopped
+	// lost mode.
+	//   "ATTEMPT_FAILED" - Indicates that the user's attempt to stop lost
+	// mode failed.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StopLostModeUserAttemptEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod StopLostModeUserAttemptEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6649,6 +6925,12 @@ type UsageLogEvent struct {
 	//   "WIPE_FAILURE" - Indicates wipe_failure_event has been set.
 	//   "CONNECT" - Indicates connect_event has been set.
 	//   "DNS" - Indicates dns_event has been set.
+	//   "STOP_LOST_MODE_USER_ATTEMPT" - Indicates
+	// stopLostModeUserAttemptEvent has been set.
+	//   "LOST_MODE_OUTGOING_PHONE_CALL" - Indicates
+	// lostModeOutgoingPhoneCallEvent has been set.
+	//   "LOST_MODE_LOCATION" - Indicates lostModeLocationEvent has been
+	// set.
 	EventType string `json:"eventType,omitempty"`
 
 	// FilePulledEvent: A file was downloaded from the device. Part of
@@ -6705,6 +6987,14 @@ type UsageLogEvent struct {
 	// SECURITY_LOGS.
 	LoggingStoppedEvent *LoggingStoppedEvent `json:"loggingStoppedEvent,omitempty"`
 
+	// LostModeLocationEvent: A lost mode location update when a device in
+	// lost mode.
+	LostModeLocationEvent *LostModeLocationEvent `json:"lostModeLocationEvent,omitempty"`
+
+	// LostModeOutgoingPhoneCallEvent: An outgoing phone call has been made
+	// when a device in lost mode.
+	LostModeOutgoingPhoneCallEvent *LostModeOutgoingPhoneCallEvent `json:"lostModeOutgoingPhoneCallEvent,omitempty"`
+
 	// MediaMountEvent: Removable media was mounted. Part of SECURITY_LOGS.
 	MediaMountEvent *MediaMountEvent `json:"mediaMountEvent,omitempty"`
 
@@ -6721,6 +7011,10 @@ type UsageLogEvent struct {
 	// RemoteLockEvent: The device or profile has been remotely locked via
 	// the LOCK command. Part of SECURITY_LOGS.
 	RemoteLockEvent *RemoteLockEvent `json:"remoteLockEvent,omitempty"`
+
+	// StopLostModeUserAttemptEvent: An attempt to take a device out of lost
+	// mode.
+	StopLostModeUserAttemptEvent *StopLostModeUserAttemptEvent `json:"stopLostModeUserAttemptEvent,omitempty"`
 
 	// WipeFailureEvent: The work profile or company-owned device failed to
 	// wipe when requested. This could be user initiated or admin initiated

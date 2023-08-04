@@ -753,7 +753,7 @@
       }
     }
   },
-  "revision": "20230724",
+  "revision": "20230731",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1925,6 +1925,97 @@
             "Format is unspecified. Defaults to MARKDOWN.",
             "The text contains Markdown formatting.",
             "The text contains no special formatting."
+          ],
+          "type": "string"
+        },
+        "style": {
+          "$ref": "TextStyle",
+          "description": "How the text is styled"
+        }
+      },
+      "type": "object"
+    },
+    "TextStyle": {
+      "description": "Properties that determine how the title and content are styled",
+      "id": "TextStyle",
+      "properties": {
+        "backgroundColor": {
+          "description": "The background color as a hex string. \"#RRGGBB\" or \"#RGB\"",
+          "type": "string"
+        },
+        "fontSize": {
+          "description": "Font sizes for both the title and content. The title will still be larger relative to the content.",
+          "enum": [
+            "FONT_SIZE_UNSPECIFIED",
+            "FS_EXTRA_SMALL",
+            "FS_SMALL",
+            "FS_MEDIUM",
+            "FS_LARGE",
+            "FS_EXTRA_LARGE"
+          ],
+          "enumDescriptions": [
+            "No font size specified, will default to FS_LARGE",
+            "Extra small font size",
+            "Small font size",
+            "Medium font size",
+            "Large font size",
+            "Extra large font size"
+          ],
+          "type": "string"
+        },
+        "horizontalAlignment": {
+          "description": "The horizontal alignment of both the title and content",
+          "enum": [
+            "HORIZONTAL_ALIGNMENT_UNSPECIFIED",
+            "H_LEFT",
+            "H_CENTER",
+            "H_RIGHT"
+          ],
+          "enumDescriptions": [
+            "No horizontal alignment specified, will default to H_LEFT",
+            "Left-align",
+            "Center-align",
+            "Right-align"
+          ],
+          "type": "string"
+        },
+        "padding": {
+          "description": "The amount of padding around the widget",
+          "enum": [
+            "PADDING_SIZE_UNSPECIFIED",
+            "P_EXTRA_SMALL",
+            "P_SMALL",
+            "P_MEDIUM",
+            "P_LARGE",
+            "P_EXTRA_LARGE"
+          ],
+          "enumDescriptions": [
+            "No padding size specified, will default to P_EXTRA_SMALL",
+            "Extra small padding",
+            "Small padding",
+            "Medium padding",
+            "Large padding",
+            "Extra large padding"
+          ],
+          "type": "string"
+        },
+        "textColor": {
+          "description": "The text color as a hex string. \"#RRGGBB\" or \"#RGB\"",
+          "type": "string"
+        },
+        "verticalAlignment": {
+          "description": "The vertical alignment of both the title and content",
+          "enum": [
+            "VERTICAL_ALIGNMENT_UNSPECIFIED",
+            "V_TOP",
+            "V_CENTER",
+            "V_BOTTOM"
+          ],
+          "enumDescriptions": [
+            "No vertical alignment specified, will default to V_TOP",
+            "Top-align",
+            "Center-align",
+            "Bottom-align"
           ],
           "type": "string"
         }

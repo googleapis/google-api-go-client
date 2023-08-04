@@ -991,7 +991,7 @@ type ComputeEngineTargetDefaults struct {
 	// adaptation module report.
 	AppliedLicense *AppliedLicense `json:"appliedLicense,omitempty"`
 
-	// BootOption: Output only. The VM Boot Option, as set in the source vm.
+	// BootOption: Output only. The VM Boot Option, as set in the source VM.
 	//
 	// Possible values:
 	//   "COMPUTE_ENGINE_BOOT_OPTION_UNSPECIFIED" - The boot option is
@@ -1044,11 +1044,11 @@ type ComputeEngineTargetDefaults struct {
 	// NetworkInterfaces: List of NICs connected to this VM.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 
-	// NetworkTags: A map of network tags to associate with the VM.
+	// NetworkTags: A list of network tags to associate with the VM.
 	NetworkTags []string `json:"networkTags,omitempty"`
 
 	// SecureBoot: Defines whether the instance has Secure Boot enabled.
-	// This can be set to true only if the vm boot option is EFI.
+	// This can be set to true only if the VM boot option is EFI.
 	SecureBoot bool `json:"secureBoot,omitempty"`
 
 	// ServiceAccount: The service account to associate the VM with.
@@ -1100,7 +1100,7 @@ type ComputeEngineTargetDetails struct {
 	// report.
 	AppliedLicense *AppliedLicense `json:"appliedLicense,omitempty"`
 
-	// BootOption: The VM Boot Option, as set in the source vm.
+	// BootOption: The VM Boot Option, as set in the source VM.
 	//
 	// Possible values:
 	//   "COMPUTE_ENGINE_BOOT_OPTION_UNSPECIFIED" - The boot option is
@@ -1153,14 +1153,14 @@ type ComputeEngineTargetDetails struct {
 	// NetworkInterfaces: List of NICs connected to this VM.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 
-	// NetworkTags: A map of network tags to associate with the VM.
+	// NetworkTags: A list of network tags to associate with the VM.
 	NetworkTags []string `json:"networkTags,omitempty"`
 
 	// Project: The Google Cloud target project ID or project name.
 	Project string `json:"project,omitempty"`
 
 	// SecureBoot: Defines whether the instance has Secure Boot enabled.
-	// This can be set to true only if the vm boot option is EFI.
+	// This can be set to true only if the VM boot option is EFI.
 	SecureBoot bool `json:"secureBoot,omitempty"`
 
 	// ServiceAccount: The service account to associate the VM with.
@@ -2719,7 +2719,7 @@ type PersistentDiskDefaults struct {
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
 
-	// SourceDiskNumber: The ordinal number of the source VM disk.
+	// SourceDiskNumber: Required. The ordinal number of the source VM disk.
 	SourceDiskNumber int64 `json:"sourceDiskNumber,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalLabels") to

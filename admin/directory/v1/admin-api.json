@@ -2376,11 +2376,13 @@
               "description": "Whether to return all sub-organizations or just immediate children.",
               "enum": [
                 "all",
-                "children"
+                "children",
+                "allIncludingParent"
               ],
               "enumDescriptions": [
                 "All sub-organizational units.",
-                "Immediate children only (default)."
+                "Immediate children only (default).",
+                "All sub-organizational units and the specified organizational unit (root if not specified)."
               ],
               "location": "query",
               "type": "string"
@@ -4635,7 +4637,7 @@
       }
     }
   },
-  "revision": "20230724",
+  "revision": "20230802",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {

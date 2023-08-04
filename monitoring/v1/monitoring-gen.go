@@ -2462,6 +2462,9 @@ type Text struct {
 	//   "RAW" - The text contains no special formatting.
 	Format string `json:"format,omitempty"`
 
+	// Style: How the text is styled
+	Style *TextStyle `json:"style,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2481,6 +2484,87 @@ type Text struct {
 
 func (s *Text) MarshalJSON() ([]byte, error) {
 	type NoMethod Text
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TextStyle: Properties that determine how the title and content are
+// styled
+type TextStyle struct {
+	// BackgroundColor: The background color as a hex string. "#RRGGBB" or
+	// "#RGB"
+	BackgroundColor string `json:"backgroundColor,omitempty"`
+
+	// FontSize: Font sizes for both the title and content. The title will
+	// still be larger relative to the content.
+	//
+	// Possible values:
+	//   "FONT_SIZE_UNSPECIFIED" - No font size specified, will default to
+	// FS_LARGE
+	//   "FS_EXTRA_SMALL" - Extra small font size
+	//   "FS_SMALL" - Small font size
+	//   "FS_MEDIUM" - Medium font size
+	//   "FS_LARGE" - Large font size
+	//   "FS_EXTRA_LARGE" - Extra large font size
+	FontSize string `json:"fontSize,omitempty"`
+
+	// HorizontalAlignment: The horizontal alignment of both the title and
+	// content
+	//
+	// Possible values:
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - No horizontal alignment
+	// specified, will default to H_LEFT
+	//   "H_LEFT" - Left-align
+	//   "H_CENTER" - Center-align
+	//   "H_RIGHT" - Right-align
+	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
+
+	// Padding: The amount of padding around the widget
+	//
+	// Possible values:
+	//   "PADDING_SIZE_UNSPECIFIED" - No padding size specified, will
+	// default to P_EXTRA_SMALL
+	//   "P_EXTRA_SMALL" - Extra small padding
+	//   "P_SMALL" - Small padding
+	//   "P_MEDIUM" - Medium padding
+	//   "P_LARGE" - Large padding
+	//   "P_EXTRA_LARGE" - Extra large padding
+	Padding string `json:"padding,omitempty"`
+
+	// TextColor: The text color as a hex string. "#RRGGBB" or "#RGB"
+	TextColor string `json:"textColor,omitempty"`
+
+	// VerticalAlignment: The vertical alignment of both the title and
+	// content
+	//
+	// Possible values:
+	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - No vertical alignment specified,
+	// will default to V_TOP
+	//   "V_TOP" - Top-align
+	//   "V_CENTER" - Center-align
+	//   "V_BOTTOM" - Bottom-align
+	VerticalAlignment string `json:"verticalAlignment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackgroundColor") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextStyle) MarshalJSON() ([]byte, error) {
+	type NoMethod TextStyle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

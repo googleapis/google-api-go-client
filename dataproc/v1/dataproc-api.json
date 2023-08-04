@@ -2671,7 +2671,7 @@
       }
     }
   },
-  "revision": "20230721",
+  "revision": "20230726",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -4819,7 +4819,8 @@
             "YARN",
             "SPARK_HISTORY_SERVER",
             "HIVESERVER2",
-            "HIVEMETASTORE"
+            "HIVEMETASTORE",
+            "FLINK"
           ],
           "enumDescriptions": [
             "Required unspecified metric source.",
@@ -4829,7 +4830,8 @@
             "YARN metric source.",
             "Spark History Server metric source.",
             "Hiveserver2 metric source.",
-            "hivemetastore metric source"
+            "hivemetastore metric source",
+            "flink metric source"
           ],
           "type": "string"
         }

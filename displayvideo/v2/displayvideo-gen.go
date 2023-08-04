@@ -10124,9 +10124,8 @@ type InsertionOrder struct {
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
 
 	// BillableOutcome: Immutable. The billable outcome of the insertion
-	// order. Outcome based buying will be deprecated on **August 1, 2023**.
-	// Read more on our Announced Deprecations page
-	// (/display-video/api/deprecations#features.obb).
+	// order. Outcome based buying is deprecated.
+	// `BILLABLE_OUTCOME_PAY_PER_IMPRESSION` is the only valid value.
 	//
 	// Possible values:
 	//   "BILLABLE_OUTCOME_UNSPECIFIED" - Unspecified billable outcome.
@@ -14261,8 +14260,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -18097,7 +18096,8 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// Value: The value used by the bidding strategy. When the bidding
 	// strategy is assigned at the line item level, this field is only
 	// applicable for the following strategy types: *
-	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` When the
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` When the
 	// bidding strategy is assigned at the ad group level, this field is
 	// only applicable for the following strategy types: *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPM` *
@@ -19181,6 +19181,16 @@ func (c *AdvertisersListCall) Filter(filter string) *AdvertisersListCall {
 	return c
 }
 
+// InternalDebuggingConfig sets the optional parameter
+// "internalDebuggingConfig": The config used in internal debugging and
+// manual testing. Use comma to separate multiple values. Examples: To
+// allow entity search to go through tangle `searchUsingTangle` To get
+// only the advertiser Ids use `idOnly`
+func (c *AdvertisersListCall) InternalDebuggingConfig(internalDebuggingConfig string) *AdvertisersListCall {
+	c.urlParams_.Set("internalDebuggingConfig", internalDebuggingConfig)
+	return c
+}
+
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
 // the list. Acceptable values are: * `displayName` (default) *
 // `entityStatus` * `updateTime` The default sorting order is ascending.
@@ -19320,6 +19330,11 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "Allows filtering by advertiser fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `advertiserId` * `displayName` * `entityStatus` * `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * All active advertisers under a partner: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` * All advertisers with an update time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All advertisers with an update time greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "internalDebuggingConfig": {
+	//       "description": "The config used in internal debugging and manual testing. Use comma to separate multiple values. Examples: To allow entity search to go through tangle `searchUsingTangle` To get only the advertiser Ids use `idOnly`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

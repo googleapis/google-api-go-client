@@ -16115,6 +16115,9 @@ func (c *OrgunitsListCall) OrgUnitPath(orgUnitPath string) *OrgunitsListCall {
 //
 //	"all" - All sub-organizational units.
 //	"children" - Immediate children only (default).
+//	"allIncludingParent" - All sub-organizational units and the
+//
+// specified organizational unit (root if not specified).
 func (c *OrgunitsListCall) Type(type_ string) *OrgunitsListCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -16243,11 +16246,13 @@ func (c *OrgunitsListCall) Do(opts ...googleapi.CallOption) (*OrgUnits, error) {
 	//       "description": "Whether to return all sub-organizations or just immediate children.",
 	//       "enum": [
 	//         "all",
-	//         "children"
+	//         "children",
+	//         "allIncludingParent"
 	//       ],
 	//       "enumDescriptions": [
 	//         "All sub-organizational units.",
-	//         "Immediate children only (default)."
+	//         "Immediate children only (default).",
+	//         "All sub-organizational units and the specified organizational unit (root if not specified)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

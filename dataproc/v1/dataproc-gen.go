@@ -3838,6 +3838,7 @@ type Metric struct {
 	//   "SPARK_HISTORY_SERVER" - Spark History Server metric source.
 	//   "HIVESERVER2" - Hiveserver2 metric source.
 	//   "HIVEMETASTORE" - hivemetastore metric source
+	//   "FLINK" - flink metric source
 	MetricSource string `json:"metricSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MetricOverrides") to

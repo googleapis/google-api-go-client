@@ -585,6 +585,10 @@ func (s *AppStartTime) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AssetIssue: There was an issue with the assets in this test.
+type AssetIssue struct {
+}
+
 // AvailableDeepLinks: A suggestion to use deep links for a Robo run.
 type AvailableDeepLinks struct {
 }
@@ -1137,7 +1141,7 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FailedToInstall: Failed to install the APK.
+// FailedToInstall: Failed to install the App.
 type FailedToInstall struct {
 }
 
@@ -4014,6 +4018,7 @@ type TestIssue struct {
 	//   "logcatCollectionError" - Problems detected while collecting logcat
 	//   "detectedAppSplashScreen" - Robo detected a splash screen provided
 	// by app (vs. Android OS splash screen).
+	//   "assetIssue" - There was an issue with the assets in this test.
 	Type string `json:"type,omitempty"`
 
 	// Warning: Warning message with additional details of the issue. Should

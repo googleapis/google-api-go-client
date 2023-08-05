@@ -921,15 +921,50 @@ func (s *Barrier) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// ComputeResource: Compute resource requirements
+// ComputeResource: Compute resource requirements. ComputeResource
+// defines the amount of resources required for each task. Make sure
+// your tasks have enough resources to successfully run. If you also
+// define the types of resources for a job to use with the
+// InstancePolicyOrTemplate
+// (https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicyortemplate)
+// field, make sure both fields are compatible with each other.
 type ComputeResource struct {
 	// BootDiskMib: Extra boot disk size in MiB for each task.
 	BootDiskMib int64 `json:"bootDiskMib,omitempty,string"`
 
-	// CpuMilli: The milliCPU count.
+	// CpuMilli: The milliCPU count. `cpuMilli` defines the amount of CPU
+	// resources per task in milliCPU units. For example, `1000` corresponds
+	// to 1 vCPU per task. If undefined, the default value is `2000`. If you
+	// also define the VM's machine type using the `machineType` in
+	// InstancePolicy
+	// (https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicy)
+	// field or inside the `instanceTemplate` in the
+	// InstancePolicyOrTemplate
+	// (https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicyortemplate)
+	// field, make sure the CPU resources for both fields are compatible
+	// with each other and with how many tasks you want to allow to run on
+	// the same VM at the same time. For example, if you specify the
+	// `n2-standard-2` machine type, which has 2 vCPUs each, you are
+	// recommended to set `cpuMilli` no more than `2000`, or you are
+	// recommended to run two tasks on the same VM if you set `cpuMilli` to
+	// `1000` or less.
 	CpuMilli int64 `json:"cpuMilli,omitempty,string"`
 
-	// MemoryMib: Memory in MiB.
+	// MemoryMib: Memory in MiB. `memoryMib` defines the amount of memory
+	// per task in MiB units. If undefined, the default value is `2000`. If
+	// you also define the VM's machine type using the `machineType` in
+	// InstancePolicy
+	// (https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicy)
+	// field or inside the `instanceTemplate` in the
+	// InstancePolicyOrTemplate
+	// (https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicyortemplate)
+	// field, make sure the memory resources for both fields are compatible
+	// with each other and with how many tasks you want to allow to run on
+	// the same VM at the same time. For example, if you specify the
+	// `n2-standard-2` machine type, which has 8 GiB each, you are
+	// recommended to set `memoryMib` to no more than `8192`, or you are
+	// recommended to run two tasks on the same VM if you set `memoryMib` to
+	// `4096` or less.
 	MemoryMib int64 `json:"memoryMib,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BootDiskMib") to
@@ -1173,7 +1208,10 @@ type InstancePolicy struct {
 	BootDisk *Disk `json:"bootDisk,omitempty"`
 
 	// Disks: Non-boot disks to be attached for each VM created by this
-	// InstancePolicy. New disks will be deleted when the VM is deleted.
+	// InstancePolicy. New disks will be deleted when the VM is deleted. A
+	// non bootable disk is a disk that can be of a device with a file
+	// system or a raw storage drive that is not ready for data storage and
+	// accessing.
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 
 	// MachineType: The Compute Engine machine type.
@@ -1219,8 +1257,11 @@ func (s *InstancePolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InstancePolicyOrTemplate: Either an InstancePolicy or an instance
-// template.
+// InstancePolicyOrTemplate: InstancePolicyOrTemplate lets you define
+// the type of resources to use for this job either with an
+// InstancePolicy or an instance template. If undefined, Batch picks the
+// type of VM to use and doesn't include optional VM resources such as
+// GPUs and extra disks.
 type InstancePolicyOrTemplate struct {
 	// InstallGpuDrivers: Set this field true if users want Batch to help
 	// fetch drivers from a third party location and install them for GPUs

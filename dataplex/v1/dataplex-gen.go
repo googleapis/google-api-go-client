@@ -2585,7 +2585,8 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRangeExpectation) MarshalJSON() ([]
 // GoogleCloudDataplexV1DataQualityRuleRegexExpectation: Evaluates
 // whether each column value matches a specified regex.
 type GoogleCloudDataplexV1DataQualityRuleRegexExpectation struct {
-	// Regex: A regular expression the column value is expected to match.
+	// Regex: Optional. A regular expression the column value is expected to
+	// match.
 	Regex string `json:"regex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Regex") to
@@ -2687,7 +2688,7 @@ func (s *GoogleCloudDataplexV1DataQualityRuleResult) UnmarshalJSON(data []byte) 
 // produce a boolean value per row as the result.Example: col1 >= 0 AND
 // col2 < 10
 type GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation struct {
-	// SqlExpression: The SQL expression.
+	// SqlExpression: Optional. The SQL expression.
 	SqlExpression string `json:"sqlExpression,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SqlExpression") to
@@ -2716,7 +2717,7 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation) MarshalJSO
 // GoogleCloudDataplexV1DataQualityRuleSetExpectation: Evaluates whether
 // each column value is contained by a specified set.
 type GoogleCloudDataplexV1DataQualityRuleSetExpectation struct {
-	// Values: Expected values for the column value.
+	// Values: Optional. Expected values for the column value.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -2746,17 +2747,17 @@ func (s *GoogleCloudDataplexV1DataQualityRuleSetExpectation) MarshalJSON() ([]by
 // Evaluates whether the column aggregate statistic lies between a
 // specified range.
 type GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation struct {
-	// MaxValue: The maximum column statistic value allowed for a row to
-	// pass this validation.At least one of min_value and max_value need to
-	// be provided.
+	// MaxValue: Optional. The maximum column statistic value allowed for a
+	// row to pass this validation.At least one of min_value and max_value
+	// need to be provided.
 	MaxValue string `json:"maxValue,omitempty"`
 
-	// MinValue: The minimum column statistic value allowed for a row to
-	// pass this validation.At least one of min_value and max_value need to
-	// be provided.
+	// MinValue: Optional. The minimum column statistic value allowed for a
+	// row to pass this validation.At least one of min_value and max_value
+	// need to be provided.
 	MinValue string `json:"minValue,omitempty"`
 
-	// Statistic: The aggregate metric to evaluate.
+	// Statistic: Optional. The aggregate metric to evaluate.
 	//
 	// Possible values:
 	//   "STATISTIC_UNDEFINED" - Unspecified statistic type
@@ -2765,14 +2766,16 @@ type GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation struct {
 	//   "MAX" - Evaluate the column max
 	Statistic string `json:"statistic,omitempty"`
 
-	// StrictMaxEnabled: Whether column statistic needs to be strictly
-	// lesser than ('<') the maximum, or if equality is allowed.Only
-	// relevant if a max_value has been defined. Default = false.
+	// StrictMaxEnabled: Optional. Whether column statistic needs to be
+	// strictly lesser than ('<') the maximum, or if equality is
+	// allowed.Only relevant if a max_value has been defined. Default =
+	// false.
 	StrictMaxEnabled bool `json:"strictMaxEnabled,omitempty"`
 
-	// StrictMinEnabled: Whether column statistic needs to be strictly
-	// greater than ('>') the minimum, or if equality is allowed.Only
-	// relevant if a min_value has been defined. Default = false.
+	// StrictMinEnabled: Optional. Whether column statistic needs to be
+	// strictly greater than ('>') the minimum, or if equality is
+	// allowed.Only relevant if a min_value has been defined. Default =
+	// false.
 	StrictMinEnabled bool `json:"strictMinEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxValue") to
@@ -2803,7 +2806,7 @@ func (s *GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation) MarshalJ
 // needs to use BigQuery standard SQL syntax and should produce a scalar
 // boolean result.Example: MIN(col1) >= 0
 type GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation struct {
-	// SqlExpression: The SQL expression.
+	// SqlExpression: Optional. The SQL expression.
 	SqlExpression string `json:"sqlExpression,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SqlExpression") to
@@ -2959,8 +2962,8 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	// col2 < 10
 	RowFilter string `json:"rowFilter,omitempty"`
 
-	// Rules: The list of rules to evaluate against a data source. At least
-	// one rule is required.
+	// Rules: Required. The list of rules to evaluate against a data source.
+	// At least one rule is required.
 	Rules []*GoogleCloudDataplexV1DataQualityRule `json:"rules,omitempty"`
 
 	// SamplingPercent: Optional. The percentage of the records to be

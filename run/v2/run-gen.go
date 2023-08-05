@@ -318,6 +318,7 @@ type GoogleCloudRunV2Condition struct {
 	// code.
 	//   "CANCELLED" - The execution was cancelled by users.
 	//   "CANCELLING" - The execution is in the process of being cancelled.
+	//   "DELETED" - The execution was deleted.
 	ExecutionReason string `json:"executionReason,omitempty"`
 
 	// LastTransitionTime: Last time the condition transitioned from one
@@ -454,7 +455,8 @@ type GoogleCloudRunV2Container struct {
 	// image's ENTRYPOINT is used if this is not provided.
 	Command []string `json:"command,omitempty"`
 
-	// DependsOn: Container names which must start before this container.
+	// DependsOn: Names of the containers that must start before this
+	// container.
 	DependsOn []string `json:"dependsOn,omitempty"`
 
 	// Env: List of environment variables to set in the container.
@@ -553,11 +555,10 @@ func (s *GoogleCloudRunV2ContainerPort) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2EmptyDirVolumeSource: Ephemeral storage which can be
-// backed by real disks (HD, SSD), network storage or memory (i.e.
-// tmpfs). For now only in memory (tmpfs) is supported. It is ephemeral
-// in the sense that when the sandbox is taken down, the data is
-// destroyed with it (it does not persist across sandbox runs).
+// GoogleCloudRunV2EmptyDirVolumeSource: In memory (tmpfs) ephemeral
+// storage. It is ephemeral in the sense that when the sandbox is taken
+// down, the data is destroyed with it (it does not persist across
+// sandbox runs).
 type GoogleCloudRunV2EmptyDirVolumeSource struct {
 	// Medium: The medium on which the data is stored. Acceptable values
 	// today is only MEMORY or none. When none, the default will currently
@@ -574,11 +575,11 @@ type GoogleCloudRunV2EmptyDirVolumeSource struct {
 	// size limit is also applicable for memory medium. The maximum usage on
 	// memory medium EmptyDir would be the minimum value between the
 	// SizeLimit specified here and the sum of memory limits of all
-	// containers in a pod. This field's values are of the 'Quantity' k8s
-	// type:
-	// https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/.
-	// The default is nil which means that the limit is undefined. More
-	// info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+	// containers. The default is nil which means that the limit is
+	// undefined. More info:
+	// https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume.
+	// Info in Kubernetes:
+	// https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
 	SizeLimit string `json:"sizeLimit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Medium") to

@@ -611,7 +611,7 @@ type CancelOperationRequest struct {
 }
 
 // Consumer: Contains information of the customer's network
-// configurations.
+// configurations.Next available ID: 5
 type Consumer struct {
 	// EndpointUri: Output only. The URI of the endpoint used to access the
 	// metastore service.
@@ -1796,7 +1796,7 @@ type MoveTableToDatabaseResponse struct {
 }
 
 // NetworkConfig: Network configuration for the Dataproc Metastore
-// service.
+// service.Next available ID: 4
 type NetworkConfig struct {
 	// Consumers: Immutable. The consumer-side network configuration for the
 	// Dataproc Metastore instance.

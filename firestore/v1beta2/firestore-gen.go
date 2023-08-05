@@ -216,6 +216,39 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirestoreAdminV1Progress: Describes the progress of the
+// operation. Unit of work is generic and must be interpreted based on
+// where Progress is used.
+type GoogleFirestoreAdminV1Progress struct {
+	// CompletedWork: The amount of work completed.
+	CompletedWork int64 `json:"completedWork,omitempty,string"`
+
+	// EstimatedWork: The amount of work estimated.
+	EstimatedWork int64 `json:"estimatedWork,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CompletedWork") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompletedWork") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1Progress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the
 // long-running operation from the RestoreDatabase request.
 type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
@@ -245,6 +278,10 @@ type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
 	//   "CANCELLED" - Request has finished being cancelled after user
 	// called google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
+
+	// ProgressPercentage: How far along the restore is as an estimated
+	// percentage of remaining time.
+	ProgressPercentage *GoogleFirestoreAdminV1Progress `json:"progressPercentage,omitempty"`
 
 	// StartTime: The time the restore was started.
 	StartTime string `json:"startTime,omitempty"`

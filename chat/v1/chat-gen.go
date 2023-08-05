@@ -4532,8 +4532,11 @@ type Space struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ExternalUserAllowed: Immutable. Whether this space permits any Google
-	// Chat user as a member. Input when creating a space. For existing
-	// spaces, this field is output only.
+	// Chat user as a member. Input when creating a space in a Google
+	// Workspace organization. For Google Chat users that use a Google
+	// Account, omit this field when creating a space (By default, the space
+	// permits any Google Chat user). For existing spaces, this field is
+	// output only.
 	ExternalUserAllowed bool `json:"externalUserAllowed,omitempty"`
 
 	// Name: Resource name of the space. Format: `spaces/{space}`
@@ -5549,8 +5552,8 @@ type SpacesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a named space. Spaces grouped by topics or that have
-// guest access aren't supported. For an example, see Create a space
+// Create: Creates a named space. Spaces grouped by topics aren't
+// supported. For an example, see Create a space
 // (https://developers.google.com/chat/api/guides/v1/spaces/create).
 // Requires user authentication
 // (https://developers.google.com/chat/api/guides/auth/users) and the
@@ -5659,7 +5662,7 @@ func (c *SpacesCreateCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a named space. Spaces grouped by topics or that have guest access aren't supported. For an example, see [Create a space](https://developers.google.com/chat/api/guides/v1/spaces/create). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
+	//   "description": "Creates a named space. Spaces grouped by topics aren't supported. For an example, see [Create a space](https://developers.google.com/chat/api/guides/v1/spaces/create). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
 	//   "flatPath": "v1/spaces",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.create",

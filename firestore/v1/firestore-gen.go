@@ -278,8 +278,14 @@ type Aggregation struct {
 	// Conform to document field name limitations.
 	Alias string `json:"alias,omitempty"`
 
+	// Avg: Average aggregator.
+	Avg *Avg `json:"avg,omitempty"`
+
 	// Count: Count aggregator.
 	Count *Count `json:"count,omitempty"`
+
+	// Sum: Sum aggregator.
+	Sum *Sum `json:"sum,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alias") to
 	// unconditionally include in API requests. By default, fields with
@@ -363,6 +369,38 @@ type ArrayValue struct {
 
 func (s *ArrayValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ArrayValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Avg: Average of the values of the requested field. * Only numeric
+// values will be aggregated. All non-numeric values including `NULL`
+// are skipped. * If the aggregated values contain `NaN`, returns `NaN`.
+// * If the aggregated value set is empty, returns `NULL`. * Always
+// returns the result as a double.
+type Avg struct {
+	// Field: The field to aggregate on.
+	Field *FieldReference `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Avg) MarshalJSON() ([]byte, error) {
+	type NoMethod Avg
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1199,22 +1237,22 @@ type ExistenceFilter struct {
 	// different from the count of documents in the client that match, the
 	// client must manually determine which documents no longer match the
 	// target. The client can use the `unchanged_names` bloom filter to
-	// assist with this determination.
+	// assist with this determination by testing ALL the document names
+	// against the filter; if the document name is NOT in the filter, it
+	// means the document no longer matches the target.
 	Count int64 `json:"count,omitempty"`
 
 	// TargetId: The target ID to which this filter applies.
 	TargetId int64 `json:"targetId,omitempty"`
 
-	// UnchangedNames: A bloom filter that contains the UTF-8 byte encodings
-	// of the resource names of the documents that match target_id, in the
-	// form
+	// UnchangedNames: A bloom filter that, despite its name, contains the
+	// UTF-8 byte encodings of the resource names of ALL the documents that
+	// match target_id, in the form
 	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
-	// h}` that have NOT changed since the query results indicated by the
-	// resume token or timestamp given in `Target.resume_type`. This bloom
-	// filter may be omitted at the server's discretion, such as if it is
-	// deemed that the client will not make use of it or if it is too
-	// computationally expensive to calculate or transmit. Clients must
-	// gracefully handle this field being absent by falling back to the
+	// h}`. This bloom filter may be omitted at the server's discretion,
+	// such as if it is deemed that the client will not make use of it or if
+	// it is too computationally expensive to calculate or transmit. Clients
+	// must gracefully handle this field being absent by falling back to the
 	// logic used before this field existed; that is, re-add the target
 	// without a resume token to figure out which documents in the client's
 	// cache are out of sync.
@@ -2705,6 +2743,10 @@ type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
 	// called google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
 
+	// ProgressPercentage: How far along the restore is as an estimated
+	// percentage of remaining time.
+	ProgressPercentage *GoogleFirestoreAdminV1Progress `json:"progressPercentage,omitempty"`
+
 	// StartTime: The time the restore was started.
 	StartTime string `json:"startTime,omitempty"`
 
@@ -4097,6 +4139,47 @@ type StructuredQuery struct {
 
 func (s *StructuredQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod StructuredQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Sum: Sum of the values of the requested field. * Only numeric values
+// will be aggregated. All non-numeric values including `NULL` are
+// skipped. * If the aggregated values contain `NaN`, returns `NaN`. *
+// If the aggregated value set is empty, returns 0. * Returns a 64-bit
+// integer if the sum result is an integer value and does not overflow.
+// Otherwise, the result is returned as a double. Note that even if all
+// the aggregated values are integers, the result is returned as a
+// double if it cannot fit within a 64-bit signed integer. When this
+// occurs, the returned value will lose precision. * When underflow
+// occurs, floating-point aggregation is non-deterministic. This means
+// that running the same query repeatedly without any changes to the
+// underlying values could produce slightly different results each time.
+// In those cases, values should be stored as integers over
+// floating-point numbers.
+type Sum struct {
+	// Field: The field to aggregate on.
+	Field *FieldReference `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Sum) MarshalJSON() ([]byte, error) {
+	type NoMethod Sum
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

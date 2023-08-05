@@ -769,22 +769,24 @@ func (s *GooglePlayDeveloperReportingV1alpha1DimensionValue) MarshalJSON() ([]by
 // GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet: Singleton
 // resource representing the set of error report metrics. This metric
 // set contains un-normalized error report counts. **Supported
-// aggregation periods:** * DAILY: metrics are aggregated in calendar
-// date intervals. The default and only supported timezone is
-// `America/Los_Angeles`. **Supported metrics:** * `errorReportCount`
-// (`google.type.Decimal`): Absolute count of individual error reports
-// that have been received for an app. * `distinctUsers`
-// (`google.type.Decimal`): Count of distinct users for which reports
-// have been received. Care must be taken not to aggregate this count
-// further, as it may result in users being counted multiple times. This
-// value is not rounded, however it may be an approximation. **Required
-// dimension:** This dimension must be always specified in all requests
-// in the `dimensions` field in query requests. * `reportType` (string):
-// the type of error. The value should correspond to one of the possible
-// values in ErrorType. **Supported dimensions:** * `apiLevel` (string):
-// the API level of Android that was running on the user's device, e.g.,
-// 26. * `versionCode` (int64): version of the app that was running on
-// the user's device. * `deviceModel` (string): unique identifier of the
+// aggregation periods:** * HOURLY: metrics are aggregated in hourly
+// intervals. The default and only supported timezone is `UTC`. * DAILY:
+// metrics are aggregated in calendar date intervals. The default and
+// only supported timezone is `America/Los_Angeles`. **Supported
+// metrics:** * `errorReportCount` (`google.type.Decimal`): Absolute
+// count of individual error reports that have been received for an app.
+// * `distinctUsers` (`google.type.Decimal`): Count of distinct users
+// for which reports have been received. Care must be taken not to
+// aggregate this count further, as it may result in users being counted
+// multiple times. This value is not rounded, however it may be an
+// approximation. **Required dimension:** This dimension must be always
+// specified in all requests in the `dimensions` field in query
+// requests. * `reportType` (string): the type of error. The value
+// should correspond to one of the possible values in ErrorType.
+// **Supported dimensions:** * `apiLevel` (string): the API level of
+// Android that was running on the user's device, e.g., 26. *
+// `versionCode` (int64): version of the app that was running on the
+// user's device. * `deviceModel` (string): unique identifier of the
 // user's device model. The form of the identifier is
 // 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
 // and device corresponds to Build.DEVICE, e.g., google/coral. *

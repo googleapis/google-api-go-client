@@ -951,6 +951,79 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Group: A group is a set of spokes to which you can apply policies.
+// Each group of spokes has its own route table. For each group, you can
+// also set different rules for whether spokes can be automatically
+// attached to the hub.
+type Group struct {
+	// CreateTime: Output only. The time the group was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. The description of the group.
+	Description string `json:"description,omitempty"`
+
+	// Labels: Optional. Labels in key:value format. For more information
+	// about labels, see Requirements for labels
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Immutable. The name of the group. Group names must be unique.
+	// They use the following form:
+	// `projects/{project_number}/locations/global/hubs/{hub}/groups/{group_i
+	// d}`
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The current lifecycle state of this group.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state information available
+	//   "CREATING" - The resource's create operation is in progress.
+	//   "ACTIVE" - The resource is active
+	//   "DELETING" - The resource's delete operation is in progress.
+	//   "ACCEPTING" - The resource's accept operation is in progress.
+	//   "REJECTING" - The resource's reject operation is in progress.
+	//   "UPDATING" - The resource's update operation is in progress.
+	//   "INACTIVE" - The resource is inactive.
+	//   "OBSOLETE" - The hub associated with this spoke resource has been
+	// deleted. This state applies to spoke resources only.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. The Google-generated UUID for the group. This value
+	// is unique across all group resources. If a group is deleted and
+	// another with the same name is created, the new route table is
+	// assigned a different unique_id.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The time the group was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Group) MarshalJSON() ([]byte, error) {
+	type NoMethod Group
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Hub: A Network Connectivity Center hub is a global management
 // resource to which you attach spokes. A single hub can contain spokes
 // from multiple regions. However, if any of a hub's spokes use the
@@ -1341,6 +1414,46 @@ type LinkedVpnTunnels struct {
 
 func (s *LinkedVpnTunnels) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedVpnTunnels
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListGroupsResponse: Response for HubService.ListGroups method.
+type ListGroupsResponse struct {
+	// Groups: The requested groups.
+	Groups []*Group `json:"groups,omitempty"`
+
+	// NextPageToken: The token for the next page of the response. To see
+	// more results, use this value as the page_token for your next request.
+	// If this value is empty, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Hubs that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Groups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Groups") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGroupsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2834,6 +2947,9 @@ type Spoke struct {
 
 	// Description: An optional description of the spoke.
 	Description string `json:"description,omitempty"`
+
+	// Group: The name of the group that this spoke is associated with.
+	Group string `json:"group,omitempty"`
 
 	// Hub: Immutable. The name of the hub that this spoke is attached to.
 	Hub string `json:"hub,omitempty"`
@@ -5196,6 +5312,152 @@ func (c *ProjectsLocationsGlobalHubsTestIamPermissionsCall) Do(opts ...googleapi
 
 }
 
+// method id "networkconnectivity.projects.locations.global.hubs.groups.get":
+
+type ProjectsLocationsGlobalHubsGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details about a Network Connectivity Center group.
+//
+// - name: The name of the route table resource.
+func (r *ProjectsLocationsGlobalHubsGroupsService) Get(name string) *ProjectsLocationsGlobalHubsGroupsGetCall {
+	c := &ProjectsLocationsGlobalHubsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalHubsGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsGroupsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.groups.get" call.
+// Exactly one of *Group or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Group.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsGlobalHubsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Group{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details about a Network Connectivity Center group.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/groups/{groupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.groups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the route table resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+/groups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Group"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "networkconnectivity.projects.locations.global.hubs.groups.getIamPolicy":
 
 type ProjectsLocationsGlobalHubsGroupsGetIamPolicyCall struct {
@@ -5369,6 +5631,221 @@ func (c *ProjectsLocationsGlobalHubsGroupsGetIamPolicyCall) Do(opts ...googleapi
 	//   ]
 	// }
 
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.groups.list":
+
+type ProjectsLocationsGlobalHubsGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists groups in a given hub.
+//
+// - parent: The parent resource's name.
+func (r *ProjectsLocationsGlobalHubsGroupsService) List(parent string) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c := &ProjectsLocationsGlobalHubsGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of results.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) Filter(filter string) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by a
+// certain order.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return per page.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/groups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.groups.list" call.
+// Exactly one of *ListGroupsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListGroupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists groups in a given hub.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/groups",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.groups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "An expression that filters the list of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sort the results by a certain order.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/groups",
+	//   "response": {
+	//     "$ref": "ListGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalHubsGroupsListCall) Pages(ctx context.Context, f func(*ListGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "networkconnectivity.projects.locations.global.hubs.groups.setIamPolicy":
@@ -8885,7 +9362,8 @@ type ProjectsLocationsServiceClassesListCall struct {
 
 // List: Lists ServiceClasses in a given project and location.
 //
-// - parent: The parent resource's name.
+//   - parent: The parent resource's name. ex.
+//     projects/123/locations/us-east1.
 func (r *ProjectsLocationsServiceClassesService) List(parent string) *ProjectsLocationsServiceClassesListCall {
 	c := &ProjectsLocationsServiceClassesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9048,7 +9526,7 @@ func (c *ProjectsLocationsServiceClassesListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource's name.",
+	//       "description": "Required. The parent resource's name. ex. projects/123/locations/us-east1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -9583,7 +10061,8 @@ type ProjectsLocationsServiceConnectionMapsCreateCall struct {
 // Create: Creates a new ServiceConnectionMap in a given project and
 // location.
 //
-// - parent: The parent resource's name of the ServiceConnectionMap.
+//   - parent: The parent resource's name of the ServiceConnectionMap. ex.
+//     projects/123/locations/us-east1.
 func (r *ProjectsLocationsServiceConnectionMapsService) Create(parent string, serviceconnectionmap *ServiceConnectionMap) *ProjectsLocationsServiceConnectionMapsCreateCall {
 	c := &ProjectsLocationsServiceConnectionMapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9719,7 +10198,7 @@ func (c *ProjectsLocationsServiceConnectionMapsCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource's name of the ServiceConnectionMap.",
+	//       "description": "Required. The parent resource's name of the ServiceConnectionMap. ex. projects/123/locations/us-east1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -10252,7 +10731,8 @@ type ProjectsLocationsServiceConnectionMapsListCall struct {
 
 // List: Lists ServiceConnectionMaps in a given project and location.
 //
-// - parent: The parent resource's name.
+//   - parent: The parent resource's name. ex.
+//     projects/123/locations/us-east1.
 func (r *ProjectsLocationsServiceConnectionMapsService) List(parent string) *ProjectsLocationsServiceConnectionMapsListCall {
 	c := &ProjectsLocationsServiceConnectionMapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10416,7 +10896,7 @@ func (c *ProjectsLocationsServiceConnectionMapsListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource's name.",
+	//       "description": "Required. The parent resource's name. ex. projects/123/locations/us-east1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -10951,7 +11431,8 @@ type ProjectsLocationsServiceConnectionPoliciesCreateCall struct {
 // Create: Creates a new ServiceConnectionPolicy in a given project and
 // location.
 //
-// - parent: The parent resource's name of the ServiceConnectionPolicy.
+//   - parent: The parent resource's name of the ServiceConnectionPolicy.
+//     ex. projects/123/locations/us-east1.
 func (r *ProjectsLocationsServiceConnectionPoliciesService) Create(parent string, serviceconnectionpolicy *ServiceConnectionPolicy) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
 	c := &ProjectsLocationsServiceConnectionPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11086,7 +11567,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource's name of the ServiceConnectionPolicy.",
+	//       "description": "Required. The parent resource's name of the ServiceConnectionPolicy. ex. projects/123/locations/us-east1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -11620,7 +12101,8 @@ type ProjectsLocationsServiceConnectionPoliciesListCall struct {
 // List: Lists ServiceConnectionPolicies in a given project and
 // location.
 //
-// - parent: The parent resource's name.
+//   - parent: The parent resource's name. ex.
+//     projects/123/locations/us-east1.
 func (r *ProjectsLocationsServiceConnectionPoliciesService) List(parent string) *ProjectsLocationsServiceConnectionPoliciesListCall {
 	c := &ProjectsLocationsServiceConnectionPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11784,7 +12266,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource's name.",
+	//       "description": "Required. The parent resource's name. ex. projects/123/locations/us-east1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12319,7 +12801,8 @@ type ProjectsLocationsServiceConnectionTokensCreateCall struct {
 // Create: Creates a new ServiceConnectionToken in a given project and
 // location.
 //
-// - parent: The parent resource's name of the ServiceConnectionToken.
+//   - parent: The parent resource's name of the ServiceConnectionToken.
+//     ex. projects/123/locations/us-east1.
 func (r *ProjectsLocationsServiceConnectionTokensService) Create(parent string, serviceconnectiontoken *ServiceConnectionToken) *ProjectsLocationsServiceConnectionTokensCreateCall {
 	c := &ProjectsLocationsServiceConnectionTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12455,7 +12938,7 @@ func (c *ProjectsLocationsServiceConnectionTokensCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource's name of the ServiceConnectionToken.",
+	//       "description": "Required. The parent resource's name of the ServiceConnectionToken. ex. projects/123/locations/us-east1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12813,7 +13296,8 @@ type ProjectsLocationsServiceConnectionTokensListCall struct {
 
 // List: Lists ServiceConnectionTokens in a given project and location.
 //
-// - parent: The parent resource's name.
+//   - parent: The parent resource's name. ex.
+//     projects/123/locations/us-east1.
 func (r *ProjectsLocationsServiceConnectionTokensService) List(parent string) *ProjectsLocationsServiceConnectionTokensListCall {
 	c := &ProjectsLocationsServiceConnectionTokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12977,7 +13461,7 @@ func (c *ProjectsLocationsServiceConnectionTokensListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource's name.",
+	//       "description": "Required. The parent resource's name. ex. projects/123/locations/us-east1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

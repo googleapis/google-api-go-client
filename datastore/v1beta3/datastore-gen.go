@@ -170,8 +170,14 @@ type Aggregation struct {
 	// Conform to entity property name limitations.
 	Alias string `json:"alias,omitempty"`
 
+	// Avg: Average aggregator.
+	Avg *Avg `json:"avg,omitempty"`
+
 	// Count: Count aggregator.
 	Count *Count `json:"count,omitempty"`
+
+	// Sum: Sum aggregator.
+	Sum *Sum `json:"sum,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alias") to
 	// unconditionally include in API requests. By default, fields with
@@ -406,6 +412,38 @@ type ArrayValue struct {
 
 func (s *ArrayValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ArrayValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Avg: Average of the values of the requested property. * Only numeric
+// values will be aggregated. All non-numeric values including `NULL`
+// are skipped. * If the aggregated values contain `NaN`, returns `NaN`.
+// * If the aggregated value set is empty, returns `NULL`. * Always
+// returns the result as a double.
+type Avg struct {
+	// Property: The property to aggregate on.
+	Property *PropertyReference `json:"property,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Property") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Property") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Avg) MarshalJSON() ([]byte, error) {
+	type NoMethod Avg
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2678,6 +2716,47 @@ type RunQueryResponse struct {
 
 func (s *RunQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Sum: Sum of the values of the requested property. * Only numeric
+// values will be aggregated. All non-numeric values including `NULL`
+// are skipped. * If the aggregated values contain `NaN`, returns `NaN`.
+// * If the aggregated value set is empty, returns 0. * Returns a 64-bit
+// integer if the sum result is an integer value and does not overflow.
+// Otherwise, the result is returned as a double. Note that even if all
+// the aggregated values are integers, the result is returned as a
+// double if it cannot fit within a 64-bit signed integer. When this
+// occurs, the returned value will lose precision. * When underflow
+// occurs, floating-point aggregation is non-deterministic. This means
+// that running the same query repeatedly without any changes to the
+// underlying values could produce slightly different results each time.
+// In those cases, values should be stored as integers over
+// floating-point numbers.
+type Sum struct {
+	// Property: The property to aggregate on.
+	Property *PropertyReference `json:"property,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Property") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Property") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Sum) MarshalJSON() ([]byte, error) {
+	type NoMethod Sum
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

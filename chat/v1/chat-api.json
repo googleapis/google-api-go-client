@@ -229,7 +229,7 @@
     "spaces": {
       "methods": {
         "create": {
-          "description": "Creates a named space. Spaces grouped by topics or that have guest access aren't supported. For an example, see [Create a space](https://developers.google.com/chat/api/guides/v1/spaces/create). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
+          "description": "Creates a named space. Spaces grouped by topics aren't supported. For an example, see [Create a space](https://developers.google.com/chat/api/guides/v1/spaces/create). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
           "flatPath": "v1/spaces",
           "httpMethod": "POST",
           "id": "chat.spaces.create",
@@ -954,7 +954,7 @@
       }
     }
   },
-  "revision": "20230729",
+  "revision": "20230801",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -3380,7 +3380,7 @@
           "type": "string"
         },
         "externalUserAllowed": {
-          "description": "Immutable. Whether this space permits any Google Chat user as a member. Input when creating a space. For existing spaces, this field is output only.",
+          "description": "Immutable. Whether this space permits any Google Chat user as a member. Input when creating a space in a Google Workspace organization. For Google Chat users that use a Google Account, omit this field when creating a space (By default, the space permits any Google Chat user). For existing spaces, this field is output only.",
           "type": "boolean"
         },
         "name": {

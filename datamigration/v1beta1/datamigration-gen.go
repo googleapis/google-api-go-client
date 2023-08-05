@@ -1198,6 +1198,8 @@ type MigrationJobVerificationError struct {
 	// of quota, or might not be supported.
 	//   "EXISTING_CONFLICTING_DATABASES" - The destination DB contains
 	// existing databases that are conflicting with those in the source DB.
+	//   "PARALLEL_IMPORT_INSUFFICIENT_PRIVILEGE" - Insufficient privilege
+	// to enable the parallelism configuration.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

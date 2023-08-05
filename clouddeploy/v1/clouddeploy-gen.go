@@ -640,6 +640,15 @@ type CanaryDeployment struct {
 	// and each integer n is 0 <= n < 100.
 	Percentages []int64 `json:"percentages,omitempty"`
 
+	// Postdeploy: Optional. Configuration for the postdeploy job of the
+	// last phase. If this is not configured, postdeploy job will not be
+	// present.
+	Postdeploy *Postdeploy `json:"postdeploy,omitempty"`
+
+	// Predeploy: Optional. Configuration for the predeploy job of the first
+	// phase. If this is not configured, predeploy job will not be present.
+	Predeploy *Predeploy `json:"predeploy,omitempty"`
+
 	// Verify: Whether to run verify tests after each percentage deployment.
 	Verify bool `json:"verify,omitempty"`
 
@@ -1231,8 +1240,8 @@ type DeployJobRun struct {
 	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
 	// because it is not enabled or because Cloud Deploy has insufficient
 	// permissions. See [Required
-	// permission](/deploy/docs/cloud-deploy-service-account#required_permiss
-	// ions).
+	// permission](https://cloud.google.com/deploy/docs/cloud-deploy-service-
+	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The deploy operation did not complete
 	// successfully; check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - The deploy build did not complete within the
@@ -1346,6 +1355,14 @@ type DeploymentJobs struct {
 	// phase.
 	DeployJob *Job `json:"deployJob,omitempty"`
 
+	// PostdeployJob: Output only. The postdeploy Job. This is the
+	// postdeploy job in the phase. This is the last job of the phase.
+	PostdeployJob *Job `json:"postdeployJob,omitempty"`
+
+	// PredeployJob: Output only. The predeploy Job. This is the predeploy
+	// job in the phase. This is the first job of the phase.
+	PredeployJob *Job `json:"predeployJob,omitempty"`
+
 	// VerifyJob: Output only. The verify Job. Runs after a deploy if the
 	// deploy succeeds.
 	VerifyJob *Job `json:"verifyJob,omitempty"`
@@ -1417,6 +1434,8 @@ type ExecutionConfig struct {
 	//   "RENDER" - Use for rendering.
 	//   "DEPLOY" - Use for deploying and deployment hooks.
 	//   "VERIFY" - Use for deployment verification.
+	//   "PREDEPLOY" - Use for predeploy job execution.
+	//   "POSTDEPLOY" - Use for postdeploy job execution.
 	Usages []string `json:"usages,omitempty"`
 
 	// WorkerPool: Optional. The resource name of the `WorkerPool`, with the
@@ -1645,6 +1664,12 @@ type Job struct {
 	// most recent invocation of this Job.
 	JobRun string `json:"jobRun,omitempty"`
 
+	// PostdeployJob: Output only. A postdeploy Job.
+	PostdeployJob *PostdeployJob `json:"postdeployJob,omitempty"`
+
+	// PredeployJob: Output only. A predeploy Job.
+	PredeployJob *PredeployJob `json:"predeployJob,omitempty"`
+
 	// SkipMessage: Output only. Additional information on why the Job was
 	// skipped, if available.
 	SkipMessage string `json:"skipMessage,omitempty"`
@@ -1731,6 +1756,14 @@ type JobRun struct {
 	// PhaseId: Output only. ID of the `Rollout` phase this `JobRun` belongs
 	// in.
 	PhaseId string `json:"phaseId,omitempty"`
+
+	// PostdeployJobRun: Output only. Information specific to a postdeploy
+	// `JobRun`.
+	PostdeployJobRun *PostdeployJobRun `json:"postdeployJobRun,omitempty"`
+
+	// PredeployJobRun: Output only. Information specific to a predeploy
+	// `JobRun`.
+	PredeployJobRun *PredeployJobRun `json:"predeployJobRun,omitempty"`
 
 	// StartTime: Output only. Time at which the `JobRun` was started.
 	StartTime string `json:"startTime,omitempty"`
@@ -2480,6 +2513,16 @@ type PhaseConfig struct {
 	// regex: `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
 	PhaseId string `json:"phaseId,omitempty"`
 
+	// Postdeploy: Optional. Configuration for the postdeploy job of this
+	// phase. If this is not configured, postdeploy job will not be present
+	// for this phase.
+	Postdeploy *Postdeploy `json:"postdeploy,omitempty"`
+
+	// Predeploy: Optional. Configuration for the predeploy job of this
+	// phase. If this is not configured, predeploy job will not be present
+	// for this phase.
+	Predeploy *Predeploy `json:"predeploy,omitempty"`
+
 	// Profiles: Skaffold profiles to use when rendering the manifest for
 	// this phase. These are in addition to the profiles list specified in
 	// the `DeliveryPipeline` stage.
@@ -2691,6 +2734,234 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Postdeploy: Postdeploy contains the postdeploy job configuration
+// information.
+type Postdeploy struct {
+	// Actions: Optional. A sequence of skaffold custom actions to invoke
+	// during execution of the postdeploy job.
+	Actions []string `json:"actions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Postdeploy) MarshalJSON() ([]byte, error) {
+	type NoMethod Postdeploy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostdeployJob: A postdeploy Job.
+type PostdeployJob struct {
+	// Actions: Output only. The custom actions that the postdeploy Job
+	// executes.
+	Actions []string `json:"actions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostdeployJob) MarshalJSON() ([]byte, error) {
+	type NoMethod PostdeployJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostdeployJobRun: PostdeployJobRun contains information specific to a
+// postdeploy `JobRun`.
+type PostdeployJobRun struct {
+	// Build: Output only. The resource name of the Cloud Build `Build`
+	// object that is used to execute the custom actions associated with the
+	// postdeploy Job. Format is
+	// projects/{project}/locations/{location}/builds/{build}.
+	Build string `json:"build,omitempty"`
+
+	// FailureCause: Output only. The reason the postdeploy failed. This
+	// will always be unspecified while the postdeploy is in progress or if
+	// it succeeded.
+	//
+	// Possible values:
+	//   "FAILURE_CAUSE_UNSPECIFIED" - No reason for failure is specified.
+	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
+	// because it is not enabled or because Cloud Deploy has insufficient
+	// permissions. See [required
+	// permission](https://cloud.google.com/deploy/docs/cloud-deploy-service-
+	// account#required_permissions).
+	//   "EXECUTION_FAILED" - The postdeploy operation did not complete
+	// successfully; check Cloud Build logs.
+	//   "DEADLINE_EXCEEDED" - The postdeploy build did not complete within
+	// the alloted time.
+	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
+	// Deploy's request. See failure_message for additional details.
+	FailureCause string `json:"failureCause,omitempty"`
+
+	// FailureMessage: Output only. Additional information about the
+	// postdeploy failure, if available.
+	FailureMessage string `json:"failureMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Build") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Build") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostdeployJobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod PostdeployJobRun
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Predeploy: Predeploy contains the predeploy job configuration
+// information.
+type Predeploy struct {
+	// Actions: Optional. A sequence of skaffold custom actions to invoke
+	// during execution of the predeploy job.
+	Actions []string `json:"actions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Predeploy) MarshalJSON() ([]byte, error) {
+	type NoMethod Predeploy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PredeployJob: A predeploy Job.
+type PredeployJob struct {
+	// Actions: Output only. The custom actions that the predeploy Job
+	// executes.
+	Actions []string `json:"actions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PredeployJob) MarshalJSON() ([]byte, error) {
+	type NoMethod PredeployJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PredeployJobRun: PredeployJobRun contains information specific to a
+// predeploy `JobRun`.
+type PredeployJobRun struct {
+	// Build: Output only. The resource name of the Cloud Build `Build`
+	// object that is used to execute the custom actions associated with the
+	// predeploy Job. Format is
+	// projects/{project}/locations/{location}/builds/{build}.
+	Build string `json:"build,omitempty"`
+
+	// FailureCause: Output only. The reason the predeploy failed. This will
+	// always be unspecified while the predeploy is in progress or if it
+	// succeeded.
+	//
+	// Possible values:
+	//   "FAILURE_CAUSE_UNSPECIFIED" - No reason for failure is specified.
+	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
+	// because it is not enabled or because Cloud Deploy has insufficient
+	// permissions. See [required
+	// permission](https://cloud.google.com/deploy/docs/cloud-deploy-service-
+	// account#required_permissions).
+	//   "EXECUTION_FAILED" - The predeploy operation did not complete
+	// successfully; check Cloud Build logs.
+	//   "DEADLINE_EXCEEDED" - The predeploy build did not complete within
+	// the alloted time.
+	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
+	// Deploy's request. See failure_message for additional details.
+	FailureCause string `json:"failureCause,omitempty"`
+
+	// FailureMessage: Output only. Additional information about the
+	// predeploy failure, if available.
+	FailureMessage string `json:"failureMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Build") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Build") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PredeployJobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod PredeployJobRun
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3129,8 +3400,8 @@ type Rollout struct {
 	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
 	// because it is not enabled or because Cloud Deploy has insufficient
 	// permissions. See [required
-	// permission](/deploy/docs/cloud-deploy-service-account#required_permiss
-	// ions).
+	// permission](https://cloud.google.com/deploy/docs/cloud-deploy-service-
+	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The deploy operation did not complete
 	// successfully; check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - Deployment did not complete within the
@@ -3581,10 +3852,18 @@ func (s *Stage) MarshalJSON() ([]byte, error) {
 
 // Standard: Standard represents the standard deployment strategy.
 type Standard struct {
+	// Postdeploy: Optional. Configuration for the postdeploy job. If this
+	// is not configured, postdeploy job will not be present.
+	Postdeploy *Postdeploy `json:"postdeploy,omitempty"`
+
+	// Predeploy: Optional. Configuration for the predeploy job. If this is
+	// not configured, predeploy job will not be present.
+	Predeploy *Predeploy `json:"predeploy,omitempty"`
+
 	// Verify: Whether to verify a deployment.
 	Verify bool `json:"verify,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Verify") to
+	// ForceSendFields is a list of field names (e.g. "Postdeploy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3592,8 +3871,8 @@ type Standard struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Verify") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Postdeploy") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -3885,12 +4164,16 @@ type TargetRender struct {
 	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
 	// because it is not enabled or because Cloud Deploy has insufficient
 	// permissions. See [required
-	// permission](/deploy/docs/cloud-deploy-service-account#required_permiss
-	// ions).
+	// permission](https://cloud.google.com/deploy/docs/cloud-deploy-service-
+	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The render operation did not complete
 	// successfully; check Cloud Build logs.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
+	//   "CUSTOM_ACTION_NOT_FOUND" - The render operation did not complete
+	// successfully because the custom action required for predeploy or
+	// postdeploy was not found in the skaffold configuration. See
+	// failure_message for additional details.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the render
@@ -4120,8 +4403,8 @@ type VerifyJobRun struct {
 	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
 	// because it is not enabled or because Cloud Deploy has insufficient
 	// permissions. See [required
-	// permission](/deploy/docs/cloud-deploy-service-account#required_permiss
-	// ions).
+	// permission](https://cloud.google.com/deploy/docs/cloud-deploy-service-
+	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The verify operation did not complete
 	// successfully; check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - The verify build did not complete within the

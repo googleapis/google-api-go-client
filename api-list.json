@@ -1188,6 +1188,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "clouddebugger:v2",
+      "name": "clouddebugger",
+      "version": "v2",
+      "title": "Cloud Debugger API (Deprecated)",
+      "description": "Examines the call stack and variables of a running application without stopping or slowing it down. (Deprecated)",
+      "discoveryRestUrl": "https://clouddebugger.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/debugger",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "clouddeploy:v1",
       "name": "clouddeploy",
       "version": "v1",

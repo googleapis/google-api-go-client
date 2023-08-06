@@ -2042,6 +2042,10 @@ type GoogleCloudApigeeV1ApiProxyRevision struct {
 	// revision as a key-value map.
 	EntityMetaDataAsProperties map[string]string `json:"entityMetaDataAsProperties,omitempty"`
 
+	// HasExtensiblePolicy: Output only. This field will be marked as true
+	// if revision contains any policies marked as extensible.
+	HasExtensiblePolicy bool `json:"hasExtensiblePolicy,omitempty"`
+
 	// IntegrationEndpoints: List of IntegrationEndpoints in the
 	// '/integration-endpoints' directory of the API proxy. This is a
 	// 'manifest' setting designed to provide visibility into the contents
@@ -3947,6 +3951,21 @@ type GoogleCloudApigeeV1Deployment struct {
 	// status rather than pod status.
 	Pods []*GoogleCloudApigeeV1PodStatus `json:"pods,omitempty"`
 
+	// ProxyDeploymentType: Output only. The type of the deployment
+	// (standard or extensible) Deployed proxy revision will be marked as
+	// extensible in following 2 cases. 1. The deployed proxy revision uses
+	// extensible policies. 2. If a environment supports flowhooks and flow
+	// hook is configured.
+	//
+	// Possible values:
+	//   "PROXY_DEPLOYMENT_TYPE_UNSPECIFIED" - Default value till public
+	// preview. After public preview this value should not be returned.
+	//   "STANDARD" - Deployment will be of type Standard if only Standard
+	// proxies are used
+	//   "EXTENSIBLE" - Proxy will be of type Extensible if deployments uses
+	// one or more Extensible proxies
+	ProxyDeploymentType string `json:"proxyDeploymentType,omitempty"`
+
 	// Revision: API proxy revision.
 	Revision string `json:"revision,omitempty"`
 
@@ -4956,6 +4975,22 @@ type GoogleCloudApigeeV1Environment struct {
 	//   "DELETING" - The resource is being deleted.
 	//   "UPDATING" - The resource is being updated.
 	State string `json:"state,omitempty"`
+
+	// Type: Optional. EnvironmentType selected for the environment.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Environment type not specified.
+	//   "BASE" - Base environment has limited capacity and capabilities and
+	// are usually used when you are getting started with Apigee or while
+	// experimenting. Refer to Apigee's public documentation for more
+	// details.
+	//   "INTERMEDIATE" - This is the default type and it supports API
+	// management features and higher capacity than Base environment. Refer
+	// to Apigee's public documentation for more details.
+	//   "COMPREHENSIVE" - Comprehensive environment supports advanced
+	// capabilites and even higher capacity than Intermediate environment.
+	// Refer to Apigee's public documentation for more details.
+	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

@@ -4142,6 +4142,55 @@ func (s *Cuepoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CuepointSchedule: Schedule to insert cuepoints into a broadcast by
+// ads automator.
+type CuepointSchedule struct {
+	// Enabled: This field is semantically required. If it is set false or
+	// not set, other fields in this message will be ignored.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// PauseAdsUntil: If set, automatic cuepoint insertion is paused until
+	// this timestamp ("No Ad Zone").
+	PauseAdsUntil string `json:"pauseAdsUntil,omitempty"`
+
+	// RepeatInterval: Interval frequency that api uses to insert cuepoints
+	// automatically.
+	RepeatInterval string `json:"repeatInterval,omitempty"`
+
+	// ScheduleStrategy: The strategy to use when scheduling cuepoints.
+	//
+	// Possible values:
+	//   "scheduleStrategyUnspecified"
+	//   "concurrent" - Strategy to schedule cuepoints at one time for all
+	// viewers.
+	//   "nonConcurrent" - Strategy to schedule cuepoints at an increased
+	// rate to allow viewers to receive cuepoints when eligible. See
+	// go/lcr-non-concurrent-ads for more details.
+	ScheduleStrategy string `json:"scheduleStrategy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CuepointSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod CuepointSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Entity struct {
 	Id string `json:"id,omitempty"`
 
@@ -4840,6 +4889,10 @@ type LiveBroadcast struct {
 	// string "youtube#liveBroadcast".
 	Kind string `json:"kind,omitempty"`
 
+	// MonetizationDetails: The monetizationDetails object contains
+	// information about the event's monetization details.
+	MonetizationDetails *LiveBroadcastMonetizationDetails `json:"monetizationDetails,omitempty"`
+
 	// Snippet: The snippet object contains basic details about the event,
 	// including its title, description, start time, and end time.
 	Snippet *LiveBroadcastSnippet `json:"snippet,omitempty"`
@@ -5081,6 +5134,35 @@ type LiveBroadcastListResponse struct {
 
 func (s *LiveBroadcastListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveBroadcastListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LiveBroadcastMonetizationDetails: Monetization settings of a
+// broadcast.
+type LiveBroadcastMonetizationDetails struct {
+	CuepointSchedule *CuepointSchedule `json:"cuepointSchedule,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CuepointSchedule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CuepointSchedule") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveBroadcastMonetizationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveBroadcastMonetizationDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

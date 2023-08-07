@@ -761,6 +761,36 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LinkedResource: Reference to a linked resource tracked by this
+// Subscription.
+type LinkedResource struct {
+	// LinkedDataset: Output only. Name of the linked dataset, e.g.
+	// projects/subscriberproject/datasets/linked_dataset
+	LinkedDataset string `json:"linkedDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LinkedDataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LinkedDataset") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDataExchangesResponse: Message for response to the list of data
 // exchanges.
 type ListDataExchangesResponse struct {
@@ -1184,6 +1214,35 @@ func (s *Publisher) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RefreshSubscriptionResponse: Message for response when you refresh a
+// subscription.
+type RefreshSubscriptionResponse struct {
+	// Subscription: The refreshed subscription resource.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscription") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshSubscriptionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RestrictedExportConfig: Restricted export config, used to configure
 // restricted export on linked dataset.
 type RestrictedExportConfig struct {
@@ -1258,6 +1317,35 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SubscribeDataExchangeResponse: Message for response when you
+// subscribe to a Data Exchange.
+type SubscribeDataExchangeResponse struct {
+	// Subscription: Subscription object created from this subscribe action.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscription") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscribeDataExchangeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscribeDataExchangeResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SubscribeListingRequest: Message for subscribing to a listing.
 type SubscribeListingRequest struct {
 	// DestinationDataset: BigQuery destination dataset to create for the
@@ -1294,6 +1382,87 @@ type SubscribeListingResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Subscription: A subscription represents a subscribers' access to a
+// particular set of published data. It contains references to
+// associated listings, data exchanges, and linked datasets.
+// TODO(b/267528977) Consider port the new resource to v1beta1 and
+// dataexchange APIs.
+type Subscription struct {
+	// CreationTime: Output only. Timestamp when the subscription was
+	// created.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// DataExchange: Output only. Resource name of the source Data Exchange.
+	// e.g. projects/123/locations/US/dataExchanges/456
+	DataExchange string `json:"dataExchange,omitempty"`
+
+	// LastModifyTime: Output only. Timestamp when the subscription was last
+	// modified.
+	LastModifyTime string `json:"lastModifyTime,omitempty"`
+
+	// LinkedDatasetMap: Output only. Map of listing resource names to
+	// associated linked resource, e.g.
+	// projects/123/locations/US/dataExchanges/456/listings/789 ->
+	// projects/123/datasets/my_dataset For listing-level subscriptions,
+	// this is a map of size 1. Only contains values if state ==
+	// STATE_ACTIVE.
+	LinkedDatasetMap map[string]LinkedResource `json:"linkedDatasetMap,omitempty"`
+
+	// Listing: Output only. Resource name of the source Listing. e.g.
+	// projects/123/locations/US/dataExchanges/456/listings/789
+	Listing string `json:"listing,omitempty"`
+
+	// Name: Output only. The resource name of the subscription. e.g.
+	// `projects/myproject/locations/US/subscriptions/123`.
+	Name string `json:"name,omitempty"`
+
+	// OrganizationDisplayName: Output only. Display name of the project of
+	// this subscription.
+	OrganizationDisplayName string `json:"organizationDisplayName,omitempty"`
+
+	// OrganizationId: Output only. Organization of the project this
+	// subscription belongs to.
+	OrganizationId string `json:"organizationId,omitempty"`
+
+	// State: Output only. Current state of the subscription.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STATE_ACTIVE" - This subscription is active and the data is
+	// accessible.
+	//   "STATE_STALE" - The data referenced by this subscription is out of
+	// date and should be refreshed. This can happen when a data provider
+	// adds or removes datasets.
+	//   "STATE_INACTIVE" - This subscription has been cancelled or revoked
+	// and the data is no longer accessible.
+	State string `json:"state,omitempty"`
+
+	// SubscriberContact: Output only. Email of the subscriber.
+	SubscriberContact string `json:"subscriberContact,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Subscription) MarshalJSON() ([]byte, error) {
+	type NoMethod Subscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`

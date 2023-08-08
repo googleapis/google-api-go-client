@@ -6,6 +6,7 @@ package internal
 
 import (
 	"crypto/tls"
+	"net/http"
 	"os"
 	"testing"
 	"time"
@@ -277,6 +278,29 @@ func TestGetHTTPTransportConfigAndEndpoint(t *testing.T) {
 			func() bool { return true },
 			testOverrideEndpoint,
 			false,
+		},
+		{
+			"no client cert, S2A address not empty, but DefaultMTLSEndpoint is not set",
+			&DialSettings{
+				DefaultMTLSEndpoint: "",
+				DefaultEndpoint:     testRegularEndpoint,
+			},
+			validConfigResp,
+			func() bool { return true },
+			testRegularEndpoint,
+			true,
+		},
+		{
+			"no client cert, endpoint is MTLS enabled, S2A address not empty, custom HTTP client",
+			&DialSettings{
+				DefaultMTLSEndpoint: testMTLSEndpoint,
+				DefaultEndpoint:     testRegularEndpoint,
+				HTTPClient:          http.DefaultClient,
+			},
+			validConfigResp,
+			func() bool { return true },
+			testRegularEndpoint,
+			true,
 		},
 	}
 

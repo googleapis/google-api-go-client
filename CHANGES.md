@@ -1,5 +1,13 @@
 # Changes
 
+## [0.136.0](https://github.com/googleapis/google-api-go-client/compare/v0.135.0...v0.136.0) (2023-08-08)
+
+
+### Features
+
+* Add additional checks before using S2A ([#2103](https://github.com/googleapis/google-api-go-client/issues/2103)) ([c62e5c6](https://github.com/googleapis/google-api-go-client/commit/c62e5c6665e06611d792c892028c8e5e840f8447))
+* **all:** Auto-regenerate discovery clients ([#2104](https://github.com/googleapis/google-api-go-client/issues/2104)) ([8029f73](https://github.com/googleapis/google-api-go-client/commit/8029f731063d2c0e6cd22e9a1e92b511e7105740))
+
 ## [0.135.0](https://github.com/googleapis/google-api-go-client/compare/v0.134.0...v0.135.0) (2023-08-07)
 
 

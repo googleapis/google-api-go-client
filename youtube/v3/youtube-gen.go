@@ -7675,11 +7675,6 @@ func (s *PlaylistSnippet) MarshalJSON() ([]byte, error) {
 }
 
 type PlaylistStatus struct {
-	// Possible values:
-	//   "enabled"
-	//   "disabled"
-	PodcastStatus string `json:"podcastStatus,omitempty"`
-
 	// PrivacyStatus: The playlist's privacy status.
 	//
 	// Possible values:
@@ -7688,7 +7683,7 @@ type PlaylistStatus struct {
 	//   "private"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PodcastStatus") to
+	// ForceSendFields is a list of field names (e.g. "PrivacyStatus") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -7696,7 +7691,7 @@ type PlaylistStatus struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PodcastStatus") to include
+	// NullFields is a list of field names (e.g. "PrivacyStatus") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as

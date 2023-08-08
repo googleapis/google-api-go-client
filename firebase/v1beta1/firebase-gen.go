@@ -1451,6 +1451,11 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadata: Describes the progress of an LRO. It is included
+// in the `metadata` field of the `Operation`.
+type OperationMetadata struct {
+}
+
 // ProductMetadata: Metadata about a long-running Product operation.
 type ProductMetadata struct {
 	// WarningMessages: List of warnings related to the associated

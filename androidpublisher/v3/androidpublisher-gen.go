@@ -15294,7 +15294,7 @@ type InappproductsDeleteCall struct {
 	header_     http.Header
 }
 
-// Delete: Deletes an in-app product (i.e. a managed product or a
+// Delete: Deletes an in-app product (a managed product or a
 // subscription). This method should no longer be used to delete
 // subscriptions. See this article
 // (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
@@ -15371,7 +15371,7 @@ func (c *InappproductsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes an in-app product (i.e. a managed product or a subscription). This method should no longer be used to delete subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
+	//   "description": "Deletes an in-app product (a managed product or a subscription). This method should no longer be used to delete subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidpublisher.inappproducts.delete",
@@ -15572,7 +15572,7 @@ type InappproductsInsertCall struct {
 	header_      http.Header
 }
 
-// Insert: Creates an in-app product (i.e. a managed product or a
+// Insert: Creates an in-app product (a managed product or a
 // subscription). This method should no longer be used to create
 // subscriptions. See this article
 // (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
@@ -15687,7 +15687,7 @@ func (c *InappproductsInsertCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an in-app product (i.e. a managed product or a subscription). This method should no longer be used to create subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
+	//   "description": "Creates an in-app product (a managed product or a subscription). This method should no longer be used to create subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.inappproducts.insert",
@@ -15926,7 +15926,7 @@ type InappproductsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Patches an in-app product (i.e. a managed product or a
+// Patch: Patches an in-app product (a managed product or a
 // subscription). This method should no longer be used to update
 // subscriptions. See this article
 // (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
@@ -16044,7 +16044,7 @@ func (c *InappproductsPatchCall) Do(opts ...googleapi.CallOption) (*InAppProduct
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches an in-app product (i.e. a managed product or a subscription). This method should no longer be used to update subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
+	//   "description": "Patches an in-app product (a managed product or a subscription). This method should no longer be used to update subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.inappproducts.patch",
@@ -16097,7 +16097,7 @@ type InappproductsUpdateCall struct {
 	header_      http.Header
 }
 
-// Update: Updates an in-app product (i.e. a managed product or a
+// Update: Updates an in-app product (a managed product or a
 // subscription). This method should no longer be used to update
 // subscriptions. See this article
 // (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
@@ -16223,7 +16223,7 @@ func (c *InappproductsUpdateCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an in-app product (i.e. a managed product or a subscription). This method should no longer be used to update subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
+	//   "description": "Updates an in-app product (a managed product or a subscription). This method should no longer be used to update subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.inappproducts.update",

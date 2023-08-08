@@ -162,7 +162,6 @@ func NewServicesService(s *APIService) *ServicesService {
 	rs := &ServicesService{s: s}
 	rs.Connections = NewServicesConnectionsService(s)
 	rs.DnsRecordSets = NewServicesDnsRecordSetsService(s)
-	rs.DnsZone = NewServicesDnsZoneService(s)
 	rs.DnsZones = NewServicesDnsZonesService(s)
 	rs.Projects = NewServicesProjectsService(s)
 	rs.Roles = NewServicesRolesService(s)
@@ -175,8 +174,6 @@ type ServicesService struct {
 	Connections *ServicesConnectionsService
 
 	DnsRecordSets *ServicesDnsRecordSetsService
-
-	DnsZone *ServicesDnsZoneService
 
 	DnsZones *ServicesDnsZonesService
 
@@ -200,15 +197,6 @@ func NewServicesDnsRecordSetsService(s *APIService) *ServicesDnsRecordSetsServic
 }
 
 type ServicesDnsRecordSetsService struct {
-	s *APIService
-}
-
-func NewServicesDnsZoneService(s *APIService) *ServicesDnsZoneService {
-	rs := &ServicesDnsZoneService{s: s}
-	return rs
-}
-
-type ServicesDnsZoneService struct {
 	s *APIService
 }
 
@@ -247,6 +235,7 @@ type ServicesProjectsGlobalService struct {
 
 func NewServicesProjectsGlobalNetworksService(s *APIService) *ServicesProjectsGlobalNetworksService {
 	rs := &ServicesProjectsGlobalNetworksService{s: s}
+	rs.DnsZones = NewServicesProjectsGlobalNetworksDnsZonesService(s)
 	rs.PeeredDnsDomains = NewServicesProjectsGlobalNetworksPeeredDnsDomainsService(s)
 	return rs
 }
@@ -254,7 +243,18 @@ func NewServicesProjectsGlobalNetworksService(s *APIService) *ServicesProjectsGl
 type ServicesProjectsGlobalNetworksService struct {
 	s *APIService
 
+	DnsZones *ServicesProjectsGlobalNetworksDnsZonesService
+
 	PeeredDnsDomains *ServicesProjectsGlobalNetworksPeeredDnsDomainsService
+}
+
+func NewServicesProjectsGlobalNetworksDnsZonesService(s *APIService) *ServicesProjectsGlobalNetworksDnsZonesService {
+	rs := &ServicesProjectsGlobalNetworksDnsZonesService{s: s}
+	return rs
+}
+
+type ServicesProjectsGlobalNetworksDnsZonesService struct {
+	s *APIService
 }
 
 func NewServicesProjectsGlobalNetworksPeeredDnsDomainsService(s *APIService) *ServicesProjectsGlobalNetworksPeeredDnsDomainsService {
@@ -8157,7 +8157,7 @@ func (c *ServicesDnsRecordSetsGetCall) Domain(domain string) *ServicesDnsRecordS
 
 // Type sets the optional parameter "type": Required. RecordSet Type eg.
 // type='A'. See the list of Supported DNS Types
-// (https://dns.corp.google.com/docs/overview).
+// (https://cloud.google.com/dns/records/json-record).
 func (c *ServicesDnsRecordSetsGetCall) Type(type_ string) *ServicesDnsRecordSetsGetCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -8295,7 +8295,7 @@ func (c *ServicesDnsRecordSetsGetCall) Do(opts ...googleapi.CallOption) (*DnsRec
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "Required. RecordSet Type eg. type='A'. See the list of [Supported DNS Types](https://dns.corp.google.com/docs/overview).",
+	//       "description": "Required. RecordSet Type eg. type='A'. See the list of [Supported DNS Types](https://cloud.google.com/dns/records/json-record).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8791,162 +8791,6 @@ func (c *ServicesDnsRecordSetsUpdateCall) Do(opts ...googleapi.CallOption) (*Ope
 
 }
 
-// method id "servicenetworking.services.dnsZone.get":
-
-type ServicesDnsZoneGetCall struct {
-	s            *APIService
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Service producers can use this method to retrieve a DNS zone in
-// the shared producer host project and the matching peering zones in
-// consumer project
-//
-//   - name: The network that the consumer is using to connect with
-//     services. Must be in the form of
-//     services/{service}/projects/{project}/global/networks/{network}/zone
-//     s/{zoneName} Where {service} is the peering service that is
-//     managing connectivity for the service producer's organization. For
-//     Google services that support this {project} is the project number,
-//     as in '12345' {network} is the network name. {zoneName} is the DNS
-//     zone name.
-func (r *ServicesDnsZoneService) Get(name string) *ServicesDnsZoneGetCall {
-	c := &ServicesDnsZoneGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ServicesDnsZoneGetCall) Fields(s ...googleapi.Field) *ServicesDnsZoneGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ServicesDnsZoneGetCall) IfNoneMatch(entityTag string) *ServicesDnsZoneGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ServicesDnsZoneGetCall) Context(ctx context.Context) *ServicesDnsZoneGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ServicesDnsZoneGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ServicesDnsZoneGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/dnsZone:get")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "servicenetworking.services.dnsZone.get" call.
-// Exactly one of *GetDnsZoneResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GetDnsZoneResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ServicesDnsZoneGetCall) Do(opts ...googleapi.CallOption) (*GetDnsZoneResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GetDnsZoneResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Service producers can use this method to retrieve a DNS zone in the shared producer host project and the matching peering zones in consumer project",
-	//   "flatPath": "v1/services/{servicesId}/dnsZone:get",
-	//   "httpMethod": "GET",
-	//   "id": "servicenetworking.services.dnsZone.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The network that the consumer is using to connect with services. Must be in the form of services/{service}/projects/{project}/global/networks/{network}/zones/{zoneName} Where {service} is the peering service that is managing connectivity for the service producer's organization. For Google services that support this {project} is the project number, as in '12345' {network} is the network name. {zoneName} is the DNS zone name",
-	//       "location": "path",
-	//       "pattern": "^services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/dnsZone:get",
-	//   "response": {
-	//     "$ref": "GetDnsZoneResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
-	//   ]
-	// }
-
-}
-
 // method id "servicenetworking.services.dnsZones.add":
 
 type ServicesDnsZonesAddCall struct {
@@ -9086,162 +8930,6 @@ func (c *ServicesDnsZonesAddCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
-	//   ]
-	// }
-
-}
-
-// method id "servicenetworking.services.dnsZones.list":
-
-type ServicesDnsZonesListCall struct {
-	s            *APIService
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: * Service producers can use this method to retrieve a list of
-// available DNS zones in the shared producer host project and the
-// matching peering zones in the consumer project. *
-//
-//   - parent: Parent resource identifying the connection which owns this
-//     collection of DNS zones in the format
-//     services/{service}/projects/{project}/global/networks/{network}
-//     Service: The service that is managing connectivity for the service
-//     producer's organization. For Google services that support this
-//     functionality, this value is `servicenetworking.googleapis.com`.
-//     Projects: the consumer project containing the consumer network.
-//     Network: The consumer network accessible from the tenant project.
-func (r *ServicesDnsZonesService) List(parent string) *ServicesDnsZonesListCall {
-	c := &ServicesDnsZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ServicesDnsZonesListCall) Fields(s ...googleapi.Field) *ServicesDnsZonesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ServicesDnsZonesListCall) IfNoneMatch(entityTag string) *ServicesDnsZonesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ServicesDnsZonesListCall) Context(ctx context.Context) *ServicesDnsZonesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ServicesDnsZonesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ServicesDnsZonesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dnsZones:list")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "servicenetworking.services.dnsZones.list" call.
-// Exactly one of *ListDnsZonesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListDnsZonesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ServicesDnsZonesListCall) Do(opts ...googleapi.CallOption) (*ListDnsZonesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListDnsZonesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "* Service producers can use this method to retrieve a list of available DNS zones in the shared producer host project and the matching peering zones in the consumer project. *",
-	//   "flatPath": "v1/services/{servicesId}/dnsZones:list",
-	//   "httpMethod": "GET",
-	//   "id": "servicenetworking.services.dnsZones.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent resource identifying the connection which owns this collection of DNS zones in the format services/{service}/projects/{project}/global/networks/{network} Service: The service that is managing connectivity for the service producer's organization. For Google services that support this functionality, this value is `servicenetworking.googleapis.com`. Projects: the consumer project containing the consumer network. Network: The consumer network accessible from the tenant project.",
-	//       "location": "path",
-	//       "pattern": "^services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/dnsZones:list",
-	//   "response": {
-	//     "$ref": "ListDnsZonesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -9716,6 +9404,318 @@ func (c *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall) Do(opts ...goog
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "servicenetworking.services.projects.global.networks.dnsZones.get":
+
+type ServicesProjectsGlobalNetworksDnsZonesGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Service producers can use this method to retrieve a DNS zone in
+// the shared producer host project and the matching peering zones in
+// consumer project
+//
+//   - name: The network that the consumer is using to connect with
+//     services. Must be in the form of
+//     services/{service}/projects/{project}/global/networks/{network}/zone
+//     s/{zoneName} Where {service} is the peering service that is
+//     managing connectivity for the service producer's organization. For
+//     Google services that support this {project} is the project number,
+//     as in '12345' {network} is the network name. {zoneName} is the DNS
+//     zone name.
+func (r *ServicesProjectsGlobalNetworksDnsZonesService) Get(name string) *ServicesProjectsGlobalNetworksDnsZonesGetCall {
+	c := &ServicesProjectsGlobalNetworksDnsZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) Fields(s ...googleapi.Field) *ServicesProjectsGlobalNetworksDnsZonesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) IfNoneMatch(entityTag string) *ServicesProjectsGlobalNetworksDnsZonesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) Context(ctx context.Context) *ServicesProjectsGlobalNetworksDnsZonesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicenetworking.services.projects.global.networks.dnsZones.get" call.
+// Exactly one of *GetDnsZoneResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GetDnsZoneResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) Do(opts ...googleapi.CallOption) (*GetDnsZoneResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetDnsZoneResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Service producers can use this method to retrieve a DNS zone in the shared producer host project and the matching peering zones in consumer project",
+	//   "flatPath": "v1/services/{servicesId}/projects/{projectsId}/global/networks/{networksId}/dnsZones/{dnsZonesId}",
+	//   "httpMethod": "GET",
+	//   "id": "servicenetworking.services.projects.global.networks.dnsZones.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The network that the consumer is using to connect with services. Must be in the form of services/{service}/projects/{project}/global/networks/{network}/zones/{zoneName} Where {service} is the peering service that is managing connectivity for the service producer's organization. For Google services that support this {project} is the project number, as in '12345' {network} is the network name. {zoneName} is the DNS zone name",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/projects/[^/]+/global/networks/[^/]+/dnsZones/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GetDnsZoneResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "servicenetworking.services.projects.global.networks.dnsZones.list":
+
+type ServicesProjectsGlobalNetworksDnsZonesListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: * Service producers can use this method to retrieve a list of
+// available DNS zones in the shared producer host project and the
+// matching peering zones in the consumer project. *
+//
+//   - parent: Parent resource identifying the connection which owns this
+//     collection of DNS zones in the format
+//     services/{service}/projects/{project}/global/networks/{network}
+//     Service: The service that is managing connectivity for the service
+//     producer's organization. For Google services that support this
+//     functionality, this value is `servicenetworking.googleapis.com`.
+//     Projects: the consumer project containing the consumer network.
+//     Network: The consumer network accessible from the tenant project.
+func (r *ServicesProjectsGlobalNetworksDnsZonesService) List(parent string) *ServicesProjectsGlobalNetworksDnsZonesListCall {
+	c := &ServicesProjectsGlobalNetworksDnsZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) Fields(s ...googleapi.Field) *ServicesProjectsGlobalNetworksDnsZonesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) IfNoneMatch(entityTag string) *ServicesProjectsGlobalNetworksDnsZonesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) Context(ctx context.Context) *ServicesProjectsGlobalNetworksDnsZonesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dnsZones:list")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicenetworking.services.projects.global.networks.dnsZones.list" call.
+// Exactly one of *ListDnsZonesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListDnsZonesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) Do(opts ...googleapi.CallOption) (*ListDnsZonesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDnsZonesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "* Service producers can use this method to retrieve a list of available DNS zones in the shared producer host project and the matching peering zones in the consumer project. *",
+	//   "flatPath": "v1/services/{servicesId}/projects/{projectsId}/global/networks/{networksId}/dnsZones:list",
+	//   "httpMethod": "GET",
+	//   "id": "servicenetworking.services.projects.global.networks.dnsZones.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent resource identifying the connection which owns this collection of DNS zones in the format services/{service}/projects/{project}/global/networks/{network} Service: The service that is managing connectivity for the service producer's organization. For Google services that support this functionality, this value is `servicenetworking.googleapis.com`. Projects: the consumer project containing the consumer network. Network: The consumer network accessible from the tenant project.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/projects/[^/]+/global/networks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/dnsZones:list",
+	//   "response": {
+	//     "$ref": "ListDnsZonesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

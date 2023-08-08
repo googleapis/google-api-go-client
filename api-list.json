@@ -244,6 +244,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "aiplatform:v1beta1",
+      "name": "aiplatform",
+      "version": "v1beta1",
+      "title": "Vertex AI API",
+      "description": "Train high-quality custom machine learning models with minimal machine learning expertise and effort.",
+      "discoveryRestUrl": "https://aiplatform.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/vertex-ai/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "aiplatform:v1",
+      "name": "aiplatform",
+      "version": "v1",
+      "title": "Vertex AI API",
+      "description": "Train high-quality custom machine learning models with minimal machine learning expertise and effort.",
+      "discoveryRestUrl": "https://aiplatform.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/vertex-ai/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "alertcenter:v1beta1",
       "name": "alertcenter",
       "version": "v1beta1",

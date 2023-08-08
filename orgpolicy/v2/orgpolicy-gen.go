@@ -430,7 +430,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	ActionType string `json:"actionType,omitempty"`
 
 	// Condition: Org policy condition/expression. For example:
-	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
+	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
 	// `resource.management.auto_upgrade == true` The max length of the
 	// condition is 1000 characters.
 	Condition string `json:"condition,omitempty"`
@@ -633,12 +633,12 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
 
 	// Name: Immutable. The resource name of the policy. Must be one of the
-	// following forms, where constraint_name is the name of the constraint
-	// which this policy configures: *
+	// following forms, where `constraint_name` is the name of the
+	// constraint which this policy configures: *
 	// `projects/{project_number}/policies/{constraint_name}` *
 	// `folders/{folder_id}/policies/{constraint_name}` *
 	// `organizations/{organization_id}/policies/{constraint_name}` For
-	// example, "projects/123/policies/compute.disableSerialPortAccess".
+	// example, `projects/123/policies/compute.disableSerialPortAccess`.
 	// Note: `projects/{project_id}/policies/{constraint_name}` is also an
 	// acceptable name for API requests, but responses will return the name
 	// using the equivalent project number.
@@ -802,11 +802,11 @@ func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, erro
 // values. The `is:` prefix is used to denote specific values, and is
 // required only if the value contains a ":". Values prefixed with "is:"
 // are treated the same as values with no prefix. Ancestry subtrees must
-// be in one of the following formats: - "projects/", e.g.
-// "projects/tokyo-rain-123" - "folders/", e.g. "folders/1234" -
-// "organizations/", e.g. "organizations/1234" The `supports_under`
-// field of the associated `Constraint` defines whether ancestry
-// prefixes can be used.
+// be in one of the following formats: - `projects/` (for example,
+// `projects/tokyo-rain-123`) - `folders/` (for example, `folders/1234`)
+// - `organizations/` (for example, `organizations/1234`) The
+// `supports_under` field of the associated `Constraint` defines whether
+// ancestry prefixes can be used.
 type GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues struct {
 	// AllowedValues: List of values allowed at this resource.
 	AllowedValues []string `json:"allowedValues,omitempty"`
@@ -1406,7 +1406,7 @@ type FoldersPoliciesGetCall struct {
 // resource, `NOT_FOUND` is returned. The `etag` value can be used with
 // `UpdatePolicy()` to update a policy during read-modify-write.
 //
-//   - name: Resource name of the policy. See `Policy` for naming
+//   - name: Resource name of the policy. See Policy for naming
 //     requirements.
 func (r *FoldersPoliciesService) Get(name string) *FoldersPoliciesGetCall {
 	c := &FoldersPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1522,7 +1522,7 @@ func (c *FoldersPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the policy. See `Policy` for naming requirements.",
+	//       "description": "Required. Resource name of the policy. See Policy for naming requirements.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -1558,8 +1558,8 @@ type FoldersPoliciesGetEffectivePolicyCall struct {
 // resources. Subtrees of Resource Manager resource hierarchy with
 // 'under:' prefix will not be expanded.
 //
-//   - name: The effective policy to compute. See `Policy` for naming
-//     rules.
+//   - name: The effective policy to compute. See Policy for naming
+//     requirements.
 func (r *FoldersPoliciesService) GetEffectivePolicy(name string) *FoldersPoliciesGetEffectivePolicyCall {
 	c := &FoldersPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1674,7 +1674,7 @@ func (c *FoldersPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The effective policy to compute. See `Policy` for naming rules.",
+	//       "description": "Required. The effective policy to compute. See Policy for naming requirements.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -1912,12 +1912,12 @@ type FoldersPoliciesPatchCall struct {
 // of all fields.
 //
 //   - name: Immutable. The resource name of the policy. Must be one of
-//     the following forms, where constraint_name is the name of the
+//     the following forms, where `constraint_name` is the name of the
 //     constraint which this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
 //     `organizations/{organization_id}/policies/{constraint_name}` For
-//     example, "projects/123/policies/compute.disableSerialPortAccess".
+//     example, `projects/123/policies/compute.disableSerialPortAccess`.
 //     Note: `projects/{project_id}/policies/{constraint_name}` is also an
 //     acceptable name for API requests, but responses will return the
 //     name using the equivalent project number.
@@ -2037,7 +2037,7 @@ func (c *FoldersPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where constraint_name is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, \"projects/123/policies/compute.disableSerialPortAccess\". Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
+	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -3345,7 +3345,7 @@ type OrganizationsPoliciesGetCall struct {
 // resource, `NOT_FOUND` is returned. The `etag` value can be used with
 // `UpdatePolicy()` to update a policy during read-modify-write.
 //
-//   - name: Resource name of the policy. See `Policy` for naming
+//   - name: Resource name of the policy. See Policy for naming
 //     requirements.
 func (r *OrganizationsPoliciesService) Get(name string) *OrganizationsPoliciesGetCall {
 	c := &OrganizationsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3461,7 +3461,7 @@ func (c *OrganizationsPoliciesGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the policy. See `Policy` for naming requirements.",
+	//       "description": "Required. Resource name of the policy. See Policy for naming requirements.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -3497,8 +3497,8 @@ type OrganizationsPoliciesGetEffectivePolicyCall struct {
 // resources. Subtrees of Resource Manager resource hierarchy with
 // 'under:' prefix will not be expanded.
 //
-//   - name: The effective policy to compute. See `Policy` for naming
-//     rules.
+//   - name: The effective policy to compute. See Policy for naming
+//     requirements.
 func (r *OrganizationsPoliciesService) GetEffectivePolicy(name string) *OrganizationsPoliciesGetEffectivePolicyCall {
 	c := &OrganizationsPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3613,7 +3613,7 @@ func (c *OrganizationsPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The effective policy to compute. See `Policy` for naming rules.",
+	//       "description": "Required. The effective policy to compute. See Policy for naming requirements.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -3851,12 +3851,12 @@ type OrganizationsPoliciesPatchCall struct {
 // of all fields.
 //
 //   - name: Immutable. The resource name of the policy. Must be one of
-//     the following forms, where constraint_name is the name of the
+//     the following forms, where `constraint_name` is the name of the
 //     constraint which this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
 //     `organizations/{organization_id}/policies/{constraint_name}` For
-//     example, "projects/123/policies/compute.disableSerialPortAccess".
+//     example, `projects/123/policies/compute.disableSerialPortAccess`.
 //     Note: `projects/{project_id}/policies/{constraint_name}` is also an
 //     acceptable name for API requests, but responses will return the
 //     name using the equivalent project number.
@@ -3976,7 +3976,7 @@ func (c *OrganizationsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where constraint_name is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, \"projects/123/policies/compute.disableSerialPortAccess\". Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
+	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -4501,7 +4501,7 @@ type ProjectsPoliciesGetCall struct {
 // resource, `NOT_FOUND` is returned. The `etag` value can be used with
 // `UpdatePolicy()` to update a policy during read-modify-write.
 //
-//   - name: Resource name of the policy. See `Policy` for naming
+//   - name: Resource name of the policy. See Policy for naming
 //     requirements.
 func (r *ProjectsPoliciesService) Get(name string) *ProjectsPoliciesGetCall {
 	c := &ProjectsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4617,7 +4617,7 @@ func (c *ProjectsPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the policy. See `Policy` for naming requirements.",
+	//       "description": "Required. Resource name of the policy. See Policy for naming requirements.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -4653,8 +4653,8 @@ type ProjectsPoliciesGetEffectivePolicyCall struct {
 // resources. Subtrees of Resource Manager resource hierarchy with
 // 'under:' prefix will not be expanded.
 //
-//   - name: The effective policy to compute. See `Policy` for naming
-//     rules.
+//   - name: The effective policy to compute. See Policy for naming
+//     requirements.
 func (r *ProjectsPoliciesService) GetEffectivePolicy(name string) *ProjectsPoliciesGetEffectivePolicyCall {
 	c := &ProjectsPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4769,7 +4769,7 @@ func (c *ProjectsPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The effective policy to compute. See `Policy` for naming rules.",
+	//       "description": "Required. The effective policy to compute. See Policy for naming requirements.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
 	//       "required": true,
@@ -5007,12 +5007,12 @@ type ProjectsPoliciesPatchCall struct {
 // of all fields.
 //
 //   - name: Immutable. The resource name of the policy. Must be one of
-//     the following forms, where constraint_name is the name of the
+//     the following forms, where `constraint_name` is the name of the
 //     constraint which this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
 //     `organizations/{organization_id}/policies/{constraint_name}` For
-//     example, "projects/123/policies/compute.disableSerialPortAccess".
+//     example, `projects/123/policies/compute.disableSerialPortAccess`.
 //     Note: `projects/{project_id}/policies/{constraint_name}` is also an
 //     acceptable name for API requests, but responses will return the
 //     name using the equivalent project number.
@@ -5132,7 +5132,7 @@ func (c *ProjectsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where constraint_name is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, \"projects/123/policies/compute.disableSerialPortAccess\". Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
+	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
 	//       "required": true,

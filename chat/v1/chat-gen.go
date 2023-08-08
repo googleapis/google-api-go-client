@@ -568,11 +568,11 @@ type Attachment struct {
 	// used with the media API to download the attachment data.
 	AttachmentDataRef *AttachmentDataRef `json:"attachmentDataRef,omitempty"`
 
-	// ContentName: The original file name for the content, not the full
-	// path.
+	// ContentName: Output only. The original file name for the content, not
+	// the full path.
 	ContentName string `json:"contentName,omitempty"`
 
-	// ContentType: The content type (MIME type) of the file.
+	// ContentType: Output only. The content type (MIME type) of the file.
 	ContentType string `json:"contentType,omitempty"`
 
 	// DownloadUri: Output only. The download URL which should be used to
@@ -580,15 +580,15 @@ type Attachment struct {
 	// use this URL to download attachment content.
 	DownloadUri string `json:"downloadUri,omitempty"`
 
-	// DriveDataRef: A reference to the drive attachment. This field is used
-	// with the Drive API.
+	// DriveDataRef: Output only. A reference to the Google Drive
+	// attachment. This field is used with the Google Drive API.
 	DriveDataRef *DriveDataRef `json:"driveDataRef,omitempty"`
 
 	// Name: Resource name of the attachment, in the form
 	// `spaces/*/messages/*/attachments/*`.
 	Name string `json:"name,omitempty"`
 
-	// Source: The source of the attachment.
+	// Source: Output only. The source of the attachment.
 	//
 	// Possible values:
 	//   "SOURCE_UNSPECIFIED"
@@ -2676,7 +2676,8 @@ type GoogleAppsCardV1OnClick struct {
 	// needs to open a link. This differs from the `open_link` above in that
 	// this needs to talk to server to get the link. Thus some preparation
 	// work is required for web client to do before the open link action
-	// response comes back.
+	// response comes back. Supported by Google Workspace Add-ons, but not
+	// Google Chat apps.
 	OpenDynamicLinkAction *GoogleAppsCardV1Action `json:"openDynamicLinkAction,omitempty"`
 
 	// OpenLink: If specified, this `onClick` triggers an open link action.
@@ -4838,18 +4839,17 @@ func (s *TextParagraph) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Thread: A thread in Google Chat.
+// Thread: A thread in a Google Chat space. For example usage, see Start
+// or reply to a message thread
+// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 type Thread struct {
 	// Name: Resource name of the thread. Example:
 	// `spaces/{space}/threads/{thread}`
 	Name string `json:"name,omitempty"`
 
-	// ThreadKey: Optional. Opaque thread identifier. To start or add to a
-	// thread, create a message and specify a `threadKey` or the
-	// thread.name. For example usage, see Start or reply to a message
-	// thread
-	// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
-	// For other requests, this is an output only field.
+	// ThreadKey: Optional. ID for the thread. Supports up to 4000
+	// characters. Input for creating or updating a thread. Otherwise,
+	// output only.
 	ThreadKey string `json:"threadKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -6597,8 +6597,8 @@ type SpacesSetupCall struct {
 // (https://developers.google.com/chat/api/guides/v1/members/create). If
 // a DM already exists between two users, even when one user blocks the
 // other at the time a request is made, then the existing DM is
-// returned. Spaces with threaded replies or guest access aren't
-// supported. Requires user authentication
+// returned. Spaces with threaded replies aren't supported. Requires
+// user authentication
 // (https://developers.google.com/chat/api/guides/auth/users) and the
 // `chat.spaces.create` or `chat.spaces` scope.
 func (r *SpacesService) Setup(setupspacerequest *SetUpSpaceRequest) *SpacesSetupCall {
@@ -6695,7 +6695,7 @@ func (c *SpacesSetupCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a space and adds specified users to it. The calling user is automatically added to the space, and shouldn't be specified as a membership in the request. For an example, see [Set up a space](https://developers.google.com/chat/api/guides/v1/spaces/set-up). To specify the human members to add, add memberships with the appropriate `member.name` in the `SetUpSpaceRequest`. To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`. For a space or group chat, if the caller blocks or is blocked by some members, then those members aren't added to the created space. To create a direct message (DM) between the calling user and another human user, specify exactly one membership to represent the human user. If one user blocks the other, the request fails and the DM isn't created. To create a DM between the calling user and the calling app, set `Space.singleUserBotDm` to `true` and don't specify any memberships. You can only use this method to set up a DM with the calling app. To add the calling app as a member of a space or an existing DM between two human users, see [create a membership](https://developers.google.com/chat/api/guides/v1/members/create). If a DM already exists between two users, even when one user blocks the other at the time a request is made, then the existing DM is returned. Spaces with threaded replies or guest access aren't supported. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
+	//   "description": "Creates a space and adds specified users to it. The calling user is automatically added to the space, and shouldn't be specified as a membership in the request. For an example, see [Set up a space](https://developers.google.com/chat/api/guides/v1/spaces/set-up). To specify the human members to add, add memberships with the appropriate `member.name` in the `SetUpSpaceRequest`. To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`. For a space or group chat, if the caller blocks or is blocked by some members, then those members aren't added to the created space. To create a direct message (DM) between the calling user and another human user, specify exactly one membership to represent the human user. If one user blocks the other, the request fails and the DM isn't created. To create a DM between the calling user and the calling app, set `Space.singleUserBotDm` to `true` and don't specify any memberships. You can only use this method to set up a DM with the calling app. To add the calling app as a member of a space or an existing DM between two human users, see [create a membership](https://developers.google.com/chat/api/guides/v1/members/create). If a DM already exists between two users, even when one user blocks the other at the time a request is made, then the existing DM is returned. Spaces with threaded replies aren't supported. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
 	//   "flatPath": "v1/spaces:setup",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.setup",
@@ -6875,6 +6875,7 @@ func (c *SpacesMembersCreateCall) Do(opts ...googleapi.CallOption) (*Membership,
 	//     "$ref": "Membership"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
 	//     "https://www.googleapis.com/auth/chat.memberships",
 	//     "https://www.googleapis.com/auth/chat.memberships.app"
 	//   ]
@@ -7548,10 +7549,10 @@ func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCr
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread.thread_key instead. Opaque thread identifier. To start or add
-// to a thread, create a message and specify a `threadKey` or the
-// thread.name. For example usage, see Start or reply to a message
-// thread
+// thread.thread_key instead. ID for the thread. Supports up to 4000
+// characters. To start or add to a thread, create a message and specify
+// a `threadKey` or the thread.name. For example usage, see Start or
+// reply to a message thread
 // (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
@@ -7691,7 +7692,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     },
 	//     "threadKey": {
 	//       "deprecated": true,
-	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. ID for the thread. Supports up to 4000 characters. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -5287,7 +5287,7 @@ type GoogleCloudDocumentaiV1OcrConfig struct {
 	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
 
 	// ComputeStyleInfo: Turn on font id model and returns font style
-	// information.
+	// information. Use PremiumFeatures.compute_style_info instead.
 	ComputeStyleInfo bool `json:"computeStyleInfo,omitempty"`
 
 	// EnableImageQualityScores: Enables intelligent document quality scores
@@ -12340,8 +12340,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type

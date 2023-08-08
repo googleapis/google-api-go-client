@@ -378,7 +378,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	ActionType string `json:"actionType,omitempty"`
 
 	// Condition: Org policy condition/expression. For example:
-	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
+	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
 	// `resource.management.auto_upgrade == true` The max length of the
 	// condition is 1000 characters.
 	Condition string `json:"condition,omitempty"`
@@ -457,12 +457,12 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
 
 	// Name: Immutable. The resource name of the policy. Must be one of the
-	// following forms, where constraint_name is the name of the constraint
-	// which this policy configures: *
+	// following forms, where `constraint_name` is the name of the
+	// constraint which this policy configures: *
 	// `projects/{project_number}/policies/{constraint_name}` *
 	// `folders/{folder_id}/policies/{constraint_name}` *
 	// `organizations/{organization_id}/policies/{constraint_name}` For
-	// example, "projects/123/policies/compute.disableSerialPortAccess".
+	// example, `projects/123/policies/compute.disableSerialPortAccess`.
 	// Note: `projects/{project_id}/policies/{constraint_name}` is also an
 	// acceptable name for API requests, but responses will return the name
 	// using the equivalent project number.
@@ -622,11 +622,11 @@ func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, erro
 // values. The `is:` prefix is used to denote specific values, and is
 // required only if the value contains a ":". Values prefixed with "is:"
 // are treated the same as values with no prefix. Ancestry subtrees must
-// be in one of the following formats: - "projects/", e.g.
-// "projects/tokyo-rain-123" - "folders/", e.g. "folders/1234" -
-// "organizations/", e.g. "organizations/1234" The `supports_under`
-// field of the associated `Constraint` defines whether ancestry
-// prefixes can be used.
+// be in one of the following formats: - `projects/` (for example,
+// `projects/tokyo-rain-123`) - `folders/` (for example, `folders/1234`)
+// - `organizations/` (for example, `organizations/1234`) The
+// `supports_under` field of the associated `Constraint` defines whether
+// ancestry prefixes can be used.
 type GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues struct {
 	// AllowedValues: List of values allowed at this resource.
 	AllowedValues []string `json:"allowedValues,omitempty"`
@@ -2141,7 +2141,7 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2150,17 +2150,17 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type GoogleIamV1Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2295,8 +2295,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type

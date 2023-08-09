@@ -2586,6 +2586,13 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EnrollmentCompleteEvent: Represents that the device has completed
+// enrollment. User should be in the launcher at this point, device at
+// this point will be compliant and all setup steps have been completed.
+// Intentionally empty.
+type EnrollmentCompleteEvent struct {
+}
+
 // EnrollmentToken: An enrollment token.
 type EnrollmentToken struct {
 	// AdditionalData: Optional, arbitrary data associated with the
@@ -5876,7 +5883,7 @@ type ProvisioningInfo struct {
 	// the device.
 	ApiLevel int64 `json:"apiLevel,omitempty"`
 
-	// Brand: Brand of the device. For example, Google.
+	// Brand: The brand of the device. For example, Google.
 	Brand string `json:"brand,omitempty"`
 
 	// Enterprise: The name of the enterprise in the form
@@ -6876,6 +6883,10 @@ type UsageLogEvent struct {
 	// network stack. Part of NETWORK_ACTIVITY_LOGS.
 	DnsEvent *DnsEvent `json:"dnsEvent,omitempty"`
 
+	// EnrollmentCompleteEvent: Device has completed enrollment. Part of
+	// AMAPI_LOGS.
+	EnrollmentCompleteEvent *EnrollmentCompleteEvent `json:"enrollmentCompleteEvent,omitempty"`
+
 	// EventId: Unique id of the event.
 	EventId int64 `json:"eventId,omitempty,string"`
 
@@ -6931,6 +6942,8 @@ type UsageLogEvent struct {
 	// lostModeOutgoingPhoneCallEvent has been set.
 	//   "LOST_MODE_LOCATION" - Indicates lostModeLocationEvent has been
 	// set.
+	//   "ENROLLMENT_COMPLETE" - Indicates enrollment_complete_event has
+	// been set.
 	EventType string `json:"eventType,omitempty"`
 
 	// FilePulledEvent: A file was downloaded from the device. Part of
@@ -11991,8 +12004,8 @@ type ProvisioningInfoGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the device provisioning info by the identifier provided via
-// the sign-in url.
+// Get: Get the device provisioning information by the identifier
+// provided in the sign-in url.
 //
 //   - name: The identifier that Android Device Policy passes to the 3P
 //     sign-in page in the form of provisioningInfo/{provisioning_info}.
@@ -12101,7 +12114,7 @@ func (c *ProvisioningInfoGetCall) Do(opts ...googleapi.CallOption) (*Provisionin
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the device provisioning info by the identifier provided via the sign-in url.",
+	//   "description": "Get the device provisioning information by the identifier provided in the sign-in url.",
 	//   "flatPath": "v1/provisioningInfo/{provisioningInfoId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.provisioningInfo.get",

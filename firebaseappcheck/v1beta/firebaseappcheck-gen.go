@@ -1821,6 +1821,12 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// will not work with that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and may be sent on update and delete requests to ensure
+	// the client has an up-to-date value before proceeding. This etag is
+	// strongly validated as defined by RFC 7232.
+	Etag string `json:"etag,omitempty"`
+
 	// Name: Required. The relative resource name of the service
 	// configuration object, in the format: ```
 	// projects/{project_number}/services/{service_id} ``` Note that the

@@ -3815,8 +3815,9 @@ type CompetitiveVisibility struct {
 	// (https://support.google.com/merchants/answer/11366442#zippy=%2Cadsfree-ratio)
 	// shows how often a merchant receives impressions from Shopping ads
 	// compared to organic traffic. The number is rounded and bucketed.
-	// Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be
-	// filtered on in the 'WHERE' clause.
+	// Available only in `CompetitiveVisibilityTopMerchantView` and
+	// `CompetitiveVisibilityCompetitorView`. Cannot be filtered on in the
+	// 'WHERE' clause.
 	AdsOrganicRatio float64 `json:"adsOrganicRatio,omitempty"`
 
 	// CategoryBenchmarkVisibilityTrend: Change in visibility based on
@@ -3840,45 +3841,58 @@ type CompetitiveVisibility struct {
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// Date: Date of this row. Available only in
-	// `CompetitiveVisibilityBenchmarkView`. Required in the `SELECT` clause
-	// for `CompetitiveVisibilityMarketBenchmarkView`.
+	// `CompetitiveVisibilityBenchmarkView` and
+	// `CompetitiveVisibilityCompetitorView`. Required in the `SELECT`
+	// clause for `CompetitiveVisibilityMarketBenchmarkView`.
 	Date *Date `json:"date,omitempty"`
 
 	// Domain: Domain of your competitor or your domain, if 'is_your_domain'
-	// is true. Available only in `CompetitiveVisibilityTopMerchantView`.
-	// Required in the `SELECT` clause for
-	// `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the
+	// is true. Available only in `CompetitiveVisibilityTopMerchantView` and
+	// `CompetitiveVisibilityCompetitorView`. Required in the `SELECT`
+	// clause for `CompetitiveVisibilityTopMerchantView` and
+	// `CompetitiveVisibilityCompetitorView`. Cannot be filtered on in the
 	// 'WHERE' clause.
 	Domain string `json:"domain,omitempty"`
 
 	// HigherPositionRate: Higher position rate shows how often a
 	// competitor’s offer got placed in a higher position on the page than
-	// your offer. Available only in `CompetitiveVisibilityTopMerchantView`.
-	// Cannot be filtered on in the 'WHERE' clause.
+	// your offer. Available only in `CompetitiveVisibilityTopMerchantView`
+	// and `CompetitiveVisibilityCompetitorView`. Cannot be filtered on in
+	// the 'WHERE' clause.
 	HigherPositionRate float64 `json:"higherPositionRate,omitempty"`
 
 	// IsYourDomain: True if this row contains data for your domain.
-	// Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be
-	// filtered on in the 'WHERE' clause.
+	// Available only in `CompetitiveVisibilityTopMerchantView` and
+	// `CompetitiveVisibilityCompetitorView`. Cannot be filtered on in the
+	// 'WHERE' clause.
 	IsYourDomain bool `json:"isYourDomain,omitempty"`
 
 	// PageOverlapRate: Page overlap rate describes how frequently competing
 	// retailers’ offers are shown together with your offers on the same
-	// page. Available only in `CompetitiveVisibilityTopMerchantView`.
-	// Cannot be filtered on in the 'WHERE' clause.
+	// page. Available only in `CompetitiveVisibilityTopMerchantView` and
+	// `CompetitiveVisibilityCompetitorView`. Cannot be filtered on in the
+	// 'WHERE' clause.
 	PageOverlapRate float64 `json:"pageOverlapRate,omitempty"`
 
 	// Rank: Position of the domain in the top merchants ranking for the
 	// selected keys (`date`, `category_id`, `country_code`, `listing_type`)
 	// based on impressions. 1 is the highest. Available only in
-	// `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the
+	// `CompetitiveVisibilityTopMerchantView` and
+	// `CompetitiveVisibilityCompetitorView`. Cannot be filtered on in the
 	// 'WHERE' clause.
 	Rank uint64 `json:"rank,omitempty,string"`
 
+	// RelativeVisibility: Relative visibility shows how often your
+	// competitors’ offers are shown compared to your offers. In other
+	// words, this is the number of displayed impressions of a competitor
+	// retailer divided by the number of your displayed impressions during a
+	// selected time range for a selected product category and country.
+	// Available only in `CompetitiveVisibilityCompetitorView`. Cannot be
+	// filtered on in the 'WHERE' clause.
+	RelativeVisibility float64 `json:"relativeVisibility,omitempty"`
+
 	// TrafficSource: Type of impression listing. Required in the `SELECT`
-	// clause for `CompetitiveVisibilityTopMerchantView` and
-	// `CompetitiveVisibilityMarketBenchmarkView`. Cannot be filtered on in
-	// the 'WHERE' clause.
+	// clause. Cannot be filtered on in the 'WHERE' clause.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Traffic source is unknown.
@@ -3925,6 +3939,7 @@ func (s *CompetitiveVisibility) UnmarshalJSON(data []byte) error {
 		CategoryBenchmarkVisibilityTrend gensupport.JSONFloat64 `json:"categoryBenchmarkVisibilityTrend"`
 		HigherPositionRate               gensupport.JSONFloat64 `json:"higherPositionRate"`
 		PageOverlapRate                  gensupport.JSONFloat64 `json:"pageOverlapRate"`
+		RelativeVisibility               gensupport.JSONFloat64 `json:"relativeVisibility"`
 		YourDomainVisibilityTrend        gensupport.JSONFloat64 `json:"yourDomainVisibilityTrend"`
 		*NoMethod
 	}
@@ -3936,6 +3951,7 @@ func (s *CompetitiveVisibility) UnmarshalJSON(data []byte) error {
 	s.CategoryBenchmarkVisibilityTrend = float64(s1.CategoryBenchmarkVisibilityTrend)
 	s.HigherPositionRate = float64(s1.HigherPositionRate)
 	s.PageOverlapRate = float64(s1.PageOverlapRate)
+	s.RelativeVisibility = float64(s1.RelativeVisibility)
 	s.YourDomainVisibilityTrend = float64(s1.YourDomainVisibilityTrend)
 	return nil
 }
@@ -16430,8 +16446,9 @@ type ReportRow struct {
 
 	// CompetitiveVisibility: Competitive visibility fields requested by the
 	// merchant in the query. Field values are only set if the merchant
-	// queries `CompetitiveVisibilityTopMerchantView` or
-	// `CompetitiveVisibilityBenchmarkView`.
+	// queries `CompetitiveVisibilityTopMerchantView`,
+	// `CompetitiveVisibilityBenchmarkView` or
+	// `CompetitiveVisibilityCompetitorView`.
 	CompetitiveVisibility *CompetitiveVisibility `json:"competitiveVisibility,omitempty"`
 
 	// Metrics: Metrics requested by the merchant in the query. Metric

@@ -2524,6 +2524,13 @@ func (s *MergeConflict) MarshalJSON() ([]byte, error) {
 
 // Parameter: Represents a Google Tag Manager Parameter.
 type Parameter struct {
+	// IsWeakReference: Whether or not a reference type parameter is
+	// strongly or weakly referenced. @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.create
+	// @mutable
+	// tagmanager.accounts.containers.workspaces.transformations.update
+	IsWeakReference bool `json:"isWeakReference,omitempty"`
+
 	// Key: The named key that uniquely identifies a parameter. Required for
 	// top-level parameters, as well as map values. Ignored for list values.
 	// @mutable tagmanager.accounts.containers.workspaces.variables.create
@@ -2591,7 +2598,7 @@ type Parameter struct {
 	// tagmanager.accounts.containers.workspaces.tags.update
 	Value string `json:"value,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Key") to
+	// ForceSendFields is a list of field names (e.g. "IsWeakReference") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2599,12 +2606,13 @@ type Parameter struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IsWeakReference") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -1005,7 +1005,7 @@ type GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse struct {
 	// code.
 	//   "EXTERNAL_USER_ERROR" - Error occurred with the customer not
 	// granting permission/creating resource.
-	//   "EXTERNAL_PARTNER_ERROR" - Error occurred within the partner’s
+	//   "EXTERNAL_PARTNER_ERROR" - Error occurred within the partner's
 	// provisioning cluster.
 	//   "TIMEOUT_ERROR" - Resource wasn't provisioned in the required 7 day
 	// time period
@@ -1345,8 +1345,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type

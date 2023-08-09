@@ -2147,8 +2147,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2247,7 +2247,7 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2256,17 +2256,17 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -2598,6 +2598,10 @@ type Repository struct {
 	// zone separation.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
+	// SbomConfig: Optional. Config and state for sbom generation for
+	// resources within this Repository.
+	SbomConfig *SbomConfig `json:"sbomConfig,omitempty"`
+
 	// SizeBytes: Output only. The size, in bytes, of all artifact storage
 	// in this repository. Repositories that are generally available or in
 	// public preview use this to calculate storage costs.
@@ -2635,6 +2639,50 @@ type Repository struct {
 
 func (s *Repository) MarshalJSON() ([]byte, error) {
 	type NoMethod Repository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SbomConfig: Config for whether to generate SBOMs for resources in
+// this repository, as well as output fields describing current state.
+type SbomConfig struct {
+	// EnablementConfig: Optional. Config for whether this repository has
+	// sbom generation disabled.
+	//
+	// Possible values:
+	//   "ENABLEMENT_CONFIG_UNSPECIFIED" - Unspecified config was not set.
+	// This will be interpreted as DISABLED.
+	//   "INHERITED" - Inherited indicates the repository is allowed for
+	// SBOM generation, however the actual state will be inherited from the
+	// API enablement state.
+	//   "DISABLED" - Disabled indicates the repository will not generate
+	// SBOMs.
+	EnablementConfig string `json:"enablementConfig,omitempty"`
+
+	// LastEnableTime: Output only. The last time this repository config was
+	// set to INHERITED.
+	LastEnableTime string `json:"lastEnableTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnablementConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnablementConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SbomConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SbomConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

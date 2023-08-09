@@ -251,6 +251,8 @@ type AbortInfo struct {
 	// (several PSC endpoints satisfy test input).
 	//   "SOURCE_PSC_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with a
 	// PSC-based Cloud SQL instance as a source are not supported.
+	//   "SOURCE_FORWARDING_RULE_UNSUPPORTED" - Aborted because tests with a
+	// forwarding rule as a source are not supported.
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -1420,6 +1422,7 @@ type ForwardInfo struct {
 	// custom route imported from a peering VPC.
 	//   "CLOUD_SQL_INSTANCE" - Forwarded to a Cloud SQL instance.
 	//   "ANOTHER_PROJECT" - Forwarded to a VPC network in another project.
+	//   "NCC_HUB" - Forwarded to an NCC Hub.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -2031,8 +2034,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2130,7 +2133,7 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2139,17 +2142,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2384,13 +2387,19 @@ type RouteInfo struct {
 	// routes only.
 	DestPortRanges []string `json:"destPortRanges,omitempty"`
 
-	// DisplayName: Name of a Compute Engine route.
+	// DisplayName: Name of a route.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// InstanceTags: Instance tags of the route.
 	InstanceTags []string `json:"instanceTags,omitempty"`
 
-	// NetworkUri: URI of a Compute Engine network.
+	// NccHubUri: URI of a NCC Hub. NCC_HUB routes only.
+	NccHubUri string `json:"nccHubUri,omitempty"`
+
+	// NccSpokeUri: URI of a NCC Spoke. NCC_HUB routes only.
+	NccSpokeUri string `json:"nccSpokeUri,omitempty"`
+
+	// NetworkUri: URI of a Compute Engine network. NETWORK routes only.
 	NetworkUri string `json:"networkUri,omitempty"`
 
 	// NextHop: Next hop of the route.
@@ -2419,6 +2428,7 @@ type RouteInfo struct {
 	//   "NEXT_HOP_ROUTER_APPLIANCE" - Next hop is a [router appliance
 	// instance](https://cloud.google.com/network-connectivity/docs/network-c
 	// onnectivity-center/concepts/ra-overview).
+	//   "NEXT_HOP_NCC_HUB" - Next hop is an NCC hub.
 	NextHopType string `json:"nextHopType,omitempty"`
 
 	// Priority: Priority of the route.
@@ -2426,6 +2436,15 @@ type RouteInfo struct {
 
 	// Protocols: Protocols of the route. Policy based routes only.
 	Protocols []string `json:"protocols,omitempty"`
+
+	// RouteScope: Indicates where route is applicable.
+	//
+	// Possible values:
+	//   "ROUTE_SCOPE_UNSPECIFIED" - Unspecified scope. Default value.
+	//   "NETWORK" - Route is applicable to packets in Network.
+	//   "NCC_HUB" - Route is applicable to packets using NCC Hub's routing
+	// table.
+	RouteScope string `json:"routeScope,omitempty"`
 
 	// RouteType: Type of route.
 	//
@@ -2450,9 +2469,9 @@ type RouteInfo struct {
 	// only.
 	SrcPortRanges []string `json:"srcPortRanges,omitempty"`
 
-	// Uri: URI of a Compute Engine route. Dynamic route from cloud router
-	// does not have a URI. Advertised route from Google Cloud VPC to
-	// on-premises network also does not have a URI.
+	// Uri: URI of a route. Dynamic, peering static and peering dynamic
+	// routes do not have an URI. Advertised route from Google Cloud VPC to
+	// on-premises network also does not have an URI.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestIpRange") to

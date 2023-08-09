@@ -7541,7 +7541,7 @@ type BillingAccountsLocationsBucketsLinksGetCall struct {
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
 //     CKET_ID/links/LINK_ID"
 //     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID.
+//     K_ID".
 func (r *BillingAccountsLocationsBucketsLinksService) Get(name string) *BillingAccountsLocationsBucketsLinksGetCall {
 	c := &BillingAccountsLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7656,7 +7656,7 @@ func (c *BillingAccountsLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID",
+	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -7691,13 +7691,13 @@ type BillingAccountsLocationsBucketsLinksListCall struct {
 // List: Lists links.
 //
 //   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/"
+//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
+//
 //     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/"
+//     ID"
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/.
+//     CKET_ID"
+//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
 func (r *BillingAccountsLocationsBucketsLinksService) List(parent string) *BillingAccountsLocationsBucketsLinksListCall {
 	c := &BillingAccountsLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7839,7 +7839,7 @@ func (c *BillingAccountsLocationsBucketsLinksListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/",
+	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -8192,7 +8192,7 @@ type BillingAccountsLocationsBucketsViewsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a view on a log bucket..
+// Get: Gets a view on a log bucket.
 //
 //   - name: The resource name of the policy:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -8304,7 +8304,7 @@ func (c *BillingAccountsLocationsBucketsViewsGetCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a view on a log bucket..",
+	//   "description": "Gets a view on a log bucket.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "GET",
 	//   "id": "logging.billingAccounts.locations.buckets.views.get",
@@ -9861,9 +9861,10 @@ func (c *BillingAccountsSinksCreateCall) CustomWriterIdentity(customWriterIdenti
 // API. The sink's destination must be in the same project as the sink
 // itself.If this field is set to true, or if the sink is owned by a
 // non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// writer_identity will be a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// used by the sinks with the same parent. For more information, see
+// writer_identity in LogSink.
 func (c *BillingAccountsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -9981,7 +9982,7 @@ func (c *BillingAccountsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) used by the sinks with the same parent. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -10545,9 +10546,10 @@ func (c *BillingAccountsSinksPatchCall) CustomWriterIdentity(customWriterIdentit
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *BillingAccountsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksPatchCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -10680,7 +10682,7 @@ func (c *BillingAccountsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSi
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10754,9 +10756,10 @@ func (c *BillingAccountsSinksUpdateCall) CustomWriterIdentity(customWriterIdenti
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *BillingAccountsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -10889,7 +10892,7 @@ func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -15593,7 +15596,7 @@ type FoldersLocationsBucketsLinksGetCall struct {
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
 //     CKET_ID/links/LINK_ID"
 //     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID.
+//     K_ID".
 func (r *FoldersLocationsBucketsLinksService) Get(name string) *FoldersLocationsBucketsLinksGetCall {
 	c := &FoldersLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15708,7 +15711,7 @@ func (c *FoldersLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID",
+	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -15743,13 +15746,13 @@ type FoldersLocationsBucketsLinksListCall struct {
 // List: Lists links.
 //
 //   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/"
+//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
+//
 //     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/"
+//     ID"
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/.
+//     CKET_ID"
+//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
 func (r *FoldersLocationsBucketsLinksService) List(parent string) *FoldersLocationsBucketsLinksListCall {
 	c := &FoldersLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15891,7 +15894,7 @@ func (c *FoldersLocationsBucketsLinksListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/",
+	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -16244,7 +16247,7 @@ type FoldersLocationsBucketsViewsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a view on a log bucket..
+// Get: Gets a view on a log bucket.
 //
 //   - name: The resource name of the policy:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -16356,7 +16359,7 @@ func (c *FoldersLocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a view on a log bucket..",
+	//   "description": "Gets a view on a log bucket.",
 	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "GET",
 	//   "id": "logging.folders.locations.buckets.views.get",
@@ -17913,9 +17916,10 @@ func (c *FoldersSinksCreateCall) CustomWriterIdentity(customWriterIdentity strin
 // API. The sink's destination must be in the same project as the sink
 // itself.If this field is set to true, or if the sink is owned by a
 // non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// writer_identity will be a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// used by the sinks with the same parent. For more information, see
+// writer_identity in LogSink.
 func (c *FoldersSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -18033,7 +18037,7 @@ func (c *FoldersSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) used by the sinks with the same parent. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -18597,9 +18601,10 @@ func (c *FoldersSinksPatchCall) CustomWriterIdentity(customWriterIdentity string
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *FoldersSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksPatchCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -18732,7 +18737,7 @@ func (c *FoldersSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, erro
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -18806,9 +18811,10 @@ func (c *FoldersSinksUpdateCall) CustomWriterIdentity(customWriterIdentity strin
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *FoldersSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -18941,7 +18947,7 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -20979,7 +20985,7 @@ type LocationsBucketsLinksGetCall struct {
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
 //     CKET_ID/links/LINK_ID"
 //     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID.
+//     K_ID".
 func (r *LocationsBucketsLinksService) Get(name string) *LocationsBucketsLinksGetCall {
 	c := &LocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21094,7 +21100,7 @@ func (c *LocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOption) (*Link, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID",
+	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -21129,13 +21135,13 @@ type LocationsBucketsLinksListCall struct {
 // List: Lists links.
 //
 //   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/"
+//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
+//
 //     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/"
+//     ID"
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/.
+//     CKET_ID"
+//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
 func (r *LocationsBucketsLinksService) List(parent string) *LocationsBucketsLinksListCall {
 	c := &LocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21277,7 +21283,7 @@ func (c *LocationsBucketsLinksListCall) Do(opts ...googleapi.CallOption) (*ListL
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/",
+	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -21630,7 +21636,7 @@ type LocationsBucketsViewsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a view on a log bucket..
+// Get: Gets a view on a log bucket.
 //
 //   - name: The resource name of the policy:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -21742,7 +21748,7 @@ func (c *LocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) (*LogVie
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a view on a log bucket..",
+	//   "description": "Gets a view on a log bucket.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "GET",
 	//   "id": "logging.locations.buckets.views.get",
@@ -26717,7 +26723,7 @@ type OrganizationsLocationsBucketsLinksGetCall struct {
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
 //     CKET_ID/links/LINK_ID"
 //     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID.
+//     K_ID".
 func (r *OrganizationsLocationsBucketsLinksService) Get(name string) *OrganizationsLocationsBucketsLinksGetCall {
 	c := &OrganizationsLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26832,7 +26838,7 @@ func (c *OrganizationsLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID",
+	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -26867,13 +26873,13 @@ type OrganizationsLocationsBucketsLinksListCall struct {
 // List: Lists links.
 //
 //   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/"
+//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
+//
 //     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/"
+//     ID"
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/.
+//     CKET_ID"
+//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
 func (r *OrganizationsLocationsBucketsLinksService) List(parent string) *OrganizationsLocationsBucketsLinksListCall {
 	c := &OrganizationsLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27015,7 +27021,7 @@ func (c *OrganizationsLocationsBucketsLinksListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/",
+	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -27368,7 +27374,7 @@ type OrganizationsLocationsBucketsViewsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a view on a log bucket..
+// Get: Gets a view on a log bucket.
 //
 //   - name: The resource name of the policy:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -27480,7 +27486,7 @@ func (c *OrganizationsLocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a view on a log bucket..",
+	//   "description": "Gets a view on a log bucket.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "GET",
 	//   "id": "logging.organizations.locations.buckets.views.get",
@@ -29037,9 +29043,10 @@ func (c *OrganizationsSinksCreateCall) CustomWriterIdentity(customWriterIdentity
 // API. The sink's destination must be in the same project as the sink
 // itself.If this field is set to true, or if the sink is owned by a
 // non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// writer_identity will be a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// used by the sinks with the same parent. For more information, see
+// writer_identity in LogSink.
 func (c *OrganizationsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -29157,7 +29164,7 @@ func (c *OrganizationsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) used by the sinks with the same parent. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -29721,9 +29728,10 @@ func (c *OrganizationsSinksPatchCall) CustomWriterIdentity(customWriterIdentity 
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *OrganizationsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksPatchCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -29856,7 +29864,7 @@ func (c *OrganizationsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -29930,9 +29938,10 @@ func (c *OrganizationsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *OrganizationsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -30065,7 +30074,7 @@ func (c *OrganizationsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -33244,7 +33253,7 @@ type ProjectsLocationsBucketsLinksGetCall struct {
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
 //     CKET_ID/links/LINK_ID"
 //     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID.
+//     K_ID".
 func (r *ProjectsLocationsBucketsLinksService) Get(name string) *ProjectsLocationsBucketsLinksGetCall {
 	c := &ProjectsLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33359,7 +33368,7 @@ func (c *ProjectsLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID",
+	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -33394,13 +33403,13 @@ type ProjectsLocationsBucketsLinksListCall struct {
 // List: Lists links.
 //
 //   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/"
+//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
+//
 //     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/"
+//     ID"
 //     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/.
+//     CKET_ID"
+//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
 func (r *ProjectsLocationsBucketsLinksService) List(parent string) *ProjectsLocationsBucketsLinksListCall {
 	c := &ProjectsLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33542,7 +33551,7 @@ func (c *ProjectsLocationsBucketsLinksListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/",
+	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -33895,7 +33904,7 @@ type ProjectsLocationsBucketsViewsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a view on a log bucket..
+// Get: Gets a view on a log bucket.
 //
 //   - name: The resource name of the policy:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -34007,7 +34016,7 @@ func (c *ProjectsLocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a view on a log bucket..",
+	//   "description": "Gets a view on a log bucket.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.locations.buckets.views.get",
@@ -36344,9 +36353,10 @@ func (c *ProjectsSinksCreateCall) CustomWriterIdentity(customWriterIdentity stri
 // API. The sink's destination must be in the same project as the sink
 // itself.If this field is set to true, or if the sink is owned by a
 // non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// writer_identity will be a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// used by the sinks with the same parent. For more information, see
+// writer_identity in LogSink.
 func (c *ProjectsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -36464,7 +36474,7 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) used by the sinks with the same parent. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -37028,9 +37038,10 @@ func (c *ProjectsSinksPatchCall) CustomWriterIdentity(customWriterIdentity strin
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *ProjectsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksPatchCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -37163,7 +37174,7 @@ func (c *ProjectsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -37237,9 +37248,10 @@ func (c *ProjectsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity stri
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *ProjectsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -37372,7 +37384,7 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -37445,9 +37457,10 @@ func (c *SinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *Sin
 // API. The sink's destination must be in the same project as the sink
 // itself.If this field is set to true, or if the sink is owned by a
 // non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// writer_identity will be a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// used by the sinks with the same parent. For more information, see
+// writer_identity in LogSink.
 func (c *SinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *SinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -37565,7 +37578,7 @@ func (c *SinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Cloud Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) used by the sinks with the same parent. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -38129,9 +38142,10 @@ func (c *SinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *Sin
 // values of this field: If the old and new values of this field are
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
-// then writer_identity is changed to a unique service account. It is an
-// error if the old value is true and the new value is set to false or
-// defaulted to false.
+// then writer_identity is changed to a service agent
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// owned by Cloud Logging. It is an error if the old value is true and
+// the new value is set to false or defaulted to false.
 func (c *SinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *SinksUpdateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -38264,7 +38278,7 @@ func (c *SinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a unique service account. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

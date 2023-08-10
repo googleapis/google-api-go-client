@@ -5,7 +5,7 @@ go 1.19
 require (
 	cloud.google.com/go/compute/metadata v0.2.3
 	github.com/google/go-cmp v0.5.9
-	github.com/google/s2a-go v0.1.4
+	github.com/google/s2a-go v0.1.5
 	github.com/google/uuid v1.3.0
 	github.com/googleapis/enterprise-certificate-proxy v0.2.5
 	github.com/googleapis/gax-go/v2 v2.12.0

@@ -1737,6 +1737,49 @@ func (s *GoogleCloudIdentitytoolkitAdminV2OAuthResponseType) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitAdminV2PasskeyConfig: Configuration for
+// signing in users using passkeys.
+type GoogleCloudIdentitytoolkitAdminV2PasskeyConfig struct {
+	// ExpectedOrigins: Required. The website or app origins associated with
+	// the customer's sites or apps. Only challenges signed from these
+	// origins will be allowed to sign in with passkeys.
+	ExpectedOrigins []string `json:"expectedOrigins,omitempty"`
+
+	// Name: Required. The name of the PasskeyConfig resource.
+	Name string `json:"name,omitempty"`
+
+	// RpId: Required. The relying party ID for the purpose of passkeys
+	// verifications. This cannot be changed once created.
+	RpId string `json:"rpId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpectedOrigins") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpectedOrigins") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasskeyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig: The
 // configuration for the password policy on the project.
 type GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig struct {
@@ -3938,7 +3981,7 @@ func (s *GoogleIamV1GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -3947,17 +3990,17 @@ func (s *GoogleIamV1GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type GoogleIamV1Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -5311,6 +5354,157 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudId
 
 }
 
+// method id "identitytoolkit.projects.getPasskeyConfig":
+
+type ProjectsGetPasskeyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPasskeyConfig: Retrieve a passkey configuration for an Identity
+// Toolkit project.
+//
+//   - name: The resource name of the config, for example:
+//     'projects/my-awesome-project/passkeyConfig'.
+func (r *ProjectsService) GetPasskeyConfig(name string) *ProjectsGetPasskeyConfigCall {
+	c := &ProjectsGetPasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetPasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsGetPasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetPasskeyConfigCall) IfNoneMatch(entityTag string) *ProjectsGetPasskeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetPasskeyConfigCall) Context(ctx context.Context) *ProjectsGetPasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetPasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetPasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.getPasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsGetPasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/passkeyConfig",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.projects.getPasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the config, for example: 'projects/my-awesome-project/passkeyConfig'.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "identitytoolkit.projects.updateConfig":
 
 type ProjectsUpdateConfigCall struct {
@@ -5462,6 +5656,167 @@ func (c *ProjectsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Config"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.projects.updatePasskeyConfig":
+
+type ProjectsUpdatePasskeyConfigCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// UpdatePasskeyConfig: Update a passkey configuration for an Identity
+// Toolkit project.
+//
+// - name: The name of the PasskeyConfig resource.
+func (r *ProjectsService) UpdatePasskeyConfig(name string, googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig) *ProjectsUpdatePasskeyConfigCall {
+	c := &ProjectsUpdatePasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudidentitytoolkitadminv2passkeyconfig = googlecloudidentitytoolkitadminv2passkeyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask
+// applies to the resource. Empty update mask will result in updating
+// nothing. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsUpdatePasskeyConfigCall) UpdateMask(updateMask string) *ProjectsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUpdatePasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUpdatePasskeyConfigCall) Context(ctx context.Context) *ProjectsUpdatePasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUpdatePasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdatePasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2passkeyconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.updatePasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsUpdatePasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/passkeyConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "identitytoolkit.projects.updatePasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the PasskeyConfig resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -8626,6 +8981,157 @@ func (c *ProjectsTenantsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goo
 
 }
 
+// method id "identitytoolkit.projects.tenants.getPasskeyConfig":
+
+type ProjectsTenantsGetPasskeyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPasskeyConfig: Retrieve a passkey configuration for an Identity
+// Toolkit project.
+//
+//   - name: The resource name of the config, for example:
+//     'projects/my-awesome-project/passkeyConfig'.
+func (r *ProjectsTenantsService) GetPasskeyConfig(name string) *ProjectsTenantsGetPasskeyConfigCall {
+	c := &ProjectsTenantsGetPasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsTenantsGetPasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsTenantsGetPasskeyConfigCall) IfNoneMatch(entityTag string) *ProjectsTenantsGetPasskeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Context(ctx context.Context) *ProjectsTenantsGetPasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTenantsGetPasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.tenants.getPasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/passkeyConfig",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.projects.tenants.getPasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the config, for example: 'projects/my-awesome-project/passkeyConfig'.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/tenants/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "identitytoolkit.projects.tenants.list":
 
 type ProjectsTenantsListCall struct {
@@ -9272,6 +9778,167 @@ func (c *ProjectsTenantsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.projects.tenants.updatePasskeyConfig":
+
+type ProjectsTenantsUpdatePasskeyConfigCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// UpdatePasskeyConfig: Update a passkey configuration for an Identity
+// Toolkit project.
+//
+// - name: The name of the PasskeyConfig resource.
+func (r *ProjectsTenantsService) UpdatePasskeyConfig(name string, googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c := &ProjectsTenantsUpdatePasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudidentitytoolkitadminv2passkeyconfig = googlecloudidentitytoolkitadminv2passkeyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask
+// applies to the resource. Empty update mask will result in updating
+// nothing. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) UpdateMask(updateMask string) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Context(ctx context.Context) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2passkeyconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.tenants.updatePasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/passkeyConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "identitytoolkit.projects.tenants.updatePasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the PasskeyConfig resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/tenants/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

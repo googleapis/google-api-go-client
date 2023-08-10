@@ -734,8 +734,8 @@ func (s *ConcatenateExpression) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateRange: A contiguous set of days: startDate, startDate + 1, ...,
-// endDate. Requests are allowed up to 4 date ranges.
+// DateRange: A contiguous set of days: `startDate`, `startDate + 1`,
+// ..., `endDate`. Requests are allowed up to 4 date ranges.
 type DateRange struct {
 	// EndDate: The inclusive end date for the query in the format
 	// `YYYY-MM-DD`. Cannot be before `start_date`. The format `NdaysAgo`,
@@ -1543,9 +1543,9 @@ func (s *MetricValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MinuteRange: A contiguous set of minutes: startMinutesAgo,
-// startMinutesAgo + 1, ..., endMinutesAgo. Requests are allowed up to 2
-// minute ranges.
+// MinuteRange: A contiguous set of minutes: `startMinutesAgo`,
+// `startMinutesAgo + 1`, ..., `endMinutesAgo`. Requests are allowed up
+// to 2 minute ranges.
 type MinuteRange struct {
 	// EndMinutesAgo: The inclusive end minute for the query as a number of
 	// minutes before now. Cannot be before `startMinutesAgo`. For example,

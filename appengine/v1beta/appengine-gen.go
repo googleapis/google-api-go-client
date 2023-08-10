@@ -162,6 +162,7 @@ func NewAppsService(s *APIService) *AppsService {
 	rs.Firewall = NewAppsFirewallService(s)
 	rs.Locations = NewAppsLocationsService(s)
 	rs.Operations = NewAppsOperationsService(s)
+	rs.Runtimes = NewAppsRuntimesService(s)
 	rs.Services = NewAppsServicesService(s)
 	return rs
 }
@@ -180,6 +181,8 @@ type AppsService struct {
 	Locations *AppsLocationsService
 
 	Operations *AppsOperationsService
+
+	Runtimes *AppsRuntimesService
 
 	Services *AppsServicesService
 }
@@ -247,6 +250,15 @@ func NewAppsOperationsService(s *APIService) *AppsOperationsService {
 }
 
 type AppsOperationsService struct {
+	s *APIService
+}
+
+func NewAppsRuntimesService(s *APIService) *AppsRuntimesService {
+	rs := &AppsRuntimesService{s: s}
+	return rs
+}
+
+type AppsRuntimesService struct {
 	s *APIService
 }
 
@@ -2236,6 +2248,42 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListRuntimesResponse: Response message for Applications.ListRuntimes.
+type ListRuntimesResponse struct {
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Runtimes: The runtimes available to the requested application.
+	Runtimes []*Runtime `json:"runtimes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRuntimesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRuntimesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListServicesResponse: Response message for Services.ListServices.
 type ListServicesResponse struct {
 	// NextPageToken: Continuation token for fetching the next page of
@@ -2723,8 +2771,8 @@ type Operation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is
@@ -3419,6 +3467,57 @@ func (s *Resources) UnmarshalJSON(data []byte) error {
 	s.DiskGb = float64(s1.DiskGb)
 	s.MemoryGb = float64(s1.MemoryGb)
 	return nil
+}
+
+// Runtime: Runtime versions for App Engine.
+type Runtime struct {
+	// Environment: The environment of the runtime.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Default value.
+	//   "STANDARD" - App Engine Standard.
+	//   "FLEXIBLE" - App Engine Flexible
+	Environment string `json:"environment,omitempty"`
+
+	// Name: The name of the runtime, e.g., 'go113', 'nodejs12', etc.
+	Name string `json:"name,omitempty"`
+
+	// Stage: The stage of life this runtime is in, e.g., BETA, GA, etc.
+	//
+	// Possible values:
+	//   "RUNTIME_STAGE_UNSPECIFIED" - Not specified.
+	//   "DEVELOPMENT" - The runtime is in development.
+	//   "ALPHA" - The runtime is in the Alpha stage.
+	//   "BETA" - The runtime is in the Beta stage.
+	//   "GA" - The runtime is generally available.
+	//   "DEPRECATED" - The runtime is deprecated.
+	//   "DECOMMISSIONED" - The runtime is no longer supported.
+	Stage string `json:"stage,omitempty"`
+
+	// Warnings: Warning messages, e.g., a deprecation warning.
+	Warnings []string `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Runtime) MarshalJSON() ([]byte, error) {
+	type NoMethod Runtime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ScriptHandler: Executes a script to handle the request that matches
@@ -8502,6 +8601,226 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AppsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "appengine.apps.runtimes.list":
+
+type AppsRuntimesListCall struct {
+	s            *APIService
+	appsId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the available runtimes for the application.
+//
+//   - appsId: Part of `parent`.  Name of the parent Application resource.
+//     Example: apps/myapp.
+func (r *AppsRuntimesService) List(appsId string) *AppsRuntimesListCall {
+	c := &AppsRuntimesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	return c
+}
+
+// Environment sets the optional parameter "environment": The
+// environment of the Application.
+//
+// Possible values:
+//
+//	"ENVIRONMENT_UNSPECIFIED" - Default value.
+//	"STANDARD" - App Engine Standard.
+//	"FLEXIBLE" - App Engine Flexible
+func (c *AppsRuntimesListCall) Environment(environment string) *AppsRuntimesListCall {
+	c.urlParams_.Set("environment", environment)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum results to
+// return per page.
+func (c *AppsRuntimesListCall) PageSize(pageSize int64) *AppsRuntimesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AppsRuntimesListCall) PageToken(pageToken string) *AppsRuntimesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsRuntimesListCall) Fields(s ...googleapi.Field) *AppsRuntimesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsRuntimesListCall) IfNoneMatch(entityTag string) *AppsRuntimesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsRuntimesListCall) Context(ctx context.Context) *AppsRuntimesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsRuntimesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsRuntimesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/apps/{appsId}/runtimes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId": c.appsId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.apps.runtimes.list" call.
+// Exactly one of *ListRuntimesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListRuntimesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AppsRuntimesListCall) Do(opts ...googleapi.CallOption) (*ListRuntimesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRuntimesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the available runtimes for the application.",
+	//   "flatPath": "v1beta/apps/{appsId}/runtimes",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.runtimes.list",
+	//   "parameterOrder": [
+	//     "appsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `parent`. Required. Name of the parent Application resource. Example: apps/myapp.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environment": {
+	//       "description": "Optional. The environment of the Application.",
+	//       "enum": [
+	//         "ENVIRONMENT_UNSPECIFIED",
+	//         "STANDARD",
+	//         "FLEXIBLE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value.",
+	//         "App Engine Standard.",
+	//         "App Engine Flexible"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum results to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/apps/{appsId}/runtimes",
+	//   "response": {
+	//     "$ref": "ListRuntimesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AppsRuntimesListCall) Pages(ctx context.Context, f func(*ListRuntimesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

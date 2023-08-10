@@ -4607,7 +4607,10 @@ type ScriptsRunCall struct {
 // the same as the one used by the script.
 //
 //   - scriptId: The script ID of the script to be executed. Find the
-//     script ID on the **Project settings** page under "IDs.".
+//     script ID on the **Project settings** page under "IDs." As multiple
+//     executable APIs can be deployed in new IDE for same script, this
+//     field should be populated with DeploymentID generated while
+//     deploying in new IDE instead of script ID.
 func (r *ScriptsService) Run(scriptId string, executionrequest *ExecutionRequest) *ScriptsRunCall {
 	c := &ScriptsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4715,7 +4718,7 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "scriptId": {
-	//       "description": "The script ID of the script to be executed. Find the script ID on the **Project settings** page under \"IDs.\"",
+	//       "description": "The script ID of the script to be executed. Find the script ID on the **Project settings** page under \"IDs.\" As multiple executable APIs can be deployed in new IDE for same script, this field should be populated with DeploymentID generated while deploying in new IDE instead of script ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

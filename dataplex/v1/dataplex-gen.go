@@ -2222,7 +2222,8 @@ func (s *GoogleCloudDataplexV1DataProfileSpecPostScanActions) MarshalJSON() ([]b
 type GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport struct {
 	// ResultsTable: Optional. The BigQuery table to export DataProfileScan
 	// results to. Format:
-	// projects/{project}/datasets/{dataset}/tables/{table}
+	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tabl
+	// es/TABLE_ID
 	ResultsTable string `json:"resultsTable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResultsTable") to
@@ -3046,7 +3047,8 @@ func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActions) MarshalJSON() ([]b
 type GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport struct {
 	// ResultsTable: Optional. The BigQuery table to export DataQualityScan
 	// results to. Format:
-	// projects/{project}/datasets/{dataset}/tables/{table}
+	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tabl
+	// es/TABLE_ID
 	ResultsTable string `json:"resultsTable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResultsTable") to
@@ -7707,8 +7709,8 @@ type GoogleLongrunningOperation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is

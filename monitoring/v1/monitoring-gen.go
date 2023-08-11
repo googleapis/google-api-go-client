@@ -1634,8 +1634,8 @@ type Operation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is
@@ -2118,6 +2118,10 @@ func (s *RowLayout) MarshalJSON() ([]byte, error) {
 // Scorecard: A widget showing the latest value of a metric, and how
 // this value relates to one or more thresholds.
 type Scorecard struct {
+	// BlankView: Will cause the Scorecard to show only the value, with no
+	// indicator to its value relative to its thresholds.
+	BlankView *Empty `json:"blankView,omitempty"`
+
 	// GaugeView: Will cause the scorecard to show a gauge chart.
 	GaugeView *GaugeView `json:"gaugeView,omitempty"`
 
@@ -2147,7 +2151,7 @@ type Scorecard struct {
 	// the Stackdriver metrics API.
 	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GaugeView") to
+	// ForceSendFields is a list of field names (e.g. "BlankView") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2155,7 +2159,7 @@ type Scorecard struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GaugeView") to include in
+	// NullFields is a list of field names (e.g. "BlankView") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2792,6 +2796,13 @@ func (s *TimeSeriesFilterRatio) MarshalJSON() ([]byte, error) {
 // methods for querying time series data from the Stackdriver metrics
 // API.
 type TimeSeriesQuery struct {
+	// OutputFullDuration: Optional. If set, Cloud Monitoring will treat the
+	// full query duration as the alignment period so that there will be
+	// only 1 output value.*Note: This could override the configured
+	// alignment period except for the cases where a series of data points
+	// are expected, like - XyChart - Scorecard's spark chart
+	OutputFullDuration bool `json:"outputFullDuration,omitempty"`
+
 	// PrometheusQuery: A query used to fetch time series with PromQL.
 	PrometheusQuery string `json:"prometheusQuery,omitempty"`
 
@@ -2812,15 +2823,15 @@ type TimeSeriesQuery struct {
 	// field in MetricDescriptor.
 	UnitOverride string `json:"unitOverride,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PrometheusQuery") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "OutputFullDuration")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PrometheusQuery") to
+	// NullFields is a list of field names (e.g. "OutputFullDuration") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

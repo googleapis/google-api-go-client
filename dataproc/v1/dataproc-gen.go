@@ -2681,6 +2681,23 @@ type InstanceGroupConfig struct {
 	// (https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
+	// MinNumInstances: Optional. The minimum number of instances to create.
+	// If min_num_instances is set, min_num_instances is used for a criteria
+	// to decide the cluster. Cluster creation will be failed by being an
+	// error state if the total number of instances created is less than the
+	// min_num_instances. For example, given that num_instances = 5 and
+	// min_num_instances = 3, * if 4 instances are created and then
+	// registered successfully but one instance is failed, the failed VM
+	// will be deleted and the cluster will be resized to 4 instances in
+	// running state. * if 2 instances are created successfully and 3
+	// instances are failed, the cluster will be in an error state and does
+	// not delete failed VMs for debugging. * if 2 instance are created and
+	// then registered successfully but 3 instances are failed to
+	// initialize, the cluster will be in an error state and does not delete
+	// failed VMs for debugging. NB: This can only be set for primary
+	// workers now.
+	MinNumInstances int64 `json:"minNumInstances,omitempty"`
+
 	// NumInstances: Optional. The number of VM instances in the instance
 	// group. For HA cluster master_config groups, must be set to 3. For
 	// standard cluster master_config groups, must be set to 1.
@@ -4155,8 +4172,8 @@ type Operation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is
@@ -12216,6 +12233,20 @@ func (c *ProjectsRegionsClustersDeleteCall) ClusterUuid(clusterUuid string) *Pro
 	return c
 }
 
+// GracefulTerminationTimeout sets the optional parameter
+// "gracefulTerminationTimeout": The graceful termination timeout for
+// the deletion of the cluster. Indicate the time the request will wait
+// to complete the running jobs on the cluster before its forceful
+// deletion. Default value is 0 indicating that the user has not enabled
+// the graceful termination. Value can be between 60 second and 6 Hours,
+// in case the graceful termination is enabled. (There is no separate
+// flag to check the enabling or disabling of graceful termination, it
+// can be checked by the values in the field).
+func (c *ProjectsRegionsClustersDeleteCall) GracefulTerminationTimeout(gracefulTerminationTimeout string) *ProjectsRegionsClustersDeleteCall {
+	c.urlParams_.Set("gracefulTerminationTimeout", gracefulTerminationTimeout)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique ID used
 // to identify the request. If the server receives two
 // DeleteClusterRequest
@@ -12337,6 +12368,12 @@ func (c *ProjectsRegionsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//     },
 	//     "clusterUuid": {
 	//       "description": "Optional. Specifying the cluster_uuid means the RPC should fail (with error NOT_FOUND) if cluster with specified UUID does not exist.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gracefulTerminationTimeout": {
+	//       "description": "Optional. The graceful termination timeout for the deletion of the cluster. Indicate the time the request will wait to complete the running jobs on the cluster before its forceful deletion. Default value is 0 indicating that the user has not enabled the graceful termination. Value can be between 60 second and 6 Hours, in case the graceful termination is enabled. (There is no separate flag to check the enabling or disabling of graceful termination, it can be checked by the values in the field).",
+	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -969,7 +969,16 @@ type BinaryAuthorization struct {
 	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - Enforce Kubernetes admission
 	// requests with BinaryAuthorization using the project's singleton
 	// policy. This is equivalent to setting the enabled boolean to true.
+	//   "POLICY_BINDINGS" - Use Binary Authorization with the policies
+	// specified in policy_bindings.
+	//   "POLICY_BINDINGS_AND_PROJECT_SINGLETON_POLICY_ENFORCE" - Use Binary
+	// Authorization with the policies specified in policy_bindings, and
+	// also with the project's singleton policy in enforcement mode.
 	EvaluationMode string `json:"evaluationMode,omitempty"`
+
+	// PolicyBindings: Optional. Binauthz policies that apply to this
+	// cluster.
+	PolicyBindings []*PolicyBinding `json:"policyBindings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
@@ -6212,6 +6221,36 @@ type PodSecurityPolicyConfig struct {
 
 func (s *PodSecurityPolicyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PodSecurityPolicyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyBinding: Binauthz policy that applies to this cluster.
+type PolicyBinding struct {
+	// Name: The relative resource name of the binauthz platform policy to
+	// audit. GKE platform policies have the following format:
+	// `projects/{project_number}/platforms/gke/policies/{policy_id}`.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyBinding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

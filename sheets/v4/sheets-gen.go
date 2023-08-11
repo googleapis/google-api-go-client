@@ -9927,7 +9927,8 @@ type TextFormatRun struct {
 	// format.
 	Format *TextFormat `json:"format,omitempty"`
 
-	// StartIndex: The character index where this run starts.
+	// StartIndex: The zero-based character index where this run starts, in
+	// UTF-16 code units.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to

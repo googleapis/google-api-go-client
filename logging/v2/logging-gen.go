@@ -1271,15 +1271,15 @@ func (s *CreateLinkRequest) MarshalJSON() ([]byte, error) {
 
 // DeleteLinkRequest: The parameters to DeleteLink.
 type DeleteLinkRequest struct {
-	// Name: Required. The full resource name of the link to
-	// delete."projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/li
-	// nks/LINK_ID"
-	// "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID
-	// /links/LINK_ID"
-	// "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCK
-	// ET_ID/links/LINK_ID"
-	// "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_
-	// ID"
+	// Name: Required. The full resource name of the link to delete.
+	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+	// ks/[LINK_ID]"
+	// "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCK
+	// ET_ID]/links/[LINK_ID]"
+	// "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/
+	// [BUCKET_ID]/links/[LINK_ID]"
+	// "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links
+	// /[LINK_ID]"
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -3698,8 +3698,8 @@ type Operation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is
@@ -7391,15 +7391,15 @@ type BillingAccountsLocationsBucketsLinksDeleteCall struct {
 // Delete: Deletes a link. This will also delete the corresponding
 // BigQuery linked dataset.
 //
-//   - name: The full resource name of the link to
-//     delete."projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The full resource name of the link to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *BillingAccountsLocationsBucketsLinksService) Delete(name string) *BillingAccountsLocationsBucketsLinksDeleteCall {
 	c := &BillingAccountsLocationsBucketsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7501,7 +7501,7 @@ func (c *BillingAccountsLocationsBucketsLinksDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full resource name of the link to delete.\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The full resource name of the link to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -7533,15 +7533,15 @@ type BillingAccountsLocationsBucketsLinksGetCall struct {
 
 // Get: Gets a link.
 //
-//   - name: The resource name of the
-//     link:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/li
-//     nks/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The resource name of the link:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *BillingAccountsLocationsBucketsLinksService) Get(name string) *BillingAccountsLocationsBucketsLinksGetCall {
 	c := &BillingAccountsLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7656,7 +7656,7 @@ func (c *BillingAccountsLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The resource name of the link: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -7690,14 +7690,13 @@ type BillingAccountsLocationsBucketsLinksListCall struct {
 
 // List: Lists links.
 //
-//   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
-//
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
+//   - parent: The parent resource whose links are to be listed:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *BillingAccountsLocationsBucketsLinksService) List(parent string) *BillingAccountsLocationsBucketsLinksListCall {
 	c := &BillingAccountsLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7839,7 +7838,7 @@ func (c *BillingAccountsLocationsBucketsLinksListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
+	//       "description": "Required. The parent resource whose links are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -10547,7 +10546,7 @@ func (c *BillingAccountsSinksPatchCall) CustomWriterIdentity(customWriterIdentit
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *BillingAccountsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksPatchCall {
@@ -10682,7 +10681,7 @@ func (c *BillingAccountsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSi
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10757,7 +10756,7 @@ func (c *BillingAccountsSinksUpdateCall) CustomWriterIdentity(customWriterIdenti
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *BillingAccountsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksUpdateCall {
@@ -10892,7 +10891,7 @@ func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -15446,15 +15445,15 @@ type FoldersLocationsBucketsLinksDeleteCall struct {
 // Delete: Deletes a link. This will also delete the corresponding
 // BigQuery linked dataset.
 //
-//   - name: The full resource name of the link to
-//     delete."projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The full resource name of the link to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *FoldersLocationsBucketsLinksService) Delete(name string) *FoldersLocationsBucketsLinksDeleteCall {
 	c := &FoldersLocationsBucketsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15556,7 +15555,7 @@ func (c *FoldersLocationsBucketsLinksDeleteCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full resource name of the link to delete.\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The full resource name of the link to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -15588,15 +15587,15 @@ type FoldersLocationsBucketsLinksGetCall struct {
 
 // Get: Gets a link.
 //
-//   - name: The resource name of the
-//     link:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/li
-//     nks/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The resource name of the link:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *FoldersLocationsBucketsLinksService) Get(name string) *FoldersLocationsBucketsLinksGetCall {
 	c := &FoldersLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15711,7 +15710,7 @@ func (c *FoldersLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The resource name of the link: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -15745,14 +15744,13 @@ type FoldersLocationsBucketsLinksListCall struct {
 
 // List: Lists links.
 //
-//   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
-//
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
+//   - parent: The parent resource whose links are to be listed:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *FoldersLocationsBucketsLinksService) List(parent string) *FoldersLocationsBucketsLinksListCall {
 	c := &FoldersLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15894,7 +15892,7 @@ func (c *FoldersLocationsBucketsLinksListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
+	//       "description": "Required. The parent resource whose links are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -18602,7 +18600,7 @@ func (c *FoldersSinksPatchCall) CustomWriterIdentity(customWriterIdentity string
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *FoldersSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksPatchCall {
@@ -18737,7 +18735,7 @@ func (c *FoldersSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, erro
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -18812,7 +18810,7 @@ func (c *FoldersSinksUpdateCall) CustomWriterIdentity(customWriterIdentity strin
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *FoldersSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksUpdateCall {
@@ -18947,7 +18945,7 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -20835,15 +20833,15 @@ type LocationsBucketsLinksDeleteCall struct {
 // Delete: Deletes a link. This will also delete the corresponding
 // BigQuery linked dataset.
 //
-//   - name: The full resource name of the link to
-//     delete."projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The full resource name of the link to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *LocationsBucketsLinksService) Delete(name string) *LocationsBucketsLinksDeleteCall {
 	c := &LocationsBucketsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20945,7 +20943,7 @@ func (c *LocationsBucketsLinksDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full resource name of the link to delete.\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The full resource name of the link to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -20977,15 +20975,15 @@ type LocationsBucketsLinksGetCall struct {
 
 // Get: Gets a link.
 //
-//   - name: The resource name of the
-//     link:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/li
-//     nks/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The resource name of the link:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *LocationsBucketsLinksService) Get(name string) *LocationsBucketsLinksGetCall {
 	c := &LocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21100,7 +21098,7 @@ func (c *LocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOption) (*Link, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The resource name of the link: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -21134,14 +21132,13 @@ type LocationsBucketsLinksListCall struct {
 
 // List: Lists links.
 //
-//   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
-//
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
+//   - parent: The parent resource whose links are to be listed:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *LocationsBucketsLinksService) List(parent string) *LocationsBucketsLinksListCall {
 	c := &LocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21283,7 +21280,7 @@ func (c *LocationsBucketsLinksListCall) Do(opts ...googleapi.CallOption) (*ListL
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
+	//       "description": "Required. The parent resource whose links are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -26573,15 +26570,15 @@ type OrganizationsLocationsBucketsLinksDeleteCall struct {
 // Delete: Deletes a link. This will also delete the corresponding
 // BigQuery linked dataset.
 //
-//   - name: The full resource name of the link to
-//     delete."projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The full resource name of the link to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *OrganizationsLocationsBucketsLinksService) Delete(name string) *OrganizationsLocationsBucketsLinksDeleteCall {
 	c := &OrganizationsLocationsBucketsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26683,7 +26680,7 @@ func (c *OrganizationsLocationsBucketsLinksDeleteCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full resource name of the link to delete.\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The full resource name of the link to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -26715,15 +26712,15 @@ type OrganizationsLocationsBucketsLinksGetCall struct {
 
 // Get: Gets a link.
 //
-//   - name: The resource name of the
-//     link:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/li
-//     nks/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The resource name of the link:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *OrganizationsLocationsBucketsLinksService) Get(name string) *OrganizationsLocationsBucketsLinksGetCall {
 	c := &OrganizationsLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26838,7 +26835,7 @@ func (c *OrganizationsLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The resource name of the link: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -26872,14 +26869,13 @@ type OrganizationsLocationsBucketsLinksListCall struct {
 
 // List: Lists links.
 //
-//   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
-//
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
+//   - parent: The parent resource whose links are to be listed:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *OrganizationsLocationsBucketsLinksService) List(parent string) *OrganizationsLocationsBucketsLinksListCall {
 	c := &OrganizationsLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27021,7 +27017,7 @@ func (c *OrganizationsLocationsBucketsLinksListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
+	//       "description": "Required. The parent resource whose links are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -29729,7 +29725,7 @@ func (c *OrganizationsSinksPatchCall) CustomWriterIdentity(customWriterIdentity 
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *OrganizationsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksPatchCall {
@@ -29864,7 +29860,7 @@ func (c *OrganizationsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -29939,7 +29935,7 @@ func (c *OrganizationsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *OrganizationsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksUpdateCall {
@@ -30074,7 +30070,7 @@ func (c *OrganizationsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -33103,15 +33099,15 @@ type ProjectsLocationsBucketsLinksDeleteCall struct {
 // Delete: Deletes a link. This will also delete the corresponding
 // BigQuery linked dataset.
 //
-//   - name: The full resource name of the link to
-//     delete."projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-//     links/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The full resource name of the link to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *ProjectsLocationsBucketsLinksService) Delete(name string) *ProjectsLocationsBucketsLinksDeleteCall {
 	c := &ProjectsLocationsBucketsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33213,7 +33209,7 @@ func (c *ProjectsLocationsBucketsLinksDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full resource name of the link to delete.\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The full resource name of the link to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -33245,15 +33241,15 @@ type ProjectsLocationsBucketsLinksGetCall struct {
 
 // Get: Gets a link.
 //
-//   - name: The resource name of the
-//     link:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/li
-//     nks/LINK_ID"
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID/links/LINK_ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID/links/LINK_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LIN
-//     K_ID".
+//   - name: The resource name of the link:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/l
+//     inks/[LINK_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]/links/[LINK_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]/links/[LINK_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
+//     ks/[LINK_ID]".
 func (r *ProjectsLocationsBucketsLinksService) Get(name string) *ProjectsLocationsBucketsLinksGetCall {
 	c := &ProjectsLocationsBucketsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33368,7 +33364,7 @@ func (c *ProjectsLocationsBucketsLinksGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the link:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID\"",
+	//       "description": "Required. The resource name of the link: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+/links/[^/]+$",
 	//       "required": true,
@@ -33402,14 +33398,13 @@ type ProjectsLocationsBucketsLinksListCall struct {
 
 // List: Lists links.
 //
-//   - parent: The parent resource whose links are to be
-//     listed:"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID"
-//
-//     "organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_
-//     ID"
-//     "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BU
-//     CKET_ID"
-//     "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID".
+//   - parent: The parent resource whose links are to be listed:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *ProjectsLocationsBucketsLinksService) List(parent string) *ProjectsLocationsBucketsLinksListCall {
 	c := &ProjectsLocationsBucketsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33551,7 +33546,7 @@ func (c *ProjectsLocationsBucketsLinksListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose links are to be listed:\"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"organizations/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID\"",
+	//       "description": "Required. The parent resource whose links are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -37039,7 +37034,7 @@ func (c *ProjectsSinksPatchCall) CustomWriterIdentity(customWriterIdentity strin
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *ProjectsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksPatchCall {
@@ -37174,7 +37169,7 @@ func (c *ProjectsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -37249,7 +37244,7 @@ func (c *ProjectsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity stri
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *ProjectsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksUpdateCall {
@@ -37384,7 +37379,7 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -38143,7 +38138,7 @@ func (c *SinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *Sin
 // both false or both true, then there is no change to the sink's
 // writer_identity. If the old value is false and the new value is true,
 // then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents))
+// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and
 // the new value is set to false or defaulted to false.
 func (c *SinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *SinksUpdateCall {
@@ -38278,7 +38273,7 @@ func (c *SinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents)) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
+	//       "description": "Optional. See sinks.create for a description of this field. When updating a sink, the effect of this field on the value of writer_identity in the updated sink depends on both the old and new values of this field: If the old and new values of this field are both false or both true, then there is no change to the sink's writer_identity. If the old value is false and the new value is true, then writer_identity is changed to a service agent (https://cloud.google.com/iam/docs/service-account-types#service-agents) owned by Cloud Logging. It is an error if the old value is true and the new value is set to false or defaulted to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

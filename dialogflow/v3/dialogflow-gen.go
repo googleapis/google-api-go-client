@@ -190,6 +190,7 @@ func NewProjectsLocationsAgentsService(s *Service) *ProjectsLocationsAgentsServi
 	rs.Intents = NewProjectsLocationsAgentsIntentsService(s)
 	rs.Sessions = NewProjectsLocationsAgentsSessionsService(s)
 	rs.TestCases = NewProjectsLocationsAgentsTestCasesService(s)
+	rs.TransitionRouteGroups = NewProjectsLocationsAgentsTransitionRouteGroupsService(s)
 	rs.Webhooks = NewProjectsLocationsAgentsWebhooksService(s)
 	return rs
 }
@@ -210,6 +211,8 @@ type ProjectsLocationsAgentsService struct {
 	Sessions *ProjectsLocationsAgentsSessionsService
 
 	TestCases *ProjectsLocationsAgentsTestCasesService
+
+	TransitionRouteGroups *ProjectsLocationsAgentsTransitionRouteGroupsService
 
 	Webhooks *ProjectsLocationsAgentsWebhooksService
 }
@@ -397,6 +400,15 @@ type ProjectsLocationsAgentsTestCasesResultsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsAgentsTransitionRouteGroupsService(s *Service) *ProjectsLocationsAgentsTransitionRouteGroupsService {
+	rs := &ProjectsLocationsAgentsTransitionRouteGroupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAgentsTransitionRouteGroupsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsAgentsWebhooksService(s *Service) *ProjectsLocationsAgentsWebhooksService {
 	rs := &ProjectsLocationsAgentsWebhooksService{s: s}
 	return rs
@@ -520,8 +532,8 @@ func (s *GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings) MarshalJSON()
 // into actionable data. You can include agents in your app, product, or
 // service to determine user intent and respond to the user in a natural
 // way. After you create an agent, you can add Intents, Entity Types,
-// Flows, Fulfillments, Webhooks, and so on to manage the conversation
-// flows..
+// Flows, Fulfillments, Webhooks, TransitionRouteGroups and so on to
+// manage the conversation flows.
 type GoogleCloudDialogflowCxV3Agent struct {
 	// AdvancedSettings: Hierarchical advanced settings for this agent. The
 	// settings exposed at the lower level overrides the settings exposed at
@@ -2810,7 +2822,9 @@ type GoogleCloudDialogflowCxV3Flow struct {
 	// utterances in the flow. * They are inherited by every page's
 	// transition route groups. Transition route groups defined in the page
 	// have higher priority than those defined in the flow.
-	// Format:`projects//locations//agents//flows//transitionRouteGroups/`.
+	// Format:`projects//locations//agents//flows//transitionRouteGroups/`
+	// or `projects//locations//agents//transitionRouteGroups/` for
+	// agent-level groups.
 	TransitionRouteGroups []string `json:"transitionRouteGroups,omitempty"`
 
 	// TransitionRoutes: A flow's transition routes serve two purposes: *
@@ -2849,6 +2863,55 @@ type GoogleCloudDialogflowCxV3Flow struct {
 
 func (s *GoogleCloudDialogflowCxV3Flow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3Flow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3FlowImportStrategy: The flow import strategy
+// used for resource conflict resolution associated with an
+// ImportFlowRequest.
+type GoogleCloudDialogflowCxV3FlowImportStrategy struct {
+	// GlobalImportStrategy: Optional. Import strategy for resource conflict
+	// resolution, applied globally throughout the flow. It will be applied
+	// for all display name conflicts in the imported content. If not
+	// specified, 'CREATE_NEW' is assumed.
+	//
+	// Possible values:
+	//   "IMPORT_STRATEGY_UNSPECIFIED" - Unspecified. Treated as
+	// 'CREATE_NEW'.
+	//   "IMPORT_STRATEGY_CREATE_NEW" - Create a new resource with a numeric
+	// suffix appended to the end of the existing display name.
+	//   "IMPORT_STRATEGY_REPLACE" - Replace existing resource with incoming
+	// resource in the content to be imported.
+	//   "IMPORT_STRATEGY_KEEP" - Keep existing resource and discard
+	// incoming resource in the content to be imported.
+	//   "IMPORT_STRATEGY_MERGE" - Combine existing and incoming resources
+	// when a conflict is encountered.
+	//   "IMPORT_STRATEGY_THROW_ERROR" - Throw error if a conflict is
+	// encountered.
+	GlobalImportStrategy string `json:"globalImportStrategy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "GlobalImportStrategy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GlobalImportStrategy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3FlowImportStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3FlowImportStrategy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3465,6 +3528,10 @@ func (s *GoogleCloudDialogflowCxV3ImportDocumentsResponse) MarshalJSON() ([]byte
 type GoogleCloudDialogflowCxV3ImportFlowRequest struct {
 	// FlowContent: Uncompressed raw byte content for flow.
 	FlowContent string `json:"flowContent,omitempty"`
+
+	// FlowImportStrategy: Optional. Specifies the import strategy used when
+	// resolving resource conflicts.
+	FlowImportStrategy *GoogleCloudDialogflowCxV3FlowImportStrategy `json:"flowImportStrategy,omitempty"`
 
 	// FlowUri: The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to import flow from. The
@@ -5173,7 +5240,9 @@ type GoogleCloudDialogflowCxV3Page struct {
 	// transition routes. * If multiple transition route groups within a
 	// page contain the same intent, then the first group in the ordered
 	// list takes precedence.
-	// Format:`projects//locations//agents//flows//transitionRouteGroups/`.
+	// Format:`projects//locations//agents//flows//transitionRouteGroups/`
+	// or `projects//locations//agents//transitionRouteGroups/` for
+	// agent-level groups.
 	TransitionRouteGroups []string `json:"transitionRouteGroups,omitempty"`
 
 	// TransitionRoutes: A list of transitions for the transition rules of
@@ -7468,9 +7537,8 @@ func (s *GoogleCloudDialogflowCxV3TransitionRoute) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3TransitionRouteGroup: An
-// TransitionRouteGroup represents a group of `TransitionRoutes` to be
-// used by a Page.
+// GoogleCloudDialogflowCxV3TransitionRouteGroup: A TransitionRouteGroup
+// represents a group of `TransitionRoutes` to be used by a Page.
 type GoogleCloudDialogflowCxV3TransitionRouteGroup struct {
 	// DisplayName: Required. The human-readable name of the transition
 	// route group, unique within the flow. The display name can be no
@@ -7480,7 +7548,7 @@ type GoogleCloudDialogflowCxV3TransitionRouteGroup struct {
 	// Name: The unique identifier of the transition route group.
 	// TransitionRouteGroups.CreateTransitionRouteGroup populates the name
 	// automatically. Format:
-	// `projects//locations//agents//flows//transitionRouteGroups/`.
+	// `projects//locations//agents//flows//transitionRouteGroups/` .
 	Name string `json:"name,omitempty"`
 
 	// TransitionRoutes: Transition routes associated with the
@@ -10443,7 +10511,9 @@ type GoogleCloudDialogflowCxV3beta1Page struct {
 	// transition routes. * If multiple transition route groups within a
 	// page contain the same intent, then the first group in the ordered
 	// list takes precedence.
-	// Format:`projects//locations//agents//flows//transitionRouteGroups/`.
+	// Format:`projects//locations//agents//flows//transitionRouteGroups/`
+	// or `projects//locations//agents//transitionRouteGroups/` for
+	// agent-level groups.
 	TransitionRouteGroups []string `json:"transitionRouteGroups,omitempty"`
 
 	// TransitionRoutes: A list of transitions for the transition rules of
@@ -20151,8 +20221,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -30083,7 +30153,8 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall struct {
 // (https://cloud.google.com/dialogflow/cx/docs/concept/training).
 //
 //   - parent: The flow to create an TransitionRouteGroup for. Format:
-//     `projects//locations//agents//flows/`.
+//     `projects//locations//agents//flows/` or
+//     `projects//locations//agents/` for agent-level groups.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Create(parent string, googleclouddialogflowcxv3transitionroutegroup *GoogleCloudDialogflowCxV3TransitionRouteGroup) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30213,7 +30284,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The flow to create an TransitionRouteGroup for. Format: `projects//locations//agents//flows/`.",
+	//       "description": "Required. The flow to create an TransitionRouteGroup for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/` for agent-level groups.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+$",
 	//       "required": true,
@@ -30251,7 +30322,8 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall struct {
 // (https://cloud.google.com/dialogflow/cx/docs/concept/training).
 //
 //   - name: The name of the TransitionRouteGroup to delete. Format:
-//     `projects//locations//agents//flows//transitionRouteGroups/`.
+//     `projects//locations//agents//flows//transitionRouteGroups/` or
+//     `projects//locations//agents//transitionRouteGroups/`.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Delete(name string) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30370,7 +30442,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall) Do(opts ..
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the TransitionRouteGroup to delete. Format: `projects//locations//agents//flows//transitionRouteGroups/`.",
+	//       "description": "Required. The name of the TransitionRouteGroup to delete. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/transitionRouteGroups/[^/]+$",
 	//       "required": true,
@@ -30403,7 +30475,8 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall struct {
 // Get: Retrieves the specified TransitionRouteGroup.
 //
 //   - name: The name of the TransitionRouteGroup. Format:
-//     `projects//locations//agents//flows//transitionRouteGroups/`.
+//     `projects//locations//agents//flows//transitionRouteGroups/` or
+//     `projects//locations//agents//transitionRouteGroups/`.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Get(name string) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30541,7 +30614,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the TransitionRouteGroup. Format: `projects//locations//agents//flows//transitionRouteGroups/`.",
+	//       "description": "Required. The name of the TransitionRouteGroup. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/transitionRouteGroups/[^/]+$",
 	//       "required": true,
@@ -30575,7 +30648,8 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall struct {
 // specified flow.
 //
 //   - parent: The flow to list all transition route groups for. Format:
-//     `projects//locations//agents//flows/`.
+//     `projects//locations//agents//flows/` or
+//     `projects//locations//agents/.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) List(parent string) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30739,7 +30813,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The flow to list all transition route groups for. Format: `projects//locations//agents//flows/`.",
+	//       "description": "Required. The flow to list all transition route groups for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+$",
 	//       "required": true,
@@ -30798,7 +30872,7 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall struct {
 //   - name: The unique identifier of the transition route group.
 //     TransitionRouteGroups.CreateTransitionRouteGroup populates the name
 //     automatically. Format:
-//     `projects//locations//agents//flows//transitionRouteGroups/`.
+//     `projects//locations//agents//flows//transitionRouteGroups/` .
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Patch(nameid string, googleclouddialogflowcxv3transitionroutegroup *GoogleCloudDialogflowCxV3TransitionRouteGroup) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -30935,7 +31009,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall) Do(opts ...
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/`.",
+	//       "description": "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/transitionRouteGroups/[^/]+$",
 	//       "required": true,
@@ -36195,6 +36269,907 @@ func (c *ProjectsLocationsAgentsTestCasesResultsListCall) Pages(ctx context.Cont
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "dialogflow.projects.locations.agents.transitionRouteGroups.create":
+
+type ProjectsLocationsAgentsTransitionRouteGroupsCreateCall struct {
+	s                                             *Service
+	parent                                        string
+	googleclouddialogflowcxv3transitionroutegroup *GoogleCloudDialogflowCxV3TransitionRouteGroup
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Create: Creates an TransitionRouteGroup in the specified flow. Note:
+// You should always train a flow prior to sending it queries. See the
+// training documentation
+// (https://cloud.google.com/dialogflow/cx/docs/concept/training).
+//
+//   - parent: The flow to create an TransitionRouteGroup for. Format:
+//     `projects//locations//agents//flows/` or
+//     `projects//locations//agents/` for agent-level groups.
+func (r *ProjectsLocationsAgentsTransitionRouteGroupsService) Create(parent string, googleclouddialogflowcxv3transitionroutegroup *GoogleCloudDialogflowCxV3TransitionRouteGroup) *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall {
+	c := &ProjectsLocationsAgentsTransitionRouteGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowcxv3transitionroutegroup = googleclouddialogflowcxv3transitionroutegroup
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// of the following fields in `TransitionRouteGroup`: *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages`
+// *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditiona
+// l_cases` If not specified, the agent's default language is used. Many
+// languages
+// (https://cloud.google.com/dialogflow/cx/docs/reference/language) are
+// supported. Note: languages must be enabled in the agent before they
+// can be used.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall) Context(ctx context.Context) *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3transitionroutegroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/transitionRouteGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.transitionRouteGroups.create" call.
+// Exactly one of *GoogleCloudDialogflowCxV3TransitionRouteGroup or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3TransitionRouteGroup.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3TransitionRouteGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3TransitionRouteGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.transitionRouteGroups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language of the following fields in `TransitionRouteGroup`: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The flow to create an TransitionRouteGroup for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/` for agent-level groups.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/transitionRouteGroups",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.transitionRouteGroups.delete":
+
+type ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified TransitionRouteGroup. Note: You should
+// always train a flow prior to sending it queries. See the training
+// documentation
+// (https://cloud.google.com/dialogflow/cx/docs/concept/training).
+//
+//   - name: The name of the TransitionRouteGroup to delete. Format:
+//     `projects//locations//agents//flows//transitionRouteGroups/` or
+//     `projects//locations//agents//transitionRouteGroups/`.
+func (r *ProjectsLocationsAgentsTransitionRouteGroupsService) Delete(name string) *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall {
+	c := &ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": This field has no effect
+// for transition route group that no page is using. If the transition
+// route group is referenced by any page: * If `force` is set to false,
+// an error will be returned with message indicating pages that
+// reference the transition route group. * If `force` is set to true,
+// Dialogflow will remove the transition route group, as well as any
+// reference to it.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall) Force(force bool) *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.transitionRouteGroups.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups/{transitionRouteGroupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dialogflow.projects.locations.agents.transitionRouteGroups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "This field has no effect for transition route group that no page is using. If the transition route group is referenced by any page: * If `force` is set to false, an error will be returned with message indicating pages that reference the transition route group. * If `force` is set to true, Dialogflow will remove the transition route group, as well as any reference to it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the TransitionRouteGroup to delete. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/transitionRouteGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.transitionRouteGroups.get":
+
+type ProjectsLocationsAgentsTransitionRouteGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified TransitionRouteGroup.
+//
+//   - name: The name of the TransitionRouteGroup. Format:
+//     `projects//locations//agents//flows//transitionRouteGroups/` or
+//     `projects//locations//agents//transitionRouteGroups/`.
+func (r *ProjectsLocationsAgentsTransitionRouteGroupsService) Get(name string) *ProjectsLocationsAgentsTransitionRouteGroupsGetCall {
+	c := &ProjectsLocationsAgentsTransitionRouteGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// to retrieve the transition route group for. The following fields are
+// language dependent: *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages`
+// *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditiona
+// l_cases` If not specified, the agent's default language is used. Many
+// languages
+// (https://cloud.google.com/dialogflow/cx/docs/reference/language) are
+// supported. Note: languages must be enabled in the agent before they
+// can be used.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsGetCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsTransitionRouteGroupsGetCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsTransitionRouteGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentsTransitionRouteGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsGetCall) Context(ctx context.Context) *ProjectsLocationsAgentsTransitionRouteGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.transitionRouteGroups.get" call.
+// Exactly one of *GoogleCloudDialogflowCxV3TransitionRouteGroup or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3TransitionRouteGroup.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3TransitionRouteGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3TransitionRouteGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified TransitionRouteGroup.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups/{transitionRouteGroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.agents.transitionRouteGroups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language to retrieve the transition route group for. The following fields are language dependent: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the TransitionRouteGroup. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/transitionRouteGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.transitionRouteGroups.list":
+
+type ProjectsLocationsAgentsTransitionRouteGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all transition route groups in the
+// specified flow.
+//
+//   - parent: The flow to list all transition route groups for. Format:
+//     `projects//locations//agents//flows/` or
+//     `projects//locations//agents/.
+func (r *ProjectsLocationsAgentsTransitionRouteGroupsService) List(parent string) *ProjectsLocationsAgentsTransitionRouteGroupsListCall {
+	c := &ProjectsLocationsAgentsTransitionRouteGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// to list transition route groups for. The following fields are
+// language dependent: *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages`
+// *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditiona
+// l_cases` If not specified, the agent's default language is used. Many
+// languages
+// (https://cloud.google.com/dialogflow/cx/docs/reference/language) are
+// supported. Note: languages must be enabled in the agent before they
+// can be used.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsTransitionRouteGroupsListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return in a single page. By default 100 and at most 1000.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsAgentsTransitionRouteGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) PageToken(pageToken string) *ProjectsLocationsAgentsTransitionRouteGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsTransitionRouteGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentsTransitionRouteGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) Context(ctx context.Context) *ProjectsLocationsAgentsTransitionRouteGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/transitionRouteGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.transitionRouteGroups.list" call.
+// Exactly one of
+// *GoogleCloudDialogflowCxV3ListTransitionRouteGroupsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3ListTransitionRouteGroupsResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3ListTransitionRouteGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3ListTransitionRouteGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all transition route groups in the specified flow.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.agents.transitionRouteGroups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language to list transition route groups for. The following fields are language dependent: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The flow to list all transition route groups for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/transitionRouteGroups",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3ListTransitionRouteGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowCxV3ListTransitionRouteGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.locations.agents.transitionRouteGroups.patch":
+
+type ProjectsLocationsAgentsTransitionRouteGroupsPatchCall struct {
+	s                                             *Service
+	nameid                                        string
+	googleclouddialogflowcxv3transitionroutegroup *GoogleCloudDialogflowCxV3TransitionRouteGroup
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Patch: Updates the specified TransitionRouteGroup. Note: You should
+// always train a flow prior to sending it queries. See the training
+// documentation
+// (https://cloud.google.com/dialogflow/cx/docs/concept/training).
+//
+//   - name: The unique identifier of the transition route group.
+//     TransitionRouteGroups.CreateTransitionRouteGroup populates the name
+//     automatically. Format:
+//     `projects//locations//agents//flows//transitionRouteGroups/` .
+func (r *ProjectsLocationsAgentsTransitionRouteGroupsService) Patch(nameid string, googleclouddialogflowcxv3transitionroutegroup *GoogleCloudDialogflowCxV3TransitionRouteGroup) *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall {
+	c := &ProjectsLocationsAgentsTransitionRouteGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddialogflowcxv3transitionroutegroup = googleclouddialogflowcxv3transitionroutegroup
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// of the following fields in `TransitionRouteGroup`: *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages`
+// *
+// `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditiona
+// l_cases` If not specified, the agent's default language is used. Many
+// languages
+// (https://cloud.google.com/dialogflow/cx/docs/reference/language) are
+// supported. Note: languages must be enabled in the agent before they
+// can be used.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to
+// control which fields get updated.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall) Context(ctx context.Context) *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3transitionroutegroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.transitionRouteGroups.patch" call.
+// Exactly one of *GoogleCloudDialogflowCxV3TransitionRouteGroup or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3TransitionRouteGroup.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsTransitionRouteGroupsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3TransitionRouteGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3TransitionRouteGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups/{transitionRouteGroupsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dialogflow.projects.locations.agents.transitionRouteGroups.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language of the following fields in `TransitionRouteGroup`: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/transitionRouteGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The mask to control which fields get updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
 }
 
 // method id "dialogflow.projects.locations.agents.webhooks.create":

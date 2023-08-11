@@ -749,7 +749,9 @@ func (s *GooglePrivacyDlpV2BigQueryKey) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2BigQueryOptions struct {
 	// ExcludedFields: References to fields excluded from scanning. This
 	// allows you to skip inspection of entire columns which you know have
-	// no findings.
+	// no findings. When inspecting a table, we recommend that you inspect
+	// all columns. Otherwise, findings might be impacted because hints from
+	// excluded columns will not be used.
 	ExcludedFields []*GooglePrivacyDlpV2FieldId `json:"excludedFields,omitempty"`
 
 	// IdentifyingFields: Table fields that may uniquely identify a row
@@ -760,7 +762,10 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// Nested fields such as `person.birthdate.year` are allowed.
 	IdentifyingFields []*GooglePrivacyDlpV2FieldId `json:"identifyingFields,omitempty"`
 
-	// IncludedFields: Limit scanning only to these fields.
+	// IncludedFields: Limit scanning only to these fields. When inspecting
+	// a table, we recommend that you inspect all columns. Otherwise,
+	// findings might be impacted because hints from excluded columns will
+	// not be used.
 	IncludedFields []*GooglePrivacyDlpV2FieldId `json:"includedFields,omitempty"`
 
 	// RowsLimit: Max number of rows to scan. If the table has more rows

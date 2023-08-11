@@ -869,8 +869,9 @@ type Cluster struct {
 	// `projects/{project}/instances/{instance}/clusters/a-z*`.
 	Name string `json:"name,omitempty"`
 
-	// ServeNodes: The number of nodes allocated to this cluster. More nodes
-	// enable higher throughput and more consistent performance.
+	// ServeNodes: The number of nodes in the cluster. If no value is set,
+	// Cloud Bigtable automatically allocates nodes based on your data
+	// footprint and optimized for 50% storage utilization.
 	ServeNodes int64 `json:"serveNodes,omitempty"`
 
 	// State: Output only. The current state of the cluster.

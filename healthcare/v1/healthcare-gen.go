@@ -21105,6 +21105,464 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Do(opts ...goo
 
 }
 
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalDelete":
+
+type ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall struct {
+	s          *Service
+	parent     string
+	type_      string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// ConditionalDelete: Deletes a FHIR resource that match an identifier
+// search query. Implements the FHIR standard conditional delete
+// interaction, limited to searching by resource identifier. If multiple
+// resources match, 412 Precondition Failed error will be returned.
+// Search term for identifier should be in the pattern
+// identifier=system|value or identifier=value - similar to the search
+// method on resources with a specific identifier. Note: Unless resource
+// versioning is disabled by setting the disable_resource_versioning
+// flag on the FHIR store, the deleted resource is moved to a history
+// repository that can still be retrieved through vread and related
+// methods, unless they are removed by the purge method. For samples
+// that show how to call `conditionalDelete`, see Conditionally deleting
+// a FHIR resource
+// (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#conditionally_deleting_a_fhir_resource).
+//
+//   - parent: The name of the FHIR store this resource belongs to.
+//   - type: The FHIR resource type to delete, such as Patient or
+//     Observation. For a complete list, see the FHIR Resource Index
+//     (DSTU2
+//     (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//     STU3
+//     (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//     R4
+//     (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalDelete(parent string, type_ string) *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.type_ = type_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/fhir/{+type}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+		"type":   c.type_,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalDelete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a FHIR resource that match an identifier search query. Implements the FHIR standard conditional delete interaction, limited to searching by resource identifier. If multiple resources match, 412 Precondition Failed error will be returned. Search term for identifier should be in the pattern identifier=system|value or identifier=value - similar to the search method on resources with a specific identifier. Note: Unless resource versioning is disabled by setting the disable_resource_versioning flag on the FHIR store, the deleted resource is moved to a history repository that can still be retrieved through vread and related methods, unless they are removed by the purge method. For samples that show how to call `conditionalDelete`, see [Conditionally deleting a FHIR resource](https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#conditionally_deleting_a_fhir_resource).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalDelete",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "type"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the FHIR store this resource belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "The FHIR resource type to delete, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/fhir/{+type}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalPatch":
+
+type ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall struct {
+	s          *Service
+	parent     string
+	type_      string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// ConditionalPatch: If a resource is found with the identifier
+// specified in the query parameters, updates part of that resource by
+// applying the operations specified in a JSON Patch
+// (http://jsonpatch.com/) document. Implements the FHIR standard
+// conditional patch interaction, limited to searching by resource
+// identifier. DSTU2 doesn't define a conditional patch method, but the
+// server supports it in the same way it supports STU3. Search term for
+// identifier should be in the pattern identifier=system|value or
+// identifier=value - similar to the search method on resources with a
+// specific identifier. If the search criteria identify more than one
+// match, the request returns a `412 Precondition Failed` error. The
+// request body must contain a JSON Patch document, and the request
+// headers must contain `Content-Type: application/json-patch+json`. On
+// success, the response body contains a JSON-encoded representation of
+// the updated resource, including the server-assigned version ID.
+// Errors generated by the FHIR store contain a JSON-encoded
+// `OperationOutcome` resource describing the reason for the error. If
+// the request cannot be mapped to a valid API method on a FHIR store, a
+// generic GCP error might be returned instead. For samples that show
+// how to call `conditionalPatch`, see Conditionally patching a FHIR
+// resource
+// (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#conditionally_patching_a_fhir_resource).
+//
+//   - parent: The name of the FHIR store this resource belongs to.
+//   - type: The FHIR resource type to update, such as Patient or
+//     Observation. For a complete list, see the FHIR Resource Index
+//     (DSTU2
+//     (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//     STU3
+//     (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//     R4
+//     (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalPatch(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.type_ = type_
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body = c.body_
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/fhir/{+type}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+		"type":   c.type_,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalPatch" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "If a resource is found with the identifier specified in the query parameters, updates part of that resource by applying the operations specified in a [JSON Patch](http://jsonpatch.com/) document. Implements the FHIR standard conditional patch interaction, limited to searching by resource identifier. DSTU2 doesn't define a conditional patch method, but the server supports it in the same way it supports STU3. Search term for identifier should be in the pattern identifier=system|value or identifier=value - similar to the search method on resources with a specific identifier. If the search criteria identify more than one match, the request returns a `412 Precondition Failed` error. The request body must contain a JSON Patch document, and the request headers must contain `Content-Type: application/json-patch+json`. On success, the response body contains a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `conditionalPatch`, see [Conditionally patching a FHIR resource](https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#conditionally_patching_a_fhir_resource).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalPatch",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "type"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the FHIR store this resource belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/fhir/{+type}",
+	//   "request": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalUpdate":
+
+type ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall struct {
+	s          *Service
+	parent     string
+	type_      string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// ConditionalUpdate: If a resource is found with the identifier
+// specified in the query parameters, updates the entire contents of
+// that resource. Implements the FHIR standard conditional update
+// interaction, limited to searching by resource identifier. Search term
+// for identifier should be in the pattern identifier=system|value or
+// identifier=value - similar to the search method on resources with a
+// specific identifier. If the search criteria identify more than one
+// match, the request returns a `412 Precondition Failed` error. If the
+// search criteria identify zero matches, and the supplied resource body
+// contains an `id`, and the FHIR store has enable_update_create set,
+// creates the resource with the client-specified ID. It is strongly
+// advised not to include or encode any sensitive data such as patient
+// identifiers in client-specified resource IDs. Those IDs are part of
+// the FHIR resource path recorded in Cloud Audit Logs and Pub/Sub
+// notifications. Those IDs can also be contained in reference fields
+// within other resources. If the search criteria identify zero matches,
+// and the supplied resource body does not contain an `id`, the resource
+// is created with a server-assigned ID as per the create method. The
+// request body must contain a JSON-encoded FHIR resource, and the
+// request headers must contain `Content-Type: application/fhir+json`.
+// On success, the response body contains a JSON-encoded representation
+// of the updated resource, including the server-assigned version ID.
+// Errors generated by the FHIR store contain a JSON-encoded
+// `OperationOutcome` resource describing the reason for the error. If
+// the request cannot be mapped to a valid API method on a FHIR store, a
+// generic GCP error might be returned instead. For samples that show
+// how to call `conditionalUpdate`, see Conditionally updating a FHIR
+// resource
+// (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#conditionally_updating_a_fhir_resource).
+//
+//   - parent: The name of the FHIR store this resource belongs to.
+//   - type: The FHIR resource type to update, such as Patient or
+//     Observation. For a complete list, see the FHIR Resource Index
+//     (DSTU2
+//     (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//     STU3
+//     (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//     R4
+//     (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//     Must match the resource type in the provided content.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalUpdate(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.type_ = type_
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body = c.body_
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/fhir/{+type}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+		"type":   c.type_,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalUpdate" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "If a resource is found with the identifier specified in the query parameters, updates the entire contents of that resource. Implements the FHIR standard conditional update interaction, limited to searching by resource identifier. Search term for identifier should be in the pattern identifier=system|value or identifier=value - similar to the search method on resources with a specific identifier. If the search criteria identify more than one match, the request returns a `412 Precondition Failed` error. If the search criteria identify zero matches, and the supplied resource body contains an `id`, and the FHIR store has enable_update_create set, creates the resource with the client-specified ID. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud Audit Logs and Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. If the search criteria identify zero matches, and the supplied resource body does not contain an `id`, the resource is created with a server-assigned ID as per the create method. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. On success, the response body contains a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `conditionalUpdate`, see [Conditionally updating a FHIR resource](https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#conditionally_updating_a_fhir_resource).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
+	//   "httpMethod": "PUT",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalUpdate",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "type"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the FHIR store this resource belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/fhir/{+type}",
+	//   "request": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.fhirStores.fhir.create":
 
 type ProjectsLocationsDatasetsFhirStoresFhirCreateCall struct {
@@ -21998,8 +22456,24 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // searchable as the server might trim its generated search index in
 // those cases. Note: FHIR resources are indexed asynchronously, so
 // there might be a slight delay between the time a resource is created
-// or changes and when the change is reflected in search results. For
-// samples and detailed information, see Searching for FHIR resources
+// or changed, and the time when the change reflects in search results.
+// The only exception is resource identifier data, which is indexed
+// synchronously as a special index. As a result, searching using
+// resource identifier is not subject to indexing delay. To use the
+// special synchronous index, the search term for identifier should be
+// in the pattern `identifier=[system]|[value]` or `identifier=[value]`,
+// and any of the following search result parameters can be used: *
+// `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If
+// your query contains any other search parameters, the standard
+// asynchronous index will be used instead. Note that searching against
+// the special index is optimized for resolving a small number of
+// matches. The search isn't optimized if your identifier search
+// criteria matches a large number (i.e. more than 2,000) of resources.
+// For a search query that will match a large number of resources, you
+// can avoiding using the special synchronous index by including an
+// additional `_sort` parameter in your query. Use `_sort=-_lastUpdated`
+// if you want to keep the default sorting order. For samples and
+// detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -22070,7 +22544,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changed, and the time when the change reflects in search results. The only exception is resource identifier data, which is indexed synchronously as a special index. As a result, searching using resource identifier is not subject to indexing delay. To use the special synchronous index, the search term for identifier should be in the pattern `identifier=[system]|[value]` or `identifier=[value]`, and any of the following search result parameters can be used: * `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If your query contains any other search parameters, the standard asynchronous index will be used instead. Note that searching against the special index is optimized for resolving a small number of matches. The search isn't optimized if your identifier search criteria matches a large number (i.e. more than 2,000) of resources. For a search query that will match a large number of resources, you can avoiding using the special synchronous index by including an additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you want to keep the default sorting order. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",
@@ -22161,8 +22635,24 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // searchable as the server might trim its generated search index in
 // those cases. Note: FHIR resources are indexed asynchronously, so
 // there might be a slight delay between the time a resource is created
-// or changes and when the change is reflected in search results. For
-// samples and detailed information, see Searching for FHIR resources
+// or changed, and the time when the change reflects in search results.
+// The only exception is resource identifier data, which is indexed
+// synchronously as a special index. As a result, searching using
+// resource identifier is not subject to indexing delay. To use the
+// special synchronous index, the search term for identifier should be
+// in the pattern `identifier=[system]|[value]` or `identifier=[value]`,
+// and any of the following search result parameters can be used: *
+// `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If
+// your query contains any other search parameters, the standard
+// asynchronous index will be used instead. Note that searching against
+// the special index is optimized for resolving a small number of
+// matches. The search isn't optimized if your identifier search
+// criteria matches a large number (i.e. more than 2,000) of resources.
+// For a search query that will match a large number of resources, you
+// can avoiding using the special synchronous index by including an
+// additional `_sort` parameter in your query. Use `_sort=-_lastUpdated`
+// if you want to keep the default sorting order. For samples and
+// detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -22242,7 +22732,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changed, and the time when the change reflects in search results. The only exception is resource identifier data, which is indexed synchronously as a special index. As a result, searching using resource identifier is not subject to indexing delay. To use the special synchronous index, the search term for identifier should be in the pattern `identifier=[system]|[value]` or `identifier=[value]`, and any of the following search result parameters can be used: * `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If your query contains any other search parameters, the standard asynchronous index will be used instead. Note that searching against the special index is optimized for resolving a small number of matches. The search isn't optimized if your identifier search criteria matches a large number (i.e. more than 2,000) of resources. For a search query that will match a large number of resources, you can avoiding using the special synchronous index by including an additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you want to keep the default sorting order. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{resourceType}/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search-type",

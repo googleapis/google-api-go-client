@@ -842,8 +842,7 @@ func (s *ReportRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReportResponse: Response message for the Report method. If the
-// request contains any invalid data, the server returns an RPC error.
+// ReportResponse: Response message for the Report method.
 type ReportResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1105,14 +1104,13 @@ type ResourceInfo struct {
 	// Container: Optional. The identifier of the container of this
 	// resource. For Google Cloud APIs, the resource container must be one
 	// of the following formats: - `projects/` - `folders/` -
-	// `organizations/` For the policy enforcement on the container level
-	// (VPCSC and Location Policy check), this field takes precedence on the
-	// container extracted from name when presents.
+	// `organizations/` Required for the policy enforcement on the container
+	// level (e.g. VPCSC, Location Policy check, Org Policy check).
 	Container string `json:"container,omitempty"`
 
-	// Location: Optional. The location of the resource. The value must be a
-	// valid zone, region or multiregion. For example: "europe-west4" or
-	// "northamerica-northeast1-a"
+	// Location: Optional. The location of the resource, it must be a valid
+	// zone, region or multiregion, for example: "europe-west4",
+	// "northamerica-northeast1-a". Required for location policy check.
 	Location string `json:"location,omitempty"`
 
 	// Name: The name of the resource referenced in the request.

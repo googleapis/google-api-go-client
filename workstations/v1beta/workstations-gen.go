@@ -209,11 +209,11 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService s
 
 // Accelerator: An accelerator card attached to the instance.
 type Accelerator struct {
-	// Count: Number of accelerator cards exposed to the instance.
+	// Count: Optional. Number of accelerator cards exposed to the instance.
 	Count int64 `json:"count,omitempty"`
 
-	// Type: Type of accelerator resource to attach to the instance, for
-	// example, "nvidia-tesla-p100".
+	// Type: Optional. Type of accelerator resource to attach to the
+	// instance, for example, "nvidia-tesla-p100".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -421,18 +421,20 @@ type CancelOperationRequest struct {
 
 // Container: A Docker container.
 type Container struct {
-	// Args: Arguments passed to the entrypoint.
+	// Args: Optional. Arguments passed to the entrypoint.
 	Args []string `json:"args,omitempty"`
 
-	// Command: If set, overrides the default ENTRYPOINT specified by the
-	// image.
+	// Command: Optional. If set, overrides the default ENTRYPOINT specified
+	// by the image.
 	Command []string `json:"command,omitempty"`
 
-	// Env: Environment variables passed to the container's entrypoint.
+	// Env: Optional. Environment variables passed to the container's
+	// entrypoint.
 	Env map[string]string `json:"env,omitempty"`
 
-	// Image: A Docker container image that defines a custom environment.
-	// Cloud Workstations provides a number of preconfigured images
+	// Image: Optional. A Docker container image that defines a custom
+	// environment. Cloud Workstations provides a number of preconfigured
+	// images
 	// (https://cloud.google.com/workstations/docs/preconfigured-base-images),
 	// but you can create your own custom container images
 	// (https://cloud.google.com/workstations/docs/custom-container-images).
@@ -442,11 +444,12 @@ type Container struct {
 	// publicly accessible.
 	Image string `json:"image,omitempty"`
 
-	// RunAsUser: If set, overrides the USER specified in the image with the
-	// given uid.
+	// RunAsUser: Optional. If set, overrides the USER specified in the
+	// image with the given uid.
 	RunAsUser int64 `json:"runAsUser,omitempty"`
 
-	// WorkingDir: If set, overrides the default DIR specified by the image.
+	// WorkingDir: Optional. If set, overrides the default DIR specified by
+	// the image.
 	WorkingDir string `json:"workingDir,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -481,8 +484,8 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 type CustomerEncryptionKey struct {
 	// KmsKey: Immutable. The name of the Google Cloud KMS encryption key.
 	// For example,
-	// `projects/PROJECT_ID/locations/REGION/keyRings/KEY_RING/cryptoKeys/KEY
-	// _NAME`. The key must be in the same region as the workstation
+	// "projects/PROJECT_ID/locations/REGION/keyRings/KEY_RING/cryptoKeys/KE
+	// Y_NAME". The key must be in the same region as the workstation
 	// configuration.
 	KmsKey string `json:"kmsKey,omitempty"`
 
@@ -581,8 +584,8 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GceConfidentialInstanceConfig: A set of Compute Engine Confidential
 // VM instance options.
 type GceConfidentialInstanceConfig struct {
-	// EnableConfidentialCompute: Whether the instance has confidential
-	// compute enabled.
+	// EnableConfidentialCompute: Optional. Whether the instance has
+	// confidential compute enabled.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -612,21 +615,22 @@ func (s *GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 
 // GceInstance: A runtime using a Compute Engine instance.
 type GceInstance struct {
-	// Accelerators: A list of the type and count of accelerator cards
-	// attached to the instance.
+	// Accelerators: Optional. A list of the type and count of accelerator
+	// cards attached to the instance.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
 
-	// BootDiskSizeGb: The size of the boot disk for the VM in gigabytes
-	// (GB). The minimum boot disk size is `30` GB. Defaults to `50` GB.
+	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in
+	// gigabytes (GB). The minimum boot disk size is `30` GB. Defaults to
+	// `50` GB.
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 
-	// ConfidentialInstanceConfig: A set of Compute Engine Confidential VM
-	// instance options.
+	// ConfidentialInstanceConfig: Optional. A set of Compute Engine
+	// Confidential VM instance options.
 	ConfidentialInstanceConfig *GceConfidentialInstanceConfig `json:"confidentialInstanceConfig,omitempty"`
 
-	// DisablePublicIpAddresses: When set to true, disables public IP
-	// addresses for VMs. If you disable public IP addresses, you must set
-	// up Private Google Access or Cloud NAT on your network. If you use
+	// DisablePublicIpAddresses: Optional. When set to true, disables public
+	// IP addresses for VMs. If you disable public IP addresses, you must
+	// set up Private Google Access or Cloud NAT on your network. If you use
 	// Private Google Access and you use `private.googleapis.com` or
 	// `restricted.googleapis.com` for Container Registry and Artifact
 	// Registry, make sure that you set up DNS records for domains
@@ -634,47 +638,73 @@ type GceInstance struct {
 	// addresses).
 	DisablePublicIpAddresses bool `json:"disablePublicIpAddresses,omitempty"`
 
-	// EnableNestedVirtualization: Whether to enable nested virtualization
-	// on instances.
+	// EnableNestedVirtualization: Optional. Whether to enable nested
+	// virtualization on Cloud Workstations VMs created under this
+	// workstation configuration. Nested virtualization lets you run virtual
+	// machine (VM) instances inside your workstation. Before enabling
+	// nested virtualization, consider the following important
+	// considerations. Cloud Workstations instances are subject to the same
+	// restrictions as Compute Engine instances
+	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/overview#restrictions):
+	// * **Organization policy**: projects, folders, or organizations may be
+	// restricted from creating nested VMs if the **Disable VM nested
+	// virtualization** constraint is enforced in the organization policy.
+	// For more information, see the Compute Engine section, Checking
+	// whether nested virtualization is allowed
+	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/managing-constraint#checking_whether_nested_virtualization_is_allowed).
+	// * **Performance**: nested VMs might experience a 10% or greater
+	// decrease in performance for workloads that are CPU-bound and possibly
+	// greater than a 10% decrease for workloads that are input/output
+	// bound. * **Machine Type**: nested virtualization can only be enabled
+	// on workstation configurations that specify a machine_type in the N1
+	// or N2 machine series. * **GPUs**: nested virtualization may not be
+	// enabled on workstation configurations with accelerators. *
+	// **Operating System**: Because Container-Optimized OS
+	// (https://cloud.google.com/compute/docs/images/os-details#container-optimized_os_cos)
+	// does not support nested virtualization, when nested virtualization is
+	// enabled, the underlying Compute Engine VM instances boot from an
+	// Ubuntu LTS
+	// (https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts)
+	// image.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 
-	// MachineType: The type of machine to use for VM instances—for
-	// example, `e2-standard-4`. For more information about machine types
-	// that Cloud Workstations supports, see the list of available machine
-	// types
+	// MachineType: Optional. The type of machine to use for VM
+	// instances—for example, "e2-standard-4". For more information
+	// about machine types that Cloud Workstations supports, see the list of
+	// available machine types
 	// (https://cloud.google.com/workstations/docs/available-machine-types).
 	MachineType string `json:"machineType,omitempty"`
 
-	// PoolSize: The number of VMs that the system should keep idle so that
-	// new workstations can be started quickly for new users. Defaults to
-	// `0` in the API.
+	// PoolSize: Optional. The number of VMs that the system should keep
+	// idle so that new workstations can be started quickly for new users.
+	// Defaults to `0` in the API.
 	PoolSize int64 `json:"poolSize,omitempty"`
 
 	// PooledInstances: Output only. Number of instances currently available
 	// in the pool for faster workstation startup.
 	PooledInstances int64 `json:"pooledInstances,omitempty"`
 
-	// ServiceAccount: The email address of the service account for Cloud
-	// Workstations VMs created with this configuration. When specified, be
-	// sure that the service account has `logginglogEntries.create`
-	// permission on the project so it can write logs out to Cloud Logging.
-	// If using a custom container image, the service account must have
-	// permissions to pull the specified image. If you as the administrator
-	// want to be able to `ssh` into the underlying VM, you need to set this
-	// value to a service account for which you have the
-	// `iam.serviceAccounts.actAs` permission. Conversely, if you don't want
-	// anyone to be able to `ssh` into the underlying VM, use a service
-	// account where no one has that permission. If not set, VMs run with a
-	// service account provided by the Cloud Workstations service, and the
-	// image must be publicly accessible.
+	// ServiceAccount: Optional. The email address of the service account
+	// for Cloud Workstations VMs created with this configuration. When
+	// specified, be sure that the service account has
+	// `logginglogEntries.create` permission on the project so it can write
+	// logs out to Cloud Logging. If using a custom container image, the
+	// service account must have permissions to pull the specified image. If
+	// you as the administrator want to be able to `ssh` into the underlying
+	// VM, you need to set this value to a service account for which you
+	// have the `iam.serviceAccounts.actAs` permission. Conversely, if you
+	// don't want anyone to be able to `ssh` into the underlying VM, use a
+	// service account where no one has that permission. If not set, VMs run
+	// with a service account provided by the Cloud Workstations service,
+	// and the image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// ShieldedInstanceConfig: A set of Compute Engine Shielded instance
-	// options.
+	// ShieldedInstanceConfig: Optional. A set of Compute Engine Shielded
+	// instance options.
 	ShieldedInstanceConfig *GceShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
 
-	// Tags: Network tags to add to the Compute Engine machines backing the
-	// workstations. This option applies network tags
+	// Tags: Optional. Network tags to add to the Compute Engine VMs backing
+	// the workstations. This option applies network tags
 	// (https://cloud.google.com/vpc/docs/add-remove-network-tags) to VMs
 	// created with this configuration. These network tags enable the
 	// creation of firewall rules
@@ -705,28 +735,27 @@ func (s *GceInstance) MarshalJSON() ([]byte, error) {
 }
 
 // GceRegionalPersistentDisk: A PersistentDirectory backed by a Compute
-// Engine regional persistent disk. The `persistentDirectories[]` field
-// is repeated, but it may contain only one entry. It creates a
-// persistent disk
-// (https://cloud.google.com/compute/docs/disks/persistent-disks) that
-// mounts to the workstation VM at `/home` when the session starts and
-// detaches when the session ends. If this field is empty, workstations
-// created with this configuration do not have a persistent home
-// directory.
+// Engine regional persistent disk. The persistent_directories field is
+// repeated, but it may contain only one entry. It creates a persistent
+// disk (https://cloud.google.com/compute/docs/disks/persistent-disks)
+// that mounts to the workstation VM at `/home` when the session starts
+// and detaches when the session ends. If this field is empty,
+// workstations created with this configuration do not have a persistent
+// home directory.
 type GceRegionalPersistentDisk struct {
-	// DiskType: The type of the persistent disk
+	// DiskType: Optional. The type of the persistent disk
 	// (https://cloud.google.com/compute/docs/disks#disk-types) for the home
-	// directory. Defaults to `pd-standard`.
+	// directory. Defaults to "pd-standard".
 	DiskType string `json:"diskType,omitempty"`
 
-	// FsType: Type of file system that the disk should be formatted with.
-	// The workstation image must support this file system type. Must be
-	// empty if source_snapshot is set. Defaults to `ext4`.
+	// FsType: Optional. Type of file system that the disk should be
+	// formatted with. The workstation image must support this file system
+	// type. Must be empty if source_snapshot is set. Defaults to "ext4".
 	FsType string `json:"fsType,omitempty"`
 
-	// ReclaimPolicy: Whether the persistent disk should be deleted when the
-	// workstation is deleted. Valid values are `DELETE` and `RETAIN`.
-	// Defaults to `DELETE`.
+	// ReclaimPolicy: Optional. Whether the persistent disk should be
+	// deleted when the workstation is deleted. Valid values are `DELETE`
+	// and `RETAIN`. Defaults to `DELETE`.
 	//
 	// Possible values:
 	//   "RECLAIM_POLICY_UNSPECIFIED" - Do not use.
@@ -736,15 +765,15 @@ type GceRegionalPersistentDisk struct {
 	// An administrator must manually delete the disk.
 	ReclaimPolicy string `json:"reclaimPolicy,omitempty"`
 
-	// SizeGb: The GB capacity of a persistent home directory for each
-	// workstation created with this configuration. Must be empty if
-	// `source_snapshot` is set. Valid values are `10`, `50`, `100`, `200`,
+	// SizeGb: Optional. The GB capacity of a persistent home directory for
+	// each workstation created with this configuration. Must be empty if
+	// source_snapshot is set. Valid values are `10`, `50`, `100`, `200`,
 	// `500`, or `1000`. Defaults to `200`. If less than `200` GB, the
-	// `diskType` must be `pd-balanced` or `pd-ssd`.
+	// disk_type must be "pd-balanced" or "pd-ssd".
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
-	// SourceSnapshot: Name of the snapshot to use as the source for the
-	// disk. If set, size_gb and fs_type must be empty.
+	// SourceSnapshot: Optional. Name of the snapshot to use as the source
+	// for the disk. If set, size_gb and fs_type must be empty.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskType") to
@@ -773,14 +802,15 @@ func (s *GceRegionalPersistentDisk) MarshalJSON() ([]byte, error) {
 // GceShieldedInstanceConfig: A set of Compute Engine Shielded instance
 // options.
 type GceShieldedInstanceConfig struct {
-	// EnableIntegrityMonitoring: Whether the instance has integrity
-	// monitoring enabled.
+	// EnableIntegrityMonitoring: Optional. Whether the instance has
+	// integrity monitoring enabled.
 	EnableIntegrityMonitoring bool `json:"enableIntegrityMonitoring,omitempty"`
 
-	// EnableSecureBoot: Whether the instance has Secure Boot enabled.
+	// EnableSecureBoot: Optional. Whether the instance has Secure Boot
+	// enabled.
 	EnableSecureBoot bool `json:"enableSecureBoot,omitempty"`
 
-	// EnableVtpm: Whether the instance has the vTPM enabled.
+	// EnableVtpm: Optional. Whether the instance has the vTPM enabled.
 	EnableVtpm bool `json:"enableVtpm,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1121,11 +1151,11 @@ func (s *ListWorkstationConfigsResponse) MarshalJSON() ([]byte, error) {
 
 // ListWorkstationsResponse: Response message for ListWorkstations.
 type ListWorkstationsResponse struct {
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Optional. Token to retrieve the next page of results,
+	// or empty if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Unreachable: Unreachable resources.
+	// Unreachable: Optional. Unreachable resources.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// Workstations: The requested workstations.
@@ -1183,8 +1213,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1276,7 +1306,8 @@ type PersistentDirectory struct {
 	// disk.
 	GcePd *GceRegionalPersistentDisk `json:"gcePd,omitempty"`
 
-	// MountPath: Location of this directory in the running workstation.
+	// MountPath: Optional. Location of this directory in the running
+	// workstation.
 	MountPath string `json:"mountPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcePd") to
@@ -1316,7 +1347,7 @@ func (s *PersistentDirectory) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1325,17 +1356,17 @@ func (s *PersistentDirectory) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1412,19 +1443,20 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PrivateClusterConfig: Configuration options for private clusters.
+// PrivateClusterConfig: Configuration options for private workstation
+// clusters.
 type PrivateClusterConfig struct {
-	// AllowedProjects: Additional projects that are allowed to attach to
-	// the workstation cluster's service attachment. By default, the
-	// workstation cluster's project and the VPC host project (if different)
-	// are allowed.
+	// AllowedProjects: Optional. Additional projects that are allowed to
+	// attach to the workstation cluster's service attachment. By default,
+	// the workstation cluster's project and the VPC host project (if
+	// different) are allowed.
 	AllowedProjects []string `json:"allowedProjects,omitempty"`
 
 	// ClusterHostname: Output only. Hostname for the workstation cluster.
 	// This field will be populated only when private endpoint is enabled.
-	// To access workstations in the cluster, create a new DNS zone mapping
-	// this domain name to an internal IP address and a forwarding rule
-	// mapping that address to the service attachment.
+	// To access workstations in the workstation cluster, create a new DNS
+	// zone mapping this domain name to an internal IP address and a
+	// forwarding rule mapping that address to the service attachment.
 	ClusterHostname string `json:"clusterHostname,omitempty"`
 
 	// EnablePrivateEndpoint: Immutable. Whether Workstations endpoint is
@@ -1433,8 +1465,9 @@ type PrivateClusterConfig struct {
 
 	// ServiceAttachmentUri: Output only. Service attachment URI for the
 	// workstation cluster. The service attachemnt is created when private
-	// endpoint is enabled. To access workstations in the cluster, configure
-	// access to the managed service using Private Service Connect
+	// endpoint is enabled. To access workstations in the workstation
+	// cluster, configure access to the managed service using Private
+	// Service Connect
 	// (https://cloud.google.com/vpc/docs/configure-private-service-connect-services).
 	ServiceAttachmentUri string `json:"serviceAttachmentUri,omitempty"`
 
@@ -1464,10 +1497,10 @@ func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 
 // ReadinessCheck: A readiness check to be performed on a workstation.
 type ReadinessCheck struct {
-	// Path: Path to which the request should be sent.
+	// Path: Optional. Path to which the request should be sent.
 	Path string `json:"path,omitempty"`
 
-	// Port: Port to which the request should be sent.
+	// Port: Optional. Port to which the request should be sent.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Path") to
@@ -1532,12 +1565,12 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // StartWorkstationRequest: Request message for StartWorkstation.
 type StartWorkstationRequest struct {
-	// Etag: If set, the request will be rejected if the latest version of
-	// the workstation on the server does not have this ETag.
+	// Etag: Optional. If set, the request will be rejected if the latest
+	// version of the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set, validate the request and preview the review,
-	// but do not actually apply it.
+	// ValidateOnly: Optional. If set, validate the request and preview the
+	// review, but do not actually apply it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -1609,12 +1642,12 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // StopWorkstationRequest: Request message for StopWorkstation.
 type StopWorkstationRequest struct {
-	// Etag: If set, the request will be rejected if the latest version of
-	// the workstation on the server does not have this ETag.
+	// Etag: Optional. If set, the request will be rejected if the latest
+	// version of the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set, validate the request and preview the review,
-	// but do not actually apply it.
+	// ValidateOnly: Optional. If set, validate the request and preview the
+	// review, but do not actually apply it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -1709,25 +1742,25 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // Workstation: A single instance of a developer workstation with its
 // own persistent storage.
 type Workstation struct {
-	// Annotations: Client-specified annotations.
+	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// CreateTime: Output only. Time when this resource was created.
+	// CreateTime: Output only. Time when this workstation was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DeleteTime: Output only. Time when this resource was soft-deleted.
+	// DeleteTime: Output only. Time when this workstation was soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// DisplayName: Human-readable name for this resource.
+	// DisplayName: Optional. Human-readable name for this workstation.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Env: Environment variables passed to the workstation container's
-	// entrypoint.
+	// Env: Optional. Environment variables passed to the workstation
+	// container's entrypoint.
 	Env map[string]string `json:"env,omitempty"`
 
-	// Etag: Checksum computed by the server. May be sent on update and
-	// delete requests to make sure that the client has an up-to-date value
-	// before proceeding.
+	// Etag: Optional. Checksum computed by the server. May be sent on
+	// update and delete requests to make sure that the client has an
+	// up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// Host: Output only. Host to which clients can send HTTPS traffic that
@@ -1737,14 +1770,16 @@ type Workstation struct {
 	// in the format `{port}-{host}`.
 	Host string `json:"host,omitempty"`
 
-	// Labels: Client-specified labels that are applied to the resource and
-	// that are also propagated to the underlying Compute Engine resources.
+	// Labels: Optional. Labels
+	// (https://cloud.google.com/workstations/docs/label-resources) that are
+	// applied to the workstation and that are also propagated to the
+	// underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Full name of this resource.
+	// Name: Full name of this workstation.
 	Name string `json:"name,omitempty"`
 
-	// Reconciling: Output only. Indicates whether this resource is
+	// Reconciling: Output only. Indicates whether this workstation is
 	// currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
 
@@ -1762,10 +1797,10 @@ type Workstation struct {
 	State string `json:"state,omitempty"`
 
 	// Uid: Output only. A system-assigned unique identifier for this
-	// resource.
+	// workstation.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. Time when this resource was most recently
+	// UpdateTime: Output only. Time when this workstation was most recently
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1796,70 +1831,78 @@ func (s *Workstation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkstationCluster: A grouping of workstation configurations and the
-// associated workstations in that region.
+// WorkstationCluster: A workstation cluster resource in the Cloud
+// Workstations API. Defines a group of workstations in a particular
+// region and the VPC network they're attached to.
 type WorkstationCluster struct {
-	// Annotations: Client-specified annotations.
+	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// Conditions: Output only. Status conditions describing the current
-	// resource state.
+	// Conditions: Output only. Status conditions describing the workstation
+	// cluster's current state.
 	Conditions []*Status `json:"conditions,omitempty"`
 
 	// ControlPlaneIp: Output only. The private IP address of the control
-	// plane for this cluster. Workstation VMs need access to this IP
-	// address to work with the service, so make sure that your firewall
-	// rules allow egress from the workstation VMs to this address.
+	// plane for this workstation cluster. Workstation VMs need access to
+	// this IP address to work with the service, so make sure that your
+	// firewall rules allow egress from the workstation VMs to this address.
 	ControlPlaneIp string `json:"controlPlaneIp,omitempty"`
 
-	// CreateTime: Output only. Time when this resource was created.
+	// CreateTime: Output only. Time when this workstation cluster was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Degraded: Output only. Whether this resource is in degraded mode, in
-	// which case it may require user action to restore full functionality.
-	// Details can be found in the `conditions` field.
+	// Degraded: Output only. Whether this workstation cluster is in
+	// degraded mode, in which case it may require user action to restore
+	// full functionality. Details can be found in conditions.
 	Degraded bool `json:"degraded,omitempty"`
 
-	// DeleteTime: Output only. Time when this resource was soft-deleted.
+	// DeleteTime: Output only. Time when this workstation cluster was
+	// soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// DisplayName: Human-readable name for this resource.
+	// DisplayName: Optional. Human-readable name for this workstation
+	// cluster.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Etag: Checksum computed by the server. May be sent on update and
-	// delete requests to make sure that the client has an up-to-date value
-	// before proceeding.
+	// Etag: Optional. Checksum computed by the server. May be sent on
+	// update and delete requests to make sure that the client has an
+	// up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: Client-specified labels that are applied to the resource and
-	// that are also propagated to the underlying Compute Engine resources.
+	// Labels: Optional. Labels
+	// (https://cloud.google.com/workstations/docs/label-resources) that are
+	// applied to the workstation cluster and that are also propagated to
+	// the underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Full name of this resource.
+	// Name: Full name of this workstation cluster.
 	Name string `json:"name,omitempty"`
 
 	// Network: Immutable. Name of the Compute Engine network in which
-	// instances associated with this cluster will be created.
+	// instances associated with this workstation cluster will be created.
 	Network string `json:"network,omitempty"`
 
-	// PrivateClusterConfig: Configuration for private cluster.
+	// PrivateClusterConfig: Optional. Configuration for private workstation
+	// cluster.
 	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 
-	// Reconciling: Output only. Indicates whether this resource is
-	// currently being updated to match its intended state.
+	// Reconciling: Output only. Indicates whether this workstation cluster
+	// is currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
 
 	// Subnetwork: Immutable. Name of the Compute Engine subnetwork in which
-	// instances associated with this cluster will be created. Must be part
-	// of the subnetwork specified for this cluster.
+	// instances associated with this workstation cluster will be created.
+	// Must be part of the subnetwork specified for this workstation
+	// cluster.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// Uid: Output only. A system-assigned unique identifier for this
-	// resource.
+	// workstation cluster.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. Time when this resource was most recently
-	// updated.
+	// UpdateTime: Output only. Time when this workstation cluster was most
+	// recently updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1889,39 +1932,48 @@ func (s *WorkstationCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkstationConfig: A set of configuration options that describe how a
-// workstation runs. Workstation configurations are intended to be
-// shared across multiple workstations.
+// WorkstationConfig: A workstation configuration resource in the Cloud
+// Workstations API. Workstation configurations act as templates for
+// workstations. The workstation configuration defines details such as
+// the workstation virtual machine (VM) instance type, persistent
+// storage, container image defining environment, which IDE or Code
+// Editor to use, and more. Administrators and platform teams can also
+// use Identity and Access Management (IAM)
+// (https://cloud.google.com/iam/docs/overview) rules to grant access to
+// teams or to individual developers.
 type WorkstationConfig struct {
-	// Annotations: Client-specified annotations.
+	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// Conditions: Output only. Status conditions describing the current
 	// resource state.
 	Conditions []*Status `json:"conditions,omitempty"`
 
-	// Container: Container that runs upon startup for each workstation
-	// using this workstation configuration.
+	// Container: Optional. Container that runs upon startup for each
+	// workstation using this workstation configuration.
 	Container *Container `json:"container,omitempty"`
 
-	// CreateTime: Output only. Time when this resource was created.
+	// CreateTime: Output only. Time when this workstation configuration was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Degraded: Output only. Whether this resource is degraded, in which
 	// case it may require user action to restore full functionality. See
-	// also the `conditions` field.
+	// also the conditions field.
 	Degraded bool `json:"degraded,omitempty"`
 
-	// DeleteTime: Output only. Time when this resource was soft-deleted.
+	// DeleteTime: Output only. Time when this workstation configuration was
+	// soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// DisplayName: Human-readable name for this resource.
+	// DisplayName: Optional. Human-readable name for this workstation
+	// configuration.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// EnableAuditAgent: Whether to enable Linux `auditd` logging on the
-	// workstation. When enabled, a service account must also be specified
-	// that has `logging.buckets.write` permission on the project. Operating
-	// system audit logging is distinct from Cloud Audit Logs
+	// EnableAuditAgent: Optional. Whether to enable Linux `auditd` logging
+	// on the workstation. When enabled, a service account must also be
+	// specified that has `logging.buckets.write` permission on the project.
+	// Operating system audit logging is distinct from Cloud Audit Logs
 	// (https://cloud.google.com/workstations/docs/audit-logging).
 	EnableAuditAgent bool `json:"enableAuditAgent,omitempty"`
 
@@ -1940,67 +1992,69 @@ type WorkstationConfig struct {
 	// after the workstation configuration is created.
 	EncryptionKey *CustomerEncryptionKey `json:"encryptionKey,omitempty"`
 
-	// Etag: Checksum computed by the server. May be sent on update and
-	// delete requests to make sure that the client has an up-to-date value
-	// before proceeding.
+	// Etag: Optional. Checksum computed by the server. May be sent on
+	// update and delete requests to make sure that the client has an
+	// up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Host: Runtime host for the workstation.
+	// Host: Optional. Runtime host for the workstation.
 	Host *Host `json:"host,omitempty"`
 
-	// IdleTimeout: Number of seconds to wait before automatically stopping
-	// a workstation after it last received user traffic. A value of `0s`
-	// indicates that Cloud Workstations VMs created with this configuration
-	// should never time out due to idleness. Provide duration
+	// IdleTimeout: Optional. Number of seconds to wait before automatically
+	// stopping a workstation after it last received user traffic. A value
+	// of "0s" indicates that Cloud Workstations VMs created with this
+	// configuration should never time out due to idleness. Provide duration
 	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration)
-	// terminated by `s` for seconds—for example, `7200s` (2 hours). The
-	// default is `1200s` (20 minutes).
+	// terminated by `s` for seconds—for example, "7200s" (2 hours). The
+	// default is "1200s" (20 minutes).
 	IdleTimeout string `json:"idleTimeout,omitempty"`
 
-	// Labels: Client-specified labels that are applied to the resource and
-	// that are also propagated to the underlying Compute Engine resources.
+	// Labels: Optional. Labels
+	// (https://cloud.google.com/workstations/docs/label-resources) that are
+	// applied to the workstation configuration and that are also propagated
+	// to the underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Full name of this resource.
+	// Name: Full name of this workstation configuration.
 	Name string `json:"name,omitempty"`
 
-	// PersistentDirectories: Directories to persist across workstation
-	// sessions.
+	// PersistentDirectories: Optional. Directories to persist across
+	// workstation sessions.
 	PersistentDirectories []*PersistentDirectory `json:"persistentDirectories,omitempty"`
 
-	// ReadinessChecks: Readiness checks to perform when starting a
-	// workstation using this workstation configuration. Mark a workstation
-	// as running only after all specified readiness checks return 200
-	// status codes.
+	// ReadinessChecks: Optional. Readiness checks to perform when starting
+	// a workstation using this workstation configuration. Mark a
+	// workstation as running only after all specified readiness checks
+	// return 200 status codes.
 	ReadinessChecks []*ReadinessCheck `json:"readinessChecks,omitempty"`
 
-	// Reconciling: Output only. Indicates whether this resource is
-	// currently being updated to match its intended state.
+	// Reconciling: Output only. Indicates whether this workstation
+	// configuration is currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
 
-	// RunningTimeout: Number of seconds that a workstation can run until it
-	// is automatically shut down. We recommend that workstations be shut
-	// down daily to reduce costs and so that security updates can be
-	// applied upon restart. The `idleTimeout` and `runningTimeout`
-	// parameters are independent of each other. Note that the
-	// `runningTimeout` parameter shuts down VMs after the specified time,
+	// RunningTimeout: Optional. Number of seconds that a workstation can
+	// run until it is automatically shut down. We recommend that
+	// workstations be shut down daily to reduce costs and so that security
+	// updates can be applied upon restart. The idle_timeout and
+	// running_timeout fields are independent of each other. Note that the
+	// running_timeout field shuts down VMs after the specified time,
 	// regardless of whether or not the VMs are idle. Provide duration
-	// terminated by `s` for seconds—for example, `54000s` (15 hours).
-	// Defaults to `43200s` (12 hours). A value of `0` indicates that
+	// terminated by `s` for seconds—for example, "54000s" (15 hours).
+	// Defaults to "43200s" (12 hours). A value of "0s" indicates that
 	// workstations using this configuration should never time out. If
-	// `encryption_key` is set, it must be greater than `0` and less than
-	// `86400s` (24 hours). Warning: A value of `0s` indicates that Cloud
-	// Workstations VMs created with this configuration have no maximum
-	// running time. This is strongly discouraged because you incur costs
-	// and will not pick up security updates.
+	// encryption_key is set, it must be greater than "0s" and less than
+	// "86400s" (24 hours). Warning: A value of "0s" indicates that
+	// Cloud Workstations VMs created with this configuration have no
+	// maximum running time. This is strongly discouraged because you incur
+	// costs and will not pick up security updates.
 	RunningTimeout string `json:"runningTimeout,omitempty"`
 
 	// Uid: Output only. A system-assigned unique identifier for this
-	// resource.
+	// workstation configuration.
 	Uid string `json:"uid,omitempty"`
 
-	// UpdateTime: Output only. Time when this resource was most recently
-	// updated.
+	// UpdateTime: Output only. Time when this workstation configuration was
+	// most recently updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2814,7 +2868,7 @@ func (c *ProjectsLocationsWorkstationClustersCreateCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2976,12 +3030,12 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request will be rejected if the latest version of the workstation cluster on the server does not have this ETag.",
+	//       "description": "Optional. If set, the request will be rejected if the latest version of the workstation cluster on the server does not have this ETag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set, any workstation configurations and workstations in the workstation cluster are also deleted. Otherwise, the request only works if the workstation cluster has no configurations or workstations.",
+	//       "description": "Optional. If set, any workstation configurations and workstations in the workstation cluster are also deleted. Otherwise, the request only works if the workstation cluster has no configurations or workstations.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2993,7 +3047,7 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3297,13 +3351,13 @@ func (c *ProjectsLocationsWorkstationClustersListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of items to return.",
+	//       "description": "Optional. Maximum number of items to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. next_page_token value returned from a previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3360,7 +3414,7 @@ type ProjectsLocationsWorkstationClustersPatchCall struct {
 
 // Patch: Updates an existing workstation cluster.
 //
-// - name: Full name of this resource.
+// - name: Full name of this workstation cluster.
 func (r *ProjectsLocationsWorkstationClustersService) Patch(name string, workstationcluster *WorkstationCluster) *ProjectsLocationsWorkstationClustersPatchCall {
 	c := &ProjectsLocationsWorkstationClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3492,12 +3546,12 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set, and the workstation cluster is not found, a new workstation cluster will be created. In this situation, update_mask is ignored.",
+	//       "description": "Optional. If set, and the workstation cluster is not found, a new workstation cluster will be created. In this situation, update_mask is ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Full name of this resource.",
+	//       "description": "Full name of this workstation cluster.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+$",
 	//       "required": true,
@@ -3510,7 +3564,7 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3673,7 +3727,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall) Do(op
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3836,12 +3890,12 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request is rejected if the latest version of the workstation configuration on the server does not have this ETag.",
+	//       "description": "Optional. If set, the request is rejected if the latest version of the workstation configuration on the server does not have this ETag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set, any workstations in the workstation configuration are also deleted. Otherwise, the request works only if the workstation configuration has no workstations.",
+	//       "description": "Optional. If set, any workstations in the workstation configuration are also deleted. Otherwise, the request works only if the workstation configuration has no workstations.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3853,7 +3907,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Do(op
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4333,13 +4387,13 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsListCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of items to return.",
+	//       "description": "Optional. Maximum number of items to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. next_page_token value returned from a previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4528,13 +4582,13 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsListUsableCall) D
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of items to return.",
+	//       "description": "Optional. Maximum number of items to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. next_page_token value returned from a previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4591,7 +4645,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall struct {
 
 // Patch: Updates an existing workstation configuration.
 //
-// - name: Full name of this resource.
+// - name: Full name of this workstation configuration.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Patch(name string, workstationconfig *WorkstationConfig) *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall {
 	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4724,12 +4778,12 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set and the workstation configuration is not found, a new workstation configuration will be created. In this situation, update_mask is ignored.",
+	//       "description": "Optional. If set and the workstation configuration is not found, a new workstation configuration will be created. In this situation, update_mask is ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Full name of this resource.",
+	//       "description": "Full name of this workstation configuration.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+/workstationConfigs/[^/]+$",
 	//       "required": true,
@@ -4742,7 +4796,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) Do(opt
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5201,7 +5255,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsCreat
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5355,7 +5409,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDelet
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.",
+	//       "description": "Optional. If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5367,7 +5421,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDelet
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5991,13 +6045,13 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListC
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of items to return.",
+	//       "description": "Optional. Maximum number of items to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. next_page_token value returned from a previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6185,13 +6239,13 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListU
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of items to return.",
+	//       "description": "Optional. Maximum number of items to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. next_page_token value returned from a previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6248,7 +6302,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall
 
 // Patch: Updates an existing workstation.
 //
-// - name: Full name of this resource.
+// - name: Full name of this workstation.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) Patch(name string, workstation *Workstation) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
 	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6380,12 +6434,12 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set and the workstation configuration is not found, a new workstation configuration is created. In this situation, update_mask is ignored.",
+	//       "description": "Optional. If set and the workstation configuration is not found, a new workstation configuration is created. In this situation, update_mask is ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Full name of this resource.",
+	//       "description": "Full name of this workstation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+/workstationConfigs/[^/]+/workstations/[^/]+$",
 	//       "required": true,
@@ -6398,7 +6452,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not actually apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

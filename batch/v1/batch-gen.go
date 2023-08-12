@@ -1064,13 +1064,14 @@ type Disk struct {
 	// for local ssds. We only support "SCSI" for persistent disks now.
 	DiskInterface string `json:"diskInterface,omitempty"`
 
-	// Image: Name of an image used as the data source. For example, the
-	// following are all valid URLs: * Specify the image by its family name:
-	// projects/project/global/images/family/image_family * Specify the
-	// image version: projects/project/global/images/image_version You can
-	// also use Batch customized image in short names. The following image
-	// values are supported for a boot disk: * `batch-debian`: use Batch
-	// Debian images. * `batch-centos`: use Batch CentOS images. *
+	// Image: URL for a VM image to use as the data source for this disk.
+	// For example, the following are all valid URLs: * Specify the image by
+	// its family name:
+	// projects/{project}/global/images/family/{image_family} * Specify the
+	// image version: projects/{project}/global/images/{image_version} You
+	// can also use Batch customized image in short names. The following
+	// image values are supported for a boot disk: * `batch-debian`: use
+	// Batch Debian images. * `batch-centos`: use Batch CentOS images. *
 	// `batch-cos`: use Batch Container-Optimized images. *
 	// `batch-hpc-centos`: use Batch HPC CentOS images.
 	Image string `json:"image,omitempty"`
@@ -1209,9 +1210,8 @@ type InstancePolicy struct {
 
 	// Disks: Non-boot disks to be attached for each VM created by this
 	// InstancePolicy. New disks will be deleted when the VM is deleted. A
-	// non bootable disk is a disk that can be of a device with a file
-	// system or a raw storage drive that is not ready for data storage and
-	// accessing.
+	// non-boot disk is a disk that can be of a device with a file system or
+	// a raw storage drive that is not ready for data storage and accessing.
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 
 	// MachineType: The Compute Engine machine type.
@@ -1975,9 +1975,10 @@ func (s *NFS) MarshalJSON() ([]byte, error) {
 type NetworkInterface struct {
 	// Network: The URL of an existing network resource. You can specify the
 	// network as a full or partial URL. For example, the following are all
-	// valid URLs:
-	// https://www.googleapis.com/compute/v1/projects/project/global/networks/network
-	// projects/project/global/networks/network global/networks/network
+	// valid URLs: *
+	// https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
+	// * projects/{project}/global/networks/{network} *
+	// global/networks/{network}
 	Network string `json:"network,omitempty"`
 
 	// NoExternalIpAddress: Default is false (with an external IP address).
@@ -1991,10 +1992,10 @@ type NetworkInterface struct {
 
 	// Subnetwork: The URL of an existing subnetwork resource in the
 	// network. You can specify the subnetwork as a full or partial URL. For
-	// example, the following are all valid URLs:
-	// https://www.googleapis.com/compute/v1/projects/project/regions/region/subnetworks/subnetwork
-	// projects/project/regions/region/subnetworks/subnetwork
-	// regions/region/subnetworks/subnetwork
+	// example, the following are all valid URLs: *
+	// https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}
+	// * projects/{project}/regions/{region}/subnetworks/{subnetwork} *
+	// regions/{region}/subnetworks/{subnetwork}
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Network") to
@@ -2075,8 +2076,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type

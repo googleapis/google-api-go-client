@@ -1655,8 +1655,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -7695,7 +7695,7 @@ type ProjectsLocationsStreamsRunCall struct {
 }
 
 // Run: Use this method to start, resume or recover a stream with a non
-// default CDC strategy.
+// default CDC strategy. NOTE: This feature is currently experimental.
 //
 //   - name: Name of the stream resource to start, in the format:
 //     projects/{project_id}/locations/{location}/streams/{stream_name}.
@@ -7797,7 +7797,7 @@ func (c *ProjectsLocationsStreamsRunCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Use this method to start, resume or recover a stream with a non default CDC strategy.",
+	//   "description": "Use this method to start, resume or recover a stream with a non default CDC strategy. NOTE: This feature is currently experimental.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "datastream.projects.locations.streams.run",

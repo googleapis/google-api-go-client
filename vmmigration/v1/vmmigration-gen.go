@@ -614,6 +614,17 @@ type AwsSourceVmDetails struct {
 	//   "BIOS" - The firmware is BIOS.
 	Firmware string `json:"firmware,omitempty"`
 
+	// VmCapabilities: Output only. Unordered list. List of VM certain
+	// capabilities needed for some Compute Engine features.
+	//
+	// Possible values:
+	//   "VM_CAPABILITY_UNSPECIFIED" - Unknown capability.
+	//   "VM_CAPABILITY_NVME_STORAGE_ACCESS" - NVMe driver install and the
+	// VM can use NVMe PD or local SSD.
+	//   "VM_CAPABILITY_GVNIC_NETWORK_INTERFACE" - gVNIC virtual NIC driver
+	// supported.
+	VmCapabilities []string `json:"vmCapabilities,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "CommittedStorageBytes") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2575,8 +2586,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type

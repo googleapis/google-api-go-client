@@ -2201,6 +2201,50 @@ func (s *GCSPayloadInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GenericInsight: An insight about an asset (experimental insight)
+type GenericInsight struct {
+	// AdditionalInformation: Output only. Additional information about the
+	// insight, each entry can be a logical entry and must make sense if it
+	// is displayed with line breaks between each entry. Text can contain md
+	// style links
+	AdditionalInformation []string `json:"additionalInformation,omitempty"`
+
+	// DefaultMessage: Output only. In case message_code is not yet known by
+	// the client default_message will be the message to be used instead.
+	// Text can contain md file style links.
+	DefaultMessage string `json:"defaultMessage,omitempty"`
+
+	// MessageId: Output only. Represents a globally unique message id for
+	// this insight, can be used for localization purposes, in case
+	// message_code is not yet known by the client use default_message
+	// instead.
+	MessageId int64 `json:"messageId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalInformation") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalInformation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenericInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod GenericInsight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GenericPlatformDetails: Generic platform details.
 type GenericPlatformDetails struct {
 	// Location: Free text representation of the machine location. The
@@ -2809,11 +2853,14 @@ func (s *InlinePayloadInfo) MarshalJSON() ([]byte, error) {
 
 // Insight: An insight about an asset.
 type Insight struct {
+	// GenericInsight: Output only. A generic insight about an asset.
+	GenericInsight *GenericInsight `json:"genericInsight,omitempty"`
+
 	// MigrationInsight: Output only. An insight about potential migrations
 	// for an asset.
 	MigrationInsight *MigrationInsight `json:"migrationInsight,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MigrationInsight") to
+	// ForceSendFields is a list of field names (e.g. "GenericInsight") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2821,7 +2868,7 @@ type Insight struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MigrationInsight") to
+	// NullFields is a list of field names (e.g. "GenericInsight") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -3949,8 +3996,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type

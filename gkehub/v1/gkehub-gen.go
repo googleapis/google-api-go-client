@@ -1777,15 +1777,15 @@ type ConfigManagementSyncState struct {
 	// Code: Sync status code
 	//
 	// Possible values:
-	//   "SYNC_CODE_UNSPECIFIED" - ACM cannot determine a sync code
-	//   "SYNCED" - ACM successfully synced the git Repo with the cluster
-	//   "PENDING" - ACM is in the progress of syncing a new change
-	//   "ERROR" - Indicates an error configuring ACM, and user action is
-	// required
-	//   "NOT_CONFIGURED" - ACM has been installed (operator manifest
-	// deployed), but not configured.
-	//   "NOT_INSTALLED" - ACM has not been installed (no operator pod
-	// found)
+	//   "SYNC_CODE_UNSPECIFIED" - Config Sync cannot determine a sync code
+	//   "SYNCED" - Config Sync successfully synced the git Repo with the
+	// cluster
+	//   "PENDING" - Config Sync is in the progress of syncing a new change
+	//   "ERROR" - Indicates an error configuring Config Sync, and user
+	// action is required
+	//   "NOT_CONFIGURED" - Config Sync has been installed but not
+	// configured
+	//   "NOT_INSTALLED" - Config Sync has not been installed
 	//   "UNAUTHORIZED" - Error authorizing with the cluster
 	//   "UNREACHABLE" - Cluster could not be reached
 	Code string `json:"code,omitempty"`
@@ -2723,6 +2723,10 @@ type IdentityServiceAzureADConfig struct {
 	// Tenant: Kind of Azure AD account to be authenticated. Supported
 	// values are or for accounts belonging to a specific tenant.
 	Tenant string `json:"tenant,omitempty"`
+
+	// UserClaim: Optional. Claim in the AzureAD ID Token that holds the
+	// user details.
+	UserClaim string `json:"userClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
@@ -4124,8 +4128,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -4263,7 +4267,7 @@ func (s *Origin) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -4272,17 +4276,17 @@ func (s *Origin) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.

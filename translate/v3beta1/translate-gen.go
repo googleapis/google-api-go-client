@@ -268,15 +268,16 @@ type BatchDocumentOutputConfig struct {
 	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The naming format of translation output files follows (for target
 	// language code [trg]): `translation_output`:
-	// gs://translation_output/a_b_c_[trg]_translation.[extension]
+	// `gs://translation_output/a_b_c_[trg]_translation.[extension]`
 	// `glossary_translation_output`:
-	// gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]`.
 	// The output document will maintain the same file format as the input
 	// document. The naming format of error output files follows (for target
 	// language code [trg]): `error_output`:
-	// gs://translation_test/a_b_c_[trg]_errors.txt `glossary_error_output`:
-	// gs://translation_test/a_b_c_[trg]_glossary_translation.txt The error
-	// output is a txt file containing error details.
+	// `gs://translation_test/a_b_c_[trg]_errors.txt`
+	// `glossary_error_output`:
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.txt` The
+	// error output is a txt file containing error details.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
@@ -642,21 +643,21 @@ type DocumentOutputConfig struct {
 	// corresponds to the translated file's extension according to its mime
 	// type. For a DocumentInputConfig.gcs_uri provided document, the output
 	// file will have a name according to its URI. For example: an input
-	// file with URI: "gs://a/b/c.[extension]" stored in a gcs_destination
+	// file with URI: `gs://a/b/c.[extension]` stored in a gcs_destination
 	// bucket with name "my_bucket" will have an output URI:
-	// "gs://my_bucket/a_b_c_[trg]_translations.[ext]", where - [trg]
+	// `gs://my_bucket/a_b_c_[trg]_translations.[ext]`, where - [trg]
 	// corresponds to the translated file's language code, - [ext]
 	// corresponds to the translated file's extension according to its mime
 	// type. If the document was directly provided through the request, then
 	// the output document will have the format:
-	// "gs://my_bucket/translated_document_[trg]_translations.[ext], where -
-	// [trg] corresponds to the translated file's language code, - [ext]
+	// `gs://my_bucket/translated_document_[trg]_translations.[ext]`, where
+	// - [trg] corresponds to the translated file's language code, - [ext]
 	// corresponds to the translated file's extension according to its mime
 	// type. If a glossary was provided, then the output URI for the
 	// glossary translation will be equal to the default output URI but have
 	// `glossary_translations` instead of `translations`. For the previous
 	// example, its glossary URI would be:
-	// "gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]". Thus the
+	// `gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]`. Thus the
 	// max number of output files will be 2 (Translated document, Glossary
 	// translated document). Callers should expect no partial outputs. If
 	// there is any error during document translation, no output will be
@@ -1208,8 +1209,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1287,9 +1288,9 @@ type OutputConfig struct {
 	// applied. If input file extension is a txt or html, the translation is
 	// directly written to the output file. If glossary is requested, a
 	// separate glossary_translations_file has format of
-	// gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]
+	// `gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]`
 	// The format of errors file (for target language code 'trg') is:
-	// gs://translation_test/a_b_c_'trg'_errors.[extension] If the input
+	// `gs://translation_test/a_b_c_'trg'_errors.[extension]` If the input
 	// file extension is tsv, errors_file contains the following: Column 1:
 	// ID of the request provided in the input, if it's not provided in the
 	// input, then the input row number is used (0-based). Column 2: source
@@ -1298,7 +1299,7 @@ type OutputConfig struct {
 	// Error when applying the glossary. If the input file extension is txt
 	// or html, glossary_error_file will be generated that contains error
 	// details. glossary_error_file has format of
-	// gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]
+	// `gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]`
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to

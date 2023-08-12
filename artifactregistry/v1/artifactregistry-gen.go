@@ -401,6 +401,36 @@ func (s *AptArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AptRepository: Configuration for an Apt remote repository.
+type AptRepository struct {
+	// PublicRepository: One of the publicly available Apt repositories
+	// supported by Artifact Registry.
+	PublicRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository `json:"publicRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AptRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod AptRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchDeleteVersionsMetadata: The metadata of an LRO from deleting
 // multiple versions.
 type BatchDeleteVersionsMetadata struct {
@@ -1014,6 +1044,90 @@ type GoogleDevtoolsArtifactregistryV1File struct {
 
 func (s *GoogleDevtoolsArtifactregistryV1File) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1File
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPub
+// licRepository: Publicly available Apt repositories constructed from a
+// common repository base and a custom repository path.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository struct {
+	// RepositoryBase: A common public repository base for Apt.
+	//
+	// Possible values:
+	//   "REPOSITORY_BASE_UNSPECIFIED" - Unspecified repository base.
+	//   "DEBIAN" - Debian.
+	//   "UBUNTU" - Ubuntu LTS/Pro.
+	RepositoryBase string `json:"repositoryBase,omitempty"`
+
+	// RepositoryPath: A custom field to define a path to a specific
+	// repository from the base.
+	RepositoryPath string `json:"repositoryPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RepositoryBase") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RepositoryBase") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPub
+// licRepository: Publicly available Yum repositories constructed from a
+// common repository base and a custom repository path.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository struct {
+	// RepositoryBase: A common public repository base for Yum.
+	//
+	// Possible values:
+	//   "REPOSITORY_BASE_UNSPECIFIED" - Unspecified repository base.
+	//   "CENTOS" - CentOS.
+	//   "CENTOS_DEBUG" - CentOS Debug.
+	//   "CENTOS_VAULT" - CentOS Vault.
+	//   "CENTOS_STREAM" - CentOS Stream.
+	//   "ROCKY" - Rocky.
+	//   "EPEL" - Fedora Extra Packages for Enterprise Linux (EPEL).
+	RepositoryBase string `json:"repositoryBase,omitempty"`
+
+	// RepositoryPath: A custom field to define a path to a specific
+	// repository from the base.
+	RepositoryPath string `json:"repositoryPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RepositoryBase") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RepositoryBase") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2479,6 +2593,9 @@ func (s *PythonRepository) MarshalJSON() ([]byte, error) {
 
 // RemoteRepositoryConfig: Remote repository configuration.
 type RemoteRepositoryConfig struct {
+	// AptRepository: Specific settings for an Apt remote repository.
+	AptRepository *AptRepository `json:"aptRepository,omitempty"`
+
 	// Description: The description of the remote source.
 	Description string `json:"description,omitempty"`
 
@@ -2494,7 +2611,10 @@ type RemoteRepositoryConfig struct {
 	// PythonRepository: Specific settings for a Python remote repository.
 	PythonRepository *PythonRepository `json:"pythonRepository,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// YumRepository: Specific settings for a Yum remote repository.
+	YumRepository *YumRepository `json:"yumRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AptRepository") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2502,7 +2622,7 @@ type RemoteRepositoryConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
+	// NullFields is a list of field names (e.g. "AptRepository") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -3410,6 +3530,36 @@ type YumArtifact struct {
 
 func (s *YumArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod YumArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YumRepository: Configuration for a Yum remote repository.
+type YumRepository struct {
+	// PublicRepository: One of the publicly available Yum repositories
+	// supported by Artifact Registry.
+	PublicRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository `json:"publicRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YumRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod YumRepository
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -641,12 +641,13 @@ type CanaryDeployment struct {
 	Percentages []int64 `json:"percentages,omitempty"`
 
 	// Postdeploy: Optional. Configuration for the postdeploy job of the
-	// last phase. If this is not configured, postdeploy job will not be
-	// present.
+	// last phase. If this is not configured, there will be no postdeploy
+	// job for this phase.
 	Postdeploy *Postdeploy `json:"postdeploy,omitempty"`
 
 	// Predeploy: Optional. Configuration for the predeploy job of the first
-	// phase. If this is not configured, predeploy job will not be present.
+	// phase. If this is not configured, there will be no predeploy job for
+	// this phase.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
 
 	// Verify: Whether to run verify tests after each percentage deployment.
@@ -1244,8 +1245,8 @@ type DeployJobRun struct {
 	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The deploy operation did not complete
 	// successfully; check Cloud Build logs.
-	//   "DEADLINE_EXCEEDED" - The deploy build did not complete within the
-	// alloted time.
+	//   "DEADLINE_EXCEEDED" - The deploy job run did not complete within
+	// the alloted time.
 	//   "MISSING_RESOURCES_FOR_CANARY" - There were missing resources in
 	// the runtime environment required for a canary deployment. Check the
 	// Cloud Build logs for more information.
@@ -1355,12 +1356,12 @@ type DeploymentJobs struct {
 	// phase.
 	DeployJob *Job `json:"deployJob,omitempty"`
 
-	// PostdeployJob: Output only. The postdeploy Job. This is the
-	// postdeploy job in the phase. This is the last job of the phase.
+	// PostdeployJob: Output only. The postdeploy Job, which is the last job
+	// on the phase.
 	PostdeployJob *Job `json:"postdeployJob,omitempty"`
 
-	// PredeployJob: Output only. The predeploy Job. This is the predeploy
-	// job in the phase. This is the first job of the phase.
+	// PredeployJob: Output only. The predeploy Job, which is the first job
+	// on the phase.
 	PredeployJob *Job `json:"predeployJob,omitempty"`
 
 	// VerifyJob: Output only. The verify Job. Runs after a deploy if the
@@ -2318,8 +2319,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2514,13 +2515,13 @@ type PhaseConfig struct {
 	PhaseId string `json:"phaseId,omitempty"`
 
 	// Postdeploy: Optional. Configuration for the postdeploy job of this
-	// phase. If this is not configured, postdeploy job will not be present
-	// for this phase.
+	// phase. If this is not configured, there will be no postdeploy job for
+	// this phase.
 	Postdeploy *Postdeploy `json:"postdeploy,omitempty"`
 
 	// Predeploy: Optional. Configuration for the predeploy job of this
-	// phase. If this is not configured, predeploy job will not be present
-	// for this phase.
+	// phase. If this is not configured, there will be no predeploy job for
+	// this phase.
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
 
 	// Profiles: Skaffold profiles to use when rendering the manifest for
@@ -2642,7 +2643,7 @@ func (s *PipelineReadyCondition) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2651,17 +2652,17 @@ func (s *PipelineReadyCondition) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2741,7 +2742,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // Postdeploy: Postdeploy contains the postdeploy job configuration
 // information.
 type Postdeploy struct {
-	// Actions: Optional. A sequence of skaffold custom actions to invoke
+	// Actions: Optional. A sequence of Skaffold custom actions to invoke
 	// during execution of the postdeploy job.
 	Actions []string `json:"actions,omitempty"`
 
@@ -2819,8 +2820,8 @@ type PostdeployJobRun struct {
 	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The postdeploy operation did not complete
 	// successfully; check Cloud Build logs.
-	//   "DEADLINE_EXCEEDED" - The postdeploy build did not complete within
-	// the alloted time.
+	//   "DEADLINE_EXCEEDED" - The postdeploy job run did not complete
+	// within the alloted time.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
 	FailureCause string `json:"failureCause,omitempty"`
@@ -2855,7 +2856,7 @@ func (s *PostdeployJobRun) MarshalJSON() ([]byte, error) {
 // Predeploy: Predeploy contains the predeploy job configuration
 // information.
 type Predeploy struct {
-	// Actions: Optional. A sequence of skaffold custom actions to invoke
+	// Actions: Optional. A sequence of Skaffold custom actions to invoke
 	// during execution of the predeploy job.
 	Actions []string `json:"actions,omitempty"`
 
@@ -2933,7 +2934,7 @@ type PredeployJobRun struct {
 	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The predeploy operation did not complete
 	// successfully; check Cloud Build logs.
-	//   "DEADLINE_EXCEEDED" - The predeploy build did not complete within
+	//   "DEADLINE_EXCEEDED" - The predeploy job run did not complete within
 	// the alloted time.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
@@ -4407,8 +4408,8 @@ type VerifyJobRun struct {
 	// account#required_permissions).
 	//   "EXECUTION_FAILED" - The verify operation did not complete
 	// successfully; check Cloud Build logs.
-	//   "DEADLINE_EXCEEDED" - The verify build did not complete within the
-	// alloted time.
+	//   "DEADLINE_EXCEEDED" - The verify job run did not complete within
+	// the alloted time.
 	//   "VERIFICATION_CONFIG_NOT_FOUND" - No Skaffold verify configuration
 	// was found.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud

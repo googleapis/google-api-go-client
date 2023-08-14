@@ -291,6 +291,17 @@ func TestGetHTTPTransportConfigAndEndpoint(t *testing.T) {
 			true,
 		},
 		{
+			"no client cert, S2A address not empty, override endpoint is set",
+			&DialSettings{
+				DefaultMTLSEndpoint: "",
+				Endpoint:            testOverrideEndpoint,
+			},
+			validConfigResp,
+			func() bool { return true },
+			testOverrideEndpoint,
+			false,
+		},
+		{
 			"no client cert, endpoint is MTLS enabled, S2A address not empty, custom HTTP client",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,

@@ -1,5 +1,18 @@
 # Changes
 
+## [0.137.0](https://github.com/googleapis/google-api-go-client/compare/v0.136.0...v0.137.0) (2023-08-14)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2106](https://github.com/googleapis/google-api-go-client/issues/2106)) ([3f3ed3d](https://github.com/googleapis/google-api-go-client/commit/3f3ed3da191394d25fd28f60ec1a51fddaf43a4a))
+* **all:** Auto-regenerate discovery clients ([#2108](https://github.com/googleapis/google-api-go-client/issues/2108)) ([80485e0](https://github.com/googleapis/google-api-go-client/commit/80485e0e9a1bae98714d695ed2efff6187618d57))
+* **all:** Auto-regenerate discovery clients ([#2110](https://github.com/googleapis/google-api-go-client/issues/2110)) ([4d775db](https://github.com/googleapis/google-api-go-client/commit/4d775db7cf6eb71fad1f67b022736f3b2de09a0b))
+* **all:** Auto-regenerate discovery clients ([#2111](https://github.com/googleapis/google-api-go-client/issues/2111)) ([0cc62ab](https://github.com/googleapis/google-api-go-client/commit/0cc62aba44965ffc10e33c2e43cc7260e836e504))
+* **all:** Auto-regenerate discovery clients ([#2112](https://github.com/googleapis/google-api-go-client/issues/2112)) ([f7f1c7b](https://github.com/googleapis/google-api-go-client/commit/f7f1c7b4c610f6a41c130c3bb85d6a609e99fb37))
+* **all:** Auto-regenerate discovery clients ([#2113](https://github.com/googleapis/google-api-go-client/issues/2113)) ([142ffeb](https://github.com/googleapis/google-api-go-client/commit/142ffebac56456c904234248a004175aa41e035c))
+* Ok to use S2A with override endpoint ([#2114](https://github.com/googleapis/google-api-go-client/issues/2114)) ([caea956](https://github.com/googleapis/google-api-go-client/commit/caea95689f82049822552cd649765335123831e0))
+
 ## [0.136.0](https://github.com/googleapis/google-api-go-client/compare/v0.135.0...v0.136.0) (2023-08-08)
 
 

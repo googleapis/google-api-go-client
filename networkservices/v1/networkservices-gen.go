@@ -997,7 +997,7 @@ type GrpcRouteDestination struct {
 
 	// Weight: Optional. Specifies the proportion of requests forwarded to
 	// the backend referenced by the serviceName field. This is computed as:
-	// weight/Sum(weights in this destination list). For non-zero values,
+	// - weight/Sum(weights in this destination list). For non-zero values,
 	// there may be some epsilon from the exact proportion defined here
 	// depending on the precision an implementation supports. If only one
 	// serviceName is specified and it has a weight greater than 0, 100% of
@@ -1548,7 +1548,7 @@ type HttpRouteDestination struct {
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// Weight: Specifies the proportion of requests forwarded to the backend
-	// referenced by the serviceName field. This is computed as:
+	// referenced by the serviceName field. This is computed as: -
 	// weight/Sum(weights in this destination list). For non-zero values,
 	// there may be some epsilon from the exact proportion defined here
 	// depending on the precision an implementation supports. If only one
@@ -2746,8 +2746,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2849,7 +2849,7 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2858,17 +2858,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -3201,7 +3201,7 @@ type TcpRouteRouteDestination struct {
 
 	// Weight: Optional. Specifies the proportion of requests forwarded to
 	// the backend referenced by the serviceName field. This is computed as:
-	// weight/Sum(weights in this destination list). For non-zero values,
+	// - weight/Sum(weights in this destination list). For non-zero values,
 	// there may be some epsilon from the exact proportion defined here
 	// depending on the precision an implementation supports. If only one
 	// serviceName is specified and it has a weight greater than 0, 100% of
@@ -3480,7 +3480,7 @@ type TlsRouteRouteDestination struct {
 
 	// Weight: Optional. Specifies the proportion of requests forwareded to
 	// the backend referenced by the service_name field. This is computed
-	// as: weight/Sum(weights in destinations) Weights in all destinations
+	// as: - weight/Sum(weights in destinations) Weights in all destinations
 	// does not need to sum up to 100.
 	Weight int64 `json:"weight,omitempty"`
 
@@ -12521,8 +12521,7 @@ func (r *ProjectsLocationsTcpRoutesService) Create(parent string, tcproute *TcpR
 }
 
 // TcpRouteId sets the optional parameter "tcpRouteId": Required. Short
-// name of the TcpRoute resource to be created. E.g. TODO(Add an
-// example).
+// name of the TcpRoute resource to be created.
 func (c *ProjectsLocationsTcpRoutesCreateCall) TcpRouteId(tcpRouteId string) *ProjectsLocationsTcpRoutesCreateCall {
 	c.urlParams_.Set("tcpRouteId", tcpRouteId)
 	return c
@@ -12635,7 +12634,7 @@ func (c *ProjectsLocationsTcpRoutesCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "tcpRouteId": {
-	//       "description": "Required. Short name of the TcpRoute resource to be created. E.g. TODO(Add an example).",
+	//       "description": "Required. Short name of the TcpRoute resource to be created.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13312,8 +13311,7 @@ func (r *ProjectsLocationsTlsRoutesService) Create(parent string, tlsroute *TlsR
 }
 
 // TlsRouteId sets the optional parameter "tlsRouteId": Required. Short
-// name of the TlsRoute resource to be created. E.g. TODO(Add an
-// example).
+// name of the TlsRoute resource to be created.
 func (c *ProjectsLocationsTlsRoutesCreateCall) TlsRouteId(tlsRouteId string) *ProjectsLocationsTlsRoutesCreateCall {
 	c.urlParams_.Set("tlsRouteId", tlsRouteId)
 	return c
@@ -13426,7 +13424,7 @@ func (c *ProjectsLocationsTlsRoutesCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "tlsRouteId": {
-	//       "description": "Required. Short name of the TlsRoute resource to be created. E.g. TODO(Add an example).",
+	//       "description": "Required. Short name of the TlsRoute resource to be created.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

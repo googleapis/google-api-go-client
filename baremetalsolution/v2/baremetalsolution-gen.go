@@ -156,6 +156,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Networks = NewProjectsLocationsNetworksService(s)
 	rs.NfsShares = NewProjectsLocationsNfsSharesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.OsImages = NewProjectsLocationsOsImagesService(s)
 	rs.ProvisioningConfigs = NewProjectsLocationsProvisioningConfigsService(s)
 	rs.ProvisioningQuotas = NewProjectsLocationsProvisioningQuotasService(s)
 	rs.SshKeys = NewProjectsLocationsSshKeysService(s)
@@ -173,6 +174,8 @@ type ProjectsLocationsService struct {
 	NfsShares *ProjectsLocationsNfsSharesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	OsImages *ProjectsLocationsOsImagesService
 
 	ProvisioningConfigs *ProjectsLocationsProvisioningConfigsService
 
@@ -216,6 +219,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsOsImagesService(s *Service) *ProjectsLocationsOsImagesService {
+	rs := &ProjectsLocationsOsImagesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOsImagesService struct {
 	s *Service
 }
 
@@ -377,6 +389,11 @@ func (s *DetachLunRequest) MarshalJSON() ([]byte, error) {
 type DisableInteractiveSerialConsoleRequest struct {
 }
 
+// DisableInteractiveSerialConsoleResponse: Message for response of
+// DisableInteractiveSerialConsole.
+type DisableInteractiveSerialConsoleResponse struct {
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -391,6 +408,11 @@ type Empty struct {
 // EnableInteractiveSerialConsoleRequest: Message for enabling the
 // interactive serial console on an instance.
 type EnableInteractiveSerialConsoleRequest struct {
+}
+
+// EnableInteractiveSerialConsoleResponse: Message for response of
+// EnableInteractiveSerialConsole.
+type EnableInteractiveSerialConsoleResponse struct {
 }
 
 // EvictLunRequest: Request for skip lun cooloff and delete it.
@@ -440,6 +462,48 @@ type GoogleCloudBaremetalsolutionV2LogicalInterface struct {
 
 func (s *GoogleCloudBaremetalsolutionV2LogicalInterface) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBaremetalsolutionV2LogicalInterface
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface:
+// Logical interface.
+type GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface struct {
+	// Name: Interface name. This is not a globally unique identifier. Name
+	// is unique only inside the ServerNetworkTemplate. This is of syntax or
+	// and forms part of the network template name.
+	Name string `json:"name,omitempty"`
+
+	// Required: If true, interface must have network connected.
+	Required bool `json:"required,omitempty"`
+
+	// Type: Interface type.
+	//
+	// Possible values:
+	//   "INTERFACE_TYPE_UNSPECIFIED" - Unspecified value.
+	//   "BOND" - Bond interface type.
+	//   "NIC" - NIC interface type.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -947,6 +1011,42 @@ type ListNfsSharesResponse struct {
 
 func (s *ListNfsSharesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNfsSharesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListOSImagesResponse: Request for getting all available OS images.
+type ListOSImagesResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// OsImages: The OS images available.
+	OsImages []*OSImage `json:"osImages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListOSImagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOSImagesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1777,6 +1877,51 @@ func (s *NfsShare) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OSImage: Operation System image.
+type OSImage struct {
+	// ApplicableInstanceTypes: Instance types this image is applicable to.
+	// Available types
+	// (https://cloud.google.com/bare-metal/docs/bms-planning#server_configurations)
+	ApplicableInstanceTypes []string `json:"applicableInstanceTypes,omitempty"`
+
+	// Code: OS Image code.
+	Code string `json:"code,omitempty"`
+
+	// Description: OS Image description.
+	Description string `json:"description,omitempty"`
+
+	// Name: Output only. OS Image's unique name.
+	Name string `json:"name,omitempty"`
+
+	// SupportedNetworkTemplates: Network templates that can be used with
+	// this OS Image.
+	SupportedNetworkTemplates []string `json:"supportedNetworkTemplates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplicableInstanceTypes") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicableInstanceTypes")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OSImage) MarshalJSON() ([]byte, error) {
+	type NoMethod OSImage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -1802,8 +1947,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2221,6 +2366,47 @@ type SSHKey struct {
 
 func (s *SSHKey) MarshalJSON() ([]byte, error) {
 	type NoMethod SSHKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServerNetworkTemplate: Network template.
+type ServerNetworkTemplate struct {
+	// ApplicableInstanceTypes: Instance types this template is applicable
+	// to.
+	ApplicableInstanceTypes []string `json:"applicableInstanceTypes,omitempty"`
+
+	// LogicalInterfaces: Logical interfaces.
+	LogicalInterfaces []*GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface `json:"logicalInterfaces,omitempty"`
+
+	// Name: Output only. Template's unique name. The full resource name
+	// follows the pattern:
+	// `projects/{project}/locations/{location}/serverNetworkTemplate/{server
+	// _network_template}` Generally, the {server_network_template} follows
+	// the syntax of "bond" or "nic".
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplicableInstanceTypes") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicableInstanceTypes")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServerNetworkTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod ServerNetworkTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6545,6 +6731,201 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ]
 	// }
 
+}
+
+// method id "baremetalsolution.projects.locations.osImages.list":
+
+type ProjectsLocationsOsImagesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves the list of OS images which are currently approved.
+//
+// - parent: Parent value for ListProvisioningQuotasRequest.
+func (r *ProjectsLocationsOsImagesService) List(parent string) *ProjectsLocationsOsImagesListCall {
+	c := &ProjectsLocationsOsImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server might return fewer items than requested. If unspecified,
+// server will pick an appropriate default. Notice that page_size field
+// is not supported and won't be respected in the API request for now,
+// will be updated when pagination is supported.
+func (c *ProjectsLocationsOsImagesListCall) PageSize(pageSize int64) *ProjectsLocationsOsImagesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results from the server.
+func (c *ProjectsLocationsOsImagesListCall) PageToken(pageToken string) *ProjectsLocationsOsImagesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOsImagesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOsImagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOsImagesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOsImagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOsImagesListCall) Context(ctx context.Context) *ProjectsLocationsOsImagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOsImagesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOsImagesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/osImages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.osImages.list" call.
+// Exactly one of *ListOSImagesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListOSImagesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOsImagesListCall) Do(opts ...googleapi.CallOption) (*ListOSImagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOSImagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of OS images which are currently approved.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/osImages",
+	//   "httpMethod": "GET",
+	//   "id": "baremetalsolution.projects.locations.osImages.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default. Notice that page_size field is not supported and won't be respected in the API request for now, will be updated when pagination is supported.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results from the server.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent value for ListProvisioningQuotasRequest.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/osImages",
+	//   "response": {
+	//     "$ref": "ListOSImagesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsOsImagesListCall) Pages(ctx context.Context, f func(*ListOSImagesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "baremetalsolution.projects.locations.provisioningConfigs.create":

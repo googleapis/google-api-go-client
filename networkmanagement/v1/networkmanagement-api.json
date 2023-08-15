@@ -591,7 +591,7 @@
       }
     }
   },
-  "revision": "20230802",
+  "revision": "20230809",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {
@@ -956,7 +956,8 @@
             "CLOUD_SQL_INSTANCE",
             "PSC_PUBLISHED_SERVICE",
             "PSC_GOOGLE_API",
-            "PSC_VPC_SC"
+            "PSC_VPC_SC",
+            "SERVERLESS_NEG"
           ],
           "enumDescriptions": [
             "Target not specified.",
@@ -967,7 +968,8 @@
             "Target is a Cloud SQL instance.",
             "Target is a published service that uses [Private Service Connect](https://cloud.google.com/vpc/docs/configure-private-service-connect-services).",
             "Target is all Google APIs that use [Private Service Connect](https://cloud.google.com/vpc/docs/configure-private-service-connect-apis).",
-            "Target is a VPC-SC that uses [Private Service Connect](https://cloud.google.com/vpc/docs/configure-private-service-connect-apis)."
+            "Target is a VPC-SC that uses [Private Service Connect](https://cloud.google.com/vpc/docs/configure-private-service-connect-apis).",
+            "Target is a serverless network endpoint group."
           ],
           "type": "string"
         }
@@ -1166,6 +1168,10 @@
           "description": "IP protocol in string format, for example: \"TCP\", \"UDP\", \"ICMP\".",
           "type": "string"
         },
+        "sourceAgentUri": {
+          "description": "URI of the source telemetry agent this packet originates from.",
+          "type": "string"
+        },
         "sourceIp": {
           "description": "Source IP address.",
           "type": "string"
@@ -1229,7 +1235,8 @@
             "VPC_FIREWALL_RULE",
             "IMPLIED_VPC_FIREWALL_RULE",
             "SERVERLESS_VPC_ACCESS_MANAGED_FIREWALL_RULE",
-            "NETWORK_FIREWALL_POLICY_RULE"
+            "NETWORK_FIREWALL_POLICY_RULE",
+            "NETWORK_REGIONAL_FIREWALL_POLICY_RULE"
           ],
           "enumDescriptions": [
             "Unspecified type.",
@@ -1237,7 +1244,8 @@
             "VPC firewall rule. For details, see [VPC firewall rules overview](https://cloud.google.com/vpc/docs/firewalls).",
             "Implied VPC firewall rule. For details, see [Implied rules](https://cloud.google.com/vpc/docs/firewalls#default_firewall_rules).",
             "Implicit firewall rules that are managed by serverless VPC access to allow ingress access. They are not visible in the Google Cloud console. For details, see [VPC connector's implicit rules](https://cloud.google.com/functions/docs/networking/connecting-vpc#restrict-access).",
-            "Global network firewall policy rule. For details, see [Network firewall policies](https://cloud.google.com/vpc/docs/network-firewall-policies)."
+            "Global network firewall policy rule. For details, see [Network firewall policies](https://cloud.google.com/vpc/docs/network-firewall-policies).",
+            "Regional network firewall policy rule. For details, see [Regional network firewall policies](https://cloud.google.com/firewall/docs/regional-firewall-policies)."
           ],
           "type": "string"
         },

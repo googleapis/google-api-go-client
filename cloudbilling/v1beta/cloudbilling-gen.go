@@ -284,25 +284,25 @@ type CacheFillRegions struct {
 	// DestinationRegion: The destination region for cache fill.
 	//
 	// Possible values:
-	//   "CACHE_FILL_DESTINATION_REGION_UNSPECIFIED" - Not specified.
-	//   "CACHE_FILL_DESTINATION_REGION_ASIA_PACIFIC" - Asia Pacific.
+	//   "CACHE_FILL_DESTINATION_REGION_UNSPECIFIED" - Not specified
+	//   "CACHE_FILL_DESTINATION_REGION_ASIA_PACIFIC" - Asia Pacific
 	//   "CACHE_FILL_DESTINATION_REGION_EUROPE" - Europe
-	//   "CACHE_FILL_DESTINATION_REGION_NORTH_AMERICA" - North America.
-	//   "CACHE_FILL_DESTINATION_REGION_OCEANIA" - Oceania.
-	//   "CACHE_FILL_DESTINATION_REGION_SOUTH_AMERICA" - South America.
-	//   "CACHE_FILL_DESTINATION_REGION_CHINA" - China.
-	//   "CACHE_FILL_DESTINATION_REGION_OTHERS" - Others.
+	//   "CACHE_FILL_DESTINATION_REGION_NORTH_AMERICA" - North America
+	//   "CACHE_FILL_DESTINATION_REGION_OCEANIA" - Oceania
+	//   "CACHE_FILL_DESTINATION_REGION_SOUTH_AMERICA" - South America
+	//   "CACHE_FILL_DESTINATION_REGION_CHINA" - China
+	//   "CACHE_FILL_DESTINATION_REGION_OTHERS" - Others
 	DestinationRegion string `json:"destinationRegion,omitempty"`
 
 	// SourceRegion: The source region for cache fill.
 	//
 	// Possible values:
-	//   "CACHE_FILL_SOURCE_REGION_UNSPECIFIED" - Not specified.
-	//   "CACHE_FILL_REGION_ASIA_PACIFIC" - Asia Pacific.
+	//   "CACHE_FILL_SOURCE_REGION_UNSPECIFIED" - Not specified
+	//   "CACHE_FILL_REGION_ASIA_PACIFIC" - Asia Pacific
 	//   "CACHE_FILL_SOURCE_REGION_EUROPE" - Europe
-	//   "CACHE_FILL_SOURCE_REGION_NORTH_AMERICA" - North America.
-	//   "CACHE_FILL_SOURCE_REGION_OCEANIA" - Oceania.
-	//   "CACHE_FILL_SOURCE_REGION_SOUTH_AMERICA" - South America.
+	//   "CACHE_FILL_SOURCE_REGION_NORTH_AMERICA" - North America
+	//   "CACHE_FILL_SOURCE_REGION_OCEANIA" - Oceania
+	//   "CACHE_FILL_SOURCE_REGION_SOUTH_AMERICA" - South America
 	SourceRegion string `json:"sourceRegion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestinationRegion")
@@ -479,20 +479,20 @@ type CloudInterconnectWorkload struct {
 	// InterconnectAttachments: VLAN attachment used for interconnect.
 	InterconnectAttachments []*VlanAttachment `json:"interconnectAttachments,omitempty"`
 
-	// InterconnectType: Vlan attachment type.
+	// InterconnectType: VLAN attachment type
 	//
 	// Possible values:
-	//   "INTERCONNECT_TYPE_UNSPECIFIED" - Unspecified.
-	//   "INTERCONNECT_TYPE_DEDICATED" - Type is dedicated.
-	//   "INTERCONNECT_TYPE_PARTNER" - Type is partner.
+	//   "INTERCONNECT_TYPE_UNSPECIFIED" - Unspecified
+	//   "INTERCONNECT_TYPE_DEDICATED" - Type is dedicated
+	//   "INTERCONNECT_TYPE_PARTNER" - Type is partner
 	InterconnectType string `json:"interconnectType,omitempty"`
 
 	// LinkType: Interconnect circuit link type.
 	//
 	// Possible values:
-	//   "LINK_TYPE_UNSPECIFIED" - Unspecified.
-	//   "LINK_TYPE_ETHERNET_10G_LR" - Link type is 10 gbps.
-	//   "LINK_TYPE_ETHERNET_100G_LR" - Link type is 100 gbps.
+	//   "LINK_TYPE_UNSPECIFIED" - Unspecified
+	//   "LINK_TYPE_ETHERNET_10G_LR" - Link type is 10 Gbps.
+	//   "LINK_TYPE_ETHERNET_100G_LR" - Link type is 100 Gbps.
 	LinkType string `json:"linkType,omitempty"`
 
 	// ProvisionedLinkCount: Interconnect usage. This is specified as a
@@ -3910,7 +3910,7 @@ func (s *UsageRateTimelineEntry) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// VlanAttachment: VLAN attachment for cloud interconnect.
+// VlanAttachment: VLAN attachment for Cloud Interconnect.
 type VlanAttachment struct {
 	// Bandwidth: Capacities in the pricing table
 	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing)
@@ -3918,7 +3918,7 @@ type VlanAttachment struct {
 	// 1/2/5/10/20/50-Gbps.
 	//
 	// Possible values:
-	//   "BANDWIDTH_UNSPECIFIED" - Unspecified.
+	//   "BANDWIDTH_UNSPECIFIED" - Unspecified
 	//   "BANDWIDTH_BPS_50M" - 50 Mbit/s
 	//   "BANDWIDTH_BPS_100M" - 100 Mbit/s
 	//   "BANDWIDTH_BPS_200M" - 200 Mbit/s

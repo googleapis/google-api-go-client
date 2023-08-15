@@ -1601,9 +1601,26 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 	// search engine.
 	ExactMatch bool `json:"exactMatch,omitempty"`
 
+	// FailureReason: Output only. Failure reason.
+	FailureReason *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason `json:"failureReason,omitempty"`
+
 	// GeneratedUriPattern: Output only. This is system-generated based on
 	// the provided_uri_pattern.
 	GeneratedUriPattern string `json:"generatedUriPattern,omitempty"`
+
+	// IndexingStatus: Output only. Indexing status.
+	//
+	// Possible values:
+	//   "INDEXING_STATUS_UNSPECIFIED" - Defaults to SUCCEEDED.
+	//   "PENDING" - The target site is in the update queue and will be
+	// picked up by indexing pipeline.
+	//   "FAILED" - The target site fails to be indexed.
+	//   "SUCCEEDED" - The target site has been indexed.
+	//   "DELETING" - The previously indexed target site has been marked to
+	// be deleted. This is a transitioning state which will resulted in
+	// either: 1. target site deleted if unindexing is successful; 2. state
+	// reverts to SUCCEEDED if the unindexing fails.
+	IndexingStatus string `json:"indexingStatus,omitempty"`
 
 	// Name: Output only. The fully qualified resource name of the target
 	// site.
@@ -1652,6 +1669,64 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaTargetSite) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaTargetSite
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason: Site search
+// indexing failure reasons.
+type GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason struct {
+	// QuotaFailure: Failed due to insufficient quota.
+	QuotaFailure *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure `json:"quotaFailure,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QuotaFailure") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QuotaFailure") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure struct {
+	// TotalRequiredQuota: This number is an estimation on how much total
+	// quota this project needs to successfully complete indexing.
+	TotalRequiredQuota int64 `json:"totalRequiredQuota,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "TotalRequiredQuota")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TotalRequiredQuota") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

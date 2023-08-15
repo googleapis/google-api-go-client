@@ -573,6 +573,38 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails:
+// Details for a subscriptiin line item with finite billing cycles.
+type GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails struct {
+	// BillingCycleCountLimit: Required. The number of a subscription line
+	// item billing cycles after which billing will stop automatically.
+	BillingCycleCountLimit int64 `json:"billingCycleCountLimit,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BillingCycleCountLimit") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingCycleCountLimit")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload
 // specific to Google One products.
 type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
@@ -743,6 +775,11 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byt
 // GoogleCloudPaymentsResellerSubscriptionV1Product: A Product resource
 // that defines a subscription service that can be resold.
 type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
+	// FiniteBillingCycleDetails: Optional. Details for a subscription line
+	// item with finite billing cycles. If unset, the line item will be
+	// charged indefinitely.
+	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
+
 	// Name: Output only. Response only. Resource name of the product. It
 	// will have the format of "partners/{partner_id}/products/{product_id}"
 	Name string `json:"name,omitempty"`
@@ -763,20 +800,22 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	// Titles: Output only. Localized human readable name of the product.
 	Titles []*GoogleTypeLocalizedText `json:"titles,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "FiniteBillingCycleDetails") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "FiniteBillingCycleDetails") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -866,6 +905,12 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// available indefinitely.
 	EndTime string `json:"endTime,omitempty"`
 
+	// FiniteBillingCycleDetails: Optional. Details for a subscription line
+	// item with finite billing cycles. If unset, the line item will be
+	// charged indefinitely. Used only with
+	// PROMOTION_TYPE_REGULAR_REDUCTION.
+	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
+
 	// FreeTrialDuration: Optional. Specifies the duration of the free trial
 	// of the subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
 	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
@@ -888,6 +933,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
 	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
 	// introductory pricing.
+	//   "PROMOTION_TYPE_REGULAR_REDUCTION" - The promotion is a reduced
+	// price.
 	PromotionType string `json:"promotionType,omitempty"`
 
 	// RegionCodes: Output only. 2-letter ISO region code where the
@@ -1242,6 +1289,12 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`
 
+	// FiniteBillingCycleDetails: Optional. Details for a subscription line
+	// item with finite billing cycles. If unset, the line item will be
+	// charged indefinitely. Used only with
+	// LINE_ITEM_RECURRENCE_TYPE_PERIODIC.
+	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
+
 	// LineItemFreeTrialEndTime: Output only. The free trial end time will
 	// be populated after the line item is successfully processed. End time
 	// of the line item free trial period, in ISO 8061 format. For example,
@@ -1381,6 +1434,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
 	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
 	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
 	// introductory pricing.
+	//   "PROMOTION_TYPE_REGULAR_REDUCTION" - The promotion is a reduced
+	// price.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FreeTrialDuration")

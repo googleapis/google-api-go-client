@@ -120,7 +120,6 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Organizations = NewOrganizationsService(s)
-	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
@@ -130,8 +129,6 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Organizations *OrganizationsService
-
-	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -195,51 +192,6 @@ func NewOrganizationsLocationsWorkloadsViolationsService(s *Service) *Organizati
 }
 
 type OrganizationsLocationsWorkloadsViolationsService struct {
-	s *Service
-}
-
-func NewProjectsService(s *Service) *ProjectsService {
-	rs := &ProjectsService{s: s}
-	rs.Organizations = NewProjectsOrganizationsService(s)
-	return rs
-}
-
-type ProjectsService struct {
-	s *Service
-
-	Organizations *ProjectsOrganizationsService
-}
-
-func NewProjectsOrganizationsService(s *Service) *ProjectsOrganizationsService {
-	rs := &ProjectsOrganizationsService{s: s}
-	rs.Locations = NewProjectsOrganizationsLocationsService(s)
-	return rs
-}
-
-type ProjectsOrganizationsService struct {
-	s *Service
-
-	Locations *ProjectsOrganizationsLocationsService
-}
-
-func NewProjectsOrganizationsLocationsService(s *Service) *ProjectsOrganizationsLocationsService {
-	rs := &ProjectsOrganizationsLocationsService{s: s}
-	rs.Workloads = NewProjectsOrganizationsLocationsWorkloadsService(s)
-	return rs
-}
-
-type ProjectsOrganizationsLocationsService struct {
-	s *Service
-
-	Workloads *ProjectsOrganizationsLocationsWorkloadsService
-}
-
-func NewProjectsOrganizationsLocationsWorkloadsService(s *Service) *ProjectsOrganizationsLocationsWorkloadsService {
-	rs := &ProjectsOrganizationsLocationsWorkloadsService{s: s}
-	return rs
-}
-
-type ProjectsOrganizationsLocationsWorkloadsService struct {
 	s *Service
 }
 
@@ -691,7 +643,7 @@ type GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesResponse struct {
 }
 
 // GoogleCloudAssuredworkloadsV1beta1Violation: Workload monitoring
-// Violation. Next Id: 27
+// Violation. Next Id: 28
 type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// Acknowledged: A boolean that indicates if the violation is
 	// acknowledged
@@ -2171,6 +2123,257 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove":
+
+type OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
+	s            *Service
+	target       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeWorkloadMove: Analyzes a hypothetical move of a source
+// resource to a target(destination) folder-based workload to surface
+// compliance risks.
+//
+//   - target: The resource ID of the folder-based destination workload.
+//     This workload is where the source resource will hypothetically be
+//     moved to. Specify the workload's relative resource name, formatted
+//     as:
+//     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
+//     WORKLOAD_ID}" For example:
+//     "organizations/123/locations/us-east1/workloads/assured-workload-2".
+func (r *OrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(target string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c := &OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.target = target
+	return c
+}
+
+// AnalyzeChildAssets sets the optional parameter "analyzeChildAssets":
+// Indicates if all child assets of the source resource should also be
+// analyzed in addition to the source.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AnalyzeChildAssets(analyzeChildAssets bool) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("analyzeChildAssets", fmt.Sprint(analyzeChildAssets))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size. If a
+// value is not specified, the default value of 10 is used.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageSize(pageSize int64) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token
+// from the previous response. It needs to be passed in the second and
+// following requests.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageToken(pageToken string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Project sets the optional parameter "project": The source type is a
+// project. Specify the project's relative resource name, formatted as
+// either a project number or a project ID: "projects/{PROJECT_NUMBER}"
+// or "projects/{PROJECT_ID}" For example: "projects/951040570662" when
+// specifying a project number, or "projects/my-project-123" when
+// specifying a project ID.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Project(project string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("project", project)
+	return c
+}
+
+// Source sets the optional parameter "source": The source type is a
+// project-based workload. Specify the workloads's relative resource
+// name, formatted as:
+// "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WO
+// RKLOAD_ID}" For example:
+// "organizations/123/locations/us-east1/workloads/assured-workload-1"
+// This option is now deprecated.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Source(source string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("source", source)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) IfNoneMatch(entityTag string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+target}:analyzeWorkloadMove")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"target": c.target,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove" call.
+// Exactly one of
+// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes a hypothetical move of a source resource to a target(destination) folder-based workload to surface compliance risks.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
+	//   "httpMethod": "GET",
+	//   "id": "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove",
+	//   "parameterOrder": [
+	//     "target"
+	//   ],
+	//   "parameters": {
+	//     "analyzeChildAssets": {
+	//       "description": "Optional. Indicates if all child assets of the source resource should also be analyzed in addition to the source.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Page size. If a value is not specified, the default value of 10 is used.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The page token from the previous response. It needs to be passed in the second and following requests.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The source type is a project. Specify the project's relative resource name, formatted as either a project number or a project ID: \"projects/{PROJECT_NUMBER}\" or \"projects/{PROJECT_ID}\" For example: \"projects/951040570662\" when specifying a project number, or \"projects/my-project-123\" when specifying a project ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "deprecated": true,
+	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\" This option is now deprecated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "target": {
+	//       "description": "Required. The resource ID of the folder-based destination workload. This workload is where the source resource will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+target}:analyzeWorkloadMove",
+	//   "response": {
+	//     "$ref": "GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -3837,257 +4040,6 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) Do(opts ...googleapi
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove":
-
-type ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
-	s            *Service
-	project      string
-	target       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// AnalyzeWorkloadMove: Analyzes a hypothetical move of a source
-// resource to a target(destination) folder-based workload to surface
-// compliance risks.
-//
-//   - project: The source type is a project. Specify the project's
-//     relative resource name, formatted as either a project number or a
-//     project ID: "projects/{PROJECT_NUMBER}" or "projects/{PROJECT_ID}"
-//     For example: "projects/951040570662" when specifying a project
-//     number, or "projects/my-project-123" when specifying a project ID.
-//   - target: The resource ID of the folder-based destination workload.
-//     This workload is where the source resource will hypothetically be
-//     moved to. Specify the workload's relative resource name, formatted
-//     as:
-//     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
-//     WORKLOAD_ID}" For example:
-//     "organizations/123/locations/us-east1/workloads/assured-workload-2".
-func (r *ProjectsOrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(project string, target string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c := &ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.target = target
-	return c
-}
-
-// AnalyzeChildAssets sets the optional parameter "analyzeChildAssets":
-// Indicates if all child assets of the source resource should also be
-// analyzed in addition to the source.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AnalyzeChildAssets(analyzeChildAssets bool) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("analyzeChildAssets", fmt.Sprint(analyzeChildAssets))
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Page size. If a
-// value is not specified, the default value of 10 is used.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageSize(pageSize int64) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The page token
-// from the previous response. It needs to be passed in the second and
-// following requests.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageToken(pageToken string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Source sets the optional parameter "source": The source type is a
-// project-based workload. Specify the workloads's relative resource
-// name, formatted as:
-// "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WO
-// RKLOAD_ID}" For example:
-// "organizations/123/locations/us-east1/workloads/assured-workload-1"
-// This option is now deprecated.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Source(source string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("source", source)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Fields(s ...googleapi.Field) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) IfNoneMatch(entityTag string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Context(ctx context.Context) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+project}/{+target}:analyzeWorkloadMove")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-		"target":  c.target,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove" call.
-// Exactly one of
-// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Analyzes a hypothetical move of a source resource to a target(destination) folder-based workload to surface compliance risks.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
-	//   "httpMethod": "GET",
-	//   "id": "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove",
-	//   "parameterOrder": [
-	//     "project",
-	//     "target"
-	//   ],
-	//   "parameters": {
-	//     "analyzeChildAssets": {
-	//       "description": "Optional. Indicates if all child assets of the source resource should also be analyzed in addition to the source.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Page size. If a value is not specified, the default value of 10 is used.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. The page token from the previous response. It needs to be passed in the second and following requests.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "The source type is a project. Specify the project's relative resource name, formatted as either a project number or a project ID: \"projects/{PROJECT_NUMBER}\" or \"projects/{PROJECT_ID}\" For example: \"projects/951040570662\" when specifying a project number, or \"projects/my-project-123\" when specifying a project ID.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "source": {
-	//       "deprecated": true,
-	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\" This option is now deprecated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "target": {
-	//       "description": "Required. The resource ID of the folder-based destination workload. This workload is where the source resource will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+project}/{+target}:analyzeWorkloadMove",
-	//   "response": {
-	//     "$ref": "GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

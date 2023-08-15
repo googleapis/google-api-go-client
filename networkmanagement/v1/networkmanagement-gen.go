@@ -840,6 +840,7 @@ type DeliverInfo struct {
 	//   "PSC_VPC_SC" - Target is a VPC-SC that uses [Private Service
 	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
 	// onnect-apis).
+	//   "SERVERLESS_NEG" - Target is a serverless network endpoint group.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -1133,6 +1134,10 @@ type EndpointInfo struct {
 	// "ICMP".
 	Protocol string `json:"protocol,omitempty"`
 
+	// SourceAgentUri: URI of the source telemetry agent this packet
+	// originates from.
+	SourceAgentUri string `json:"sourceAgentUri,omitempty"`
+
 	// SourceIp: Source IP address.
 	SourceIp string `json:"sourceIp,omitempty"`
 
@@ -1264,6 +1269,10 @@ type FirewallInfo struct {
 	// rule. For details, see [Network firewall
 	// policies](https://cloud.google.com/vpc/docs/network-firewall-policies)
 	// .
+	//   "NETWORK_REGIONAL_FIREWALL_POLICY_RULE" - Regional network firewall
+	// policy rule. For details, see [Regional network firewall
+	// policies](https://cloud.google.com/firewall/docs/regional-firewall-pol
+	// icies).
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 
 	// NetworkUri: The URI of the VPC network that the firewall rule is

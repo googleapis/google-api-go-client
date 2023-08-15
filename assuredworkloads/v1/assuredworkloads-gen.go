@@ -472,7 +472,7 @@ type GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesResponse struct {
 }
 
 // GoogleCloudAssuredworkloadsV1Violation: Workload monitoring
-// Violation. Next Id: 27
+// Violation. Next Id: 28
 type GoogleCloudAssuredworkloadsV1Violation struct {
 	// Acknowledged: A boolean that indicates if the violation is
 	// acknowledged

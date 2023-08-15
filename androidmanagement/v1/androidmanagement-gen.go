@@ -1843,7 +1843,10 @@ func (s *ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CrossProfilePolicies: Cross-profile policies applied on the device.
+// CrossProfilePolicies: Controls the data from the work profile that
+// can be accessed from the personal profile and vice versa. A
+// nonComplianceDetail with MANAGEMENT_MODE is reported if the device
+// does not have a work profile.
 type CrossProfilePolicies struct {
 	// CrossProfileCopyPaste: Whether text copied from one profile (personal
 	// or work) can be pasted in the other profile.
@@ -4547,8 +4550,8 @@ type Operation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is

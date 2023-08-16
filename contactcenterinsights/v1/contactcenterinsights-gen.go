@@ -2213,6 +2213,11 @@ func (s *GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDest
 type GoogleCloudContactcenterinsightsV1ExportInsightsDataResponse struct {
 }
 
+// GoogleCloudContactcenterinsightsV1ExportIssueModelResponse: Response
+// from export issue model
+type GoogleCloudContactcenterinsightsV1ExportIssueModelResponse struct {
+}
+
 // GoogleCloudContactcenterinsightsV1FaqAnswerData: Agent Assist
 // frequently-asked-question answer data.
 type GoogleCloudContactcenterinsightsV1FaqAnswerData struct {
@@ -2315,6 +2320,11 @@ func (s *GoogleCloudContactcenterinsightsV1GcsSource) MarshalJSON() ([]byte, err
 // GoogleCloudContactcenterinsightsV1HoldData: The data for a hold
 // annotation.
 type GoogleCloudContactcenterinsightsV1HoldData struct {
+}
+
+// GoogleCloudContactcenterinsightsV1ImportIssueModelResponse: Response
+// from import issue model
+type GoogleCloudContactcenterinsightsV1ImportIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsMetadata: The
@@ -5791,6 +5801,11 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQue
 type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataResponse struct {
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelResponse:
+// Response from export issue model
+type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelResponse struct {
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData: Agent Assist
 // frequently-asked-question answer data.
 type GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData struct {
@@ -5893,6 +5908,11 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1GcsSource) MarshalJSON() ([]byt
 // GoogleCloudContactcenterinsightsV1alpha1HoldData: The data for a hold
 // annotation.
 type GoogleCloudContactcenterinsightsV1alpha1HoldData struct {
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelResponse:
+// Response from import issue model
+type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata:

@@ -1011,6 +1011,52 @@ func (s *BiEngineStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type BigLakeConfiguration struct {
+	// ConnectionId: [Required] Required and immutable. Credential reference
+	// for accessing external storage system. Normalized as
+	// project_id.location_id.connection_id.
+	ConnectionId string `json:"connectionId,omitempty"`
+
+	// FileFormat: [Required] Required and immutable. Open source file
+	// format that the table data is stored in. Currently only PARQUET is
+	// supported.
+	FileFormat string `json:"fileFormat,omitempty"`
+
+	// StorageUri: [Required] Required and immutable. Fully qualified
+	// location prefix of the external folder where data is stored.
+	// Normalized to standard format: "gs:////". Starts with "gs://" rather
+	// than "/bigstore/". Ends with "/". Does not contain "*". See also
+	// BigLakeStorageMetadata on how it is used.
+	StorageUri string `json:"storageUri,omitempty"`
+
+	// TableFormat: [Required] Required and immutable. Open source file
+	// format that the table data is stored in. Currently only PARQUET is
+	// supported.
+	TableFormat string `json:"tableFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigLakeConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod BigLakeConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type BigQueryModelTraining struct {
 	// CurrentIteration: [Output-only, Beta] Index of current ML training
 	// iteration. Updated during create model query job to show job
@@ -3937,7 +3983,7 @@ func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
 type IndexUnusedReason struct {
 	// BaseTable: [Output-only] Specifies the base table involved in the
 	// reason that no search index was used.
-	BaseTable *TableReference `json:"base_table,omitempty"`
+	BaseTable *TableReference `json:"baseTable,omitempty"`
 
 	// Code: [Output-only] Specifies the high-level reason for the scenario
 	// when no search index was used.
@@ -3945,7 +3991,7 @@ type IndexUnusedReason struct {
 
 	// IndexName: [Output-only] Specifies the name of the unused search
 	// index, if available.
-	IndexName string `json:"index_name,omitempty"`
+	IndexName string `json:"indexName,omitempty"`
 
 	// Message: [Output-only] Free form human-readable reason for the
 	// scenario when no search index was used.
@@ -5497,11 +5543,11 @@ func (s *JobStatistics4) MarshalJSON() ([]byte, error) {
 type JobStatistics5 struct {
 	// CopiedLogicalBytes: [Output-only] Number of logical bytes copied to
 	// the destination table.
-	CopiedLogicalBytes int64 `json:"copied_logical_bytes,omitempty,string"`
+	CopiedLogicalBytes int64 `json:"copiedLogicalBytes,omitempty,string"`
 
 	// CopiedRows: [Output-only] Number of rows copied to the destination
 	// table.
-	CopiedRows int64 `json:"copied_rows,omitempty,string"`
+	CopiedRows int64 `json:"copiedRows,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CopiedLogicalBytes")
 	// to unconditionally include in API requests. By default, fields with
@@ -5740,7 +5786,7 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 type MaterializedViewDefinition struct {
 	// AllowNonIncrementalDefinition: [Optional] Allow non incremental
 	// materialized view definition. The default value is "false".
-	AllowNonIncrementalDefinition bool `json:"allow_non_incremental_definition,omitempty"`
+	AllowNonIncrementalDefinition bool `json:"allowNonIncrementalDefinition,omitempty"`
 
 	// EnableRefresh: [Optional] [TrustedTester] Enable automatic refresh of
 	// the materialized view when the base table is updated. The default
@@ -6168,7 +6214,7 @@ func (s *ParquetOptions) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -6177,17 +6223,17 @@ func (s *ParquetOptions) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -7121,6 +7167,9 @@ type RemoteModelInfo struct {
 	// set dynamically.
 	MaxBatchingRows int64 `json:"maxBatchingRows,omitempty,string"`
 
+	// RemoteModelVersion: Output only. The model version for LLM.
+	RemoteModelVersion string `json:"remoteModelVersion,omitempty"`
+
 	// RemoteServiceType: Output only. The remote service type for remote
 	// model.
 	//
@@ -7170,6 +7219,16 @@ type Routine struct {
 	// CreationTime: Output only. The time when this routine was created, in
 	// milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
+
+	// DataGovernanceType: Optional. Data governance specific option, if the
+	// value is DATA_MASKING, the function will be validated as masking
+	// functions.
+	//
+	// Possible values:
+	//   "DATA_GOVERNANCE_TYPE_UNSPECIFIED" - Unspecified data governance
+	// type.
+	//   "DATA_MASKING" - The data governance type is data masking.
+	DataGovernanceType string `json:"dataGovernanceType,omitempty"`
 
 	// DefinitionBody: Required. The body of the routine. For functions,
 	// this is the expression in the AS clause. If language=SQL, it is the
@@ -7568,16 +7627,16 @@ func (s *ScriptStatistics) MarshalJSON() ([]byte, error) {
 }
 
 type SearchStatistics struct {
-	// IndexUnusedReason: When index_usage_mode is UNUSED or PARTIALLY_USED,
-	// this field explains why index was not used in all or part of the
-	// search query. If index_usage_mode is FULLLY_USED, this field is not
-	// populated.
-	IndexUnusedReason []*IndexUnusedReason `json:"indexUnusedReason,omitempty"`
+	// IndexUnusedReasons: When index_usage_mode is UNUSED or
+	// PARTIALLY_USED, this field explains why index was not used in all or
+	// part of the search query. If index_usage_mode is FULLLY_USED, this
+	// field is not populated.
+	IndexUnusedReasons []*IndexUnusedReason `json:"indexUnusedReasons,omitempty"`
 
 	// IndexUsageMode: Specifies index usage mode for the query.
 	IndexUsageMode string `json:"indexUsageMode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IndexUnusedReason")
+	// ForceSendFields is a list of field names (e.g. "IndexUnusedReasons")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -7585,7 +7644,7 @@ type SearchStatistics struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IndexUnusedReason") to
+	// NullFields is a list of field names (e.g. "IndexUnusedReasons") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -7813,15 +7872,15 @@ type SparkStatistics struct {
 
 	// LoggingInfo: [Output-only] Logging info is used to generate a link to
 	// Cloud Logging.
-	LoggingInfo *SparkLoggingInfo `json:"logging_info,omitempty"`
+	LoggingInfo *SparkLoggingInfo `json:"loggingInfo,omitempty"`
 
 	// SparkJobId: [Output-only] Spark job id if a Spark job is created
 	// successfully.
-	SparkJobId string `json:"spark_job_id,omitempty"`
+	SparkJobId string `json:"sparkJobId,omitempty"`
 
 	// SparkJobLocation: [Output-only] Location where the Spark job is
 	// executed.
-	SparkJobLocation string `json:"spark_job_location,omitempty"`
+	SparkJobLocation string `json:"sparkJobLocation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Endpoints") to
 	// unconditionally include in API requests. By default, fields with
@@ -7858,6 +7917,10 @@ type StandardSqlDataType struct {
 	// "ARRAY".
 	ArrayElementType *StandardSqlDataType `json:"arrayElementType,omitempty"`
 
+	// RangeElementType: The type of the range's elements, if type_kind =
+	// "RANGE".
+	RangeElementType *StandardSqlDataType `json:"rangeElementType,omitempty"`
+
 	// StructType: The fields of this struct, in order, if type_kind =
 	// "STRUCT".
 	StructType *StandardSqlStructType `json:"structType,omitempty"`
@@ -7889,6 +7952,8 @@ type StandardSqlDataType struct {
 	//   "STRUCT" - Encoded as a list with fields of type
 	// Type.struct_type[i]. List is used because a JSON object cannot have
 	// duplicate field names.
+	//   "RANGE" - Encoded as a pair with types matching range_element_type.
+	// Pairs must begin with "[", end with ")", and be separated by ", ".
 	TypeKind string `json:"typeKind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayElementType") to
@@ -8071,6 +8136,10 @@ func (s *StringHparamSearchSpace) MarshalJSON() ([]byte, error) {
 }
 
 type Table struct {
+	// BiglakeConfiguration: [Optional] Specifies the configuration of a
+	// BigLake managed table.
+	BiglakeConfiguration *BigLakeConfiguration `json:"biglakeConfiguration,omitempty"`
+
 	// CloneDefinition: [Output-only] Clone definition.
 	CloneDefinition *CloneDefinition `json:"cloneDefinition,omitempty"`
 
@@ -8265,15 +8334,16 @@ type Table struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CloneDefinition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BiglakeConfiguration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloneDefinition") to
+	// NullFields is a list of field names (e.g. "BiglakeConfiguration") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -9207,6 +9277,15 @@ type TrainingOptions struct {
 	// this model. Only available for linear and logistic regression models.
 	CalculatePValues bool `json:"calculatePValues,omitempty"`
 
+	// CategoryEncodingMethod: Categorical feature encoding method.
+	//
+	// Possible values:
+	//   "ENCODING_METHOD_UNSPECIFIED" - Unspecified encoding method.
+	//   "ONE_HOT_ENCODING" - Applies one-hot encoding.
+	//   "LABEL_ENCODING" - Applies label encoding.
+	//   "DUMMY_ENCODING" - Applies dummy encoding.
+	CategoryEncodingMethod string `json:"categoryEncodingMethod,omitempty"`
+
 	// CleanSpikesAndDips: If true, clean spikes and dips in the input time
 	// series.
 	CleanSpikesAndDips bool `json:"cleanSpikesAndDips,omitempty"`
@@ -9407,6 +9486,82 @@ type TrainingOptions struct {
 	//   "ZA" - South Africa
 	HolidayRegion string `json:"holidayRegion,omitempty"`
 
+	// HolidayRegions: A list of geographical regions that are used for time
+	// series modeling.
+	//
+	// Possible values:
+	//   "HOLIDAY_REGION_UNSPECIFIED" - Holiday region unspecified.
+	//   "GLOBAL" - Global.
+	//   "NA" - North America.
+	//   "JAPAC" - Japan and Asia Pacific: Korea, Greater China, India,
+	// Australia, and New Zealand.
+	//   "EMEA" - Europe, the Middle East and Africa.
+	//   "LAC" - Latin America and the Caribbean.
+	//   "AE" - United Arab Emirates
+	//   "AR" - Argentina
+	//   "AT" - Austria
+	//   "AU" - Australia
+	//   "BE" - Belgium
+	//   "BR" - Brazil
+	//   "CA" - Canada
+	//   "CH" - Switzerland
+	//   "CL" - Chile
+	//   "CN" - China
+	//   "CO" - Colombia
+	//   "CS" - Czechoslovakia
+	//   "CZ" - Czech Republic
+	//   "DE" - Germany
+	//   "DK" - Denmark
+	//   "DZ" - Algeria
+	//   "EC" - Ecuador
+	//   "EE" - Estonia
+	//   "EG" - Egypt
+	//   "ES" - Spain
+	//   "FI" - Finland
+	//   "FR" - France
+	//   "GB" - Great Britain (United Kingdom)
+	//   "GR" - Greece
+	//   "HK" - Hong Kong
+	//   "HU" - Hungary
+	//   "ID" - Indonesia
+	//   "IE" - Ireland
+	//   "IL" - Israel
+	//   "IN" - India
+	//   "IR" - Iran
+	//   "IT" - Italy
+	//   "JP" - Japan
+	//   "KR" - Korea (South)
+	//   "LV" - Latvia
+	//   "MA" - Morocco
+	//   "MX" - Mexico
+	//   "MY" - Malaysia
+	//   "NG" - Nigeria
+	//   "NL" - Netherlands
+	//   "NO" - Norway
+	//   "NZ" - New Zealand
+	//   "PE" - Peru
+	//   "PH" - Philippines
+	//   "PK" - Pakistan
+	//   "PL" - Poland
+	//   "PT" - Portugal
+	//   "RO" - Romania
+	//   "RS" - Serbia
+	//   "RU" - Russian Federation
+	//   "SA" - Saudi Arabia
+	//   "SE" - Sweden
+	//   "SG" - Singapore
+	//   "SI" - Slovenia
+	//   "SK" - Slovakia
+	//   "TH" - Thailand
+	//   "TR" - Turkey
+	//   "TW" - Taiwan
+	//   "UA" - Ukraine
+	//   "US" - United States
+	//   "VE" - Venezuela
+	//   "VN" - Viet Nam
+	//   "ZA" - South Africa
+	HolidayRegions []string `json:"holidayRegions,omitempty"`
+
 	// Horizon: The number of periods ahead that need to be forecasted.
 	Horizon int64 `json:"horizon,omitempty,string"`
 
@@ -9534,9 +9689,10 @@ type TrainingOptions struct {
 	// MaxParallelTrials: Maximum number of trials to run in parallel.
 	MaxParallelTrials int64 `json:"maxParallelTrials,omitempty,string"`
 
-	// MaxTimeSeriesLength: Get truncated length by last n points in time
-	// series. Use separately from time_series_length_fraction and
-	// min_time_series_length.
+	// MaxTimeSeriesLength: The maximum number of time points in a time
+	// series that can be used in modeling the trend component of the time
+	// series. Don't use this option with the `timeSeriesLengthFraction` or
+	// `minTimeSeriesLength` options.
 	MaxTimeSeriesLength int64 `json:"maxTimeSeriesLength,omitempty,string"`
 
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
@@ -9550,8 +9706,16 @@ type TrainingOptions struct {
 	// MinSplitLoss: Minimum split loss for boosted tree models.
 	MinSplitLoss float64 `json:"minSplitLoss,omitempty"`
 
-	// MinTimeSeriesLength: Set fast trend ARIMA_PLUS model minimum training
-	// length. Use in pair with time_series_length_fraction.
+	// MinTimeSeriesLength: The minimum number of time points in a time
+	// series that are used in modeling the trend component of the time
+	// series. If you use this option you must also set the
+	// `timeSeriesLengthFraction` option. This training option ensures that
+	// enough time points are available when you use
+	// `timeSeriesLengthFraction` in trend modeling. This is particularly
+	// important when forecasting multiple time series in a single query
+	// using `timeSeriesIdColumn`. If the total number of time points is
+	// less than the `minTimeSeriesLength` value, then the query uses all
+	// available time points.
 	MinTimeSeriesLength int64 `json:"minTimeSeriesLength,omitempty,string"`
 
 	// MinTreeChildWeight: Minimum sum of instance weight needed in a child
@@ -9650,8 +9814,13 @@ type TrainingOptions struct {
 	// ARIMA model training.
 	TimeSeriesIdColumns []string `json:"timeSeriesIdColumns,omitempty"`
 
-	// TimeSeriesLengthFraction: Get truncated length by fraction in time
-	// series.
+	// TimeSeriesLengthFraction: The fraction of the interpolated length of
+	// the time series that's used to model the time series trend component.
+	// All of the time points of the time series are used to model the
+	// non-trend component. This training option accelerates modeling
+	// training without sacrificing much forecasting accuracy. You can use
+	// this option with `minTimeSeriesLength` but not with
+	// `maxTimeSeriesLength`.
 	TimeSeriesLengthFraction float64 `json:"timeSeriesLengthFraction,omitempty"`
 
 	// TimeSeriesTimestampColumn: Column to be designated as time series
@@ -9669,8 +9838,12 @@ type TrainingOptions struct {
 	//   "HIST" - Fast histogram optimized approximate greedy algorithm.
 	TreeMethod string `json:"treeMethod,omitempty"`
 
-	// TrendSmoothingWindowSize: The smoothing window size for the trend
-	// component of the time series.
+	// TrendSmoothingWindowSize: Smoothing window size for the trend
+	// component. When a positive value is specified, a center moving
+	// average smoothing is applied on the history trend. When the smoothing
+	// window is out of the boundary at the beginning or the end of the
+	// trend, the first element or the last element is padded to fill the
+	// smoothing window before the average is applied.
 	TrendSmoothingWindowSize int64 `json:"trendSmoothingWindowSize,omitempty,string"`
 
 	// UserColumn: User column specified for matrix factorization models.

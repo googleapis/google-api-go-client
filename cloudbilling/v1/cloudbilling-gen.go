@@ -1409,7 +1409,7 @@ type BillingAccountsCreateCall struct {
 // which is typically given to billing account administrators
 // (https://cloud.google.com/billing/docs/how-to/billing-access). This
 // method will return an error if the parent account has not been
-// provisioned as a reseller account.
+// provisioned for subaccounts.
 func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *BillingAccountsCreateCall {
 	c := &BillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.billingaccount = billingaccount
@@ -1504,7 +1504,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	}
 	return ret, nil
 	// {
-	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned as a reseller account.",
+	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned for subaccounts.",
 	//   "flatPath": "v1/billingAccounts",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbilling.billingAccounts.create",
@@ -1873,10 +1873,9 @@ func (r *BillingAccountsService) List() *BillingAccountsListCall {
 }
 
 // Filter sets the optional parameter "filter": Options for how to
-// filter the returned billing accounts. Currently this only supports
-// filtering for subaccounts
-// (https://cloud.google.com/billing/docs/concepts) under a single
-// provided reseller billing account. (e.g.
+// filter the returned billing accounts. This only supports filtering
+// for subaccounts (https://cloud.google.com/billing/docs/concepts)
+// under a single provided parent billing account. (e.g.
 // "master_billing_account=billingAccounts/012345-678901-ABCDEF").
 // Boolean algebra and other fields are not currently supported.
 func (c *BillingAccountsListCall) Filter(filter string) *BillingAccountsListCall {
@@ -2004,7 +2003,7 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. Currently this only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided reseller billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
+	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

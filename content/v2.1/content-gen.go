@@ -40539,7 +40539,8 @@ func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of products to return in the response, used for paging.
+// number of products to return in the response, used for paging. The
+// default value is 25. The maximum value is 250.
 func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -40660,7 +40661,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "description": "The maximum number of products to return in the response, used for paging.",
+	//       "description": "The maximum number of products to return in the response, used for paging. The default value is 25. The maximum value is 250.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -41215,7 +41216,7 @@ func (c *ProductstatusesListCall) Destinations(destinations ...string) *Products
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of product statuses to return in the response, used for
-// paging.
+// paging. The default value is 25. The maximum value is 250.
 func (c *ProductstatusesListCall) MaxResults(maxResults int64) *ProductstatusesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -41342,7 +41343,7 @@ func (c *ProductstatusesListCall) Do(opts ...googleapi.CallOption) (*Productstat
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of product statuses to return in the response, used for paging.",
+	//       "description": "The maximum number of product statuses to return in the response, used for paging. The default value is 25. The maximum value is 250.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"

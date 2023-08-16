@@ -1717,6 +1717,45 @@ func (s *IosModel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IosRoboTest: A test that explores an iOS application on an iOS
+// device.
+type IosRoboTest struct {
+	// AppBundleId: The bundle ID for the app-under-test. This is determined
+	// by examining the application's "Info.plist" file.
+	AppBundleId string `json:"appBundleId,omitempty"`
+
+	// AppIpa: Required. The ipa stored at this file should be used to run
+	// the test.
+	AppIpa *FileReference `json:"appIpa,omitempty"`
+
+	// RoboScript: An optional Roboscript to customize the crawl. See
+	// https://firebase.google.com/docs/test-lab/android/robo-scripts-reference
+	// for more information about Roboscripts.
+	RoboScript *FileReference `json:"roboScript,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppBundleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppBundleId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IosRoboTest) MarshalJSON() ([]byte, error) {
+	type NoMethod IosRoboTest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IosRuntimeConfiguration: iOS configuration that can be selected at
 // the time a test is run.
 type IosRuntimeConfiguration struct {
@@ -3233,6 +3272,9 @@ type TestSpecification struct {
 	// DisableVideoRecording: Disables video recording. May reduce test
 	// latency.
 	DisableVideoRecording bool `json:"disableVideoRecording,omitempty"`
+
+	// IosRoboTest: An iOS Robo test.
+	IosRoboTest *IosRoboTest `json:"iosRoboTest,omitempty"`
 
 	// IosTestLoop: An iOS application with a test loop.
 	IosTestLoop *IosTestLoop `json:"iosTestLoop,omitempty"`

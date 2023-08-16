@@ -3572,6 +3572,10 @@ type ManagedProductTaxAndComplianceSettings struct {
 	//   "WITHDRAWAL_RIGHT_SERVICE"
 	EeaWithdrawalRightType string `json:"eeaWithdrawalRightType,omitempty"`
 
+	// IsTokenizedDigitalAsset: Whether this in-app product is declared as a
+	// product representing a tokenized digital asset.
+	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate
 	// details. The keys are region codes as defined by Unicode's "CLDR".
 	TaxRateInfoByRegionCode map[string]RegionalTaxRateInfo `json:"taxRateInfoByRegionCode,omitempty"`
@@ -6215,6 +6219,10 @@ type SubscriptionTaxAndComplianceSettings struct {
 	//   "WITHDRAWAL_RIGHT_DIGITAL_CONTENT"
 	//   "WITHDRAWAL_RIGHT_SERVICE"
 	EeaWithdrawalRightType string `json:"eeaWithdrawalRightType,omitempty"`
+
+	// IsTokenizedDigitalAsset: Whether this subscription is declared as a
+	// product representing a tokenized digital asset.
+	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
 
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate
 	// details. The keys are region codes as defined by Unicode's "CLDR".

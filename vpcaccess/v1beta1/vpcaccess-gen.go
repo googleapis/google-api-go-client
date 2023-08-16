@@ -201,7 +201,8 @@ type Connector struct {
 	MaxInstances int64 `json:"maxInstances,omitempty"`
 
 	// MaxThroughput: Maximum throughput of the connector in Mbps. Default
-	// is 300, max is 1000.
+	// is 300, max is 1000. If both maxThroughput and maxInstances are set,
+	// the value for maxInstances is utilzed.
 	MaxThroughput int64 `json:"maxThroughput,omitempty"`
 
 	// MinInstances: Minimum value of instances in autoscaling group
@@ -209,7 +210,8 @@ type Connector struct {
 	MinInstances int64 `json:"minInstances,omitempty"`
 
 	// MinThroughput: Minimum throughput of the connector in Mbps. Default
-	// and min is 200.
+	// and min is 200. If both max-throughput and max-instances are
+	// provided, max-instances takes precedence over max-throughput.
 	MinThroughput int64 `json:"minThroughput,omitempty"`
 
 	// Name: The resource name in the format
@@ -444,8 +446,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -904,8 +906,9 @@ type ProjectsLocationsConnectorsCreateCall struct {
 // Create: Creates a Serverless VPC Access connector, returns an
 // operation.
 //
-//   - parent: The project and location in which the configuration should
-//     be created, specified in the format `projects/*/locations/*`.
+//   - parent: The project id and location in which the configuration
+//     should be created, specified in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsConnectorsService) Create(parent string, connector *Connector) *ProjectsLocationsConnectorsCreateCall {
 	c := &ProjectsLocationsConnectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1025,7 +1028,7 @@ func (c *ProjectsLocationsConnectorsCreateCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and location in which the configuration should be created, specified in the format `projects/*/locations/*`.",
+	//       "description": "Required. The project id and location in which the configuration should be created, specified in the format `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

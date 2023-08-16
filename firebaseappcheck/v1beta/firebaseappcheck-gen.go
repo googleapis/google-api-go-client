@@ -2459,6 +2459,158 @@ func (c *OauthClientsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 
 }
 
+// method id "firebaseappcheck.oauthClients.exchangeDebugToken":
+
+type OauthClientsExchangeDebugTokenCall struct {
+	s                                                     *Service
+	appid                                                 string
+	googlefirebaseappcheckv1betaexchangedebugtokenrequest *GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// ExchangeDebugToken: Validates a debug token secret that you have
+// previously created using CreateDebugToken. If valid, returns an
+// AppCheckToken. Note that a restrictive quota is enforced on this
+// method to prevent accidental exposure of the app to abuse.
+//
+//   - app: The relative resource name of the app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in
+//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *OauthClientsService) ExchangeDebugToken(appid string, googlefirebaseappcheckv1betaexchangedebugtokenrequest *GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest) *OauthClientsExchangeDebugTokenCall {
+	c := &OauthClientsExchangeDebugTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1betaexchangedebugtokenrequest = googlefirebaseappcheckv1betaexchangedebugtokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OauthClientsExchangeDebugTokenCall) Fields(s ...googleapi.Field) *OauthClientsExchangeDebugTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OauthClientsExchangeDebugTokenCall) Context(ctx context.Context) *OauthClientsExchangeDebugTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OauthClientsExchangeDebugTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OauthClientsExchangeDebugTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1betaexchangedebugtokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+app}:exchangeDebugToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.oauthClients.exchangeDebugToken" call.
+// Exactly one of *GoogleFirebaseAppcheckV1betaAppCheckToken or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleFirebaseAppcheckV1betaAppCheckToken.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OauthClientsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaAppCheckToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaAppCheckToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Validates a debug token secret that you have previously created using CreateDebugToken. If valid, returns an AppCheckToken. Note that a restrictive quota is enforced on this method to prevent accidental exposure of the app to abuse.",
+	//   "flatPath": "v1beta/oauthClients/{oauthClientsId}:exchangeDebugToken",
+	//   "httpMethod": "POST",
+	//   "id": "firebaseappcheck.oauthClients.exchangeDebugToken",
+	//   "parameterOrder": [
+	//     "app"
+	//   ],
+	//   "parameters": {
+	//     "app": {
+	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "location": "path",
+	//       "pattern": "^oauthClients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+app}:exchangeDebugToken",
+	//   "request": {
+	//     "$ref": "GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "firebaseappcheck.oauthClients.generateAppAttestChallenge":
 
 type OauthClientsGenerateAppAttestChallengeCall struct {

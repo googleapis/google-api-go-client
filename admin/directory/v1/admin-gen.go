@@ -23127,6 +23127,16 @@ func (r *UsersService) Insert(user *User) *UsersInsertCall {
 	return c
 }
 
+// ResolveConflictAccount sets the optional parameter
+// "resolveConflictAccount": If set to `true`, the option selected for
+// handling unmanaged user accounts
+// (https://support.google.com/a/answer/11112794) will apply. Default:
+// `false`
+func (c *UsersInsertCall) ResolveConflictAccount(resolveConflictAccount bool) *UsersInsertCall {
+	c.urlParams_.Set("resolveConflictAccount", fmt.Sprint(resolveConflictAccount))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -23220,7 +23230,13 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//   "httpMethod": "POST",
 	//   "id": "directory.users.insert",
 	//   "parameterOrder": [],
-	//   "parameters": {},
+	//   "parameters": {
+	//     "resolveConflictAccount": {
+	//       "description": "Optional. If set to `true`, the option selected for [handling unmanaged user accounts](https://support.google.com/a/answer/11112794) will apply. Default: `false`",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "admin/directory/v1/users",
 	//   "request": {
 	//     "$ref": "User"

@@ -3536,11 +3536,6 @@ type MembershipBinding struct {
 	// DeleteTime: Output only. When the membership binding was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// Fleet: Whether the membershipbinding is Fleet-wide; true means that
-	// this Membership should be bound to all Namespaces in this entire
-	// Fleet.
-	Fleet bool `json:"fleet,omitempty"`
-
 	// Labels: Optional. Labels for this MembershipBinding.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -4226,6 +4221,8 @@ type Origin struct {
 	//   "TYPE_UNSPECIFIED" - Type is unknown or not set.
 	//   "FLEET" - Per-Membership spec was inherited from the fleet-level
 	// default.
+	//   "FLEET_OUT_OF_SYNC" - Per-Membership spec was inherited from the
+	// fleet-level default but is now out of sync with the current default.
 	//   "USER" - Per-Membership spec was inherited from a user
 	// specification.
 	Type string `json:"type,omitempty"`

@@ -1810,6 +1810,116 @@ func (s *PickTimeSeriesFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PieChart: A widget that displays timeseries data as a pie or a donut.
+type PieChart struct {
+	// ChartType: Required. Indicates the visualization type for the
+	// PieChart.
+	//
+	// Possible values:
+	//   "PIE_CHART_TYPE_UNSPECIFIED" - The zero value. No type specified.
+	// Do not use.
+	//   "PIE" - A Pie type PieChart.
+	//   "DONUT" - Similar to PIE, but the DONUT type PieChart has a hole in
+	// the middle.
+	ChartType string `json:"chartType,omitempty"`
+
+	// DataSets: Required. The queries for the chart's data.
+	DataSets []*PieChartDataSet `json:"dataSets,omitempty"`
+
+	// ShowLabels: Optional. Indicates whether or not the pie chart should
+	// slices' labels
+	ShowLabels bool `json:"showLabels,omitempty"`
+
+	// ShowTotal: Optional. Indicates whether or not donut chart should show
+	// the total in the middle
+	ShowTotal bool `json:"showTotal,omitempty"`
+
+	// SliceAggregatedThreshold: Optional. If slices's values are smaller
+	// than this value, they will be combined into other category
+	SliceAggregatedThreshold float64 `json:"sliceAggregatedThreshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChartType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChartType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PieChart) MarshalJSON() ([]byte, error) {
+	type NoMethod PieChart
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PieChart) UnmarshalJSON(data []byte) error {
+	type NoMethod PieChart
+	var s1 struct {
+		SliceAggregatedThreshold gensupport.JSONFloat64 `json:"sliceAggregatedThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SliceAggregatedThreshold = float64(s1.SliceAggregatedThreshold)
+	return nil
+}
+
+// PieChartDataSet: Groups a time series query definition.
+type PieChartDataSet struct {
+	// MinAlignmentPeriod: Optional. The lower bound on data point frequency
+	// for this data set, implemented by specifying the minimum alignment
+	// period to use in a time series query. For example, if the data is
+	// published once every 10 minutes, the min_alignment_period should be
+	// at least 10 minutes. It would not make sense to fetch and align data
+	// at one minute intervals.
+	MinAlignmentPeriod string `json:"minAlignmentPeriod,omitempty"`
+
+	// SliceNameTemplate: Optional. A template for the name of the slice.
+	// This name will be displayed in the legend and the tooltip of the pie
+	// chart. It replaces the auto-generated names for the slices. For
+	// example, if the template is set to ${resource.labels.zone}, the
+	// zone's value will be used for the name instead of the default name.
+	SliceNameTemplate string `json:"sliceNameTemplate,omitempty"`
+
+	// TimeSeriesQuery: Required. The query for the PieChart. See,
+	// google.monitoring.dashboard.v1.TimeSeriesQuery.
+	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinAlignmentPeriod")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinAlignmentPeriod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PieChartDataSet) MarshalJSON() ([]byte, error) {
+	type NoMethod PieChartDataSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryExemplarsRequest: QueryExemplarsRequest holds all parameters of
 // the Prometheus upstream API for querying exemplars.
 type QueryExemplarsRequest struct {
@@ -2960,6 +3070,9 @@ type Widget struct {
 
 	// LogsPanel: A widget that shows a stream of logs.
 	LogsPanel *LogsPanel `json:"logsPanel,omitempty"`
+
+	// PieChart: A widget that displays timeseries data as a pie chart.
+	PieChart *PieChart `json:"pieChart,omitempty"`
 
 	// Scorecard: A scorecard summarizing time series data.
 	Scorecard *Scorecard `json:"scorecard,omitempty"`

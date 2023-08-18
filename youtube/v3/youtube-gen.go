@@ -4150,7 +4150,8 @@ type CuepointSchedule struct {
 	Enabled bool `json:"enabled,omitempty"`
 
 	// PauseAdsUntil: If set, automatic cuepoint insertion is paused until
-	// this timestamp ("No Ad Zone").
+	// this timestamp ("No Ad Zone"). The value is specified in ISO 8601
+	// format.
 	PauseAdsUntil string `json:"pauseAdsUntil,omitempty"`
 
 	// RepeatInterval: Interval frequency that api uses to insert cuepoints

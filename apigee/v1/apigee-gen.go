@@ -8577,6 +8577,117 @@ func (s *GoogleCloudApigeeV1Point) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ProfileConfig: ProfileConfig defines a set of
+// categories and policies which will be used to compute security score.
+type GoogleCloudApigeeV1ProfileConfig struct {
+	// Categories: List of categories of profile config.
+	Categories []*GoogleCloudApigeeV1ProfileConfigCategory `json:"categories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ProfileConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ProfileConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ProfileConfigAbuse: Checks for abuse, which
+// includes any requests sent to the API for purposes other than what it
+// is intended for, such as high volumes of requests, data scraping, and
+// abuse related to authorization.
+type GoogleCloudApigeeV1ProfileConfigAbuse struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigAuthorization: By default, following
+// policies will be included: - JWS - JWT - OAuth - BasicAuth - APIKey
+type GoogleCloudApigeeV1ProfileConfigAuthorization struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigCORS: Checks to see if you have CORS
+// policy in place.
+type GoogleCloudApigeeV1ProfileConfigCORS struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigCategory: Advanced API Security
+// provides security profile that scores the following categories.
+type GoogleCloudApigeeV1ProfileConfigCategory struct {
+	// Abuse: Checks for abuse, which includes any requests sent to the API
+	// for purposes other than what it is intended for, such as high volumes
+	// of requests, data scraping, and abuse related to authorization.
+	Abuse *GoogleCloudApigeeV1ProfileConfigAbuse `json:"abuse,omitempty"`
+
+	// Authorization: Checks to see if you have an authorization policy in
+	// place.
+	Authorization *GoogleCloudApigeeV1ProfileConfigAuthorization `json:"authorization,omitempty"`
+
+	// Cors: Checks to see if you have CORS policy in place.
+	Cors *GoogleCloudApigeeV1ProfileConfigCORS `json:"cors,omitempty"`
+
+	// Mediation: Checks to see if you have a mediation policy in place.
+	Mediation *GoogleCloudApigeeV1ProfileConfigMediation `json:"mediation,omitempty"`
+
+	// Mtls: Checks to see if you have configured mTLS for the target
+	// server.
+	Mtls *GoogleCloudApigeeV1ProfileConfigMTLS `json:"mtls,omitempty"`
+
+	// Threat: Checks to see if you have a threat protection policy in
+	// place.
+	Threat *GoogleCloudApigeeV1ProfileConfigThreat `json:"threat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Abuse") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Abuse") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ProfileConfigCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ProfileConfigCategory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ProfileConfigMTLS: Checks to see if you have
+// configured mTLS for the target server.
+type GoogleCloudApigeeV1ProfileConfigMTLS struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigMediation: By default, following
+// policies will be included: - OASValidation - SOAPMessageValidation
+type GoogleCloudApigeeV1ProfileConfigMediation struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigThreat: By default, following
+// policies will be included: - XMLThreatProtection -
+// JSONThreatProtection
+type GoogleCloudApigeeV1ProfileConfigThreat struct {
+}
+
 // GoogleCloudApigeeV1Properties: Message for compatibility with legacy
 // Edge specification for Java Properties object in JSON.
 type GoogleCloudApigeeV1Properties struct {
@@ -10410,7 +10521,7 @@ type GoogleCloudApigeeV1SecurityIncident struct {
 	// Anomaly Detection.
 	DetectionTypes []string `json:"detectionTypes,omitempty"`
 
-	// DisplayName: Display name of the security incident.
+	// DisplayName: Optional. Display name of the security incident.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// FirstDetectedTime: Output only. The time when events associated with
@@ -10491,6 +10602,10 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// Name: Immutable. Name of the security profile resource. Format:
 	// organizations/{org}/securityProfiles/{profile}
 	Name string `json:"name,omitempty"`
+
+	// ProfileConfig: Required. Customized profile configuration that
+	// computes the security score.
+	ProfileConfig *GoogleCloudApigeeV1ProfileConfig `json:"profileConfig,omitempty"`
 
 	// RevisionCreateTime: Output only. The time when revision was created.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
@@ -12260,7 +12375,7 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -12269,17 +12384,17 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type GoogleIamV1Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -12522,8 +12637,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -20447,14 +20562,7 @@ type OrganizationsAppgroupsCreateCall struct {
 
 // Create: Creates an AppGroup. Once created, user can register apps
 // under the AppGroup to obtain secret key and password. At creation
-// time, the AppGroup's state is set as `active`. The attribute
-// `Attribute` with key `attribute_name` as
-// `__apigee_reserved__developer_details` can be used to store
-// developers and their roles. The JSON format expected is: [ {
-// "developer_id":"", "roles":[ "" ] } ] and is dealt in base64encoded
-// format. Etag will be available in attribute `Attribute` with key
-// `attribute_name` as `__apigee_reserved__developer_details_etag` for
-// that AppGroup.
+// time, the AppGroup's state is set as `active`.
 //
 //   - parent: Name of the Apigee organization in which the AppGroup is
 //     created. Use the following structure in your request:
@@ -20557,7 +20665,7 @@ func (c *OrganizationsAppgroupsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an AppGroup. Once created, user can register apps under the AppGroup to obtain secret key and password. At creation time, the AppGroup's state is set as `active`. The attribute `Attribute` with key `attribute_name` as `__apigee_reserved__developer_details` can be used to store developers and their roles. The JSON format expected is: [ { \"developer_id\":\"\", \"roles\":[ \"\" ] } ] and is dealt in base64encoded format. Etag will be available in attribute `Attribute` with key `attribute_name` as `__apigee_reserved__developer_details_etag` for that AppGroup.",
+	//   "description": "Creates an AppGroup. Once created, user can register apps under the AppGroup to obtain secret key and password. At creation time, the AppGroup's state is set as `active`.",
 	//   "flatPath": "v1/organizations/{organizationsId}/appgroups",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.appgroups.create",
@@ -20898,8 +21006,8 @@ func (r *OrganizationsAppgroupsService) List(parent string) *OrganizationsAppgro
 
 // Filter sets the optional parameter "filter": The filter expression to
 // be used to get the list of AppGroups, where filtering can be done on
-// name, correlationID or channelID of the app group. Example: filter =
-// "name = foobar"
+// status, channelId or channelUri of the app group. Examples:
+// filter=status=active", filter=channelId=, filter=channelUri=
 func (c *OrganizationsAppgroupsListCall) Filter(filter string) *OrganizationsAppgroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -21031,7 +21139,7 @@ func (c *OrganizationsAppgroupsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression to be used to get the list of AppGroups, where filtering can be done on name, correlationID or channelID of the app group. Example: filter = \"name = foobar\"",
+	//       "description": "The filter expression to be used to get the list of AppGroups, where filtering can be done on status, channelId or channelUri of the app group. Examples: filter=status=active\", filter=channelId=, filter=channelUri=",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21101,14 +21209,13 @@ type OrganizationsAppgroupsUpdateCall struct {
 // details with those specified in the request. Include or exclude any
 // existing details that you want to retain or delete, respectively.
 // Note that the state of the AppGroup should be updated using `action`,
-// and not via AppGroup. The custom attribute limit is 1000, and is how
-// `__apigee_reserved__developer_details` can be updated. **Note**:
-// OAuth access tokens and Key Management Service (KMS) entities (apps,
-// developers, and API products) are cached for 180 seconds (current
-// default). Any custom attributes associated with these entities are
-// cached for at least 180 seconds after the entity is accessed at
-// runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy
-// won't be able to expire an access token in less than 180 seconds.
+// and not via AppGroup. **Note**: OAuth access tokens and Key
+// Management Service (KMS) entities (apps, developers, and API
+// products) are cached for 180 seconds (current default). Any custom
+// attributes associated with these entities are cached for at least 180
+// seconds after the entity is accessed at runtime. Therefore, an
+// `ExpiresIn` element on the OAuthV2 policy won't be able to expire an
+// access token in less than 180 seconds.
 //
 //   - name: Name of the AppGroup. Use the following structure in your
 //     request: `organizations/{org}/appgroups/{app_group_name}`.
@@ -21219,7 +21326,7 @@ func (c *OrganizationsAppgroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an appGroup. This API replaces the existing appGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup. The custom attribute limit is 1000, and is how `__apigee_reserved__developer_details` can be updated. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with these entities are cached for at least 180 seconds after the entity is accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.",
+	//   "description": "Updates an appGroup. This API replaces the existing appGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with these entities are cached for at least 180 seconds after the entity is accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.",
 	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.appgroups.update",
@@ -23140,10 +23247,10 @@ func (c *OrganizationsAppsListCall) Expand(expand bool) *OrganizationsAppsListCa
 
 // Filter sets the optional parameter "filter": The filter expression to
 // be used to get the list of apps, where filtering can be done on
-// developerEmail, apiProduct, consumerKey, status, appId, appName and
-// appType. Examples: "developerEmail=foo@bar.com", "appType=AppGroup",
-// or "appType=Developer" "filter" is supported from ver 1.10.0 and
-// above.
+// developerEmail, apiProduct, consumerKey, status, appId, appName,
+// appType and appGroup. Examples: "developerEmail=foo@bar.com",
+// "appType=AppGroup", or "appType=Developer" "filter" is supported from
+// ver 1.10.0 and above.
 func (c *OrganizationsAppsListCall) Filter(filter string) *OrganizationsAppsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -23335,7 +23442,7 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "type": "boolean"
 	//     },
 	//     "filter": {
-	//       "description": "Optional. The filter expression to be used to get the list of apps, where filtering can be done on developerEmail, apiProduct, consumerKey, status, appId, appName and appType. Examples: \"developerEmail=foo@bar.com\", \"appType=AppGroup\", or \"appType=Developer\" \"filter\" is supported from ver 1.10.0 and above.",
+	//       "description": "Optional. The filter expression to be used to get the list of apps, where filtering can be done on developerEmail, apiProduct, consumerKey, status, appId, appName, appType and appGroup. Examples: \"developerEmail=foo@bar.com\", \"appType=AppGroup\", or \"appType=Developer\" \"filter\" is supported from ver 1.10.0 and above.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -44865,13 +44972,13 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of incidents to return. The service may return fewer than this value. If unspecified, at most 50 incidents will be returned.",
+	//       "description": "Optional. The maximum number of incidents to return. The service may return fewer than this value. If unspecified, at most 50 incidents will be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListSecurityIncident` call. Provide this to retrieve the subsequent page.",
+	//       "description": "Optional. A page token, received from a previous `ListSecurityIncident` call. Provide this to retrieve the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -55462,6 +55569,298 @@ func (c *OrganizationsReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Goog
 
 }
 
+// method id "apigee.organizations.securityProfiles.create":
+
+type OrganizationsSecurityProfilesCreateCall struct {
+	s                                  *Service
+	parent                             string
+	googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Create: CreateSecurityProfile create a new custom security profile.
+//
+// - parent: Name of organization. Format: organizations/{org}.
+func (r *OrganizationsSecurityProfilesService) Create(parent string, googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile) *OrganizationsSecurityProfilesCreateCall {
+	c := &OrganizationsSecurityProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityprofile = googlecloudapigeev1securityprofile
+	return c
+}
+
+// SecurityProfileId sets the optional parameter "securityProfileId":
+// Required. The ID to use for the SecurityProfile, which will become
+// the final component of the action's resource name. This value should
+// be 4-63 characters, and valid characters are /(^a-z
+// ([a-z0-9-]{​0,61}[a-z0-9])?$/.
+func (c *OrganizationsSecurityProfilesCreateCall) SecurityProfileId(securityProfileId string) *OrganizationsSecurityProfilesCreateCall {
+	c.urlParams_.Set("securityProfileId", securityProfileId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesCreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesCreateCall) Context(ctx context.Context) *OrganizationsSecurityProfilesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.create" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityProfile or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityProfile.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "CreateSecurityProfile create a new custom security profile.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.securityProfiles.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of organization. Format: organizations/{org}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "securityProfileId": {
+	//       "description": "Required. The ID to use for the SecurityProfile, which will become the final component of the action's resource name. This value should be 4-63 characters, and valid characters are /(^[a-z]([a-z0-9-]{​0,61}[a-z0-9])?$/.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityProfiles",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.securityProfiles.delete":
+
+type OrganizationsSecurityProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: DeleteSecurityProfile delete a profile with all its
+// revisions.
+//
+//   - name: Name of profile. Format:
+//     organizations/{org}/securityProfiles/{profile}.
+func (r *OrganizationsSecurityProfilesService) Delete(name string) *OrganizationsSecurityProfilesDeleteCall {
+	c := &OrganizationsSecurityProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesDeleteCall) Context(ctx context.Context) *OrganizationsSecurityProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSecurityProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "DeleteSecurityProfile delete a profile with all its revisions.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.securityProfiles.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of profile. Format: organizations/{org}/securityProfiles/{profile}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.securityProfiles.get":
 
 type OrganizationsSecurityProfilesGetCall struct {
@@ -56012,6 +56411,163 @@ func (c *OrganizationsSecurityProfilesListRevisionsCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "apigee.organizations.securityProfiles.patch":
+
+type OrganizationsSecurityProfilesPatchCall struct {
+	s                                  *Service
+	name                               string
+	googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Patch: UpdateSecurityProfile update the metadata of security profile.
+//
+//   - name: Immutable. Name of the security profile resource. Format:
+//     organizations/{org}/securityProfiles/{profile}.
+func (r *OrganizationsSecurityProfilesService) Patch(name string, googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile) *OrganizationsSecurityProfilesPatchCall {
+	c := &OrganizationsSecurityProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securityprofile = googlecloudapigeev1securityprofile
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update.
+func (c *OrganizationsSecurityProfilesPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityProfilesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesPatchCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesPatchCall) Context(ctx context.Context) *OrganizationsSecurityProfilesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.patch" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityProfile or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityProfile.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "UpdateSecurityProfile update the metadata of security profile.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "apigee.organizations.securityProfiles.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Name of the security profile resource. Format: organizations/{org}/securityProfiles/{profile}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "apigee.organizations.securityProfiles.environments.computeEnvironmentScores":

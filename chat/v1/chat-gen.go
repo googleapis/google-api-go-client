@@ -1260,8 +1260,9 @@ func (s *DeletionMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeprecatedEvent: Google Chat events. To learn how to use events, see
-// Receive and respond to Google Chat events
+// DeprecatedEvent: Google Chat app interaction events. To learn about
+// interaction events, see Receive and respond to Google Chat app
+// interaction events
 // (https://developers.google.com/chat/api/guides/message-formats).
 type DeprecatedEvent struct {
 	// Action: The form action data associated with an interactive card that
@@ -1285,35 +1286,38 @@ type DeprecatedEvent struct {
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
 	// DialogEventType: The type of dialog
-	// (https://developers.google.com/chat/how-tos/dialogs) event received.
+	// (https://developers.google.com/chat/how-tos/dialogs) interaction
+	// event received.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - This could be used when the corresponding
-	// event is not dialog related. For example an @mention.
+	// interaction event is not dialog related. For example an @mention.
 	//   "REQUEST_DIALOG" - Any user action that opens a
 	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
-	//   "SUBMIT_DIALOG" - A card click event from a
+	//   "SUBMIT_DIALOG" - A card click interaction event from a
 	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
 	//   "CANCEL_DIALOG" - The
 	// [dialog](https://developers.google.com/chat/how-tos/dialogs) was
 	// cancelled.
 	DialogEventType string `json:"dialogEventType,omitempty"`
 
-	// EventTime: The timestamp indicating when the event occurred.
+	// EventTime: The timestamp indicating when the interaction event
+	// occurred.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// IsDialogEvent: True when the event is related to dialogs
+	// IsDialogEvent: True when the interaction event is related to dialogs
 	// (https://developers.google.com/chat/how-tos/dialogs).
 	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 
-	// Message: The message that triggered the event, if applicable.
+	// Message: The message that triggered the interaction event, if
+	// applicable.
 	Message *Message `json:"message,omitempty"`
 
-	// Space: The space in which the event occurred.
+	// Space: The space in which the interaction event occurred.
 	Space *Space `json:"space,omitempty"`
 
 	// ThreadKey: The Chat app-defined key for the thread related to the
-	// event. See `spaces.messages.thread.threadKey`
+	// interaction event. See `spaces.messages.thread.threadKey`
 	// (/chat/api/reference/rest/v1/spaces.messages#Thread.FIELDS.thread_key)
 	//  for more information.
 	ThreadKey string `json:"threadKey,omitempty"`
@@ -1328,7 +1332,7 @@ type DeprecatedEvent struct {
 	// (https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat).
 	Token string `json:"token,omitempty"`
 
-	// Type: The type of the event.
+	// Type: The type of the interaction event.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
@@ -1340,7 +1344,7 @@ type DeprecatedEvent struct {
 	//   "CARD_CLICKED" - The Chat app's interactive card was clicked.
 	Type string `json:"type,omitempty"`
 
-	// User: The user that triggered the event.
+	// User: The user that triggered the interaction event.
 	User *User `json:"user,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -1844,14 +1848,18 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // guide users to take a next step. In Google Chat, cards appear in
 // several places: - As stand-alone messages. - Accompanying a text
 // message, just beneath the text message. - As a dialog
-// (https://developers.google.com/chat/how-tos/dialogs). The following
-// example JSON creates a "contact card" that features: - A header with
-// the contact's name, job title, and avatar picture. - A section with
-// the contact information, including formatted text. - Buttons that
-// users can click to share the contact, or see more or less
-// information. For more examples, see Design dynamic, interactive, and
-// consistent UIs with cards (https://developers.google.com/chat/ui).
-// !Example contact card
+// (https://developers.google.com/chat/how-tos/dialogs). Only Google
+// Chat apps can create card messages in Google Chat. If your Chat app
+// uses user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) to send
+// messages on behalf of users, the messages can't contain cards. The
+// following example JSON creates a "contact card" that features: - A
+// header with the contact's name, job title, and avatar picture. - A
+// section with the contact information, including formatted text. -
+// Buttons that users can click to share the contact, or see more or
+// less information. For more examples, see Design dynamic, interactive,
+// and consistent UIs with cards
+// (https://developers.google.com/chat/ui). !Example contact card
 // (https://developers.google.com/chat/images/card_api_reference.png)
 // ``` { "cardsV2": [ { "cardId": "unique-card-id", "card": { "header":
 // { "title": "Sasha", "subtitle": "Software Engineer", "imageUrl":
@@ -2669,7 +2677,8 @@ type GoogleAppsCardV1OnClick struct {
 	Action *GoogleAppsCardV1Action `json:"action,omitempty"`
 
 	// Card: A new card is pushed to the card stack after clicking if
-	// specified. Supported by Google Workspace Add-ons, but not Chat apps.
+	// specified. Supported by Google Workspace Add-ons, but not Google Chat
+	// apps.
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
 
 	// OpenDynamicLinkAction: An add-on triggers this action when the action
@@ -3168,7 +3177,7 @@ type GoogleAppsCardV1TextInput struct {
 	// If unspecified, the suggestions are set by `initialSuggestions` and
 	// are processed by the client. If specified, the app takes the action
 	// specified here, such as running a custom function. Supported by
-	// Google Workspace Add-ons, but not Chat apps.
+	// Google Workspace Add-ons, but not Google Chat apps.
 	AutoCompleteAction *GoogleAppsCardV1Action `json:"autoCompleteAction,omitempty"`
 
 	// HintText: Text that appears below the text input field meant to

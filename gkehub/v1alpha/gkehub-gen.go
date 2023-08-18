@@ -778,6 +778,89 @@ func (s *CloudBuildMembershipSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ClusterUpgradeFleetSpec: **ClusterUpgrade**: The configuration for
+// the fleet-level ClusterUpgrade feature.
+type ClusterUpgradeFleetSpec struct {
+	// GkeUpgradeOverrides: Allow users to override some properties of each
+	// GKE upgrade.
+	GkeUpgradeOverrides []*ClusterUpgradeGKEUpgradeOverride `json:"gkeUpgradeOverrides,omitempty"`
+
+	// PostConditions: Required. Post conditions to evaluate to mark an
+	// upgrade COMPLETE. Required.
+	PostConditions *ClusterUpgradePostConditions `json:"postConditions,omitempty"`
+
+	// UpstreamFleets: This fleet consumes upgrades that have COMPLETE
+	// status code in the upstream fleets. See UpgradeStatus.Code for code
+	// definitions. The fleet name should be either fleet project number or
+	// id. This is defined as repeated for future proof reasons. Initial
+	// implementation will enforce at most one upstream fleet.
+	UpstreamFleets []string `json:"upstreamFleets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GkeUpgradeOverrides")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GkeUpgradeOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeFleetSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeFleetSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeFleetState: **ClusterUpgrade**: The state for the
+// fleet-level ClusterUpgrade feature.
+type ClusterUpgradeFleetState struct {
+	// DownstreamFleets: This fleets whose upstream_fleets contain the
+	// current fleet. The fleet name should be either fleet project number
+	// or id.
+	DownstreamFleets []string `json:"downstreamFleets,omitempty"`
+
+	// GkeState: Feature state for GKE clusters.
+	GkeState *ClusterUpgradeGKEUpgradeFeatureState `json:"gkeState,omitempty"`
+
+	// Ignored: A list of memberships ignored by the feature. For example,
+	// manually upgraded clusters can be ignored if they are newer than the
+	// default versions of its release channel. The membership resource is
+	// in the format: `projects/{p}/locations/{l}/membership/{m}`.
+	Ignored map[string]ClusterUpgradeIgnoredMembership `json:"ignored,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownstreamFleets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownstreamFleets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeFleetState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeFleetState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClusterUpgradeGKEUpgrade: GKEUpgrade represents a GKE provided
 // upgrade, e.g., control plane upgrade.
 type ClusterUpgradeGKEUpgrade struct {
@@ -1020,6 +1103,10 @@ func (s *ClusterUpgradeMembershipGKEUpgradeState) MarshalJSON() ([]byte, error) 
 
 // ClusterUpgradeMembershipState: Per-membership state for this feature.
 type ClusterUpgradeMembershipState struct {
+	// Fleet: Project number or id of the fleet. It is set only for
+	// Memberships that are part of fleet-based Rollout Sequencing.
+	Fleet string `json:"fleet,omitempty"`
+
 	// Ignored: Whether this membership is ignored by the feature. For
 	// example, manually upgraded clusters can be ignored if they are newer
 	// than the default versions of its release channel.
@@ -1032,7 +1119,7 @@ type ClusterUpgradeMembershipState struct {
 	// Upgrades: Actual upgrade state against desired.
 	Upgrades []*ClusterUpgradeMembershipGKEUpgradeState `json:"upgrades,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Ignored") to
+	// ForceSendFields is a list of field names (e.g. "Fleet") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1040,8 +1127,8 @@ type ClusterUpgradeMembershipState struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Ignored") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Fleet") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1239,6 +1326,9 @@ type CommonFeatureSpec struct {
 	// Cloudauditlogging: Cloud Audit Logging-specific spec.
 	Cloudauditlogging *CloudAuditLoggingFeatureSpec `json:"cloudauditlogging,omitempty"`
 
+	// Clusterupgrade: ClusterUpgrade (fleet-based) feature spec.
+	Clusterupgrade *ClusterUpgradeFleetSpec `json:"clusterupgrade,omitempty"`
+
 	// Fleetobservability: FleetObservability feature spec.
 	Fleetobservability *FleetObservabilityFeatureSpec `json:"fleetobservability,omitempty"`
 
@@ -1277,6 +1367,9 @@ func (s *CommonFeatureSpec) MarshalJSON() ([]byte, error) {
 type CommonFeatureState struct {
 	// Appdevexperience: Appdevexperience specific state.
 	Appdevexperience *AppDevExperienceFeatureState `json:"appdevexperience,omitempty"`
+
+	// Clusterupgrade: ClusterUpgrade fleet-level state.
+	Clusterupgrade *ClusterUpgradeFleetState `json:"clusterupgrade,omitempty"`
 
 	// Fleetobservability: FleetObservability feature state.
 	Fleetobservability *FleetObservabilityFeatureState `json:"fleetobservability,omitempty"`
@@ -4541,11 +4634,6 @@ type MembershipBinding struct {
 	// DeleteTime: Output only. When the membership binding was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// Fleet: Whether the membershipbinding is Fleet-wide; true means that
-	// this Membership should be bound to all Namespaces in this entire
-	// Fleet.
-	Fleet bool `json:"fleet,omitempty"`
-
 	// Labels: Optional. Labels for this MembershipBinding.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -5345,6 +5433,8 @@ type Origin struct {
 	//   "TYPE_UNSPECIFIED" - Type is unknown or not set.
 	//   "FLEET" - Per-Membership spec was inherited from the fleet-level
 	// default.
+	//   "FLEET_OUT_OF_SYNC" - Per-Membership spec was inherited from the
+	// fleet-level default but is now out of sync with the current default.
 	//   "USER" - Per-Membership spec was inherited from a user
 	// specification.
 	Type string `json:"type,omitempty"`

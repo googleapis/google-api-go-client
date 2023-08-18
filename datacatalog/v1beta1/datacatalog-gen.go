@@ -1241,6 +1241,7 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
+	//   "VERTEX_AI" - Vertex AI
 	System string `json:"system,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataCatalogEntry") to
@@ -1376,6 +1377,36 @@ func (s *GoogleCloudDatacatalogV1DataplexTableSpec) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatacatalogV1DatasetSpec: Specification that applies to a
+// dataset. Valid only for entries with the `DATASET` type.
+type GoogleCloudDatacatalogV1DatasetSpec struct {
+	// VertexDatasetSpec: Vertex AI Dataset specific fields
+	VertexDatasetSpec *GoogleCloudDatacatalogV1VertexDatasetSpec `json:"vertexDatasetSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VertexDatasetSpec")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VertexDatasetSpec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1DatasetSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1DatasetSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatacatalogV1DumpItem: Wrapper for any item that can be
 // contained in the dump.
 type GoogleCloudDatacatalogV1DumpItem struct {
@@ -1444,6 +1475,9 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// Valid only for entries with the `TABLE` or `EXPLORE` type.
 	DatabaseTableSpec *GoogleCloudDatacatalogV1DatabaseTableSpec `json:"databaseTableSpec,omitempty"`
 
+	// DatasetSpec: Specification that applies to a dataset.
+	DatasetSpec *GoogleCloudDatacatalogV1DatasetSpec `json:"datasetSpec,omitempty"`
+
 	// Description: Entry description that can consist of several sentences
 	// or paragraphs that describe entry contents. The description must not
 	// contain Unicode non-characters as well as C0 and C1 control codes
@@ -1485,6 +1519,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
+	//   "VERTEX_AI" - Vertex AI
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
 
 	// Labels: Cloud labels attached to the entry. In Data Catalog, you can
@@ -1510,6 +1545,9 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// LookerSystemSpec: Specification that applies to Looker sysstem. Only
 	// settable when `user_specified_system` is equal to `LOOKER`
 	LookerSystemSpec *GoogleCloudDatacatalogV1LookerSystemSpec `json:"lookerSystemSpec,omitempty"`
+
+	// ModelSpec: Model specification.
+	ModelSpec *GoogleCloudDatacatalogV1ModelSpec `json:"modelSpec,omitempty"`
 
 	// Name: Output only. The resource name of an entry in URL format. Note:
 	// The entry itself and its child resources might not be stored in the
@@ -1899,6 +1937,36 @@ type GoogleCloudDatacatalogV1LookerSystemSpec struct {
 
 func (s *GoogleCloudDatacatalogV1LookerSystemSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1LookerSystemSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ModelSpec: Specification that applies to a
+// model. Valid only for entries with the `MODEL` type.
+type GoogleCloudDatacatalogV1ModelSpec struct {
+	// VertexModelSpec: Specification for vertex model resources.
+	VertexModelSpec *GoogleCloudDatacatalogV1VertexModelSpec `json:"vertexModelSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VertexModelSpec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VertexModelSpec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ModelSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ModelSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2783,6 +2851,149 @@ func (s *GoogleCloudDatacatalogV1UsageStats) UnmarshalJSON(data []byte) error {
 	s.TotalExecutionTimeForCompletionsMillis = float64(s1.TotalExecutionTimeForCompletionsMillis)
 	s.TotalFailures = float64(s1.TotalFailures)
 	return nil
+}
+
+// GoogleCloudDatacatalogV1VertexDatasetSpec: Specification for vertex
+// dataset resources.
+type GoogleCloudDatacatalogV1VertexDatasetSpec struct {
+	// DataItemCount: The number of DataItems in this Dataset. Only apply
+	// for non-structured Dataset.
+	DataItemCount int64 `json:"dataItemCount,omitempty,string"`
+
+	// DataType: Type of the dataset.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Should not be used.
+	//   "TABLE" - Structured data dataset.
+	//   "IMAGE" - Image dataset which supports ImageClassification,
+	// ImageObjectDetection and ImageSegmentation problems.
+	//   "TEXT" - Document dataset which supports TextClassification,
+	// TextExtraction and TextSentiment problems.
+	//   "VIDEO" - Video dataset which supports VideoClassification,
+	// VideoObjectTracking and VideoActionRecognition problems.
+	//   "CONVERSATION" - Conversation dataset which supports conversation
+	// problems.
+	//   "TIME_SERIES" - TimeSeries dataset.
+	//   "DOCUMENT" - Document dataset which supports DocumentAnnotation
+	// problems.
+	//   "TEXT_TO_SPEECH" - TextToSpeech dataset which supports TextToSpeech
+	// problems.
+	//   "TRANSLATION" - Translation dataset which supports Translation
+	// problems.
+	//   "STORE_VISION" - Store Vision dataset which is used for HITL
+	// integration.
+	//   "ENTERPRISE_KNOWLEDGE_GRAPH" - Enterprise Knowledge Graph dataset
+	// which is used for HITL labeling integration.
+	//   "TEXT_PROMPT" - Text prompt dataset which supports Large Language
+	// Models.
+	DataType string `json:"dataType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataItemCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataItemCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1VertexDatasetSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1VertexDatasetSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1VertexModelSourceInfo: Detail description of
+// the source information of a Vertex model.
+type GoogleCloudDatacatalogV1VertexModelSourceInfo struct {
+	// Copy: If this Model is copy of another Model. If true then
+	// source_type pertains to the original.
+	Copy bool `json:"copy,omitempty"`
+
+	// SourceType: Type of the model source.
+	//
+	// Possible values:
+	//   "MODEL_SOURCE_TYPE_UNSPECIFIED" - Should not be used.
+	//   "AUTOML" - The Model is uploaded by automl training pipeline.
+	//   "CUSTOM" - The Model is uploaded by user or custom training
+	// pipeline.
+	//   "BQML" - The Model is registered and sync'ed from BigQuery ML.
+	//   "MODEL_GARDEN" - The Model is saved or tuned from Model Garden.
+	SourceType string `json:"sourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Copy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Copy") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1VertexModelSourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1VertexModelSourceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1VertexModelSpec: Specification for vertex
+// model resources.
+type GoogleCloudDatacatalogV1VertexModelSpec struct {
+	// ContainerImageUri: URI of the Docker image to be used as the custom
+	// container for serving predictions.
+	ContainerImageUri string `json:"containerImageUri,omitempty"`
+
+	// VersionAliases: User provided version aliases so that a model version
+	// can be referenced via alias
+	VersionAliases []string `json:"versionAliases,omitempty"`
+
+	// VersionDescription: The description of this version.
+	VersionDescription string `json:"versionDescription,omitempty"`
+
+	// VersionId: The version ID of the model.
+	VersionId string `json:"versionId,omitempty"`
+
+	// VertexModelSourceInfo: Source of a Vertex model.
+	VertexModelSourceInfo *GoogleCloudDatacatalogV1VertexModelSourceInfo `json:"vertexModelSourceInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerImageUri")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerImageUri") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1VertexModelSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1VertexModelSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogV1ViewSpec: Table view specification.

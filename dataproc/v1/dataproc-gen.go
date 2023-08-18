@@ -160,6 +160,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AutoscalingPolicies = NewProjectsLocationsAutoscalingPoliciesService(s)
 	rs.Batches = NewProjectsLocationsBatchesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.SessionTemplates = NewProjectsLocationsSessionTemplatesService(s)
+	rs.Sessions = NewProjectsLocationsSessionsService(s)
 	rs.WorkflowTemplates = NewProjectsLocationsWorkflowTemplatesService(s)
 	return rs
 }
@@ -172,6 +174,10 @@ type ProjectsLocationsService struct {
 	Batches *ProjectsLocationsBatchesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	SessionTemplates *ProjectsLocationsSessionTemplatesService
+
+	Sessions *ProjectsLocationsSessionsService
 
 	WorkflowTemplates *ProjectsLocationsWorkflowTemplatesService
 }
@@ -200,6 +206,24 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSessionTemplatesService(s *Service) *ProjectsLocationsSessionTemplatesService {
+	rs := &ProjectsLocationsSessionTemplatesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSessionTemplatesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSessionsService(s *Service) *ProjectsLocationsSessionsService {
+	rs := &ProjectsLocationsSessionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSessionsService struct {
 	s *Service
 }
 
@@ -1691,10 +1715,10 @@ type ExecutionConfig struct {
 	// Minimum value is 10 minutes; maximum value is 14 days (see JSON
 	// representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
-	// Defaults to 4 hours if not set. If both ttl and idle_ttl are
-	// specified for an interactive session, the conditions are treated as
-	// OR conditions: the workload will be terminated when it has been idle
-	// for idle_ttl or when ttl has been exceeded, whichever occurs first.
+	// Defaults to 1 hour if not set. If both ttl and idle_ttl are specified
+	// for an interactive session, the conditions are treated as OR
+	// conditions: the workload will be terminated when it has been idle for
+	// idle_ttl or when ttl has been exceeded, whichever occurs first.
 	IdleTtl string `json:"idleTtl,omitempty"`
 
 	// KmsKey: Optional. The Cloud KMS key to use for encryption.
@@ -2567,6 +2591,53 @@ func (s *InjectCredentialsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InjectSessionCredentialsRequest: A request to inject credentials to a
+// session.
+type InjectSessionCredentialsRequest struct {
+	// CredentialsCiphertext: Required. The encrypted credentials being
+	// injected in to the session.The client is responsible for encrypting
+	// the credentials in a way that is supported by the session.A wrapped
+	// value is used here so that the actual contents of the encrypted
+	// credentials are not written to audit logs.
+	CredentialsCiphertext string `json:"credentialsCiphertext,omitempty"`
+
+	// RequestId: Optional. A unique ID used to identify the request. If the
+	// service receives two TerminateSessionRequest
+	// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.TerminateSessionRequest)s
+	// with the same ID, the first request is ignored to ensure the most
+	// recent credentials are injected.Recommendation: Set this value to a
+	// UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The
+	// value must contain only letters (a-z, A-Z), numbers (0-9),
+	// underscores (_), and hyphens (-). The maximum length is 40
+	// characters.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CredentialsCiphertext") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CredentialsCiphertext") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InjectSessionCredentialsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InjectSessionCredentialsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InstanceGroupAutoscalingPolicyConfig: Configuration for the size
 // bounds of an instance group, including its proportional size to other
 // groups.
@@ -3214,6 +3285,43 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JupyterConfig: Jupyter configuration for an interactive session.
+type JupyterConfig struct {
+	// DisplayName: Optional. Display name, shown in the Jupyter kernelspec
+	// card.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Kernel: Optional. Kernel
+	//
+	// Possible values:
+	//   "KERNEL_UNSPECIFIED" - The kernel is unknown.
+	//   "PYTHON" - Python kernel.
+	//   "SCALA" - Scala kernel.
+	Kernel string `json:"kernel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JupyterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod JupyterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KerberosConfig: Specifies Kerberos related configuration.
 type KerberosConfig struct {
 	// CrossRealmTrustAdminServer: Optional. The admin server (IP or
@@ -3629,6 +3737,80 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSessionTemplatesResponse: A list of session templates.
+type ListSessionTemplatesResponse struct {
+	// NextPageToken: A token, which can be sent as page_token to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SessionTemplates: Output only. Session template list
+	SessionTemplates []*SessionTemplate `json:"sessionTemplates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSessionTemplatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSessionTemplatesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSessionsResponse: A list of interactive sessions.
+type ListSessionsResponse struct {
+	// NextPageToken: A token, which can be sent as page_token to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Sessions: Output only. The sessions from the specified collection.
+	Sessions []*Session `json:"sessions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSessionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSessionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5033,6 +5215,108 @@ func (s *SecurityConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Session: A representation of a session in the service. Next ID: 18
+type Session struct {
+	// CreateTime: Output only. The time when the session was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Creator: Output only. The email address of the user who created the
+	// session.
+	Creator string `json:"creator,omitempty"`
+
+	// EnvironmentConfig: Optional. Environment configuration for the
+	// session execution.
+	EnvironmentConfig *EnvironmentConfig `json:"environmentConfig,omitempty"`
+
+	// JupyterSession: Optional. Jupyter session config.
+	JupyterSession *JupyterConfig `json:"jupyterSession,omitempty"`
+
+	// Labels: Optional. The labels to associate with this session. Label
+	// keys must contain 1 to 63 characters, and must conform to RFC 1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty,
+	// but, if present, must contain 1 to 63 characters, and must conform to
+	// RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32
+	// labels can be associated with a session.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Required. The resource name of the session.
+	Name string `json:"name,omitempty"`
+
+	// RuntimeConfig: Optional. Runtime configuration for the session
+	// execution.
+	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
+
+	// RuntimeInfo: Output only. Runtime information about session
+	// execution.
+	RuntimeInfo *RuntimeInfo `json:"runtimeInfo,omitempty"`
+
+	// SessionTemplate: Optional. The session template used by the
+	// session.Only resource names including project ID and location are
+	// valid.Example: *
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]
+	// *
+	// projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[te
+	// mplate_id]Note that the template must be in the same project and
+	// Dataproc region.
+	SessionTemplate string `json:"sessionTemplate,omitempty"`
+
+	// State: Output only. A state of the session.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The session state is unknown.
+	//   "CREATING" - The session is created before running.
+	//   "ACTIVE" - The session is running.
+	//   "TERMINATING" - The session is terminating.
+	//   "TERMINATED" - The session is terminated successfully.
+	//   "FAILED" - The session is no longer running due to an error.
+	State string `json:"state,omitempty"`
+
+	// StateHistory: Output only. Historical state information for the
+	// session.
+	StateHistory []*SessionStateHistory `json:"stateHistory,omitempty"`
+
+	// StateMessage: Output only. Session state details, such as a failure
+	// description if the state is FAILED.
+	StateMessage string `json:"stateMessage,omitempty"`
+
+	// StateTime: Output only. The time when the session entered a current
+	// state.
+	StateTime string `json:"stateTime,omitempty"`
+
+	// User: Optional. The email address of the user who owns the session.
+	User string `json:"user,omitempty"`
+
+	// Uuid: Output only. A session UUID (Unique Universal Identifier). The
+	// service generates this value when it creates the session.
+	Uuid string `json:"uuid,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Session) MarshalJSON() ([]byte, error) {
+	type NoMethod Session
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SessionOperationMetadata: Metadata describing the Session operation.
 type SessionOperationMetadata struct {
 	// CreateTime: The time when the operation was created.
@@ -5085,6 +5369,116 @@ type SessionOperationMetadata struct {
 
 func (s *SessionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SessionOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SessionStateHistory: Historical state information.
+type SessionStateHistory struct {
+	// State: Output only. The state of the session at this point in
+	// history.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The session state is unknown.
+	//   "CREATING" - The session is created before running.
+	//   "ACTIVE" - The session is running.
+	//   "TERMINATING" - The session is terminating.
+	//   "TERMINATED" - The session is terminated successfully.
+	//   "FAILED" - The session is no longer running due to an error.
+	State string `json:"state,omitempty"`
+
+	// StateMessage: Output only. Details about the state at this point in
+	// history.
+	StateMessage string `json:"stateMessage,omitempty"`
+
+	// StateStartTime: Output only. The time when the session entered the
+	// historical state.
+	StateStartTime string `json:"stateStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SessionStateHistory) MarshalJSON() ([]byte, error) {
+	type NoMethod SessionStateHistory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SessionTemplate: A representation of a session template in the
+// service. Next ID: 12
+type SessionTemplate struct {
+	// CreateTime: Output only. The time when the template was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Creator: Output only. The email address of the user who created the
+	// template.
+	Creator string `json:"creator,omitempty"`
+
+	// Description: Optional. Brief description of the template.
+	Description string `json:"description,omitempty"`
+
+	// EnvironmentConfig: Optional. Environment configuration for session
+	// execution.
+	EnvironmentConfig *EnvironmentConfig `json:"environmentConfig,omitempty"`
+
+	// JupyterSession: Optional. Jupyter session config.
+	JupyterSession *JupyterConfig `json:"jupyterSession,omitempty"`
+
+	// Labels: Optional. The labels to associate with sessions created using
+	// this template. Label keys must contain 1 to 63 characters, and must
+	// conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label
+	// values may be empty, but, if present, must contain 1 to 63
+	// characters, and must conform to RFC 1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
+	// associated with a session.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Required. The resource name of the session template.
+	Name string `json:"name,omitempty"`
+
+	// RuntimeConfig: Optional. Runtime configuration for session execution.
+	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
+
+	// UpdateTime: Output only. The time template was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SessionTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod SessionTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5931,6 +6325,43 @@ type TemplateParameter struct {
 
 func (s *TemplateParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod TemplateParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TerminateSessionRequest: A request to terminate an interactive
+// session.
+type TerminateSessionRequest struct {
+	// RequestId: Optional. A unique ID used to identify the request. If the
+	// service receives two TerminateSessionRequest
+	// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.TerminateSessionRequest)s
+	// with the same ID, the second request is ignored.Recommendation: Set
+	// this value to a UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The
+	// value must contain only letters (a-z, A-Z), numbers (0-9),
+	// underscores (_), and hyphens (-). The maximum length is 40
+	// characters.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TerminateSessionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TerminateSessionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9140,6 +9571,1752 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "dataproc.projects.locations.sessionTemplates.create":
+
+type ProjectsLocationsSessionTemplatesCreateCall struct {
+	s               *Service
+	parent          string
+	sessiontemplate *SessionTemplate
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Create an session template, synchronously.
+//
+//   - parent: The parent resource where this session template will be
+//     created.
+func (r *ProjectsLocationsSessionTemplatesService) Create(parent string, sessiontemplate *SessionTemplate) *ProjectsLocationsSessionTemplatesCreateCall {
+	c := &ProjectsLocationsSessionTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.sessiontemplate = sessiontemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionTemplatesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionTemplatesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionTemplatesCreateCall) Context(ctx context.Context) *ProjectsLocationsSessionTemplatesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionTemplatesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sessiontemplate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sessionTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessionTemplates.create" call.
+// Exactly one of *SessionTemplate or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SessionTemplate.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*SessionTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SessionTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create an session template, synchronously.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessionTemplates",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.locations.sessionTemplates.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this session template will be created.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/sessionTemplates",
+	//   "request": {
+	//     "$ref": "SessionTemplate"
+	//   },
+	//   "response": {
+	//     "$ref": "SessionTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessionTemplates.delete":
+
+type ProjectsLocationsSessionTemplatesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a session template.
+//
+// - name: The name of the session template resource to delete.
+func (r *ProjectsLocationsSessionTemplatesService) Delete(name string) *ProjectsLocationsSessionTemplatesDeleteCall {
+	c := &ProjectsLocationsSessionTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionTemplatesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionTemplatesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionTemplatesDeleteCall) Context(ctx context.Context) *ProjectsLocationsSessionTemplatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionTemplatesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessionTemplates.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsSessionTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a session template.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessionTemplates/{sessionTemplatesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dataproc.projects.locations.sessionTemplates.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the session template resource to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessionTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessionTemplates.get":
+
+type ProjectsLocationsSessionTemplatesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the resource representation for a session template.
+//
+// - name: The name of the session template to retrieve.
+func (r *ProjectsLocationsSessionTemplatesService) Get(name string) *ProjectsLocationsSessionTemplatesGetCall {
+	c := &ProjectsLocationsSessionTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionTemplatesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionTemplatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSessionTemplatesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSessionTemplatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionTemplatesGetCall) Context(ctx context.Context) *ProjectsLocationsSessionTemplatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionTemplatesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessionTemplates.get" call.
+// Exactly one of *SessionTemplate or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SessionTemplate.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionTemplatesGetCall) Do(opts ...googleapi.CallOption) (*SessionTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SessionTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the resource representation for a session template.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessionTemplates/{sessionTemplatesId}",
+	//   "httpMethod": "GET",
+	//   "id": "dataproc.projects.locations.sessionTemplates.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the session template to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessionTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "SessionTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessionTemplates.list":
+
+type ProjectsLocationsSessionTemplatesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists session templates.
+//
+//   - parent: The parent, which owns this collection of session
+//     templates.
+func (r *ProjectsLocationsSessionTemplatesService) List(parent string) *ProjectsLocationsSessionTemplatesListCall {
+	c := &ProjectsLocationsSessionTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter for the session
+// templates to return in the response. Filters are case sensitive and
+// have the following syntax:field = value AND field = value ...
+func (c *ProjectsLocationsSessionTemplatesListCall) Filter(filter string) *ProjectsLocationsSessionTemplatesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of sessions to return in each response. The service may return fewer
+// than this value.
+func (c *ProjectsLocationsSessionTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsSessionTemplatesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous ListSessions call. Provide this token to
+// retrieve the subsequent page.
+func (c *ProjectsLocationsSessionTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsSessionTemplatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionTemplatesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionTemplatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSessionTemplatesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSessionTemplatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionTemplatesListCall) Context(ctx context.Context) *ProjectsLocationsSessionTemplatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionTemplatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionTemplatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sessionTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessionTemplates.list" call.
+// Exactly one of *ListSessionTemplatesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListSessionTemplatesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionTemplatesListCall) Do(opts ...googleapi.CallOption) (*ListSessionTemplatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSessionTemplatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists session templates.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessionTemplates",
+	//   "httpMethod": "GET",
+	//   "id": "dataproc.projects.locations.sessionTemplates.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter for the session templates to return in the response. Filters are case sensitive and have the following syntax:field = value AND field = value ...",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of sessions to return in each response. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token received from a previous ListSessions call. Provide this token to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of session templates.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/sessionTemplates",
+	//   "response": {
+	//     "$ref": "ListSessionTemplatesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSessionTemplatesListCall) Pages(ctx context.Context, f func(*ListSessionTemplatesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dataproc.projects.locations.sessionTemplates.patch":
+
+type ProjectsLocationsSessionTemplatesPatchCall struct {
+	s               *Service
+	name            string
+	sessiontemplate *SessionTemplate
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates the session template, synchronously.Disable check for
+// update_mask, because all updates will be full replacements.
+//
+// - name: The resource name of the session template.
+func (r *ProjectsLocationsSessionTemplatesService) Patch(name string, sessiontemplate *SessionTemplate) *ProjectsLocationsSessionTemplatesPatchCall {
+	c := &ProjectsLocationsSessionTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.sessiontemplate = sessiontemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionTemplatesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionTemplatesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionTemplatesPatchCall) Context(ctx context.Context) *ProjectsLocationsSessionTemplatesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionTemplatesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sessiontemplate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessionTemplates.patch" call.
+// Exactly one of *SessionTemplate or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SessionTemplate.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*SessionTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SessionTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the session template, synchronously.Disable check for update_mask, because all updates will be full replacements.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessionTemplates/{sessionTemplatesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dataproc.projects.locations.sessionTemplates.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the session template.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessionTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "SessionTemplate"
+	//   },
+	//   "response": {
+	//     "$ref": "SessionTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessions.create":
+
+type ProjectsLocationsSessionsCreateCall struct {
+	s          *Service
+	parent     string
+	session    *Session
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Create an interactive session asynchronously.
+//
+// - parent: The parent resource where this session will be created.
+func (r *ProjectsLocationsSessionsService) Create(parent string, session *Session) *ProjectsLocationsSessionsCreateCall {
+	c := &ProjectsLocationsSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.session = session
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique ID used
+// to identify the request. If the service receives two
+// CreateSessionRequest
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateSessionRequest)s
+// with the same ID, the second request is ignored and the first Session
+// is created and stored in the backend is returned.Recommendation: Set
+// this value to a UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The
+// value must contain only letters (a-z, A-Z), numbers (0-9),
+// underscores (_), and hyphens (-). The maximum length is 40
+// characters.
+func (c *ProjectsLocationsSessionsCreateCall) RequestId(requestId string) *ProjectsLocationsSessionsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// SessionId sets the optional parameter "sessionId": Required. The ID
+// to use for the session, which becomes the final component of the
+// session's resource name.This value must be 4-63 characters. Valid
+// characters are /a-z-/.
+func (c *ProjectsLocationsSessionsCreateCall) SessionId(sessionId string) *ProjectsLocationsSessionsCreateCall {
+	c.urlParams_.Set("sessionId", sessionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionsCreateCall) Context(ctx context.Context) *ProjectsLocationsSessionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.session)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create an interactive session asynchronously.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.locations.sessions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this session will be created.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique ID used to identify the request. If the service receives two CreateSessionRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateSessionRequest)s with the same ID, the second request is ignored and the first Session is created and stored in the backend is returned.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sessionId": {
+	//       "description": "Required. The ID to use for the session, which becomes the final component of the session's resource name.This value must be 4-63 characters. Valid characters are /a-z-/.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/sessions",
+	//   "request": {
+	//     "$ref": "Session"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessions.delete":
+
+type ProjectsLocationsSessionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the interactive session resource. If the session is
+// not in terminal state, it will be terminated and deleted afterwards.
+//
+// - name: The name of the session resource to delete.
+func (r *ProjectsLocationsSessionsService) Delete(name string) *ProjectsLocationsSessionsDeleteCall {
+	c := &ProjectsLocationsSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique ID used
+// to identify the request. If the service receives two
+// DeleteSessionRequest
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.DeleteSessionRequest)s
+// with the same ID, the second request is ignored.Recommendation: Set
+// this value to a UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The
+// value must contain only letters (a-z, A-Z), numbers (0-9),
+// underscores (_), and hyphens (-). The maximum length is 40
+// characters.
+func (c *ProjectsLocationsSessionsDeleteCall) RequestId(requestId string) *ProjectsLocationsSessionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSessionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the interactive session resource. If the session is not in terminal state, it will be terminated and deleted afterwards.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dataproc.projects.locations.sessions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the session resource to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique ID used to identify the request. If the service receives two DeleteSessionRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.DeleteSessionRequest)s with the same ID, the second request is ignored.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessions.get":
+
+type ProjectsLocationsSessionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the resource representation for an interactive session.
+//
+// - name: The name of the session to retrieve.
+func (r *ProjectsLocationsSessionsService) Get(name string) *ProjectsLocationsSessionsGetCall {
+	c := &ProjectsLocationsSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSessionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSessionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionsGetCall) Context(ctx context.Context) *ProjectsLocationsSessionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.get" call.
+// Exactly one of *Session or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Session.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsSessionsGetCall) Do(opts ...googleapi.CallOption) (*Session, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Session{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the resource representation for an interactive session.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dataproc.projects.locations.sessions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the session to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Session"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessions.injectCredentials":
+
+type ProjectsLocationsSessionsInjectCredentialsCall struct {
+	s                               *Service
+	session                         string
+	injectsessioncredentialsrequest *InjectSessionCredentialsRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// InjectCredentials: Inject Credentials in the interactive session.
+//
+// - session: The name of the session resource to inject credentials to.
+func (r *ProjectsLocationsSessionsService) InjectCredentials(session string, injectsessioncredentialsrequest *InjectSessionCredentialsRequest) *ProjectsLocationsSessionsInjectCredentialsCall {
+	c := &ProjectsLocationsSessionsInjectCredentialsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.session = session
+	c.injectsessioncredentialsrequest = injectsessioncredentialsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionsInjectCredentialsCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsInjectCredentialsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionsInjectCredentialsCall) Context(ctx context.Context) *ProjectsLocationsSessionsInjectCredentialsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionsInjectCredentialsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsInjectCredentialsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.injectsessioncredentialsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+session}:injectCredentials")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"session": c.session,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.injectCredentials" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsInjectCredentialsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inject Credentials in the interactive session.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}:injectCredentials",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.locations.sessions.injectCredentials",
+	//   "parameterOrder": [
+	//     "session"
+	//   ],
+	//   "parameters": {
+	//     "session": {
+	//       "description": "Required. The name of the session resource to inject credentials to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+session}:injectCredentials",
+	//   "request": {
+	//     "$ref": "InjectSessionCredentialsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.locations.sessions.list":
+
+type ProjectsLocationsSessionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists interactive sessions.
+//
+// - parent: The parent, which owns this collection of sessions.
+func (r *ProjectsLocationsSessionsService) List(parent string) *ProjectsLocationsSessionsListCall {
+	c := &ProjectsLocationsSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter for the
+// sessions to return in the response.A filter is a logical expression
+// constraining the values of various fields in each session resource.
+// Filters are case sensitive, and may contain multiple clauses combined
+// with logical operators (AND/OR). Supported fields are session_id,
+// session_uuid, state, and create_time.e.g. state = ACTIVE and
+// create_time < "2023-01-01T00:00:00Z" filters for sessions in state
+// ACTIVE that were created before 2023-01-01See
+// https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed
+// description of the filter syntax and a list of supported comparisons.
+func (c *ProjectsLocationsSessionsListCall) Filter(filter string) *ProjectsLocationsSessionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of sessions to return in each response. The service may return fewer
+// than this value.
+func (c *ProjectsLocationsSessionsListCall) PageSize(pageSize int64) *ProjectsLocationsSessionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous ListSessions call. Provide this token to
+// retrieve the subsequent page.
+func (c *ProjectsLocationsSessionsListCall) PageToken(pageToken string) *ProjectsLocationsSessionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSessionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSessionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionsListCall) Context(ctx context.Context) *ProjectsLocationsSessionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.list" call.
+// Exactly one of *ListSessionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSessionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsListCall) Do(opts ...googleapi.CallOption) (*ListSessionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSessionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists interactive sessions.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions",
+	//   "httpMethod": "GET",
+	//   "id": "dataproc.projects.locations.sessions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter for the sessions to return in the response.A filter is a logical expression constraining the values of various fields in each session resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND/OR). Supported fields are session_id, session_uuid, state, and create_time.e.g. state = ACTIVE and create_time \u003c \"2023-01-01T00:00:00Z\" filters for sessions in state ACTIVE that were created before 2023-01-01See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparisons.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of sessions to return in each response. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token received from a previous ListSessions call. Provide this token to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of sessions.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/sessions",
+	//   "response": {
+	//     "$ref": "ListSessionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSessionsListCall) Pages(ctx context.Context, f func(*ListSessionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dataproc.projects.locations.sessions.terminate":
+
+type ProjectsLocationsSessionsTerminateCall struct {
+	s                       *Service
+	name                    string
+	terminatesessionrequest *TerminateSessionRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Terminate: Terminates the interactive session.
+//
+// - name: The name of the session resource to terminate.
+func (r *ProjectsLocationsSessionsService) Terminate(name string, terminatesessionrequest *TerminateSessionRequest) *ProjectsLocationsSessionsTerminateCall {
+	c := &ProjectsLocationsSessionsTerminateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.terminatesessionrequest = terminatesessionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSessionsTerminateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsTerminateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSessionsTerminateCall) Context(ctx context.Context) *ProjectsLocationsSessionsTerminateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSessionsTerminateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsTerminateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.terminatesessionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:terminate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.terminate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsTerminateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Terminates the interactive session.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}:terminate",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.locations.sessions.terminate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the session resource to terminate.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:terminate",
+	//   "request": {
+	//     "$ref": "TerminateSessionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "dataproc.projects.locations.workflowTemplates.create":

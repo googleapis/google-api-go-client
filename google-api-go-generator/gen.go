@@ -69,6 +69,7 @@ var (
 var skipAPIGeneration = map[string]bool{
 	"integrations:v1alpha": true,
 	"sql:v1beta4":          true,
+	"datalineage:v1":       true,
 }
 
 // API represents an API to generate, as well as its state while it's

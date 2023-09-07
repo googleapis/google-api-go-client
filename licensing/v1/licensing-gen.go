@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "licensing:v1"
 const apiName = "licensing"
@@ -386,17 +387,17 @@ func (c *LicenseAssignmentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -561,17 +562,17 @@ func (c *LicenseAssignmentsGetCall) Do(opts ...googleapi.CallOption) (*LicenseAs
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LicenseAssignment{
 		ServerResponse: googleapi.ServerResponse{
@@ -720,17 +721,17 @@ func (c *LicenseAssignmentsInsertCall) Do(opts ...googleapi.CallOption) (*Licens
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LicenseAssignment{
 		ServerResponse: googleapi.ServerResponse{
@@ -900,17 +901,17 @@ func (c *LicenseAssignmentsListForProductCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LicenseAssignmentList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1119,17 +1120,17 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LicenseAssignmentList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1324,17 +1325,17 @@ func (c *LicenseAssignmentsPatchCall) Do(opts ...googleapi.CallOption) (*License
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LicenseAssignment{
 		ServerResponse: googleapi.ServerResponse{
@@ -1496,17 +1497,17 @@ func (c *LicenseAssignmentsUpdateCall) Do(opts ...googleapi.CallOption) (*Licens
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LicenseAssignment{
 		ServerResponse: googleapi.ServerResponse{

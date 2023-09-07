@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "toolresults:v1beta3"
 const apiName = "toolresults"
@@ -582,6 +583,10 @@ func (s *AppStartTime) MarshalJSON() ([]byte, error) {
 	type NoMethod AppStartTime
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AssetIssue: There was an issue with the assets in this test.
+type AssetIssue struct {
 }
 
 // AvailableDeepLinks: A suggestion to use deep links for a Robo run.
@@ -1136,7 +1141,7 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FailedToInstall: Failed to install the APK.
+// FailedToInstall: Failed to install the App.
 type FailedToInstall struct {
 }
 
@@ -3374,13 +3379,13 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // time if some operations are done in parallel). Here is an example,
 // let's consider that we have a continuous build is executing a test
 // runner for each iteration. The workflow would look like: - user
-// creates a Execution with id 1 - user creates an TestExecutionStep
-// with id 100 for Execution 1 - user update TestExecutionStep with id
-// 100 to add a raw xml log + the service parses the xml logs and
-// returns a TestExecutionStep with updated TestResult(s). - user update
-// the status of TestExecutionStep with id 100 to COMPLETE A Step can be
+// creates a Execution with id 1 - user creates a TestExecutionStep with
+// id 100 for Execution 1 - user update TestExecutionStep with id 100 to
+// add a raw xml log + the service parses the xml logs and returns a
+// TestExecutionStep with updated TestResult(s). - user update the
+// status of TestExecutionStep with id 100 to COMPLETE A Step can be
 // updated until its state is set to COMPLETE at which points it becomes
-// immutable. Next tag: 27
+// immutable.
 type Step struct {
 	// CompletionTime: The time when the step status was set to complete.
 	// This value will be set automatically when state transitions to
@@ -4013,6 +4018,7 @@ type TestIssue struct {
 	//   "logcatCollectionError" - Problems detected while collecting logcat
 	//   "detectedAppSplashScreen" - Robo detected a splash screen provided
 	// by app (vs. Android OS splash screen).
+	//   "assetIssue" - There was an issue with the assets in this test.
 	Type string `json:"type,omitempty"`
 
 	// Warning: Warning message with additional details of the issue. Should
@@ -4639,17 +4645,17 @@ func (c *ProjectsGetSettingsCall) Do(opts ...googleapi.CallOption) (*ProjectSett
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -4790,17 +4796,17 @@ func (c *ProjectsInitializeSettingsCall) Do(opts ...googleapi.CallOption) (*Proj
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -4940,17 +4946,17 @@ func (c *ProjectsHistoriesCreateCall) Do(opts ...googleapi.CallOption) (*History
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &History{
 		ServerResponse: googleapi.ServerResponse{
@@ -5100,17 +5106,17 @@ func (c *ProjectsHistoriesGetCall) Do(opts ...googleapi.CallOption) (*History, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &History{
 		ServerResponse: googleapi.ServerResponse{
@@ -5280,17 +5286,17 @@ func (c *ProjectsHistoriesListCall) Do(opts ...googleapi.CallOption) (*ListHisto
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListHistoriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5471,17 +5477,17 @@ func (c *ProjectsHistoriesExecutionsCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -5642,17 +5648,17 @@ func (c *ProjectsHistoriesExecutionsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -5826,17 +5832,17 @@ func (c *ProjectsHistoriesExecutionsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListExecutionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6024,17 +6030,17 @@ func (c *ProjectsHistoriesExecutionsPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -6203,17 +6209,17 @@ func (c *ProjectsHistoriesExecutionsClustersGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScreenshotCluster{
 		ServerResponse: googleapi.ServerResponse{
@@ -6383,17 +6389,17 @@ func (c *ProjectsHistoriesExecutionsClustersListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListScreenshotClustersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6557,17 +6563,17 @@ func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -6750,17 +6756,17 @@ func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEnvironmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6960,17 +6966,17 @@ func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListStepAccessibilityClustersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7125,17 +7131,17 @@ func (c *ProjectsHistoriesExecutionsStepsCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Step{
 		ServerResponse: googleapi.ServerResponse{
@@ -7307,17 +7313,17 @@ func (c *ProjectsHistoriesExecutionsStepsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Step{
 		ServerResponse: googleapi.ServerResponse{
@@ -7487,17 +7493,17 @@ func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PerfMetricsSummary{
 		ServerResponse: googleapi.ServerResponse{
@@ -7684,17 +7690,17 @@ func (c *ProjectsHistoriesExecutionsStepsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListStepsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7894,17 +7900,17 @@ func (c *ProjectsHistoriesExecutionsStepsPatchCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Step{
 		ServerResponse: googleapi.ServerResponse{
@@ -7991,7 +7997,7 @@ type ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall struct {
 // return any of the following canonical error codes: -
 // PERMISSION_DENIED - if the user is not authorized to write project -
 // INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION
-// - if the requested state transition is illegal, e.g try to upload a
+// - if the requested state transition is illegal, e.g. try to upload a
 // duplicate xml file or a file too large. - NOT_FOUND - if the
 // containing Execution does not exist
 //
@@ -8080,17 +8086,17 @@ func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Step{
 		ServerResponse: googleapi.ServerResponse{
@@ -8104,7 +8110,7 @@ func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Publish xml files to an existing Step. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write project - INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION - if the requested state transition is illegal, e.g try to upload a duplicate xml file or a file too large. - NOT_FOUND - if the containing Execution does not exist",
+	//   "description": "Publish xml files to an existing Step. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write project - INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION - if the requested state transition is illegal, e.g. try to upload a duplicate xml file or a file too large. - NOT_FOUND - if the containing Execution does not exist",
 	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
 	//   "httpMethod": "POST",
 	//   "id": "toolresults.projects.histories.executions.steps.publishXunitXmlFiles",
@@ -8256,17 +8262,17 @@ func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PerfMetricsSummary{
 		ServerResponse: googleapi.ServerResponse{
@@ -8432,17 +8438,17 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PerfSampleSeries{
 		ServerResponse: googleapi.ServerResponse{
@@ -8618,17 +8624,17 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PerfSampleSeries{
 		ServerResponse: googleapi.ServerResponse{
@@ -8823,17 +8829,17 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPerfSampleSeriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9025,17 +9031,17 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchCreatePerfSamplesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9240,17 +9246,17 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPerfSamplesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9466,17 +9472,17 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestCase{
 		ServerResponse: googleapi.ServerResponse{
@@ -9671,17 +9677,17 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTestCasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9900,17 +9906,17 @@ func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListStepThumbnailsResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -77,6 +77,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "language:v1beta2"
 const apiName = "language"
@@ -567,6 +568,10 @@ type AnnotateTextResponse struct {
 	// details.
 	Language string `json:"language,omitempty"`
 
+	// ModerationCategories: Harmful and sensitive categories identified in
+	// the input document.
+	ModerationCategories []*ClassificationCategory `json:"moderationCategories,omitempty"`
+
 	// Sentences: Sentences in the input document. Populated if the user
 	// enables AnnotateTextRequest.Features.extract_syntax.
 	Sentences []*Sentence `json:"sentences,omitempty"`
@@ -611,9 +616,7 @@ type ClassificationCategory struct {
 	// represents the given text.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of the category representing the document, from the
-	// predefined taxonomy
-	// (https://cloud.google.com/natural-language/docs/categories).
+	// Name: The name of the category representing the document.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -879,9 +882,7 @@ func (s *DependencyEdge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Document:
-// ################################################################ #
-// Represents the input to API methods.
+// Document: Represents the input to API methods.
 type Document struct {
 	// BoilerplateHandling: Indicates how detected boilerplate(e.g.
 	// advertisements, copyright declarations, banners) should be handled
@@ -1101,7 +1102,7 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 
 // Features: All available features for sentiment, syntax, and semantic
 // analysis. Setting each one to true will enable that specific analysis
-// for the input. Next ID: 11
+// for the input. Next ID: 12
 type Features struct {
 	// ClassificationModelOptions: The model options to use for
 	// classification. Defaults to v1 options if not specified. Only used if
@@ -1127,6 +1128,10 @@ type Features struct {
 	// ExtractSyntax: Extract syntax information.
 	ExtractSyntax bool `json:"extractSyntax,omitempty"`
 
+	// ModerateText: Moderate the document for harmful and sensitive
+	// categories.
+	ModerateText bool `json:"moderateText,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "ClassificationModelOptions") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -1148,6 +1153,69 @@ type Features struct {
 
 func (s *Features) MarshalJSON() ([]byte, error) {
 	type NoMethod Features
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ModerateTextRequest: The document moderation request message.
+type ModerateTextRequest struct {
+	// Document: Required. Input document.
+	Document *Document `json:"document,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Document") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ModerateTextRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ModerateTextRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ModerateTextResponse: The document moderation response message.
+type ModerateTextResponse struct {
+	// ModerationCategories: Harmful and sensitive categories representing
+	// the input document.
+	ModerationCategories []*ClassificationCategory `json:"moderationCategories,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ModerationCategories") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ModerationCategories") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ModerateTextResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ModerateTextResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1458,14 +1526,15 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TextSpan: Represents an output piece of text.
+// TextSpan: Represents a text span in the input document.
 type TextSpan struct {
 	// BeginOffset: The API calculates the beginning offset of the content
 	// in the original document according to the EncodingType specified in
 	// the API request.
 	BeginOffset int64 `json:"beginOffset,omitempty"`
 
-	// Content: The content of the output text.
+	// Content: The content of the text span, which is a substring of the
+	// document.
 	Content string `json:"content,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BeginOffset") to
@@ -1655,17 +1724,17 @@ func (c *DocumentsAnalyzeEntitiesCall) Do(opts ...googleapi.CallOption) (*Analyz
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeEntitiesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1783,17 +1852,17 @@ func (c *DocumentsAnalyzeEntitySentimentCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeEntitySentimentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1909,17 +1978,17 @@ func (c *DocumentsAnalyzeSentimentCall) Do(opts ...googleapi.CallOption) (*Analy
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeSentimentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2037,17 +2106,17 @@ func (c *DocumentsAnalyzeSyntaxCall) Do(opts ...googleapi.CallOption) (*AnalyzeS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeSyntaxResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2164,17 +2233,17 @@ func (c *DocumentsAnnotateTextCall) Do(opts ...googleapi.CallOption) (*AnnotateT
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnnotateTextResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2290,17 +2359,17 @@ func (c *DocumentsClassifyTextCall) Do(opts ...googleapi.CallOption) (*ClassifyT
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClassifyTextResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2326,6 +2395,133 @@ func (c *DocumentsClassifyTextCall) Do(opts ...googleapi.CallOption) (*ClassifyT
 	//   },
 	//   "response": {
 	//     "$ref": "ClassifyTextResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-language",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "language.documents.moderateText":
+
+type DocumentsModerateTextCall struct {
+	s                   *Service
+	moderatetextrequest *ModerateTextRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// ModerateText: Moderates a document for harmful and sensitive
+// categories.
+func (r *DocumentsService) ModerateText(moderatetextrequest *ModerateTextRequest) *DocumentsModerateTextCall {
+	c := &DocumentsModerateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.moderatetextrequest = moderatetextrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DocumentsModerateTextCall) Fields(s ...googleapi.Field) *DocumentsModerateTextCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DocumentsModerateTextCall) Context(ctx context.Context) *DocumentsModerateTextCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DocumentsModerateTextCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DocumentsModerateTextCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moderatetextrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/documents:moderateText")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "language.documents.moderateText" call.
+// Exactly one of *ModerateTextResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ModerateTextResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DocumentsModerateTextCall) Do(opts ...googleapi.CallOption) (*ModerateTextResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ModerateTextResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Moderates a document for harmful and sensitive categories.",
+	//   "flatPath": "v1beta2/documents:moderateText",
+	//   "httpMethod": "POST",
+	//   "id": "language.documents.moderateText",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1beta2/documents:moderateText",
+	//   "request": {
+	//     "$ref": "ModerateTextRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ModerateTextResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-language",

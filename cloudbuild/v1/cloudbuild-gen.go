@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudbuild:v1"
 const apiName = "cloudbuild"
@@ -535,8 +536,8 @@ type ArtifactResult struct {
 	// FileHash: The file hash of the artifact.
 	FileHash []*FileHashes `json:"fileHash,omitempty"`
 
-	// Location: The path of an artifact in a Google Cloud Storage bucket,
-	// with the generation number. For example,
+	// Location: The path of an artifact in a Cloud Storage bucket, with the
+	// generation number. For example,
 	// `gs://mybucket/path/to/output.jar#generation`.
 	Location string `json:"location,omitempty"`
 
@@ -573,6 +574,21 @@ type Artifacts struct {
 	// fail to be pushed, the build is marked FAILURE.
 	Images []string `json:"images,omitempty"`
 
+	// MavenArtifacts: A list of Maven artifacts to be uploaded to Artifact
+	// Registry upon successful completion of all build steps. Artifacts in
+	// the workspace matching specified paths globs will be uploaded to the
+	// specified Artifact Registry repository using the builder service
+	// account's credentials. If any artifacts fail to be pushed, the build
+	// is marked FAILURE.
+	MavenArtifacts []*MavenArtifact `json:"mavenArtifacts,omitempty"`
+
+	// NpmPackages: A list of npm packages to be uploaded to Artifact
+	// Registry upon successful completion of all build steps. Npm packages
+	// in the specified paths will be uploaded to the specified Artifact
+	// Registry repository using the builder service account's credentials.
+	// If any packages fail to be pushed, the build is marked FAILURE.
+	NpmPackages []*NpmPackage `json:"npmPackages,omitempty"`
+
 	// Objects: A list of objects to be uploaded to Cloud Storage upon
 	// successful completion of all build steps. Files in the workspace
 	// matching specified paths globs will be uploaded to the specified
@@ -581,6 +597,12 @@ type Artifacts struct {
 	// be stored in the Build resource's results field. If any objects fail
 	// to be pushed, the build is marked FAILURE.
 	Objects *ArtifactObjects `json:"objects,omitempty"`
+
+	// PythonPackages: A list of Python packages to be uploaded to Artifact
+	// Registry upon successful completion of all build steps. The build
+	// service account credentials will be used to perform the upload. If
+	// any objects fail to be pushed, the build is marked FAILURE.
+	PythonPackages []*PythonPackage `json:"pythonPackages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Images") to
 	// unconditionally include in API requests. By default, fields with
@@ -1156,8 +1178,8 @@ type Build struct {
 	// Console.
 	LogUrl string `json:"logUrl,omitempty"`
 
-	// LogsBucket: Google Cloud Storage bucket where logs should be written
-	// (see Bucket Name Requirements
+	// LogsBucket: Cloud Storage bucket where logs should be written (see
+	// Bucket Name Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	// Logs file names will be of the format
 	// `${logs_bucket}/log-${build_id}.txt`.
@@ -1239,14 +1261,15 @@ type Build struct {
 	// Timeout: Amount of time that this build should be allowed to run, to
 	// second granularity. If this amount of time elapses, work on the build
 	// will cease and the build status will be `TIMEOUT`. `timeout` starts
-	// ticking from `startTime`. Default time is ten minutes.
+	// ticking from `startTime`. Default time is 60 minutes.
 	Timeout string `json:"timeout,omitempty"`
 
 	// Timing: Output only. Stores timing information for phases of the
 	// build. Valid keys are: * BUILD: time to execute all build steps. *
-	// PUSH: time to push all specified images. * FETCHSOURCE: time to fetch
-	// source. * SETUPBUILD: time to set up build. If the build does not
-	// specify source or images, these keys will not be included.
+	// PUSH: time to push all artifacts including docker images and non
+	// docker artifacts. * FETCHSOURCE: time to fetch source. * SETUPBUILD:
+	// time to set up build. If the build does not specify source or images,
+	// these keys will not be included.
 	Timing map[string]TimeSpan `json:"timing,omitempty"`
 
 	// Warnings: Output only. Non-fatal problems encountered during the
@@ -1354,12 +1377,27 @@ func (s *BuildOperationMetadata) MarshalJSON() ([]byte, error) {
 // BuildOptions: Optional arguments to enable specific features of
 // builds.
 type BuildOptions struct {
+	// AutomapSubstitutions: Option to include built-in and custom
+	// substitutions as env variables for all build steps.
+	AutomapSubstitutions bool `json:"automapSubstitutions,omitempty"`
+
+	// DefaultLogsBucketBehavior: Optional. Option to specify how default
+	// logs buckets are setup.
+	//
+	// Possible values:
+	//   "DEFAULT_LOGS_BUCKET_BEHAVIOR_UNSPECIFIED" - Unspecified.
+	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned
+	// project in the same region as the build. The builder service account
+	// must have access to create and write to Cloud Storage buckets in the
+	// build project.
+	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
+
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note
 	// that this is *NOT* "disk free"; some of the space will be used by the
 	// operating system and build utilities. Also note that this is the
 	// minimum disk size that will be allocated for the build -- the build
 	// may run with a larger disk than requested. At present, the maximum
-	// disk size is 1000GB; builds that request more than the maximum are
+	// disk size is 2000GB; builds that request more than the maximum are
 	// rejected with an error.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
@@ -1377,15 +1415,14 @@ type BuildOptions struct {
 	Env []string `json:"env,omitempty"`
 
 	// LogStreamingOption: Option to define build log streaming behavior to
-	// Google Cloud Storage.
+	// Cloud Storage.
 	//
 	// Possible values:
 	//   "STREAM_DEFAULT" - Service may automatically determine build log
 	// streaming behavior.
-	//   "STREAM_ON" - Build logs should be streamed to Google Cloud
-	// Storage.
-	//   "STREAM_OFF" - Build logs should not be streamed to Google Cloud
-	// Storage; they will be written when the build is completed.
+	//   "STREAM_ON" - Build logs should be streamed to Cloud Storage.
+	//   "STREAM_OFF" - Build logs should not be streamed to Cloud Storage;
+	// they will be written when the build is completed.
 	LogStreamingOption string `json:"logStreamingOption,omitempty"`
 
 	// Logging: Option to specify the logging mode, which determines if and
@@ -1413,6 +1450,7 @@ type BuildOptions struct {
 	//   "N1_HIGHCPU_32" - Highcpu machine with 32 CPUs.
 	//   "E2_HIGHCPU_8" - Highcpu e2 machine with 8 CPUs.
 	//   "E2_HIGHCPU_32" - Highcpu e2 machine with 32 CPUs.
+	//   "E2_MEDIUM" - E2 machine with 1 CPU.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Pool: Optional. Specification for execution on a `WorkerPool`. See
@@ -1440,6 +1478,7 @@ type BuildOptions struct {
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
 	//   "MD5" - Use a md5 hash.
+	//   "SHA512" - Use a sha512 hash.
 	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
 
 	// SubstitutionOption: Option to specify behavior when there is an error
@@ -1466,20 +1505,22 @@ type BuildOptions struct {
 	// WorkerPool: This field deprecated; please use `pool.name` instead.
 	WorkerPool string `json:"workerPool,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomapSubstitutions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutomapSubstitutions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1510,6 +1551,11 @@ type BuildStep struct {
 	// the image does not define an entrypoint, the first element in args is
 	// used as the entrypoint, and the remainder will be used as arguments.
 	Args []string `json:"args,omitempty"`
+
+	// AutomapSubstitutions: Option to include built-in and custom
+	// substitutions as env variables for this build step. This option will
+	// override the global option in BuildOption.
+	AutomapSubstitutions bool `json:"automapSubstitutions,omitempty"`
 
 	// Dir: Working directory to use when running this step's container. If
 	// this value is a relative path, it is relative to the build's working
@@ -1741,6 +1787,10 @@ type BuildTrigger struct {
 	// that creates a build whenever a Pub/Sub message is published.
 	PubsubConfig *PubsubConfig `json:"pubsubConfig,omitempty"`
 
+	// RepositoryEventConfig: The configuration of a trigger that creates a
+	// build whenever an event from Repo API is received.
+	RepositoryEventConfig *RepositoryEventConfig `json:"repositoryEventConfig,omitempty"`
+
 	// ResourceName: The `Trigger` name with format:
 	// `projects/{project}/locations/{location}/triggers/{trigger}`, where
 	// {trigger} is a unique identifier generated by the service.
@@ -1882,6 +1932,44 @@ func (s *CancelBuildRequest) MarshalJSON() ([]byte, error) {
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// ConnectedRepository: Location of the source in a 2nd-gen Google Cloud
+// Build repository resource.
+type ConnectedRepository struct {
+	// Dir: Directory, relative to the source root, in which to run the
+	// build.
+	Dir string `json:"dir,omitempty"`
+
+	// Repository: Required. Name of the Google Cloud Build repository,
+	// formatted as `projects/*/locations/*/connections/*/repositories/*`.
+	Repository string `json:"repository,omitempty"`
+
+	// Revision: The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref.
+	Revision string `json:"revision,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dir") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dir") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectedRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectedRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CreateBitbucketServerConfigOperationMetadata: Metadata for
@@ -2362,13 +2450,21 @@ type GitFileSource struct {
 	// RepoType: See RepoType above.
 	//
 	// Possible values:
-	//   "UNKNOWN" - The default, unknown repo type.
+	//   "UNKNOWN" - The default, unknown repo type. Don't use it, instead
+	// use one of the other repo types.
 	//   "CLOUD_SOURCE_REPOSITORIES" - A Google Cloud Source
 	// Repositories-hosted repo.
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"
 	// (i.e. GitHub Enterprise).
 	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
+	//   "GITLAB" - A GitLab-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
+
+	// Repository: The fully qualified resource name of the Repos API
+	// repository. Either URI or repository can be specified. If
+	// unspecified, the repo from which the trigger invocation originated is
+	// assumed to be the repo from which to read the specified path.
+	Repository string `json:"repository,omitempty"`
 
 	// Revision: The branch, tag, arbitrary ref, or SHA version of the repo
 	// to use when resolving the filename (optional). This field respects
@@ -2428,7 +2524,8 @@ type GitHubEnterpriseConfig struct {
 
 	// Name: Optional. The full resource name for the GitHubEnterpriseConfig
 	// For example:
-	// "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}"
+	// "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfi
+	// gs/{$config_id}"
 	Name string `json:"name,omitempty"`
 
 	// PeeredNetwork: Optional. The network to be used when reaching out to
@@ -2546,7 +2643,8 @@ type GitHubEventsConfig struct {
 	// EnterpriseConfigResourceName: Optional. The resource name of the
 	// github enterprise config that should be applied to this installation.
 	// For example:
-	// "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}"
+	// "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfi
+	// gs/{$config_id}"
 	EnterpriseConfigResourceName string `json:"enterpriseConfigResourceName,omitempty"`
 
 	// InstallationId: The installationID that emits the GitHub event.
@@ -2908,16 +3006,23 @@ type GitRepoSource struct {
 	// RepoType: See RepoType below.
 	//
 	// Possible values:
-	//   "UNKNOWN" - The default, unknown repo type.
+	//   "UNKNOWN" - The default, unknown repo type. Don't use it, instead
+	// use one of the other repo types.
 	//   "CLOUD_SOURCE_REPOSITORIES" - A Google Cloud Source
 	// Repositories-hosted repo.
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"
 	// (i.e. GitHub Enterprise).
 	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
+	//   "GITLAB" - A GitLab-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
-	// Uri: The URI of the repo. Either uri or repository can be specified
-	// and is required.
+	// Repository: The connected repository resource name, in the format
+	// `projects/*/locations/*/connections/*/repositories/*`. Either `uri`
+	// or `repository` can be specified and is required.
+	Repository string `json:"repository,omitempty"`
+
+	// Uri: The URI of the repo (e.g. https://github.com/user/repo.git).
+	// Either `uri` or `repository` can be specified and is required.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2945,36 +3050,28 @@ func (s *GitRepoSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDevtoolsCloudbuildV2OperationMetadata: Represents the metadata
-// of the long-running operation.
-type GoogleDevtoolsCloudbuildV2OperationMetadata struct {
-	// ApiVersion: Output only. API version used to start the operation.
-	ApiVersion string `json:"apiVersion,omitempty"`
+// GitSource: Location of the source in any accessible Git repository.
+type GitSource struct {
+	// Dir: Directory, relative to the source root, in which to run the
+	// build. This must be a relative path. If a step's `dir` is specified
+	// and is an absolute path, this value is ignored for that step's
+	// execution.
+	Dir string `json:"dir,omitempty"`
 
-	// CreateTime: Output only. The time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
+	// Revision: The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref. Cloud Build uses `git
+	// fetch` to fetch the revision from the Git repository; therefore make
+	// sure that the string you provide for `revision` is parsable by the
+	// command. For information on string values accepted by `git fetch`,
+	// see https://git-scm.com/docs/gitrevisions#_specifying_revisions. For
+	// information on `git fetch`, see https://git-scm.com/docs/git-fetch.
+	Revision string `json:"revision,omitempty"`
 
-	// EndTime: Output only. The time the operation finished running.
-	EndTime string `json:"endTime,omitempty"`
+	// Url: Location of the Git repo to build. This will be used as a `git
+	// remote`, see https://git-scm.com/docs/git-remote.
+	Url string `json:"url,omitempty"`
 
-	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have
-	// successfully been cancelled have Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
-	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-
-	// StatusMessage: Output only. Human-readable status of the operation,
-	// if any.
-	StatusMessage string `json:"statusMessage,omitempty"`
-
-	// Target: Output only. Server-defined resource path for the target of
-	// the operation.
-	Target string `json:"target,omitempty"`
-
-	// Verb: Output only. Name of the verb executed by the operation.
-	Verb string `json:"verb,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// ForceSendFields is a list of field names (e.g. "Dir") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2982,37 +3079,7 @@ type GoogleDevtoolsCloudbuildV2OperationMetadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsCloudbuildV2OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsCloudbuildV2OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HTTPDelivery: HTTPDelivery is the delivery configuration for an HTTP
-// notification.
-type HTTPDelivery struct {
-	// Uri: The URI to which JSON-containing HTTP POST requests should be
-	// sent.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Uri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// NullFields is a list of field names (e.g. "Dir") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3021,8 +3088,8 @@ type HTTPDelivery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HTTPDelivery) MarshalJSON() ([]byte, error) {
-	type NoMethod HTTPDelivery
+func (s *GitSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GitSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3035,6 +3102,7 @@ type Hash struct {
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
 	//   "MD5" - Use a md5 hash.
+	//   "SHA512" - Use a sha512 hash.
 	Type string `json:"type,omitempty"`
 
 	// Value: The hash value.
@@ -3454,6 +3522,56 @@ func (s *ListWorkerPoolsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MavenArtifact: A Maven artifact to upload to Artifact Registry upon
+// successful completion of all build steps.
+type MavenArtifact struct {
+	// ArtifactId: Maven `artifactId` value used when uploading the artifact
+	// to Artifact Registry.
+	ArtifactId string `json:"artifactId,omitempty"`
+
+	// GroupId: Maven `groupId` value used when uploading the artifact to
+	// Artifact Registry.
+	GroupId string `json:"groupId,omitempty"`
+
+	// Path: Path to an artifact in the build's workspace to be uploaded to
+	// Artifact Registry. This can be either an absolute path, e.g.
+	// /workspace/my-app/target/my-app-1.0.SNAPSHOT.jar or a relative path
+	// from /workspace, e.g. my-app/target/my-app-1.0.SNAPSHOT.jar.
+	Path string `json:"path,omitempty"`
+
+	// Repository: Artifact Registry repository, in the form
+	// "https://$REGION-maven.pkg.dev/$PROJECT/$REPOSITORY" Artifact in the
+	// workspace specified by path will be uploaded to Artifact Registry
+	// with this location as a prefix.
+	Repository string `json:"repository,omitempty"`
+
+	// Version: Maven `version` value used when uploading the artifact to
+	// Artifact Registry.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArtifactId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArtifactId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MavenArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod MavenArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NetworkConfig: Defines the network configuration for the pool.
 type NetworkConfig struct {
 	// EgressOption: Option to configure network egress for the workers.
@@ -3478,6 +3596,16 @@ type NetworkConfig struct {
 	// (https://cloud.google.com/build/docs/private-pools/set-up-private-pool-environment)
 	PeeredNetwork string `json:"peeredNetwork,omitempty"`
 
+	// PeeredNetworkIpRange: Immutable. Subnet IP range within the peered
+	// network. This is specified in CIDR notation with a slash and the
+	// subnet prefix size. You can optionally specify an IP address before
+	// the subnet prefix value. e.g. `192.168.0.0/29` would specify an IP
+	// range starting at 192.168.0.0 with a prefix size of 29 bits. `/16`
+	// would specify a prefix size of 16 bits, with an automatically
+	// determined IP within the peered VPC. If unspecified, a value of `/24`
+	// will be used.
+	PeeredNetworkIpRange string `json:"peeredNetworkIpRange,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "EgressOption") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3501,28 +3629,19 @@ func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Notification: Notification is the container which holds the data that
-// is relevant to this particular notification.
-type Notification struct {
-	// Filter: The filter string to use for notification filtering.
-	// Currently, this is assumed to be a CEL program. See
-	// https://opensource.google/projects/cel for more.
-	Filter string `json:"filter,omitempty"`
+// NpmPackage: Npm package to upload to Artifact Registry upon
+// successful completion of all build steps.
+type NpmPackage struct {
+	// PackagePath: Path to the package.json. e.g. workspace/path/to/package
+	PackagePath string `json:"packagePath,omitempty"`
 
-	// HttpDelivery: Configuration for HTTP delivery.
-	HttpDelivery *HTTPDelivery `json:"httpDelivery,omitempty"`
+	// Repository: Artifact Registry repository, in the form
+	// "https://$REGION-npm.pkg.dev/$PROJECT/$REPOSITORY" Npm package in the
+	// workspace specified by path will be zipped and uploaded to Artifact
+	// Registry with this location as a prefix.
+	Repository string `json:"repository,omitempty"`
 
-	// SlackDelivery: Configuration for Slack delivery.
-	SlackDelivery *SlackDelivery `json:"slackDelivery,omitempty"`
-
-	// SmtpDelivery: Configuration for SMTP (email) delivery.
-	SmtpDelivery *SMTPDelivery `json:"smtpDelivery,omitempty"`
-
-	// StructDelivery: Escape hatch for users to supply custom delivery
-	// configs.
-	StructDelivery googleapi.RawMessage `json:"structDelivery,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// ForceSendFields is a list of field names (e.g. "PackagePath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3530,179 +3649,7 @@ type Notification struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Filter") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Notification) MarshalJSON() ([]byte, error) {
-	type NoMethod Notification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierConfig: NotifierConfig is the top-level configuration
-// message.
-type NotifierConfig struct {
-	// ApiVersion: The API version of this configuration format.
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Kind: The type of notifier to use (e.g. SMTPNotifier).
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata for referring to/handling/deploying this notifier.
-	Metadata *NotifierMetadata `json:"metadata,omitempty"`
-
-	// Spec: The actual configuration for this notifier.
-	Spec *NotifierSpec `json:"spec,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierMetadata: NotifierMetadata contains the data which can be
-// used to reference or describe this notifier.
-type NotifierMetadata struct {
-	// Name: The human-readable and user-given name for the notifier. For
-	// example: "repo-merge-email-notifier".
-	Name string `json:"name,omitempty"`
-
-	// Notifier: The string representing the name and version of notifier to
-	// deploy. Expected to be of the form of "/:". For example:
-	// "gcr.io/my-project/notifiers/smtp:1.2.34".
-	Notifier string `json:"notifier,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierSecret: NotifierSecret is the container that maps a secret
-// name (reference) to its Google Cloud Secret Manager resource path.
-type NotifierSecret struct {
-	// Name: Name is the local name of the secret, such as the verbatim
-	// string "my-smtp-password".
-	Name string `json:"name,omitempty"`
-
-	// Value: Value is interpreted to be a resource path for fetching the
-	// actual (versioned) secret data for this secret. For example, this
-	// would be a Google Cloud Secret Manager secret version resource path
-	// like: "projects/my-project/secrets/my-secret/versions/latest".
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierSecret) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierSecret
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierSecretRef: NotifierSecretRef contains the reference to a
-// secret stored in the corresponding NotifierSpec.
-type NotifierSecretRef struct {
-	// SecretRef: The value of `secret_ref` should be a `name` that is
-	// registered in a `Secret` in the `secrets` list of the `Spec`.
-	SecretRef string `json:"secretRef,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SecretRef") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SecretRef") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierSecretRef) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierSecretRef
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierSpec: NotifierSpec is the configuration container for
-// notifications.
-type NotifierSpec struct {
-	// Notification: The configuration of this particular notifier.
-	Notification *Notification `json:"notification,omitempty"`
-
-	// Secrets: Configurations for secret resources used by this particular
-	// notifier.
-	Secrets []*NotifierSecret `json:"secrets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Notification") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Notification") to include
+	// NullFields is a list of field names (e.g. "PackagePath") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -3711,8 +3658,8 @@ type NotifierSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotifierSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierSpec
+func (s *NpmPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod NpmPackage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3742,8 +3689,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -4074,6 +4021,44 @@ func (s *PushFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PythonPackage: Python package to upload to Artifact Registry upon
+// successful completion of all build steps. A package can encapsulate
+// multiple objects to be uploaded to a single repository.
+type PythonPackage struct {
+	// Paths: Path globs used to match files in the build's workspace. For
+	// Python/ Twine, this is usually `dist/*`, and sometimes additionally
+	// an `.asc` file.
+	Paths []string `json:"paths,omitempty"`
+
+	// Repository: Artifact Registry repository, in the form
+	// "https://$REGION-python.pkg.dev/$PROJECT/$REPOSITORY" Files in the
+	// workspace matching any path pattern will be uploaded to Artifact
+	// Registry with this location as a prefix.
+	Repository string `json:"repository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Paths") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Paths") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PythonPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod PythonPackage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReceiveTriggerWebhookResponse: ReceiveTriggerWebhookResponse
 // [Experimental] is the response object for the ReceiveTriggerWebhook
 // method.
@@ -4203,13 +4188,61 @@ func (s *RepoSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RepositoryEventConfig: The configuration of a trigger that creates a
+// build whenever an event from Repo API is received.
+type RepositoryEventConfig struct {
+	// PullRequest: Filter to match changes in pull requests.
+	PullRequest *PullRequestFilter `json:"pullRequest,omitempty"`
+
+	// Push: Filter to match changes in refs like branches, tags.
+	Push *PushFilter `json:"push,omitempty"`
+
+	// Repository: The resource name of the Repo API resource.
+	Repository string `json:"repository,omitempty"`
+
+	// RepositoryType: Output only. The type of the SCM vendor the
+	// repository points to.
+	//
+	// Possible values:
+	//   "REPOSITORY_TYPE_UNSPECIFIED" - If unspecified, RepositoryType
+	// defaults to GITHUB.
+	//   "GITHUB" - The SCM repo is GITHUB.
+	//   "GITHUB_ENTERPRISE" - The SCM repo is GITHUB Enterprise.
+	//   "GITLAB_ENTERPRISE" - The SCM repo is GITLAB Enterprise.
+	RepositoryType string `json:"repositoryType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PullRequest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PullRequest") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepositoryEventConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RepositoryEventConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Results: Artifacts created by the build pipeline.
 type Results struct {
-	// ArtifactManifest: Path to the artifact manifest. Only populated when
-	// artifacts are uploaded.
+	// ArtifactManifest: Path to the artifact manifest for non-container
+	// artifacts uploaded to Cloud Storage. Only populated when artifacts
+	// are uploaded to Cloud Storage.
 	ArtifactManifest string `json:"artifactManifest,omitempty"`
 
-	// ArtifactTiming: Time to push all non-container artifacts.
+	// ArtifactTiming: Time to push all non-container artifacts to Cloud
+	// Storage.
 	ArtifactTiming *TimeSpan `json:"artifactTiming,omitempty"`
 
 	// BuildStepImages: List of build step digests, in the order
@@ -4226,9 +4259,21 @@ type Results struct {
 	// Images: Container images that were built as a part of the build.
 	Images []*BuiltImage `json:"images,omitempty"`
 
-	// NumArtifacts: Number of artifacts uploaded. Only populated when
-	// artifacts are uploaded.
+	// MavenArtifacts: Maven artifacts uploaded to Artifact Registry at the
+	// end of the build.
+	MavenArtifacts []*UploadedMavenArtifact `json:"mavenArtifacts,omitempty"`
+
+	// NpmPackages: Npm packages uploaded to Artifact Registry at the end of
+	// the build.
+	NpmPackages []*UploadedNpmPackage `json:"npmPackages,omitempty"`
+
+	// NumArtifacts: Number of non-container artifacts uploaded to Cloud
+	// Storage. Only populated when artifacts are uploaded to Cloud Storage.
 	NumArtifacts int64 `json:"numArtifacts,omitempty,string"`
+
+	// PythonPackages: Python artifacts uploaded to Artifact Registry at the
+	// end of the build.
+	PythonPackages []*UploadedPythonPackage `json:"pythonPackages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArtifactManifest") to
 	// unconditionally include in API requests. By default, fields with
@@ -4321,105 +4366,6 @@ type RunBuildTriggerRequest struct {
 
 func (s *RunBuildTriggerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunBuildTriggerRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RunWorkflowCustomOperationMetadata: Represents the custom metadata of
-// the RunWorkflow long-running operation.
-type RunWorkflowCustomOperationMetadata struct {
-	// ApiVersion: Output only. API version used to start the operation.
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// CreateTime: Output only. The time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// EndTime: Output only. The time the operation finished running.
-	EndTime string `json:"endTime,omitempty"`
-
-	// PipelineRunId: Output only. ID of the pipeline run created by
-	// RunWorkflow.
-	PipelineRunId string `json:"pipelineRunId,omitempty"`
-
-	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have
-	// successfully been cancelled have Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
-	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-
-	// Target: Output only. Server-defined resource path for the target of
-	// the operation.
-	Target string `json:"target,omitempty"`
-
-	// Verb: Output only. Name of the verb executed by the operation.
-	Verb string `json:"verb,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RunWorkflowCustomOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod RunWorkflowCustomOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SMTPDelivery: SMTPDelivery is the delivery configuration for an SMTP
-// (email) notification.
-type SMTPDelivery struct {
-	// FromAddress: This is the SMTP account/email that appears in the
-	// `From:` of the email. If empty, it is assumed to be sender.
-	FromAddress string `json:"fromAddress,omitempty"`
-
-	// Password: The SMTP sender's password.
-	Password *NotifierSecretRef `json:"password,omitempty"`
-
-	// Port: The SMTP port of the server.
-	Port string `json:"port,omitempty"`
-
-	// RecipientAddresses: This is the list of addresses to which we send
-	// the email (i.e. in the `To:` of the email).
-	RecipientAddresses []string `json:"recipientAddresses,omitempty"`
-
-	// SenderAddress: This is the SMTP account/email that is used to send
-	// the message.
-	SenderAddress string `json:"senderAddress,omitempty"`
-
-	// Server: The address of the SMTP server.
-	Server string `json:"server,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FromAddress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FromAddress") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SMTPDelivery) MarshalJSON() ([]byte, error) {
-	type NoMethod SMTPDelivery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4562,67 +4508,43 @@ func (s *ServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SlackDelivery: SlackDelivery is the delivery configuration for
-// delivering Slack messages via webhooks. See Slack webhook
-// documentation at: https://api.slack.com/messaging/webhooks.
-type SlackDelivery struct {
-	// WebhookUri: The secret reference for the Slack webhook URI for
-	// sending messages to a channel.
-	WebhookUri *NotifierSecretRef `json:"webhookUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "WebhookUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "WebhookUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SlackDelivery) MarshalJSON() ([]byte, error) {
-	type NoMethod SlackDelivery
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Source: Location of the source in a supported storage service.
 type Source struct {
+	// ConnectedRepository: Optional. If provided, get the source from this
+	// 2nd-gen Google Cloud Build repository resource.
+	ConnectedRepository *ConnectedRepository `json:"connectedRepository,omitempty"`
+
+	// GitSource: If provided, get the source from this Git repository.
+	GitSource *GitSource `json:"gitSource,omitempty"`
+
 	// RepoSource: If provided, get the source from this location in a Cloud
 	// Source Repository.
 	RepoSource *RepoSource `json:"repoSource,omitempty"`
 
 	// StorageSource: If provided, get the source from this location in
-	// Google Cloud Storage.
+	// Cloud Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
 	// StorageSourceManifest: If provided, get the source from this manifest
-	// in Google Cloud Storage. This feature is in Preview; see description
-	// here
+	// in Cloud Storage. This feature is in Preview; see description here
 	// (https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
 	StorageSourceManifest *StorageSourceManifest `json:"storageSourceManifest,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RepoSource") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ConnectedRepository")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RepoSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConnectedRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4725,21 +4647,21 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StorageSource: Location of the source in an archive file in Google
-// Cloud Storage.
+// StorageSource: Location of the source in an archive file in Cloud
+// Storage.
 type StorageSource struct {
-	// Bucket: Google Cloud Storage bucket containing the source (see Bucket
-	// Name Requirements
+	// Bucket: Cloud Storage bucket containing the source (see Bucket Name
+	// Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
 
-	// Generation: Google Cloud Storage generation for the object. If the
+	// Generation: Cloud Storage generation for the object. If the
 	// generation is omitted, the latest generation will be used.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Object: Google Cloud Storage object containing the source. This
-	// object must be a zipped (`.zip`) or gzipped archive file (`.tar.gz`)
-	// containing source to build.
+	// Object: Cloud Storage object containing the source. This object must
+	// be a zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing
+	// source to build.
 	Object string `json:"object,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
@@ -4765,21 +4687,21 @@ func (s *StorageSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StorageSourceManifest: Location of the source manifest in Google
-// Cloud Storage. This feature is in Preview; see description here
+// StorageSourceManifest: Location of the source manifest in Cloud
+// Storage. This feature is in Preview; see description here
 // (https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
 type StorageSourceManifest struct {
-	// Bucket: Google Cloud Storage bucket containing the source manifest
-	// (see Bucket Name Requirements
+	// Bucket: Cloud Storage bucket containing the source manifest (see
+	// Bucket Name Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
 
-	// Generation: Google Cloud Storage generation for the object. If the
+	// Generation: Cloud Storage generation for the object. If the
 	// generation is omitted, the latest generation will be used.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Object: Google Cloud Storage object containing the source manifest.
-	// This object must be a JSON file.
+	// Object: Cloud Storage object containing the source manifest. This
+	// object must be a JSON file.
 	Object string `json:"object,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
@@ -4986,6 +4908,114 @@ func (s *UpdateWorkerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UploadedMavenArtifact: A Maven artifact uploaded using the
+// MavenArtifact directive.
+type UploadedMavenArtifact struct {
+	// FileHashes: Hash types and values of the Maven Artifact.
+	FileHashes *FileHashes `json:"fileHashes,omitempty"`
+
+	// PushTiming: Output only. Stores timing information for pushing the
+	// specified artifact.
+	PushTiming *TimeSpan `json:"pushTiming,omitempty"`
+
+	// Uri: URI of the uploaded artifact.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileHashes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadedMavenArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadedMavenArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UploadedNpmPackage: An npm package uploaded to Artifact Registry
+// using the NpmPackage directive.
+type UploadedNpmPackage struct {
+	// FileHashes: Hash types and values of the npm package.
+	FileHashes *FileHashes `json:"fileHashes,omitempty"`
+
+	// PushTiming: Output only. Stores timing information for pushing the
+	// specified artifact.
+	PushTiming *TimeSpan `json:"pushTiming,omitempty"`
+
+	// Uri: URI of the uploaded npm package.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileHashes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadedNpmPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadedNpmPackage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UploadedPythonPackage: Artifact uploaded using the PythonPackage
+// directive.
+type UploadedPythonPackage struct {
+	// FileHashes: Hash types and values of the Python Artifact.
+	FileHashes *FileHashes `json:"fileHashes,omitempty"`
+
+	// PushTiming: Output only. Stores timing information for pushing the
+	// specified artifact.
+	PushTiming *TimeSpan `json:"pushTiming,omitempty"`
+
+	// Uri: URI of the uploaded artifact.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileHashes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadedPythonPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadedPythonPackage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Volume: Volume describes a Docker container volume which is mounted
 // into build steps in order to persist files across build step
 // execution.
@@ -5112,7 +5142,7 @@ type WorkerConfig struct {
 	// DiskSizeGb: Size of the disk attached to the worker, in GB. See
 	// Worker pool config file
 	// (https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema).
-	// Specify a value of up to 1000. If `0` is specified, Cloud Build will
+	// Specify a value of up to 2000. If `0` is specified, Cloud Build will
 	// use a standard disk size.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
@@ -5325,17 +5355,17 @@ func (c *GithubDotComWebhookReceiveCall) Do(opts ...googleapi.CallOption) (*Empt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5469,17 +5499,17 @@ func (c *LocationsRegionalWebhookCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5622,17 +5652,17 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5773,17 +5803,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5915,17 +5945,17 @@ func (c *ProjectsBuildsApproveCall) Do(opts ...googleapi.CallOption) (*Operation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6061,17 +6091,17 @@ func (c *ProjectsBuildsCancelCall) Do(opts ...googleapi.CallOption) (*Build, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Build{
 		ServerResponse: googleapi.ServerResponse{
@@ -6220,17 +6250,17 @@ func (c *ProjectsBuildsCreateCall) Do(opts ...googleapi.CallOption) (*Operation,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6387,17 +6417,17 @@ func (c *ProjectsBuildsGetCall) Do(opts ...googleapi.CallOption) (*Build, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Build{
 		ServerResponse: googleapi.ServerResponse{
@@ -6579,17 +6609,17 @@ func (c *ProjectsBuildsListCall) Do(opts ...googleapi.CallOption) (*ListBuildsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBuildsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6694,8 +6724,8 @@ type ProjectsBuildsRetryCall struct {
 // the original build. * If the original build specified a commit sha or
 // revision ID, the retried build will use the identical source. For
 // builds that specify `StorageSource`: * If the original build pulled
-// source from Google Cloud Storage without specifying the generation of
-// the object, the new build will use the current object, which may be
+// source from Cloud Storage without specifying the generation of the
+// object, the new build will use the current object, which may be
 // different from the original build source. * If the original build
 // pulled source from Cloud Storage and specified the generation of the
 // object, the new build will attempt to use the same object, which may
@@ -6780,17 +6810,17 @@ func (c *ProjectsBuildsRetryCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6804,7 +6834,7 @@ func (c *ProjectsBuildsRetryCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new build based on the specified build. This method creates a new build using the original build request, which may or may not result in an identical build. For triggered builds: * Triggered builds resolve to a precise revision; therefore a retry of a triggered build will result in a build that uses the same revision. For non-triggered builds that specify `RepoSource`: * If the original build built from the tip of a branch, the retried build will build from the tip of that branch, which may not be the same revision as the original build. * If the original build specified a commit sha or revision ID, the retried build will use the identical source. For builds that specify `StorageSource`: * If the original build pulled source from Google Cloud Storage without specifying the generation of the object, the new build will use the current object, which may be different from the original build source. * If the original build pulled source from Cloud Storage and specified the generation of the object, the new build will attempt to use the same object, which may or may not be available depending on the bucket's lifecycle management settings.",
+	//   "description": "Creates a new build based on the specified build. This method creates a new build using the original build request, which may or may not result in an identical build. For triggered builds: * Triggered builds resolve to a precise revision; therefore a retry of a triggered build will result in a build that uses the same revision. For non-triggered builds that specify `RepoSource`: * If the original build built from the tip of a branch, the retried build will build from the tip of that branch, which may not be the same revision as the original build. * If the original build specified a commit sha or revision ID, the retried build will use the identical source. For builds that specify `StorageSource`: * If the original build pulled source from Cloud Storage without specifying the generation of the object, the new build will use the current object, which may be different from the original build source. * If the original build pulled source from Cloud Storage and specified the generation of the object, the new build will attempt to use the same object, which may or may not be available depending on the bucket's lifecycle management settings.",
 	//   "flatPath": "v1/projects/{projectId}/builds/{id}:retry",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.builds.retry",
@@ -6947,17 +6977,17 @@ func (c *ProjectsGithubEnterpriseConfigsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6992,6 +7022,7 @@ func (c *ProjectsGithubEnterpriseConfigsCreateCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project.",
 	//       "location": "query",
 	//       "type": "string"
@@ -7026,7 +7057,8 @@ type ProjectsGithubEnterpriseConfigsDeleteCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Delete(name string) *ProjectsGithubEnterpriseConfigsDeleteCall {
 	c := &ProjectsGithubEnterpriseConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7108,17 +7140,17 @@ func (c *ProjectsGithubEnterpriseConfigsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7141,18 +7173,20 @@ func (c *ProjectsGithubEnterpriseConfigsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "configId": {
+	//       "deprecated": true,
 	//       "description": "Unique identifier of the `GitHubEnterpriseConfig`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project",
 	//       "location": "query",
 	//       "type": "string"
@@ -7184,7 +7218,8 @@ type ProjectsGithubEnterpriseConfigsGetCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Get(name string) *ProjectsGithubEnterpriseConfigsGetCall {
 	c := &ProjectsGithubEnterpriseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7279,17 +7314,17 @@ func (c *ProjectsGithubEnterpriseConfigsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GitHubEnterpriseConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -7312,18 +7347,20 @@ func (c *ProjectsGithubEnterpriseConfigsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "configId": {
+	//       "deprecated": true,
 	//       "description": "Unique identifier of the `GitHubEnterpriseConfig`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project",
 	//       "location": "query",
 	//       "type": "string"
@@ -7443,17 +7480,17 @@ func (c *ProjectsGithubEnterpriseConfigsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGithubEnterpriseConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7483,6 +7520,7 @@ func (c *ProjectsGithubEnterpriseConfigsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project",
 	//       "location": "query",
 	//       "type": "string"
@@ -7515,7 +7553,8 @@ type ProjectsGithubEnterpriseConfigsPatchCall struct {
 //
 //   - name: Optional. The full resource name for the
 //     GitHubEnterpriseConfig For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsGithubEnterpriseConfigsPatchCall {
 	c := &ProjectsGithubEnterpriseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7599,17 +7638,17 @@ func (c *ProjectsGithubEnterpriseConfigsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7632,7 +7671,7 @@ func (c *ProjectsGithubEnterpriseConfigsPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -7760,17 +7799,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsCreateCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7900,17 +7939,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsDeleteCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8046,17 +8085,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsGetCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BitbucketServerConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -8213,17 +8252,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBitbucketServerConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8394,17 +8433,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsPatchCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8547,17 +8586,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsRemoveBitbucketServerConnectedRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8693,17 +8732,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsConnectedRepositoriesBatchCreate
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8862,17 +8901,17 @@ func (c *ProjectsLocationsBitbucketServerConfigsReposListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBitbucketServerRepositoriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9036,17 +9075,17 @@ func (c *ProjectsLocationsBuildsApproveCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9179,17 +9218,17 @@ func (c *ProjectsLocationsBuildsCancelCall) Do(opts ...googleapi.CallOption) (*B
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Build{
 		ServerResponse: googleapi.ServerResponse{
@@ -9332,17 +9371,17 @@ func (c *ProjectsLocationsBuildsCreateCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9502,17 +9541,17 @@ func (c *ProjectsLocationsBuildsGetCall) Do(opts ...googleapi.CallOption) (*Buil
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Build{
 		ServerResponse: googleapi.ServerResponse{
@@ -9693,17 +9732,17 @@ func (c *ProjectsLocationsBuildsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBuildsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9808,8 +9847,8 @@ type ProjectsLocationsBuildsRetryCall struct {
 // the original build. * If the original build specified a commit sha or
 // revision ID, the retried build will use the identical source. For
 // builds that specify `StorageSource`: * If the original build pulled
-// source from Google Cloud Storage without specifying the generation of
-// the object, the new build will use the current object, which may be
+// source from Cloud Storage without specifying the generation of the
+// object, the new build will use the current object, which may be
 // different from the original build source. * If the original build
 // pulled source from Cloud Storage and specified the generation of the
 // object, the new build will attempt to use the same object, which may
@@ -9892,17 +9931,17 @@ func (c *ProjectsLocationsBuildsRetryCall) Do(opts ...googleapi.CallOption) (*Op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9916,7 +9955,7 @@ func (c *ProjectsLocationsBuildsRetryCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new build based on the specified build. This method creates a new build using the original build request, which may or may not result in an identical build. For triggered builds: * Triggered builds resolve to a precise revision; therefore a retry of a triggered build will result in a build that uses the same revision. For non-triggered builds that specify `RepoSource`: * If the original build built from the tip of a branch, the retried build will build from the tip of that branch, which may not be the same revision as the original build. * If the original build specified a commit sha or revision ID, the retried build will use the identical source. For builds that specify `StorageSource`: * If the original build pulled source from Google Cloud Storage without specifying the generation of the object, the new build will use the current object, which may be different from the original build source. * If the original build pulled source from Cloud Storage and specified the generation of the object, the new build will attempt to use the same object, which may or may not be available depending on the bucket's lifecycle management settings.",
+	//   "description": "Creates a new build based on the specified build. This method creates a new build using the original build request, which may or may not result in an identical build. For triggered builds: * Triggered builds resolve to a precise revision; therefore a retry of a triggered build will result in a build that uses the same revision. For non-triggered builds that specify `RepoSource`: * If the original build built from the tip of a branch, the retried build will build from the tip of that branch, which may not be the same revision as the original build. * If the original build specified a commit sha or revision ID, the retried build will use the identical source. For builds that specify `StorageSource`: * If the original build pulled source from Cloud Storage without specifying the generation of the object, the new build will use the current object, which may be different from the original build source. * If the original build pulled source from Cloud Storage and specified the generation of the object, the new build will attempt to use the same object, which may or may not be available depending on the bucket's lifecycle management settings.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/builds/{buildsId}:retry",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.locations.builds.retry",
@@ -10045,17 +10084,17 @@ func (c *ProjectsLocationsGitLabConfigsCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10185,17 +10224,17 @@ func (c *ProjectsLocationsGitLabConfigsDeleteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10331,17 +10370,17 @@ func (c *ProjectsLocationsGitLabConfigsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GitLabConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -10497,17 +10536,17 @@ func (c *ProjectsLocationsGitLabConfigsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGitLabConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10677,17 +10716,17 @@ func (c *ProjectsLocationsGitLabConfigsPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10829,17 +10868,17 @@ func (c *ProjectsLocationsGitLabConfigsRemoveGitLabConnectedRepositoryCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -10974,17 +11013,17 @@ func (c *ProjectsLocationsGitLabConfigsConnectedRepositoriesBatchCreateCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11142,17 +11181,17 @@ func (c *ProjectsLocationsGitLabConfigsReposListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGitLabRepositoriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11332,17 +11371,17 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11377,6 +11416,7 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsCreateCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project.",
 	//       "location": "query",
 	//       "type": "string"
@@ -11411,7 +11451,8 @@ type ProjectsLocationsGithubEnterpriseConfigsDeleteCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Delete(name string) *ProjectsLocationsGithubEnterpriseConfigsDeleteCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11493,17 +11534,17 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsDeleteCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11526,18 +11567,20 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsDeleteCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "configId": {
+	//       "deprecated": true,
 	//       "description": "Unique identifier of the `GitHubEnterpriseConfig`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project",
 	//       "location": "query",
 	//       "type": "string"
@@ -11569,7 +11612,8 @@ type ProjectsLocationsGithubEnterpriseConfigsGetCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Get(name string) *ProjectsLocationsGithubEnterpriseConfigsGetCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11664,17 +11708,17 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsGetCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GitHubEnterpriseConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -11697,18 +11741,20 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsGetCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "configId": {
+	//       "deprecated": true,
 	//       "description": "Unique identifier of the `GitHubEnterpriseConfig`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project",
 	//       "location": "query",
 	//       "type": "string"
@@ -11828,17 +11874,17 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGithubEnterpriseConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11868,6 +11914,7 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "projectId": {
+	//       "deprecated": true,
 	//       "description": "ID of the project",
 	//       "location": "query",
 	//       "type": "string"
@@ -11900,7 +11947,8 @@ type ProjectsLocationsGithubEnterpriseConfigsPatchCall struct {
 //
 //   - name: Optional. The full resource name for the
 //     GitHubEnterpriseConfig For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsLocationsGithubEnterpriseConfigsPatchCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11984,17 +12032,17 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsPatchCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -12017,7 +12065,7 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsPatchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -12141,17 +12189,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -12292,17 +12340,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -12439,17 +12487,17 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BuildTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -12595,17 +12643,17 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -12767,17 +12815,17 @@ func (c *ProjectsLocationsTriggersGetCall) Do(opts ...googleapi.CallOption) (*Bu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BuildTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -12945,17 +12993,17 @@ func (c *ProjectsLocationsTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBuildTriggersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13071,6 +13119,15 @@ func (c *ProjectsLocationsTriggersPatchCall) TriggerId(triggerId string) *Projec
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Update mask for
+// the resource. If this is set, the server will only update the fields
+// specified in the field mask. Otherwise, a full update of the mutable
+// resource fields will be performed.
+func (c *ProjectsLocationsTriggersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTriggersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13138,17 +13195,17 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BuildTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -13186,6 +13243,12 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "description": "Required. ID of the `BuildTrigger` to update.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update mask for the resource. If this is set, the server will only update the fields specified in the field mask. Otherwise, a full update of the mutable resource fields will be performed.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/{+resourceName}",
@@ -13215,9 +13278,10 @@ type ProjectsLocationsTriggersRunCall struct {
 
 // Run: Runs a `BuildTrigger` at a particular source revision. To run a
 // regional or global trigger, use the POST request that includes the
-// location endpoint in the path. The POST request that does not include
-// the location endpoint in the path can only be used when running
-// global triggers.
+// location endpoint in the path (ex.
+// v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run).
+// The POST request that does not include the location endpoint in the
+// path can only be used when running global triggers.
 //
 //   - name: The name of the `Trigger` to run. Format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`.
@@ -13295,17 +13359,17 @@ func (c *ProjectsLocationsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -13319,7 +13383,7 @@ func (c *ProjectsLocationsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path (ex. v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.locations.triggers.run",
@@ -13460,17 +13524,17 @@ func (c *ProjectsLocationsTriggersWebhookCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReceiveTriggerWebhookResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13632,17 +13696,17 @@ func (c *ProjectsLocationsWorkerPoolsCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -13801,17 +13865,17 @@ func (c *ProjectsLocationsWorkerPoolsDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -13963,17 +14027,17 @@ func (c *ProjectsLocationsWorkerPoolsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WorkerPool{
 		ServerResponse: googleapi.ServerResponse{
@@ -14126,17 +14190,17 @@ func (c *ProjectsLocationsWorkerPoolsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListWorkerPoolsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14317,17 +14381,17 @@ func (c *ProjectsLocationsWorkerPoolsPatchCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -14479,17 +14543,17 @@ func (c *ProjectsTriggersCreateCall) Do(opts ...googleapi.CallOption) (*BuildTri
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BuildTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -14631,17 +14695,17 @@ func (c *ProjectsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -14802,17 +14866,17 @@ func (c *ProjectsTriggersGetCall) Do(opts ...googleapi.CallOption) (*BuildTrigge
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BuildTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -14981,17 +15045,17 @@ func (c *ProjectsTriggersListCall) Do(opts ...googleapi.CallOption) (*ListBuildT
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBuildTriggersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15093,6 +15157,15 @@ func (r *ProjectsTriggersService) Patch(projectId string, triggerId string, buil
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Update mask for
+// the resource. If this is set, the server will only update the fields
+// specified in the field mask. Otherwise, a full update of the mutable
+// resource fields will be performed.
+func (c *ProjectsTriggersPatchCall) UpdateMask(updateMask string) *ProjectsTriggersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -15161,17 +15234,17 @@ func (c *ProjectsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*BuildTrig
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BuildTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -15205,6 +15278,12 @@ func (c *ProjectsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*BuildTrig
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update mask for the resource. If this is set, the server will only update the fields specified in the field mask. Otherwise, a full update of the mutable resource fields will be performed.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/projects/{projectId}/triggers/{triggerId}",
@@ -15235,9 +15314,10 @@ type ProjectsTriggersRunCall struct {
 
 // Run: Runs a `BuildTrigger` at a particular source revision. To run a
 // regional or global trigger, use the POST request that includes the
-// location endpoint in the path. The POST request that does not include
-// the location endpoint in the path can only be used when running
-// global triggers.
+// location endpoint in the path (ex.
+// v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run).
+// The POST request that does not include the location endpoint in the
+// path can only be used when running global triggers.
 //
 // - projectId: ID of the project.
 // - triggerId: ID of the trigger.
@@ -15325,17 +15405,17 @@ func (c *ProjectsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -15349,7 +15429,7 @@ func (c *ProjectsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path (ex. v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectId}/triggers/{triggerId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.triggers.run",
@@ -15498,17 +15578,17 @@ func (c *ProjectsTriggersWebhookCall) Do(opts ...googleapi.CallOption) (*Receive
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReceiveTriggerWebhookResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15655,17 +15735,17 @@ func (c *V1WebhookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{

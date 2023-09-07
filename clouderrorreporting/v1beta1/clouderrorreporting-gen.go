@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "clouderrorreporting:v1beta1"
 const apiName = "clouderrorreporting"
@@ -287,8 +288,14 @@ type ErrorGroup struct {
 	// same group ID.
 	GroupId string `json:"groupId,omitempty"`
 
-	// Name: The group resource name. Example:
-	// projects/my-project-123/groups/CNSgkpnppqKCUw
+	// Name: The group resource name. Written as
+	// `projects/{projectID}/groups/{group_id}`. Example:
+	// `projects/my-project-123/groups/my-group` In the group resource name,
+	// the `group_id` is a unique identifier for a particular error group.
+	// The identifier is derived from key parts of the error-log content and
+	// is treated as Service Data. For information about how Service Data is
+	// handled, see Google Cloud Privacy Notice
+	// (https://cloud.google.com/terms/cloud-privacy-notice).
 	Name string `json:"name,omitempty"`
 
 	// ResolutionStatus: Error group's resolution status. An unspecified
@@ -900,17 +907,17 @@ func (c *ProjectsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEven
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeleteEventsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -976,7 +983,12 @@ func (r *ProjectsEventsService) List(projectName string) *ProjectsEventsListCall
 }
 
 // GroupId sets the optional parameter "groupId": Required. The group
-// for which events shall be returned.
+// for which events shall be returned. The `group_id` is a unique
+// identifier for a particular error group. The identifier is derived
+// from key parts of the error-log content and is treated as Service
+// Data. For information about how Service Data is handled, see Google
+// Cloud Privacy Notice
+// (https://cloud.google.com/terms/cloud-privacy-notice).
 func (c *ProjectsEventsListCall) GroupId(groupId string) *ProjectsEventsListCall {
 	c.urlParams_.Set("groupId", groupId)
 	return c
@@ -1131,17 +1143,17 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEventsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1164,7 +1176,7 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 	//   ],
 	//   "parameters": {
 	//     "groupId": {
-	//       "description": "Required. The group for which events shall be returned.",
+	//       "description": "Required. The group for which events shall be returned. The `group_id` is a unique identifier for a particular error group. The identifier is derived from key parts of the error-log content and is treated as Service Data. For information about how Service Data is handled, see [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1275,9 +1287,7 @@ type ProjectsEventsReportCall struct {
 // **Note:** [Error Reporting]
 // (https://cloud.google.com/error-reporting) is a global service built
 // on Cloud Logging and doesn't analyze logs stored in regional log
-// buckets or logs routed to other Google Cloud projects. For more
-// information, see [Using Error Reporting with regionalized logs]
-// (https://cloud.google.com/error-reporting/docs/regionalization).
+// buckets or logs routed to other Google Cloud projects.
 //
 //   - projectName: The resource name of the Google Cloud Platform
 //     project. Written as `projects/{projectId}`, where `{projectId}` is
@@ -1358,17 +1368,17 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReportErrorEventResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1382,7 +1392,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	}
 	return ret, nil
 	// {
-	//   "description": "Report an individual error event and record the event to a log. This endpoint accepts **either** an OAuth token, **or** an [API key](https://support.google.com/cloud/answer/6158862) for authentication. To use an API key, append it to the URL as the value of a `key` parameter. For example: `POST https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456` **Note:** [Error Reporting] (https://cloud.google.com/error-reporting) is a global service built on Cloud Logging and doesn't analyze logs stored in regional log buckets or logs routed to other Google Cloud projects. For more information, see [Using Error Reporting with regionalized logs] (https://cloud.google.com/error-reporting/docs/regionalization).",
+	//   "description": "Report an individual error event and record the event to a log. This endpoint accepts **either** an OAuth token, **or** an [API key](https://support.google.com/cloud/answer/6158862) for authentication. To use an API key, append it to the URL as the value of a `key` parameter. For example: `POST https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456` **Note:** [Error Reporting] (https://cloud.google.com/error-reporting) is a global service built on Cloud Logging and doesn't analyze logs stored in regional log buckets or logs routed to other Google Cloud projects.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/events:report",
 	//   "httpMethod": "POST",
 	//   "id": "clouderrorreporting.projects.events.report",
@@ -1471,7 +1481,12 @@ func (c *ProjectsGroupStatsListCall) AlignmentTime(alignmentTime string) *Projec
 }
 
 // GroupId sets the optional parameter "groupId": List all
-// ErrorGroupStats with these IDs.
+// ErrorGroupStats with these IDs. The `group_id` is a unique identifier
+// for a particular error group. The identifier is derived from key
+// parts of the error-log content and is treated as Service Data. For
+// information about how Service Data is handled, see [Google Cloud
+// Privacy Notice]
+// (https://cloud.google.com/terms/cloud-privacy-notice).
 func (c *ProjectsGroupStatsListCall) GroupId(groupId ...string) *ProjectsGroupStatsListCall {
 	c.urlParams_.SetMulti("groupId", append([]string{}, groupId...))
 	return c
@@ -1662,17 +1677,17 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGroupStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1716,7 +1731,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "groupId": {
-	//       "description": "Optional. List all ErrorGroupStats with these IDs.",
+	//       "description": "Optional. List all ErrorGroupStats with these IDs. The `group_id` is a unique identifier for a particular error group. The identifier is derived from key parts of the error-log content and is treated as Service Data. For information about how Service Data is handled, see [Google Cloud Privacy Notice] (https://cloud.google.com/terms/cloud-privacy-notice).",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -1837,7 +1852,7 @@ func (c *ProjectsGroupStatsListCall) Pages(ctx context.Context, f func(*ListGrou
 
 type ProjectsGroupsGetCall struct {
 	s            *Service
-	groupName    string
+	groupNameid  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -1847,12 +1862,17 @@ type ProjectsGroupsGetCall struct {
 // Get: Get the specified group.
 //
 //   - groupName: The group resource name. Written as
-//     `projects/{projectID}/groups/{group_name}`. Call groupStats.list to
+//     `projects/{projectID}/groups/{group_id}`. Call groupStats.list to
 //     return a list of groups belonging to this project. Example:
-//     `projects/my-project-123/groups/my-group`.
-func (r *ProjectsGroupsService) Get(groupName string) *ProjectsGroupsGetCall {
+//     `projects/my-project-123/groups/my-group` In the group resource
+//     name, the `group_id` is a unique identifier for a particular error
+//     group. The identifier is derived from key parts of the error-log
+//     content and is treated as Service Data. For information about how
+//     Service Data is handled, see Google Cloud Privacy Notice
+//     (https://cloud.google.com/terms/cloud-privacy-notice).
+func (r *ProjectsGroupsService) Get(groupNameid string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.groupName = groupName
+	c.groupNameid = groupNameid
 	return c
 }
 
@@ -1912,7 +1932,7 @@ func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"groupName": c.groupName,
+		"groupName": c.groupNameid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -1931,17 +1951,17 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ErrorGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -1964,7 +1984,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 	//   ],
 	//   "parameters": {
 	//     "groupName": {
-	//       "description": "Required. The group resource name. Written as `projects/{projectID}/groups/{group_name}`. Call groupStats.list to return a list of groups belonging to this project. Example: `projects/my-project-123/groups/my-group`",
+	//       "description": "Required. The group resource name. Written as `projects/{projectID}/groups/{group_id}`. Call groupStats.list to return a list of groups belonging to this project. Example: `projects/my-project-123/groups/my-group` In the group resource name, the `group_id` is a unique identifier for a particular error group. The identifier is derived from key parts of the error-log content and is treated as Service Data. For information about how Service Data is handled, see [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -1986,7 +2006,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 
 type ProjectsGroupsUpdateCall struct {
 	s          *Service
-	name       string
+	nameid     string
 	errorgroup *ErrorGroup
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -1996,11 +2016,17 @@ type ProjectsGroupsUpdateCall struct {
 // Update: Replace the data for the specified group. Fails if the group
 // does not exist.
 //
-//   - name: The group resource name. Example:
-//     projects/my-project-123/groups/CNSgkpnppqKCUw.
-func (r *ProjectsGroupsService) Update(name string, errorgroup *ErrorGroup) *ProjectsGroupsUpdateCall {
+//   - name: The group resource name. Written as
+//     `projects/{projectID}/groups/{group_id}`. Example:
+//     `projects/my-project-123/groups/my-group` In the group resource
+//     name, the `group_id` is a unique identifier for a particular error
+//     group. The identifier is derived from key parts of the error-log
+//     content and is treated as Service Data. For information about how
+//     Service Data is handled, see Google Cloud Privacy Notice
+//     (https://cloud.google.com/terms/cloud-privacy-notice).
+func (r *ProjectsGroupsService) Update(nameid string, errorgroup *ErrorGroup) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+	c.nameid = nameid
 	c.errorgroup = errorgroup
 	return c
 }
@@ -2053,7 +2079,7 @@ func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error)
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"name": c.nameid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -2072,17 +2098,17 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ErrorGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -2105,7 +2131,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The group resource name. Example: projects/my-project-123/groups/CNSgkpnppqKCUw",
+	//       "description": "The group resource name. Written as `projects/{projectID}/groups/{group_id}`. Example: `projects/my-project-123/groups/my-group` In the group resource name, the `group_id` is a unique identifier for a particular error group. The identifier is derived from key parts of the error-log content and is treated as Service Data. For information about how Service Data is handled, see [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,

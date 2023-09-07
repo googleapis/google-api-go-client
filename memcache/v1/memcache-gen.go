@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "memcache:v1"
 const apiName = "memcache"
@@ -486,12 +487,34 @@ func (s *GoogleCloudMemcacheV1OperationMetadata) MarshalJSON() ([]byte, error) {
 type GoogleCloudMemcacheV1ZoneMetadata struct {
 }
 
+// GoogleCloudSaasacceleratorManagementProvidersV1Instance: Instance
+// represents the interface for SLM services to actuate the state of
+// control plane resources. Example Instance in JSON, where
+// consumer-project-number=123456, producer-project-id=cloud-sql:
+// ```json Instance: { "name":
+// "projects/123456/locations/us-east1/instances/prod-instance",
+// "create_time": { "seconds": 1526406431, }, "labels": { "env": "prod",
+// "foo": "bar" }, "state": READY, "software_versions": {
+// "software_update": "cloud-sql-09-28-2018", },
+// "maintenance_policy_names": { "UpdatePolicy":
+// "projects/123456/locations/us-east1/maintenancePolicies/prod-update-po
+// licy", } "tenant_project_id": "cloud-sql-test-tenant",
+// "producer_metadata": { "cloud-sql-tier": "basic",
+// "cloud-sql-instance-size": "1G", }, "provisioned_resources": [ {
+// "resource-type": "compute-instance", "resource-url":
+// "https://www.googleapis.com/compute/v1/projects/cloud-sql/zones/us-eas
+// t1-b/instances/vm-1", } ], "maintenance_schedules": { "csa_rollout":
+// { "start_time": { "seconds": 1526406431, }, "end_time": { "seconds":
+// 1535406431, }, }, "ncsa_rollout": { "start_time": { "seconds":
+// 1526406431, }, "end_time": { "seconds": 1535406431, }, } },
+// "consumer_defined_name": "my-sql-instance1", } ``` LINT.IfChange
 type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
-	// ConsumerDefinedName: consumer_defined_name is the name that is set by
-	// the consumer. On the other hand Name field represents system-assigned
-	// id of an instance so consumers are not necessarily aware of it.
-	// consumer_defined_name is used for notification/UI purposes for
-	// consumer to recognize their instances.
+	// ConsumerDefinedName: consumer_defined_name is the name of the
+	// instance set by the service consumers. Generally this is different
+	// from the `name` field which reperesents the system-assigned id of the
+	// instance which the service consumers do not recognize. This is a
+	// required field for tenants onboarding to Maintenance Window
+	// notifications (go/slm-rollout-maintenance-policies#prerequisites).
 	ConsumerDefinedName string `json:"consumerDefinedName,omitempty"`
 
 	// CreateTime: Output only. Timestamp when the resource was created.
@@ -511,11 +534,12 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// value are arbitrary strings provided by the user.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MaintenancePolicyNames: Optional. Deprecated. The MaintenancePolicies
-	// that have been attached to the instance. The key must be of the type
-	// name of the oneof policy name defined in MaintenancePolicy, and the
-	// referenced policy must define the same policy type. For complete
-	// details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
+	// MaintenancePolicyNames: Optional. The MaintenancePolicies that have
+	// been attached to the instance. The key must be of the type name of
+	// the oneof policy name defined in MaintenancePolicy, and the
+	// referenced policy must define the same policy type. For details,
+	// please refer to go/cloud-saas-mw-ug. Should not be set if
+	// maintenance_settings.maintenance_policies is set.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
 
 	// MaintenanceSchedules: The MaintenanceSchedule contains the scheduling
@@ -682,9 +706,10 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// MaintenancePolicies: Optional. The MaintenancePolicies that have been
 	// attached to the instance. The key must be of the type name of the
 	// oneof policy name defined in MaintenancePolicy, and the embedded
-	// policy must define the same policy type. For complete details of
-	// MaintenancePolicy, please refer to go/cloud-saas-mw-ug. If only the
-	// name is needed, then only populate MaintenancePolicy.name.
+	// policy must define the same policy type. For details, please refer to
+	// go/cloud-saas-mw-ug. Should not be set if maintenance_policy_names is
+	// set. If only the name is needed, then only populate
+	// MaintenancePolicy.name.
 	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclude") to
@@ -993,7 +1018,8 @@ type Instance struct {
 	// minor version.
 	//
 	// Possible values:
-	//   "MEMCACHE_VERSION_UNSPECIFIED"
+	//   "MEMCACHE_VERSION_UNSPECIFIED" - Memcache version is not specified
+	// by customer
 	//   "MEMCACHE_1_5" - Memcached 1.5 version.
 	MemcacheVersion string `json:"memcacheVersion,omitempty"`
 
@@ -1015,6 +1041,11 @@ type Instance struct {
 	// Parameters: User defined parameters to apply to the memcached process
 	// on each node.
 	Parameters *MemcacheParameters `json:"parameters,omitempty"`
+
+	// ReservedIpRangeId: Optional. Contains the id of allocated IP address
+	// ranges associated with the private service access connection for
+	// example, "test-default" associated with IP range 10.0.0.0/29.
+	ReservedIpRangeId []string `json:"reservedIpRangeId,omitempty"`
 
 	// State: Output only. The state of this Memcached instance.
 	//
@@ -1218,7 +1249,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1301,7 +1332,8 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MaintenancePolicy: Defines policies to service maintenance events.
+// MaintenancePolicy: LINT.IfChange Defines policies to service
+// maintenance events.
 type MaintenancePolicy struct {
 	// CreateTime: Output only. The time when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1574,8 +1606,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1896,9 +1928,9 @@ type UpdatePolicy struct {
 	Channel string `json:"channel,omitempty"`
 
 	// DenyMaintenancePeriods: Deny Maintenance Period that is applied to
-	// resource to indicate when maintenance is forbidden. User can specify
-	// zero or more non-overlapping deny periods. Maximum number of
-	// deny_maintenance_periods expected is one.
+	// resource to indicate when maintenance is forbidden. The protocol
+	// supports zero-to-many such periods, but the current SLM Rollout
+	// implementation only supports zero-to-one.
 	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
 
 	// Window: Optional. Maintenance window that is applied to resources
@@ -2100,17 +2132,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2272,17 +2304,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2451,17 +2483,17 @@ func (c *ProjectsLocationsInstancesApplyParametersCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2607,17 +2639,17 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2749,17 +2781,17 @@ func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2897,17 +2929,17 @@ func (c *ProjectsLocationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*I
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Instance{
 		ServerResponse: googleapi.ServerResponse{
@@ -3079,17 +3111,17 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInstancesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3274,17 +3306,17 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3424,17 +3456,17 @@ func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3570,17 +3602,17 @@ func (c *ProjectsLocationsInstancesUpdateParametersCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3721,17 +3753,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3859,17 +3891,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4007,17 +4039,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4071,14 +4103,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -4183,17 +4208,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4207,7 +4232,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "memcache.projects.locations.operations.list",

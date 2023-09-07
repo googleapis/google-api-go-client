@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "workflowexecutions:v1beta"
 const apiName = "workflowexecutions"
@@ -235,7 +236,7 @@ type Execution struct {
 	// CallLogLevel: The call logging level associated to this execution.
 	//
 	// Possible values:
-	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging specified.
+	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging level specified.
 	//   "LOG_ALL_CALLS" - Log all call steps within workflows, all call
 	// returns, and all exceptions raised.
 	//   "LOG_ERRORS_ONLY" - Log only exceptions that are raised from call
@@ -271,19 +272,13 @@ type Execution struct {
 	//   "SUCCEEDED" - The execution finished successfully.
 	//   "FAILED" - The execution failed with an error.
 	//   "CANCELLED" - The execution was stopped intentionally.
+	//   "UNAVAILABLE" - Reserved for future use.
+	//   "QUEUED" - Request has been placed in the backlog for processing at
+	// a later time.
 	State string `json:"state,omitempty"`
 
 	// Status: Output only. Status tracks the current steps and progress
-	// data of this execution. > **Preview:** This field is covered by the >
-	// Pre-GA Offerings Terms (https://cloud.google.com/terms/service-terms)
-	// of > the Google Cloud Terms of Service. Pre-GA features might have
-	// limited > support, and changes to pre-GA features might not be
-	// compatible with > other pre-GA versions. For more information, see
-	// the > launch stage descriptions
-	// (https://cloud.google.com/products#product-launch-stages). > This
-	// field is usable only if your project has access. See the > access
-	// request page
-	// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
+	// data of this execution.
 	Status *Status `json:"status,omitempty"`
 
 	// WorkflowRevisionId: Output only. Revision of the workflow this
@@ -457,17 +452,7 @@ func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Status: > **Preview:** This field is covered by the > Pre-GA
-// Offerings Terms (https://cloud.google.com/terms/service-terms) of >
-// the Google Cloud Terms of Service. Pre-GA features might have limited
-// > support, and changes to pre-GA features might not be compatible
-// with > other pre-GA versions. For more information, see the > launch
-// stage descriptions
-// (https://cloud.google.com/products#product-launch-stages). > This
-// field is usable only if your project has access. See the > access
-// request page
-// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
-// Represents the current status of this execution.
+// Status: Represents the current status of this execution.
 type Status struct {
 	// CurrentSteps: A list of currently executing or last executed step
 	// names for the workflow execution currently running. If the workflow
@@ -622,17 +607,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -768,17 +753,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -937,17 +922,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -1142,17 +1127,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListExecutionsResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "servicedirectory:v1beta1"
 const apiName = "servicedirectory"
@@ -152,7 +153,6 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *APIService) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Namespaces = NewProjectsLocationsNamespacesService(s)
-	rs.RegistrationPolicies = NewProjectsLocationsRegistrationPoliciesService(s)
 	return rs
 }
 
@@ -160,32 +160,21 @@ type ProjectsLocationsService struct {
 	s *APIService
 
 	Namespaces *ProjectsLocationsNamespacesService
-
-	RegistrationPolicies *ProjectsLocationsRegistrationPoliciesService
 }
 
 func NewProjectsLocationsNamespacesService(s *APIService) *ProjectsLocationsNamespacesService {
 	rs := &ProjectsLocationsNamespacesService{s: s}
-	rs.ServiceWorkloads = NewProjectsLocationsNamespacesServiceWorkloadsService(s)
 	rs.Services = NewProjectsLocationsNamespacesServicesService(s)
+	rs.Workloads = NewProjectsLocationsNamespacesWorkloadsService(s)
 	return rs
 }
 
 type ProjectsLocationsNamespacesService struct {
 	s *APIService
 
-	ServiceWorkloads *ProjectsLocationsNamespacesServiceWorkloadsService
-
 	Services *ProjectsLocationsNamespacesServicesService
-}
 
-func NewProjectsLocationsNamespacesServiceWorkloadsService(s *APIService) *ProjectsLocationsNamespacesServiceWorkloadsService {
-	rs := &ProjectsLocationsNamespacesServiceWorkloadsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsNamespacesServiceWorkloadsService struct {
-	s *APIService
+	Workloads *ProjectsLocationsNamespacesWorkloadsService
 }
 
 func NewProjectsLocationsNamespacesServicesService(s *APIService) *ProjectsLocationsNamespacesServicesService {
@@ -209,12 +198,12 @@ type ProjectsLocationsNamespacesServicesEndpointsService struct {
 	s *APIService
 }
 
-func NewProjectsLocationsRegistrationPoliciesService(s *APIService) *ProjectsLocationsRegistrationPoliciesService {
-	rs := &ProjectsLocationsRegistrationPoliciesService{s: s}
+func NewProjectsLocationsNamespacesWorkloadsService(s *APIService) *ProjectsLocationsNamespacesWorkloadsService {
+	rs := &ProjectsLocationsNamespacesWorkloadsService{s: s}
 	return rs
 }
 
-type ProjectsLocationsRegistrationPoliciesService struct {
+type ProjectsLocationsNamespacesWorkloadsService struct {
 	s *APIService
 }
 
@@ -247,7 +236,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -264,9 +255,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -350,6 +339,10 @@ type Endpoint struct {
 	// Port: Optional. Service Directory rejects values outside of `[0,
 	// 65535]`.
 	Port int64 `json:"port,omitempty"`
+
+	// Uid: Output only. A globally unique identifier (in UUID4 format) for
+	// this endpoint.
+	Uid string `json:"uid,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the endpoint was last
 	// updated.
@@ -660,7 +653,7 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -727,6 +720,10 @@ type Namespace struct {
 	// `projects/*/locations/*/namespaces/*`.
 	Name string `json:"name,omitempty"`
 
+	// Uid: Output only. A globally unique identifier (in UUID4 format) for
+	// this namespace.
+	Uid string `json:"uid,omitempty"`
+
 	// UpdateTime: Output only. The timestamp when the namespace was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -772,7 +769,7 @@ func (s *Namespace) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -781,17 +778,17 @@ func (s *Namespace) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -989,6 +986,10 @@ type Service struct {
 	// Name: Immutable. The resource name for the service in the format
 	// `projects/*/locations/*/namespaces/*/services/*`.
 	Name string `json:"name,omitempty"`
+
+	// Uid: Output only. A globally unique identifier (in UUID4 format) for
+	// this service.
+	Uid string `json:"uid,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the service was last
 	// updated. Note: endpoints being created/deleted/updated within the
@@ -1215,17 +1216,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -1387,17 +1388,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1576,17 +1577,17 @@ func (c *ProjectsLocationsNamespacesCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Namespace{
 		ServerResponse: googleapi.ServerResponse{
@@ -1717,17 +1718,17 @@ func (c *ProjectsLocationsNamespacesDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1863,17 +1864,17 @@ func (c *ProjectsLocationsNamespacesGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Namespace{
 		ServerResponse: googleapi.ServerResponse{
@@ -2005,17 +2006,17 @@ func (c *ProjectsLocationsNamespacesGetIamPolicyCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2205,17 +2206,17 @@ func (c *ProjectsLocationsNamespacesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListNamespacesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2394,17 +2395,17 @@ func (c *ProjectsLocationsNamespacesPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Namespace{
 		ServerResponse: googleapi.ServerResponse{
@@ -2545,17 +2546,17 @@ func (c *ProjectsLocationsNamespacesSetIamPolicyCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2691,17 +2692,17 @@ func (c *ProjectsLocationsNamespacesTestIamPermissionsCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2727,442 +2728,6 @@ func (c *ProjectsLocationsNamespacesTestIamPermissionsCall) Do(opts ...googleapi
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "servicedirectory.projects.locations.namespaces.serviceWorkloads.getIamPolicy":
-
-type ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall struct {
-	s                   *APIService
-	resource            string
-	getiampolicyrequest *GetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// GetIamPolicy: Gets the IAM Policy for a resource
-//
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
-func (r *ProjectsLocationsNamespacesServiceWorkloadsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall {
-	c := &ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.getiampolicyrequest = getiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "servicedirectory.projects.locations.namespaces.serviceWorkloads.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the IAM Policy for a resource",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/serviceWorkloads/{serviceWorkloadsId}:getIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "servicedirectory.projects.locations.namespaces.serviceWorkloads.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/serviceWorkloads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:getIamPolicy",
-	//   "request": {
-	//     "$ref": "GetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "servicedirectory.projects.locations.namespaces.serviceWorkloads.setIamPolicy":
-
-type ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall struct {
-	s                   *APIService
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the IAM Policy for a resource
-//
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
-func (r *ProjectsLocationsNamespacesServiceWorkloadsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall {
-	c := &ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "servicedirectory.projects.locations.namespaces.serviceWorkloads.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Sets the IAM Policy for a resource",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/serviceWorkloads/{serviceWorkloadsId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "servicedirectory.projects.locations.namespaces.serviceWorkloads.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/serviceWorkloads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "servicedirectory.projects.locations.namespaces.serviceWorkloads.testIamPermissions":
-
-type ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall struct {
-	s                         *APIService
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Tests IAM permissions for a resource (namespace,
-// service or service workload only).
-//
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
-func (r *ProjectsLocationsNamespacesServiceWorkloadsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall {
-	c := &ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "servicedirectory.projects.locations.namespaces.serviceWorkloads.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsNamespacesServiceWorkloadsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Tests IAM permissions for a resource (namespace, service or service workload only).",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/serviceWorkloads/{serviceWorkloadsId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "servicedirectory.projects.locations.namespaces.serviceWorkloads.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/serviceWorkloads/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3282,17 +2847,17 @@ func (c *ProjectsLocationsNamespacesServicesCreateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -3423,17 +2988,17 @@ func (c *ProjectsLocationsNamespacesServicesDeleteCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3569,17 +3134,17 @@ func (c *ProjectsLocationsNamespacesServicesGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -3711,17 +3276,17 @@ func (c *ProjectsLocationsNamespacesServicesGetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3911,17 +3476,17 @@ func (c *ProjectsLocationsNamespacesServicesListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4100,17 +3665,17 @@ func (c *ProjectsLocationsNamespacesServicesPatchCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -4249,17 +3814,17 @@ func (c *ProjectsLocationsNamespacesServicesResolveCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ResolveServiceResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4394,17 +3959,17 @@ func (c *ProjectsLocationsNamespacesServicesSetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4540,17 +4105,17 @@ func (c *ProjectsLocationsNamespacesServicesTestIamPermissionsCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4695,17 +4260,17 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsCreateCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Endpoint{
 		ServerResponse: googleapi.ServerResponse{
@@ -4835,17 +4400,17 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsDeleteCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4981,17 +4546,17 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsGetCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Endpoint{
 		ServerResponse: googleapi.ServerResponse{
@@ -5185,17 +4750,17 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEndpointsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5374,17 +4939,17 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsPatchCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Endpoint{
 		ServerResponse: googleapi.ServerResponse{
@@ -5434,9 +4999,9 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsPatchCall) Do(opts ...googl
 
 }
 
-// method id "servicedirectory.projects.locations.registrationPolicies.getIamPolicy":
+// method id "servicedirectory.projects.locations.namespaces.workloads.getIamPolicy":
 
-type ProjectsLocationsRegistrationPoliciesGetIamPolicyCall struct {
+type ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall struct {
 	s                   *APIService
 	resource            string
 	getiampolicyrequest *GetIamPolicyRequest
@@ -5451,8 +5016,8 @@ type ProjectsLocationsRegistrationPoliciesGetIamPolicyCall struct {
 //     requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsRegistrationPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall {
-	c := &ProjectsLocationsRegistrationPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNamespacesWorkloadsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall {
+	c := &ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.getiampolicyrequest = getiampolicyrequest
 	return c
@@ -5461,7 +5026,7 @@ func (r *ProjectsLocationsRegistrationPoliciesService) GetIamPolicy(resource str
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall {
+func (c *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5469,21 +5034,21 @@ func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Fields(s ...goog
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall {
+func (c *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Header() http.Header {
+func (c *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5511,31 +5076,31 @@ func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) doRequest(alt st
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "servicedirectory.projects.locations.registrationPolicies.getIamPolicy" call.
+// Do executes the "servicedirectory.projects.locations.namespaces.workloads.getIamPolicy" call.
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Policy.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+func (c *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5550,9 +5115,9 @@ func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Do(opts ...googl
 	return ret, nil
 	// {
 	//   "description": "Gets the IAM Policy for a resource",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrationPolicies/{registrationPoliciesId}:getIamPolicy",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/workloads/{workloadsId}:getIamPolicy",
 	//   "httpMethod": "POST",
-	//   "id": "servicedirectory.projects.locations.registrationPolicies.getIamPolicy",
+	//   "id": "servicedirectory.projects.locations.namespaces.workloads.getIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -5560,7 +5125,7 @@ func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Do(opts ...googl
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/registrationPolicies/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/workloads/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5579,9 +5144,9 @@ func (c *ProjectsLocationsRegistrationPoliciesGetIamPolicyCall) Do(opts ...googl
 
 }
 
-// method id "servicedirectory.projects.locations.registrationPolicies.setIamPolicy":
+// method id "servicedirectory.projects.locations.namespaces.workloads.setIamPolicy":
 
-type ProjectsLocationsRegistrationPoliciesSetIamPolicyCall struct {
+type ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall struct {
 	s                   *APIService
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
@@ -5596,8 +5161,8 @@ type ProjectsLocationsRegistrationPoliciesSetIamPolicyCall struct {
 //     specified. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsRegistrationPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall {
-	c := &ProjectsLocationsRegistrationPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNamespacesWorkloadsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall {
+	c := &ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.setiampolicyrequest = setiampolicyrequest
 	return c
@@ -5606,7 +5171,7 @@ func (r *ProjectsLocationsRegistrationPoliciesService) SetIamPolicy(resource str
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall {
+func (c *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5614,21 +5179,21 @@ func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Fields(s ...goog
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall {
+func (c *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Header() http.Header {
+func (c *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5656,31 +5221,31 @@ func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) doRequest(alt st
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "servicedirectory.projects.locations.registrationPolicies.setIamPolicy" call.
+// Do executes the "servicedirectory.projects.locations.namespaces.workloads.setIamPolicy" call.
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Policy.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+func (c *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5695,9 +5260,9 @@ func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Do(opts ...googl
 	return ret, nil
 	// {
 	//   "description": "Sets the IAM Policy for a resource",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrationPolicies/{registrationPoliciesId}:setIamPolicy",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/workloads/{workloadsId}:setIamPolicy",
 	//   "httpMethod": "POST",
-	//   "id": "servicedirectory.projects.locations.registrationPolicies.setIamPolicy",
+	//   "id": "servicedirectory.projects.locations.namespaces.workloads.setIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -5705,7 +5270,7 @@ func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Do(opts ...googl
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/registrationPolicies/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/workloads/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5724,9 +5289,9 @@ func (c *ProjectsLocationsRegistrationPoliciesSetIamPolicyCall) Do(opts ...googl
 
 }
 
-// method id "servicedirectory.projects.locations.registrationPolicies.testIamPermissions":
+// method id "servicedirectory.projects.locations.namespaces.workloads.testIamPermissions":
 
-type ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall struct {
+type ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall struct {
 	s                         *APIService
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
@@ -5742,8 +5307,8 @@ type ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall struct {
 //     being requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsRegistrationPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall {
-	c := &ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNamespacesWorkloadsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall {
+	c := &ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
@@ -5752,7 +5317,7 @@ func (r *ProjectsLocationsRegistrationPoliciesService) TestIamPermissions(resour
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall {
+func (c *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5760,21 +5325,21 @@ func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) Fields(s .
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall {
+func (c *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) Header() http.Header {
+func (c *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5802,31 +5367,31 @@ func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) doRequest(
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "servicedirectory.projects.locations.registrationPolicies.testIamPermissions" call.
+// Do executes the "servicedirectory.projects.locations.namespaces.workloads.testIamPermissions" call.
 // Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *TestIamPermissionsResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+func (c *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5841,9 +5406,9 @@ func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) Do(opts ..
 	return ret, nil
 	// {
 	//   "description": "Tests IAM permissions for a resource (namespace, service or service workload only).",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrationPolicies/{registrationPoliciesId}:testIamPermissions",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/workloads/{workloadsId}:testIamPermissions",
 	//   "httpMethod": "POST",
-	//   "id": "servicedirectory.projects.locations.registrationPolicies.testIamPermissions",
+	//   "id": "servicedirectory.projects.locations.namespaces.workloads.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -5851,7 +5416,7 @@ func (c *ProjectsLocationsRegistrationPoliciesTestIamPermissionsCall) Do(opts ..
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/registrationPolicies/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/workloads/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

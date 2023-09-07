@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "mybusinessverifications:v1"
 const apiName = "mybusinessverifications"
@@ -732,6 +733,10 @@ func (s *ServiceBusinessContext) MarshalJSON() ([]byte, error) {
 // Verification: A verification represents a verification attempt on a
 // location.
 type Verification struct {
+	// Announcement: Optional. Response announcement set only if the method
+	// is VETTED_PARTNER.
+	Announcement string `json:"announcement,omitempty"`
+
 	// CreateTime: The timestamp when the verification is requested.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -752,9 +757,8 @@ type Verification struct {
 	// number. The PIN is used to complete verification with Google.
 	//   "AUTO" - Verify the location without additional user action. This
 	// option may not be available for all locations.
-	//   "VETTED_PARTNER" - Used for vetted
-	// [partners](https://support.google.com/business/answer/7674102). This
-	// option may not be available for all locations.
+	//   "VETTED_PARTNER" - This option may not be available for all
+	// locations.
 	Method string `json:"method,omitempty"`
 
 	// Name: Resource name of the verification.
@@ -769,7 +773,7 @@ type Verification struct {
 	//   "FAILED" - The verification is failed.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Announcement") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -777,10 +781,10 @@ type Verification struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Announcement") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -798,6 +802,9 @@ func (s *Verification) MarshalJSON() ([]byte, error) {
 type VerificationOption struct {
 	// AddressData: Set only if the method is MAIL.
 	AddressData *AddressVerificationData `json:"addressData,omitempty"`
+
+	// Announcement: Set only if the method is VETTED_PARTNER.
+	Announcement string `json:"announcement,omitempty"`
 
 	// EmailData: Set only if the method is EMAIL.
 	EmailData *EmailVerificationData `json:"emailData,omitempty"`
@@ -823,9 +830,8 @@ type VerificationOption struct {
 	// number. The PIN is used to complete verification with Google.
 	//   "AUTO" - Verify the location without additional user action. This
 	// option may not be available for all locations.
-	//   "VETTED_PARTNER" - Used for vetted
-	// [partners](https://support.google.com/business/answer/7674102). This
-	// option may not be available for all locations.
+	//   "VETTED_PARTNER" - This option may not be available for all
+	// locations.
 	VerificationMethod string `json:"verificationMethod,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddressData") to
@@ -958,9 +964,8 @@ type VerifyLocationRequest struct {
 	// number. The PIN is used to complete verification with Google.
 	//   "AUTO" - Verify the location without additional user action. This
 	// option may not be available for all locations.
-	//   "VETTED_PARTNER" - Used for vetted
-	// [partners](https://support.google.com/business/answer/7674102). This
-	// option may not be available for all locations.
+	//   "VETTED_PARTNER" - This option may not be available for all
+	// locations.
 	Method string `json:"method,omitempty"`
 
 	// PhoneNumber: Optional. The input for PHONE_CALL/SMS method The phone
@@ -1189,17 +1194,17 @@ func (c *LocationsFetchVerificationOptionsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FetchVerificationOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1335,17 +1340,17 @@ func (c *LocationsGetVoiceOfMerchantStateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VoiceOfMerchantState{
 		ServerResponse: googleapi.ServerResponse{
@@ -1471,17 +1476,17 @@ func (c *LocationsVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyLocationR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VerifyLocationResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1612,17 +1617,17 @@ func (c *LocationsVerificationsCompleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CompleteVerificationResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1774,17 +1779,17 @@ func (c *LocationsVerificationsListCall) Do(opts ...googleapi.CallOption) (*List
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVerificationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1940,17 +1945,17 @@ func (c *VerificationTokensGenerateCall) Do(opts ...googleapi.CallOption) (*Gene
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GenerateVerificationTokenResponse{
 		ServerResponse: googleapi.ServerResponse{

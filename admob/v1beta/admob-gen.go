@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "admob:v1beta"
 const apiName = "admob"
@@ -251,14 +252,17 @@ func (s *AdSource) MarshalJSON() ([]byte, error) {
 // AdUnit: Describes an AdMob ad unit.
 type AdUnit struct {
 	// AdFormat: AdFormat of the ad unit. Possible values are as follows:
-	// "BANNER" - Banner ad format. "BANNER_INTERSTITIAL" - Legacy format
-	// that can be used as either banner or interstitial. This format can no
-	// longer be created but can be targeted by mediation groups.
-	// "INTERSTITIAL" - A full screen ad. Supported ad types are
-	// "RICH_MEDIA" and "VIDEO". "NATIVE" - Native ad format. "REWARDED" -
-	// An ad that, once viewed, gets a callback verifying the view so that a
-	// reward can be given to the user. Supported ad types are "RICH_MEDIA"
-	// (interactive) and video where video can not be excluded.
+	// "APP_OPEN" - App Open ad format. "BANNER" - Banner ad format.
+	// "BANNER_INTERSTITIAL" - Legacy format that can be used as either
+	// banner or interstitial. This format can no longer be created but can
+	// be targeted by mediation groups. "INTERSTITIAL" - A full screen ad.
+	// Supported ad types are "RICH_MEDIA" and "VIDEO". "NATIVE" - Native ad
+	// format. "REWARDED" - An ad that, once viewed, gets a callback
+	// verifying the view so that a reward can be given to the user.
+	// Supported ad types are "RICH_MEDIA" (interactive) and video where
+	// video can not be excluded. "REWARDED_INTERSTITIAL" - Rewarded
+	// Interstitial ad format. Only supports video ad type. See
+	// https://support.google.com/admob/answer/9884467.
 	AdFormat string `json:"adFormat,omitempty"`
 
 	// AdTypes: Ad media type supported by this ad unit. Possible values as
@@ -311,6 +315,20 @@ func (s *AdUnit) MarshalJSON() ([]byte, error) {
 // App: Describes an AdMob app for a specific platform (For example:
 // Android or iOS).
 type App struct {
+	// AppApprovalState: Output only. The approval state for the app. The
+	// field is read-only.
+	//
+	// Possible values:
+	//   "APP_APPROVAL_STATE_UNSPECIFIED" - Default value for an unset
+	// field. Do not use.
+	//   "ACTION_REQUIRED" - The app requires additional user action to be
+	// approved. Please refer to
+	// https://support.google.com/admob/answer/10564477 for details and next
+	// steps.
+	//   "IN_REVIEW" - The app is pending review.
+	//   "APPROVED" - The app is approved and can serve ads.
+	AppApprovalState string `json:"appApprovalState,omitempty"`
+
 	// AppId: The externally visible ID of the app which can be used to
 	// integrate with the AdMob SDK. This is a read only property. Example:
 	// ca-app-pub-9876543210987654~0123456789
@@ -336,7 +354,7 @@ type App struct {
 	// "ANDROID".
 	Platform string `json:"platform,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// ForceSendFields is a list of field names (e.g. "AppApprovalState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -344,12 +362,13 @@ type App struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppApprovalState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -513,7 +532,7 @@ func (s *DateRange) MarshalJSON() ([]byte, error) {
 }
 
 // GenerateMediationReportRequest: Request to generate an AdMob
-// Mediation report.
+// mediation report.
 type GenerateMediationReportRequest struct {
 	// ReportSpec: Network report specification.
 	ReportSpec *MediationReportSpec `json:"reportSpec,omitempty"`
@@ -542,7 +561,7 @@ func (s *GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GenerateMediationReportResponse: The streaming response for the AdMob
-// Mediation report where the first response contains the report header,
+// mediation report where the first response contains the report header,
 // then a stream of row responses, and finally a footer as the last
 // response message. For example: [{ "header": { "date_range": {
 // "start_date": {"year": 2018, "month": 9, "day": 1}, "end_date":
@@ -917,23 +936,13 @@ type MediationReportSpec struct {
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1". **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	// **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "APP_VERSION_NAME" - For Android, the app version name can be found
 	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString. **Warning:** The dimension is
-	// incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// found in CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
-	// "Non-personalized ads"). **Warning:** The dimension is incompatible
-	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// metric.
+	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -1054,23 +1063,13 @@ type MediationReportSpecDimensionFilter struct {
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1". **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	// **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "APP_VERSION_NAME" - For Android, the app version name can be found
 	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString. **Warning:** The dimension is
-	// incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// found in CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
-	// "Non-personalized ads"). **Warning:** The dimension is incompatible
-	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// metric.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -1137,23 +1136,13 @@ type MediationReportSpecSortCondition struct {
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1". **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	// **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "APP_VERSION_NAME" - For Android, the app version name can be found
 	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString. **Warning:** The dimension is
-	// incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// found in CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
-	// "Non-personalized ads"). **Warning:** The dimension is incompatible
-	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// metric.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.
@@ -1967,17 +1956,17 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PublisherAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -2126,17 +2115,17 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPublisherAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2315,17 +2304,17 @@ func (c *AccountsAdSourcesListCall) Do(opts ...googleapi.CallOption) (*ListAdSou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAdSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2510,17 +2499,17 @@ func (c *AccountsAdUnitsListCall) Do(opts ...googleapi.CallOption) (*ListAdUnits
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAdUnitsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2708,17 +2697,17 @@ func (c *AccountsAppsListCall) Do(opts ...googleapi.CallOption) (*ListAppsRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAppsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2803,7 +2792,7 @@ type AccountsMediationReportGenerateCall struct {
 	header_                        http.Header
 }
 
-// Generate: Generates an AdMob Mediation report based on the provided
+// Generate: Generates an AdMob mediation report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
 //
@@ -2883,17 +2872,17 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GenerateMediationReportResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2907,7 +2896,7 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
+	//   "description": "Generates an AdMob mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
 	//   "flatPath": "v1beta/accounts/{accountsId}/mediationReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.mediationReport.generate",
@@ -3030,17 +3019,17 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GenerateNetworkReportResponse{
 		ServerResponse: googleapi.ServerResponse{

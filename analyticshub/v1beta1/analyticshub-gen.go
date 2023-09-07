@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "analyticshub:v1beta1"
 const apiName = "analyticshub"
@@ -388,7 +389,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -405,9 +408,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -760,6 +761,36 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LinkedResource: Reference to a linked resource tracked by this
+// Subscription.
+type LinkedResource struct {
+	// LinkedDataset: Output only. Name of the linked dataset, e.g.
+	// projects/subscriberproject/datasets/linked_dataset
+	LinkedDataset string `json:"linkedDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LinkedDataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LinkedDataset") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDataExchangesResponse: Message for response to the list of data
 // exchanges.
 type ListDataExchangesResponse struct {
@@ -948,6 +979,10 @@ type Listing struct {
 	// Length: 1000 bytes.
 	RequestAccess string `json:"requestAccess,omitempty"`
 
+	// RestrictedExportConfig: Optional. If set, restricted export
+	// configuration will be propagated and enforced on the linked dataset.
+	RestrictedExportConfig *RestrictedExportConfig `json:"restrictedExportConfig,omitempty"`
+
 	// State: Output only. Current state of the listing.
 	//
 	// Possible values:
@@ -1051,7 +1086,7 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1060,17 +1095,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1179,6 +1214,72 @@ func (s *Publisher) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RefreshSubscriptionResponse: Message for response when you refresh a
+// subscription.
+type RefreshSubscriptionResponse struct {
+	// Subscription: The refreshed subscription resource.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscription") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshSubscriptionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestrictedExportConfig: Restricted export config, used to configure
+// restricted export on linked dataset.
+type RestrictedExportConfig struct {
+	// Enabled: Optional. If true, enable restricted export.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// RestrictDirectTableAccess: Output only. If true, restrict direct
+	// table access(read api/tabledata.list) on linked table.
+	RestrictDirectTableAccess bool `json:"restrictDirectTableAccess,omitempty"`
+
+	// RestrictQueryResult: Optional. If true, restrict export of query
+	// result derived from restricted linked dataset table.
+	RestrictQueryResult bool `json:"restrictQueryResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestrictedExportConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RestrictedExportConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -1212,6 +1313,35 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubscribeDataExchangeResponse: Message for response when you
+// subscribe to a Data Exchange.
+type SubscribeDataExchangeResponse struct {
+	// Subscription: Subscription object created from this subscribe action.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscription") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscribeDataExchangeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscribeDataExchangeResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1252,6 +1382,87 @@ type SubscribeListingResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Subscription: A subscription represents a subscribers' access to a
+// particular set of published data. It contains references to
+// associated listings, data exchanges, and linked datasets.
+// TODO(b/267528977) Consider port the new resource to v1beta1 and
+// dataexchange APIs.
+type Subscription struct {
+	// CreationTime: Output only. Timestamp when the subscription was
+	// created.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// DataExchange: Output only. Resource name of the source Data Exchange.
+	// e.g. projects/123/locations/US/dataExchanges/456
+	DataExchange string `json:"dataExchange,omitempty"`
+
+	// LastModifyTime: Output only. Timestamp when the subscription was last
+	// modified.
+	LastModifyTime string `json:"lastModifyTime,omitempty"`
+
+	// LinkedDatasetMap: Output only. Map of listing resource names to
+	// associated linked resource, e.g.
+	// projects/123/locations/US/dataExchanges/456/listings/789 ->
+	// projects/123/datasets/my_dataset For listing-level subscriptions,
+	// this is a map of size 1. Only contains values if state ==
+	// STATE_ACTIVE.
+	LinkedDatasetMap map[string]LinkedResource `json:"linkedDatasetMap,omitempty"`
+
+	// Listing: Output only. Resource name of the source Listing. e.g.
+	// projects/123/locations/US/dataExchanges/456/listings/789
+	Listing string `json:"listing,omitempty"`
+
+	// Name: Output only. The resource name of the subscription. e.g.
+	// `projects/myproject/locations/US/subscriptions/123`.
+	Name string `json:"name,omitempty"`
+
+	// OrganizationDisplayName: Output only. Display name of the project of
+	// this subscription.
+	OrganizationDisplayName string `json:"organizationDisplayName,omitempty"`
+
+	// OrganizationId: Output only. Organization of the project this
+	// subscription belongs to.
+	OrganizationId string `json:"organizationId,omitempty"`
+
+	// State: Output only. Current state of the subscription.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STATE_ACTIVE" - This subscription is active and the data is
+	// accessible.
+	//   "STATE_STALE" - The data referenced by this subscription is out of
+	// date and should be refreshed. This can happen when a data provider
+	// adds or removes datasets.
+	//   "STATE_INACTIVE" - This subscription has been cancelled or revoked
+	// and the data is no longer accessible.
+	State string `json:"state,omitempty"`
+
+	// SubscriberContact: Output only. Email of the subscriber.
+	SubscriberContact string `json:"subscriberContact,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Subscription) MarshalJSON() ([]byte, error) {
+	type NoMethod Subscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
@@ -1432,17 +1643,17 @@ func (c *OrganizationsLocationsDataExchangesListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOrgDataExchangesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1615,17 +1826,17 @@ func (c *ProjectsLocationsDataExchangesCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataExchange{
 		ServerResponse: googleapi.ServerResponse{
@@ -1758,17 +1969,17 @@ func (c *ProjectsLocationsDataExchangesDeleteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1906,17 +2117,17 @@ func (c *ProjectsLocationsDataExchangesGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataExchange{
 		ServerResponse: googleapi.ServerResponse{
@@ -2049,17 +2260,17 @@ func (c *ProjectsLocationsDataExchangesGetIamPolicyCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2215,17 +2426,17 @@ func (c *ProjectsLocationsDataExchangesListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDataExchangesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2397,17 +2608,17 @@ func (c *ProjectsLocationsDataExchangesPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataExchange{
 		ServerResponse: googleapi.ServerResponse{
@@ -2549,17 +2760,17 @@ func (c *ProjectsLocationsDataExchangesSetIamPolicyCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2695,17 +2906,17 @@ func (c *ProjectsLocationsDataExchangesTestIamPermissionsCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2849,17 +3060,17 @@ func (c *ProjectsLocationsDataExchangesListingsCreateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Listing{
 		ServerResponse: googleapi.ServerResponse{
@@ -2991,17 +3202,17 @@ func (c *ProjectsLocationsDataExchangesListingsDeleteCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3139,17 +3350,17 @@ func (c *ProjectsLocationsDataExchangesListingsGetCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Listing{
 		ServerResponse: googleapi.ServerResponse{
@@ -3282,17 +3493,17 @@ func (c *ProjectsLocationsDataExchangesListingsGetIamPolicyCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3448,17 +3659,17 @@ func (c *ProjectsLocationsDataExchangesListingsListCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListListingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3630,17 +3841,17 @@ func (c *ProjectsLocationsDataExchangesListingsPatchCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Listing{
 		ServerResponse: googleapi.ServerResponse{
@@ -3782,17 +3993,17 @@ func (c *ProjectsLocationsDataExchangesListingsSetIamPolicyCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3930,17 +4141,17 @@ func (c *ProjectsLocationsDataExchangesListingsSubscribeCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SubscribeListingResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4076,17 +4287,17 @@ func (c *ProjectsLocationsDataExchangesListingsTestIamPermissionsCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{

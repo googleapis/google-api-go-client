@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "servicemanagement:v1"
 const apiName = "servicemanagement"
@@ -273,6 +274,7 @@ type Api struct {
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax `proto2`.
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
+	//   "SYNTAX_EDITIONS" - Syntax `editions`.
 	Syntax string `json:"syntax,omitempty"`
 
 	// Version: A version string for this interface. If specified, must have
@@ -688,9 +690,16 @@ type BackendRule struct {
 	// "authorization" header, and sent to the backend.
 	JwtAudience string `json:"jwtAudience,omitempty"`
 
+	// MinDeadline: Deprecated, do not use.
+	MinDeadline float64 `json:"minDeadline,omitempty"`
+
 	// OperationDeadline: The number of seconds to wait for the completion
 	// of a long running operation. The default is no deadline.
 	OperationDeadline float64 `json:"operationDeadline,omitempty"`
+
+	// OverridesByRequestProtocol: The map between request protocol and the
+	// backend address.
+	OverridesByRequestProtocol map[string]BackendRule `json:"overridesByRequestProtocol,omitempty"`
 
 	// Possible values:
 	//   "PATH_TRANSLATION_UNSPECIFIED"
@@ -763,6 +772,7 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 	type NoMethod BackendRule
 	var s1 struct {
 		Deadline          gensupport.JSONFloat64 `json:"deadline"`
+		MinDeadline       gensupport.JSONFloat64 `json:"minDeadline"`
 		OperationDeadline gensupport.JSONFloat64 `json:"operationDeadline"`
 		*NoMethod
 	}
@@ -771,6 +781,7 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.Deadline = float64(s1.Deadline)
+	s.MinDeadline = float64(s1.MinDeadline)
 	s.OperationDeadline = float64(s1.OperationDeadline)
 	return nil
 }
@@ -887,7 +898,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -904,9 +917,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -966,6 +977,146 @@ type ChangeReport struct {
 
 func (s *ChangeReport) MarshalJSON() ([]byte, error) {
 	type NoMethod ChangeReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClientLibrarySettings: Details about how and where to publish client
+// libraries.
+type ClientLibrarySettings struct {
+	// CppSettings: Settings for C++ client libraries.
+	CppSettings *CppSettings `json:"cppSettings,omitempty"`
+
+	// DotnetSettings: Settings for .NET client libraries.
+	DotnetSettings *DotnetSettings `json:"dotnetSettings,omitempty"`
+
+	// GoSettings: Settings for Go client libraries.
+	GoSettings *GoSettings `json:"goSettings,omitempty"`
+
+	// JavaSettings: Settings for legacy Java features, supported in the
+	// Service YAML.
+	JavaSettings *JavaSettings `json:"javaSettings,omitempty"`
+
+	// LaunchStage: Launch stage of this version of the API.
+	//
+	// Possible values:
+	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "UNIMPLEMENTED" - The feature is not yet implemented. Users can not
+	// use it.
+	//   "PRELAUNCH" - Prelaunch features are hidden from users and are only
+	// visible internally.
+	//   "EARLY_ACCESS" - Early Access features are limited to a closed
+	// group of testers. To use these features, you must sign up in advance
+	// and sign a Trusted Tester agreement (which includes confidentiality
+	// provisions). These features may be unstable, changed in
+	// backward-incompatible ways, and are not guaranteed to be released.
+	//   "ALPHA" - Alpha is a limited availability test for releases before
+	// they are cleared for widespread use. By Alpha, all significant design
+	// issues are resolved and we are in the process of verifying
+	// functionality. Alpha customers need to apply for access, agree to
+	// applicable terms, and have their projects allowlisted. Alpha releases
+	// don't have to be feature complete, no SLAs are provided, and there
+	// are no technical support obligations, but they will be far enough
+	// along that customers can actually use them in test environments or
+	// for limited-use tests -- just like they would in normal production
+	// cases.
+	//   "BETA" - Beta is the point at which we are ready to open a release
+	// for any customer to use. There are no SLA or technical support
+	// obligations in a Beta release. Products will be complete from a
+	// feature perspective, but may have some open outstanding issues. Beta
+	// releases are suitable for limited production use cases.
+	//   "GA" - GA features are open to all developers and are considered
+	// stable and fully qualified for production use.
+	//   "DEPRECATED" - Deprecated features are scheduled to be shut down
+	// and removed. For more information, see the "Deprecation Policy"
+	// section of our [Terms of Service](https://cloud.google.com/terms/)
+	// and the [Google Cloud Platform Subject to the Deprecation
+	// Policy](https://cloud.google.com/terms/deprecation) documentation.
+	LaunchStage string `json:"launchStage,omitempty"`
+
+	// NodeSettings: Settings for Node client libraries.
+	NodeSettings *NodeSettings `json:"nodeSettings,omitempty"`
+
+	// PhpSettings: Settings for PHP client libraries.
+	PhpSettings *PhpSettings `json:"phpSettings,omitempty"`
+
+	// PythonSettings: Settings for Python client libraries.
+	PythonSettings *PythonSettings `json:"pythonSettings,omitempty"`
+
+	// RestNumericEnums: When using transport=rest, the client request will
+	// encode enums as numbers rather than strings.
+	RestNumericEnums bool `json:"restNumericEnums,omitempty"`
+
+	// RubySettings: Settings for Ruby client libraries.
+	RubySettings *RubySettings `json:"rubySettings,omitempty"`
+
+	// Version: Version of the API to apply these settings to. This is the
+	// full protobuf package for the API, ending in the version element.
+	// Examples: "google.cloud.speech.v1" and
+	// "google.spanner.admin.database.v1".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CppSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CppSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClientLibrarySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientLibrarySettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommonLanguageSettings: Required information for every language.
+type CommonLanguageSettings struct {
+	// Destinations: The destination where API teams want this client
+	// library to be published.
+	//
+	// Possible values:
+	//   "CLIENT_LIBRARY_DESTINATION_UNSPECIFIED" - Client libraries will
+	// neither be generated nor published to package managers.
+	//   "GITHUB" - Generate the client library in a repo under
+	// github.com/googleapis, but don't publish it to package managers.
+	//   "PACKAGE_MANAGER" - Publish the library to package managers like
+	// nuget.org and npmjs.com.
+	Destinations []string `json:"destinations,omitempty"`
+
+	// ReferenceDocsUri: Link to automatically generated reference
+	// documentation. Example:
+	// https://cloud.google.com/nodejs/docs/reference/asset/latest
+	ReferenceDocsUri string `json:"referenceDocsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Destinations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommonLanguageSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonLanguageSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1245,20 +1396,16 @@ func (s *ContextRule) MarshalJSON() ([]byte, error) {
 }
 
 // Control: Selects and configures the service controller used by the
-// service. The service controller handles two things: - **What is
-// allowed:** for each API request, Chemist checks the project status,
-// activation status, abuse status, billing status, service status,
-// location restrictions, VPC Service Controls, SuperQuota, and other
-// policies. - **What has happened:** for each API response, Chemist
-// reports the telemetry data to analytics, auditing, billing, eventing,
-// logging, monitoring, sawmill, and tracing. Chemist also accepts
-// telemetry data not associated with API traffic, such as billing
-// metrics. Example: control: environment: servicecontrol.googleapis.com
+// service. Example: control: environment: servicecontrol.googleapis.com
 type Control struct {
 	// Environment: The service controller environment to use. If empty, no
 	// control plane feature (like quota and billing) will be enabled. The
 	// recommended value for most services is servicecontrol.googleapis.com
 	Environment string `json:"environment,omitempty"`
+
+	// MethodPolicies: Defines policies applying to the API methods of the
+	// service.
+	MethodPolicies []*MethodPolicy `json:"methodPolicies,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
@@ -1279,6 +1426,34 @@ type Control struct {
 
 func (s *Control) MarshalJSON() ([]byte, error) {
 	type NoMethod Control
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CppSettings: Settings for C++ client libraries.
+type CppSettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CppSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CppSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1434,7 +1609,7 @@ func (s *Diagnostic) MarshalJSON() ([]byte, error) {
 // describing a service. Example: documentation: summary: > The Google
 // Calendar API gives access to most calendar features. pages: - name:
 // Overview content: (== include google/foo/overview.md ==) - name:
-// Tutorial content: (== include google/foo/tutorial.md ==) subpages; -
+// Tutorial content: (== include google/foo/tutorial.md ==) subpages: -
 // name: Java content: (== include google/foo/tutorial_java.md ==)
 // rules: - selector: google.calendar.Calendar.Get description: > ... -
 // selector: google.calendar.Calendar.Put description: > ...
@@ -1479,6 +1654,11 @@ type Documentation struct {
 	// elements. **NOTE:** All service configuration rules follow "last one
 	// wins" order.
 	Rules []*DocumentationRule `json:"rules,omitempty"`
+
+	// SectionOverrides: Specifies section and content to override
+	// boilerplate content provided by go/api-docgen. Currently overrides
+	// following sections: 1. rest.service.client_libraries
+	SectionOverrides []*Page `json:"sectionOverrides,omitempty"`
 
 	// ServiceRootUrl: Specifies the service root url if the default one
 	// (the service name from the yaml file) is not suitable. This can be
@@ -1531,6 +1711,11 @@ type DocumentationRule struct {
 	// the proto element.
 	Description string `json:"description,omitempty"`
 
+	// DisableReplacementWords: String of comma or space separated
+	// case-sensitive words for which method/field name replacement will be
+	// disabled by go/api-docgen.
+	DisableReplacementWords string `json:"disableReplacementWords,omitempty"`
+
 	// Selector: The selector is a comma-separated list of patterns for any
 	// element such as a method, a field, an enum value. Each pattern is a
 	// qualified name of the element which may end in "*", indicating a
@@ -1566,6 +1751,63 @@ func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DotnetSettings: Settings for Dotnet client libraries.
+type DotnetSettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// ForcedNamespaceAliases: Namespaces which must be aliased in snippets
+	// due to a known (but non-generator-predictable) naming collision
+	ForcedNamespaceAliases []string `json:"forcedNamespaceAliases,omitempty"`
+
+	// HandwrittenSignatures: Method signatures (in the form
+	// "service.method(signature)") which are provided separately, so
+	// shouldn't be generated. Snippets *calling* these methods are still
+	// generated, however.
+	HandwrittenSignatures []string `json:"handwrittenSignatures,omitempty"`
+
+	// IgnoredResources: List of full resource types to ignore during
+	// generation. This is typically used for API-specific Location
+	// resources, which should be handled by the generator as if they were
+	// actually the common Location resources. Example entry:
+	// "documentai.googleapis.com/Location"
+	IgnoredResources []string `json:"ignoredResources,omitempty"`
+
+	// RenamedResources: Map from full resource types to the effective short
+	// name for the resource. This is used when otherwise resource named
+	// from different services would cause naming collisions. Example entry:
+	// "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+	RenamedResources map[string]string `json:"renamedResources,omitempty"`
+
+	// RenamedServices: Map from original service names to renamed versions.
+	// This is used when the default generated types would cause a naming
+	// conflict. (Neither name is fully-qualified.) Example: Subscriber to
+	// SubscriberServiceApi.
+	RenamedServices map[string]string `json:"renamedServices,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DotnetSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DotnetSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EnableServiceResponse: Operation payload for EnableService method.
 type EnableServiceResponse struct {
 }
@@ -1585,6 +1827,12 @@ type EnableServiceResponse struct {
 // whether the subsequent cross-origin request is allowed # to proceed.
 // allow_cors: true
 type Endpoint struct {
+	// Aliases: Unimplemented. Dot not use. DEPRECATED: This field is no
+	// longer supported. Instead of using aliases, please specify multiple
+	// google.api.Endpoint for each of the intended aliases. Additional
+	// names that this endpoint will be hosted on.
+	Aliases []string `json:"aliases,omitempty"`
+
 	// AllowCors: Allowing CORS
 	// (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
 	// cross-domain traffic, would allow the backends served from this
@@ -1603,7 +1851,7 @@ type Endpoint struct {
 	// "8.8.8.8" or "myservice.appspot.com".
 	Target string `json:"target,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AllowCors") to
+	// ForceSendFields is a list of field names (e.g. "Aliases") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1611,7 +1859,7 @@ type Endpoint struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllowCors") to include in
+	// NullFields is a list of field names (e.g. "Aliases") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1628,6 +1876,10 @@ func (s *Endpoint) MarshalJSON() ([]byte, error) {
 
 // Enum: Enum type definition.
 type Enum struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
+
 	// Enumvalue: Enum value definitions.
 	Enumvalue []*EnumValue `json:"enumvalue,omitempty"`
 
@@ -1645,9 +1897,10 @@ type Enum struct {
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax `proto2`.
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
+	//   "SYNTAX_EDITIONS" - Syntax `editions`.
 	Syntax string `json:"syntax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Enumvalue") to
+	// ForceSendFields is a list of field names (e.g. "Edition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1655,7 +1908,7 @@ type Enum struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Enumvalue") to include in
+	// NullFields is a list of field names (e.g. "Edition") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1852,6 +2105,57 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FieldPolicy: Google API Policy Annotation This message defines a
+// simple API policy annotation that can be used to annotate API request
+// and response message fields with applicable policies. One field may
+// have multiple applicable policies that must all be satisfied before a
+// request can be processed. This policy annotation is used to generate
+// the overall policy that will be used for automatic runtime policy
+// enforcement and documentation generation.
+type FieldPolicy struct {
+	// ResourcePermission: Specifies the required permission(s) for the
+	// resource referred to by the field. It requires the field contains a
+	// valid resource reference, and the request must pass the permission
+	// checks to proceed. For example, "resourcemanager.projects.get".
+	ResourcePermission string `json:"resourcePermission,omitempty"`
+
+	// ResourceType: Specifies the resource type for the resource referred
+	// to by the field.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// Selector: Selects one or more request or response message fields to
+	// apply this `FieldPolicy`. When a `FieldPolicy` is used in proto
+	// annotation, the selector must be left as empty. The service config
+	// generator will automatically fill the correct value. When a
+	// `FieldPolicy` is used in service config, the selector must be a
+	// comma-separated string with valid request or response field paths,
+	// such as "foo.bar" or "foo.bar,foo.baz".
+	Selector string `json:"selector,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourcePermission")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourcePermission") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FieldPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FlowErrorDetails: Encapsulation of flow-specific error details for
 // debugging. Used as a details field on an error Status, not intended
 // for external use.
@@ -2033,6 +2337,34 @@ type GetPolicyOptions struct {
 
 func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoSettings: Settings for Go client libraries.
+type GoSettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2297,6 +2629,53 @@ type HttpRule struct {
 
 func (s *HttpRule) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JavaSettings: Settings for Java client libraries.
+type JavaSettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// LibraryPackage: The package name to use in Java. Clobbers the
+	// java_package option set in the protobuf. This should be used **only**
+	// by APIs who have already set the language_settings.java.package_name"
+	// field in gapic.yaml. API teams should use the protobuf java_package
+	// option where possible. Example of a YAML configuration:: publishing:
+	// java_settings: library_package: com.google.cloud.pubsub.v1
+	LibraryPackage string `json:"libraryPackage,omitempty"`
+
+	// ServiceClassNames: Configure the Java class name to use instead of
+	// the service's for its corresponding generated GAPIC client. Keys are
+	// fully-qualified service names as they appear in the protobuf
+	// (including the full the language_settings.java.interface_names" field
+	// in gapic.yaml. API teams should otherwise use the service name as it
+	// appears in the protobuf. Example of a YAML configuration::
+	// publishing: java_settings: service_class_names: -
+	// google.pubsub.v1.Publisher: TopicAdmin - google.pubsub.v1.Subscriber:
+	// SubscriptionAdmin
+	ServiceClassNames map[string]string `json:"serviceClassNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JavaSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod JavaSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2663,6 +3042,64 @@ func (s *LoggingDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LongRunning: Describes settings to use when generating API methods
+// that use the long-running operation pattern. All default values below
+// are from those used in the client library generators (e.g. Java
+// (https://github.com/googleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+type LongRunning struct {
+	// InitialPollDelay: Initial delay after which the first poll request
+	// will be made. Default value: 5 seconds.
+	InitialPollDelay string `json:"initialPollDelay,omitempty"`
+
+	// MaxPollDelay: Maximum time between two subsequent poll requests.
+	// Default value: 45 seconds.
+	MaxPollDelay string `json:"maxPollDelay,omitempty"`
+
+	// PollDelayMultiplier: Multiplier to gradually increase delay between
+	// subsequent polls until it reaches max_poll_delay. Default value: 1.5.
+	PollDelayMultiplier float64 `json:"pollDelayMultiplier,omitempty"`
+
+	// TotalPollTimeout: Total polling timeout. Default value: 5 minutes.
+	TotalPollTimeout string `json:"totalPollTimeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InitialPollDelay") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InitialPollDelay") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LongRunning) MarshalJSON() ([]byte, error) {
+	type NoMethod LongRunning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *LongRunning) UnmarshalJSON(data []byte) error {
+	type NoMethod LongRunning
+	var s1 struct {
+		PollDelayMultiplier gensupport.JSONFloat64 `json:"pollDelayMultiplier"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PollDelayMultiplier = float64(s1.PollDelayMultiplier)
+	return nil
+}
+
 // ManagedService: The full representation of a Service that is managed
 // by Google Service Management.
 type ManagedService struct {
@@ -2728,6 +3165,7 @@ type Method struct {
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax `proto2`.
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
+	//   "SYNTAX_EDITIONS" - Syntax `editions`.
 	Syntax string `json:"syntax,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2749,6 +3187,83 @@ type Method struct {
 
 func (s *Method) MarshalJSON() ([]byte, error) {
 	type NoMethod Method
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MethodPolicy: Defines policies applying to an RPC method.
+type MethodPolicy struct {
+	// RequestPolicies: Policies that are applicable to the request message.
+	RequestPolicies []*FieldPolicy `json:"requestPolicies,omitempty"`
+
+	// Selector: Selects a method to which these policies should be
+	// enforced, for example,
+	// "google.pubsub.v1.Subscriber.CreateSubscription". Refer to selector
+	// for syntax details. NOTE: This field must not be set in the proto
+	// annotation. It will be automatically filled by the service config
+	// compiler .
+	Selector string `json:"selector,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestPolicies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestPolicies") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MethodPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod MethodPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MethodSettings: Describes the generator configuration for a method.
+type MethodSettings struct {
+	// LongRunning: Describes settings to use for long-running operations
+	// when generating API methods for RPCs. Complements RPCs that use the
+	// annotations in google/longrunning/operations.proto. Example of a YAML
+	// configuration:: publishing: method_settings: - selector:
+	// google.cloud.speech.v2.Speech.BatchRecognize long_running:
+	// initial_poll_delay: seconds: 60 # 1 minute poll_delay_multiplier: 1.5
+	// max_poll_delay: seconds: 360 # 6 minutes total_poll_timeout: seconds:
+	// 54000 # 90 minutes
+	LongRunning *LongRunning `json:"longRunning,omitempty"`
+
+	// Selector: The fully qualified name of the method, for which the
+	// options below apply. This is used to find the method to apply the
+	// options.
+	Selector string `json:"selector,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LongRunning") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LongRunning") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MethodSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod MethodSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3080,7 +3595,7 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 // The mixin construct implies that all methods in `AccessControl` are
 // also declared with same name and request/response types in `Storage`.
 // A documentation generator or annotation processor will see the
-// effective `Storage.GetAcl` method after inheriting documentation and
+// effective `Storage.GetAcl` method after inherting documentation and
 // annotations as follows: service Storage { // Get the underlying ACL
 // object. rpc GetAcl(GetAclRequest) returns (Acl) { option
 // (google.api.http).get = "/v2/{resource=**}:getAcl"; } ... } Note how
@@ -3330,6 +3845,34 @@ func (s *MonitoringDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NodeSettings: Settings for Node client libraries.
+type NodeSettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OAuthRequirements: OAuth scopes are a way to define data and
 // permissions on data. For example, there are scopes defined for
 // "Read-only access to Google Calendar" and "Access to Cloud Platform".
@@ -3402,8 +3945,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -3609,6 +4152,34 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PhpSettings: Settings for Php client libraries.
+type PhpSettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PhpSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PhpSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
 // collection of `bindings`. A `binding` binds one or more `members`, or
@@ -3623,7 +4194,7 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -3632,17 +4203,17 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -3715,6 +4286,117 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Publishing: This message configures the settings for publishing
+// Google Cloud Client libraries
+// (https://cloud.google.com/apis/docs/cloud-client-libraries) generated
+// from the service config.
+type Publishing struct {
+	// ApiShortName: Used as a tracking tag when collecting data about the
+	// APIs developer relations artifacts like docs, packages delivered to
+	// package managers, etc. Example: "speech".
+	ApiShortName string `json:"apiShortName,omitempty"`
+
+	// CodeownerGithubTeams: GitHub teams to be added to CODEOWNERS in the
+	// directory in GitHub containing source code for the client libraries
+	// for this API.
+	CodeownerGithubTeams []string `json:"codeownerGithubTeams,omitempty"`
+
+	// DocTagPrefix: A prefix used in sample code when demarking regions to
+	// be included in documentation.
+	DocTagPrefix string `json:"docTagPrefix,omitempty"`
+
+	// DocumentationUri: Link to product home page. Example:
+	// https://cloud.google.com/asset-inventory/docs/overview
+	DocumentationUri string `json:"documentationUri,omitempty"`
+
+	// GithubLabel: GitHub label to apply to issues and pull requests opened
+	// for this API.
+	GithubLabel string `json:"githubLabel,omitempty"`
+
+	// LibrarySettings: Client library settings. If the same version string
+	// appears multiple times in this list, then the last one wins. Settings
+	// from earlier settings with the same version string are discarded.
+	LibrarySettings []*ClientLibrarySettings `json:"librarySettings,omitempty"`
+
+	// MethodSettings: A list of API method settings, e.g. the behavior for
+	// methods that use the long-running operation pattern.
+	MethodSettings []*MethodSettings `json:"methodSettings,omitempty"`
+
+	// NewIssueUri: Link to a *public* URI where users can report issues.
+	// Example:
+	// https://issuetracker.google.com/issues/new?component=190865&template=1161103
+	NewIssueUri string `json:"newIssueUri,omitempty"`
+
+	// Organization: For whom the client library is being published.
+	//
+	// Possible values:
+	//   "CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED" - Not useful.
+	//   "CLOUD" - Google Cloud Platform Org.
+	//   "ADS" - Ads (Advertising) Org.
+	//   "PHOTOS" - Photos Org.
+	//   "STREET_VIEW" - Street View Org.
+	//   "SHOPPING" - Shopping Org.
+	//   "GEO" - Geo Org.
+	//   "GENERATIVE_AI" - Generative AI -
+	// https://developers.generativeai.google
+	Organization string `json:"organization,omitempty"`
+
+	// ProtoReferenceDocumentationUri: Optional link to proto reference
+	// documentation. Example:
+	// https://cloud.google.com/pubsub/lite/docs/reference/rpc
+	ProtoReferenceDocumentationUri string `json:"protoReferenceDocumentationUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiShortName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiShortName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Publishing) MarshalJSON() ([]byte, error) {
+	type NoMethod Publishing
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PythonSettings: Settings for Python client libraries.
+type PythonSettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PythonSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PythonSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3989,6 +4671,34 @@ func (s *Rollout) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RubySettings: Settings for Ruby client libraries.
+type RubySettings struct {
+	// Common: Some settings.
+	Common *CommonLanguageSettings `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RubySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod RubySettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Service: `Service` is the root object of Google API service
 // configuration (service config). It describes the basic information
 // about a logical service, such as the service name and the user-facing
@@ -4084,6 +4794,11 @@ type Service struct {
 
 	// ProducerProjectId: The Google project that owns this service.
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
+
+	// Publishing: Settings for Google Cloud Client libraries
+	// (https://cloud.google.com/apis/docs/cloud-client-libraries) generated
+	// from APIs defined as protocol buffers.
+	Publishing *Publishing `json:"publishing,omitempty"`
 
 	// Quota: Quota configuration.
 	Quota *Quota `json:"quota,omitempty"`
@@ -4618,6 +5333,10 @@ func (s *TrafficPercentStrategy) MarshalJSON() ([]byte, error) {
 
 // Type: A protocol buffer message type.
 type Type struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
+
 	// Fields: The list of fields.
 	Fields []*Field `json:"fields,omitempty"`
 
@@ -4639,9 +5358,10 @@ type Type struct {
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax `proto2`.
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
+	//   "SYNTAX_EDITIONS" - Syntax `editions`.
 	Syntax string `json:"syntax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// ForceSendFields is a list of field names (e.g. "Edition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4649,8 +5369,8 @@ type Type struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Edition") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -4895,17 +5615,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5076,17 +5796,17 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5247,17 +5967,17 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5378,17 +6098,17 @@ func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5519,17 +6239,17 @@ func (c *ServicesGenerateConfigReportCall) Do(opts ...googleapi.CallOption) (*Ge
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GenerateConfigReportResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5662,17 +6382,17 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*ManagedService, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ManagedService{
 		ServerResponse: googleapi.ServerResponse{
@@ -5837,17 +6557,17 @@ func (c *ServicesGetConfigCall) Do(opts ...googleapi.CallOption) (*Service, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -6001,17 +6721,17 @@ func (c *ServicesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6178,17 +6898,17 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6209,6 +6929,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "consumerId": {
+	//       "deprecated": true,
 	//       "description": "Include services consumed by the specified consumer. The Google Service Management implementation accepts the following forms: - project:",
 	//       "location": "query",
 	//       "type": "string"
@@ -6358,17 +7079,17 @@ func (c *ServicesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6509,17 +7230,17 @@ func (c *ServicesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6652,17 +7373,17 @@ func (c *ServicesUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6798,17 +7519,17 @@ func (c *ServicesConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Service, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -6971,17 +7692,17 @@ func (c *ServicesConfigsGetCall) Do(opts ...googleapi.CallOption) (*Service, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -7157,17 +7878,17 @@ func (c *ServicesConfigsListCall) Do(opts ...googleapi.CallOption) (*ListService
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServiceConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7339,17 +8060,17 @@ func (c *ServicesConfigsSubmitCall) Do(opts ...googleapi.CallOption) (*Operation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7486,17 +8207,17 @@ func (c *ServicesConsumersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7636,17 +8357,17 @@ func (c *ServicesConsumersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7787,17 +8508,17 @@ func (c *ServicesConsumersTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7943,17 +8664,17 @@ func (c *ServicesRolloutsCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8098,17 +8819,17 @@ func (c *ServicesRolloutsGetCall) Do(opts ...googleapi.CallOption) (*Rollout, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Rollout{
 		ServerResponse: googleapi.ServerResponse{
@@ -8280,17 +9001,17 @@ func (c *ServicesRolloutsListCall) Do(opts ...googleapi.CallOption) (*ListServic
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServiceRolloutsResponse{
 		ServerResponse: googleapi.ServerResponse{

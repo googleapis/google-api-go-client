@@ -11,10 +11,12 @@
   "commitMessagePrefix": "chore(all): ",
   "commitMessageAction": "update",
   "groupName": "all",
-  "ignoreDeps": [],
+  "ignoreDeps": [
+    "google.golang.org/appengine"
+  ],
   "force": {
     "constraints": {
-      "go": "1.17"
+      "go": "1.19"
     }
   }
 }

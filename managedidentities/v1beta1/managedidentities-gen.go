@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "managedidentities:v1beta1"
 const apiName = "managedidentities"
@@ -359,7 +360,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -376,9 +379,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -759,6 +760,88 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DomainJoinMachineRequest: DomainJoinMachineRequest is the request
+// message for DomainJoinMachine method
+type DomainJoinMachineRequest struct {
+	// Force: Optional. force if True, forces domain join even if the
+	// computer account already exists.
+	Force bool `json:"force,omitempty"`
+
+	// OuName: Optional. OU name to which the VM needs to be domain joined.
+	// If the field is not provided, the VM is joined to the default OU
+	// which is created. The default OU for the domain join api is created
+	// as GCE Instances under the Cloud OU. Example - OU=GCE
+	// Instances,OU=Cloud,DC=ad,DC=test,DC=com If the field is provided,
+	// then the custom OU is searched for under GCE Instances OU. Example -
+	// if ou_name=test_ou then the VM is domain joined to the following OU:
+	// OU=test_ou,OU=GCE Instances,OU=Cloud,DC=ad,DC=test,DC=com if present.
+	// If OU is not present under GCE Instances, then error is returned.
+	OuName string `json:"ouName,omitempty"`
+
+	// VmIdToken: Required. Full instance id token of compute engine VM to
+	// verify instance identity. More about this:
+	// https://cloud.google.com/compute/docs/instances/verifying-instance-identity#request_signature
+	VmIdToken string `json:"vmIdToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Force") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainJoinMachineRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainJoinMachineRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DomainJoinMachineResponse: DomainJoinMachineResponse is the response
+// message for DomainJoinMachine method
+type DomainJoinMachineResponse struct {
+	// DomainJoinBlob: The response is the offline domain join blob that is
+	// returned after running the djoin command. To correctly use the
+	// response of the API, please refer to the sample usage.
+	DomainJoinBlob string `json:"domainJoinBlob,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DomainJoinBlob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DomainJoinBlob") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainJoinMachineResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainJoinMachineResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -773,11 +856,15 @@ type Empty struct {
 // EnableMigrationRequest: EnableMigrationRequest is the request message
 // for EnableMigration method.
 type EnableMigrationRequest struct {
+	// EnableDuration: Optional. Period after which the migration would be
+	// auto disabled. If unspecified, a default timeout of 48h is used.
+	EnableDuration string `json:"enableDuration,omitempty"`
+
 	// MigratingDomains: Required. List of the on-prem domains to be
 	// migrated.
 	MigratingDomains []*OnPremDomainDetails `json:"migratingDomains,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MigratingDomains") to
+	// ForceSendFields is a list of field names (e.g. "EnableDuration") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -785,7 +872,7 @@ type EnableMigrationRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MigratingDomains") to
+	// NullFields is a list of field names (e.g. "EnableDuration") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1043,12 +1130,34 @@ func (s *GoogleCloudManagedidentitiesV1beta1OpMetadata) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSaasacceleratorManagementProvidersV1Instance: Instance
+// represents the interface for SLM services to actuate the state of
+// control plane resources. Example Instance in JSON, where
+// consumer-project-number=123456, producer-project-id=cloud-sql:
+// ```json Instance: { "name":
+// "projects/123456/locations/us-east1/instances/prod-instance",
+// "create_time": { "seconds": 1526406431, }, "labels": { "env": "prod",
+// "foo": "bar" }, "state": READY, "software_versions": {
+// "software_update": "cloud-sql-09-28-2018", },
+// "maintenance_policy_names": { "UpdatePolicy":
+// "projects/123456/locations/us-east1/maintenancePolicies/prod-update-po
+// licy", } "tenant_project_id": "cloud-sql-test-tenant",
+// "producer_metadata": { "cloud-sql-tier": "basic",
+// "cloud-sql-instance-size": "1G", }, "provisioned_resources": [ {
+// "resource-type": "compute-instance", "resource-url":
+// "https://www.googleapis.com/compute/v1/projects/cloud-sql/zones/us-eas
+// t1-b/instances/vm-1", } ], "maintenance_schedules": { "csa_rollout":
+// { "start_time": { "seconds": 1526406431, }, "end_time": { "seconds":
+// 1535406431, }, }, "ncsa_rollout": { "start_time": { "seconds":
+// 1526406431, }, "end_time": { "seconds": 1535406431, }, } },
+// "consumer_defined_name": "my-sql-instance1", } ``` LINT.IfChange
 type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
-	// ConsumerDefinedName: consumer_defined_name is the name that is set by
-	// the consumer. On the other hand Name field represents system-assigned
-	// id of an instance so consumers are not necessarily aware of it.
-	// consumer_defined_name is used for notification/UI purposes for
-	// consumer to recognize their instances.
+	// ConsumerDefinedName: consumer_defined_name is the name of the
+	// instance set by the service consumers. Generally this is different
+	// from the `name` field which reperesents the system-assigned id of the
+	// instance which the service consumers do not recognize. This is a
+	// required field for tenants onboarding to Maintenance Window
+	// notifications (go/slm-rollout-maintenance-policies#prerequisites).
 	ConsumerDefinedName string `json:"consumerDefinedName,omitempty"`
 
 	// CreateTime: Output only. Timestamp when the resource was created.
@@ -1068,11 +1177,12 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// value are arbitrary strings provided by the user.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MaintenancePolicyNames: Optional. Deprecated. The MaintenancePolicies
-	// that have been attached to the instance. The key must be of the type
-	// name of the oneof policy name defined in MaintenancePolicy, and the
-	// referenced policy must define the same policy type. For complete
-	// details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
+	// MaintenancePolicyNames: Optional. The MaintenancePolicies that have
+	// been attached to the instance. The key must be of the type name of
+	// the oneof policy name defined in MaintenancePolicy, and the
+	// referenced policy must define the same policy type. For details,
+	// please refer to go/cloud-saas-mw-ug. Should not be set if
+	// maintenance_settings.maintenance_policies is set.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
 
 	// MaintenanceSchedules: The MaintenanceSchedule contains the scheduling
@@ -1239,9 +1349,10 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// MaintenancePolicies: Optional. The MaintenancePolicies that have been
 	// attached to the instance. The key must be of the type name of the
 	// oneof policy name defined in MaintenancePolicy, and the embedded
-	// policy must define the same policy type. For complete details of
-	// MaintenancePolicy, please refer to go/cloud-saas-mw-ug. If only the
-	// name is needed, then only populate MaintenancePolicy.name.
+	// policy must define the same policy type. For details, please refer to
+	// go/cloud-saas-mw-ug. Should not be set if maintenance_policy_names is
+	// set. If only the name is needed, then only populate
+	// MaintenancePolicy.name.
 	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclude") to
@@ -1813,7 +1924,7 @@ func (s *ListSqlIntegrationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1863,7 +1974,8 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MaintenancePolicy: Defines policies to service maintenance events.
+// MaintenancePolicy: LINT.IfChange Defines policies to service
+// maintenance events.
 type MaintenancePolicy struct {
 	// CreateTime: Output only. The time when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2997,17 +3109,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -3169,17 +3281,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3347,17 +3459,17 @@ func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3491,17 +3603,17 @@ func (c *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckMigrationPermissionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3647,17 +3759,17 @@ func (c *ProjectsLocationsGlobalDomainsCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3788,17 +3900,17 @@ func (c *ProjectsLocationsGlobalDomainsDeleteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3929,17 +4041,17 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4072,17 +4184,17 @@ func (c *ProjectsLocationsGlobalDomainsDisableMigrationCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4118,6 +4230,150 @@ func (c *ProjectsLocationsGlobalDomainsDisableMigrationCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "managedidentities.projects.locations.global.domains.domainJoinMachine":
+
+type ProjectsLocationsGlobalDomainsDomainJoinMachineCall struct {
+	s                        *Service
+	domain                   string
+	domainjoinmachinerequest *DomainJoinMachineRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// DomainJoinMachine: DomainJoinMachine API joins a Compute Engine VM to
+// the domain
+//
+//   - domain: The domain resource name using the form:
+//     projects/{project_id}/locations/global/domains/{domain_name}.
+func (r *ProjectsLocationsGlobalDomainsService) DomainJoinMachine(domain string, domainjoinmachinerequest *DomainJoinMachineRequest) *ProjectsLocationsGlobalDomainsDomainJoinMachineCall {
+	c := &ProjectsLocationsGlobalDomainsDomainJoinMachineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.domain = domain
+	c.domainjoinmachinerequest = domainjoinmachinerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDomainsDomainJoinMachineCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Context(ctx context.Context) *ProjectsLocationsGlobalDomainsDomainJoinMachineCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.domainjoinmachinerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+domain}:domainJoinMachine")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"domain": c.domain,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.domains.domainJoinMachine" call.
+// Exactly one of *DomainJoinMachineResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DomainJoinMachineResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Do(opts ...googleapi.CallOption) (*DomainJoinMachineResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DomainJoinMachineResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "DomainJoinMachine API joins a Compute Engine VM to the domain",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}:domainJoinMachine",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.domains.domainJoinMachine",
+	//   "parameterOrder": [
+	//     "domain"
+	//   ],
+	//   "parameters": {
+	//     "domain": {
+	//       "description": "Required. The domain resource name using the form: projects/{project_id}/locations/global/domains/{domain_name}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+domain}:domainJoinMachine",
+	//   "request": {
+	//     "$ref": "DomainJoinMachineRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DomainJoinMachineResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4215,17 +4471,17 @@ func (c *ProjectsLocationsGlobalDomainsEnableMigrationCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4358,17 +4614,17 @@ func (c *ProjectsLocationsGlobalDomainsExtendSchemaCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4508,17 +4764,17 @@ func (c *ProjectsLocationsGlobalDomainsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -4677,17 +4933,17 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4830,17 +5086,17 @@ func (c *ProjectsLocationsGlobalDomainsGetLdapssettingsCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LDAPSSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -5012,17 +5268,17 @@ func (c *ProjectsLocationsGlobalDomainsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5204,17 +5460,17 @@ func (c *ProjectsLocationsGlobalDomainsPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5354,17 +5610,17 @@ func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5497,17 +5753,17 @@ func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ResetAdminPasswordResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5640,17 +5896,17 @@ func (c *ProjectsLocationsGlobalDomainsRestoreCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5787,17 +6043,17 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5937,17 +6193,17 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6089,17 +6345,17 @@ func (c *ProjectsLocationsGlobalDomainsUpdateLdapssettingsCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6241,17 +6497,17 @@ func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6394,17 +6650,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsCreateCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6536,17 +6792,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsDeleteCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6684,17 +6940,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsGetCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Backup{
 		ServerResponse: googleapi.ServerResponse{
@@ -6853,17 +7109,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsGetIamPolicyCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7039,17 +7295,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBackupsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7231,17 +7487,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsPatchCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7384,17 +7640,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsSetIamPolicyCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7534,17 +7790,17 @@ func (c *ProjectsLocationsGlobalDomainsBackupsTestIamPermissionsCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7685,17 +7941,17 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SqlIntegration{
 		ServerResponse: googleapi.ServerResponse{
@@ -7866,17 +8122,17 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSqlIntegrationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8056,17 +8312,17 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8194,17 +8450,17 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8342,17 +8598,17 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8406,14 +8662,7 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
@@ -8518,17 +8767,17 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8542,7 +8791,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/operations",
 	//   "httpMethod": "GET",
 	//   "id": "managedidentities.projects.locations.global.operations.list",
@@ -8702,17 +8951,17 @@ func (c *ProjectsLocationsGlobalPeeringsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8843,17 +9092,17 @@ func (c *ProjectsLocationsGlobalPeeringsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8990,17 +9239,17 @@ func (c *ProjectsLocationsGlobalPeeringsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Peering{
 		ServerResponse: googleapi.ServerResponse{
@@ -9159,17 +9408,17 @@ func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -9346,17 +9595,17 @@ func (c *ProjectsLocationsGlobalPeeringsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPeeringsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9538,17 +9787,17 @@ func (c *ProjectsLocationsGlobalPeeringsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9691,17 +9940,17 @@ func (c *ProjectsLocationsGlobalPeeringsSetIamPolicyCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -9841,17 +10090,17 @@ func (c *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{

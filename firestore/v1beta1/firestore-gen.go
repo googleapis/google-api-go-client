@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -77,6 +77,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "firestore:v1beta1"
 const apiName = "firestore"
@@ -192,21 +193,27 @@ type ProjectsDatabasesIndexesService struct {
 	s *Service
 }
 
-// Aggregation: Defines a aggregation that produces a single result.
+// Aggregation: Defines an aggregation that produces a single result.
 type Aggregation struct {
 	// Alias: Optional. Optional name of the field to store the result of
 	// the aggregation into. If not provided, Firestore will pick a default
 	// name following the format `field_`. For example: ``` AGGREGATE
 	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2), COUNT_UP_TO(3) AS
-	// count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); ``` becomes: ```
-	// AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS field_1,
-	// COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS field_2 OVER ( ...
-	// ); ``` Requires: * Must be unique across all aggregation aliases. *
+	// count_up_to_3, COUNT(*) OVER ( ... ); ``` becomes: ``` AGGREGATE
+	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS field_1,
+	// COUNT_UP_TO(3) AS count_up_to_3, COUNT(*) AS field_2 OVER ( ... );
+	// ``` Requires: * Must be unique across all aggregation aliases. *
 	// Conform to document field name limitations.
 	Alias string `json:"alias,omitempty"`
 
+	// Avg: Average aggregator.
+	Avg *Avg `json:"avg,omitempty"`
+
 	// Count: Count aggregator.
 	Count *Count `json:"count,omitempty"`
+
+	// Sum: Sum aggregator.
+	Sum *Sum `json:"sum,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alias") to
 	// unconditionally include in API requests. By default, fields with
@@ -294,6 +301,39 @@ func (s *ArrayValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Avg: Average of the values of the requested field. * Only numeric
+// values will be aggregated. All non-numeric values including `NULL`
+// are skipped. * If the aggregated values contain `NaN`, returns `NaN`.
+// Infinity math follows IEEE-754 standards. * If the aggregated value
+// set is empty, returns `NULL`. * Always returns the result as a
+// double.
+type Avg struct {
+	// Field: The field to aggregate on.
+	Field *FieldReference `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Avg) MarshalJSON() ([]byte, error) {
+	type NoMethod Avg
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetDocumentsRequest: The request for
 // Firestore.BatchGetDocuments.
 type BatchGetDocumentsRequest struct {
@@ -313,8 +353,10 @@ type BatchGetDocumentsRequest struct {
 	// returned as the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// Transaction: Reads documents in a transaction.
@@ -526,6 +568,91 @@ func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BitSequence: A sequence of bits, encoded in a byte array. Each byte
+// in the `bitmap` byte array stores 8 bits of the sequence. The only
+// exception is the last byte, which may store 8 _or fewer_ bits. The
+// `padding` defines the number of bits of the last byte to be ignored
+// as "padding". The values of these "padding" bits are unspecified and
+// must be ignored. To retrieve the first bit, bit 0, calculate:
+// `(bitmap[0] & 0x01) != 0`. To retrieve the second bit, bit 1,
+// calculate: `(bitmap[0] & 0x02) != 0`. To retrieve the third bit, bit
+// 2, calculate: `(bitmap[0] & 0x04) != 0`. To retrieve the fourth bit,
+// bit 3, calculate: `(bitmap[0] & 0x08) != 0`. To retrieve bit n,
+// calculate: `(bitmap[n / 8] & (0x01 << (n % 8))) != 0`. The "size" of
+// a `BitSequence` (the number of bits it contains) is calculated by
+// this formula: `(bitmap.length * 8) - padding`.
+type BitSequence struct {
+	// Bitmap: The bytes that encode the bit sequence. May have a length of
+	// zero.
+	Bitmap string `json:"bitmap,omitempty"`
+
+	// Padding: The number of bits of the last byte in `bitmap` to ignore as
+	// "padding". If the length of `bitmap` is zero, then this value must be
+	// `0`. Otherwise, this value must be between 0 and 7, inclusive.
+	Padding int64 `json:"padding,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bitmap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bitmap") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitSequence) MarshalJSON() ([]byte, error) {
+	type NoMethod BitSequence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BloomFilter: A bloom filter
+// (https://en.wikipedia.org/wiki/Bloom_filter). The bloom filter hashes
+// the entries with MD5 and treats the resulting 128-bit hash as 2
+// distinct 64-bit hash values, interpreted as unsigned integers using
+// 2's complement encoding. These two hash values, named `h1` and `h2`,
+// are then used to compute the `hash_count` hash values using the
+// formula, starting at `i=0`: h(i) = h1 + (i * h2) These resulting
+// values are then taken modulo the number of bits in the bloom filter
+// to get the bits of the bloom filter to test for the given entry.
+type BloomFilter struct {
+	// Bits: The bloom filter data.
+	Bits *BitSequence `json:"bits,omitempty"`
+
+	// HashCount: The number of hashes used by the algorithm.
+	HashCount int64 `json:"hashCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bits") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BloomFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod BloomFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CollectionSelector: A selection of a collection, such as `messages as
 // m1`.
 type CollectionSelector struct {
@@ -645,6 +772,8 @@ type CompositeFilter struct {
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
 	//   "AND" - Documents are required to satisfy all of the combined
 	// filters.
+	//   "OR" - Documents are required to satisfy at least one of the
+	// combined filters.
 	Op string `json:"op,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to
@@ -676,7 +805,7 @@ func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 type Count struct {
 	// UpTo: Optional. Optional constraint on the maximum number of
 	// documents to count. This provides a way to set an upper bound on the
-	// number of documents to scan, limiting latency and cost. Unspecified
+	// number of documents to scan, limiting latency, and cost. Unspecified
 	// is interpreted as no bound. High-Level Example: ``` AGGREGATE
 	// COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ``` Requires: * Must be
 	// greater than zero when present.
@@ -1036,11 +1165,27 @@ type ExistenceFilter struct {
 	// Count: The total count of documents that match target_id. If
 	// different from the count of documents in the client that match, the
 	// client must manually determine which documents no longer match the
-	// target.
+	// target. The client can use the `unchanged_names` bloom filter to
+	// assist with this determination by testing ALL the document names
+	// against the filter; if the document name is NOT in the filter, it
+	// means the document no longer matches the target.
 	Count int64 `json:"count,omitempty"`
 
 	// TargetId: The target ID to which this filter applies.
 	TargetId int64 `json:"targetId,omitempty"`
+
+	// UnchangedNames: A bloom filter that, despite its name, contains the
+	// UTF-8 byte encodings of the resource names of ALL the documents that
+	// match target_id, in the form
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`. This bloom filter may be omitted at the server's discretion,
+	// such as if it is deemed that the client will not make use of it or if
+	// it is too computationally expensive to calculate or transmit. Clients
+	// must gracefully handle this field being absent by falling back to the
+	// logic used before this field existed; that is, re-add the target
+	// without a resume token to figure out which documents in the client's
+	// cache are out of sync.
+	UnchangedNames *BloomFilter `json:"unchangedNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
@@ -1090,18 +1235,19 @@ type FieldFilter struct {
 	//   "ARRAY_CONTAINS" - The given `field` is an array that contains the
 	// given `value`.
 	//   "IN" - The given `field` is equal to at least one value in the
-	// given array. Requires: * That `value` is a non-empty `ArrayValue`
-	// with at most 10 values. * No other `IN` or `ARRAY_CONTAINS_ANY` or
-	// `NOT_IN`.
+	// given array. Requires: * That `value` is a non-empty `ArrayValue`,
+	// subject to disjunction limits. * No `NOT_IN` filters in the same
+	// query.
 	//   "ARRAY_CONTAINS_ANY" - The given `field` is an array that contains
 	// any of the values in the given array. Requires: * That `value` is a
-	// non-empty `ArrayValue` with at most 10 values. * No other `IN` or
-	// `ARRAY_CONTAINS_ANY` or `NOT_IN`.
+	// non-empty `ArrayValue`, subject to disjunction limits. * No other
+	// `ARRAY_CONTAINS_ANY` filters within the same disjunction. * No
+	// `NOT_IN` filters in the same query.
 	//   "NOT_IN" - The value of the `field` is not in the given array.
 	// Requires: * That `value` is a non-empty `ArrayValue` with at most 10
-	// values. * No other `IN`, `ARRAY_CONTAINS_ANY`, `NOT_IN`, `NOT_EQUAL`,
-	// `IS_NOT_NULL`, or `IS_NOT_NAN`. * That `field` comes first in the
-	// `order_by`.
+	// values. * No other `OR`, `IN`, `ARRAY_CONTAINS_ANY`, `NOT_IN`,
+	// `NOT_EQUAL`, `IS_NOT_NULL`, or `IS_NOT_NAN`. * That `field` comes
+	// first in the `order_by`.
 	Op string `json:"op,omitempty"`
 
 	// Value: The value to compare to.
@@ -1290,6 +1436,99 @@ type Filter struct {
 
 func (s *Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1Progress: Describes the progress of the
+// operation. Unit of work is generic and must be interpreted based on
+// where Progress is used.
+type GoogleFirestoreAdminV1Progress struct {
+	// CompletedWork: The amount of work completed.
+	CompletedWork int64 `json:"completedWork,omitempty,string"`
+
+	// EstimatedWork: The amount of work estimated.
+	EstimatedWork int64 `json:"estimatedWork,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CompletedWork") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompletedWork") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1Progress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the
+// long-running operation from the RestoreDatabase request.
+type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
+	// Backup: The name of the backup restoring from.
+	Backup string `json:"backup,omitempty"`
+
+	// Database: The name of the database being restored to.
+	Database string `json:"database,omitempty"`
+
+	// EndTime: The time the restore finished, unset for ongoing restores.
+	EndTime string `json:"endTime,omitempty"`
+
+	// OperationState: The operation state of the restore.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
+	//   "FINALIZING" - Request has been processed and is in its
+	// finalization stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an
+	// error.
+	//   "CANCELLED" - Request has finished being cancelled after user
+	// called google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+
+	// ProgressPercentage: How far along the restore is as an estimated
+	// percentage of remaining time.
+	ProgressPercentage *GoogleFirestoreAdminV1Progress `json:"progressPercentage,omitempty"`
+
+	// StartTime: The time the restore was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1789,8 +2028,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1889,8 +2128,10 @@ type ListCollectionIdsRequest struct {
 	// ListCollectionIdsResponse.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
@@ -1957,7 +2198,8 @@ type ListDocumentsResponse struct {
 	// Documents: The Documents found.
 	Documents []*Document `json:"documents,omitempty"`
 
-	// NextPageToken: The next page token.
+	// NextPageToken: A token to retrieve the next page of documents. If
+	// this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2167,8 +2409,10 @@ type PartitionQueryRequest struct {
 	// fewer than the number of workers or compute instances available.
 	PartitionCount int64 `json:"partitionCount,omitempty,string"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredQuery: A structured query. Query must specify collection
@@ -2349,8 +2593,10 @@ func (s *QueryTarget) MarshalJSON() ([]byte, error) {
 // ReadOnly: Options for a transaction that can only be used to read
 // documents.
 type ReadOnly struct {
-	// ReadTime: Reads documents at the given time. This may not be older
-	// than 60 seconds.
+	// ReadTime: Reads documents at the given time. This must be a
+	// microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReadTime") to
@@ -2377,7 +2623,8 @@ func (s *ReadOnly) MarshalJSON() ([]byte, error) {
 }
 
 // ReadWrite: Options for a transaction that can be used to read and
-// write documents.
+// write documents. Firestore does not allow 3rd party auth requests to
+// create read-write. transactions.
 type ReadWrite struct {
 	// RetryTransaction: An optional transaction to retry.
 	RetryTransaction string `json:"retryTransaction,omitempty"`
@@ -2442,8 +2689,10 @@ type RunAggregationQueryRequest struct {
 	// the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Executes the query at the given timestamp. Requires: *
-	// Cannot be more than 270 seconds in the past.
+	// ReadTime: Executes the query at the given timestamp. This must be a
+	// microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredAggregationQuery: An aggregation query.
@@ -2481,7 +2730,12 @@ func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
 // RunAggregationQueryResponse: The response for
 // Firestore.RunAggregationQuery.
 type RunAggregationQueryResponse struct {
-	// ReadTime: The time at which the aggregate value is valid for.
+	// ReadTime: The time at which the aggregate result was computed. This
+	// is always monotonically increasing; in this case, the previous
+	// AggregationResult in the result stream are guaranteed not to have
+	// changed between their `read_time` and this one. If the query returns
+	// no results, a response with `read_time` and no `result` will be sent,
+	// and this represents the time at which the query was run.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// Result: A single aggregation result. Not present when reporting
@@ -2527,8 +2781,10 @@ type RunQueryRequest struct {
 	// returned as the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time. This may
-	// not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This must
+	// be a microsecond precision timestamp within the past one hour, or if
+	// Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredQuery: A structured query.
@@ -2734,7 +2990,9 @@ type StructuredQuery struct {
 	// ASC, __name__ ASC`
 	OrderBy []*Order `json:"orderBy,omitempty"`
 
-	// Select: The projection to return.
+	// Select: Optional sub-set of the fields to return. This acts as a
+	// DocumentMask over the documents returned from a query. When not set,
+	// assumes that the caller wants all fields returned.
 	Select *Projection `json:"select,omitempty"`
 
 	// StartAt: A potential prefix of a position in the result set to start
@@ -2782,10 +3040,59 @@ func (s *StructuredQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Sum: Sum of the values of the requested field. * Only numeric values
+// will be aggregated. All non-numeric values including `NULL` are
+// skipped. * If the aggregated values contain `NaN`, returns `NaN`.
+// Infinity math follows IEEE-754 standards. * If the aggregated value
+// set is empty, returns 0. * Returns a 64-bit integer if all aggregated
+// numbers are integers and the sum result does not overflow. Otherwise,
+// the result is returned as a double. Note that even if all the
+// aggregated values are integers, the result is returned as a double if
+// it cannot fit within a 64-bit signed integer. When this occurs, the
+// returned value will lose precision. * When underflow occurs,
+// floating-point aggregation is non-deterministic. This means that
+// running the same query repeatedly without any changes to the
+// underlying values could produce slightly different results each time.
+// In those cases, values should be stored as integers over
+// floating-point numbers.
+type Sum struct {
+	// Field: The field to aggregate on.
+	Field *FieldReference `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Sum) MarshalJSON() ([]byte, error) {
+	type NoMethod Sum
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Target: A specification of a set of documents to listen to.
 type Target struct {
 	// Documents: A target specified by a set of document names.
 	Documents *DocumentsTarget `json:"documents,omitempty"`
+
+	// ExpectedCount: The number of documents that last matched the query at
+	// the resume token or read time. This value is only relevant when a
+	// `resume_type` is provided. This value being present and greater than
+	// zero signals that the client wants `ExistenceFilter.unchanged_names`
+	// to be included in the response.
+	ExpectedCount int64 `json:"expectedCount,omitempty"`
 
 	// Once: If the target should be removed once it is current and
 	// consistent.
@@ -3343,17 +3650,17 @@ func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3492,17 +3799,17 @@ func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3638,17 +3945,17 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3787,17 +4094,17 @@ func (c *ProjectsDatabasesDocumentsBatchWriteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchWriteResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3931,17 +4238,17 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BeginTransactionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4075,17 +4382,17 @@ func (c *ProjectsDatabasesDocumentsCommitCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CommitResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4242,17 +4549,17 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -4415,17 +4722,17 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4509,8 +4816,10 @@ func (c *ProjectsDatabasesDocumentsGetCall) MaskFieldPaths(maskFieldPaths ...str
 }
 
 // ReadTime sets the optional parameter "readTime": Reads the version of
-// the document at the given time. This may not be older than 270
-// seconds.
+// the document at the given time. This must be a microsecond precision
+// timestamp within the past one hour, or if Point-in-Time Recovery is
+// enabled, can additionally be a whole minute timestamp within the past
+// 7 days.
 func (c *ProjectsDatabasesDocumentsGetCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsGetCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -4598,17 +4907,17 @@ func (c *ProjectsDatabasesDocumentsGetCall) Do(opts ...googleapi.CallOption) (*D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -4644,7 +4953,7 @@ func (c *ProjectsDatabasesDocumentsGetCall) Do(opts ...googleapi.CallOption) (*D
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads the version of the document at the given time. This may not be older than 270 seconds.",
+	//       "description": "Reads the version of the document at the given time. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -4682,8 +4991,10 @@ type ProjectsDatabasesDocumentsListCall struct {
 
 // List: Lists documents.
 //
-//   - collectionId: The collection ID, relative to `parent`, to list. For
-//     example: `chatrooms` or `messages`.
+//   - collectionId: Optional. The collection ID, relative to `parent`, to
+//     list. For example: `chatrooms` or `messages`. This is optional, and
+//     when not provided, Firestore will list documents from all
+//     collections under the provided `parent`.
 //   - parent: The parent resource name. In the format:
 //     `projects/{project_id}/databases/{database_id}/documents` or
 //     `projects/{project_id}/databases/{database_id}/documents/{document_p
@@ -4706,48 +5017,56 @@ func (c *ProjectsDatabasesDocumentsListCall) MaskFieldPaths(maskFieldPaths ...st
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The order to sort
-// results by. For example: `priority desc, name`.
+// OrderBy sets the optional parameter "orderBy": The optional ordering
+// of the documents to return. For example: `priority desc, __name__
+// desc`. This mirrors the `ORDER BY` used in Firestore queries but in a
+// string representation. When absent, documents are ordered based on
+// `__name__ ASC`.
 func (c *ProjectsDatabasesDocumentsListCall) OrderBy(orderBy string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of documents to return.
+// of documents to return in a single response. Firestore may return
+// fewer than this value.
 func (c *ProjectsDatabasesDocumentsListCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// `next_page_token` value returned from a previous List request, if
-// any.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDocuments` response. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// (with the exception of `page_size`) must match the values set in the
+// request that generated the page token.
 func (c *ProjectsDatabasesDocumentsListCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadTime sets the optional parameter "readTime": Reads documents as
-// they were at the given time. This may not be older than 270 seconds.
+// ReadTime sets the optional parameter "readTime": Perform the read at
+// the provided time. This must be a microsecond precision timestamp
+// within the past one hour, or if Point-in-Time Recovery is enabled,
+// can additionally be a whole minute timestamp within the past 7 days.
 func (c *ProjectsDatabasesDocumentsListCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
 }
 
 // ShowMissing sets the optional parameter "showMissing": If the list
-// should show missing documents. A missing document is a document that
-// does not exist but has sub-documents. These documents will be
-// returned with a key but will not have fields, Document.create_time,
-// or Document.update_time set. Requests with `show_missing` may not
-// specify `where` or `order_by`.
+// should show missing documents. A document is missing if it does not
+// exist, but there are sub-documents nested underneath it. When true,
+// such missing documents will be returned with a key but will not have
+// fields, `create_time`, or `update_time` set. Requests with
+// `show_missing` may not specify `where` or `order_by`.
 func (c *ProjectsDatabasesDocumentsListCall) ShowMissing(showMissing bool) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("showMissing", fmt.Sprint(showMissing))
 	return c
 }
 
-// Transaction sets the optional parameter "transaction": Reads
-// documents in a transaction.
+// Transaction sets the optional parameter "transaction": Perform the
+// read as part of an already active transaction.
 func (c *ProjectsDatabasesDocumentsListCall) Transaction(transaction string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("transaction", transaction)
 	return c
@@ -4829,17 +5148,17 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4863,7 +5182,7 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "collectionId": {
-	//       "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`.",
+	//       "description": "Optional. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`. This is optional, and when not provided, Firestore will list documents from all collections under the provided `parent`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4875,18 +5194,18 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The order to sort results by. For example: `priority desc, name`.",
+	//       "description": "Optional. The optional ordering of the documents to return. For example: `priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore queries but in a string representation. When absent, documents are ordered based on `__name__ ASC`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of documents to return.",
+	//       "description": "Optional. The maximum number of documents to return in a single response. Firestore may return fewer than this value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The `next_page_token` value returned from a previous List request, if any.",
+	//       "description": "Optional. A page token, received from a previous `ListDocuments` response. Provide this to retrieve the subsequent page. When paginating, all other parameters (with the exception of `page_size`) must match the values set in the request that generated the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4898,18 +5217,18 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads documents as they were at the given time. This may not be older than 270 seconds.",
+	//       "description": "Perform the read at the provided time. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "showMissing": {
-	//       "description": "If the list should show missing documents. A missing document is a document that does not exist but has sub-documents. These documents will be returned with a key but will not have fields, Document.create_time, or Document.update_time set. Requests with `show_missing` may not specify `where` or `order_by`.",
+	//       "description": "If the list should show missing documents. A document is missing if it does not exist, but there are sub-documents nested underneath it. When true, such missing documents will be returned with a key but will not have fields, `create_time`, or `update_time` set. Requests with `show_missing` may not specify `where` or `order_by`.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "transaction": {
-	//       "description": "Reads documents in a transaction.",
+	//       "description": "Perform the read as part of an already active transaction.",
 	//       "format": "byte",
 	//       "location": "query",
 	//       "type": "string"
@@ -5041,17 +5360,17 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCollectionIdsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5131,8 +5450,10 @@ type ProjectsDatabasesDocumentsListDocumentsCall struct {
 
 // ListDocuments: Lists documents.
 //
-//   - collectionId: The collection ID, relative to `parent`, to list. For
-//     example: `chatrooms` or `messages`.
+//   - collectionId: Optional. The collection ID, relative to `parent`, to
+//     list. For example: `chatrooms` or `messages`. This is optional, and
+//     when not provided, Firestore will list documents from all
+//     collections under the provided `parent`.
 //   - parent: The parent resource name. In the format:
 //     `projects/{project_id}/databases/{database_id}/documents` or
 //     `projects/{project_id}/databases/{database_id}/documents/{document_p
@@ -5155,48 +5476,56 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) MaskFieldPaths(maskFieldPa
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The order to sort
-// results by. For example: `priority desc, name`.
+// OrderBy sets the optional parameter "orderBy": The optional ordering
+// of the documents to return. For example: `priority desc, __name__
+// desc`. This mirrors the `ORDER BY` used in Firestore queries but in a
+// string representation. When absent, documents are ordered based on
+// `__name__ ASC`.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) OrderBy(orderBy string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of documents to return.
+// of documents to return in a single response. Firestore may return
+// fewer than this value.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// `next_page_token` value returned from a previous List request, if
-// any.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDocuments` response. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// (with the exception of `page_size`) must match the values set in the
+// request that generated the page token.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadTime sets the optional parameter "readTime": Reads documents as
-// they were at the given time. This may not be older than 270 seconds.
+// ReadTime sets the optional parameter "readTime": Perform the read at
+// the provided time. This must be a microsecond precision timestamp
+// within the past one hour, or if Point-in-Time Recovery is enabled,
+// can additionally be a whole minute timestamp within the past 7 days.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
 }
 
 // ShowMissing sets the optional parameter "showMissing": If the list
-// should show missing documents. A missing document is a document that
-// does not exist but has sub-documents. These documents will be
-// returned with a key but will not have fields, Document.create_time,
-// or Document.update_time set. Requests with `show_missing` may not
-// specify `where` or `order_by`.
+// should show missing documents. A document is missing if it does not
+// exist, but there are sub-documents nested underneath it. When true,
+// such missing documents will be returned with a key but will not have
+// fields, `create_time`, or `update_time` set. Requests with
+// `show_missing` may not specify `where` or `order_by`.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) ShowMissing(showMissing bool) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("showMissing", fmt.Sprint(showMissing))
 	return c
 }
 
-// Transaction sets the optional parameter "transaction": Reads
-// documents in a transaction.
+// Transaction sets the optional parameter "transaction": Perform the
+// read as part of an already active transaction.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) Transaction(transaction string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("transaction", transaction)
 	return c
@@ -5278,17 +5607,17 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5312,7 +5641,7 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "collectionId": {
-	//       "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`.",
+	//       "description": "Optional. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`. This is optional, and when not provided, Firestore will list documents from all collections under the provided `parent`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5324,18 +5653,18 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The order to sort results by. For example: `priority desc, name`.",
+	//       "description": "Optional. The optional ordering of the documents to return. For example: `priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore queries but in a string representation. When absent, documents are ordered based on `__name__ ASC`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of documents to return.",
+	//       "description": "Optional. The maximum number of documents to return in a single response. Firestore may return fewer than this value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The `next_page_token` value returned from a previous List request, if any.",
+	//       "description": "Optional. A page token, received from a previous `ListDocuments` response. Provide this to retrieve the subsequent page. When paginating, all other parameters (with the exception of `page_size`) must match the values set in the request that generated the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5347,18 +5676,18 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads documents as they were at the given time. This may not be older than 270 seconds.",
+	//       "description": "Perform the read at the provided time. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "showMissing": {
-	//       "description": "If the list should show missing documents. A missing document is a document that does not exist but has sub-documents. These documents will be returned with a key but will not have fields, Document.create_time, or Document.update_time set. Requests with `show_missing` may not specify `where` or `order_by`.",
+	//       "description": "If the list should show missing documents. A document is missing if it does not exist, but there are sub-documents nested underneath it. When true, such missing documents will be returned with a key but will not have fields, `create_time`, or `update_time` set. Requests with `show_missing` may not specify `where` or `order_by`.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "transaction": {
-	//       "description": "Reads documents in a transaction.",
+	//       "description": "Perform the read as part of an already active transaction.",
 	//       "format": "byte",
 	//       "location": "query",
 	//       "type": "string"
@@ -5408,7 +5737,8 @@ type ProjectsDatabasesDocumentsListenCall struct {
 	header_       http.Header
 }
 
-// Listen: Listens to changes.
+// Listen: Listens to changes. This method is only available via gRPC or
+// WebChannel (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`.
@@ -5486,17 +5816,17 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5510,7 +5840,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Listens to changes.",
+	//   "description": "Listens to changes. This method is only available via gRPC or WebChannel (not REST).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:listen",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.listen",
@@ -5635,17 +5965,17 @@ func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PartitionQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5834,17 +6164,17 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -6001,17 +6331,17 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6155,17 +6485,17 @@ func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RunAggregationQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6304,17 +6634,17 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RunQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6371,6 +6701,7 @@ type ProjectsDatabasesDocumentsWriteCall struct {
 }
 
 // Write: Streams batches of document updates and deletes, in order.
+// This method is only available via gRPC or WebChannel (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`. This is only
@@ -6449,17 +6780,17 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WriteResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6473,7 +6804,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Streams batches of document updates and deletes, in order.",
+	//   "description": "Streams batches of document updates and deletes, in order. This method is only available via gRPC or WebChannel (not REST).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:write",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.write",
@@ -6601,17 +6932,17 @@ func (c *ProjectsDatabasesIndexesCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6738,17 +7069,17 @@ func (c *ProjectsDatabasesIndexesDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6886,17 +7217,17 @@ func (c *ProjectsDatabasesIndexesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirestoreAdminV1beta1Index{
 		ServerResponse: googleapi.ServerResponse{
@@ -7056,17 +7387,17 @@ func (c *ProjectsDatabasesIndexesListCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirestoreAdminV1beta1ListIndexesResponse{
 		ServerResponse: googleapi.ServerResponse{

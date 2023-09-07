@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "bigqueryreservation:v1"
 const apiName = "bigqueryreservation"
@@ -222,7 +223,7 @@ type Assignment struct {
 	// BigQuery for model training. These jobs will not utilize idle slots
 	// from other reservations.
 	//   "BACKGROUND" - Background jobs that BigQuery runs for the customers
-	// in the background. This is a preview feature.
+	// in the background.
 	JobType string `json:"jobType,omitempty"`
 
 	// Name: Output only. Name of the resource. E.g.:
@@ -263,6 +264,38 @@ type Assignment struct {
 
 func (s *Assignment) MarshalJSON() ([]byte, error) {
 	type NoMethod Assignment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Autoscale: Auto scaling settings.
+type Autoscale struct {
+	// CurrentSlots: Output only. The slot capacity added to this
+	// reservation when autoscale happens. Will be between [0, max_slots].
+	CurrentSlots int64 `json:"currentSlots,omitempty,string"`
+
+	// MaxSlots: Number of slots to be scaled when needed.
+	MaxSlots int64 `json:"maxSlots,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentSlots") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentSlots") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Autoscale) MarshalJSON() ([]byte, error) {
+	type NoMethod Autoscale
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -326,15 +359,31 @@ type CapacityCommitment struct {
 	// period. It is applicable only for ACTIVE capacity commitments.
 	CommitmentStartTime string `json:"commitmentStartTime,omitempty"`
 
+	// Edition: Edition of the capacity commitment.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default value, which will be treated as
+	// ENTERPRISE.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
+
 	// FailureStatus: Output only. For FAILED commitment plan, provides the
 	// reason of failure.
 	FailureStatus *Status `json:"failureStatus,omitempty"`
+
+	// IsFlatRate: Output only. If true, the commitment is a flat-rate
+	// commitment, otherwise, it's an edition commitment.
+	IsFlatRate bool `json:"isFlatRate,omitempty"`
 
 	// MultiRegionAuxiliary: Applicable only for commitments located within
 	// one of the BigQuery multi-regions (US or EU). If set to true, this
 	// commitment is placed in the organization's secondary region which is
 	// designated for disaster recovery purposes. If false, this commitment
-	// is placed in the organization's default region.
+	// is placed in the organization's default region. NOTE: this is a
+	// preview feature. Project must be allow-listed in order to set this
+	// field.
 	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
 
 	// Name: Output only. The resource name of the capacity commitment,
@@ -353,6 +402,8 @@ type CapacityCommitment struct {
 	//   "FLEX" - Flex commitments have committed period of 1 minute after
 	// becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "FLEX_FLAT_RATE" - Same as FLEX, should only be used if flat-rate
+	// commitments are still available.
 	//   "TRIAL" - Trial commitments have a committed period of 182 days
 	// after becoming ACTIVE. After that, they are converted to a new
 	// commitment based on the `renewal_plan`. Default `renewal_plan` for
@@ -361,9 +412,23 @@ type CapacityCommitment struct {
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
 	// after becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "MONTHLY_FLAT_RATE" - Same as MONTHLY, should only be used if
+	// flat-rate commitments are still available.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
+	//   "ANNUAL_FLAT_RATE" - Same as ANNUAL, should only be used if
+	// flat-rate commitments are still available.
+	//   "THREE_YEAR" - 3-year commitments have a committed period of 1095(3
+	// * 365) days after becoming ACTIVE. After that they are converted to a
+	// new commitment based on the renewal_plan.
+	//   "NONE" - Should only be used for `renewal_plan` and is only
+	// meaningful if edition is specified to values other than
+	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
+	// UpdateCapacityCommitmentRequest will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
+	// capacity commitment will be removed at the end of its commitment
+	// period.
 	Plan string `json:"plan,omitempty"`
 
 	// RenewalPlan: The plan this capacity commitment is converted to after
@@ -378,6 +443,8 @@ type CapacityCommitment struct {
 	//   "FLEX" - Flex commitments have committed period of 1 minute after
 	// becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "FLEX_FLAT_RATE" - Same as FLEX, should only be used if flat-rate
+	// commitments are still available.
 	//   "TRIAL" - Trial commitments have a committed period of 182 days
 	// after becoming ACTIVE. After that, they are converted to a new
 	// commitment based on the `renewal_plan`. Default `renewal_plan` for
@@ -386,9 +453,23 @@ type CapacityCommitment struct {
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
 	// after becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "MONTHLY_FLAT_RATE" - Same as MONTHLY, should only be used if
+	// flat-rate commitments are still available.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
+	//   "ANNUAL_FLAT_RATE" - Same as ANNUAL, should only be used if
+	// flat-rate commitments are still available.
+	//   "THREE_YEAR" - 3-year commitments have a committed period of 1095(3
+	// * 365) days after becoming ACTIVE. After that they are converted to a
+	// new commitment based on the renewal_plan.
+	//   "NONE" - Should only be used for `renewal_plan` and is only
+	// meaningful if edition is specified to values other than
+	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
+	// UpdateCapacityCommitmentRequest will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
+	// capacity commitment will be removed at the end of its commitment
+	// period.
 	RenewalPlan string `json:"renewalPlan,omitempty"`
 
 	// SlotCount: Number of slots in this commitment.
@@ -602,11 +683,17 @@ func (s *MergeCapacityCommitmentsRequest) MarshalJSON() ([]byte, error) {
 // "bigquery.reservationAssignments.delete" permission are required on
 // the related assignee.
 type MoveAssignmentRequest struct {
+	// AssignmentId: The optional assignment ID. A new assignment name is
+	// generated if this field is empty. This field can contain only
+	// lowercase alphanumeric characters or dashes. Max length is 64
+	// characters.
+	AssignmentId string `json:"assignmentId,omitempty"`
+
 	// DestinationId: The new reservation ID, e.g.:
 	// `projects/myotherproject/locations/US/reservations/team2-prod`
 	DestinationId string `json:"destinationId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DestinationId") to
+	// ForceSendFields is a list of field names (e.g. "AssignmentId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -614,7 +701,7 @@ type MoveAssignmentRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DestinationId") to include
+	// NullFields is a list of field names (e.g. "AssignmentId") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -632,15 +719,30 @@ func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 // Reservation: A reservation is a mechanism used to guarantee slots to
 // users.
 type Reservation struct {
-	// Concurrency: Maximum number of queries that are allowed to run
-	// concurrently in this reservation. This is a soft limit due to
-	// asynchronous nature of the system and various optimizations for small
-	// queries. Default value is 0 which means that concurrency will be
-	// automatically set based on the reservation size.
+	// Autoscale: The configuration parameters for the auto scaling feature.
+	Autoscale *Autoscale `json:"autoscale,omitempty"`
+
+	// Concurrency: Job concurrency target which sets a soft upper bound on
+	// the number of jobs that can run concurrently in this reservation.
+	// This is a soft target due to asynchronous nature of the system and
+	// various optimizations for small queries. Default value is 0 which
+	// means that concurrency target will be automatically computed by the
+	// system. NOTE: this field is exposed as `target_job_concurrency` in
+	// the Information Schema, DDL and BQ CLI.
 	Concurrency int64 `json:"concurrency,omitempty,string"`
 
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
+
+	// Edition: Edition of the reservation.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default value, which will be treated as
+	// ENTERPRISE.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
 
 	// IgnoreIdleSlots: If false, any query or pipeline job using this
 	// reservation will use idle slots from other reservations within the
@@ -653,7 +755,9 @@ type Reservation struct {
 	// one of the BigQuery multi-regions (US or EU). If set to true, this
 	// reservation is placed in the organization's secondary region which is
 	// designated for disaster recovery purposes. If false, this reservation
-	// is placed in the organization's default region.
+	// is placed in the organization's default region. NOTE: this is a
+	// preview feature. Project must be allow-listed in order to set this
+	// field.
 	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
 
 	// Name: The resource name of the reservation, e.g.,
@@ -663,16 +767,23 @@ type Reservation struct {
 	// length is 64 characters.
 	Name string `json:"name,omitempty"`
 
-	// SlotCapacity: Minimum slots available to this reservation. A slot is
+	// SlotCapacity: Baseline slots available to this reservation. A slot is
 	// a unit of computational power in BigQuery, and serves as the unit of
 	// parallelism. Queries using this reservation might use more slots
-	// during runtime if ignore_idle_slots is set to false. If total
-	// slot_capacity of the reservation and its siblings exceeds the total
-	// slot_count of all capacity commitments, the request will fail with
-	// `google.rpc.Code.RESOURCE_EXHAUSTED`. NOTE: for reservations in US or
-	// EU multi-regions, slot capacity constraints are checked separately
-	// for default and auxiliary regions. See multi_region_auxiliary flag
-	// for more details.
+	// during runtime if ignore_idle_slots is set to false, or autoscaling
+	// is enabled. If edition is EDITION_UNSPECIFIED and total slot_capacity
+	// of the reservation and its siblings exceeds the total slot_count of
+	// all capacity commitments, the request will fail with
+	// `google.rpc.Code.RESOURCE_EXHAUSTED`. If edition is any value but
+	// EDITION_UNSPECIFIED, then the above requirement is not needed. The
+	// total slot_capacity of the reservation and its siblings may exceed
+	// the total slot_count of capacity commitments. In that case, the
+	// exceeding slots will be charged with the autoscale SKU. You can
+	// increase the number of baseline slots in a reservation every few
+	// minutes. If you want to decrease your baseline slots, you are limited
+	// to once an hour if you have recently changed your baseline slot
+	// capacity and your baseline slots exceed your committed slots.
+	// Otherwise, you can decrease your baseline slots every few minutes.
 	SlotCapacity int64 `json:"slotCapacity,omitempty,string"`
 
 	// UpdateTime: Output only. Last update time of the reservation.
@@ -682,7 +793,7 @@ type Reservation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Concurrency") to
+	// ForceSendFields is a list of field names (e.g. "Autoscale") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -690,10 +801,10 @@ type Reservation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Concurrency") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Autoscale") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1020,17 +1131,17 @@ func (c *ProjectsLocationsGetBiReservationCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BiReservation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1203,17 +1314,17 @@ func (c *ProjectsLocationsSearchAllAssignmentsCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchAllAssignmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1424,17 +1535,17 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchAssignmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1448,6 +1559,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated: Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project-\u003efolder-\u003eorganization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`. **Note** \"-\" cannot be used for projects nor locations.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:searchAssignments",
 	//   "httpMethod": "GET",
@@ -1614,17 +1726,17 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BiReservation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1784,17 +1896,17 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CapacityCommitment{
 		ServerResponse: googleapi.ServerResponse{
@@ -1942,17 +2054,17 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2095,17 +2207,17 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CapacityCommitment{
 		ServerResponse: googleapi.ServerResponse{
@@ -2257,17 +2369,17 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCapacityCommitmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2434,17 +2546,17 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CapacityCommitment{
 		ServerResponse: googleapi.ServerResponse{
@@ -2592,17 +2704,17 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CapacityCommitment{
 		ServerResponse: googleapi.ServerResponse{
@@ -2747,17 +2859,17 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SplitCapacityCommitmentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2899,17 +3011,17 @@ func (c *ProjectsLocationsReservationsCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Reservation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3043,17 +3155,17 @@ func (c *ProjectsLocationsReservationsDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3191,17 +3303,17 @@ func (c *ProjectsLocationsReservationsGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Reservation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3354,17 +3466,17 @@ func (c *ProjectsLocationsReservationsListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReservationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3537,17 +3649,17 @@ func (c *ProjectsLocationsReservationsPatchCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Reservation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3719,17 +3831,17 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Assignment{
 		ServerResponse: googleapi.ServerResponse{
@@ -3870,17 +3982,17 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4043,17 +4155,17 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssignmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4220,17 +4332,17 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Assignment{
 		ServerResponse: googleapi.ServerResponse{
@@ -4374,17 +4486,17 @@ func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Assignment{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -73,6 +73,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudtasks:v2beta2"
 const apiName = "cloudtasks"
@@ -120,6 +121,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Api = NewApiService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -129,6 +131,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Api *ApiService
+
 	Projects *ProjectsService
 }
 
@@ -137,6 +141,27 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewApiService(s *Service) *ApiService {
+	rs := &ApiService{s: s}
+	rs.Queue = NewApiQueueService(s)
+	return rs
+}
+
+type ApiService struct {
+	s *Service
+
+	Queue *ApiQueueService
+}
+
+func NewApiQueueService(s *Service) *ApiQueueService {
+	rs := &ApiQueueService{s: s}
+	return rs
+}
+
+type ApiQueueService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -554,7 +579,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -571,9 +598,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -603,7 +628,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BufferTaskRequest: Request message for BufferTask.
+// BufferTaskRequest: LINT.IfChange Request message for BufferTask.
 type BufferTaskRequest struct {
 	// Body: Optional. Body of the HTTP request. The body can take any
 	// generic value. The value is written to the HttpRequest of the [Task].
@@ -754,10 +779,10 @@ type CreateTaskRequest struct {
 	// that of an existing task or a task that was deleted or completed
 	// recently then the call will fail with ALREADY_EXISTS. If the task's
 	// queue was created using Cloud Tasks, then another task with the same
-	// name can't be created for ~1hour after the original task was deleted
+	// name can't be created for ~1 hour after the original task was deleted
 	// or completed. If the task's queue was created using queue.yaml or
 	// queue.xml, then another task with the same name can't be created for
-	// ~9days after the original task was deleted or completed. Because
+	// ~9 days after the original task was deleted or completed. Because
 	// there is an extra lookup cost to identify duplicate task names, these
 	// CreateTask calls have significantly increased latency. Using hashed
 	// strings for the task id or for the prefix of the task id is
@@ -1060,19 +1085,18 @@ type HttpRequest struct {
 	// that will accompany the task's HTTP request. Some HTTP request
 	// headers will be ignored or replaced. A partial list of headers that
 	// will be ignored or replaced is: * Any header that is prefixed with
-	// "X-Google-Cloud-Tasks-" will be treated as service header. Service
-	// headers define properties of the task and are predefined in
-	// CloudTask. * Host: This will be computed by Cloud Tasks and derived
-	// from HttpRequest.url. * Content-Length: This will be computed by
-	// Cloud Tasks. * User-Agent: This will be set to
-	// "Google-Cloud-Tasks". * `X-Google-*`: Google use only. *
-	// `X-AppEngine-*`: Google use only. `Content-Type` won't be set by
-	// Cloud Tasks. You can explicitly set `Content-Type` to a media type
-	// when the task is created. For example, `Content-Type` can be set to
-	// "application/octet-stream" or "application/json". Headers which
-	// can have multiple values (according to RFC2616) can be specified
-	// using comma-separated values. The size of the headers must be less
-	// than 80KB.
+	// "X-CloudTasks-" will be treated as service header. Service headers
+	// define properties of the task and are predefined in CloudTask. *
+	// Host: This will be computed by Cloud Tasks and derived from
+	// HttpRequest.url. * Content-Length: This will be computed by Cloud
+	// Tasks. * User-Agent: This will be set to "Google-Cloud-Tasks". *
+	// `X-Google-*`: Google use only. * `X-AppEngine-*`: Google use only.
+	// `Content-Type` won't be set by Cloud Tasks. You can explicitly set
+	// `Content-Type` to a media type when the task is created. For example,
+	// `Content-Type` can be set to "application/octet-stream" or
+	// "application/json". Headers which can have multiple values
+	// (according to RFC2616) can be specified using comma-separated values.
+	// The size of the headers must be less than 80KB.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. The default is
@@ -1145,25 +1169,24 @@ type HttpTarget struct {
 	// the headers that will accompany the task's HTTP request. Some HTTP
 	// request headers will be ignored or replaced. A partial list of
 	// headers that will be ignored or replaced is: * Any header that is
-	// prefixed with "X-Google-Cloud-Tasks-" will be treated as service
-	// header. Service headers define properties of the task and are
-	// predefined in CloudTask. * Host: This will be computed by Cloud Tasks
-	// and derived from HttpRequest.url. * Content-Length: This will be
-	// computed by Cloud Tasks. * User-Agent: This will be set to
-	// "Google-Cloud-Tasks". * `X-Google-*`: Google use only. *
-	// `X-AppEngine-*`: Google use only. `Content-Type` won't be set by
-	// Cloud Tasks. You can explicitly set `Content-Type` to a media type
-	// when the task is created. For example, `Content-Type` can be set to
-	// "application/octet-stream" or "application/json". Headers which
-	// can have multiple values (according to RFC2616) can be specified
-	// using comma-separated values. The size of the headers must be less
-	// than 80KB. Queue-level headers to override headers of all the tasks
-	// in the queue.
+	// prefixed with "X-CloudTasks-" will be treated as service header.
+	// Service headers define properties of the task and are predefined in
+	// CloudTask. * Host: This will be computed by Cloud Tasks and derived
+	// from HttpRequest.url. * Content-Length: This will be computed by
+	// Cloud Tasks. * User-Agent: This will be set to "Google-CloudTasks".
+	// * `X-Google-*`: Google use only. * `X-AppEngine-*`: Google use only.
+	// `Content-Type` won't be set by Cloud Tasks. You can explicitly set
+	// `Content-Type` to a media type when the task is created. For example,
+	// `Content-Type` can be set to "application/octet-stream" or
+	// "application/json". Headers which can have multiple values
+	// (according to RFC2616) can be specified using comma-separated values.
+	// The size of the headers must be less than 80KB. Queue-level headers
+	// to override headers of all the tasks in the queue.
 	HeaderOverrides []*HeaderOverride `json:"headerOverrides,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. When specified,
-	// it will override HttpRequest for the task. Note that if the value is
-	// set to HttpMethod the HttpRequest of the task will be ignored at
+	// it overrides HttpRequest for the task. Note that if the value is set
+	// to HttpMethod the HttpRequest of the task will be ignored at
 	// execution time.
 	//
 	// Possible values:
@@ -1192,8 +1215,8 @@ type HttpTarget struct {
 	// to validate the token yourself.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
-	// UriOverride: Uri override. When specified modifies the execution Uri
-	// for all the tasks in the queue.
+	// UriOverride: Uri override. When specified, overrides the execution
+	// Uri for all the tasks in the queue.
 	UriOverride *UriOverride `json:"uriOverride,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HeaderOverrides") to
@@ -1450,7 +1473,7 @@ func (s *ListTasksResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1577,6 +1600,35 @@ type OidcToken struct {
 
 func (s *OidcToken) MarshalJSON() ([]byte, error) {
 	type NoMethod OidcToken
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathOverride: PathOverride. Path message defines path override for
+// HTTP targets.
+type PathOverride struct {
+	// Path: The URI path (e.g., /users/1234). Default is an empty string.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod PathOverride
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1741,6 +1793,36 @@ type PullTarget struct {
 
 // PurgeQueueRequest: Request message for PurgeQueue.
 type PurgeQueueRequest struct {
+}
+
+// QueryOverride: QueryOverride. Query message defines query override
+// for HTTP targets.
+type QueryOverride struct {
+	// QueryParams: The query parameters (e.g., qparam1=123&qparam2=456).
+	// Default is an empty string.
+	QueryParams string `json:"queryParams,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QueryParams") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QueryParams") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Queue: A queue is a container of related tasks. Queues are configured
@@ -2522,27 +2604,32 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // the queue will be partially or fully overridden depending on the
 // configured values.
 type UriOverride struct {
-	// Host: Host override. When specified, the host part of url will be
-	// overridden. For example, if the original Uri is
-	// "https://www.google.com", and host is set to "example.net", the
-	// overridden Uri will be "https://example.net".
+	// Host: Host override. When specified, replaces the host part of the
+	// task URL. For example, if the task URL is "https://www.google.com,"
+	// and host value is set to "example.net", the overridden URI will be
+	// changed to "https://example.net." Host value cannot be an empty
+	// string (INVALID_ARGUMENT).
 	Host string `json:"host,omitempty"`
 
-	// Path: Uri path. Will be used as the path for the current Uri
-	// (replaces any existing path of the task url).
-	Path string `json:"path,omitempty"`
+	// PathOverride: URI path. When specified, replaces the existing path of
+	// the task URL. Setting the path value to an empty string clears the
+	// URI path segment.
+	PathOverride *PathOverride `json:"pathOverride,omitempty"`
 
-	// Port: Port override. When specified, the port part of Uri will be
-	// replaced by the provided value. For instance, for a Uri
-	// http://www.google.com/foo and port=123 the overridden Uri becomes
-	// http://www.google.com:123/foo.
+	// Port: Port override. When specified, replaces the port part of the
+	// task URI. For instance, for a URI http://www.google.com/foo and
+	// port=123, the overridden URI becomes http://www.google.com:123/foo.
+	// Note that the port value must be a positive integer. Setting the port
+	// to 0 (Zero) clears the URI port.
 	Port int64 `json:"port,omitempty,string"`
 
-	// Query: Uri Query. Will replace the query part of the task uri.
-	Query string `json:"query,omitempty"`
+	// QueryOverride: URI Query. When specified, replaces the query part of
+	// the task URI. Setting the query value to an empty string clears the
+	// URI query segment.
+	QueryOverride *QueryOverride `json:"queryOverride,omitempty"`
 
-	// Scheme: Scheme override. When specified, the Uri scheme is replaced
-	// by the provided value.
+	// Scheme: Scheme override. When specified, the task URI scheme is
+	// replaced by the provided value (HTTP or HTTPS).
 	//
 	// Possible values:
 	//   "SCHEME_UNSPECIFIED" - Scheme unspecified. Defaults to HTTPS.
@@ -2551,6 +2638,20 @@ type UriOverride struct {
 	//   "HTTPS" - Convert the scheme to HTTPS, e.g., http://www.google.ca
 	// will change to https://www.google.ca.
 	Scheme string `json:"scheme,omitempty"`
+
+	// UriOverrideEnforceMode: URI Override Enforce Mode When specified,
+	// determines the Target UriOverride mode. If not specified, it defaults
+	// to ALWAYS.
+	//
+	// Possible values:
+	//   "URI_OVERRIDE_ENFORCE_MODE_UNSPECIFIED" - OverrideMode Unspecified.
+	// Defaults to ALWAYS.
+	//   "IF_NOT_EXISTS" - In the IF_NOT_EXISTS mode, queue-level
+	// configuration is only applied where task-level configuration does not
+	// exist.
+	//   "ALWAYS" - In the ALWAYS mode, queue-level configuration overrides
+	// all task-level configuration
+	UriOverrideEnforceMode string `json:"uriOverrideEnforceMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
@@ -2573,6 +2674,150 @@ func (s *UriOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod UriOverride
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "cloudtasks.api.queue.update":
+
+type ApiQueueUpdateCall struct {
+	s          *Service
+	httpbody   *HttpBody
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Update: Update queue list by uploading a queue.yaml file. The
+// queue.yaml file is supplied in the request body as a YAML encoded
+// string. This method was added to support gcloud clients versions
+// before 322.0.0. New clients should use CreateQueue instead of this
+// method.
+func (r *ApiQueueService) Update(httpbody *HttpBody) *ApiQueueUpdateCall {
+	c := &ApiQueueUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.httpbody = httpbody
+	return c
+}
+
+// AppId sets the optional parameter "appId": Required. The App ID is
+// supplied as an HTTP parameter. Unlike internal usage of App ID, it
+// does not include a region prefix. Rather, the App ID represents the
+// Project ID against which to make the request.
+func (c *ApiQueueUpdateCall) AppId(appId string) *ApiQueueUpdateCall {
+	c.urlParams_.Set("appId", appId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApiQueueUpdateCall) Fields(s ...googleapi.Field) *ApiQueueUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApiQueueUpdateCall) Context(ctx context.Context) *ApiQueueUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApiQueueUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApiQueueUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpbody)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "api/queue/update")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudtasks.api.queue.update" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ApiQueueUpdateCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update queue list by uploading a queue.yaml file. The queue.yaml file is supplied in the request body as a YAML encoded string. This method was added to support gcloud clients versions before 322.0.0. New clients should use CreateQueue instead of this method.",
+	//   "flatPath": "api/queue/update",
+	//   "httpMethod": "POST",
+	//   "id": "cloudtasks.api.queue.update",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "appId": {
+	//       "description": "Required. The App ID is supplied as an HTTP parameter. Unlike internal usage of App ID, it does not include a region prefix. Rather, the App ID represents the Project ID against which to make the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "api/queue/update",
+	//   "request": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudtasks.projects.locations.get":
@@ -2670,17 +2915,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2842,17 +3087,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3028,17 +3273,17 @@ func (c *ProjectsLocationsQueuesCreateCall) Do(opts ...googleapi.CallOption) (*Q
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Queue{
 		ServerResponse: googleapi.ServerResponse{
@@ -3171,17 +3416,17 @@ func (c *ProjectsLocationsQueuesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3328,17 +3573,17 @@ func (c *ProjectsLocationsQueuesGetCall) Do(opts ...googleapi.CallOption) (*Queu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Queue{
 		ServerResponse: googleapi.ServerResponse{
@@ -3480,17 +3725,17 @@ func (c *ProjectsLocationsQueuesGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3674,17 +3919,17 @@ func (c *ProjectsLocationsQueuesListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListQueuesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3886,17 +4131,17 @@ func (c *ProjectsLocationsQueuesPatchCall) Do(opts ...googleapi.CallOption) (*Qu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Queue{
 		ServerResponse: googleapi.ServerResponse{
@@ -4038,17 +4283,17 @@ func (c *ProjectsLocationsQueuesPauseCall) Do(opts ...googleapi.CallOption) (*Qu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Queue{
 		ServerResponse: googleapi.ServerResponse{
@@ -4184,17 +4429,17 @@ func (c *ProjectsLocationsQueuesPurgeCall) Do(opts ...googleapi.CallOption) (*Qu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Queue{
 		ServerResponse: googleapi.ServerResponse{
@@ -4333,17 +4578,17 @@ func (c *ProjectsLocationsQueuesResumeCall) Do(opts ...googleapi.CallOption) (*Q
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Queue{
 		ServerResponse: googleapi.ServerResponse{
@@ -4483,17 +4728,17 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4633,17 +4878,17 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4783,17 +5028,17 @@ func (c *ProjectsLocationsQueuesTasksAcknowledgeCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4942,17 +5187,17 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BufferTaskResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5096,17 +5341,17 @@ func (c *ProjectsLocationsQueuesTasksCancelLeaseCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -5243,17 +5488,17 @@ func (c *ProjectsLocationsQueuesTasksCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -5382,17 +5627,17 @@ func (c *ProjectsLocationsQueuesTasksDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5559,17 +5804,17 @@ func (c *ProjectsLocationsQueuesTasksGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -5723,17 +5968,17 @@ func (c *ProjectsLocationsQueuesTasksLeaseCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LeaseTasksResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5926,17 +6171,17 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTasksResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6116,17 +6361,17 @@ func (c *ProjectsLocationsQueuesTasksRenewLeaseCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -6273,17 +6518,17 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{

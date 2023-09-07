@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "mybusinessplaceactions:v1"
 const apiName = "mybusinessplaceactions"
@@ -289,6 +290,8 @@ type PlaceActionLink struct {
 	// and/or takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
+	// and/or pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 
 	// ProviderType: Output only. Specifies the provider type.
@@ -357,6 +360,8 @@ type PlaceActionTypeMetadata struct {
 	// and/or takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
+	// and/or pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -475,17 +480,17 @@ func (c *LocationsPlaceActionLinksCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlaceActionLink{
 		ServerResponse: googleapi.ServerResponse{
@@ -608,17 +613,17 @@ func (c *LocationsPlaceActionLinksDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -751,17 +756,17 @@ func (c *LocationsPlaceActionLinksGetCall) Do(opts ...googleapi.CallOption) (*Pl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlaceActionLink{
 		ServerResponse: googleapi.ServerResponse{
@@ -918,17 +923,17 @@ func (c *LocationsPlaceActionLinksListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPlaceActionLinksResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1108,17 +1113,17 @@ func (c *LocationsPlaceActionLinksPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlaceActionLink{
 		ServerResponse: googleapi.ServerResponse{
@@ -1292,17 +1297,17 @@ func (c *PlaceActionTypeMetadataListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPlaceActionTypeMetadataResponse{
 		ServerResponse: googleapi.ServerResponse{

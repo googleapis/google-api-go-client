@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "playintegrity:v1"
 const apiName = "playintegrity"
@@ -145,12 +146,61 @@ type V1Service struct {
 	s *Service
 }
 
+// AccountActivity: Contains a signal helping apps differentiating
+// between likely genuine users and likely non-genuine traffic (such as
+// accounts being used for fraud, accounts used by automated traffic, or
+// accounts used in device farms) based on the presence and volume of
+// Play store activity.
+type AccountActivity struct {
+	// ActivityLevel: Required. Indicates the activity level of the account.
+	//
+	// Possible values:
+	//   "ACTIVITY_LEVEL_UNSPECIFIED" - Activity level has not been set.
+	//   "UNEVALUATED" - Account activity level is not evaluated because one
+	// of the prerequisite conditions is not met (e.g., device is not
+	// trusted, the user does not have Play app license)
+	//   "UNUSUAL" - Google Play store activity is unusual for at least one
+	// of the user accounts on the device. Google Play recommends checking
+	// that this is a real user.
+	//   "UNKNOWN" - Google Play does not have sufficient activity for the
+	// user account on the device. The account may be new, or it may lack
+	// activity on Google Play.
+	//   "TYPICAL_BASIC" - Google Play store activity is typical for the
+	// user account or accounts on the device.
+	//   "TYPICAL_STRONG" - Google Play store activity is typical for the
+	// user account or accounts on the device, with harder to replicate
+	// signals.
+	ActivityLevel string `json:"activityLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActivityLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActivityLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountActivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccountDetails: Contains the account information such as the
 // licensing status for the user in the scope.
 type AccountDetails struct {
-	// AccountRiskVerdict: Details about the account risk for the user in
-	// the scope. This feature is available only to selected developers.
-	AccountRiskVerdict *AccountRiskVerdict `json:"accountRiskVerdict,omitempty"`
+	// AccountActivity: Details about the account activity for the user in
+	// the scope.
+	AccountActivity *AccountActivity `json:"accountActivity,omitempty"`
 
 	// AppLicensingVerdict: Required. Details about the licensing status of
 	// the user for the app in the scope.
@@ -167,15 +217,15 @@ type AccountDetails struct {
 	// meet the minimum bar or the application was not a known Play version.
 	AppLicensingVerdict string `json:"appLicensingVerdict,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AccountRiskVerdict")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AccountActivity") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AccountRiskVerdict") to
+	// NullFields is a list of field names (e.g. "AccountActivity") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -187,74 +237,6 @@ type AccountDetails struct {
 
 func (s *AccountDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AccountRiskVerdict: Contains information about account risk that
-// indicates if the current user session seems low risk, unknown, or
-// risky before you allow important actions to proceed.
-type AccountRiskVerdict struct {
-	// Risk: Required. Indicates the account risk level of the current user
-	// session.
-	//
-	// Possible values:
-	//   "RISK_UNSPECIFIED" - Risk has not been set.
-	//   "UNEVALUATED" - The account risk is not evaluated, because the
-	// device is not trusted or the user does not have a Play app license.
-	//   "HIGHER" - Play thinks that at least one of the user accounts on
-	// the device has some unusual store engagement behavior that could be
-	// risky.
-	//   "UNKNOWN" - Play does not have sufficient information to assess the
-	// risk. The account may be new, or it may lack activity on the Play
-	// Store.
-	//   "LOWER" - Play thinks the user could be genuine, since there is
-	// some store engagement. However, some signals to support the trust
-	// level are missing.
-	//   "LOWEST" - Play thinks the user is more likely to be genuine due to
-	// harder to replicate store engagement signals.
-	Risk string `json:"risk,omitempty"`
-
-	// RiskLevel: Required. Indicates the account risk level of the current
-	// user session.
-	//
-	// Possible values:
-	//   "RISK_LEVEL_UNSPECIFIED" - Risk level has not been set.
-	//   "RISK_LEVEL_UNEVALUATED" - The account risk is not evaluated,
-	// because the device is not trusted or the user does not have a Play
-	// app license.
-	//   "RISK_LEVEL_RISK" - Play thinks that at least one of the user
-	// accounts on the device has some unusual store engagement behavior
-	// that could be risky.
-	//   "RISK_LEVEL_UNKNOWN" - Play does not have sufficient information to
-	// assess the risk. The account may be new, or it may lack activity on
-	// the Play Store.
-	//   "RISK_LEVEL_LOW_RISK" - Play thinks the user could be genuine,
-	// since there is some store engagement. However, some signals to
-	// support the trust level are missing.
-	//   "RISK_LEVEL_LOWEST_RISK" - Play thinks the user is more likely to
-	// be genuine due to harder to replicate store engagement signals.
-	RiskLevel string `json:"riskLevel,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Risk") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Risk") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AccountRiskVerdict) MarshalJSON() ([]byte, error) {
-	type NoMethod AccountRiskVerdict
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -399,6 +381,11 @@ type DeviceIntegrity struct {
 	//   "MEETS_VIRTUAL_INTEGRITY" - App is running on an Android emulator
 	// with Google Play services which meets core Android compatibility
 	// requirements.
+	//   "MEETS_WEAK_INTEGRITY" - App is running on a device that passes
+	// only weak integrity checks (is a physical device). See
+	// go/pcm-physical-device-detection for more details. Note that this
+	// label won't be served for PIA heavyweight and express for now, only
+	// for the crystal mode.
 	DeviceRecognitionVerdict []string `json:"deviceRecognitionVerdict,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -426,11 +413,60 @@ func (s *DeviceIntegrity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GuidanceDetails: Contains guidance details about the Integrity API
+// response, providing additional context to the integrity verdicts.
+type GuidanceDetails struct {
+	// UserRemediation: This shows when there is an issue with at least one
+	// of the integrity verdicts, and provides user remediation guidance.
+	//
+	// Possible values:
+	//   "UNKNOWN_USER_REMEDIATION" - Catch-all for unrecognized enum
+	// values. See go/protodosdonts.
+	//   "RESTORE_FACTORY_ROM" - The user has installed a custom ROM, and
+	// should restore the device to a clean factory ROM.
+	//   "LOCK_BOOTLOADER" - The device bootloader has been unlocked, the
+	// user should lock the bootloader.
+	//   "GET_UNMODIFIED_APP" - The app is unrecognized. The user should get
+	// an unmodified version of the app.
+	//   "SIGN_INTO_GOOGLE_ACCOUNT" - The user has not signed into their
+	// Google account.
+	//   "INSTALL_APP_FROM_PLAY" - The user has no license. They should
+	// install or purchase the app on the Google Play Store to add it to
+	// their library.
+	UserRemediation []string `json:"userRemediation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UserRemediation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UserRemediation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GuidanceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GuidanceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RequestDetails: Contains the integrity request information.
 type RequestDetails struct {
-	// Nonce: Required. Nonce that was provided in the request (which is
-	// base64 web-safe no-wrap).
+	// Nonce: Nonce that was provided in the request (which is base64
+	// web-safe no-wrap).
 	Nonce string `json:"nonce,omitempty"`
+
+	// RequestHash: Request hash that was provided in the request.
+	RequestHash string `json:"requestHash,omitempty"`
 
 	// RequestPackageName: Required. Application package name this
 	// attestation was requested for. Note: This field makes no guarantees
@@ -508,6 +544,10 @@ type TokenPayloadExternal struct {
 
 	// DeviceIntegrity: Required. Details about the device integrity.
 	DeviceIntegrity *DeviceIntegrity `json:"deviceIntegrity,omitempty"`
+
+	// GuidanceDetails: Additional guidance related to the integrity API
+	// response.
+	GuidanceDetails *GuidanceDetails `json:"guidanceDetails,omitempty"`
 
 	// RequestDetails: Required. Details about the integrity request.
 	RequestDetails *RequestDetails `json:"requestDetails,omitempty"`
@@ -631,17 +671,17 @@ func (c *V1DecodeIntegrityTokenCall) Do(opts ...googleapi.CallOption) (*DecodeIn
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DecodeIntegrityTokenResponse{
 		ServerResponse: googleapi.ServerResponse{

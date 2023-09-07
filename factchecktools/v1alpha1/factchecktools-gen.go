@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "factchecktools:v1alpha1"
 const apiName = "factchecktools"
@@ -768,17 +769,17 @@ func (c *ClaimsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactchecking
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -950,17 +951,17 @@ func (c *PagesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingF
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage{
 		ServerResponse: googleapi.ServerResponse{
@@ -1076,17 +1077,17 @@ func (c *PagesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1226,17 +1227,17 @@ func (c *PagesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFact
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage{
 		ServerResponse: googleapi.ServerResponse{
@@ -1415,17 +1416,17 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFac
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1602,17 +1603,17 @@ func (c *PagesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingF
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage{
 		ServerResponse: googleapi.ServerResponse{

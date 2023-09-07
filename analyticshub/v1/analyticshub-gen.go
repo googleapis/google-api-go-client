@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "analyticshub:v1"
 const apiName = "analyticshub"
@@ -197,6 +198,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.DataExchanges = NewProjectsLocationsDataExchangesService(s)
+	rs.Subscriptions = NewProjectsLocationsSubscriptionsService(s)
 	return rs
 }
 
@@ -204,6 +206,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	DataExchanges *ProjectsLocationsDataExchangesService
+
+	Subscriptions *ProjectsLocationsSubscriptionsService
 }
 
 func NewProjectsLocationsDataExchangesService(s *Service) *ProjectsLocationsDataExchangesService {
@@ -224,6 +228,15 @@ func NewProjectsLocationsDataExchangesListingsService(s *Service) *ProjectsLocat
 }
 
 type ProjectsLocationsDataExchangesListingsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSubscriptionsService(s *Service) *ProjectsLocationsSubscriptionsService {
+	rs := &ProjectsLocationsSubscriptionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSubscriptionsService struct {
 	s *Service
 }
 
@@ -388,7 +401,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -405,9 +420,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -478,6 +491,10 @@ type DataExchange struct {
 	// contact of the data exchange. Max Length: 1000 bytes.
 	PrimaryContact string `json:"primaryContact,omitempty"`
 
+	// SharingEnvironmentConfig: Required. Configurable data sharing
+	// environment option for a data exchange.
+	SharingEnvironmentConfig *SharingEnvironmentConfig `json:"sharingEnvironmentConfig,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -535,6 +552,16 @@ func (s *DataProvider) MarshalJSON() ([]byte, error) {
 	type NoMethod DataProvider
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DcrExchangeConfig: Data Clean Room (DCR), used for privacy-safe and
+// secured data sharing.
+type DcrExchangeConfig struct {
+}
+
+// DefaultExchangeConfig: Default Analytics Hub data exchange, used for
+// secured data sharing.
+type DefaultExchangeConfig struct {
 }
 
 // DestinationDataset: Defines the destination bigquery dataset.
@@ -760,6 +787,36 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LinkedResource: Reference to a linked resource tracked by this
+// Subscription.
+type LinkedResource struct {
+	// LinkedDataset: Output only. Name of the linked dataset, e.g.
+	// projects/subscriberproject/datasets/linked_dataset
+	LinkedDataset string `json:"linkedDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LinkedDataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LinkedDataset") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDataExchangesResponse: Message for response to the list of data
 // exchanges.
 type ListDataExchangesResponse struct {
@@ -867,6 +924,78 @@ func (s *ListOrgDataExchangesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSharedResourceSubscriptionsResponse: Message for response to the
+// listing of shared resource subscriptions.
+type ListSharedResourceSubscriptionsResponse struct {
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SharedResourceSubscriptions: The list of subscriptions.
+	SharedResourceSubscriptions []*Subscription `json:"sharedResourceSubscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSharedResourceSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSharedResourceSubscriptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSubscriptionsResponse: Message for response to the listing of
+// subscriptions.
+type ListSubscriptionsResponse struct {
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Subscriptions: The list of subscriptions.
+	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSubscriptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Listing: A listing is what gets published into a data exchange that a
 // subscriber can subscribe to. It contains a reference to the data
 // source along with descriptive information that will help subscribers
@@ -948,6 +1077,10 @@ type Listing struct {
 	// Length: 1000 bytes.
 	RequestAccess string `json:"requestAccess,omitempty"`
 
+	// RestrictedExportConfig: Optional. If set, restricted export
+	// configuration will be propagated and enforced on the linked dataset.
+	RestrictedExportConfig *RestrictedExportConfig `json:"restrictedExportConfig,omitempty"`
+
 	// State: Output only. Current state of the listing.
 	//
 	// Possible values:
@@ -981,6 +1114,68 @@ type Listing struct {
 
 func (s *Listing) MarshalJSON() ([]byte, error) {
 	type NoMethod Listing
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Operation: This resource represents a long-running operation that is
+// the result of a network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
+	// `operations/{unique_id}`.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1051,7 +1246,7 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1060,17 +1255,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1179,6 +1374,88 @@ func (s *Publisher) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RefreshSubscriptionRequest: Message for refreshing a subscription.
+type RefreshSubscriptionRequest struct {
+}
+
+// RefreshSubscriptionResponse: Message for response when you refresh a
+// subscription.
+type RefreshSubscriptionResponse struct {
+	// Subscription: The refreshed subscription resource.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscription") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshSubscriptionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestrictedExportConfig: Restricted export config, used to configure
+// restricted export on linked dataset.
+type RestrictedExportConfig struct {
+	// Enabled: Optional. If true, enable restricted export.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// RestrictDirectTableAccess: Output only. If true, restrict direct
+	// table access(read api/tabledata.list) on linked table.
+	RestrictDirectTableAccess bool `json:"restrictDirectTableAccess,omitempty"`
+
+	// RestrictQueryResult: Optional. If true, restrict export of query
+	// result derived from restricted linked dataset table.
+	RestrictQueryResult bool `json:"restrictQueryResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestrictedExportConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RestrictedExportConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevokeSubscriptionRequest: Message for revoking a subscription.
+type RevokeSubscriptionRequest struct {
+}
+
+// RevokeSubscriptionResponse: Message for response when you revoke a
+// subscription.
+type RevokeSubscriptionResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -1216,6 +1493,152 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SharingEnvironmentConfig: Sharing environment is a behavior model for
+// sharing data within a data exchange. This option is configurable for
+// a data exchange.
+type SharingEnvironmentConfig struct {
+	// DcrExchangeConfig: Data Clean Room (DCR), used for privacy-safe and
+	// secured data sharing.
+	DcrExchangeConfig *DcrExchangeConfig `json:"dcrExchangeConfig,omitempty"`
+
+	// DefaultExchangeConfig: Default Analytics Hub data exchange, used for
+	// secured data sharing.
+	DefaultExchangeConfig *DefaultExchangeConfig `json:"defaultExchangeConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DcrExchangeConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DcrExchangeConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SharingEnvironmentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SharingEnvironmentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubscribeDataExchangeRequest: Message for subscribing to a Data
+// Exchange.
+type SubscribeDataExchangeRequest struct {
+	// Destination: Required. The parent resource path of the Subscription.
+	// e.g. `projects/subscriberproject/locations/US`
+	Destination string `json:"destination,omitempty"`
+
+	// SubscriberContact: Email of the subscriber.
+	SubscriberContact string `json:"subscriberContact,omitempty"`
+
+	// Subscription: Required. Name of the subscription to create. e.g.
+	// `subscription1`
+	Subscription string `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Destination") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscribeDataExchangeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscribeDataExchangeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubscribeDataExchangeResponse: Message for response when you
+// subscribe to a Data Exchange.
+type SubscribeDataExchangeResponse struct {
+	// Subscription: Subscription object created from this subscribe action.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscription") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscribeDataExchangeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscribeDataExchangeResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SubscribeListingRequest: Message for subscribing to a listing.
 type SubscribeListingRequest struct {
 	// DestinationDataset: BigQuery destination dataset to create for the
@@ -1249,9 +1672,119 @@ func (s *SubscribeListingRequest) MarshalJSON() ([]byte, error) {
 // SubscribeListingResponse: Message for response when you subscribe to
 // a listing.
 type SubscribeListingResponse struct {
+	// Subscription: Subscription object created from this subscribe action.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscription") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscribeListingResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscribeListingResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Subscription: A subscription represents a subscribers' access to a
+// particular set of published data. It contains references to
+// associated listings, data exchanges, and linked datasets.
+// TODO(b/267528977) Consider port the new resource to v1beta1 and
+// dataexchange APIs.
+type Subscription struct {
+	// CreationTime: Output only. Timestamp when the subscription was
+	// created.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// DataExchange: Output only. Resource name of the source Data Exchange.
+	// e.g. projects/123/locations/US/dataExchanges/456
+	DataExchange string `json:"dataExchange,omitempty"`
+
+	// LastModifyTime: Output only. Timestamp when the subscription was last
+	// modified.
+	LastModifyTime string `json:"lastModifyTime,omitempty"`
+
+	// LinkedDatasetMap: Output only. Map of listing resource names to
+	// associated linked resource, e.g.
+	// projects/123/locations/US/dataExchanges/456/listings/789 ->
+	// projects/123/datasets/my_dataset For listing-level subscriptions,
+	// this is a map of size 1. Only contains values if state ==
+	// STATE_ACTIVE.
+	LinkedDatasetMap map[string]LinkedResource `json:"linkedDatasetMap,omitempty"`
+
+	// Listing: Output only. Resource name of the source Listing. e.g.
+	// projects/123/locations/US/dataExchanges/456/listings/789
+	Listing string `json:"listing,omitempty"`
+
+	// Name: Output only. The resource name of the subscription. e.g.
+	// `projects/myproject/locations/US/subscriptions/123`.
+	Name string `json:"name,omitempty"`
+
+	// OrganizationDisplayName: Output only. Display name of the project of
+	// this subscription.
+	OrganizationDisplayName string `json:"organizationDisplayName,omitempty"`
+
+	// OrganizationId: Output only. Organization of the project this
+	// subscription belongs to.
+	OrganizationId string `json:"organizationId,omitempty"`
+
+	// State: Output only. Current state of the subscription.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STATE_ACTIVE" - This subscription is active and the data is
+	// accessible.
+	//   "STATE_STALE" - The data referenced by this subscription is out of
+	// date and should be refreshed. This can happen when a data provider
+	// adds or removes datasets.
+	//   "STATE_INACTIVE" - This subscription has been cancelled or revoked
+	// and the data is no longer accessible.
+	State string `json:"state,omitempty"`
+
+	// SubscriberContact: Output only. Email of the subscriber.
+	SubscriberContact string `json:"subscriberContact,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Subscription) MarshalJSON() ([]byte, error) {
+	type NoMethod Subscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
@@ -1432,17 +1965,17 @@ func (c *OrganizationsLocationsDataExchangesListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOrgDataExchangesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1615,17 +2148,17 @@ func (c *ProjectsLocationsDataExchangesCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataExchange{
 		ServerResponse: googleapi.ServerResponse{
@@ -1758,17 +2291,17 @@ func (c *ProjectsLocationsDataExchangesDeleteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1906,17 +2439,17 @@ func (c *ProjectsLocationsDataExchangesGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataExchange{
 		ServerResponse: googleapi.ServerResponse{
@@ -2049,17 +2582,17 @@ func (c *ProjectsLocationsDataExchangesGetIamPolicyCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2215,17 +2748,17 @@ func (c *ProjectsLocationsDataExchangesListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDataExchangesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2282,6 +2815,217 @@ func (c *ProjectsLocationsDataExchangesListCall) Do(opts ...googleapi.CallOption
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDataExchangesListCall) Pages(ctx context.Context, f func(*ListDataExchangesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticshub.projects.locations.dataExchanges.listSubscriptions":
+
+type ProjectsLocationsDataExchangesListSubscriptionsCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListSubscriptions: Lists all subscriptions on a given Data Exchange
+// or Listing.
+//
+//   - resource: Resource name of the requested target. This resource may
+//     be either a Listing or a DataExchange. e.g.
+//     projects/123/locations/US/dataExchanges/456 OR e.g.
+//     projects/123/locations/US/dataExchanges/456/listings/789.
+func (r *ProjectsLocationsDataExchangesService) ListSubscriptions(resource string) *ProjectsLocationsDataExchangesListSubscriptionsCall {
+	c := &ProjectsLocationsDataExchangesListSubscriptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// IncludeDeletedSubscriptions sets the optional parameter
+// "includeDeletedSubscriptions": If selected, includes deleted
+// subscriptions in the response (up to 63 days after deletion).
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) IncludeDeletedSubscriptions(includeDeletedSubscriptions bool) *ProjectsLocationsDataExchangesListSubscriptionsCall {
+	c.urlParams_.Set("includeDeletedSubscriptions", fmt.Sprint(includeDeletedSubscriptions))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response page.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) PageSize(pageSize int64) *ProjectsLocationsDataExchangesListSubscriptionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) PageToken(pageToken string) *ProjectsLocationsDataExchangesListSubscriptionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesListSubscriptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataExchangesListSubscriptionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesListSubscriptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:listSubscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.listSubscriptions" call.
+// Exactly one of *ListSharedResourceSubscriptionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListSharedResourceSubscriptionsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) Do(opts ...googleapi.CallOption) (*ListSharedResourceSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSharedResourceSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all subscriptions on a given Data Exchange or Listing.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}:listSubscriptions",
+	//   "httpMethod": "GET",
+	//   "id": "analyticshub.projects.locations.dataExchanges.listSubscriptions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "includeDeletedSubscriptions": {
+	//       "description": "If selected, includes deleted subscriptions in the response (up to 63 days after deletion).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Required. Resource name of the requested target. This resource may be either a Listing or a DataExchange. e.g. projects/123/locations/US/dataExchanges/456 OR e.g. projects/123/locations/US/dataExchanges/456/listings/789",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataExchanges/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:listSubscriptions",
+	//   "response": {
+	//     "$ref": "ListSharedResourceSubscriptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDataExchangesListSubscriptionsCall) Pages(ctx context.Context, f func(*ListSharedResourceSubscriptionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -2397,17 +3141,17 @@ func (c *ProjectsLocationsDataExchangesPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataExchange{
 		ServerResponse: googleapi.ServerResponse{
@@ -2549,17 +3293,17 @@ func (c *ProjectsLocationsDataExchangesSetIamPolicyCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2595,6 +3339,151 @@ func (c *ProjectsLocationsDataExchangesSetIamPolicyCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "analyticshub.projects.locations.dataExchanges.subscribe":
+
+type ProjectsLocationsDataExchangesSubscribeCall struct {
+	s                            *Service
+	name                         string
+	subscribedataexchangerequest *SubscribeDataExchangeRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Subscribe: Creates a Subscription to a Data Exchange. This is a
+// long-running operation as it will create one or more linked datasets.
+//
+//   - name: Resource name of the Data Exchange. e.g.
+//     `projects/publisherproject/locations/US/dataExchanges/123`.
+func (r *ProjectsLocationsDataExchangesService) Subscribe(name string, subscribedataexchangerequest *SubscribeDataExchangeRequest) *ProjectsLocationsDataExchangesSubscribeCall {
+	c := &ProjectsLocationsDataExchangesSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.subscribedataexchangerequest = subscribedataexchangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataExchangesSubscribeCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesSubscribeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataExchangesSubscribeCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesSubscribeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataExchangesSubscribeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesSubscribeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscribedataexchangerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:subscribe")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.subscribe" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesSubscribeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Subscription to a Data Exchange. This is a long-running operation as it will create one or more linked datasets.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}:subscribe",
+	//   "httpMethod": "POST",
+	//   "id": "analyticshub.projects.locations.dataExchanges.subscribe",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the Data Exchange. e.g. `projects/publisherproject/locations/US/dataExchanges/123`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataExchanges/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:subscribe",
+	//   "request": {
+	//     "$ref": "SubscribeDataExchangeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
@@ -2695,17 +3584,17 @@ func (c *ProjectsLocationsDataExchangesTestIamPermissionsCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2849,17 +3738,17 @@ func (c *ProjectsLocationsDataExchangesListingsCreateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Listing{
 		ServerResponse: googleapi.ServerResponse{
@@ -2991,17 +3880,17 @@ func (c *ProjectsLocationsDataExchangesListingsDeleteCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3139,17 +4028,17 @@ func (c *ProjectsLocationsDataExchangesListingsGetCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Listing{
 		ServerResponse: googleapi.ServerResponse{
@@ -3282,17 +4171,17 @@ func (c *ProjectsLocationsDataExchangesListingsGetIamPolicyCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3448,17 +4337,17 @@ func (c *ProjectsLocationsDataExchangesListingsListCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListListingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3515,6 +4404,217 @@ func (c *ProjectsLocationsDataExchangesListingsListCall) Do(opts ...googleapi.Ca
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDataExchangesListingsListCall) Pages(ctx context.Context, f func(*ListListingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticshub.projects.locations.dataExchanges.listings.listSubscriptions":
+
+type ProjectsLocationsDataExchangesListingsListSubscriptionsCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListSubscriptions: Lists all subscriptions on a given Data Exchange
+// or Listing.
+//
+//   - resource: Resource name of the requested target. This resource may
+//     be either a Listing or a DataExchange. e.g.
+//     projects/123/locations/US/dataExchanges/456 OR e.g.
+//     projects/123/locations/US/dataExchanges/456/listings/789.
+func (r *ProjectsLocationsDataExchangesListingsService) ListSubscriptions(resource string) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
+	c := &ProjectsLocationsDataExchangesListingsListSubscriptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// IncludeDeletedSubscriptions sets the optional parameter
+// "includeDeletedSubscriptions": If selected, includes deleted
+// subscriptions in the response (up to 63 days after deletion).
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) IncludeDeletedSubscriptions(includeDeletedSubscriptions bool) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
+	c.urlParams_.Set("includeDeletedSubscriptions", fmt.Sprint(includeDeletedSubscriptions))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response page.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) PageSize(pageSize int64) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) PageToken(pageToken string) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesListingsListSubscriptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:listSubscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.listings.listSubscriptions" call.
+// Exactly one of *ListSharedResourceSubscriptionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListSharedResourceSubscriptionsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) Do(opts ...googleapi.CallOption) (*ListSharedResourceSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSharedResourceSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all subscriptions on a given Data Exchange or Listing.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}/listings/{listingsId}:listSubscriptions",
+	//   "httpMethod": "GET",
+	//   "id": "analyticshub.projects.locations.dataExchanges.listings.listSubscriptions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "includeDeletedSubscriptions": {
+	//       "description": "If selected, includes deleted subscriptions in the response (up to 63 days after deletion).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Required. Resource name of the requested target. This resource may be either a Listing or a DataExchange. e.g. projects/123/locations/US/dataExchanges/456 OR e.g. projects/123/locations/US/dataExchanges/456/listings/789",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataExchanges/[^/]+/listings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:listSubscriptions",
+	//   "response": {
+	//     "$ref": "ListSharedResourceSubscriptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDataExchangesListingsListSubscriptionsCall) Pages(ctx context.Context, f func(*ListSharedResourceSubscriptionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -3630,17 +4730,17 @@ func (c *ProjectsLocationsDataExchangesListingsPatchCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Listing{
 		ServerResponse: googleapi.ServerResponse{
@@ -3782,17 +4882,17 @@ func (c *ProjectsLocationsDataExchangesListingsSetIamPolicyCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3930,17 +5030,17 @@ func (c *ProjectsLocationsDataExchangesListingsSubscribeCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SubscribeListingResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4076,17 +5176,17 @@ func (c *ProjectsLocationsDataExchangesListingsTestIamPermissionsCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4122,6 +5222,784 @@ func (c *ProjectsLocationsDataExchangesListingsTestIamPermissionsCall) Do(opts .
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "analyticshub.projects.locations.subscriptions.delete":
+
+type ProjectsLocationsSubscriptionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a subscription.
+//
+//   - name: Resource name of the subscription to delete. e.g.
+//     projects/123/locations/US/subscriptions/456.
+func (r *ProjectsLocationsSubscriptionsService) Delete(name string) *ProjectsLocationsSubscriptionsDeleteCall {
+	c := &ProjectsLocationsSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSubscriptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSubscriptionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSubscriptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSubscriptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.subscriptions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a subscription.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticshub.projects.locations.subscriptions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the subscription to delete. e.g. projects/123/locations/US/subscriptions/456",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "analyticshub.projects.locations.subscriptions.get":
+
+type ProjectsLocationsSubscriptionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of a Subscription.
+//
+//   - name: Resource name of the subscription. e.g.
+//     projects/123/locations/US/subscriptions/456.
+func (r *ProjectsLocationsSubscriptionsService) Get(name string) *ProjectsLocationsSubscriptionsGetCall {
+	c := &ProjectsLocationsSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSubscriptionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSubscriptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSubscriptionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSubscriptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSubscriptionsGetCall) Context(ctx context.Context) *ProjectsLocationsSubscriptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSubscriptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.subscriptions.get" call.
+// Exactly one of *Subscription or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the details of a Subscription.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticshub.projects.locations.subscriptions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the subscription. e.g. projects/123/locations/US/subscriptions/456",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Subscription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "analyticshub.projects.locations.subscriptions.list":
+
+type ProjectsLocationsSubscriptionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all subscriptions in a given project and location.
+//
+//   - parent: The parent resource path of the subscription. e.g.
+//     projects/myproject/locations/US.
+func (r *ProjectsLocationsSubscriptionsService) List(parent string) *ProjectsLocationsSubscriptionsListCall {
+	c := &ProjectsLocationsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression
+// may be used to filter by Data Exchange or Listing.
+func (c *ProjectsLocationsSubscriptionsListCall) Filter(filter string) *ProjectsLocationsSubscriptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response page.
+func (c *ProjectsLocationsSubscriptionsListCall) PageSize(pageSize int64) *ProjectsLocationsSubscriptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call.
+func (c *ProjectsLocationsSubscriptionsListCall) PageToken(pageToken string) *ProjectsLocationsSubscriptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSubscriptionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSubscriptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSubscriptionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSubscriptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSubscriptionsListCall) Context(ctx context.Context) *ProjectsLocationsSubscriptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSubscriptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.subscriptions.list" call.
+// Exactly one of *ListSubscriptionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSubscriptionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all subscriptions in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/subscriptions",
+	//   "httpMethod": "GET",
+	//   "id": "analyticshub.projects.locations.subscriptions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression may be used to filter by Data Exchange or Listing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource path of the subscription. e.g. projects/myproject/locations/US",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/subscriptions",
+	//   "response": {
+	//     "$ref": "ListSubscriptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSubscriptionsListCall) Pages(ctx context.Context, f func(*ListSubscriptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticshub.projects.locations.subscriptions.refresh":
+
+type ProjectsLocationsSubscriptionsRefreshCall struct {
+	s                          *Service
+	name                       string
+	refreshsubscriptionrequest *RefreshSubscriptionRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Refresh: Refreshes a Subscription to a Data Exchange. A Data Exchange
+// can become stale when a publisher adds or removes data. This is a
+// long-running operation as it may create many linked datasets.
+//
+//   - name: Resource name of the Subscription to refresh. e.g.
+//     `projects/subscriberproject/locations/US/subscriptions/123`.
+func (r *ProjectsLocationsSubscriptionsService) Refresh(name string, refreshsubscriptionrequest *RefreshSubscriptionRequest) *ProjectsLocationsSubscriptionsRefreshCall {
+	c := &ProjectsLocationsSubscriptionsRefreshCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.refreshsubscriptionrequest = refreshsubscriptionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSubscriptionsRefreshCall) Fields(s ...googleapi.Field) *ProjectsLocationsSubscriptionsRefreshCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSubscriptionsRefreshCall) Context(ctx context.Context) *ProjectsLocationsSubscriptionsRefreshCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSubscriptionsRefreshCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSubscriptionsRefreshCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.refreshsubscriptionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:refresh")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.subscriptions.refresh" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSubscriptionsRefreshCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Refreshes a Subscription to a Data Exchange. A Data Exchange can become stale when a publisher adds or removes data. This is a long-running operation as it may create many linked datasets.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}:refresh",
+	//   "httpMethod": "POST",
+	//   "id": "analyticshub.projects.locations.subscriptions.refresh",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the Subscription to refresh. e.g. `projects/subscriberproject/locations/US/subscriptions/123`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:refresh",
+	//   "request": {
+	//     "$ref": "RefreshSubscriptionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "analyticshub.projects.locations.subscriptions.revoke":
+
+type ProjectsLocationsSubscriptionsRevokeCall struct {
+	s                         *Service
+	name                      string
+	revokesubscriptionrequest *RevokeSubscriptionRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Revoke: Revokes a given subscription.
+//
+//   - name: Resource name of the subscription to revoke. e.g.
+//     projects/123/locations/US/subscriptions/456.
+func (r *ProjectsLocationsSubscriptionsService) Revoke(name string, revokesubscriptionrequest *RevokeSubscriptionRequest) *ProjectsLocationsSubscriptionsRevokeCall {
+	c := &ProjectsLocationsSubscriptionsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.revokesubscriptionrequest = revokesubscriptionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSubscriptionsRevokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsSubscriptionsRevokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSubscriptionsRevokeCall) Context(ctx context.Context) *ProjectsLocationsSubscriptionsRevokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSubscriptionsRevokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSubscriptionsRevokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.revokesubscriptionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:revoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.subscriptions.revoke" call.
+// Exactly one of *RevokeSubscriptionResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *RevokeSubscriptionResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSubscriptionsRevokeCall) Do(opts ...googleapi.CallOption) (*RevokeSubscriptionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RevokeSubscriptionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revokes a given subscription.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}:revoke",
+	//   "httpMethod": "POST",
+	//   "id": "analyticshub.projects.locations.subscriptions.revoke",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the subscription to revoke. e.g. projects/123/locations/US/subscriptions/456",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:revoke",
+	//   "request": {
+	//     "$ref": "RevokeSubscriptionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RevokeSubscriptionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",

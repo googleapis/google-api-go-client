@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "bigquerydatatransfer:v1"
 const apiName = "bigquerydatatransfer"
@@ -458,7 +459,7 @@ type DataSourceParameter struct {
 	// Immutable: Cannot be changed after initial creation.
 	Immutable bool `json:"immutable,omitempty"`
 
-	// MaxValue: For integer and double values specifies maxminum allowed
+	// MaxValue: For integer and double values specifies maximum allowed
 	// value.
 	MaxValue float64 `json:"maxValue,omitempty"`
 
@@ -489,6 +490,7 @@ type DataSourceParameter struct {
 	//   "BOOLEAN" - Boolean parameter.
 	//   "RECORD" - Deprecated. This field has no effect.
 	//   "PLUS_PAGE" - Page ID for a Google+ Page.
+	//   "LIST" - List of strings parameter.
 	Type string `json:"type,omitempty"`
 
 	// ValidationDescription: Description of the requirements for this
@@ -583,6 +585,36 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionConfiguration: Represents the encryption configuration for
+// a transfer.
+type EncryptionConfiguration struct {
+	// KmsKeyName: The name of the KMS key used for encrypting BigQuery
+	// data.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // EnrollDataSourcesRequest: A request to enroll a set of data sources
@@ -809,7 +841,7 @@ func (s *ListTransferRunsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -976,12 +1008,16 @@ func (s *ScheduleTransferRunsResponse) MarshalJSON() ([]byte, error) {
 // StartManualTransferRunsRequest: A request to start manual transfer
 // runs.
 type StartManualTransferRunsRequest struct {
-	// RequestedRunTime: Specific run_time for a transfer run to be started.
-	// The requested_run_time must not be in the future.
+	// RequestedRunTime: A run_time timestamp for historical data files or
+	// reports that are scheduled to be transferred by the scheduled
+	// transfer run. requested_run_time must be a past time and cannot
+	// include future time values.
 	RequestedRunTime string `json:"requestedRunTime,omitempty"`
 
-	// RequestedTimeRange: Time range for the transfer runs that should be
-	// started.
+	// RequestedTimeRange: A time_range start and end timestamp for
+	// historical data files or reports that are scheduled to be transferred
+	// by the scheduled transfer run. requested_time_range must be a past
+	// time and cannot include future time values.
 	RequestedTimeRange *TimeRange `json:"requestedTimeRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequestedRunTime") to
@@ -1163,6 +1199,14 @@ type TransferConfig struct {
 	// preferences to the email address of the user who owns this transfer
 	// config.
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
+
+	// EncryptionConfiguration: The encryption configuration part.
+	// Currently, it is only used for the optional KMS key name. The
+	// BigQuery service account of your project must be granted permissions
+	// to use the key. Read methods will return the key name applied in
+	// effect. Write methods will apply the key if it is present, or
+	// otherwise try to apply project default keys if it is absent.
+	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
 	// Name: The resource name of the transfer config. Transfer config names
 	// have the form
@@ -1526,17 +1570,17 @@ func (c *ProjectsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1673,17 +1717,17 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckValidCredsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1827,17 +1871,17 @@ func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
 		ServerResponse: googleapi.ServerResponse{
@@ -1995,17 +2039,17 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDataSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2176,17 +2220,17 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2326,17 +2370,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2500,17 +2544,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2682,17 +2726,17 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckValidCredsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2836,17 +2880,17 @@ func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
 		ServerResponse: googleapi.ServerResponse{
@@ -3004,17 +3048,17 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDataSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3120,10 +3164,8 @@ func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transfer
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to create the transfer
@@ -3134,7 +3176,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authoriza
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -3151,13 +3193,12 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) ServiceAccountName(serviceA
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to create the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to create the transfer
+// config.
 func (c *ProjectsLocationsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -3230,17 +3271,17 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -3263,7 +3304,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3275,12 +3316,12 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3384,17 +3425,17 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3534,17 +3575,17 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -3711,17 +3752,17 @@ func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTransferConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3835,10 +3876,8 @@ func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transfercon
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to update the transfer
@@ -3849,7 +3888,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) AuthorizationCode(authorizat
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -3873,13 +3912,12 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to update the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to update the transfer
+// config.
 func (c *ProjectsLocationsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -3952,17 +3990,17 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -3985,7 +4023,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3997,7 +4035,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4008,7 +4046,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4122,17 +4160,17 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScheduleTransferRunsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4146,6 +4184,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
 	//   "httpMethod": "POST",
@@ -4271,17 +4310,17 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StartManualTransferRunsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4412,17 +4451,17 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4564,17 +4603,17 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferRun{
 		ServerResponse: googleapi.ServerResponse{
@@ -4765,17 +4804,17 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTransferRunsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5017,17 +5056,17 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTransferLogsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5151,10 +5190,8 @@ func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *T
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to create the transfer
@@ -5165,7 +5202,7 @@ func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode 
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -5182,13 +5219,12 @@ func (c *ProjectsTransferConfigsCreateCall) ServiceAccountName(serviceAccountNam
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to create the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to create the transfer
+// config.
 func (c *ProjectsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -5261,17 +5297,17 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5294,7 +5330,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5306,12 +5342,12 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5415,17 +5451,17 @@ func (c *ProjectsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5565,17 +5601,17 @@ func (c *ProjectsTransferConfigsGetCall) Do(opts ...googleapi.CallOption) (*Tran
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5742,17 +5778,17 @@ func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTransferConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5866,10 +5902,8 @@ func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *Tran
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to update the transfer
@@ -5880,7 +5914,7 @@ func (c *ProjectsTransferConfigsPatchCall) AuthorizationCode(authorizationCode s
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -5904,13 +5938,12 @@ func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *Projec
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to update the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to update the transfer
+// config.
 func (c *ProjectsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -5983,17 +6016,17 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6016,7 +6049,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6028,7 +6061,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6039,7 +6072,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6153,17 +6186,17 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScheduleTransferRunsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6177,6 +6210,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
 	//   "httpMethod": "POST",
@@ -6302,17 +6336,17 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StartManualTransferRunsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6443,17 +6477,17 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6595,17 +6629,17 @@ func (c *ProjectsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferRun{
 		ServerResponse: googleapi.ServerResponse{
@@ -6796,17 +6830,17 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTransferRunsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7048,17 +7082,17 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTransferLogsResponse{
 		ServerResponse: googleapi.ServerResponse{

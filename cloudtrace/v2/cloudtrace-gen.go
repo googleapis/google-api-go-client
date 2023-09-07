@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudtrace:v2"
 const apiName = "cloudtrace"
@@ -252,8 +253,8 @@ type Attributes struct {
 	// 128 bytes long. The value can be a string up to 256 bytes, a signed
 	// 64-bit integer, or the boolean values `true` or `false`. For example:
 	// "/instance_id": { "string_value": { "value": "my-instance" } }
-	// "/http/request_bytes": { "int_value": 300 } "abc.com/myattribute": {
-	// "bool_value": false }
+	// "/http/request_bytes": { "int_value": 300 }
+	// "example.com/myattribute": { "bool_value": false }
 	AttributeMap map[string]AttributeValue `json:"attributeMap,omitempty"`
 
 	// DroppedAttributesCount: The number of attributes that were discarded.
@@ -496,7 +497,7 @@ func (s *Module) MarshalJSON() ([]byte, error) {
 // be nested to form a trace tree. Often, a trace contains a root span
 // that describes the end-to-end latency, and one or more subspans for
 // its sub-operations. A trace can also contain multiple root spans, or
-// none at all. Spans do not need to be contiguous—there might be gaps
+// none at all. Spans do not need to be contiguous. There might be gaps
 // or overlaps between spans in a trace.
 type Span struct {
 	// Attributes: A set of attributes on the span. You can have up to 32
@@ -640,8 +641,9 @@ type StackFrame struct {
 	LoadModule *Module `json:"loadModule,omitempty"`
 
 	// OriginalFunctionName: An un-mangled function name, if `function_name`
-	// is mangled (http://www.avabodh.com/cxxin/namemangling.html). The name
-	// can be fully-qualified (up to 1024 bytes).
+	// is mangled. To get information about name mangling, run this search
+	// (https://www.google.com/search?q=cxx+name+mangling). The name can be
+	// fully-qualified (up to 1024 bytes).
 	OriginalFunctionName *TruncatableString `json:"originalFunctionName,omitempty"`
 
 	// SourceVersion: The version of the deployed source code (up to 128
@@ -993,17 +995,17 @@ func (c *ProjectsTracesBatchWriteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1142,17 +1144,17 @@ func (c *ProjectsTracesSpansCreateSpanCall) Do(opts ...googleapi.CallOption) (*S
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Span{
 		ServerResponse: googleapi.ServerResponse{

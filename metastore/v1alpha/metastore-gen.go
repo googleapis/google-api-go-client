@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "metastore:v1alpha"
 const apiName = "metastore"
@@ -242,6 +243,47 @@ type ProjectsLocationsServicesMetadataImportsService struct {
 	s *APIService
 }
 
+// AlterMetadataResourceLocationRequest: Request message for
+// DataprocMetastore.AlterMetadataResourceLocation.
+type AlterMetadataResourceLocationRequest struct {
+	// LocationUri: Required. The new location URI for the metadata
+	// resource.
+	LocationUri string `json:"locationUri,omitempty"`
+
+	// ResourceName: Required. The relative metadata resource name in the
+	// following format.databases/{database_id} or
+	// databases/{database_id}/tables/{table_id} or
+	// databases/{database_id}/tables/{table_id}/partitions/{partition_id}
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AlterMetadataResourceLocationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AlterMetadataResourceLocationResponse: Response message for
+// DataprocMetastore.AlterMetadataResourceLocation.
+type AlterMetadataResourceLocationResponse struct {
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -388,15 +430,15 @@ type BackendMetastore struct {
 	//
 	// Possible values:
 	//   "METASTORE_TYPE_UNSPECIFIED" - The metastore type is not set.
+	//   "DATAPLEX" - The backend metastore is Dataplex.
 	//   "BIGQUERY" - The backend metastore is BigQuery.
 	//   "DATAPROC_METASTORE" - The backend metastore is Dataproc Metastore.
 	MetastoreType string `json:"metastoreType,omitempty"`
 
 	// Name: The relative resource name of the metastore that is being
 	// federated. The formats of the relative resource names for the
-	// currently supported metastores are listed below: Dataplex:
-	// projects/{project_id}/locations/{location}/lakes/{lake_id} BigQuery:
-	// projects/{project_id} Dataproc Metastore:
+	// currently supported metastores are listed below: BigQuery
+	// projects/{project_id} Dataproc Metastore
 	// projects/{project_id}/locations/{location}/services/{service_id}
 	Name string `json:"name,omitempty"`
 
@@ -514,9 +556,11 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa].
 	// group:{emailid}: An email address that represents a Google group. For
-	// example, admins@example.com. deleted:user:{emailid}?uid={uniqueid}:
-	// An email address (plus unique identifier) representing a user that
-	// has been recently deleted. For example,
+	// example, admins@example.com. domain:{domain}: The G Suite domain
+	// (primary) that represents all the users of that domain. For example,
+	// google.com or example.com. deleted:user:{emailid}?uid={uniqueid}: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
 	// alice@example.com?uid=123456789012345678901. If the user is
 	// recovered, this value reverts to user:{emailid} and the recovered
 	// user retains the role in the binding.
@@ -531,9 +575,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// admins@example.com?uid=123456789012345678901. If the group is
 	// recovered, this value reverts to group:{emailid} and the recovered
-	// group retains the role in the binding. domain:{domain}: The G Suite
-	// domain (primary) that represents all the users of that domain. For
-	// example, google.com or example.com.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of members, or principals.
@@ -563,21 +605,26 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CancelOperationRequest: The request message for
+// Operations.CancelOperation.
+type CancelOperationRequest struct {
+}
+
 // Consumer: Contains information of the customer's network
-// configurations.
+// configurations.Next available ID: 5
 type Consumer struct {
 	// EndpointUri: Output only. The URI of the endpoint used to access the
 	// metastore service.
 	EndpointUri string `json:"endpointUri,omitempty"`
 
-	// Subnetwork: The subnetwork of the customer project from which an IP
-	// address is reserved and used as the Dataproc Metastore service's
-	// endpoint. It is accessible to hosts in the subnet and to all hosts in
-	// a subnet in the same region and same network. There must be at least
-	// one IP address available in the subnet's primary range. The subnet is
-	// specified in the following
-	// form:`projects/{project_number}/regions/{region_id}/subnetworks/{subne
-	// twork_id}
+	// Subnetwork: Immutable. The subnetwork of the customer project from
+	// which an IP address is reserved and used as the Dataproc Metastore
+	// service's endpoint. It is accessible to hosts in the subnet and to
+	// all hosts in a subnet in the same region and same network. There must
+	// be at least one IP address available in the subnet's primary range.
+	// The subnet is specified in the following
+	// form:projects/{project_number}/regions/{region_id}/subnetworks/{subnet
+	// work_id}
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndpointUri") to
@@ -753,6 +800,37 @@ type EncryptionConfig struct {
 
 func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ErrorDetails: Error details in public error message for
+// DataprocMetastore.QueryMetadata.
+type ErrorDetails struct {
+	// Details: Additional structured details about this error.Keys define
+	// the failure items. Value describes the exception or details of the
+	// item.
+	Details map[string]string `json:"details,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1364,7 +1442,7 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1676,12 +1754,57 @@ func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MoveTableToDatabaseRequest: Request message for
+// DataprocMetastore.MoveTableToDatabase.
+type MoveTableToDatabaseRequest struct {
+	// DbName: Required. The name of the database where the table resides.
+	DbName string `json:"dbName,omitempty"`
+
+	// DestinationDbName: Required. The name of the database where the table
+	// should be moved.
+	DestinationDbName string `json:"destinationDbName,omitempty"`
+
+	// TableName: Required. The name of the table to be moved.
+	TableName string `json:"tableName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DbName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DbName") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveTableToDatabaseRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MoveTableToDatabaseResponse: Response message for
+// DataprocMetastore.MoveTableToDatabase.
+type MoveTableToDatabaseResponse struct {
+}
+
 // NetworkConfig: Network configuration for the Dataproc Metastore
-// service.
+// service.Next available ID: 4
 type NetworkConfig struct {
 	// Consumers: Immutable. The consumer-side network configuration for the
 	// Dataproc Metastore instance.
 	Consumers []*Consumer `json:"consumers,omitempty"`
+
+	// CustomRoutesEnabled: Enables custom routes to be imported and
+	// exported for the Dataproc Metastore service's peered VPC network.
+	CustomRoutesEnabled bool `json:"customRoutesEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Consumers") to
 	// unconditionally include in API requests. By default, fields with
@@ -1731,8 +1854,8 @@ type Operation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is
@@ -1928,15 +2051,103 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryMetadataRequest: Request message for
+// DataprocMetastore.QueryMetadata.
+type QueryMetadataRequest struct {
+	// Query: Required. A read-only SQL query to execute against the
+	// metadata database. The query cannot change or mutate the data.
+	Query string `json:"query,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Query") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryMetadataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryMetadataRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryMetadataResponse: Response message for
+// DataprocMetastore.QueryMetadata.
+type QueryMetadataResponse struct {
+	// ResultManifestUri: The manifest URI is link to a JSON instance in
+	// Cloud Storage. This instance manifests immediately along with
+	// QueryMetadataResponse. The content of the URI is not retriable until
+	// the long-running operation query against the metadata finishes.
+	ResultManifestUri string `json:"resultManifestUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResultManifestUri")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResultManifestUri") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryMetadataResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryMetadataResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RemoveIamPolicyRequest: Request message for
 // DataprocMetastore.RemoveIamPolicy.
 type RemoveIamPolicyRequest struct {
+	// Asynchronous: Optional. Removes IAM policy attached to database or
+	// table asynchronously when it is set. The default is false.
+	Asynchronous bool `json:"asynchronous,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Asynchronous") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asynchronous") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoveIamPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // RemoveIamPolicyResponse: Response message for
 // DataprocMetastore.RemoveIamPolicy.
 type RemoveIamPolicyResponse struct {
-	// Success: whether related policies are removed
+	// Success: True if the policy is successfully removed.
 	Success bool `json:"success,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2077,6 +2288,65 @@ func (s *RestoreServiceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ScalingConfig: Represents the scaling configuration of a metastore
+// service.
+type ScalingConfig struct {
+	// InstanceSize: An enum of readable instance sizes, with each instance
+	// size mapping to a float value (e.g. InstanceSize.EXTRA_SMALL =
+	// scaling_factor(0.1))
+	//
+	// Possible values:
+	//   "INSTANCE_SIZE_UNSPECIFIED" - Unspecified instance size
+	//   "EXTRA_SMALL" - Extra small instance size, maps to a scaling factor
+	// of 0.1.
+	//   "SMALL" - Small instance size, maps to a scaling factor of 0.5.
+	//   "MEDIUM" - Medium instance size, maps to a scaling factor of 1.0.
+	//   "LARGE" - Large instance size, maps to a scaling factor of 3.0.
+	//   "EXTRA_LARGE" - Extra large instance size, maps to a scaling factor
+	// of 6.0.
+	InstanceSize string `json:"instanceSize,omitempty"`
+
+	// ScalingFactor: Scaling factor, increments of 0.1 for values less than
+	// 1.0, and increments of 1.0 for values greater than 1.0.
+	ScalingFactor float64 `json:"scalingFactor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScalingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ScalingConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod ScalingConfig
+	var s1 struct {
+		ScalingFactor gensupport.JSONFloat64 `json:"scalingFactor"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScalingFactor = float64(s1.ScalingFactor)
+	return nil
+}
+
 // Secret: A securely stored value.
 type Secret struct {
 	// CloudSecret: The relative resource name of a Secret Manager secret
@@ -2169,8 +2439,8 @@ type Service struct {
 	// form:projects/{project_number}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
 
-	// NetworkConfig: Immutable. The configuration specifying the network
-	// settings for the Dataproc Metastore service.
+	// NetworkConfig: The configuration specifying the network settings for
+	// the Dataproc Metastore service.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
 
 	// Port: The TCP port at which the metastore service is reached.
@@ -2189,6 +2459,9 @@ type Service struct {
 	//   "STABLE" - The STABLE release channel contains features that are
 	// considered stable and have been validated for production use.
 	ReleaseChannel string `json:"releaseChannel,omitempty"`
+
+	// ScalingConfig: Scaling configuration of the metastore service.
+	ScalingConfig *ScalingConfig `json:"scalingConfig,omitempty"`
 
 	// State: Output only. The current state of the metastore service.
 	//
@@ -2215,6 +2488,10 @@ type Service struct {
 	// StateMessage: Output only. Additional information about the current
 	// state of the metastore service, if available.
 	StateMessage string `json:"stateMessage,omitempty"`
+
+	// TelemetryConfig: The configuration specifying telemetry settings for
+	// the Dataproc Metastore service. If unspecified defaults to JSON.
+	TelemetryConfig *TelemetryConfig `json:"telemetryConfig,omitempty"`
 
 	// Tier: The tier of the service.
 	//
@@ -2340,6 +2617,41 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TelemetryConfig: Telemetry Configuration for the Dataproc Metastore
+// service.
+type TelemetryConfig struct {
+	// LogFormat: The output format of the Dataproc Metastore service's
+	// logs.
+	//
+	// Possible values:
+	//   "LOG_FORMAT_UNSPECIFIED" - The LOG_FORMAT is not set.
+	//   "LEGACY" - Logging output uses the legacy textPayload format.
+	//   "JSON" - Logging output uses the jsonPayload format.
+	LogFormat string `json:"logFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogFormat") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TelemetryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TelemetryConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2505,17 +2817,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2677,17 +2989,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2881,17 +3193,17 @@ func (c *ProjectsLocationsFederationsCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3044,17 +3356,17 @@ func (c *ProjectsLocationsFederationsDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3198,17 +3510,17 @@ func (c *ProjectsLocationsFederationsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Federation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3367,17 +3679,17 @@ func (c *ProjectsLocationsFederationsGetIamPolicyCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3558,17 +3870,17 @@ func (c *ProjectsLocationsFederationsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFederationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3767,17 +4079,17 @@ func (c *ProjectsLocationsFederationsPatchCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3925,17 +4237,17 @@ func (c *ProjectsLocationsFederationsSetIamPolicyCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4075,17 +4387,17 @@ func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4121,6 +4433,157 @@ func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.operations.cancel":
+
+type ProjectsLocationsOperationsCancelCall struct {
+	s                      *APIService
+	name                   string
+	canceloperationrequest *CancelOperationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns google.rpc.Code.UNIMPLEMENTED. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// Code.CANCELLED.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
+	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceloperationrequest = canceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.operations.cancel" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelOperationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4213,17 +4676,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4361,17 +4824,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4425,14 +4888,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// UNIMPLEMENTED.NOTE: the name binding allows API services to override
-// the binding to use different resource name schemes, such as
-// users/*/operations. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// UNIMPLEMENTED.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -4537,17 +4993,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4561,7 +5017,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding allows API services to override the binding to use different resource name schemes, such as users/*/operations. To override the binding, API services can add a binding such as \"/v1/{name=users/*}/operations\" to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "metastore.projects.locations.operations.list",
@@ -4623,6 +5079,154 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "metastore.projects.locations.services.alterLocation":
+
+type ProjectsLocationsServicesAlterLocationCall struct {
+	s                                    *APIService
+	service                              string
+	altermetadataresourcelocationrequest *AlterMetadataResourceLocationRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// AlterLocation: Alter metadata resource location. The metadata
+// resource can be a database, table, or partition. This functionality
+// only updates the parent directory for the respective metadata
+// resource and does not transfer any existing data to the new location.
+//
+//   - service: The relative resource name of the metastore service to
+//     mutate metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) AlterLocation(service string, altermetadataresourcelocationrequest *AlterMetadataResourceLocationRequest) *ProjectsLocationsServicesAlterLocationCall {
+	c := &ProjectsLocationsServicesAlterLocationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.altermetadataresourcelocationrequest = altermetadataresourcelocationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesAlterLocationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesAlterLocationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesAlterLocationCall) Context(ctx context.Context) *ProjectsLocationsServicesAlterLocationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesAlterLocationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesAlterLocationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.altermetadataresourcelocationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:alterLocation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.alterLocation" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesAlterLocationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Alter metadata resource location. The metadata resource can be a database, table, or partition. This functionality only updates the parent directory for the respective metadata resource and does not transfer any existing data to the new location.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterLocation",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.alterLocation",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+service}:alterLocation",
+	//   "request": {
+	//     "$ref": "AlterMetadataResourceLocationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "metastore.projects.locations.services.create":
@@ -4740,17 +5344,17 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4903,17 +5507,17 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5050,17 +5654,17 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5202,17 +5806,17 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -5371,17 +5975,17 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5561,17 +6165,17 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5652,6 +6256,151 @@ func (c *ProjectsLocationsServicesListCall) Pages(ctx context.Context, f func(*L
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "metastore.projects.locations.services.moveTableToDatabase":
+
+type ProjectsLocationsServicesMoveTableToDatabaseCall struct {
+	s                          *APIService
+	service                    string
+	movetabletodatabaserequest *MoveTableToDatabaseRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// MoveTableToDatabase: Move a table to another database.
+//
+//   - service: The relative resource name of the metastore service to
+//     mutate metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) MoveTableToDatabase(service string, movetabletodatabaserequest *MoveTableToDatabaseRequest) *ProjectsLocationsServicesMoveTableToDatabaseCall {
+	c := &ProjectsLocationsServicesMoveTableToDatabaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.movetabletodatabaserequest = movetabletodatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMoveTableToDatabaseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Context(ctx context.Context) *ProjectsLocationsServicesMoveTableToDatabaseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.movetabletodatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:moveTableToDatabase")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.moveTableToDatabase" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Move a table to another database.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:moveTableToDatabase",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.moveTableToDatabase",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+service}:moveTableToDatabase",
+	//   "request": {
+	//     "$ref": "MoveTableToDatabaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "metastore.projects.locations.services.patch":
@@ -5770,17 +6519,17 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5824,6 +6573,151 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   "path": "v1alpha/{+name}",
 	//   "request": {
 	//     "$ref": "Service"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.queryMetadata":
+
+type ProjectsLocationsServicesQueryMetadataCall struct {
+	s                    *APIService
+	service              string
+	querymetadatarequest *QueryMetadataRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// QueryMetadata: Query DPMS metadata.
+//
+//   - service: The relative resource name of the metastore service to
+//     query metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) QueryMetadata(service string, querymetadatarequest *QueryMetadataRequest) *ProjectsLocationsServicesQueryMetadataCall {
+	c := &ProjectsLocationsServicesQueryMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.querymetadatarequest = querymetadatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesQueryMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Context(ctx context.Context) *ProjectsLocationsServicesQueryMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesQueryMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.querymetadatarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:queryMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.queryMetadata" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Query DPMS metadata.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:queryMetadata",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.queryMetadata",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to query metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+service}:queryMetadata",
+	//   "request": {
+	//     "$ref": "QueryMetadataRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -5928,17 +6822,17 @@ func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RemoveIamPolicyResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6073,17 +6967,17 @@ func (c *ProjectsLocationsServicesRestoreCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6220,17 +7114,17 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6370,17 +7264,17 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6540,17 +7434,17 @@ func (c *ProjectsLocationsServicesBackupsCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6703,17 +7597,17 @@ func (c *ProjectsLocationsServicesBackupsDeleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6857,17 +7751,17 @@ func (c *ProjectsLocationsServicesBackupsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Backup{
 		ServerResponse: googleapi.ServerResponse{
@@ -7026,17 +7920,17 @@ func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7217,17 +8111,17 @@ func (c *ProjectsLocationsServicesBackupsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBackupsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7403,17 +8297,17 @@ func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7553,17 +8447,17 @@ func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7725,17 +8619,17 @@ func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7875,17 +8769,17 @@ func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -8025,17 +8919,17 @@ func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8197,17 +9091,17 @@ func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -8347,17 +9241,17 @@ func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -8497,17 +9391,17 @@ func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8667,17 +9561,17 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8829,17 +9723,17 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &MetadataImport{
 		ServerResponse: googleapi.ServerResponse{
@@ -9014,17 +9908,17 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListMetadataImportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9224,17 +10118,17 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{

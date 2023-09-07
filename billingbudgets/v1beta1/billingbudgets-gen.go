@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "billingbudgets:v1beta1"
 const apiName = "billingbudgets"
@@ -465,9 +466,17 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// `projects/{project}`, specifying that usage from only this set of
 	// projects should be included in the budget. If omitted, the report
 	// will include all usage for the billing account, regardless of which
-	// project the usage occurred on. Only zero or one project can be
-	// specified currently.
+	// project the usage occurred on.
 	Projects []string `json:"projects,omitempty"`
+
+	// ResourceAncestors: Optional. A set of folder and organization names
+	// of the form `folders/{folderId}` or `organizations/{organizationId}`,
+	// specifying that usage from only this set of folders and organizations
+	// should be included in the budget. If omitted, the budget includes all
+	// usage that the billing account pays for. If the folder or
+	// organization contains projects that are paid for by a different Cloud
+	// Billing account, the budget *doesn't* apply to those projects.
+	ResourceAncestors []string `json:"resourceAncestors,omitempty"`
 
 	// Services: Optional. A set of services of the form
 	// `services/{service_id}`, specifying that usage from only this set of
@@ -857,17 +866,17 @@ func (c *BillingAccountsBudgetsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{
@@ -994,17 +1003,17 @@ func (c *BillingAccountsBudgetsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1146,17 +1155,17 @@ func (c *BillingAccountsBudgetsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{
@@ -1316,17 +1325,17 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1494,17 +1503,17 @@ func (c *BillingAccountsBudgetsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{

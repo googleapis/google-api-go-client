@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -77,6 +77,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudkms:v1"
 const apiName = "cloudkms"
@@ -637,7 +638,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -654,9 +657,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -848,6 +849,10 @@ type CryptoKey struct {
 	// AsymmetricSign and GetPublicKey.
 	//   "ASYMMETRIC_DECRYPT" - CryptoKeys with this purpose may be used
 	// with AsymmetricDecrypt and GetPublicKey.
+	//   "RAW_ENCRYPT_DECRYPT" - CryptoKeys with this purpose may be used
+	// with RawEncrypt and RawDecrypt. This purpose is meant to be used for
+	// interoperable symmetric encryption and does not support automatic
+	// CryptoKey rotation.
 	//   "MAC" - CryptoKeys with this purpose may be used with MacSign.
 	Purpose string `json:"purpose,omitempty"`
 
@@ -906,6 +911,14 @@ type CryptoKeyVersion struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit
+	// keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit
+	// keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -943,12 +956,20 @@ type CryptoKeyVersion struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -972,6 +993,11 @@ type CryptoKeyVersion struct {
 	// DESTROY_SCHEDULED.
 	DestroyTime string `json:"destroyTime,omitempty"`
 
+	// ExternalDestructionFailureReason: Output only. The root cause of the
+	// most recent external destruction failure. Only present if state is
+	// EXTERNAL_DESTRUCTION_FAILED.
+	ExternalDestructionFailureReason string `json:"externalDestructionFailureReason,omitempty"`
+
 	// ExternalProtectionLevelOptions: ExternalProtectionLevelOptions stores
 	// a group of additional fields for configuring a CryptoKeyVersion that
 	// are specific to the EXTERNAL protection level and EXTERNAL_VPC
@@ -981,6 +1007,11 @@ type CryptoKeyVersion struct {
 	// GenerateTime: Output only. The time this CryptoKeyVersion's key
 	// material was generated.
 	GenerateTime string `json:"generateTime,omitempty"`
+
+	// GenerationFailureReason: Output only. The root cause of the most
+	// recent generation failure. Only present if state is
+	// GENERATION_FAILED.
+	GenerationFailureReason string `json:"generationFailureReason,omitempty"`
 
 	// ImportFailureReason: Output only. The root cause of the most recent
 	// import failure. Only present if state is IMPORT_FAILED.
@@ -1047,6 +1078,18 @@ type CryptoKeyVersion struct {
 	// may not be used, enabled, disabled, or destroyed. The submitted key
 	// material has been discarded. Additional details can be found in
 	// CryptoKeyVersion.import_failure_reason.
+	//   "GENERATION_FAILED" - This version was not generated successfully.
+	// It may not be used, enabled, disabled, or destroyed. Additional
+	// details can be found in CryptoKeyVersion.generation_failure_reason.
+	//   "PENDING_EXTERNAL_DESTRUCTION" - This version was destroyed, and it
+	// may not be used or enabled again. Cloud KMS is waiting for the
+	// corresponding key material residing in an external key manager to be
+	// destroyed.
+	//   "EXTERNAL_DESTRUCTION_FAILED" - This version was destroyed, and it
+	// may not be used or enabled again. However, Cloud KMS could not
+	// confirm that the corresponding key material residing in an external
+	// key manager was destroyed. Additional details can be found in
+	// CryptoKeyVersion.external_destruction_failure_reason.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1089,6 +1132,14 @@ type CryptoKeyVersionTemplate struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit
+	// keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit
+	// keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -1126,12 +1177,20 @@ type CryptoKeyVersionTemplate struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -1347,6 +1406,49 @@ func (s *Digest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EkmConfig: An EkmConfig is a singleton resource that represents
+// configuration parameters that apply to all CryptoKeys and
+// CryptoKeyVersions with a ProtectionLevel of EXTERNAL_VPC in a given
+// project and location.
+type EkmConfig struct {
+	// DefaultEkmConnection: Optional. Resource name of the default
+	// EkmConnection. Setting this field to the empty string removes the
+	// default.
+	DefaultEkmConnection string `json:"defaultEkmConnection,omitempty"`
+
+	// Name: Output only. The resource name for the EkmConfig in the format
+	// `projects/*/locations/*/ekmConfig`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultEkmConnection") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultEkmConnection") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EkmConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EkmConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EkmConnection: An EkmConnection represents an individual EKM
 // connection. It can be used for creating CryptoKeys and
 // CryptoKeyVersions with a ProtectionLevel of EXTERNAL_VPC, as well as
@@ -1357,10 +1459,38 @@ type EkmConnection struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Etag: Optional. This checksum is computed by the server based on the
-	// value of other fields, and may be sent on update requests to ensure
-	// the client has an up-to-date value before proceeding.
+	// CryptoSpacePath: Optional. Identifies the EKM Crypto Space that this
+	// EkmConnection maps to. Note: This field is required if
+	// KeyManagementMode is CLOUD_KMS.
+	CryptoSpacePath string `json:"cryptoSpacePath,omitempty"`
+
+	// Etag: Optional. Etag of the currently stored EkmConnection.
 	Etag string `json:"etag,omitempty"`
+
+	// KeyManagementMode: Optional. Describes who can perform control plane
+	// operations on the EKM. If unset, this defaults to MANUAL.
+	//
+	// Possible values:
+	//   "KEY_MANAGEMENT_MODE_UNSPECIFIED" - Not specified.
+	//   "MANUAL" - EKM-side key management operations on CryptoKeys created
+	// with this EkmConnection must be initiated from the EKM directly and
+	// cannot be performed from Cloud KMS. This means that: * When creating
+	// a CryptoKeyVersion associated with this EkmConnection, the caller
+	// must supply the key path of pre-existing external key material that
+	// will be linked to the CryptoKeyVersion. * Destruction of external key
+	// material cannot be requested via the Cloud KMS API and must be
+	// performed directly in the EKM. * Automatic rotation of key material
+	// is not supported.
+	//   "CLOUD_KMS" - All CryptoKeys created with this EkmConnection use
+	// EKM-side key management operations initiated from Cloud KMS. This
+	// means that: * When a CryptoKeyVersion associated with this
+	// EkmConnection is created, the EKM automatically generates new key
+	// material and a new key path. The caller cannot supply the key path of
+	// pre-existing external key material. * Destruction of external key
+	// material associated with this EkmConnection can be requested by
+	// calling DestroyCryptoKeyVersion. * Automatic rotation of key material
+	// is supported.
+	KeyManagementMode string `json:"keyManagementMode,omitempty"`
 
 	// Name: Output only. The resource name for the EkmConnection in the
 	// format `projects/*/locations/*/ekmConnections/*`.
@@ -1760,6 +1890,14 @@ type ImportCryptoKeyVersionRequest struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit
+	// keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit
+	// keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -1797,12 +1935,20 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -2350,7 +2496,7 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -2709,7 +2855,7 @@ func (s *MacVerifyResponse) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2718,17 +2864,17 @@ func (s *MacVerifyResponse) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2813,6 +2959,14 @@ type PublicKey struct {
 	// Possible values:
 	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
 	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit
+	// keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit
+	// keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
 	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
 	// digest.
 	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
@@ -2850,12 +3004,20 @@ type PublicKey struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -2922,6 +3084,417 @@ type PublicKey struct {
 
 func (s *PublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod PublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawDecryptRequest: Request message for
+// KeyManagementService.RawDecrypt.
+type RawDecryptRequest struct {
+	// AdditionalAuthenticatedData: Optional. Optional data that must match
+	// the data originally supplied in
+	// RawEncryptRequest.additional_authenticated_data.
+	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
+
+	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
+	// checksum of the RawDecryptRequest.additional_authenticated_data. If
+	// specified, KeyManagementService will verify the integrity of the
+	// received additional_authenticated_data using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(additional_authenticated_data) is equal to
+	// additional_authenticated_data_crc32c, and if so, perform a limited
+	// number of retries. A persistent mismatch may indicate an issue in
+	// your computation of the CRC32C checksum. Note: This field is defined
+	// as int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	AdditionalAuthenticatedDataCrc32c int64 `json:"additionalAuthenticatedDataCrc32c,omitempty,string"`
+
+	// Ciphertext: Required. The encrypted data originally returned in
+	// RawEncryptResponse.ciphertext.
+	Ciphertext string `json:"ciphertext,omitempty"`
+
+	// CiphertextCrc32c: Optional. An optional CRC32C checksum of the
+	// RawDecryptRequest.ciphertext. If specified, KeyManagementService will
+	// verify the integrity of the received ciphertext using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(ciphertext) is equal to ciphertext_crc32c,
+	// and if so, perform a limited number of retries. A persistent mismatch
+	// may indicate an issue in your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across different languages. However, it is a non-negative integer,
+	// which will never exceed 2^32-1, and can be safely downconverted to
+	// uint32 in languages that support this type.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
+
+	// InitializationVector: Required. The initialization vector (IV) used
+	// during encryption, which must match the data originally provided in
+	// RawEncryptResponse.initialization_vector.
+	InitializationVector string `json:"initializationVector,omitempty"`
+
+	// InitializationVectorCrc32c: Optional. An optional CRC32C checksum of
+	// the RawDecryptRequest.initialization_vector. If specified,
+	// KeyManagementService will verify the integrity of the received
+	// initialization_vector using this checksum. KeyManagementService will
+	// report an error if the checksum verification fails. If you receive a
+	// checksum error, your client should verify that
+	// CRC32C(initialization_vector) is equal to
+	// initialization_vector_crc32c, and if so, perform a limited number of
+	// retries. A persistent mismatch may indicate an issue in your
+	// computation of the CRC32C checksum. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	InitializationVectorCrc32c int64 `json:"initializationVectorCrc32c,omitempty,string"`
+
+	// TagLength: The length of the authentication tag that is appended to
+	// the end of the ciphertext. If unspecified (0), the default value for
+	// the key's algorithm will be used (for AES-GCM, the default value is
+	// 16).
+	TagLength int64 `json:"tagLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawDecryptRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RawDecryptRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawDecryptResponse: Response message for
+// KeyManagementService.RawDecrypt.
+type RawDecryptResponse struct {
+	// Plaintext: The decrypted data.
+	Plaintext string `json:"plaintext,omitempty"`
+
+	// PlaintextCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned RawDecryptResponse.plaintext. An integrity check of
+	// plaintext can be performed by computing the CRC32C checksum of
+	// plaintext and comparing your results to this field. Discard the
+	// response in case of non-matching checksum values, and perform a
+	// limited number of retries. A persistent mismatch may indicate an
+	// issue in your computation of the CRC32C checksum. Note: receiving
+	// this response message indicates that KeyManagementService is able to
+	// successfully decrypt the ciphertext. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	PlaintextCrc32c int64 `json:"plaintextCrc32c,omitempty,string"`
+
+	// ProtectionLevel: The ProtectionLevel of the CryptoKeyVersion used in
+	// decryption.
+	//
+	// Possible values:
+	//   "PROTECTION_LEVEL_UNSPECIFIED" - Not specified.
+	//   "SOFTWARE" - Crypto operations are performed in software.
+	//   "HSM" - Crypto operations are performed in a Hardware Security
+	// Module.
+	//   "EXTERNAL" - Crypto operations are performed by an external key
+	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
+	ProtectionLevel string `json:"protectionLevel,omitempty"`
+
+	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification
+	// field. A flag indicating whether
+	// RawDecryptRequest.additional_authenticated_data_crc32c was received
+	// by KeyManagementService and used for the integrity verification of
+	// additional_authenticated_data. A false value of this field indicates
+	// either that // RawDecryptRequest.additional_authenticated_data_crc32c
+	// was left unset or that it was not delivered to KeyManagementService.
+	// If you've set RawDecryptRequest.additional_authenticated_data_crc32c
+	// but this field is still false, discard the response and perform a
+	// limited number of retries.
+	VerifiedAdditionalAuthenticatedDataCrc32c bool `json:"verifiedAdditionalAuthenticatedDataCrc32c,omitempty"`
+
+	// VerifiedCiphertextCrc32c: Integrity verification field. A flag
+	// indicating whether RawDecryptRequest.ciphertext_crc32c was received
+	// by KeyManagementService and used for the integrity verification of
+	// the ciphertext. A false value of this field indicates either that
+	// RawDecryptRequest.ciphertext_crc32c was left unset or that it was not
+	// delivered to KeyManagementService. If you've set
+	// RawDecryptRequest.ciphertext_crc32c but this field is still false,
+	// discard the response and perform a limited number of retries.
+	VerifiedCiphertextCrc32c bool `json:"verifiedCiphertextCrc32c,omitempty"`
+
+	// VerifiedInitializationVectorCrc32c: Integrity verification field. A
+	// flag indicating whether
+	// RawDecryptRequest.initialization_vector_crc32c was received by
+	// KeyManagementService and used for the integrity verification of
+	// initialization_vector. A false value of this field indicates either
+	// that RawDecryptRequest.initialization_vector_crc32c was left unset or
+	// that it was not delivered to KeyManagementService. If you've set
+	// RawDecryptRequest.initialization_vector_crc32c but this field is
+	// still false, discard the response and perform a limited number of
+	// retries.
+	VerifiedInitializationVectorCrc32c bool `json:"verifiedInitializationVectorCrc32c,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Plaintext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Plaintext") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawDecryptResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RawDecryptResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawEncryptRequest: Request message for
+// KeyManagementService.RawEncrypt.
+type RawEncryptRequest struct {
+	// AdditionalAuthenticatedData: Optional. Optional data that, if
+	// specified, must also be provided during decryption through
+	// RawDecryptRequest.additional_authenticated_data. This field may only
+	// be used in conjunction with an algorithm that accepts additional
+	// authenticated data (for example, AES-GCM). The maximum size depends
+	// on the key version's protection_level. For SOFTWARE keys, the
+	// plaintext must be no larger than 64KiB. For HSM keys, the combined
+	// length of the plaintext and additional_authenticated_data fields must
+	// be no larger than 8KiB.
+	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
+
+	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
+	// checksum of the RawEncryptRequest.additional_authenticated_data. If
+	// specified, KeyManagementService will verify the integrity of the
+	// received additional_authenticated_data using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(additional_authenticated_data) is equal to
+	// additional_authenticated_data_crc32c, and if so, perform a limited
+	// number of retries. A persistent mismatch may indicate an issue in
+	// your computation of the CRC32C checksum. Note: This field is defined
+	// as int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	AdditionalAuthenticatedDataCrc32c int64 `json:"additionalAuthenticatedDataCrc32c,omitempty,string"`
+
+	// InitializationVector: Optional. A customer-supplied initialization
+	// vector that will be used for encryption. If it is not provided for
+	// AES-CBC and AES-CTR, one will be generated. It will be returned in
+	// RawEncryptResponse.initialization_vector.
+	InitializationVector string `json:"initializationVector,omitempty"`
+
+	// InitializationVectorCrc32c: Optional. An optional CRC32C checksum of
+	// the RawEncryptRequest.initialization_vector. If specified,
+	// KeyManagementService will verify the integrity of the received
+	// initialization_vector using this checksum. KeyManagementService will
+	// report an error if the checksum verification fails. If you receive a
+	// checksum error, your client should verify that
+	// CRC32C(initialization_vector) is equal to
+	// initialization_vector_crc32c, and if so, perform a limited number of
+	// retries. A persistent mismatch may indicate an issue in your
+	// computation of the CRC32C checksum. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	InitializationVectorCrc32c int64 `json:"initializationVectorCrc32c,omitempty,string"`
+
+	// Plaintext: Required. The data to encrypt. Must be no larger than
+	// 64KiB. The maximum size depends on the key version's
+	// protection_level. For SOFTWARE keys, the plaintext must be no larger
+	// than 64KiB. For HSM keys, the combined length of the plaintext and
+	// additional_authenticated_data fields must be no larger than 8KiB.
+	Plaintext string `json:"plaintext,omitempty"`
+
+	// PlaintextCrc32c: Optional. An optional CRC32C checksum of the
+	// RawEncryptRequest.plaintext. If specified, KeyManagementService will
+	// verify the integrity of the received plaintext using this checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client
+	// should verify that CRC32C(plaintext) is equal to plaintext_crc32c,
+	// and if so, perform a limited number of retries. A persistent mismatch
+	// may indicate an issue in your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across different languages. However, it is a non-negative integer,
+	// which will never exceed 2^32-1, and can be safely downconverted to
+	// uint32 in languages that support this type.
+	PlaintextCrc32c int64 `json:"plaintextCrc32c,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AdditionalAuthenticatedData") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawEncryptRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RawEncryptRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RawEncryptResponse: Response message for
+// KeyManagementService.RawEncrypt.
+type RawEncryptResponse struct {
+	// Ciphertext: The encrypted data. In the case of AES-GCM, the
+	// authentication tag is the tag_length bytes at the end of this field.
+	Ciphertext string `json:"ciphertext,omitempty"`
+
+	// CiphertextCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned RawEncryptResponse.ciphertext. An integrity check of
+	// ciphertext can be performed by computing the CRC32C checksum of
+	// ciphertext and comparing your results to this field. Discard the
+	// response in case of non-matching checksum values, and perform a
+	// limited number of retries. A persistent mismatch may indicate an
+	// issue in your computation of the CRC32C checksum. Note: This field is
+	// defined as int64 for reasons of compatibility across different
+	// languages. However, it is a non-negative integer, which will never
+	// exceed 2^32-1, and can be safely downconverted to uint32 in languages
+	// that support this type.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
+
+	// InitializationVector: The initialization vector (IV) generated by the
+	// service during encryption. This value must be stored and provided in
+	// RawDecryptRequest.initialization_vector at decryption time.
+	InitializationVector string `json:"initializationVector,omitempty"`
+
+	// InitializationVectorCrc32c: Integrity verification field. A CRC32C
+	// checksum of the returned RawEncryptResponse.initialization_vector. An
+	// integrity check of initialization_vector can be performed by
+	// computing the CRC32C checksum of initialization_vector and comparing
+	// your results to this field. Discard the response in case of
+	// non-matching checksum values, and perform a limited number of
+	// retries. A persistent mismatch may indicate an issue in your
+	// computation of the CRC32C checksum. Note: This field is defined as
+	// int64 for reasons of compatibility across different languages.
+	// However, it is a non-negative integer, which will never exceed
+	// 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	InitializationVectorCrc32c int64 `json:"initializationVectorCrc32c,omitempty,string"`
+
+	// Name: The resource name of the CryptoKeyVersion used in encryption.
+	// Check this field to verify that the intended resource was used for
+	// encryption.
+	Name string `json:"name,omitempty"`
+
+	// ProtectionLevel: The ProtectionLevel of the CryptoKeyVersion used in
+	// encryption.
+	//
+	// Possible values:
+	//   "PROTECTION_LEVEL_UNSPECIFIED" - Not specified.
+	//   "SOFTWARE" - Crypto operations are performed in software.
+	//   "HSM" - Crypto operations are performed in a Hardware Security
+	// Module.
+	//   "EXTERNAL" - Crypto operations are performed by an external key
+	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
+	ProtectionLevel string `json:"protectionLevel,omitempty"`
+
+	// TagLength: The length of the authentication tag that is appended to
+	// the end of the ciphertext.
+	TagLength int64 `json:"tagLength,omitempty"`
+
+	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification
+	// field. A flag indicating whether
+	// RawEncryptRequest.additional_authenticated_data_crc32c was received
+	// by KeyManagementService and used for the integrity verification of
+	// additional_authenticated_data. A false value of this field indicates
+	// either that // RawEncryptRequest.additional_authenticated_data_crc32c
+	// was left unset or that it was not delivered to KeyManagementService.
+	// If you've set RawEncryptRequest.additional_authenticated_data_crc32c
+	// but this field is still false, discard the response and perform a
+	// limited number of retries.
+	VerifiedAdditionalAuthenticatedDataCrc32c bool `json:"verifiedAdditionalAuthenticatedDataCrc32c,omitempty"`
+
+	// VerifiedInitializationVectorCrc32c: Integrity verification field. A
+	// flag indicating whether
+	// RawEncryptRequest.initialization_vector_crc32c was received by
+	// KeyManagementService and used for the integrity verification of
+	// initialization_vector. A false value of this field indicates either
+	// that RawEncryptRequest.initialization_vector_crc32c was left unset or
+	// that it was not delivered to KeyManagementService. If you've set
+	// RawEncryptRequest.initialization_vector_crc32c but this field is
+	// still false, discard the response and perform a limited number of
+	// retries.
+	VerifiedInitializationVectorCrc32c bool `json:"verifiedInitializationVectorCrc32c,omitempty"`
+
+	// VerifiedPlaintextCrc32c: Integrity verification field. A flag
+	// indicating whether RawEncryptRequest.plaintext_crc32c was received by
+	// KeyManagementService and used for the integrity verification of the
+	// plaintext. A false value of this field indicates either that
+	// RawEncryptRequest.plaintext_crc32c was left unset or that it was not
+	// delivered to KeyManagementService. If you've set
+	// RawEncryptRequest.plaintext_crc32c but this field is still false,
+	// discard the response and perform a limited number of retries.
+	VerifiedPlaintextCrc32c bool `json:"verifiedPlaintextCrc32c,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Ciphertext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ciphertext") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RawEncryptResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RawEncryptResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3113,6 +3686,14 @@ func (s *UpdateCryptoKeyPrimaryVersionRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VerifyConnectivityResponse: Response message for
+// EkmService.VerifyConnectivity.
+type VerifyConnectivityResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // WrappingPublicKey: The public key component of the wrapping key. For
 // details of the type of key this public key corresponds to, see the
 // ImportMethod.
@@ -3238,17 +3819,17 @@ func (c *ProjectsLocationsGenerateRandomBytesCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GenerateRandomBytesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3388,17 +3969,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -3431,6 +4012,154 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Location"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// method id "cloudkms.projects.locations.getEkmConfig":
+
+type ProjectsLocationsGetEkmConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetEkmConfig: Returns the EkmConfig singleton resource for a given
+// project and location.
+//
+// - name: The name of the EkmConfig to get.
+func (r *ProjectsLocationsService) GetEkmConfig(name string) *ProjectsLocationsGetEkmConfigCall {
+	c := &ProjectsLocationsGetEkmConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetEkmConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetEkmConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetEkmConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetEkmConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetEkmConfigCall) Context(ctx context.Context) *ProjectsLocationsGetEkmConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetEkmConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetEkmConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.getEkmConfig" call.
+// Exactly one of *EkmConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EkmConfig.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetEkmConfigCall) Do(opts ...googleapi.CallOption) (*EkmConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EkmConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the EkmConfig singleton resource for a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConfig",
+	//   "httpMethod": "GET",
+	//   "id": "cloudkms.projects.locations.getEkmConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the EkmConfig to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EkmConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -3561,17 +4290,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3648,6 +4377,164 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudkms.projects.locations.updateEkmConfig":
+
+type ProjectsLocationsUpdateEkmConfigCall struct {
+	s          *Service
+	name       string
+	ekmconfig  *EkmConfig
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateEkmConfig: Updates the EkmConfig singleton resource for a given
+// project and location.
+//
+//   - name: Output only. The resource name for the EkmConfig in the
+//     format `projects/*/locations/*/ekmConfig`.
+func (r *ProjectsLocationsService) UpdateEkmConfig(name string, ekmconfig *EkmConfig) *ProjectsLocationsUpdateEkmConfigCall {
+	c := &ProjectsLocationsUpdateEkmConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.ekmconfig = ekmconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List
+// of fields to be updated in this request.
+func (c *ProjectsLocationsUpdateEkmConfigCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateEkmConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateEkmConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateEkmConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateEkmConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ekmconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.updateEkmConfig" call.
+// Exactly one of *EkmConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EkmConfig.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Do(opts ...googleapi.CallOption) (*EkmConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EkmConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the EkmConfig singleton resource for a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudkms.projects.locations.updateEkmConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name for the EkmConfig in the format `projects/*/locations/*/ekmConfig`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. List of fields to be updated in this request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EkmConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "EkmConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
 }
 
 // method id "cloudkms.projects.locations.ekmConfig.getIamPolicy":
@@ -3768,17 +4655,17 @@ func (c *ProjectsLocationsEkmConfigGetIamPolicyCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3919,17 +4806,17 @@ func (c *ProjectsLocationsEkmConfigSetIamPolicyCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4070,17 +4957,17 @@ func (c *ProjectsLocationsEkmConfigTestIamPermissionsCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4222,17 +5109,17 @@ func (c *ProjectsLocationsEkmConnectionsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EkmConnection{
 		ServerResponse: googleapi.ServerResponse{
@@ -4377,17 +5264,17 @@ func (c *ProjectsLocationsEkmConnectionsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EkmConnection{
 		ServerResponse: googleapi.ServerResponse{
@@ -4547,17 +5434,17 @@ func (c *ProjectsLocationsEkmConnectionsGetIamPolicyCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4738,17 +5625,17 @@ func (c *ProjectsLocationsEkmConnectionsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEkmConnectionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4928,17 +5815,17 @@ func (c *ProjectsLocationsEkmConnectionsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EkmConnection{
 		ServerResponse: googleapi.ServerResponse{
@@ -5082,17 +5969,17 @@ func (c *ProjectsLocationsEkmConnectionsSetIamPolicyCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5233,17 +6120,17 @@ func (c *ProjectsLocationsEkmConnectionsTestIamPermissionsCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5279,6 +6166,157 @@ func (c *ProjectsLocationsEkmConnectionsTestIamPermissionsCall) Do(opts ...googl
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// method id "cloudkms.projects.locations.ekmConnections.verifyConnectivity":
+
+type ProjectsLocationsEkmConnectionsVerifyConnectivityCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// VerifyConnectivity: Verifies that Cloud KMS can successfully connect
+// to the external key manager specified by an EkmConnection. If there
+// is an error connecting to the EKM, this method returns a
+// FAILED_PRECONDITION status containing structured information as
+// described at https://cloud.google.com/kms/docs/reference/ekm_errors.
+//
+// - name: The name of the EkmConnection to verify.
+func (r *ProjectsLocationsEkmConnectionsService) VerifyConnectivity(name string) *ProjectsLocationsEkmConnectionsVerifyConnectivityCall {
+	c := &ProjectsLocationsEkmConnectionsVerifyConnectivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) Fields(s ...googleapi.Field) *ProjectsLocationsEkmConnectionsVerifyConnectivityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) IfNoneMatch(entityTag string) *ProjectsLocationsEkmConnectionsVerifyConnectivityCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) Context(ctx context.Context) *ProjectsLocationsEkmConnectionsVerifyConnectivityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:verifyConnectivity")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.ekmConnections.verifyConnectivity" call.
+// Exactly one of *VerifyConnectivityResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *VerifyConnectivityResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) Do(opts ...googleapi.CallOption) (*VerifyConnectivityResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VerifyConnectivityResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Verifies that Cloud KMS can successfully connect to the external key manager specified by an EkmConnection. If there is an error connecting to the EKM, this method returns a FAILED_PRECONDITION status containing structured information as described at https://cloud.google.com/kms/docs/reference/ekm_errors.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConnections/{ekmConnectionsId}:verifyConnectivity",
+	//   "httpMethod": "GET",
+	//   "id": "cloudkms.projects.locations.ekmConnections.verifyConnectivity",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the EkmConnection to verify.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:verifyConnectivity",
+	//   "response": {
+	//     "$ref": "VerifyConnectivityResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5385,17 +6423,17 @@ func (c *ProjectsLocationsKeyRingsCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &KeyRing{
 		ServerResponse: googleapi.ServerResponse{
@@ -5540,17 +6578,17 @@ func (c *ProjectsLocationsKeyRingsGetCall) Do(opts ...googleapi.CallOption) (*Ke
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &KeyRing{
 		ServerResponse: googleapi.ServerResponse{
@@ -5710,17 +6748,17 @@ func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5901,17 +6939,17 @@ func (c *ProjectsLocationsKeyRingsListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListKeyRingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6088,17 +7126,17 @@ func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6239,17 +7277,17 @@ func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6401,17 +7439,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -6556,17 +7594,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DecryptResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6702,17 +7740,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EncryptResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6853,17 +7891,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -7023,17 +8061,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7231,17 +8269,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCryptoKeysResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7434,17 +8472,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -7588,17 +8626,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7739,17 +8777,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7884,17 +8922,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -8030,17 +9068,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AsymmetricDecryptResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8175,17 +9213,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AsymmetricSignResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8321,17 +9359,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKeyVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -8470,17 +9508,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKeyVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -8620,17 +9658,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKeyVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -8768,17 +9806,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PublicKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -8915,17 +9953,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKeyVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -9120,17 +10158,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCryptoKeyVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9317,17 +10355,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacSignCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &MacSignResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9463,17 +10501,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacVerifyCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &MacVerifyResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9619,17 +10657,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) Do(opts 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKeyVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -9671,6 +10709,298 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) Do(opts 
 	//   },
 	//   "response": {
 	//     "$ref": "CryptoKeyVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// method id "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawDecrypt":
+
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall struct {
+	s                 *Service
+	name              string
+	rawdecryptrequest *RawDecryptRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// RawDecrypt: Decrypts data that was originally encrypted using a raw
+// cryptographic mechanism. The CryptoKey.purpose must be
+// RAW_ENCRYPT_DECRYPT.
+//
+//   - name: The resource name of the CryptoKeyVersion to use for
+//     decryption.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) RawDecrypt(name string, rawdecryptrequest *RawDecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rawdecryptrequest = rawdecryptrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rawdecryptrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rawDecrypt")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawDecrypt" call.
+// Exactly one of *RawDecryptResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RawDecryptResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) Do(opts ...googleapi.CallOption) (*RawDecryptResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RawDecryptResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Decrypts data that was originally encrypted using a raw cryptographic mechanism. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:rawDecrypt",
+	//   "httpMethod": "POST",
+	//   "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawDecrypt",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the CryptoKeyVersion to use for decryption.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:rawDecrypt",
+	//   "request": {
+	//     "$ref": "RawDecryptRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RawDecryptResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// method id "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawEncrypt":
+
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall struct {
+	s                 *Service
+	name              string
+	rawencryptrequest *RawEncryptRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// RawEncrypt: Encrypts data using portable cryptographic primitives.
+// Most users should choose Encrypt and Decrypt rather than their raw
+// counterparts. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.
+//
+//   - name: The resource name of the CryptoKeyVersion to use for
+//     encryption.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) RawEncrypt(name string, rawencryptrequest *RawEncryptRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rawencryptrequest = rawencryptrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rawencryptrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rawEncrypt")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawEncrypt" call.
+// Exactly one of *RawEncryptResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RawEncryptResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) Do(opts ...googleapi.CallOption) (*RawEncryptResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RawEncryptResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Encrypts data using portable cryptographic primitives. Most users should choose Encrypt and Decrypt rather than their raw counterparts. The CryptoKey.purpose must be RAW_ENCRYPT_DECRYPT.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:rawEncrypt",
+	//   "httpMethod": "POST",
+	//   "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawEncrypt",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the CryptoKeyVersion to use for encryption.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:rawEncrypt",
+	//   "request": {
+	//     "$ref": "RawEncryptRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RawEncryptResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -9770,17 +11100,17 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CryptoKeyVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -9922,17 +11252,17 @@ func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ImportJob{
 		ServerResponse: googleapi.ServerResponse{
@@ -10077,17 +11407,17 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ImportJob{
 		ServerResponse: googleapi.ServerResponse{
@@ -10247,17 +11577,17 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -10438,17 +11768,17 @@ func (c *ProjectsLocationsKeyRingsImportJobsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListImportJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10625,17 +11955,17 @@ func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -10776,17 +12106,17 @@ func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{

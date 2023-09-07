@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "vmmigration:v1"
 const apiName = "vmmigration"
@@ -278,6 +279,47 @@ type ProjectsLocationsTargetProjectsService struct {
 	s *Service
 }
 
+// AccessKeyCredentials: Message describing AWS Credentials using access
+// key id and secret.
+type AccessKeyCredentials struct {
+	// AccessKeyId: AWS access key ID.
+	AccessKeyId string `json:"accessKeyId,omitempty"`
+
+	// SecretAccessKey: Input only. AWS secret access key.
+	SecretAccessKey string `json:"secretAccessKey,omitempty"`
+
+	// SessionToken: Input only. AWS session token. Used only when AWS
+	// security token service (STS) is responsible for creating the
+	// temporary credentials.
+	SessionToken string `json:"sessionToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessKeyId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessKeyCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessKeyCredentials
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdaptingOSStep: AdaptingOSStep contains specific step details.
+type AdaptingOSStep struct {
+}
+
 // AddGroupMigrationRequest: Request message for 'AddGroupMigration'
 // request.
 type AddGroupMigrationRequest struct {
@@ -420,6 +462,331 @@ func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AwsDiskDetails: The details of an AWS instance disk.
+type AwsDiskDetails struct {
+	// DiskNumber: The ordinal number of the disk.
+	DiskNumber int64 `json:"diskNumber,omitempty"`
+
+	// SizeGb: Size in GB.
+	SizeGb int64 `json:"sizeGb,omitempty,string"`
+
+	// VolumeId: AWS volume ID.
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskNumber") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsDiskDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsDiskDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsSecurityGroup: AwsSecurityGroup describes a security group of an
+// AWS VM.
+type AwsSecurityGroup struct {
+	// Id: The AWS security group id.
+	Id string `json:"id,omitempty"`
+
+	// Name: The AWS security group name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSecurityGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSecurityGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsSourceDetails: AwsSourceDetails message describes a specific
+// source details for the AWS source type.
+type AwsSourceDetails struct {
+	// AccessKeyCreds: AWS Credentials using access key id and secret.
+	AccessKeyCreds *AccessKeyCredentials `json:"accessKeyCreds,omitempty"`
+
+	// AwsRegion: Immutable. The AWS region that the source VMs will be
+	// migrated from.
+	AwsRegion string `json:"awsRegion,omitempty"`
+
+	// Error: Output only. Provides details on the state of the Source in
+	// case of an error.
+	Error *Status `json:"error,omitempty"`
+
+	// InventorySecurityGroupNames: AWS security group names to limit the
+	// scope of the source inventory.
+	InventorySecurityGroupNames []string `json:"inventorySecurityGroupNames,omitempty"`
+
+	// InventoryTagList: AWS resource tags to limit the scope of the source
+	// inventory.
+	InventoryTagList []*Tag `json:"inventoryTagList,omitempty"`
+
+	// MigrationResourcesUserTags: User specified tags to add to every M2VM
+	// generated resource in AWS. These tags will be set in addition to the
+	// default tags that are set as part of the migration process. The tags
+	// must not begin with the reserved prefix `m2vm`.
+	MigrationResourcesUserTags map[string]string `json:"migrationResourcesUserTags,omitempty"`
+
+	// PublicIp: Output only. The source's public IP. All communication
+	// initiated by this source will originate from this IP.
+	PublicIp string `json:"publicIp,omitempty"`
+
+	// State: Output only. State of the source as determined by the health
+	// check.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unknown. This is used for API
+	// compatibility only and is not used by the system.
+	//   "PENDING" - The state was not sampled by the health checks yet.
+	//   "FAILED" - The source is available but might not be usable yet due
+	// to invalid credentials or another reason. The error message will
+	// contain further details.
+	//   "ACTIVE" - The source exists and its credentials were verified.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessKeyCreds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessKeyCreds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSourceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSourceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsSourceVmDetails: Represent the source AWS VM details.
+type AwsSourceVmDetails struct {
+	// CommittedStorageBytes: The total size of the disks being migrated in
+	// bytes.
+	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
+
+	// Disks: The disks attached to the source VM.
+	Disks []*AwsDiskDetails `json:"disks,omitempty"`
+
+	// Firmware: The firmware type of the source VM.
+	//
+	// Possible values:
+	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
+	//   "EFI" - The firmware is EFI.
+	//   "BIOS" - The firmware is BIOS.
+	Firmware string `json:"firmware,omitempty"`
+
+	// VmCapabilities: Output only. Unordered list. List of VM certain
+	// capabilities needed for some Compute Engine features.
+	//
+	// Possible values:
+	//   "VM_CAPABILITY_UNSPECIFIED" - Unknown capability.
+	//   "VM_CAPABILITY_NVME_STORAGE_ACCESS" - NVMe driver install and the
+	// VM can use NVMe PD or local SSD.
+	//   "VM_CAPABILITY_GVNIC_NETWORK_INTERFACE" - gVNIC virtual NIC driver
+	// supported.
+	VmCapabilities []string `json:"vmCapabilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommittedStorageBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSourceVmDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsVmDetails: AwsVmDetails describes a VM in AWS.
+type AwsVmDetails struct {
+	// Architecture: The CPU architecture.
+	//
+	// Possible values:
+	//   "VM_ARCHITECTURE_UNSPECIFIED" - The architecture is unknown.
+	//   "I386" - The architecture is I386.
+	//   "X86_64" - The architecture is X86_64.
+	//   "ARM64" - The architecture is ARM64.
+	//   "X86_64_MAC" - The architecture is X86_64_MAC.
+	Architecture string `json:"architecture,omitempty"`
+
+	// BootOption: The VM Boot Option.
+	//
+	// Possible values:
+	//   "BOOT_OPTION_UNSPECIFIED" - The boot option is unknown.
+	//   "EFI" - The boot option is UEFI.
+	//   "BIOS" - The boot option is LEGACY-BIOS.
+	BootOption string `json:"bootOption,omitempty"`
+
+	// CommittedStorageMb: The total size of the storage allocated to the VM
+	// in MB.
+	CommittedStorageMb int64 `json:"committedStorageMb,omitempty,string"`
+
+	// CpuCount: The number of cpus the VM has.
+	CpuCount int64 `json:"cpuCount,omitempty"`
+
+	// DiskCount: The number of disks the VM has.
+	DiskCount int64 `json:"diskCount,omitempty"`
+
+	// DisplayName: The display name of the VM. Note that this value is not
+	// necessarily unique.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// InstanceType: The instance type of the VM.
+	InstanceType string `json:"instanceType,omitempty"`
+
+	// MemoryMb: The memory size of the VM in MB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// OsDescription: The VM's OS.
+	OsDescription string `json:"osDescription,omitempty"`
+
+	// PowerState: Output only. The power state of the VM at the moment list
+	// was taken.
+	//
+	// Possible values:
+	//   "POWER_STATE_UNSPECIFIED" - Power state is not specified.
+	//   "ON" - The VM is turned on.
+	//   "OFF" - The VM is turned off.
+	//   "SUSPENDED" - The VM is suspended. This is similar to hibernation
+	// or sleep mode.
+	//   "PENDING" - The VM is starting.
+	PowerState string `json:"powerState,omitempty"`
+
+	// SecurityGroups: The security groups the VM belongs to.
+	SecurityGroups []*AwsSecurityGroup `json:"securityGroups,omitempty"`
+
+	// SourceDescription: The descriptive name of the AWS's source this VM
+	// is connected to.
+	SourceDescription string `json:"sourceDescription,omitempty"`
+
+	// SourceId: The id of the AWS's source this VM is connected to.
+	SourceId string `json:"sourceId,omitempty"`
+
+	// Tags: The tags of the VM.
+	Tags map[string]string `json:"tags,omitempty"`
+
+	// VirtualizationType: The virtualization type.
+	//
+	// Possible values:
+	//   "VM_VIRTUALIZATION_TYPE_UNSPECIFIED" - The virtualization type is
+	// unknown.
+	//   "HVM" - The virtualziation type is HVM.
+	//   "PARAVIRTUAL" - The virtualziation type is PARAVIRTUAL.
+	VirtualizationType string `json:"virtualizationType,omitempty"`
+
+	// VmId: The VM ID in AWS.
+	VmId string `json:"vmId,omitempty"`
+
+	// VpcId: The VPC ID the VM belongs to.
+	VpcId string `json:"vpcId,omitempty"`
+
+	// Zone: The AWS zone of the VM.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Architecture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsVmDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsVmsDetails: AWSVmsDetails describes VMs in AWS.
+type AwsVmsDetails struct {
+	// Details: The details of the AWS VMs.
+	Details []*AwsVmDetails `json:"details,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsVmsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsVmsDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelCloneJobRequest: Request message for 'CancelCloneJob' request.
 type CancelCloneJobRequest struct {
 }
@@ -445,6 +812,10 @@ type CancelOperationRequest struct {
 // touch the instance it created. It will only delete it in case of the
 // CloneJob being cancelled or upon failure to clone.
 type CloneJob struct {
+	// ComputeEngineDisksTargetDetails: Output only. Details of the target
+	// Persistent Disks in Compute Engine.
+	ComputeEngineDisksTargetDetails *ComputeEngineDisksTargetDetails `json:"computeEngineDisksTargetDetails,omitempty"`
+
 	// ComputeEngineTargetDetails: Output only. Details of the target VM in
 	// Compute Engine.
 	ComputeEngineTargetDetails *ComputeEngineTargetDetails `json:"computeEngineTargetDetails,omitempty"`
@@ -481,12 +852,15 @@ type CloneJob struct {
 	// StateTime: Output only. The time the state was last updated.
 	StateTime string `json:"stateTime,omitempty"`
 
+	// Steps: Output only. The clone steps list representing its progress.
+	Steps []*CloneStep `json:"steps,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "ComputeEngineTargetDetails") to unconditionally include in API
+	// "ComputeEngineDisksTargetDetails") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -495,8 +869,8 @@ type CloneJob struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "ComputeEngineTargetDetails") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
+	// "ComputeEngineDisksTargetDetails") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
@@ -506,6 +880,113 @@ type CloneJob struct {
 
 func (s *CloneJob) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloneStep: CloneStep holds information about the clone step progress.
+type CloneStep struct {
+	// AdaptingOs: Adapting OS step.
+	AdaptingOs *AdaptingOSStep `json:"adaptingOs,omitempty"`
+
+	// EndTime: The time the step has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// InstantiatingMigratedVm: Instantiating migrated VM step.
+	InstantiatingMigratedVm *InstantiatingMigratedVMStep `json:"instantiatingMigratedVm,omitempty"`
+
+	// PreparingVmDisks: Preparing VM disks step.
+	PreparingVmDisks *PreparingVMDisksStep `json:"preparingVmDisks,omitempty"`
+
+	// StartTime: The time the step has started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptingOs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptingOs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloneStep) MarshalJSON() ([]byte, error) {
+	type NoMethod CloneStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComputeEngineDisksTargetDefaults: ComputeEngineDisksTargetDefaults is
+// a collection of details for creating Persistent Disks in a target
+// Compute Engine project.
+type ComputeEngineDisksTargetDefaults struct {
+	// Disks: The details of each Persistent Disk to create.
+	Disks []*PersistentDiskDefaults `json:"disks,omitempty"`
+
+	// TargetProject: The full path of the resource of type TargetProject
+	// which represents the Compute Engine project in which to create the
+	// Persistent Disks.
+	TargetProject string `json:"targetProject,omitempty"`
+
+	// Zone: The zone in which to create the Persistent Disks.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComputeEngineDisksTargetDefaults) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeEngineDisksTargetDefaults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComputeEngineDisksTargetDetails: ComputeEngineDisksTargetDetails is a
+// collection of created Persistent Disks details.
+type ComputeEngineDisksTargetDetails struct {
+	// Disks: The details of each created Persistent Disk.
+	Disks []*PersistentDisk `json:"disks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComputeEngineDisksTargetDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeEngineDisksTargetDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -521,7 +1002,7 @@ type ComputeEngineTargetDefaults struct {
 	// adaptation module report.
 	AppliedLicense *AppliedLicense `json:"appliedLicense,omitempty"`
 
-	// BootOption: Output only. The VM Boot Option, as set in the source vm.
+	// BootOption: Output only. The VM Boot Option, as set in the source VM.
 	//
 	// Possible values:
 	//   "COMPUTE_ENGINE_BOOT_OPTION_UNSPECIFIED" - The boot option is
@@ -574,11 +1055,11 @@ type ComputeEngineTargetDefaults struct {
 	// NetworkInterfaces: List of NICs connected to this VM.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 
-	// NetworkTags: A map of network tags to associate with the VM.
+	// NetworkTags: A list of network tags to associate with the VM.
 	NetworkTags []string `json:"networkTags,omitempty"`
 
 	// SecureBoot: Defines whether the instance has Secure Boot enabled.
-	// This can be set to true only if the vm boot option is EFI.
+	// This can be set to true only if the VM boot option is EFI.
 	SecureBoot bool `json:"secureBoot,omitempty"`
 
 	// ServiceAccount: The service account to associate the VM with.
@@ -630,7 +1111,7 @@ type ComputeEngineTargetDetails struct {
 	// report.
 	AppliedLicense *AppliedLicense `json:"appliedLicense,omitempty"`
 
-	// BootOption: The VM Boot Option, as set in the source vm.
+	// BootOption: The VM Boot Option, as set in the source VM.
 	//
 	// Possible values:
 	//   "COMPUTE_ENGINE_BOOT_OPTION_UNSPECIFIED" - The boot option is
@@ -683,14 +1164,14 @@ type ComputeEngineTargetDetails struct {
 	// NetworkInterfaces: List of NICs connected to this VM.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 
-	// NetworkTags: A map of network tags to associate with the VM.
+	// NetworkTags: A list of network tags to associate with the VM.
 	NetworkTags []string `json:"networkTags,omitempty"`
 
-	// Project: The GCP target project ID or project name.
+	// Project: The Google Cloud target project ID or project name.
 	Project string `json:"project,omitempty"`
 
 	// SecureBoot: Defines whether the instance has Secure Boot enabled.
-	// This can be set to true only if the vm boot option is EFI.
+	// This can be set to true only if the VM boot option is EFI.
 	SecureBoot bool `json:"secureBoot,omitempty"`
 
 	// ServiceAccount: The service account to associate the VM with.
@@ -791,10 +1272,46 @@ func (s *ComputeScheduling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CutoverForecast: CutoverForecast holds information about future
+// CutoverJobs of a MigratingVm.
+type CutoverForecast struct {
+	// EstimatedCutoverJobDuration: Output only. Estimation of the
+	// CutoverJob duration.
+	EstimatedCutoverJobDuration string `json:"estimatedCutoverJobDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EstimatedCutoverJobDuration") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EstimatedCutoverJobDuration") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CutoverForecast) MarshalJSON() ([]byte, error) {
+	type NoMethod CutoverForecast
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CutoverJob: CutoverJob message describes a cutover of a migrating VM.
 // The CutoverJob is the operation of shutting down the VM, creating a
 // snapshot and clonning the VM using the replicated snapshot.
 type CutoverJob struct {
+	// ComputeEngineDisksTargetDetails: Output only. Details of the target
+	// Persistent Disks in Compute Engine.
+	ComputeEngineDisksTargetDetails *ComputeEngineDisksTargetDetails `json:"computeEngineDisksTargetDetails,omitempty"`
+
 	// ComputeEngineTargetDetails: Output only. Details of the target VM in
 	// Compute Engine.
 	ComputeEngineTargetDetails *ComputeEngineTargetDetails `json:"computeEngineTargetDetails,omitempty"`
@@ -839,12 +1356,15 @@ type CutoverJob struct {
 	// StateTime: Output only. The time the state was last updated.
 	StateTime string `json:"stateTime,omitempty"`
 
+	// Steps: Output only. The cutover steps list representing its progress.
+	Steps []*CutoverStep `json:"steps,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "ComputeEngineTargetDetails") to unconditionally include in API
+	// "ComputeEngineDisksTargetDetails") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -853,8 +1373,8 @@ type CutoverJob struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "ComputeEngineTargetDetails") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
+	// "ComputeEngineDisksTargetDetails") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
@@ -868,10 +1388,97 @@ func (s *CutoverJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CutoverStep: CutoverStep holds information about the cutover step
+// progress.
+type CutoverStep struct {
+	// EndTime: The time the step has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// FinalSync: Final sync step.
+	FinalSync *ReplicationCycle `json:"finalSync,omitempty"`
+
+	// InstantiatingMigratedVm: Instantiating migrated VM step.
+	InstantiatingMigratedVm *InstantiatingMigratedVMStep `json:"instantiatingMigratedVm,omitempty"`
+
+	// PreparingVmDisks: Preparing VM disks step.
+	PreparingVmDisks *PreparingVMDisksStep `json:"preparingVmDisks,omitempty"`
+
+	// PreviousReplicationCycle: A replication cycle prior cutover step.
+	PreviousReplicationCycle *ReplicationCycle `json:"previousReplicationCycle,omitempty"`
+
+	// ShuttingDownSourceVm: Shutting down VM step.
+	ShuttingDownSourceVm *ShuttingDownSourceVMStep `json:"shuttingDownSourceVm,omitempty"`
+
+	// StartTime: The time the step has started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CutoverStep) MarshalJSON() ([]byte, error) {
+	type NoMethod CutoverStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CycleStep: CycleStep holds information about a step progress.
+type CycleStep struct {
+	// EndTime: The time the cycle step has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// InitializingReplication: Initializing replication step.
+	InitializingReplication *InitializingReplicationStep `json:"initializingReplication,omitempty"`
+
+	// PostProcessing: Post processing step.
+	PostProcessing *PostProcessingStep `json:"postProcessing,omitempty"`
+
+	// Replicating: Replicating step.
+	Replicating *ReplicatingStep `json:"replicating,omitempty"`
+
+	// StartTime: The time the cycle step has started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CycleStep) MarshalJSON() ([]byte, error) {
+	type NoMethod CycleStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatacenterConnector: DatacenterConnector message describes a
-// connector between the Source and GCP, which is installed on a vmware
-// datacenter (an OVA vm installed by the user) to connect the
-// Datacenter to GCP and support vm migration data transfer.
+// connector between the Source and Google Cloud, which is installed on
+// a vmware datacenter (an OVA vm installed by the user) to connect the
+// Datacenter to Google Cloud and support vm migration data transfer.
 type DatacenterConnector struct {
 	// ApplianceInfrastructureVersion: Output only. Appliance OVA version.
 	// This is the OVA which is manually installed by the user and contains
@@ -889,7 +1496,7 @@ type DatacenterConnector struct {
 	AvailableVersions *AvailableUpdates `json:"availableVersions,omitempty"`
 
 	// Bucket: Output only. The communication channel between the datacenter
-	// connector and GCP.
+	// connector and Google Cloud.
 	Bucket string `json:"bucket,omitempty"`
 
 	// CreateTime: Output only. The time the connector was created (as an
@@ -986,6 +1593,9 @@ type Empty struct {
 
 // FetchInventoryResponse: Response message for fetchInventory.
 type FetchInventoryResponse struct {
+	// AwsVms: The description of the VMs in a Source of type AWS.
+	AwsVms *AwsVmsDetails `json:"awsVms,omitempty"`
+
 	// NextPageToken: Output only. A token, which can be sent as
 	// `page_token` to retrieve the next page. If this field is omitted,
 	// there are no subsequent pages.
@@ -1002,7 +1612,7 @@ type FetchInventoryResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "AwsVms") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1010,10 +1620,10 @@ type FetchInventoryResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AwsVms") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1042,6 +1652,17 @@ type Group struct {
 	// DisplayName: Display name is a user defined name for this group which
 	// can be updated.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// MigrationTargetType: Immutable. The target type of this group.
+	//
+	// Possible values:
+	//   "MIGRATION_TARGET_TYPE_UNSPECIFIED" - Group type is not specified.
+	// This defaults to Compute Engine targets.
+	//   "MIGRATION_TARGET_TYPE_GCE" - All MigratingVMs in the group must
+	// have Compute Engine targets.
+	//   "MIGRATION_TARGET_TYPE_DISKS" - All MigratingVMs in the group must
+	// have Compute Engine Disks targets.
+	MigrationTargetType string `json:"migrationTargetType,omitempty"`
 
 	// Name: Output only. The Group name.
 	Name string `json:"name,omitempty"`
@@ -1074,6 +1695,16 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InitializingReplicationStep: InitializingReplicationStep contains
+// specific step details.
+type InitializingReplicationStep struct {
+}
+
+// InstantiatingMigratedVMStep: InstantiatingMigratedVMStep contains
+// specific step details.
+type InstantiatingMigratedVMStep struct {
 }
 
 // Link: Describes a URL link.
@@ -1584,7 +2215,7 @@ func (s *LocalizedMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1637,6 +2268,14 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MigratingVm: MigratingVm describes the VM that will be migrated from
 // a Source environment and its replication state.
 type MigratingVm struct {
+	// AwsSourceVmDetails: Output only. Details of the VM from an AWS
+	// source.
+	AwsSourceVmDetails *AwsSourceVmDetails `json:"awsSourceVmDetails,omitempty"`
+
+	// ComputeEngineDisksTargetDefaults: Details of the target Persistent
+	// Disks in Compute Engine.
+	ComputeEngineDisksTargetDefaults *ComputeEngineDisksTargetDefaults `json:"computeEngineDisksTargetDefaults,omitempty"`
+
 	// ComputeEngineTargetDefaults: Details of the target VM in Compute
 	// Engine.
 	ComputeEngineTargetDefaults *ComputeEngineTargetDefaults `json:"computeEngineTargetDefaults,omitempty"`
@@ -1646,9 +2285,13 @@ type MigratingVm struct {
 	// source).
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CurrentSyncInfo: Output only. The percentage progress of the current
-	// running replication cycle.
+	// CurrentSyncInfo: Output only. Details of the current running
+	// replication cycle.
 	CurrentSyncInfo *ReplicationCycle `json:"currentSyncInfo,omitempty"`
+
+	// CutoverForecast: Output only. Provides details of future CutoverJobs
+	// of a MigratingVm. Set to empty when cutover forecast is unavailable.
+	CutoverForecast *CutoverForecast `json:"cutoverForecast,omitempty"`
 
 	// Description: The description attached to the migrating VM by the
 	// user.
@@ -1669,6 +2312,12 @@ type MigratingVm struct {
 
 	// Labels: The labels of the migrating VM.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastReplicationCycle: Output only. Details of the last replication
+	// cycle. This will be updated whenever a replication cycle is finished
+	// and is not to be confused with last_sync which is only updated on
+	// successful replication cycles.
+	LastReplicationCycle *ReplicationCycle `json:"lastReplicationCycle,omitempty"`
 
 	// LastSync: Output only. The most updated snapshot created time in the
 	// source that finished replication.
@@ -1738,22 +2387,21 @@ type MigratingVm struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AwsSourceVmDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AwsSourceVmDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1826,6 +2474,54 @@ func (s *MigrationError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MigrationWarning: Represents migration resource warning information
+// that can be used with google.rpc.Status message. MigrationWarning is
+// used to present the user with warning information in migration
+// operations.
+type MigrationWarning struct {
+	// ActionItem: Suggested action for solving the warning.
+	ActionItem *LocalizedMessage `json:"actionItem,omitempty"`
+
+	// Code: The warning code.
+	//
+	// Possible values:
+	//   "WARNING_CODE_UNSPECIFIED" - Default value. This value is not used.
+	//   "ADAPTATION_WARNING" - A warning originated from OS Adaptation.
+	Code string `json:"code,omitempty"`
+
+	// HelpLinks: URL(s) pointing to additional information on handling the
+	// current warning.
+	HelpLinks []*Link `json:"helpLinks,omitempty"`
+
+	// WarningMessage: The localized warning message.
+	WarningMessage *LocalizedMessage `json:"warningMessage,omitempty"`
+
+	// WarningTime: The time the warning occurred.
+	WarningTime string `json:"warningTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionItem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionItem") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MigrationWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationWarning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NetworkInterface: NetworkInterface represents a NIC of a VM.
 type NetworkInterface struct {
 	// ExternalIp: The external IP to define in the NIC.
@@ -1890,8 +2586,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1983,6 +2679,94 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 type PauseMigrationRequest struct {
 }
 
+// PersistentDisk: Details of a created Persistent Disk.
+type PersistentDisk struct {
+	// DiskUri: The URI of the Persistent Disk.
+	DiskUri string `json:"diskUri,omitempty"`
+
+	// SourceDiskNumber: The ordinal number of the source VM disk.
+	SourceDiskNumber int64 `json:"sourceDiskNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersistentDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod PersistentDisk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PersistentDiskDefaults: Details for creation of a Persistent Disk.
+type PersistentDiskDefaults struct {
+	// AdditionalLabels: A map of labels to associate with the Persistent
+	// Disk.
+	AdditionalLabels map[string]string `json:"additionalLabels,omitempty"`
+
+	// DiskName: Optional. The name of the Persistent Disk to create.
+	DiskName string `json:"diskName,omitempty"`
+
+	// DiskType: The disk type to use.
+	//
+	// Possible values:
+	//   "COMPUTE_ENGINE_DISK_TYPE_UNSPECIFIED" - An unspecified disk type.
+	// Will be used as STANDARD.
+	//   "COMPUTE_ENGINE_DISK_TYPE_STANDARD" - A Standard disk type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_SSD" - SSD hard disk type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD
+	// persistent disks that balance performance and cost.
+	DiskType string `json:"diskType,omitempty"`
+
+	// SourceDiskNumber: Required. The ordinal number of the source VM disk.
+	SourceDiskNumber int64 `json:"sourceDiskNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalLabels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalLabels") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersistentDiskDefaults) MarshalJSON() ([]byte, error) {
+	type NoMethod PersistentDiskDefaults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostProcessingStep: PostProcessingStep contains specific step
+// details.
+type PostProcessingStep struct {
+}
+
+// PreparingVMDisksStep: PreparingVMDisksStep contains specific step
+// details.
+type PreparingVMDisksStep struct {
+}
+
 // RemoveGroupMigrationRequest: Request message for 'RemoveMigration'
 // request.
 type RemoveGroupMigrationRequest struct {
@@ -2012,20 +2796,97 @@ func (s *RemoveGroupMigrationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReplicatingStep: ReplicatingStep contains specific step details.
+type ReplicatingStep struct {
+	// LastThirtyMinutesAverageBytesPerSecond: The source disks replication
+	// rate for the last 30 minutes in bytes per second.
+	LastThirtyMinutesAverageBytesPerSecond int64 `json:"lastThirtyMinutesAverageBytesPerSecond,omitempty,string"`
+
+	// LastTwoMinutesAverageBytesPerSecond: The source disks replication
+	// rate for the last 2 minutes in bytes per second.
+	LastTwoMinutesAverageBytesPerSecond int64 `json:"lastTwoMinutesAverageBytesPerSecond,omitempty,string"`
+
+	// ReplicatedBytes: Replicated bytes in the step.
+	ReplicatedBytes int64 `json:"replicatedBytes,omitempty,string"`
+
+	// TotalBytes: Total bytes to be handled in the step.
+	TotalBytes int64 `json:"totalBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LastThirtyMinutesAverageBytesPerSecond") to unconditionally include
+	// in API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "LastThirtyMinutesAverageBytesPerSecond") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicatingStep) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicatingStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReplicationCycle: ReplicationCycle contains information about the
 // current replication cycle status.
 type ReplicationCycle struct {
+	// CycleNumber: The cycle's ordinal number.
+	CycleNumber int64 `json:"cycleNumber,omitempty"`
+
+	// EndTime: The time the replication cycle has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Error: Provides details on the state of the cycle in case of an
+	// error.
+	Error *Status `json:"error,omitempty"`
+
+	// Name: The identifier of the ReplicationCycle.
+	Name string `json:"name,omitempty"`
+
 	// ProgressPercent: The current progress in percentage of this cycle.
+	// Was replaced by 'steps' field, which breaks down the cycle
+	// progression more accurately.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
 	// StartTime: The time the replication cycle has started.
 	StartTime string `json:"startTime,omitempty"`
 
+	// State: State of the ReplicationCycle.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unknown. This is used for API
+	// compatibility only and is not used by the system.
+	//   "RUNNING" - The replication cycle is running.
+	//   "PAUSED" - The replication cycle is paused.
+	//   "FAILED" - The replication cycle finished with errors.
+	//   "SUCCEEDED" - The replication cycle finished successfully.
+	State string `json:"state,omitempty"`
+
+	// Steps: The cycle's steps list representing its progress.
+	Steps []*CycleStep `json:"steps,omitempty"`
+
+	// TotalPauseDuration: The accumulated duration the replication cycle
+	// was paused.
+	TotalPauseDuration string `json:"totalPauseDuration,omitempty"`
+
+	// Warnings: Output only. Warnings that occurred during the cycle.
+	Warnings []*MigrationWarning `json:"warnings,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ProgressPercent") to
+	// ForceSendFields is a list of field names (e.g. "CycleNumber") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2033,13 +2894,12 @@ type ReplicationCycle struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ProgressPercent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CycleNumber") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2162,9 +3022,17 @@ func (s *SchedulingNodeAffinity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ShuttingDownSourceVMStep: ShuttingDownSourceVMStep contains specific
+// step details.
+type ShuttingDownSourceVMStep struct {
+}
+
 // Source: Source message describes a specific vm migration Source
 // resource. It contains the source environment information.
 type Source struct {
+	// Aws: AWS type source details.
+	Aws *AwsSourceDetails `json:"aws,omitempty"`
+
 	// CreateTime: Output only. The create time timestamp.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2187,7 +3055,7 @@ type Source struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Aws") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2195,8 +3063,8 @@ type Source struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Aws") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2259,6 +3127,37 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Tag: Tag is an AWS tag representation.
+type Tag struct {
+	// Key: Key of tag.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value of tag.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Tag) MarshalJSON() ([]byte, error) {
+	type NoMethod Tag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TargetProject: TargetProject message represents a target Compute
 // Engine project for a migration or a clone.
 type TargetProject struct {
@@ -2315,12 +3214,12 @@ type UpgradeApplianceRequest struct {
 	// know to ignore the request if it has already been completed. The
 	// server will guarantee that for at least 60 minutes after the first
 	// request. For example, consider a situation where you make an initial
-	// request and t he request times out. If you make the request again
-	// with the same request ID, the server can check if original operation
-	// with the same request ID was received, and if so, will ignore the
-	// second request. This prevents clients from accidentally creating
-	// duplicate commitments. The request ID must be a valid UUID with the
-	// exception that zero UUID is not supported
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if original operation with
+	// the same request ID was received, and if so, will ignore the second
+	// request. This prevents clients from accidentally creating duplicate
+	// commitments. The request ID must be a valid UUID with the exception
+	// that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 
@@ -2573,6 +3472,9 @@ type VmwareSourceDetails struct {
 	// and can not be read in a GET operation.
 	Password string `json:"password,omitempty"`
 
+	// ResolvedVcenterHost: The hostname of the vcenter.
+	ResolvedVcenterHost string `json:"resolvedVcenterHost,omitempty"`
+
 	// Thumbprint: The thumbprint representing the certificate for the
 	// vcenter.
 	Thumbprint string `json:"thumbprint,omitempty"`
@@ -2809,17 +3711,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2981,17 +3883,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3157,17 +4059,17 @@ func (c *ProjectsLocationsGroupsAddGroupMigrationCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3244,7 +4146,7 @@ func (c *ProjectsLocationsGroupsCreateCall) GroupId(groupId string) *ProjectsLoc
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -3323,17 +4225,17 @@ func (c *ProjectsLocationsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3368,7 +4270,7 @@ func (c *ProjectsLocationsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3411,7 +4313,7 @@ func (r *ProjectsLocationsGroupsService) Delete(name string) *ProjectsLocationsG
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -3485,17 +4387,17 @@ func (c *ProjectsLocationsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3525,7 +4427,7 @@ func (c *ProjectsLocationsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3636,17 +4538,17 @@ func (c *ProjectsLocationsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Grou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Group{
 		ServerResponse: googleapi.ServerResponse{
@@ -3814,17 +4716,17 @@ func (c *ProjectsLocationsGroupsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGroupsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3933,7 +4835,7 @@ func (r *ProjectsLocationsGroupsService) Patch(name string, group *Group) *Proje
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -4023,17 +4925,17 @@ func (c *ProjectsLocationsGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4063,7 +4965,7 @@ func (c *ProjectsLocationsGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4176,17 +5078,17 @@ func (c *ProjectsLocationsGroupsRemoveGroupMigrationCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4327,17 +5229,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4465,17 +5367,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4613,17 +5515,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4677,14 +5579,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -4789,17 +5684,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4813,7 +5708,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "vmmigration.projects.locations.operations.list",
@@ -4903,7 +5798,7 @@ func (r *ProjectsLocationsSourcesService) Create(parent string, source *Source) 
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -4989,17 +5884,17 @@ func (c *ProjectsLocationsSourcesCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5029,7 +5924,7 @@ func (c *ProjectsLocationsSourcesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5077,7 +5972,7 @@ func (r *ProjectsLocationsSourcesService) Delete(name string) *ProjectsLocations
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -5151,17 +6046,17 @@ func (c *ProjectsLocationsSourcesDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5191,7 +6086,7 @@ func (c *ProjectsLocationsSourcesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5336,17 +6231,17 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FetchInventoryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5519,17 +6414,17 @@ func (c *ProjectsLocationsSourcesGetCall) Do(opts ...googleapi.CallOption) (*Sou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Source{
 		ServerResponse: googleapi.ServerResponse{
@@ -5697,17 +6592,17 @@ func (c *ProjectsLocationsSourcesListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5816,7 +6711,7 @@ func (r *ProjectsLocationsSourcesService) Patch(name string, source *Source) *Pr
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -5906,17 +6801,17 @@ func (c *ProjectsLocationsSourcesPatchCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5946,7 +6841,7 @@ func (c *ProjectsLocationsSourcesPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6007,7 +6902,7 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsCreateCall) DatacenterConne
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -6086,17 +6981,17 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsCreateCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6131,7 +7026,7 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsCreateCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6174,7 +7069,7 @@ func (r *ProjectsLocationsSourcesDatacenterConnectorsService) Delete(name string
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -6248,17 +7143,17 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsDeleteCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6288,7 +7183,7 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsDeleteCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6399,17 +7294,17 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsGetCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DatacenterConnector{
 		ServerResponse: googleapi.ServerResponse{
@@ -6577,17 +7472,17 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDatacenterConnectorsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6759,17 +7654,17 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6846,7 +7741,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCreateCall) MigratingVmId(migrating
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -6925,17 +7820,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6970,7 +7865,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCreateCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7070,17 +7965,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsDeleteCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7211,17 +8106,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsFinalizeMigrationCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7380,17 +8275,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &MigratingVm{
 		ServerResponse: googleapi.ServerResponse{
@@ -7593,17 +8488,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListMigratingVmsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7727,7 +8622,7 @@ func (r *ProjectsLocationsSourcesMigratingVmsService) Patch(nameid string, migra
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -7817,17 +8712,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsPatchCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7857,7 +8752,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsPatchCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7972,17 +8867,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsPauseMigrationCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8118,17 +9013,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsResumeMigrationCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8262,17 +9157,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsStartMigrationCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8404,17 +9299,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsCancelCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8491,7 +9386,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsCreateCall) CloneJobId(clo
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -8570,17 +9465,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsCreateCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8615,7 +9510,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsCreateCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8729,17 +9624,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsGetCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CloneJob{
 		ServerResponse: googleapi.ServerResponse{
@@ -8907,17 +9802,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsListCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCloneJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9088,17 +9983,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsCancelCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9177,7 +10072,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsCreateCall) CutoverJobId
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -9256,17 +10151,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsCreateCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9301,7 +10196,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsCreateCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9415,17 +10310,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsGetCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CutoverJob{
 		ServerResponse: googleapi.ServerResponse{
@@ -9593,17 +10488,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCutoverJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9781,17 +10676,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReplicationCycle{
 		ServerResponse: googleapi.ServerResponse{
@@ -9961,17 +10856,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Do(opts 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReplicationCyclesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10080,7 +10975,7 @@ func (r *ProjectsLocationsSourcesUtilizationReportsService) Create(parent string
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -10170,17 +11065,17 @@ func (c *ProjectsLocationsSourcesUtilizationReportsCreateCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10210,7 +11105,7 @@ func (c *ProjectsLocationsSourcesUtilizationReportsCreateCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10258,7 +11153,7 @@ func (r *ProjectsLocationsSourcesUtilizationReportsService) Delete(name string) 
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -10332,17 +11227,17 @@ func (c *ProjectsLocationsSourcesUtilizationReportsDeleteCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10372,7 +11267,7 @@ func (c *ProjectsLocationsSourcesUtilizationReportsDeleteCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -10503,17 +11398,17 @@ func (c *ProjectsLocationsSourcesUtilizationReportsGetCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UtilizationReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -10716,17 +11611,17 @@ func (c *ProjectsLocationsSourcesUtilizationReportsListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListUtilizationReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10852,7 +11747,7 @@ func (r *ProjectsLocationsTargetProjectsService) Create(parent string, targetpro
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -10938,17 +11833,17 @@ func (c *ProjectsLocationsTargetProjectsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10978,7 +11873,7 @@ func (c *ProjectsLocationsTargetProjectsCreateCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11028,7 +11923,7 @@ func (r *ProjectsLocationsTargetProjectsService) Delete(name string) *ProjectsLo
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -11102,17 +11997,17 @@ func (c *ProjectsLocationsTargetProjectsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11142,7 +12037,7 @@ func (c *ProjectsLocationsTargetProjectsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -11255,17 +12150,17 @@ func (c *ProjectsLocationsTargetProjectsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TargetProject{
 		ServerResponse: googleapi.ServerResponse{
@@ -11435,17 +12330,17 @@ func (c *ProjectsLocationsTargetProjectsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTargetProjectsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11556,7 +12451,7 @@ func (r *ProjectsLocationsTargetProjectsService) Patch(name string, targetprojec
 // retry your request, the server will know to ignore the request if it
 // has already been completed. The server will guarantee that for at
 // least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and t he request times
+// situation where you make an initial request and the request times
 // out. If you make the request again with the same request ID, the
 // server can check if original operation with the same request ID was
 // received, and if so, will ignore the second request. This prevents
@@ -11646,17 +12541,17 @@ func (c *ProjectsLocationsTargetProjectsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11686,7 +12581,7 @@ func (c *ProjectsLocationsTargetProjectsPatchCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

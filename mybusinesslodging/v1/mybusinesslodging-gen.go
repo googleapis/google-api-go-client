@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "mybusinesslodging:v1"
 const apiName = "mybusinesslodging"
@@ -1249,6 +1250,25 @@ type Families struct {
 	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
 	// depends on the day of the week.
 	KidsClubException string `json:"kidsClubException,omitempty"`
+
+	// KidsFriendly: Kids friendly. The hotel has one or more special
+	// features for families with children, such as reduced rates,
+	// child-sized beds, kids' club, babysitting service, or suitable place
+	// to play on premises.
+	KidsFriendly bool `json:"kidsFriendly,omitempty"`
+
+	// KidsFriendlyException: Kids friendly exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	KidsFriendlyException string `json:"kidsFriendlyException,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Babysitting") to
 	// unconditionally include in API requests. By default, fields with
@@ -6640,17 +6660,17 @@ func (c *LocationsGetLodgingCall) Do(opts ...googleapi.CallOption) (*Lodging, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Lodging{
 		ServerResponse: googleapi.ServerResponse{
@@ -6792,17 +6812,17 @@ func (c *LocationsUpdateLodgingCall) Do(opts ...googleapi.CallOption) (*Lodging,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Lodging{
 		ServerResponse: googleapi.ServerResponse{
@@ -6864,7 +6884,7 @@ type LocationsLodgingGetGoogleUpdatedCall struct {
 // location.
 //
 //   - name: Google identifier for this location in the form:
-//     `accounts/{account_id}/locations/{location_id}/lodging`.
+//     `locations/{location_id}/lodging`.
 func (r *LocationsLodgingService) GetGoogleUpdated(nameid string) *LocationsLodgingGetGoogleUpdatedCall {
 	c := &LocationsLodgingGetGoogleUpdatedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6954,17 +6974,17 @@ func (c *LocationsLodgingGetGoogleUpdatedCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetGoogleUpdatedLodgingResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6987,7 +7007,7 @@ func (c *LocationsLodgingGetGoogleUpdatedCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Google identifier for this location in the form: `accounts/{account_id}/locations/{location_id}/lodging`",
+	//       "description": "Required. Google identifier for this location in the form: `locations/{location_id}/lodging`",
 	//       "location": "path",
 	//       "pattern": "^locations/[^/]+/lodging$",
 	//       "required": true,

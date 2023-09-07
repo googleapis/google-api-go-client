@@ -12,6 +12,10 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+type CustomType struct {
+	Foo string `json:"foo,omitempty"`
+}
+
 type schema struct {
 	// Basic types
 	B    bool    `json:"b,omitempty"`
@@ -28,12 +32,13 @@ type schema struct {
 	PStr  *string  `json:"pstr,omitempty"`
 
 	// Other types
-	Int64s        googleapi.Int64s         `json:"i64s,omitempty"`
-	S             []int                    `json:"s,omitempty"`
-	M             map[string]string        `json:"m,omitempty"`
-	Any           interface{}              `json:"any,omitempty"`
-	Child         *child                   `json:"child,omitempty"`
-	MapToAnyArray map[string][]interface{} `json:"maptoanyarray,omitempty"`
+	Int64s          googleapi.Int64s         `json:"i64s,omitempty"`
+	S               []int                    `json:"s,omitempty"`
+	M               map[string]string        `json:"m,omitempty"`
+	Any             interface{}              `json:"any,omitempty"`
+	Child           *child                   `json:"child,omitempty"`
+	MapToAnyArray   map[string][]interface{} `json:"maptoanyarray,omitempty"`
+	MapToCustomType map[string]CustomType    `json:"maptocustomtype,omitempty"`
 
 	ForceSendFields []string `json:"-"`
 	NullFields      []string `json:"-"`
@@ -253,6 +258,15 @@ func TestMapField(t *testing.T) {
 				NullFields: []string{"M.a"},
 			},
 			want: `{}`,
+		},
+		{
+			s: schema{
+				MapToCustomType: map[string]CustomType{
+					"a": {Foo: "foo"},
+				},
+				NullFields: []string{"MapToCustomType.b"},
+			},
+			want: `{"maptocustomtype": {"a": {"foo": "foo"}, "b": null}}`,
 		},
 	} {
 		checkMarshalJSON(t, tc)

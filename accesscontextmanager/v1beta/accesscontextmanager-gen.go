@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "accesscontextmanager:v1beta"
 const apiName = "accesscontextmanager"
@@ -201,10 +202,11 @@ type AccessLevel struct {
 	// affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the Access Level. The `short_name`
-	// component must begin with a letter and only include alphanumeric and
-	// '_'. Format: `accessPolicies/{policy_id}/accessLevels/{short_name}`.
-	// The maximum length // of the `short_name` component is 50 characters.
+	// Name: Resource name for the `AccessLevel`. Format:
+	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
+	// `access_level` component must begin with a letter, followed by
+	// alphanumeric characters or `_`. Its maximum length is 50 characters.
+	// After you create an `AccessLevel`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -358,8 +360,9 @@ type Condition struct {
 	Members []string `json:"members,omitempty"`
 
 	// Negate: Whether to negate the Condition. If true, the Condition
-	// becomes a NAND over its non-empty fields, each field must be false
-	// for the Condition overall to be satisfied. Defaults to false.
+	// becomes a NAND over its non-empty fields. Any non-empty field
+	// criteria evaluating to false will result in the Condition to be
+	// satisfied. Defaults to false.
 	Negate bool `json:"negate,omitempty"`
 
 	// Regions: The request must originate from one of the provided
@@ -701,8 +704,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -805,10 +808,11 @@ type ServicePerimeter struct {
 	// not affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the ServicePerimeter. The
-	// `short_name` component must begin with a letter and only include
-	// alphanumeric and '_'. Format:
-	// `accessPolicies/{policy_id}/servicePerimeters/{short_name}`
+	// Name: Resource name for the `ServicePerimeter`. Format:
+	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`
+	// . The `service_perimeter` component must begin with a letter,
+	// followed by alphanumeric characters or `_`. After you create a
+	// `ServicePerimeter`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
 	// PerimeterType: Perimeter type indicator. A single project is allowed
@@ -819,7 +823,8 @@ type ServicePerimeter struct {
 	// lists must be empty.
 	//
 	// Possible values:
-	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter.
+	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter. When no value is
+	// specified, the perimeter uses this type.
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 
@@ -1086,17 +1091,17 @@ func (c *AccessPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Operation,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1214,17 +1219,17 @@ func (c *AccessPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1361,17 +1366,17 @@ func (c *AccessPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AccessPolicy,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessPolicy{
 		ServerResponse: googleapi.ServerResponse{
@@ -1523,17 +1528,17 @@ func (c *AccessPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListAccessPo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAccessPoliciesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1702,17 +1707,17 @@ func (c *AccessPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1854,17 +1859,17 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1992,17 +1997,17 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2164,17 +2169,17 @@ func (c *AccessPoliciesAccessLevelsGetCall) Do(opts ...googleapi.CallOption) (*A
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessLevel{
 		ServerResponse: googleapi.ServerResponse{
@@ -2363,17 +2368,17 @@ func (c *AccessPoliciesAccessLevelsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAccessLevelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2478,11 +2483,12 @@ type AccessPoliciesAccessLevelsPatchCall struct {
 // containing errors will result in an error response for the first
 // error encountered.
 //
-//   - name: Resource name for the Access Level. The `short_name`
-//     component must begin with a letter and only include alphanumeric
-//     and '_'. Format:
-//     `accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum
-//     length // of the `short_name` component is 50 characters.
+//   - name: Resource name for the `AccessLevel`. Format:
+//     `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
+//     `access_level` component must begin with a letter, followed by
+//     alphanumeric characters or `_`. Its maximum length is 50
+//     characters. After you create an `AccessLevel`, you cannot change
+//     its `name`.
 func (r *AccessPoliciesAccessLevelsService) Patch(name string, accesslevel *AccessLevel) *AccessPoliciesAccessLevelsPatchCall {
 	c := &AccessPoliciesAccessLevelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2564,17 +2570,17 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2597,7 +2603,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the Access Level. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum length // of the `short_name` component is 50 characters.",
+	//       "description": "Resource name for the `AccessLevel`. Format: `accessPolicies/{access_policy}/accessLevels/{access_level}`. The `access_level` component must begin with a letter, followed by alphanumeric characters or `_`. Its maximum length is 50 characters. After you create an `AccessLevel`, you cannot change its `name`.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/accessLevels/[^/]+$",
 	//       "required": true,
@@ -2717,17 +2723,17 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2856,17 +2862,17 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3004,17 +3010,17 @@ func (c *AccessPoliciesServicePerimetersGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ServicePerimeter{
 		ServerResponse: googleapi.ServerResponse{
@@ -3166,17 +3172,17 @@ func (c *AccessPoliciesServicePerimetersListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicePerimetersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3266,10 +3272,11 @@ type AccessPoliciesServicePerimetersPatchCall struct {
 // Perimeter containing errors will result in an error response for the
 // first error encountered.
 //
-//   - name: Resource name for the ServicePerimeter. The `short_name`
-//     component must begin with a letter and only include alphanumeric
-//     and '_'. Format:
-//     `accessPolicies/{policy_id}/servicePerimeters/{short_name}`.
+//   - name: Resource name for the `ServicePerimeter`. Format:
+//     `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter
+//     }`. The `service_perimeter` component must begin with a letter,
+//     followed by alphanumeric characters or `_`. After you create a
+//     `ServicePerimeter`, you cannot change its `name`.
 func (r *AccessPoliciesServicePerimetersService) Patch(name string, serviceperimeter *ServicePerimeter) *AccessPoliciesServicePerimetersPatchCall {
 	c := &AccessPoliciesServicePerimetersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3351,17 +3358,17 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3384,7 +3391,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the ServicePerimeter. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{policy_id}/servicePerimeters/{short_name}`",
+	//       "description": "Resource name for the `ServicePerimeter`. Format: `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The `service_perimeter` component must begin with a letter, followed by alphanumeric characters or `_`. After you create a `ServicePerimeter`, you cannot change its `name`.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/servicePerimeters/[^/]+$",
 	//       "required": true,
@@ -3508,17 +3515,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{

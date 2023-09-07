@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "recommendationengine:v1beta1"
 const apiName = "recommendationengine"
@@ -859,6 +860,23 @@ func (s *GoogleCloudRecommendationengineV1beta1FeatureMapFloatList) MarshalJSON(
 	type NoMethod GoogleCloudRecommendationengineV1beta1FeatureMapFloatList
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecommendationengineV1beta1FeatureMapFloatList) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecommendationengineV1beta1FeatureMapFloatList
+	var s1 struct {
+		Value []gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = make([]float64, len(s1.Value))
+	for i := range s1.Value {
+		s.Value[i] = float64(s1.Value[i])
+	}
+	return nil
 }
 
 // GoogleCloudRecommendationengineV1beta1FeatureMapStringList: A list of
@@ -2529,8 +2547,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2736,17 +2754,17 @@ func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1ListCatalogsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2918,17 +2936,17 @@ func (c *ProjectsLocationsCatalogsPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1Catalog{
 		ServerResponse: googleapi.ServerResponse{
@@ -3069,17 +3087,17 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1CatalogItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -3206,17 +3224,17 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3356,17 +3374,17 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1CatalogItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -3502,17 +3520,17 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3677,17 +3695,17 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3866,17 +3884,17 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1CatalogItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -4023,17 +4041,17 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4087,14 +4105,7 @@ type ProjectsLocationsCatalogsEventStoresOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsCatalogsEventStoresOperationsService) List(name string) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
@@ -4200,17 +4211,17 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4224,7 +4235,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.operations.list",
@@ -4381,17 +4392,17 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1PredictResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4548,17 +4559,17 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration{
 		ServerResponse: googleapi.ServerResponse{
@@ -4685,17 +4696,17 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4851,17 +4862,17 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5059,17 +5070,17 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -5221,17 +5232,17 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5423,17 +5434,17 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1ListUserEventsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5605,17 +5616,17 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5756,17 +5767,17 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5904,17 +5915,17 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommendationengineV1beta1UserEvent{
 		ServerResponse: googleapi.ServerResponse{
@@ -6055,17 +6066,17 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6119,14 +6130,7 @@ type ProjectsLocationsCatalogsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsCatalogsOperationsService) List(name string) *ProjectsLocationsCatalogsOperationsListCall {
@@ -6232,17 +6236,17 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6256,7 +6260,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "recommendationengine.projects.locations.catalogs.operations.list",

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "safebrowsing:v4"
 const apiName = "safebrowsing"
@@ -372,20 +373,16 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
@@ -590,20 +587,16 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Additions") to
@@ -1121,20 +1114,16 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// UserInfo: Details about the user that encountered the threat.
@@ -1298,20 +1287,16 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
@@ -1387,20 +1372,16 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
@@ -1485,20 +1466,16 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to
@@ -1636,17 +1613,17 @@ func (c *EncodedFullHashesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FindFullHashesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1807,17 +1784,17 @@ func (c *EncodedUpdatesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecurit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1948,17 +1925,17 @@ func (c *FullHashesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FindFullHashesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2071,17 +2048,17 @@ func (c *ThreatHitsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2197,17 +2174,17 @@ func (c *ThreatListUpdatesFetchCall) Do(opts ...googleapi.CallOption) (*GoogleSe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2328,17 +2305,17 @@ func (c *ThreatListsListCall) Do(opts ...googleapi.CallOption) (*GoogleSecurityS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4ListThreatListsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2449,17 +2426,17 @@ func (c *ThreatMatchesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecurit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FindThreatMatchesResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "games:v1"
 const apiName = "games"
@@ -848,6 +849,38 @@ func (s *ApplicationCategory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApplicationPlayerId: Primary scoped player identifier for an
+// application.
+type ApplicationPlayerId struct {
+	// ApplicationId: The application that this player identifier is for.
+	ApplicationId string `json:"applicationId,omitempty"`
+
+	// PlayerId: The player identifier for the application.
+	PlayerId string `json:"playerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplicationPlayerId) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationPlayerId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ApplicationVerifyResponse: A third party application verification
 // response resource.
 type ApplicationVerifyResponse struct {
@@ -1482,6 +1515,41 @@ type GamesAchievementSetStepsAtLeast struct {
 
 func (s *GamesAchievementSetStepsAtLeast) MarshalJSON() ([]byte, error) {
 	type NoMethod GamesAchievementSetStepsAtLeast
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GetMultipleApplicationPlayerIdsResponse: Response message for
+// GetMultipleApplicationPlayerIds rpc.
+type GetMultipleApplicationPlayerIdsResponse struct {
+	// PlayerIds: Output only. The requested applications along with the
+	// scoped ids for tha player, if that player has an id for the
+	// application. If not, the application is not included in the response.
+	PlayerIds []*ApplicationPlayerId `json:"playerIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "PlayerIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PlayerIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetMultipleApplicationPlayerIdsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetMultipleApplicationPlayerIdsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3293,17 +3361,17 @@ func (c *AchievementDefinitionsListCall) Do(opts ...googleapi.CallOption) (*Achi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementDefinitionsListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3465,17 +3533,17 @@ func (c *AchievementsIncrementCall) Do(opts ...googleapi.CallOption) (*Achieveme
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementIncrementResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3664,17 +3732,17 @@ func (c *AchievementsListCall) Do(opts ...googleapi.CallOption) (*PlayerAchievem
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerAchievementListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3850,17 +3918,17 @@ func (c *AchievementsRevealCall) Do(opts ...googleapi.CallOption) (*AchievementR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementRevealResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3987,17 +4055,17 @@ func (c *AchievementsSetStepsAtLeastCall) Do(opts ...googleapi.CallOption) (*Ach
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementSetStepsAtLeastResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4127,17 +4195,17 @@ func (c *AchievementsUnlockCall) Do(opts ...googleapi.CallOption) (*AchievementU
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementUnlockResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4260,17 +4328,17 @@ func (c *AchievementsUpdateMultipleCall) Do(opts ...googleapi.CallOption) (*Achi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementUpdateMultipleResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4426,17 +4494,17 @@ func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Application{
 		ServerResponse: googleapi.ServerResponse{
@@ -4592,17 +4660,17 @@ func (c *ApplicationsGetEndPointCall) Do(opts ...googleapi.CallOption) (*EndPoin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EndPoint{
 		ServerResponse: googleapi.ServerResponse{
@@ -4724,7 +4792,7 @@ func (c *ApplicationsPlayedCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -4840,17 +4908,17 @@ func (c *ApplicationsVerifyCall) Do(opts ...googleapi.CallOption) (*ApplicationV
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApplicationVerifyResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5002,17 +5070,17 @@ func (c *EventsListByPlayerCall) Do(opts ...googleapi.CallOption) (*PlayerEventL
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerEventListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5193,17 +5261,17 @@ func (c *EventsListDefinitionsCall) Do(opts ...googleapi.CallOption) (*EventDefi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EventDefinitionListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5361,17 +5429,17 @@ func (c *EventsRecordCall) Do(opts ...googleapi.CallOption) (*EventUpdateRespons
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EventUpdateResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5513,17 +5581,17 @@ func (c *LeaderboardsGetCall) Do(opts ...googleapi.CallOption) (*Leaderboard, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Leaderboard{
 		ServerResponse: googleapi.ServerResponse{
@@ -5679,17 +5747,17 @@ func (c *LeaderboardsListCall) Do(opts ...googleapi.CallOption) (*LeaderboardLis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LeaderboardListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5847,17 +5915,17 @@ func (c *MetagameGetMetagameConfigCall) Do(opts ...googleapi.CallOption) (*Metag
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &MetagameConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6013,17 +6081,17 @@ func (c *MetagameListCategoriesByPlayerCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CategoryListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6229,17 +6297,17 @@ func (c *PlayersGetCall) Do(opts ...googleapi.CallOption) (*Player, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Player{
 		ServerResponse: googleapi.ServerResponse{
@@ -6281,6 +6349,155 @@ func (c *PlayersGetCall) Do(opts ...googleapi.CallOption) (*Player, error) {
 	//   "path": "games/v1/players/{playerId}",
 	//   "response": {
 	//     "$ref": "Player"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games"
+	//   ]
+	// }
+
+}
+
+// method id "games.players.getMultipleApplicationPlayerIds":
+
+type PlayersGetMultipleApplicationPlayerIdsCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetMultipleApplicationPlayerIds: Get the application player ids for
+// the currently authenticated player across all requested games by the
+// same developer as the calling application. This will only return ids
+// for players that actually have an id (scoped or otherwise) with that
+// game.
+func (r *PlayersService) GetMultipleApplicationPlayerIds() *PlayersGetMultipleApplicationPlayerIdsCall {
+	c := &PlayersGetMultipleApplicationPlayerIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// ApplicationIds sets the optional parameter "applicationIds":
+// Required. The application IDs from the Google Play developer console
+// for the games to return scoped ids for.
+func (c *PlayersGetMultipleApplicationPlayerIdsCall) ApplicationIds(applicationIds ...string) *PlayersGetMultipleApplicationPlayerIdsCall {
+	c.urlParams_.SetMulti("applicationIds", append([]string{}, applicationIds...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlayersGetMultipleApplicationPlayerIdsCall) Fields(s ...googleapi.Field) *PlayersGetMultipleApplicationPlayerIdsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PlayersGetMultipleApplicationPlayerIdsCall) IfNoneMatch(entityTag string) *PlayersGetMultipleApplicationPlayerIdsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PlayersGetMultipleApplicationPlayerIdsCall) Context(ctx context.Context) *PlayersGetMultipleApplicationPlayerIdsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PlayersGetMultipleApplicationPlayerIdsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PlayersGetMultipleApplicationPlayerIdsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/players/me/multipleApplicationPlayerIds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.players.getMultipleApplicationPlayerIds" call.
+// Exactly one of *GetMultipleApplicationPlayerIdsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GetMultipleApplicationPlayerIdsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PlayersGetMultipleApplicationPlayerIdsCall) Do(opts ...googleapi.CallOption) (*GetMultipleApplicationPlayerIdsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetMultipleApplicationPlayerIdsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the application player ids for the currently authenticated player across all requested games by the same developer as the calling application. This will only return ids for players that actually have an id (scoped or otherwise) with that game.",
+	//   "flatPath": "games/v1/players/me/multipleApplicationPlayerIds",
+	//   "httpMethod": "GET",
+	//   "id": "games.players.getMultipleApplicationPlayerIds",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "applicationIds": {
+	//       "description": "Required. The application IDs from the Google Play developer console for the games to return scoped ids for.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "games/v1/players/me/multipleApplicationPlayerIds",
+	//   "response": {
+	//     "$ref": "GetMultipleApplicationPlayerIdsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games"
@@ -6378,17 +6595,17 @@ func (c *PlayersGetScopedPlayerIdsCall) Do(opts ...googleapi.CallOption) (*Scope
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScopedPlayerIds{
 		ServerResponse: googleapi.ServerResponse{
@@ -6538,17 +6755,17 @@ func (c *PlayersListCall) Do(opts ...googleapi.CallOption) (*PlayerListResponse,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6576,6 +6793,11 @@ func (c *PlayersListCall) Do(opts ...googleapi.CallOption) (*PlayerListResponse,
 	//         "CONNECTED",
 	//         "VISIBLE",
 	//         "FRIENDS_ALL"
+	//       ],
+	//       "enumDeprecated": [
+	//         true,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "Retrieve a list of players that are also playing this game in reverse chronological order.",
@@ -6730,17 +6952,17 @@ func (c *RevisionsCheckCall) Do(opts ...googleapi.CallOption) (*RevisionCheckRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RevisionCheckResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6936,17 +7158,17 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerLeaderboardScoreListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6978,6 +7200,13 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//         "PUBLIC",
 	//         "SOCIAL",
 	//         "FRIENDS"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         false,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value. Should be unused.",
@@ -7194,17 +7423,17 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LeaderboardScores{
 		ServerResponse: googleapi.ServerResponse{
@@ -7235,6 +7464,12 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//         "PUBLIC",
 	//         "SOCIAL",
 	//         "FRIENDS"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value. This value is unused.",
@@ -7462,17 +7697,17 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LeaderboardScores{
 		ServerResponse: googleapi.ServerResponse{
@@ -7503,6 +7738,12 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//         "PUBLIC",
 	//         "SOCIAL",
 	//         "FRIENDS"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value. This value is unused.",
@@ -7703,17 +7944,17 @@ func (c *ScoresSubmitCall) Do(opts ...googleapi.CallOption) (*PlayerScoreRespons
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerScoreResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7860,17 +8101,17 @@ func (c *ScoresSubmitMultipleCall) Do(opts ...googleapi.CallOption) (*PlayerScor
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerScoreListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8012,17 +8253,17 @@ func (c *SnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Snapshot{
 		ServerResponse: googleapi.ServerResponse{
@@ -8188,17 +8429,17 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotListRespo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SnapshotListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8365,17 +8606,17 @@ func (c *StatsGetCall) Do(opts ...googleapi.CallOption) (*StatsResponse, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StatsResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -5,7 +5,7 @@
 package disco
 
 import (
-	"io/ioutil"
+	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -17,7 +17,7 @@ var stringSchema = &Schema{
 }
 
 func TestDocument(t *testing.T) {
-	bytes, err := ioutil.ReadFile("testdata/test-api.json")
+	bytes, err := os.ReadFile("testdata/test-api.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -265,7 +265,7 @@ func TestSchemaErrors(t *testing.T) {
 }
 
 func TestErrorDoc(t *testing.T) {
-	bytes, err := ioutil.ReadFile("testdata/error.json")
+	bytes, err := os.ReadFile("testdata/error.json")
 	if err != nil {
 		t.Fatal(err)
 	}

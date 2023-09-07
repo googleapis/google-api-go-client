@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -77,6 +77,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "translate:v3"
 const apiName = "translate"
@@ -161,7 +162,9 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Datasets = NewProjectsLocationsDatasetsService(s)
 	rs.Glossaries = NewProjectsLocationsGlossariesService(s)
+	rs.Models = NewProjectsLocationsModelsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
@@ -169,9 +172,34 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Datasets *ProjectsLocationsDatasetsService
+
 	Glossaries *ProjectsLocationsGlossariesService
 
+	Models *ProjectsLocationsModelsService
+
 	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsDatasetsService(s *Service) *ProjectsLocationsDatasetsService {
+	rs := &ProjectsLocationsDatasetsService{s: s}
+	rs.Examples = NewProjectsLocationsDatasetsExamplesService(s)
+	return rs
+}
+
+type ProjectsLocationsDatasetsService struct {
+	s *Service
+
+	Examples *ProjectsLocationsDatasetsExamplesService
+}
+
+func NewProjectsLocationsDatasetsExamplesService(s *Service) *ProjectsLocationsDatasetsExamplesService {
+	rs := &ProjectsLocationsDatasetsExamplesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsExamplesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsGlossariesService(s *Service) *ProjectsLocationsGlossariesService {
@@ -192,6 +220,15 @@ func NewProjectsLocationsGlossariesGlossaryEntriesService(s *Service) *ProjectsL
 }
 
 type ProjectsLocationsGlossariesGlossaryEntriesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsModelsService(s *Service) *ProjectsLocationsModelsService {
+	rs := &ProjectsLocationsModelsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsModelsService struct {
 	s *Service
 }
 
@@ -279,15 +316,16 @@ type BatchDocumentOutputConfig struct {
 	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The naming format of translation output files follows (for target
 	// language code [trg]): `translation_output`:
-	// gs://translation_output/a_b_c_[trg]_translation.[extension]
+	// `gs://translation_output/a_b_c_[trg]_translation.[extension]`
 	// `glossary_translation_output`:
-	// gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]`.
 	// The output document will maintain the same file format as the input
 	// document. The naming format of error output files follows (for target
 	// language code [trg]): `error_output`:
-	// gs://translation_test/a_b_c_[trg]_errors.txt `glossary_error_output`:
-	// gs://translation_test/a_b_c_[trg]_glossary_translation.txt The error
-	// output is a txt file containing error details.
+	// `gs://translation_test/a_b_c_[trg]_errors.txt`
+	// `glossary_error_output`:
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.txt`. The
+	// error output is a txt file containing error details.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
@@ -316,6 +354,22 @@ func (s *BatchDocumentOutputConfig) MarshalJSON() ([]byte, error) {
 
 // BatchTranslateDocumentRequest: The BatchTranslateDocument request.
 type BatchTranslateDocumentRequest struct {
+	// CustomizedAttribution: Optional. This flag is to support user
+	// customized attribution. If not provided, the default is `Machine
+	// Translated by Google`. Customized attribution should follow rules in
+	// https://cloud.google.com/translate/attribution#attribution_and_logos
+	CustomizedAttribution string `json:"customizedAttribution,omitempty"`
+
+	// EnableRotationCorrection: Optional. If true, enable auto rotation
+	// correction in DVS.
+	EnableRotationCorrection bool `json:"enableRotationCorrection,omitempty"`
+
+	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
+	// server to remove the shadow text on background image for native pdf
+	// translation. Shadow removal feature can only be enabled when
+	// is_translate_native_pdf_only: false && pdf_native_only: false
+	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
+
 	// FormatConversions: Optional.
 	FormatConversions map[string]string `json:"formatConversions,omitempty"`
 
@@ -345,26 +399,27 @@ type BatchTranslateDocumentRequest struct {
 	// output for duplicate inputs.
 	OutputConfig *BatchDocumentOutputConfig `json:"outputConfig,omitempty"`
 
-	// SourceLanguageCode: Required. The BCP-47 language code of the input
+	// SourceLanguageCode: Required. The ISO-639 language code of the input
 	// document if known, for example, "en-US" or "sr-Latn". Supported
 	// language codes are listed in Language Support
 	// (https://cloud.google.com/translate/docs/languages).
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCodes: Required. The BCP-47 language code to use for
+	// TargetLanguageCodes: Required. The ISO-639 language code to use for
 	// translation of the input document. Specify up to 10 language codes
 	// here.
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FormatConversions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomizedAttribution") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FormatConversions") to
+	// NullFields is a list of field names (e.g. "CustomizedAttribution") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -448,6 +503,132 @@ func (s *BatchTranslateTextRequest) MarshalJSON() ([]byte, error) {
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// Dataset: A dataset that hosts the examples (sentence pairs) used for
+// translation models.
+type Dataset struct {
+	// CreateTime: Output only. Timestamp when this dataset was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: The name of the dataset to show in the interface. The
+	// name can be up to 32 characters long and can consist only of ASCII
+	// Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExampleCount: Output only. The number of examples in the dataset.
+	ExampleCount int64 `json:"exampleCount,omitempty"`
+
+	// Name: The resource name of the dataset, in form of
+	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dat
+	// aset_id}`
+	Name string `json:"name,omitempty"`
+
+	// SourceLanguageCode: The BCP-47 language code of the source language.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+
+	// TargetLanguageCode: The BCP-47 language code of the target language.
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+
+	// TestExampleCount: Output only. Number of test examples (sentence
+	// pairs).
+	TestExampleCount int64 `json:"testExampleCount,omitempty"`
+
+	// TrainExampleCount: Output only. Number of training examples (sentence
+	// pairs).
+	TrainExampleCount int64 `json:"trainExampleCount,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this dataset was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ValidateExampleCount: Output only. Number of validation examples
+	// (sentence pairs).
+	ValidateExampleCount int64 `json:"validateExampleCount,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Dataset) MarshalJSON() ([]byte, error) {
+	type NoMethod Dataset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatasetInputConfig: Input configuration for datasets.
+type DatasetInputConfig struct {
+	// InputFiles: Files containing the sentence pairs to be imported to the
+	// dataset.
+	InputFiles []*InputFile `json:"inputFiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputFiles") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputFiles") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatasetInputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DatasetInputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatasetOutputConfig: Output configuration for datasets.
+type DatasetOutputConfig struct {
+	// GcsDestination: Google Cloud Storage destination to write the output.
+	GcsDestination *GcsOutputDestination `json:"gcsDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatasetOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DatasetOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DetectLanguageRequest: The request message for language detection.
@@ -539,7 +720,7 @@ type DetectedLanguage struct {
 	// Confidence: The confidence of the detection result for this language.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code of source content in the
+	// LanguageCode: The ISO-639 language code of the source content in the
 	// request, detected automatically.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -637,21 +818,21 @@ type DocumentOutputConfig struct {
 	// corresponds to the translated file's extension according to its mime
 	// type. For a DocumentInputConfig.gcs_uri provided document, the output
 	// file will have a name according to its URI. For example: an input
-	// file with URI: "gs://a/b/c.[extension]" stored in a gcs_destination
+	// file with URI: `gs://a/b/c.[extension]` stored in a gcs_destination
 	// bucket with name "my_bucket" will have an output URI:
-	// "gs://my_bucket/a_b_c_[trg]_translations.[ext]", where - [trg]
+	// `gs://my_bucket/a_b_c_[trg]_translations.[ext]`, where - [trg]
 	// corresponds to the translated file's language code, - [ext]
 	// corresponds to the translated file's extension according to its mime
 	// type. If the document was directly provided through the request, then
 	// the output document will have the format:
-	// "gs://my_bucket/translated_document_[trg]_translations.[ext], where -
-	// [trg] corresponds to the translated file's language code, - [ext]
+	// `gs://my_bucket/translated_document_[trg]_translations.[ext]`, where
+	// - [trg] corresponds to the translated file's language code, - [ext]
 	// corresponds to the translated file's extension according to its mime
 	// type. If a glossary was provided, then the output URI for the
 	// glossary translation will be equal to the default output URI but have
 	// `glossary_translations` instead of `translations`. For the previous
 	// example, its glossary URI would be:
-	// "gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]". Thus the
+	// `gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]`. Thus the
 	// max number of output files will be 2 (Translated document, Glossary
 	// translated document). Callers should expect no partial outputs. If
 	// there is any error during document translation, no output will be
@@ -745,6 +926,74 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Example: A sentence pair.
+type Example struct {
+	// Name: Output only. The resource name of the example, in form of
+	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dat
+	// aset_id}/examples/{example_id}'
+	Name string `json:"name,omitempty"`
+
+	// SourceText: Sentence in source language.
+	SourceText string `json:"sourceText,omitempty"`
+
+	// TargetText: Sentence in target language.
+	TargetText string `json:"targetText,omitempty"`
+
+	// Usage: Output only. Usage of the sentence pair. Options are
+	// TRAIN|VALIDATION|TEST.
+	Usage string `json:"usage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Example) MarshalJSON() ([]byte, error) {
+	type NoMethod Example
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExportDataRequest: Request message for ExportData.
+type ExportDataRequest struct {
+	// OutputConfig: Required. The config for the output content.
+	OutputConfig *DatasetOutputConfig `json:"outputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportDataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportDataRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GcsDestination: The Google Cloud Storage location for the output
 // content.
 type GcsDestination struct {
@@ -779,6 +1028,69 @@ func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GcsInputSource: The Google Cloud Storage location for the input
+// content.
+type GcsInputSource struct {
+	// InputUri: Required. Source data URI. For example,
+	// `gs://my_bucket/my_object`.
+	InputUri string `json:"inputUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcsInputSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsInputSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GcsOutputDestination: The Google Cloud Storage location for the
+// output content.
+type GcsOutputDestination struct {
+	// OutputUriPrefix: Required. Google Cloud Storage URI to output
+	// directory. For example, `gs://bucket/directory`. The requesting user
+	// must have write permission to the bucket. The directory will be
+	// created if it doesn't exist.
+	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcsOutputDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsOutputDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GcsSource: The Google Cloud Storage location for the input content.
 type GcsSource struct {
 	// InputUri: Required. Source data URI. For example,
@@ -808,7 +1120,7 @@ func (s *GcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Glossary: Represents a glossary built from user provided data.
+// Glossary: Represents a glossary built from user-provided data.
 type Glossary struct {
 	// DisplayName: Optional. The display name of the glossary.
 	DisplayName string `json:"displayName,omitempty"`
@@ -915,10 +1227,10 @@ type GlossaryInputConfig struct {
 	// returns [google.rpc.Code.INVALID_ARGUMENT] for unsupported URI-s and
 	// file formats. Wildcards are not allowed. This must be a single file
 	// in one of the following formats: For unidirectional glossaries: -
-	// TSV/CSV (`.tsv`/`.csv`): 2 column file, tab- or comma-separated. The
-	// first column is source text. The second column is target text. The
-	// file must not contain headers. That is, the first row is data, not
-	// column names. - TMX (`.tmx`): TMX file with parallel data defining
+	// TSV/CSV (`.tsv`/`.csv`): Two column file, tab- or comma-separated.
+	// The first column is source text. The second column is target text. No
+	// headers in this file. The first row contains data and not column
+	// names. - TMX (`.tmx`): TMX file with parallel data defining
 	// source/target term pairs. For equivalent term sets glossaries: - CSV
 	// (`.csv`): Multi-column CSV file defining equivalent glossary terms in
 	// multiple languages. See documentation for more information -
@@ -1044,6 +1356,34 @@ func (s *GlossaryTermsSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportDataRequest: Request message for ImportData.
+type ImportDataRequest struct {
+	// InputConfig: Required. The config for the input content.
+	InputConfig *DatasetInputConfig `json:"inputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportDataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportDataRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InputConfig: Input configuration for BatchTranslateText request.
 type InputConfig struct {
 	// GcsSource: Required. Google Cloud Storage location for the source
@@ -1092,14 +1432,46 @@ func (s *InputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InputFile: An input file.
+type InputFile struct {
+	// GcsSource: Google Cloud Storage file source.
+	GcsSource *GcsInputSource `json:"gcsSource,omitempty"`
+
+	// Usage: Optional. Usage of the file contents. Options are
+	// TRAIN|VALIDATION|TEST, or UNASSIGNED (by default) for auto split.
+	Usage string `json:"usage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputFile) MarshalJSON() ([]byte, error) {
+	type NoMethod InputFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LanguageCodePair: Used with unidirectional glossaries.
 type LanguageCodePair struct {
-	// SourceLanguageCode: Required. The BCP-47 language code of the input
+	// SourceLanguageCode: Required. The ISO-639 language code of the input
 	// text, for example, "en-US". Expected to be an exact match for
 	// GlossaryTerm.language_code.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCode: Required. The BCP-47 language code for
+	// TargetLanguageCode: Required. The ISO-639 language code for
 	// translation output, for example, "zh-CN". Expected to be an exact
 	// match for GlossaryTerm.language_code.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
@@ -1130,7 +1502,7 @@ func (s *LanguageCodePair) MarshalJSON() ([]byte, error) {
 
 // LanguageCodesSet: Used with equivalent term set glossaries.
 type LanguageCodesSet struct {
-	// LanguageCodes: The BCP-47 language code(s) for terms defined in the
+	// LanguageCodes: The ISO-639 language code(s) for terms defined in the
 	// glossary. All entries are unique. The list contains at least two
 	// entries. Expected to be an exact match for
 	// GlossaryTerm.language_code.
@@ -1155,6 +1527,80 @@ type LanguageCodesSet struct {
 
 func (s *LanguageCodesSet) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageCodesSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListDatasetsResponse: Response message for ListDatasets.
+type ListDatasetsResponse struct {
+	// Datasets: The datasets read.
+	Datasets []*Dataset `json:"datasets,omitempty"`
+
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// token to the page_token field in the ListDatasetsRequest to obtain
+	// the corresponding page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Datasets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Datasets") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDatasetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDatasetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListExamplesResponse: Response message for ListExamples.
+type ListExamplesResponse struct {
+	// Examples: The sentence pairs.
+	Examples []*Example `json:"examples,omitempty"`
+
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// token to the page_token field in the ListExamplesRequest to obtain
+	// the corresponding page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Examples") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Examples") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListExamplesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListExamplesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1271,6 +1717,43 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListModelsResponse: Response message for ListModels.
+type ListModelsResponse struct {
+	// Models: The models read.
+	Models []*Model `json:"models,omitempty"`
+
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// token to the page_token field in the ListModelsRequest to obtain the
+	// corresponding page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Models") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Models") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListModelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListModelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -1308,7 +1791,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1358,6 +1841,77 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Model: A trained translation model.
+type Model struct {
+	// CreateTime: Output only. Timestamp when the model resource was
+	// created, which is also when the training started.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Dataset: The dataset from which the model is trained, in form of
+	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dat
+	// aset_id}`
+	Dataset string `json:"dataset,omitempty"`
+
+	// DisplayName: The name of the model to show in the interface. The name
+	// can be up to 32 characters long and can consist only of ASCII Latin
+	// letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: The resource name of the model, in form of
+	// `projects/{project-number-or-id}/locations/{location_id}/models/{model
+	// _id}`
+	Name string `json:"name,omitempty"`
+
+	// SourceLanguageCode: Output only. The BCP-47 language code of the
+	// source language.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+
+	// TargetLanguageCode: Output only. The BCP-47 language code of the
+	// target language.
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+
+	// TestExampleCount: Output only. Number of examples (sentence pairs)
+	// used to test the model.
+	TestExampleCount int64 `json:"testExampleCount,omitempty"`
+
+	// TrainExampleCount: Output only. Number of examples (sentence pairs)
+	// used to train the model.
+	TrainExampleCount int64 `json:"trainExampleCount,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this model was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ValidateExampleCount: Output only. Number of examples (sentence
+	// pairs) used to validate the model.
+	ValidateExampleCount int64 `json:"validateExampleCount,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Model) MarshalJSON() ([]byte, error) {
+	type NoMethod Model
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -1383,8 +1937,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1450,7 +2004,7 @@ type OutputConfig struct {
 	// file updating.
 	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The format of translations_file (for target language code 'trg') is:
-	// gs://translation_test/a_b_c_'trg'_translations.[extension] If the
+	// `gs://translation_test/a_b_c_'trg'_translations.[extension]` If the
 	// input file extension is tsv, the output has the following columns:
 	// Column 1: ID of the request provided in the input, if it's not
 	// provided in the input, then the input row number is used (0-based).
@@ -1462,9 +2016,9 @@ type OutputConfig struct {
 	// applied. If input file extension is a txt or html, the translation is
 	// directly written to the output file. If glossary is requested, a
 	// separate glossary_translations_file has format of
-	// gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]
+	// `gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]`
 	// The format of errors file (for target language code 'trg') is:
-	// gs://translation_test/a_b_c_'trg'_errors.[extension] If the input
+	// `gs://translation_test/a_b_c_'trg'_errors.[extension]` If the input
 	// file extension is tsv, errors_file contains the following: Column 1:
 	// ID of the request provided in the input, if it's not provided in the
 	// input, then the input row number is used (0-based). Column 2: source
@@ -1473,7 +2027,7 @@ type OutputConfig struct {
 	// Error when applying the glossary. If the input file extension is txt
 	// or html, glossary_error_file will be generated that contains error
 	// details. glossary_error_file has format of
-	// gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]
+	// `gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]`
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
@@ -1496,6 +2050,114 @@ type OutputConfig struct {
 
 func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Romanization: A single romanization response.
+type Romanization struct {
+	// DetectedLanguageCode: The ISO-639 language code of source text in the
+	// initial request, detected automatically, if no source language was
+	// passed within the initial request. If the source language was passed,
+	// auto-detection of the language does not occur and this field is
+	// empty.
+	DetectedLanguageCode string `json:"detectedLanguageCode,omitempty"`
+
+	// RomanizedText: Romanized text. If an error occurs during
+	// romanization, this field might be excluded from the response.
+	RomanizedText string `json:"romanizedText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DetectedLanguageCode") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedLanguageCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Romanization) MarshalJSON() ([]byte, error) {
+	type NoMethod Romanization
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RomanizeTextRequest: The request message for synchronous
+// romanization.
+type RomanizeTextRequest struct {
+	// Contents: Required. The content of the input in string format.
+	Contents []string `json:"contents,omitempty"`
+
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input
+	// text if known, for example, "hi" or "zh". If the source language
+	// isn't specified, the API attempts to identify the source language
+	// automatically and returns the source language for each content in the
+	// response.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RomanizeTextRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RomanizeTextRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RomanizeTextResponse: The response message for synchronous
+// romanization.
+type RomanizeTextResponse struct {
+	// Romanizations: Text romanization responses. This field has the same
+	// length as `contents`.
+	Romanizations []*Romanization `json:"romanizations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Romanizations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Romanizations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RomanizeTextResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RomanizeTextResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1547,20 +2209,20 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // SupportedLanguage: A single supported language response corresponds
 // to information related to one supported language.
 type SupportedLanguage struct {
-	// DisplayName: Human readable name of the language localized in the
+	// DisplayName: Human-readable name of the language localized in the
 	// display language specified in the request.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LanguageCode: Supported language code, generally consisting of its
 	// ISO 639-1 identifier, for example, 'en', 'ja'. In certain cases,
-	// BCP-47 codes including language and region identifiers are returned
-	// (for example, 'zh-TW' and 'zh-CN')
+	// ISO-639 codes including language and region identifiers are returned
+	// (for example, 'zh-TW' and 'zh-CN').
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// SupportSource: Can be used as source language.
+	// SupportSource: Can be used as a source language.
 	SupportSource bool `json:"supportSource,omitempty"`
 
-	// SupportTarget: Can be used as target language.
+	// SupportTarget: Can be used as a target language.
 	SupportTarget bool `json:"supportTarget,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -1638,10 +2300,26 @@ type TranslateDocumentRequest struct {
 	// the same as the input file's mime type.
 	DocumentOutputConfig *DocumentOutputConfig `json:"documentOutputConfig,omitempty"`
 
+	// EnableRotationCorrection: Optional. If true, enable auto rotation
+	// correction in DVS.
+	EnableRotationCorrection bool `json:"enableRotationCorrection,omitempty"`
+
+	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
+	// server to remove the shadow text on background image for native pdf
+	// translation. Shadow removal feature can only be enabled when
+	// is_translate_native_pdf_only: false && pdf_native_only: false
+	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
+
 	// GlossaryConfig: Optional. Glossary to be applied. The glossary must
 	// be within the same region (have the same location-id) as the model,
 	// otherwise an INVALID_ARGUMENT (400) error is returned.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
+
+	// IsTranslateNativePdfOnly: Optional. is_translate_native_pdf_only
+	// field for external customers. If true, the page limit of online
+	// native pdf translation is 300 and only native pdf pages will be
+	// translated.
+	IsTranslateNativePdfOnly bool `json:"isTranslateNativePdfOnly,omitempty"`
 
 	// Labels: Optional. The labels with user-defined metadata for the
 	// request. Label keys and values can be no longer than 63 characters
@@ -1661,7 +2339,7 @@ type TranslateDocumentRequest struct {
 	// for translation.
 	Model string `json:"model,omitempty"`
 
-	// SourceLanguageCode: Optional. The BCP-47 language code of the input
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input
 	// document if known, for example, "en-US" or "sr-Latn". Supported
 	// language codes are listed in Language Support. If the source language
 	// isn't specified, the API attempts to identify the source language
@@ -1670,7 +2348,7 @@ type TranslateDocumentRequest struct {
 	// or a custom model.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCode: Required. The BCP-47 language code to use for
+	// TargetLanguageCode: Required. The ISO-639 language code to use for
 	// translation of the input document, set to one of the language codes
 	// listed in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
@@ -1751,19 +2429,19 @@ func (s *TranslateDocumentResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TranslateTextGlossaryConfig: Configures which glossary should be used
-// for a specific target language, and defines options for applying that
+// TranslateTextGlossaryConfig: Configures which glossary is used for a
+// specific target language and defines options for applying that
 // glossary.
 type TranslateTextGlossaryConfig struct {
 	// Glossary: Required. The `glossary` to be applied for this
-	// translation. The format depends on glossary: - User provided custom
-	// glossary:
+	// translation. The format depends on the glossary: - User-provided
+	// custom glossary:
 	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{g
 	// lossary-id}`
 	Glossary string `json:"glossary,omitempty"`
 
-	// IgnoreCase: Optional. Indicates match is case-insensitive. Default
-	// value is false if missing.
+	// IgnoreCase: Optional. Indicates match is case insensitive. The
+	// default value is `false` if missing.
 	IgnoreCase bool `json:"ignoreCase,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Glossary") to
@@ -1793,7 +2471,7 @@ func (s *TranslateTextGlossaryConfig) MarshalJSON() ([]byte, error) {
 // translation.
 type TranslateTextRequest struct {
 	// Contents: Required. The content of the input in string format. We
-	// recommend the total content be less than 30k codepoints. The max
+	// recommend the total content be less than 30,000 codepoints. The max
 	// length of this field is 1024. Use BatchTranslateText for larger text.
 	Contents []string `json:"contents,omitempty"`
 
@@ -1827,17 +2505,20 @@ type TranslateTextRequest struct {
 	//  If not provided, the default Google model (NMT) will be used
 	Model string `json:"model,omitempty"`
 
-	// SourceLanguageCode: Optional. The BCP-47 language code of the input
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input
 	// text if known, for example, "en-US" or "sr-Latn". Supported language
 	// codes are listed in Language Support. If the source language isn't
 	// specified, the API attempts to identify the source language
 	// automatically and returns the source language within the response.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCode: Required. The BCP-47 language code to use for
+	// TargetLanguageCode: Required. The ISO-639 language code to use for
 	// translation of the input text, set to one of the language codes
 	// listed in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+
+	// TransliterationConfig: Optional. Transliteration to be applied.
+	TransliterationConfig *TransliterationConfig `json:"transliterationConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
@@ -1903,7 +2584,7 @@ func (s *TranslateTextResponse) MarshalJSON() ([]byte, error) {
 
 // Translation: A single translation response.
 type Translation struct {
-	// DetectedLanguageCode: The BCP-47 language code of source text in the
+	// DetectedLanguageCode: The ISO-639 language code of source text in the
 	// initial request, detected automatically, if no source language was
 	// passed within the initial request. If the source language was passed,
 	// auto-detection of the language does not occur and this field is
@@ -1948,6 +2629,38 @@ type Translation struct {
 
 func (s *Translation) MarshalJSON() ([]byte, error) {
 	type NoMethod Translation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TransliterationConfig: Configures transliteration feature on top of
+// translation.
+type TransliterationConfig struct {
+	// EnableTransliteration: If true, source text in romanized form can be
+	// translated to the target language.
+	EnableTransliteration bool `json:"enableTransliteration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableTransliteration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableTransliteration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransliterationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TransliterationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2079,17 +2792,17 @@ func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DetectLanguageResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2260,17 +2973,17 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SupportedLanguages{
 		ServerResponse: googleapi.ServerResponse{
@@ -2313,6 +3026,155 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//   "path": "v3/{+parent}/supportedLanguages",
 	//   "response": {
 	//     "$ref": "SupportedLanguages"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.romanizeText":
+
+type ProjectsRomanizeTextCall struct {
+	s                   *Service
+	parent              string
+	romanizetextrequest *RomanizeTextRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// RomanizeText: Romanize input text written in non-Latin scripts to
+// Latin text.
+//
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}` or
+//     `projects/{project-number-or-id}`. For global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`.
+func (r *ProjectsService) RomanizeText(parent string, romanizetextrequest *RomanizeTextRequest) *ProjectsRomanizeTextCall {
+	c := &ProjectsRomanizeTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.romanizetextrequest = romanizetextrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRomanizeTextCall) Fields(s ...googleapi.Field) *ProjectsRomanizeTextCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRomanizeTextCall) Context(ctx context.Context) *ProjectsRomanizeTextCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRomanizeTextCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRomanizeTextCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.romanizetextrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:romanizeText")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.romanizeText" call.
+// Exactly one of *RomanizeTextResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RomanizeTextResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTextResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RomanizeTextResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Romanize input text written in non-Latin scripts to Latin text.",
+	//   "flatPath": "v3/projects/{projectsId}:romanizeText",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.romanizeText",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}:romanizeText",
+	//   "request": {
+	//     "$ref": "RomanizeTextRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RomanizeTextResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -2418,17 +3280,17 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TranslateTextResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2572,17 +3434,17 @@ func (c *ProjectsLocationsBatchTranslateDocumentCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2725,17 +3587,17 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2874,17 +3736,17 @@ func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DetectLanguageResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3024,17 +3886,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -3202,17 +4064,17 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SupportedLanguages{
 		ServerResponse: googleapi.ServerResponse{
@@ -3385,17 +4247,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3472,6 +4334,155 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "translate.projects.locations.romanizeText":
+
+type ProjectsLocationsRomanizeTextCall struct {
+	s                   *Service
+	parent              string
+	romanizetextrequest *RomanizeTextRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// RomanizeText: Romanize input text written in non-Latin scripts to
+// Latin text.
+//
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}` or
+//     `projects/{project-number-or-id}`. For global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`.
+func (r *ProjectsLocationsService) RomanizeText(parent string, romanizetextrequest *RomanizeTextRequest) *ProjectsLocationsRomanizeTextCall {
+	c := &ProjectsLocationsRomanizeTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.romanizetextrequest = romanizetextrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRomanizeTextCall) Fields(s ...googleapi.Field) *ProjectsLocationsRomanizeTextCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRomanizeTextCall) Context(ctx context.Context) *ProjectsLocationsRomanizeTextCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRomanizeTextCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRomanizeTextCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.romanizetextrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:romanizeText")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.romanizeText" call.
+// Exactly one of *RomanizeTextResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RomanizeTextResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTextResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RomanizeTextResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Romanize input text written in non-Latin scripts to Latin text.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:romanizeText",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.romanizeText",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}:romanizeText",
+	//   "request": {
+	//     "$ref": "RomanizeTextRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RomanizeTextResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
 }
 
 // method id "translate.projects.locations.translateDocument":
@@ -3570,17 +4581,17 @@ func (c *ProjectsLocationsTranslateDocumentCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TranslateDocumentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3721,17 +4732,17 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TranslateTextResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3774,6 +4785,1125 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 	//   ]
 	// }
 
+}
+
+// method id "translate.projects.locations.datasets.create":
+
+type ProjectsLocationsDatasetsCreateCall struct {
+	s          *Service
+	parent     string
+	dataset    *Dataset
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a Dataset.
+//
+// - parent: The project name.
+func (r *ProjectsLocationsDatasetsService) Create(parent string, dataset *Dataset) *ProjectsLocationsDatasetsCreateCall {
+	c := &ProjectsLocationsDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dataset = dataset
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/datasets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.datasets.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.datasets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/datasets",
+	//   "request": {
+	//     "$ref": "Dataset"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.datasets.delete":
+
+type ProjectsLocationsDatasetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a dataset and all of its contents.
+//
+// - name: The name of the dataset to delete.
+func (r *ProjectsLocationsDatasetsService) Delete(name string) *ProjectsLocationsDatasetsDeleteCall {
+	c := &ProjectsLocationsDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.datasets.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a dataset and all of its contents.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "translate.projects.locations.datasets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the dataset to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.datasets.exportData":
+
+type ProjectsLocationsDatasetsExportDataCall struct {
+	s                 *Service
+	dataset           string
+	exportdatarequest *ExportDataRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// ExportData: Exports dataset's data to the provided output location.
+//
+//   - dataset: Name of the dataset. In form of
+//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{d
+//     ataset-id}`.
+func (r *ProjectsLocationsDatasetsService) ExportData(dataset string, exportdatarequest *ExportDataRequest) *ProjectsLocationsDatasetsExportDataCall {
+	c := &ProjectsLocationsDatasetsExportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataset = dataset
+	c.exportdatarequest = exportdatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsExportDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsExportDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsExportDataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsExportDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsExportDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsExportDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportdatarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+dataset}:exportData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataset": c.dataset,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.datasets.exportData" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsExportDataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Exports dataset's data to the provided output location.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:exportData",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.datasets.exportData",
+	//   "parameterOrder": [
+	//     "dataset"
+	//   ],
+	//   "parameters": {
+	//     "dataset": {
+	//       "description": "Required. Name of the dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+dataset}:exportData",
+	//   "request": {
+	//     "$ref": "ExportDataRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.datasets.get":
+
+type ProjectsLocationsDatasetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Dataset.
+//
+// - name: The resource name of the dataset to retrieve.
+func (r *ProjectsLocationsDatasetsService) Get(name string) *ProjectsLocationsDatasetsGetCall {
+	c := &ProjectsLocationsDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.datasets.get" call.
+// Exactly one of *Dataset or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Dataset.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Dataset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.datasets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the dataset to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Dataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.datasets.importData":
+
+type ProjectsLocationsDatasetsImportDataCall struct {
+	s                 *Service
+	dataset           string
+	importdatarequest *ImportDataRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// ImportData: Import sentence pairs into translation Dataset.
+//
+//   - dataset: Name of the dataset. In form of
+//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{d
+//     ataset-id}`.
+func (r *ProjectsLocationsDatasetsService) ImportData(dataset string, importdatarequest *ImportDataRequest) *ProjectsLocationsDatasetsImportDataCall {
+	c := &ProjectsLocationsDatasetsImportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataset = dataset
+	c.importdatarequest = importdatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsImportDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsImportDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsImportDataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsImportDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsImportDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsImportDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importdatarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+dataset}:importData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataset": c.dataset,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.datasets.importData" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsImportDataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Import sentence pairs into translation Dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:importData",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.datasets.importData",
+	//   "parameterOrder": [
+	//     "dataset"
+	//   ],
+	//   "parameters": {
+	//     "dataset": {
+	//       "description": "Required. Name of the dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+dataset}:importData",
+	//   "request": {
+	//     "$ref": "ImportDataRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.datasets.list":
+
+type ProjectsLocationsDatasetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists datasets.
+//
+//   - parent: Name of the parent project. In form of
+//     `projects/{project-number-or-id}/locations/{location-id}`.
+func (r *ProjectsLocationsDatasetsService) List(parent string) *ProjectsLocationsDatasetsListCall {
+	c := &ProjectsLocationsDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server can return fewer results than requested.
+func (c *ProjectsLocationsDatasetsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results for the server to return. Typically
+// obtained from next_page_token field in the response of a ListDatasets
+// call.
+func (c *ProjectsLocationsDatasetsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/datasets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.datasets.list" call.
+// Exactly one of *ListDatasetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListDatasetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*ListDatasetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDatasetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists datasets.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.datasets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. The server can return fewer results than requested.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListDatasets call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent project. In form of `projects/{project-number-or-id}/locations/{location-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/datasets",
+	//   "response": {
+	//     "$ref": "ListDatasetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsListCall) Pages(ctx context.Context, f func(*ListDatasetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "translate.projects.locations.datasets.examples.list":
+
+type ProjectsLocationsDatasetsExamplesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists sentence pairs in the dataset.
+//
+//   - parent: Name of the parent dataset. In form of
+//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{d
+//     ataset-id}`.
+func (r *ProjectsLocationsDatasetsExamplesService) List(parent string) *ProjectsLocationsDatasetsExamplesListCall {
+	c := &ProjectsLocationsDatasetsExamplesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for
+// filtering the examples that will be returned. Example filter: *
+// `usage=TRAIN`
+func (c *ProjectsLocationsDatasetsExamplesListCall) Filter(filter string) *ProjectsLocationsDatasetsExamplesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server can return fewer results than requested.
+func (c *ProjectsLocationsDatasetsExamplesListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsExamplesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results for the server to return. Typically
+// obtained from next_page_token field in the response of a ListExamples
+// call.
+func (c *ProjectsLocationsDatasetsExamplesListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsExamplesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsExamplesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsExamplesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsExamplesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsExamplesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsExamplesListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsExamplesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsExamplesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsExamplesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/examples")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.datasets.examples.list" call.
+// Exactly one of *ListExamplesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListExamplesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsExamplesListCall) Do(opts ...googleapi.CallOption) (*ListExamplesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListExamplesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists sentence pairs in the dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/examples",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.datasets.examples.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. An expression for filtering the examples that will be returned. Example filter: * `usage=TRAIN`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. The server can return fewer results than requested.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListExamples call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/examples",
+	//   "response": {
+	//     "$ref": "ListExamplesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsExamplesListCall) Pages(ctx context.Context, f func(*ListExamplesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "translate.projects.locations.glossaries.create":
@@ -3865,17 +5995,17 @@ func (c *ProjectsLocationsGlossariesCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4002,17 +6132,17 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4150,17 +6280,17 @@ func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Glossary{
 		ServerResponse: googleapi.ServerResponse{
@@ -4338,17 +6468,17 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGlossariesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4527,17 +6657,17 @@ func (c *ProjectsLocationsGlossariesPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4676,17 +6806,17 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GlossaryEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -4812,17 +6942,17 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4959,17 +7089,17 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GlossaryEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -5125,17 +7255,17 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGlossaryEntriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5298,17 +7428,17 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GlossaryEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -5351,6 +7481,639 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Do(opts ...googlea
 	//   ]
 	// }
 
+}
+
+// method id "translate.projects.locations.models.create":
+
+type ProjectsLocationsModelsCreateCall struct {
+	s          *Service
+	parent     string
+	model      *Model
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a Model.
+//
+//   - parent: The project name, in form of
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsModelsService) Create(parent string, model *Model) *ProjectsLocationsModelsCreateCall {
+	c := &ProjectsLocationsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.model = model
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsModelsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsModelsCreateCall) Context(ctx context.Context) *ProjectsLocationsModelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsModelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.model)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/models")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.models.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsModelsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Model.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.models.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project name, in form of `projects/{project}/locations/{location}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/models",
+	//   "request": {
+	//     "$ref": "Model"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.models.delete":
+
+type ProjectsLocationsModelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a model.
+//
+// - name: The name of the model to delete.
+func (r *ProjectsLocationsModelsService) Delete(name string) *ProjectsLocationsModelsDeleteCall {
+	c := &ProjectsLocationsModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsModelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsModelsDeleteCall) Context(ctx context.Context) *ProjectsLocationsModelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsModelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.models.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsModelsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a model.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models/{modelsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "translate.projects.locations.models.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the model to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/models/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.models.get":
+
+type ProjectsLocationsModelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a model.
+//
+// - name: The resource name of the model to retrieve.
+func (r *ProjectsLocationsModelsService) Get(name string) *ProjectsLocationsModelsGetCall {
+	c := &ProjectsLocationsModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsModelsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsModelsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsModelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsModelsGetCall) Context(ctx context.Context) *ProjectsLocationsModelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsModelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsModelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.models.get" call.
+// Exactly one of *Model or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Model.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsModelsGetCall) Do(opts ...googleapi.CallOption) (*Model, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Model{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a model.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models/{modelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.models.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the model to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/models/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Model"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.models.list":
+
+type ProjectsLocationsModelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists models.
+//
+//   - parent: Name of the parent project. In form of
+//     `projects/{project-number-or-id}/locations/{location-id}`.
+func (r *ProjectsLocationsModelsService) List(parent string) *ProjectsLocationsModelsListCall {
+	c := &ProjectsLocationsModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for
+// filtering the models that will be returned. Supported filter:
+// `dataset_id=${dataset_id}`
+func (c *ProjectsLocationsModelsListCall) Filter(filter string) *ProjectsLocationsModelsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server can return fewer results than requested.
+func (c *ProjectsLocationsModelsListCall) PageSize(pageSize int64) *ProjectsLocationsModelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results for the server to return. Typically
+// obtained from next_page_token field in the response of a ListModels
+// call.
+func (c *ProjectsLocationsModelsListCall) PageToken(pageToken string) *ProjectsLocationsModelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsModelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsModelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsModelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsModelsListCall) Context(ctx context.Context) *ProjectsLocationsModelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsModelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsModelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/models")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.models.list" call.
+// Exactly one of *ListModelsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListModelsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListModelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists models.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.models.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. An expression for filtering the models that will be returned. Supported filter: `dataset_id=${dataset_id}`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. The server can return fewer results than requested.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListModels call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent project. In form of `projects/{project-number-or-id}/locations/{location-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/models",
+	//   "response": {
+	//     "$ref": "ListModelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsModelsListCall) Pages(ctx context.Context, f func(*ListModelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "translate.projects.locations.operations.cancel":
@@ -5450,17 +8213,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5589,17 +8352,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5738,17 +8501,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5803,14 +8566,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -5915,17 +8671,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5939,7 +8695,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "translate.projects.locations.operations.list",
@@ -6101,17 +8857,17 @@ func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudasset:v1"
 const apiName = "cloudasset"
@@ -242,7 +243,7 @@ func (s *AccessSelector) MarshalJSON() ([]byte, error) {
 }
 
 // AnalyzeIamPolicyLongrunningMetadata: Represents the metadata of the
-// longrunning operation for the AnalyzeIamPolicyLongrunning rpc.
+// longrunning operation for the AnalyzeIamPolicyLongrunning RPC.
 type AnalyzeIamPolicyLongrunningMetadata struct {
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -371,7 +372,7 @@ func (s *AnalyzeIamPolicyResponse) MarshalJSON() ([]byte, error) {
 type AnalyzeMoveResponse struct {
 	// MoveAnalysis: The list of analyses returned from performing the
 	// intended resource move analysis. The analysis is grouped by different
-	// Cloud services.
+	// Google Cloud services.
 	MoveAnalysis []*MoveAnalysis `json:"moveAnalysis,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -401,13 +402,228 @@ func (s *AnalyzeMoveResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AnalyzeOrgPoliciesResponse: The response message for
+// AssetService.AnalyzeOrgPolicies.
+type AnalyzeOrgPoliciesResponse struct {
+	// Constraint: The definition of the constraint in the request.
+	Constraint *AnalyzerOrgPolicyConstraint `json:"constraint,omitempty"`
+
+	// NextPageToken: The page token to fetch the next page for
+	// AnalyzeOrgPoliciesResponse.org_policy_results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// OrgPolicyResults: The organization policies under the
+	// AnalyzeOrgPoliciesRequest.scope with the
+	// AnalyzeOrgPoliciesRequest.constraint.
+	OrgPolicyResults []*OrgPolicyResult `json:"orgPolicyResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Constraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Constraint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeOrgPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeOrgPoliciesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzeOrgPolicyGovernedAssetsResponse: The response message for
+// AssetService.AnalyzeOrgPolicyGovernedAssets.
+type AnalyzeOrgPolicyGovernedAssetsResponse struct {
+	// Constraint: The definition of the constraint in the request.
+	Constraint *AnalyzerOrgPolicyConstraint `json:"constraint,omitempty"`
+
+	// GovernedAssets: The list of the analyzed governed assets.
+	GovernedAssets []*GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset `json:"governedAssets,omitempty"`
+
+	// NextPageToken: The page token to fetch the next page for
+	// AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Constraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Constraint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeOrgPolicyGovernedAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeOrgPolicyGovernedAssetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzeOrgPolicyGovernedContainersResponse: The response message for
+// AssetService.AnalyzeOrgPolicyGovernedContainers.
+type AnalyzeOrgPolicyGovernedContainersResponse struct {
+	// Constraint: The definition of the constraint in the request.
+	Constraint *AnalyzerOrgPolicyConstraint `json:"constraint,omitempty"`
+
+	// GovernedContainers: The list of the analyzed governed containers.
+	GovernedContainers []*GoogleCloudAssetV1GovernedContainer `json:"governedContainers,omitempty"`
+
+	// NextPageToken: The page token to fetch the next page for
+	// AnalyzeOrgPolicyGovernedContainersResponse.governed_containers.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Constraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Constraint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeOrgPolicyGovernedContainersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeOrgPolicyGovernedContainersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzerOrgPolicy: This organization policy message is a modified
+// version of the one defined in the Organization Policy system. This
+// message contains several fields defined in the original organization
+// policy with some new fields for analysis purpose.
+type AnalyzerOrgPolicy struct {
+	// AppliedResource: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of an organization/folder/project resource where this organization
+	// policy applies to. For any user defined org policies, this field has
+	// the same value as the [attached_resource] field. Only for default
+	// policy, this field has the different value.
+	AppliedResource string `json:"appliedResource,omitempty"`
+
+	// AttachedResource: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of an organization/folder/project resource where this organization
+	// policy is set. Notice that some type of constraints are defined with
+	// default policy. This field will be empty for them.
+	AttachedResource string `json:"attachedResource,omitempty"`
+
+	// InheritFromParent: If `inherit_from_parent` is true, Rules set higher
+	// up in the hierarchy (up to the closest root) are inherited and
+	// present in the effective policy. If it is false, then no rules are
+	// inherited, and this policy becomes the effective root for evaluation.
+	InheritFromParent bool `json:"inheritFromParent,omitempty"`
+
+	// Reset: Ignores policies set above this resource and restores the
+	// default behavior of the constraint at this resource. This field can
+	// be set in policies for either list or boolean constraints. If set,
+	// `rules` must be empty and `inherit_from_parent` must be set to false.
+	Reset bool `json:"reset,omitempty"`
+
+	// Rules: List of rules for this organization policy.
+	Rules []*GoogleCloudAssetV1Rule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppliedResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppliedResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzerOrgPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzerOrgPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzerOrgPolicyConstraint: The organization policy constraint
+// definition.
+type AnalyzerOrgPolicyConstraint struct {
+	// CustomConstraint: The definition of the custom constraint.
+	CustomConstraint *GoogleCloudAssetV1CustomConstraint `json:"customConstraint,omitempty"`
+
+	// GoogleDefinedConstraint: The definition of the canned constraint
+	// defined by Google.
+	GoogleDefinedConstraint *GoogleCloudAssetV1Constraint `json:"googleDefinedConstraint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzerOrgPolicyConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzerOrgPolicyConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Asset: An asset in Google Cloud. An asset can be any resource in the
 // Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy), or a relationship (e.g. an
-// INSTANCE_TO_INSTANCEGROUP relationship). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP
+// relationship). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type Asset struct {
@@ -435,15 +651,15 @@ type Asset struct {
 	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
-	// IamPolicy: A representation of the Cloud IAM policy set on a Google
-	// Cloud resource. There can be a maximum of one Cloud IAM policy set on
-	// any given resource. In addition, Cloud IAM policies inherit their
-	// granted access scope from any policies set on parent resources in the
-	// resource hierarchy. Therefore, the effectively policy is the union of
-	// both the policy set on this resource and each policy set on all of
-	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
-	// for more information.
+	// IamPolicy: A representation of the IAM policy set on a Google Cloud
+	// resource. There can be a maximum of one IAM policy set on any given
+	// resource. In addition, IAM policies inherit their granted access
+	// scope from any policies set on parent resources in the resource
+	// hierarchy. Therefore, the effectively policy is the union of both the
+	// policy set on this resource and each policy set on all of the
+	// resource's ancestry resource levels in the hierarchy. See this topic
+	// (https://cloud.google.com/iam/help/allow-policies/inheritance) for
+	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -833,7 +1049,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -850,9 +1068,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -1150,8 +1366,8 @@ type ExportAssetsRequest struct {
 	//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
 	//   "RESOURCE" - Resource metadata.
 	//   "IAM_POLICY" - The actual IAM policy set on a resource.
-	//   "ORG_POLICY" - The Cloud Organization Policy set on an asset.
-	//   "ACCESS_POLICY" - The Cloud Access context manager Policy set on an
+	//   "ORG_POLICY" - The organization policy set on an asset.
+	//   "ACCESS_POLICY" - The Access Context Manager policy set on an
 	// asset.
 	//   "OS_INVENTORY" - The runtime OS Inventory information.
 	//   "RELATIONSHIP" - The related resources.
@@ -1309,8 +1525,8 @@ type Feed struct {
 	//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
 	//   "RESOURCE" - Resource metadata.
 	//   "IAM_POLICY" - The actual IAM policy set on a resource.
-	//   "ORG_POLICY" - The Cloud Organization Policy set on an asset.
-	//   "ACCESS_POLICY" - The Cloud Access context manager Policy set on an
+	//   "ORG_POLICY" - The organization policy set on an asset.
+	//   "ACCESS_POLICY" - The Access Context Manager policy set on an
 	// asset.
 	//   "OS_INVENTORY" - The runtime OS Inventory information.
 	//   "RELATIONSHIP" - The related resources.
@@ -1402,7 +1618,7 @@ func (s *FeedOutputConfig) MarshalJSON() ([]byte, error) {
 
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
-	// Uri: The uri of the Cloud Storage object. It's the same uri that is
+	// Uri: The URI of the Cloud Storage object. It's the same URI that is
 	// used by gsutil. Example: "gs://bucket_name/object_name". See Viewing
 	// and Editing Object Metadata
 	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for
@@ -1412,8 +1628,8 @@ type GcsDestination struct {
 	// overwritten with the exported result.
 	Uri string `json:"uri,omitempty"`
 
-	// UriPrefix: The uri prefix of all generated Cloud Storage objects.
-	// Example: "gs://bucket_name/object_name_prefix". Each object uri is in
+	// UriPrefix: The URI prefix of all generated Cloud Storage objects.
+	// Example: "gs://bucket_name/object_name_prefix". Each object URI is in
 	// format: "gs://bucket_name/object_name_prefix// and only contains
 	// assets for that type. starts from 0. Example:
 	// "gs://bucket_name/object_name_prefix/compute.googleapis.com/Disk/0"
@@ -1537,6 +1753,169 @@ func (s *GoogleCloudAssetV1AccessControlList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset:
+//
+//	Represents a Google Cloud asset(resource or IAM policy) governed by
+//
+// the organization policies of the
+// AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset struct {
+	// ConsolidatedPolicy: The consolidated policy for the analyzed asset.
+	// The consolidated policy is computed by merging and evaluating
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset.policy_bundle.
+	// The evaluation will respect the organization policy hierarchy rules
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
+	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
+
+	// GovernedIamPolicy: An IAM policy governed by the organization
+	// policies of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+	GovernedIamPolicy *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy `json:"governedIamPolicy,omitempty"`
+
+	// GovernedResource: A Google Cloud resource governed by the
+	// organization policies of the
+	// AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+	GovernedResource *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource `json:"governedResource,omitempty"`
+
+	// PolicyBundle: The ordered list of all organization policies from the
+	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
+	// d_resource to the scope specified in the request. If the constraint
+	// is defined with default policy, it will also appear in the list.
+	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsolidatedPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPol
+// icy: The IAM policies governed by the organization policies of the
+// AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy struct {
+	// AttachedResource: The full resource name of the resource on which
+	// this IAM policy is set. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1`. See Cloud Asset Inventory Resource Name Format
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// for more information.
+	AttachedResource string `json:"attachedResource,omitempty"`
+
+	// Folders: The folder(s) that this IAM policy belongs to, in the format
+	// of folders/{FOLDER_NUMBER}. This field is available when the IAM
+	// policy belongs (directly or cascadingly) to one or more folders.
+	Folders []string `json:"folders,omitempty"`
+
+	// Organization: The organization that this IAM policy belongs to, in
+	// the format of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the IAM policy belongs (directly or cascadingly) to an
+	// organization.
+	Organization string `json:"organization,omitempty"`
+
+	// Policy: The IAM policy directly set on the given resource.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// Project: The project that this IAM policy belongs to, in the format
+	// of projects/{PROJECT_NUMBER}. This field is available when the IAM
+	// policy belongs to a project.
+	Project string `json:"project,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachedResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachedResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResour
+// ce: The Google Cloud resources governed by the organization policies
+// of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource struct {
+	// Folders: The folder(s) that this resource belongs to, in the format
+	// of folders/{FOLDER_NUMBER}. This field is available when the resource
+	// belongs (directly or cascadingly) to one or more folders.
+	Folders []string `json:"folders,omitempty"`
+
+	// FullResourceName: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of the Google Cloud resource.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Organization: The organization that this resource belongs to, in the
+	// format of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the resource belongs (directly or cascadingly) to an
+	// organization.
+	Organization string `json:"organization,omitempty"`
+
+	// Parent: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of the parent of
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedResource.full_resource_
+	// name.
+	Parent string `json:"parent,omitempty"`
+
+	// Project: The project that this resource belongs to, in the format of
+	// projects/{PROJECT_NUMBER}. This field is available when the resource
+	// belongs to a project.
+	Project string `json:"project,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssetV1BigQueryDestination: A BigQuery destination.
 type GoogleCloudAssetV1BigQueryDestination struct {
 	// Dataset: Required. The BigQuery dataset in format
@@ -1600,6 +1979,141 @@ func (s *GoogleCloudAssetV1BigQueryDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1BooleanConstraint: A `Constraint` that is either
+// enforced or not. For example a constraint
+// `constraints/compute.disableSerialPortAccess`. If it is enforced on a
+// VM instance, serial port connections will not be opened to that
+// instance.
+type GoogleCloudAssetV1BooleanConstraint struct {
+}
+
+// GoogleCloudAssetV1Constraint: The definition of a constraint.
+type GoogleCloudAssetV1Constraint struct {
+	// BooleanConstraint: Defines this constraint as being a
+	// BooleanConstraint.
+	BooleanConstraint *GoogleCloudAssetV1BooleanConstraint `json:"booleanConstraint,omitempty"`
+
+	// ConstraintDefault: The evaluation behavior of this constraint in the
+	// absence of 'Policy'.
+	//
+	// Possible values:
+	//   "CONSTRAINT_DEFAULT_UNSPECIFIED" - This is only used for
+	// distinguishing unset values and should never be used.
+	//   "ALLOW" - Indicate that all values are allowed for list
+	// constraints. Indicate that enforcement is off for boolean
+	// constraints.
+	//   "DENY" - Indicate that all values are denied for list constraints.
+	// Indicate that enforcement is on for boolean constraints.
+	ConstraintDefault string `json:"constraintDefault,omitempty"`
+
+	// Description: Detailed description of what this `Constraint` controls
+	// as well as how and where it is enforced.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The human readable name of the constraint.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ListConstraint: Defines this constraint as being a ListConstraint.
+	ListConstraint *GoogleCloudAssetV1ListConstraint `json:"listConstraint,omitempty"`
+
+	// Name: The unique name of the constraint. Format of the name should be
+	// * `constraints/{constraint_name}` For example,
+	// `constraints/compute.disableSerialPortAccess`.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BooleanConstraint")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BooleanConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Constraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Constraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1CustomConstraint: The definition of a custom
+// constraint.
+type GoogleCloudAssetV1CustomConstraint struct {
+	// ActionType: Allow or deny type.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Will results in user
+	// error.
+	//   "ALLOW" - Allowed action type.
+	//   "DENY" - Deny action type.
+	ActionType string `json:"actionType,omitempty"`
+
+	// Condition: Organization Policy condition/expression. For example:
+	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
+	// `resource.management.auto_upgrade == true`
+	Condition string `json:"condition,omitempty"`
+
+	// Description: Detailed information about this custom policy
+	// constraint.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: One line display name for the UI.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MethodTypes: All the operations being applied for this constraint.
+	//
+	// Possible values:
+	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Will results in user
+	// error.
+	//   "CREATE" - Constraint applied when creating the resource.
+	//   "UPDATE" - Constraint applied when updating the resource.
+	//   "DELETE" - Constraint applied when deleting the resource.
+	MethodTypes []string `json:"methodTypes,omitempty"`
+
+	// Name: Name of the constraint. This is unique within the organization.
+	// Format of the name should be *
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_
+	// id}` Example :
+	// "organizations/123/customConstraints/custom.createOnlyE2TypeVms"
+	Name string `json:"name,omitempty"`
+
+	// ResourceTypes: The Resource Instance type on which this policy
+	// applies to. Format will be of the form : "/" Example: *
+	// `compute.googleapis.com/Instance`.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1CustomConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1CustomConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssetV1Edge: A directional edge.
 type GoogleCloudAssetV1Edge struct {
 	// SourceNode: The source node of the edge. For example, it could be a
@@ -1635,7 +2149,7 @@ func (s *GoogleCloudAssetV1Edge) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudAssetV1GcsDestination: A Cloud Storage location.
 type GoogleCloudAssetV1GcsDestination struct {
-	// Uri: Required. The uri of the Cloud Storage object. It's the same uri
+	// Uri: Required. The URI of the Cloud Storage object. It's the same URI
 	// that is used by gsutil. Example: "gs://bucket_name/object_name". See
 	// Viewing and Editing Object Metadata
 	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for
@@ -1668,16 +2182,72 @@ func (s *GoogleCloudAssetV1GcsDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1GovernedContainer: The organization/folder/project
+// resource governed by organization policies of
+// AnalyzeOrgPolicyGovernedContainersRequest.constraint.
+type GoogleCloudAssetV1GovernedContainer struct {
+	// ConsolidatedPolicy: The consolidated organization policy for the
+	// analyzed resource. The consolidated organization policy is computed
+	// by merging and evaluating
+	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer.policy_bu
+	// ndle. The evaluation will respect the organization policy hierarchy
+	// rules
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
+	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
+
+	// FullResourceName: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of an organization/folder/project resource.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Parent: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of the parent of
+	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer.full_reso
+	// urce_name.
+	Parent string `json:"parent,omitempty"`
+
+	// PolicyBundle: The ordered list of all organization policies from the
+	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
+	// d_resource. to the scope specified in the request. If the constraint
+	// is defined with default policy, it will also appear in the list.
+	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsolidatedPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1GovernedContainer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1GovernedContainer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssetV1Identity: An identity under analysis.
 type GoogleCloudAssetV1Identity struct {
 	// AnalysisState: The analysis state of this identity.
 	AnalysisState *IamPolicyAnalysisState `json:"analysisState,omitempty"`
 
-	// Name: The identity name in any form of members appear in IAM policy
-	// binding (https://cloud.google.com/iam/reference/rest/v1/Binding),
-	// such as: - user:foo@google.com - group:group1@google.com -
+	// Name: The identity of members, formatted as appear in an IAM policy
+	// binding (https://cloud.google.com/iam/reference/rest/v1/Binding). For
+	// example, they might be formatted like the following: -
+	// user:foo@google.com - group:group1@google.com -
 	// serviceAccount:s1@prj1.iam.gserviceaccount.com -
-	// projectOwner:some_project_id - domain:google.com - allUsers - etc.
+	// projectOwner:some_project_id - domain:google.com - allUsers
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
@@ -1742,6 +2312,91 @@ func (s *GoogleCloudAssetV1IdentityList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1ListConstraint: A `Constraint` that allows or
+// disallows a list of string values, which are configured by an
+// organization's policy administrator with a `Policy`.
+type GoogleCloudAssetV1ListConstraint struct {
+	// SupportsIn: Indicates whether values grouped into categories can be
+	// used in `Policy.allowed_values` and `Policy.denied_values`. For
+	// example, "in:Python" would match any value in the 'Python' group.
+	SupportsIn bool `json:"supportsIn,omitempty"`
+
+	// SupportsUnder: Indicates whether subtrees of Cloud Resource Manager
+	// resource hierarchy can be used in `Policy.allowed_values` and
+	// `Policy.denied_values`. For example, "under:folders/123" would
+	// match any resource under the 'folders/123' folder.
+	SupportsUnder bool `json:"supportsUnder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SupportsIn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SupportsIn") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1ListConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1ListConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination:
+// BigQuery destination.
+type GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination struct {
+	// Dataset: Required. The BigQuery dataset where the query results will
+	// be saved. It has the format of
+	// "projects/{projectId}/datasets/{datasetId}".
+	Dataset string `json:"dataset,omitempty"`
+
+	// Table: Required. The BigQuery table where the query results will be
+	// saved. If this table does not exist, a new table with the given name
+	// will be created.
+	Table string `json:"table,omitempty"`
+
+	// WriteDisposition: Specifies the action that occurs if the destination
+	// table or partition already exists. The following values are
+	// supported: * WRITE_TRUNCATE: If the table or partition already
+	// exists, BigQuery overwrites the entire table or all the partitions
+	// data. * WRITE_APPEND: If the table or partition already exists,
+	// BigQuery appends the data to the table or the latest partition. *
+	// WRITE_EMPTY: If the table already exists and contains data, a
+	// 'duplicate' error is returned in the job result. The default value is
+	// WRITE_EMPTY.
+	WriteDisposition string `json:"writeDisposition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dataset") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssetV1Resource: A Google Cloud resource under analysis.
 type GoogleCloudAssetV1Resource struct {
 	// AnalysisState: The analysis state of this resource.
@@ -1774,12 +2429,93 @@ func (s *GoogleCloudAssetV1Resource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1Rule: This rule message is a customized version of
+// the one defined in the Organization Policy system. In addition to the
+// fields defined in the original organization policy, it contains
+// additional field(s) under specific circumstances to support analysis
+// results.
+type GoogleCloudAssetV1Rule struct {
+	// AllowAll: Setting this to true means that all values are allowed.
+	// This field can be set only in Policies for list constraints.
+	AllowAll bool `json:"allowAll,omitempty"`
+
+	// Condition: The evaluating condition for this rule.
+	Condition *Expr `json:"condition,omitempty"`
+
+	// DenyAll: Setting this to true means that all values are denied. This
+	// field can be set only in Policies for list constraints.
+	DenyAll bool `json:"denyAll,omitempty"`
+
+	// Enforce: If `true`, then the `Policy` is enforced. If `false`, then
+	// any configuration is acceptable. This field can be set only in
+	// Policies for boolean constraints.
+	Enforce bool `json:"enforce,omitempty"`
+
+	// Values: List of values to be used for this PolicyRule. This field can
+	// be set only in Policies for list constraints.
+	Values *GoogleCloudAssetV1StringValues `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowAll") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowAll") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Rule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1StringValues: The string values for the list
+// constraints.
+type GoogleCloudAssetV1StringValues struct {
+	// AllowedValues: List of values allowed at this resource.
+	AllowedValues []string `json:"allowedValues,omitempty"`
+
+	// DeniedValues: List of values denied at this resource.
+	DeniedValues []string `json:"deniedValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1StringValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1StringValues
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssetV1p7beta1Asset: An asset in Google Cloud. An asset
 // can be any resource in the Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type GoogleCloudAssetV1p7beta1Asset struct {
@@ -1807,15 +2543,15 @@ type GoogleCloudAssetV1p7beta1Asset struct {
 	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
-	// IamPolicy: A representation of the Cloud IAM policy set on a Google
-	// Cloud resource. There can be a maximum of one Cloud IAM policy set on
-	// any given resource. In addition, Cloud IAM policies inherit their
-	// granted access scope from any policies set on parent resources in the
-	// resource hierarchy. Therefore, the effectively policy is the union of
-	// both the policy set on this resource and each policy set on all of
-	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
-	// for more information.
+	// IamPolicy: A representation of the IAM policy set on a Google Cloud
+	// resource. There can be a maximum of one IAM policy set on any given
+	// resource. In addition, IAM policies inherit their granted access
+	// scope from any policies set on parent resources in the resource
+	// hierarchy. Therefore, the effectively policy is the union of both the
+	// policy set on this resource and each policy set on all of the
+	// resource's ancestry resource levels in the hierarchy. See this topic
+	// (https://cloud.google.com/iam/help/allow-policies/inheritance) for
+	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -1874,8 +2610,8 @@ func (s *GoogleCloudAssetV1p7beta1Asset) MarshalJSON() ([]byte, error) {
 // any resource in the Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type GoogleCloudAssetV1p7beta1RelatedAsset struct {
@@ -2027,7 +2763,7 @@ type GoogleCloudAssetV1p7beta1Resource struct {
 	// Resource Names
 	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
 	// for more information. For Google Cloud assets, this value is the
-	// parent resource defined in the Cloud IAM policy hierarchy
+	// parent resource defined in the IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
@@ -2351,11 +3087,11 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the Access Level. The `short_name`
-	// component must begin with a letter and only include alphanumeric and
-	// '_'. Format:
+	// Name: Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
-	// maximum length of the `access_level` component is 50 characters.
+	// `access_level` component must begin with a letter, followed by
+	// alphanumeric characters or `_`. Its maximum length is 50 characters.
+	// After you create an `AccessLevel`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -2565,8 +3301,9 @@ type GoogleIdentityAccesscontextmanagerV1Condition struct {
 	Members []string `json:"members,omitempty"`
 
 	// Negate: Whether to negate the Condition. If true, the Condition
-	// becomes a NAND over its non-empty fields, each field must be false
-	// for the Condition overall to be satisfied. Defaults to false.
+	// becomes a NAND over its non-empty fields. Any non-empty field
+	// criteria evaluating to false will result in the Condition to be
+	// satisfied. Defaults to false.
 	Negate bool `json:"negate,omitempty"`
 
 	// Regions: The request must originate from one of the provided
@@ -2975,11 +3712,13 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 
 	// Resource: A Google Cloud resource that is allowed to ingress the
 	// perimeter. Requests from these resources will be allowed to access
-	// perimeter data. Currently only projects are allowed. Format:
-	// `projects/{project_number}` The project may be in any Google Cloud
-	// organization, not just the organization that the perimeter is defined
-	// in. `*` is not allowed, the case of allowing all Google Cloud
-	// resources only is not supported.
+	// perimeter data. Currently only projects and VPCs are allowed. Project
+	// format: `projects/{project_number}` VPC network format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `. The project may be in any Google Cloud organization, not just the
+	// organization that the perimeter is defined in. `*` is not allowed,
+	// the case of allowing all Google Cloud resources only is not
+	// supported.
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
@@ -3140,30 +3879,32 @@ func (s *GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte
 // `ServicePerimeter`, the request will be blocked. Otherwise the
 // request is allowed. There are two types of Service Perimeter -
 // Regular and Bridge. Regular Service Perimeters cannot overlap, a
-// single Google Cloud project can only belong to a single regular
-// Service Perimeter. Service Perimeter Bridges can contain only Google
-// Cloud projects as members, a single Google Cloud project may belong
-// to multiple Service Perimeter Bridges.
+// single Google Cloud project or VPC network can only belong to a
+// single regular Service Perimeter. Service Perimeter Bridges can
+// contain only Google Cloud projects as members, a single Google Cloud
+// project may belong to multiple Service Perimeter Bridges.
 type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does
 	// not affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the ServicePerimeter. The
-	// `short_name` component must begin with a letter and only include
-	// alphanumeric and '_'. Format:
+	// Name: Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`
+	// . The `service_perimeter` component must begin with a letter,
+	// followed by alphanumeric characters or `_`. After you create a
+	// `ServicePerimeter`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
-	// PerimeterType: Perimeter type indicator. A single project is allowed
-	// to be a member of single regular perimeter, but multiple service
-	// perimeter bridges. A project cannot be a included in a perimeter
-	// bridge without being included in regular perimeter. For perimeter
-	// bridges, the restricted service list as well as access level lists
-	// must be empty.
+	// PerimeterType: Perimeter type indicator. A single project or VPC
+	// network is allowed to be a member of single regular perimeter, but
+	// multiple service perimeter bridges. A project cannot be a included in
+	// a perimeter bridge without being included in regular perimeter. For
+	// perimeter bridges, the restricted service list as well as access
+	// level lists must be empty.
 	//
 	// Possible values:
-	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter.
+	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter. When no value is
+	// specified, the perimeter uses this type.
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 
@@ -3245,8 +3986,10 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	IngressPolicies []*GoogleIdentityAccesscontextmanagerV1IngressPolicy `json:"ingressPolicies,omitempty"`
 
 	// Resources: A list of Google Cloud resources that are inside of the
-	// service perimeter. Currently only projects are allowed. Format:
-	// `projects/{project_number}`
+	// service perimeter. Currently only projects and VPCs are allowed.
+	// Project format: `projects/{project_number}` VPC network format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `.
 	Resources []string `json:"resources,omitempty"`
 
 	// RestrictedServices: Google Cloud services that are subject to the
@@ -3465,7 +4208,7 @@ type IamPolicyAnalysisResult struct {
 	// have successfully finished.
 	FullyExplored bool `json:"fullyExplored,omitempty"`
 
-	// IamBinding: The Cloud IAM policy binding under analysis.
+	// IamBinding: The IAM policy binding under analysis.
 	IamBinding *Binding `json:"iamBinding,omitempty"`
 
 	// IdentityList: The identity list derived from members of the
@@ -3664,13 +4407,13 @@ type IamPolicySearchResult struct {
 	// `policy.role.permissions:compute.instances.create`
 	Policy *Policy `json:"policy,omitempty"`
 
-	// Project: The project that the associated GCP resource belongs to, in
-	// the form of projects/{PROJECT_NUMBER}. If an IAM policy is set on a
-	// resource (like VM instance, Cloud Storage bucket), the project field
-	// will indicate the project that contains the resource. If an IAM
-	// policy is set on a folder or orgnization, this field will be empty.
-	// To search against the `project`: * specify the `scope` field as this
-	// project in your search request.
+	// Project: The project that the associated Google Cloud resource
+	// belongs to, in the form of projects/{PROJECT_NUMBER}. If an IAM
+	// policy is set on a resource (like VM instance, Cloud Storage bucket),
+	// the project field will indicate the project that contains the
+	// resource. If an IAM policy is set on a folder or orgnization, this
+	// field will be empty. To search against the `project`: * specify the
+	// `scope` field as this project in your search request.
 	Project string `json:"project,omitempty"`
 
 	// Resource: The full resource name of the resource associated with this
@@ -3966,7 +4709,7 @@ type MoveAnalysis struct {
 	Analysis *MoveAnalysisResult `json:"analysis,omitempty"`
 
 	// DisplayName: The user friendly display name of the analysis. E.g.
-	// IAM, Organization Policy etc.
+	// IAM, organization policy etc.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Error: Description of error encountered when performing the analysis.
@@ -4084,8 +4827,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -4127,21 +4870,22 @@ type Options struct {
 	// will include access analysis from identities to resources via service
 	// account impersonation. This is a very expensive operation, because
 	// many derived queries will be executed. We highly recommend you use
-	// AssetService.AnalyzeIamPolicyLongrunning rpc instead. For example, if
+	// AssetService.AnalyzeIamPolicyLongrunning RPC instead. For example, if
 	// the request analyzes for which resources user A has permission P, and
 	// there's an IAM policy states user A has
 	// iam.serviceAccounts.getAccessToken permission to a service account
 	// SA, and there's another IAM policy states service account SA has
-	// permission P to a GCP folder F, then user A potentially has access to
-	// the GCP folder F. And those advanced analysis results will be
-	// included in
+	// permission P to a Google Cloud folder F, then user A potentially has
+	// access to the Google Cloud folder F. And those advanced analysis
+	// results will be included in
 	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
 	// Another example, if the request analyzes for who has permission P to
-	// a GCP folder F, and there's an IAM policy states user A has
+	// a Google Cloud folder F, and there's an IAM policy states user A has
 	// iam.serviceAccounts.actAs permission to a service account SA, and
 	// there's another IAM policy states service account SA has permission P
-	// to the GCP folder F, then user A potentially has access to the GCP
-	// folder F. And those advanced analysis results will be included in
+	// to the Google Cloud folder F, then user A potentially has access to
+	// the Google Cloud folder F. And those advanced analysis results will
+	// be included in
 	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Only
 	// the following permissions are considered in this analysis: *
 	// `iam.serviceAccounts.actAs` * `iam.serviceAccounts.signBlob` *
@@ -4163,17 +4907,18 @@ type Options struct {
 	// resource section of the result will expand any resource attached to
 	// an IAM policy to include resources lower in the resource hierarchy.
 	// For example, if the request analyzes for which resources user A has
-	// permission P, and the results include an IAM policy with P on a GCP
-	// folder, the results will also include resources in that folder with
-	// permission P. If true and IamPolicyAnalysisQuery.resource_selector is
-	// specified, the resource section of the result will expand the
-	// specified resource to include resources lower in the resource
-	// hierarchy. Only project or lower resources are supported. Folder and
-	// organization resource cannot be used together with this option. For
-	// example, if the request analyzes for which users have permission P on
-	// a GCP project with this option enabled, the results will include all
-	// users who have permission P on that project or any lower resource. If
-	// true, the default max expansion per resource is 1000 for
+	// permission P, and the results include an IAM policy with P on a
+	// Google Cloud folder, the results will also include resources in that
+	// folder with permission P. If true and
+	// IamPolicyAnalysisQuery.resource_selector is specified, the resource
+	// section of the result will expand the specified resource to include
+	// resources lower in the resource hierarchy. Only project or lower
+	// resources are supported. Folder and organization resources cannot be
+	// used together with this option. For example, if the request analyzes
+	// for which users have permission P on a Google Cloud project with this
+	// option enabled, the results will include all users who have
+	// permission P on that project or any lower resource. If true, the
+	// default max expansion per resource is 1000 for
 	// AssetService.AnalyzeIamPolicy][] and 100000 for
 	// AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.
 	ExpandResources bool `json:"expandResources,omitempty"`
@@ -4216,6 +4961,45 @@ type Options struct {
 
 func (s *Options) MarshalJSON() ([]byte, error) {
 	type NoMethod Options
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OrgPolicyResult: The organization policy result to the query.
+type OrgPolicyResult struct {
+	// ConsolidatedPolicy: The consolidated organization policy for the
+	// analyzed resource. The consolidated organization policy is computed
+	// by merging and evaluating AnalyzeOrgPoliciesResponse.policy_bundle.
+	// The evaluation will respect the organization policy hierarchy rules
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
+	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
+
+	// PolicyBundle: The ordered list of all organization policies from the
+	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
+	// d_resource. to the scope specified in the request. If the constraint
+	// is defined with default policy, it will also appear in the list.
+	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsolidatedPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrgPolicyResult) MarshalJSON() ([]byte, error) {
+	type NoMethod OrgPolicyResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4391,7 +5175,7 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -4400,17 +5184,17 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -4546,11 +5330,167 @@ func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryAssetsOutputConfig: Output configuration query assets.
+type QueryAssetsOutputConfig struct {
+	// BigqueryDestination: BigQuery destination where the query results
+	// will be saved.
+	BigqueryDestination *GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination `json:"bigqueryDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAssetsOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAssetsOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryAssetsRequest: QueryAssets request.
+type QueryAssetsRequest struct {
+	// JobReference: Optional. Reference to the query job, which is from the
+	// `QueryAssetsResponse` of previous `QueryAssets` call.
+	JobReference string `json:"jobReference,omitempty"`
+
+	// OutputConfig: Optional. Destination where the query results will be
+	// saved. When this field is specified, the query results won't be saved
+	// in the [QueryAssetsResponse.query_result]. Instead
+	// [QueryAssetsResponse.output_config] will be set. Meanwhile,
+	// [QueryAssetsResponse.job_reference] will be set and can be used to
+	// check the status of the query job when passed to a following
+	// [QueryAssets] API call.
+	OutputConfig *QueryAssetsOutputConfig `json:"outputConfig,omitempty"`
+
+	// PageSize: Optional. The maximum number of rows to return in the
+	// results. Responses are limited to 10 MB and 1000 rows. By default,
+	// the maximum row count is 1000. When the byte or row count limit is
+	// reached, the rest of the query results will be paginated. The field
+	// will be ignored when [output_config] is specified.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A page token received from previous
+	// `QueryAssets`. The field will be ignored when [output_config] is
+	// specified.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ReadTime: Optional. Queries cloud assets as they appeared at the
+	// specified point in time.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// ReadTimeWindow: Optional. [start_time] is required. [start_time] must
+	// be less than [end_time] Defaults [end_time] to now if [start_time] is
+	// set and [end_time] isn't. Maximum permitted time range is 7 days.
+	ReadTimeWindow *TimeWindow `json:"readTimeWindow,omitempty"`
+
+	// Statement: Optional. A SQL statement that's compatible with BigQuery
+	// SQL (https://cloud.google.com/bigquery/docs/introduction-sql).
+	Statement string `json:"statement,omitempty"`
+
+	// Timeout: Optional. Specifies the maximum amount of time that the
+	// client is willing to wait for the query to complete. By default, this
+	// limit is 5 min for the first query, and 1 minute for the following
+	// queries. If the query is complete, the `done` field in the
+	// `QueryAssetsResponse` is true, otherwise false. Like BigQuery
+	// jobs.query API
+	// (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#queryrequest)
+	// The call is not guaranteed to wait for the specified timeout; it
+	// typically returns after around 200 seconds (200,000 milliseconds),
+	// even if the query is not complete. The field will be ignored when
+	// [output_config] is specified.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobReference") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobReference") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAssetsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAssetsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryAssetsResponse: QueryAssets response.
+type QueryAssetsResponse struct {
+	// Done: The query response, which can be either an `error` or a valid
+	// `response`. If `done` == `false` and the query result is being saved
+	// in a output, the output_config field will be set. If `done` ==
+	// `true`, exactly one of `error`, `query_result` or `output_config`
+	// will be set.
+	Done bool `json:"done,omitempty"`
+
+	// Error: Error status.
+	Error *Status `json:"error,omitempty"`
+
+	// JobReference: Reference to a query job.
+	JobReference string `json:"jobReference,omitempty"`
+
+	// OutputConfig: Output configuration which indicates instead of being
+	// returned in API response on the fly, the query result will be saved
+	// in a specific output.
+	OutputConfig *QueryAssetsOutputConfig `json:"outputConfig,omitempty"`
+
+	// QueryResult: Result of the query.
+	QueryResult *QueryResult `json:"queryResult,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAssetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryContent: The query content.
 type QueryContent struct {
 	// IamPolicyAnalysisQuery: An IAM Policy Analysis query, which could be
-	// used in the AssetService.AnalyzeIamPolicy rpc or the
-	// AssetService.AnalyzeIamPolicyLongrunning rpc.
+	// used in the AssetService.AnalyzeIamPolicy RPC or the
+	// AssetService.AnalyzeIamPolicyLongrunning RPC.
 	IamPolicyAnalysisQuery *IamPolicyAnalysisQuery `json:"iamPolicyAnalysisQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4578,13 +5518,53 @@ func (s *QueryContent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryResult: Execution results of the query. The result is formatted
+// as rows represented by BigQuery compatible [schema]. When pagination
+// is necessary, it will contains the page token to retrieve the results
+// of following pages.
+type QueryResult struct {
+	// NextPageToken: Token to retrieve the next page of the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Rows: Each row hold a query result in the format of `Struct`.
+	Rows []googleapi.RawMessage `json:"rows,omitempty"`
+
+	// Schema: Describes the format of the [rows].
+	Schema *TableSchema `json:"schema,omitempty"`
+
+	// TotalRows: Total rows of the whole query results.
+	TotalRows int64 `json:"totalRows,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RelatedAsset: An asset identifier in Google Cloud which contains its
 // name, type and ancestors. An asset can be any resource in the Google
 // Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type RelatedAsset struct {
@@ -4807,7 +5787,7 @@ type Resource struct {
 	// Resource Names
 	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
 	// for more information. For Google Cloud assets, this value is the
-	// parent resource defined in the Cloud IAM policy hierarchy
+	// parent resource defined in the IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
@@ -4847,23 +5827,24 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSearchResult: A result of Resource Search, containing
-// information of a cloud resource. Next ID: 31
+// information of a cloud resource. Next ID: 34
 type ResourceSearchResult struct {
 	// AdditionalAttributes: The additional searchable attributes of this
 	// resource. The attributes may vary from one resource type to another.
 	// Examples: `projectId` for Project, `dnsName` for DNS ManagedZone.
 	// This field contains a subset of the resource metadata fields that are
-	// returned by the List or Get APIs provided by the corresponding GCP
-	// service (e.g., Compute Engine). see API references and supported
-	// searchable attributes
+	// returned by the List or Get APIs provided by the corresponding Google
+	// Cloud service (e.g., Compute Engine). see API references and
+	// supported searchable attributes
 	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types)
 	// to see which fields are included. You can search values of these
 	// fields through free text search. However, you should not consume the
 	// field programically as the field names and values may change as the
-	// GCP service updates to a new incompatible API version. To search
-	// against the `additional_attributes`: * Use a free text query to match
-	// the attributes values. Example: to search `additional_attributes = {
-	// dnsName: "foobar" }`, you can issue a query `foobar`.
+	// Google Cloud service updates to a new incompatible API version. To
+	// search against the `additional_attributes`: * Use a free text query
+	// to match the attributes values. Example: to search
+	// `additional_attributes = { dnsName: "foobar" }`, you can issue a
+	// query `foobar`.
 	AdditionalAttributes googleapi.RawMessage `json:"additionalAttributes,omitempty"`
 
 	// AssetType: The type of this resource. Example:
@@ -4913,12 +5894,19 @@ type ResourceSearchResult struct {
 	// search request.
 	Folders []string `json:"folders,omitempty"`
 
-	// KmsKey: This field only presents for the purpose of
-	// backward-compatibility. Please use `kms_keys` field to retrieve KMS
-	// key information. This field will only be populated for the resource
-	// types included in this list for backward compatible purpose. To
-	// search against the `kms_key`: * Use a field query. Example:
-	// `kmsKey:key` * Use a free text query. Example: `key`
+	// KmsKey: The Cloud KMS CryptoKey
+	// (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys)
+	// name or CryptoKeyVersion
+	// (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys.cryptoKeyVersions)
+	// name. This field only presents for the purpose of backward
+	// compatibility. Please use the `kms_keys` field to retrieve Cloud KMS
+	// key information. This field is available only when the resource's
+	// Protobuf contains it and will only be populated for these resource
+	// types
+	// (https://cloud.google.com/asset-inventory/docs/legacy-field-names#resource_types_with_the_to_be_deprecated_kmskey_field)
+	// for backward compatible purposes. To search against the `kms_key`: *
+	// Use a field query. Example: `kmsKey:key` * Use a free text query.
+	// Example: `key`
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// KmsKeys: The Cloud KMS CryptoKey
@@ -4931,7 +5919,7 @@ type ResourceSearchResult struct {
 	KmsKeys []string `json:"kmsKeys,omitempty"`
 
 	// Labels: Labels associated with this resource. See Labelling and
-	// grouping GCP resources
+	// grouping Google Cloud resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information. This field is available only when the
 	// resource's Protobuf contains it. To search against the `labels`: *
@@ -4958,8 +5946,8 @@ type ResourceSearchResult struct {
 	Name string `json:"name,omitempty"`
 
 	// NetworkTags: Network tags associated with this resource. Like labels,
-	// network tags are a type of annotations used to group GCP resources.
-	// See Labelling GCP resources
+	// network tags are a type of annotations used to group Google Cloud
+	// resources. See Labelling Google Cloud resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information. This field is available only when the
 	// resource's Protobuf contains it. To search against the
@@ -5014,10 +6002,10 @@ type ResourceSearchResult struct {
 	// PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED,
 	// REPAIRING, and TERMINATED. See `status` definition in API Reference
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/instances).
-	// If the resource is a project provided by Cloud Resource Manager, its
-	// state will include LIFECYCLE_STATE_UNSPECIFIED, ACTIVE,
-	// DELETE_REQUESTED and DELETE_IN_PROGRESS. See `lifecycleState`
-	// definition in API Reference
+	// If the resource is a project provided by Resource Manager, its state
+	// will include LIFECYCLE_STATE_UNSPECIFIED, ACTIVE, DELETE_REQUESTED
+	// and DELETE_IN_PROGRESS. See `lifecycleState` definition in API
+	// Reference
 	// (https://cloud.google.com/resource-manager/reference/rest/v1/projects).
 	// To search against the `state`: * Use a field query. Example:
 	// `state:RUNNING` * Use a free text query. Example: `RUNNING`
@@ -5032,8 +6020,7 @@ type ResourceSearchResult struct {
 
 	// TagValueIds: TagValue IDs, in the format of tagValues/{TAG_VALUE_ID}.
 	// To search against the `tagValueIds`: * Use a field query. Example: -
-	// `tagValueIds:"456" - `tagValueIds="tagValues/456" * Use a free text
-	// query. Example: - `456`
+	// `tagValueIds="tagValues/456"
 	TagValueIds []string `json:"tagValueIds,omitempty"`
 
 	// TagValues: TagValue namespaced names, in the format of
@@ -5191,7 +6178,7 @@ type SearchAllIamPoliciesResponse struct {
 	// again, using this value as the `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Results: A list of IamPolicy that match the search query. Related
+	// Results: A list of IAM policies that match the search query. Related
 	// information such as the associated resource is returned along with
 	// the policy.
 	Results []*IamPolicySearchResult `json:"results,omitempty"`
@@ -5366,6 +6353,78 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableFieldSchema: A field in TableSchema.
+type TableFieldSchema struct {
+	// Field: The field name. The name must contain only letters (a-z, A-Z),
+	// numbers (0-9), or underscores (_), and must start with a letter or
+	// underscore. The maximum length is 128 characters.
+	Field string `json:"field,omitempty"`
+
+	// Fields: Describes the nested schema fields if the type property is
+	// set to RECORD.
+	Fields []*TableFieldSchema `json:"fields,omitempty"`
+
+	// Mode: The field mode. Possible values include NULLABLE, REQUIRED and
+	// REPEATED. The default value is NULLABLE.
+	Mode string `json:"mode,omitempty"`
+
+	// Type: The field data type. Possible values include * STRING * BYTES *
+	// INTEGER * FLOAT * BOOLEAN * TIMESTAMP * DATE * TIME * DATETIME *
+	// GEOGRAPHY, * NUMERIC, * BIGNUMERIC, * RECORD (where RECORD indicates
+	// that the field contains a nested schema).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableFieldSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod TableFieldSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableSchema: BigQuery Compatible table schema.
+type TableSchema struct {
+	// Fields: Describes the fields in a table.
+	Fields []*TableFieldSchema `json:"fields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod TableSchema
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5846,8 +6905,8 @@ func (c *AssetsListCall) AssetTypes(assetTypes ...string) *AssetsListCall {
 //	"CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
 //	"RESOURCE" - Resource metadata.
 //	"IAM_POLICY" - The actual IAM policy set on a resource.
-//	"ORG_POLICY" - The Cloud Organization Policy set on an asset.
-//	"ACCESS_POLICY" - The Cloud Access context manager Policy set on an
+//	"ORG_POLICY" - The organization policy set on an asset.
+//	"ACCESS_POLICY" - The Access Context Manager policy set on an
 //
 // asset.
 //
@@ -5981,17 +7040,17 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6034,8 +7093,8 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//         "Unspecified content type.",
 	//         "Resource metadata.",
 	//         "The actual IAM policy set on a resource.",
-	//         "The Cloud Organization Policy set on an asset.",
-	//         "The Cloud Access context manager Policy set on an asset.",
+	//         "The organization policy set on an asset.",
+	//         "The Access Context Manager policy set on an asset.",
 	//         "The runtime OS Inventory information.",
 	//         "The related resources."
 	//       ],
@@ -6221,17 +7280,17 @@ func (c *EffectiveIamPoliciesBatchGetCall) Do(opts ...googleapi.CallOption) (*Ba
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetEffectiveIamPoliciesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6295,7 +7354,7 @@ type FeedsCreateCall struct {
 //   - parent: The name of the project/folder/organization where this feed
 //     should be created in. It can only be an organization number (such
 //     as "organizations/123"), a folder number (such as "folders/123"), a
-//     project ID (such as "projects/my-project-id")", or a project number
+//     project ID (such as "projects/my-project-id"), or a project number
 //     (such as "projects/12345").
 func (r *FeedsService) Create(parent string, createfeedrequest *CreateFeedRequest) *FeedsCreateCall {
 	c := &FeedsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6371,17 +7430,17 @@ func (c *FeedsCreateCall) Do(opts ...googleapi.CallOption) (*Feed, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Feed{
 		ServerResponse: googleapi.ServerResponse{
@@ -6404,7 +7463,7 @@ func (c *FeedsCreateCall) Do(opts ...googleapi.CallOption) (*Feed, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project/folder/organization where this feed should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "description": "Required. The name of the project/folder/organization where this feed should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -6509,17 +7568,17 @@ func (c *FeedsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6658,17 +7717,17 @@ func (c *FeedsGetCall) Do(opts ...googleapi.CallOption) (*Feed, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Feed{
 		ServerResponse: googleapi.ServerResponse{
@@ -6807,17 +7866,17 @@ func (c *FeedsListCall) Do(opts ...googleapi.CallOption) (*ListFeedsResponse, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFeedsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6952,17 +8011,17 @@ func (c *FeedsPatchCall) Do(opts ...googleapi.CallOption) (*Feed, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Feed{
 		ServerResponse: googleapi.ServerResponse{
@@ -7103,17 +8162,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7171,8 +8230,8 @@ type SavedQueriesCreateCall struct {
 //   - parent: The name of the project/folder/organization where this
 //     saved_query should be created in. It can only be an organization
 //     number (such as "organizations/123"), a folder number (such as
-//     "folders/123"), a project ID (such as "projects/my-project-id")",
-//     or a project number (such as "projects/12345").
+//     "folders/123"), a project ID (such as "projects/my-project-id"), or
+//     a project number (such as "projects/12345").
 func (r *SavedQueriesService) Create(parent string, savedquery *SavedQuery) *SavedQueriesCreateCall {
 	c := &SavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7184,7 +8243,7 @@ func (r *SavedQueriesService) Create(parent string, savedquery *SavedQuery) *Sav
 // The ID to use for the saved query, which must be unique in the
 // specified parent. It will become the final component of the saved
 // query's resource name. This value should be 4-63 characters, and
-// valid characters are /a-z-/. Notice that this field is required in
+// valid characters are `a-z-`. Notice that this field is required in
 // the saved query creation, and the `name` field of the `saved_query`
 // will be ignored.
 func (c *SavedQueriesCreateCall) SavedQueryId(savedQueryId string) *SavedQueriesCreateCall {
@@ -7259,17 +8318,17 @@ func (c *SavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SavedQuery{
 		ServerResponse: googleapi.ServerResponse{
@@ -7292,14 +8351,14 @@ func (c *SavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project/folder/organization where this saved_query should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "description": "Required. The name of the project/folder/organization where this saved_query should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "savedQueryId": {
-	//       "description": "Required. The ID to use for the saved query, which must be unique in the specified parent. It will become the final component of the saved query's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Notice that this field is required in the saved query creation, and the `name` field of the `saved_query` will be ignored.",
+	//       "description": "Required. The ID to use for the saved query, which must be unique in the specified parent. It will become the final component of the saved query's resource name. This value should be 4-63 characters, and valid characters are `a-z-`. Notice that this field is required in the saved query creation, and the `name` field of the `saved_query` will be ignored.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7402,17 +8461,17 @@ func (c *SavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7551,17 +8610,17 @@ func (c *SavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SavedQuery{
 		ServerResponse: googleapi.ServerResponse{
@@ -7732,17 +8791,17 @@ func (c *SavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSavedQueri
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSavedQueriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7918,17 +8977,17 @@ func (c *SavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SavedQuery{
 		ServerResponse: googleapi.ServerResponse{
@@ -8052,21 +9111,22 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(analysisQ
 // the response will include access analysis from identities to
 // resources via service account impersonation. This is a very expensive
 // operation, because many derived queries will be executed. We highly
-// recommend you use AssetService.AnalyzeIamPolicyLongrunning rpc
+// recommend you use AssetService.AnalyzeIamPolicyLongrunning RPC
 // instead. For example, if the request analyzes for which resources
 // user A has permission P, and there's an IAM policy states user A has
 // iam.serviceAccounts.getAccessToken permission to a service account
 // SA, and there's another IAM policy states service account SA has
-// permission P to a GCP folder F, then user A potentially has access to
-// the GCP folder F. And those advanced analysis results will be
-// included in
+// permission P to a Google Cloud folder F, then user A potentially has
+// access to the Google Cloud folder F. And those advanced analysis
+// results will be included in
 // AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
 // Another example, if the request analyzes for who has permission P to
-// a GCP folder F, and there's an IAM policy states user A has
+// a Google Cloud folder F, and there's an IAM policy states user A has
 // iam.serviceAccounts.actAs permission to a service account SA, and
 // there's another IAM policy states service account SA has permission P
-// to the GCP folder F, then user A potentially has access to the GCP
-// folder F. And those advanced analysis results will be included in
+// to the Google Cloud folder F, then user A potentially has access to
+// the Google Cloud folder F. And those advanced analysis results will
+// be included in
 // AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Only
 // the following permissions are considered in this analysis: *
 // `iam.serviceAccounts.actAs` * `iam.serviceAccounts.signBlob` *
@@ -8097,17 +9157,18 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandGroups(analysisQueryO
 // resource section of the result will expand any resource attached to
 // an IAM policy to include resources lower in the resource hierarchy.
 // For example, if the request analyzes for which resources user A has
-// permission P, and the results include an IAM policy with P on a GCP
-// folder, the results will also include resources in that folder with
-// permission P. If true and IamPolicyAnalysisQuery.resource_selector is
-// specified, the resource section of the result will expand the
-// specified resource to include resources lower in the resource
-// hierarchy. Only project or lower resources are supported. Folder and
-// organization resource cannot be used together with this option. For
-// example, if the request analyzes for which users have permission P on
-// a GCP project with this option enabled, the results will include all
-// users who have permission P on that project or any lower resource. If
-// true, the default max expansion per resource is 1000 for
+// permission P, and the results include an IAM policy with P on a
+// Google Cloud folder, the results will also include resources in that
+// folder with permission P. If true and
+// IamPolicyAnalysisQuery.resource_selector is specified, the resource
+// section of the result will expand the specified resource to include
+// resources lower in the resource hierarchy. Only project or lower
+// resources are supported. Folder and organization resources cannot be
+// used together with this option. For example, if the request analyzes
+// for which users have permission P on a Google Cloud project with this
+// option enabled, the results will include all users who have
+// permission P on that project or any lower resource. If true, the
+// default max expansion per resource is 1000 for
 // AssetService.AnalyzeIamPolicy][] and 100000 for
 // AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandResources(analysisQueryOptionsExpandResources bool) *V1AnalyzeIamPolicyCall {
@@ -8263,17 +9324,17 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeIamPolicyResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8319,7 +9380,7 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.options.analyzeServiceAccountImpersonation": {
-	//       "description": "Optional. If true, the response will include access analysis from identities to resources via service account impersonation. This is a very expensive operation, because many derived queries will be executed. We highly recommend you use AssetService.AnalyzeIamPolicyLongrunning rpc instead. For example, if the request analyzes for which resources user A has permission P, and there's an IAM policy states user A has iam.serviceAccounts.getAccessToken permission to a service account SA, and there's another IAM policy states service account SA has permission P to a GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Another example, if the request analyzes for who has permission P to a GCP folder F, and there's an IAM policy states user A has iam.serviceAccounts.actAs permission to a service account SA, and there's another IAM policy states service account SA has permission P to the GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Only the following permissions are considered in this analysis: * `iam.serviceAccounts.actAs` * `iam.serviceAccounts.signBlob` * `iam.serviceAccounts.signJwt` * `iam.serviceAccounts.getAccessToken` * `iam.serviceAccounts.getOpenIdToken` * `iam.serviceAccounts.implicitDelegation` Default is false.",
+	//       "description": "Optional. If true, the response will include access analysis from identities to resources via service account impersonation. This is a very expensive operation, because many derived queries will be executed. We highly recommend you use AssetService.AnalyzeIamPolicyLongrunning RPC instead. For example, if the request analyzes for which resources user A has permission P, and there's an IAM policy states user A has iam.serviceAccounts.getAccessToken permission to a service account SA, and there's another IAM policy states service account SA has permission P to a Google Cloud folder F, then user A potentially has access to the Google Cloud folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Another example, if the request analyzes for who has permission P to a Google Cloud folder F, and there's an IAM policy states user A has iam.serviceAccounts.actAs permission to a service account SA, and there's another IAM policy states service account SA has permission P to the Google Cloud folder F, then user A potentially has access to the Google Cloud folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Only the following permissions are considered in this analysis: * `iam.serviceAccounts.actAs` * `iam.serviceAccounts.signBlob` * `iam.serviceAccounts.signJwt` * `iam.serviceAccounts.getAccessToken` * `iam.serviceAccounts.getOpenIdToken` * `iam.serviceAccounts.implicitDelegation` Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8329,7 +9390,7 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.expandResources": {
-	//       "description": "Optional. If true and IamPolicyAnalysisQuery.resource_selector is not specified, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a GCP folder, the results will also include resources in that folder with permission P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the resource section of the result will expand the specified resource to include resources lower in the resource hierarchy. Only project or lower resources are supported. Folder and organization resource cannot be used together with this option. For example, if the request analyzes for which users have permission P on a GCP project with this option enabled, the results will include all users who have permission P on that project or any lower resource. If true, the default max expansion per resource is 1000 for AssetService.AnalyzeIamPolicy][] and 100000 for AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.",
+	//       "description": "Optional. If true and IamPolicyAnalysisQuery.resource_selector is not specified, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a Google Cloud folder, the results will also include resources in that folder with permission P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the resource section of the result will expand the specified resource to include resources lower in the resource hierarchy. Only project or lower resources are supported. Folder and organization resources cannot be used together with this option. For example, if the request analyzes for which users have permission P on a Google Cloud project with this option enabled, the results will include all users who have permission P on that project or any lower resource. If true, the default max expansion per resource is 1000 for AssetService.AnalyzeIamPolicy][] and 100000 for AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8487,17 +9548,17 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8559,9 +9620,9 @@ type V1AnalyzeMoveCall struct {
 // subject to change before the actual resource migration takes place.
 //
 //   - resource: Name of the resource to perform the analysis against.
-//     Only GCP Project are supported as of today. Hence, this can only be
-//     Project ID (such as "projects/my-project-id") or a Project Number
-//     (such as "projects/12345").
+//     Only Google Cloud projects are supported as of today. Hence, this
+//     can only be a project ID (such as "projects/my-project-id") or a
+//     project number (such as "projects/12345").
 func (r *V1Service) AnalyzeMove(resource string) *V1AnalyzeMoveCall {
 	c := &V1AnalyzeMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8569,11 +9630,11 @@ func (r *V1Service) AnalyzeMove(resource string) *V1AnalyzeMoveCall {
 }
 
 // DestinationParent sets the optional parameter "destinationParent":
-// Required. Name of the GCP Folder or Organization to reparent the
-// target resource. The analysis will be performed against
+// Required. Name of the Google Cloud folder or organization to reparent
+// the target resource. The analysis will be performed against
 // hypothetically moving the resource to this specified desitination
-// parent. This can only be a Folder number (such as "folders/123") or
-// an Organization number (such as "organizations/123").
+// parent. This can only be a folder number (such as "folders/123") or
+// an organization number (such as "organizations/123").
 func (c *V1AnalyzeMoveCall) DestinationParent(destinationParent string) *V1AnalyzeMoveCall {
 	c.urlParams_.Set("destinationParent", destinationParent)
 	return c
@@ -8676,17 +9737,17 @@ func (c *V1AnalyzeMoveCall) Do(opts ...googleapi.CallOption) (*AnalyzeMoveRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeMoveResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8709,12 +9770,12 @@ func (c *V1AnalyzeMoveCall) Do(opts ...googleapi.CallOption) (*AnalyzeMoveRespon
 	//   ],
 	//   "parameters": {
 	//     "destinationParent": {
-	//       "description": "Required. Name of the GCP Folder or Organization to reparent the target resource. The analysis will be performed against hypothetically moving the resource to this specified desitination parent. This can only be a Folder number (such as \"folders/123\") or an Organization number (such as \"organizations/123\").",
+	//       "description": "Required. Name of the Google Cloud folder or organization to reparent the target resource. The analysis will be performed against hypothetically moving the resource to this specified desitination parent. This can only be a folder number (such as \"folders/123\") or an organization number (such as \"organizations/123\").",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "Required. Name of the resource to perform the analysis against. Only GCP Project are supported as of today. Hence, this can only be Project ID (such as \"projects/my-project-id\") or a Project Number (such as \"projects/12345\").",
+	//       "description": "Required. Name of the resource to perform the analysis against. Only Google Cloud projects are supported as of today. Hence, this can only be a project ID (such as \"projects/my-project-id\") or a project number (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -8745,6 +9806,710 @@ func (c *V1AnalyzeMoveCall) Do(opts ...googleapi.CallOption) (*AnalyzeMoveRespon
 	//   ]
 	// }
 
+}
+
+// method id "cloudasset.analyzeOrgPolicies":
+
+type V1AnalyzeOrgPoliciesCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeOrgPolicies: Analyzes organization policies under a scope.
+//
+//   - scope: The organization to scope the request. Only organization
+//     policies within the scope will be analyzed. *
+//     organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456").
+func (r *V1Service) AnalyzeOrgPolicies(scope string) *V1AnalyzeOrgPoliciesCall {
+	c := &V1AnalyzeOrgPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Constraint sets the optional parameter "constraint": Required. The
+// name of the constraint to analyze organization policies for. The
+// response only contains analyzed organization policies for the
+// provided constraint.
+func (c *V1AnalyzeOrgPoliciesCall) Constraint(constraint string) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("constraint", constraint)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// AnalyzeOrgPoliciesResponse.org_policy_results. The only supported
+// field is `consolidated_policy.attached_resource`, and the only
+// supported operator is `=`. Example:
+// consolidated_policy.attached_resource="//cloudresourcemanager.googleap
+// is.com/folders/001" will return the org policy results
+// of"folders/001".
+func (c *V1AnalyzeOrgPoliciesCall) Filter(filter string) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return per page. If unspecified,
+// AnalyzeOrgPoliciesResponse.org_policy_results will contain 20 items
+// with a maximum of 200.
+func (c *V1AnalyzeOrgPoliciesCall) PageSize(pageSize int64) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination
+// token to retrieve the next page.
+func (c *V1AnalyzeOrgPoliciesCall) PageToken(pageToken string) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeOrgPoliciesCall) Fields(s ...googleapi.Field) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeOrgPoliciesCall) IfNoneMatch(entityTag string) *V1AnalyzeOrgPoliciesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeOrgPoliciesCall) Context(ctx context.Context) *V1AnalyzeOrgPoliciesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeOrgPoliciesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeOrgPoliciesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeOrgPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeOrgPolicies" call.
+// Exactly one of *AnalyzeOrgPoliciesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AnalyzeOrgPoliciesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1AnalyzeOrgPoliciesCall) Do(opts ...googleapi.CallOption) (*AnalyzeOrgPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnalyzeOrgPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes organization policies under a scope.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicies",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeOrgPolicies",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "constraint": {
+	//       "description": "Required. The name of the constraint to analyze organization policies for. The response only contains analyzed organization policies for the provided constraint.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The expression to filter AnalyzeOrgPoliciesResponse.org_policy_results. The only supported field is `consolidated_policy.attached_resource`, and the only supported operator is `=`. Example: consolidated_policy.attached_resource=\"//cloudresourcemanager.googleapis.com/folders/001\" will return the org policy results of\"folders/001\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return per page. If unspecified, AnalyzeOrgPoliciesResponse.org_policy_results will contain 20 items with a maximum of 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pagination token to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. The organization to scope the request. Only organization policies within the scope will be analyzed. * organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeOrgPolicies",
+	//   "response": {
+	//     "$ref": "AnalyzeOrgPoliciesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *V1AnalyzeOrgPoliciesCall) Pages(ctx context.Context, f func(*AnalyzeOrgPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudasset.analyzeOrgPolicyGovernedAssets":
+
+type V1AnalyzeOrgPolicyGovernedAssetsCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeOrgPolicyGovernedAssets: Analyzes organization policies
+// governed assets (Google Cloud resources or policies) under a scope.
+// This RPC supports custom constraints and the following 10 canned
+// constraints: * storage.uniformBucketLevelAccess *
+// iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains
+// * compute.vmExternalIpAccess *
+// appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations *
+// compute.trustedImageProjects * compute.skipDefaultNetworkCreation *
+// compute.requireOsLogin * compute.disableNestedVirtualization This RPC
+// only returns either resources of types supported by searchable asset
+// types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
+// or IAM policies.
+//
+//   - scope: The organization to scope the request. Only organization
+//     policies within the scope will be analyzed. The output assets will
+//     also be limited to the ones governed by those in-scope organization
+//     policies. * organizations/{ORGANIZATION_NUMBER} (e.g.,
+//     "organizations/123456").
+func (r *V1Service) AnalyzeOrgPolicyGovernedAssets(scope string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c := &V1AnalyzeOrgPolicyGovernedAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Constraint sets the optional parameter "constraint": Required. The
+// name of the constraint to analyze governed assets for. The analysis
+// only contains analyzed organization policies for the provided
+// constraint.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Constraint(constraint string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("constraint", constraint)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// the governed assets in result. The only supported fields for governed
+// resources are `governed_resource.project` and
+// `governed_resource.folders`. The only supported fields for governed
+// iam policies are `governed_iam_policy.project` and
+// `governed_iam_policy.folders`. The only supported operator is `=`.
+// Example 1: governed_resource.project="projects/12345678" filter will
+// return all governed resources under projects/12345678 including the
+// project ifself, if applicable. Example 2:
+// governed_iam_policy.folders="folders/12345678" filter will return all
+// governed iam policies under folders/12345678, if applicable.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Filter(filter string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return per page. If unspecified,
+// AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets will contain
+// 100 items with a maximum of 200.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) PageSize(pageSize int64) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination
+// token to retrieve the next page.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) PageToken(pageToken string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Fields(s ...googleapi.Field) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) IfNoneMatch(entityTag string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Context(ctx context.Context) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeOrgPolicyGovernedAssets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeOrgPolicyGovernedAssets" call.
+// Exactly one of *AnalyzeOrgPolicyGovernedAssetsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *AnalyzeOrgPolicyGovernedAssetsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Do(opts ...googleapi.CallOption) (*AnalyzeOrgPolicyGovernedAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnalyzeOrgPolicyGovernedAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either resources of types supported by [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types), or IAM policies.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedAssets",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeOrgPolicyGovernedAssets",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "constraint": {
+	//       "description": "Required. The name of the constraint to analyze governed assets for. The analysis only contains analyzed organization policies for the provided constraint.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The expression to filter the governed assets in result. The only supported fields for governed resources are `governed_resource.project` and `governed_resource.folders`. The only supported fields for governed iam policies are `governed_iam_policy.project` and `governed_iam_policy.folders`. The only supported operator is `=`. Example 1: governed_resource.project=\"projects/12345678\" filter will return all governed resources under projects/12345678 including the project ifself, if applicable. Example 2: governed_iam_policy.folders=\"folders/12345678\" filter will return all governed iam policies under folders/12345678, if applicable.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return per page. If unspecified, AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets will contain 100 items with a maximum of 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pagination token to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. The organization to scope the request. Only organization policies within the scope will be analyzed. The output assets will also be limited to the ones governed by those in-scope organization policies. * organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeOrgPolicyGovernedAssets",
+	//   "response": {
+	//     "$ref": "AnalyzeOrgPolicyGovernedAssetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Pages(ctx context.Context, f func(*AnalyzeOrgPolicyGovernedAssetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudasset.analyzeOrgPolicyGovernedContainers":
+
+type V1AnalyzeOrgPolicyGovernedContainersCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeOrgPolicyGovernedContainers: Analyzes organization policies
+// governed containers (projects, folders or organization) under a
+// scope.
+//
+//   - scope: The organization to scope the request. Only organization
+//     policies within the scope will be analyzed. The output containers
+//     will also be limited to the ones governed by those in-scope
+//     organization policies. * organizations/{ORGANIZATION_NUMBER} (e.g.,
+//     "organizations/123456").
+func (r *V1Service) AnalyzeOrgPolicyGovernedContainers(scope string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c := &V1AnalyzeOrgPolicyGovernedContainersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Constraint sets the optional parameter "constraint": Required. The
+// name of the constraint to analyze governed containers for. The
+// analysis only contains organization policies for the provided
+// constraint.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Constraint(constraint string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("constraint", constraint)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// the governed containers in result. The only supported field is
+// `parent`, and the only supported operator is `=`. Example:
+// parent="//cloudresourcemanager.googleapis.com/folders/001" will
+// return all containers under "folders/001".
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Filter(filter string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return per page. If unspecified,
+// AnalyzeOrgPolicyGovernedContainersResponse.governed_containers will
+// contain 100 items with a maximum of 200.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) PageSize(pageSize int64) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination
+// token to retrieve the next page.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) PageToken(pageToken string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Fields(s ...googleapi.Field) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) IfNoneMatch(entityTag string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Context(ctx context.Context) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeOrgPolicyGovernedContainers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeOrgPolicyGovernedContainers" call.
+// Exactly one of *AnalyzeOrgPolicyGovernedContainersResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *AnalyzeOrgPolicyGovernedContainersResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Do(opts ...googleapi.CallOption) (*AnalyzeOrgPolicyGovernedContainersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnalyzeOrgPolicyGovernedContainersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes organization policies governed containers (projects, folders or organization) under a scope.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedContainers",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeOrgPolicyGovernedContainers",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "constraint": {
+	//       "description": "Required. The name of the constraint to analyze governed containers for. The analysis only contains organization policies for the provided constraint.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The expression to filter the governed containers in result. The only supported field is `parent`, and the only supported operator is `=`. Example: parent=\"//cloudresourcemanager.googleapis.com/folders/001\" will return all containers under \"folders/001\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return per page. If unspecified, AnalyzeOrgPolicyGovernedContainersResponse.governed_containers will contain 100 items with a maximum of 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pagination token to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. The organization to scope the request. Only organization policies within the scope will be analyzed. The output containers will also be limited to the ones governed by those in-scope organization policies. * organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeOrgPolicyGovernedContainers",
+	//   "response": {
+	//     "$ref": "AnalyzeOrgPolicyGovernedContainersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Pages(ctx context.Context, f func(*AnalyzeOrgPolicyGovernedContainersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "cloudasset.batchGetAssetsHistory":
@@ -8796,8 +10561,8 @@ func (c *V1BatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *V1BatchG
 //	"CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
 //	"RESOURCE" - Resource metadata.
 //	"IAM_POLICY" - The actual IAM policy set on a resource.
-//	"ORG_POLICY" - The Cloud Organization Policy set on an asset.
-//	"ACCESS_POLICY" - The Cloud Access context manager Policy set on an
+//	"ORG_POLICY" - The organization policy set on an asset.
+//	"ACCESS_POLICY" - The Access Context Manager policy set on an
 //
 // asset.
 //
@@ -8918,17 +10683,17 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetAssetsHistoryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8971,8 +10736,8 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//         "Unspecified content type.",
 	//         "Resource metadata.",
 	//         "The actual IAM policy set on a resource.",
-	//         "The Cloud Organization Policy set on an asset.",
-	//         "The Cloud Access context manager Policy set on an asset.",
+	//         "The organization policy set on an asset.",
+	//         "The Access Context Manager policy set on an asset.",
 	//         "The runtime OS Inventory information.",
 	//         "The related resources."
 	//       ],
@@ -9117,17 +10882,17 @@ func (c *V1ExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9163,6 +10928,162 @@ func (c *V1ExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.queryAssets":
+
+type V1QueryAssetsCall struct {
+	s                  *Service
+	parent             string
+	queryassetsrequest *QueryAssetsRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// QueryAssets: Issue a job that queries assets using a SQL statement
+// compatible with BigQuery SQL
+// (https://cloud.google.com/bigquery/docs/introduction-sql). If the
+// query execution finishes within timeout and there's no pagination,
+// the full query results will be returned in the `QueryAssetsResponse`.
+// Otherwise, full query results can be obtained by issuing extra
+// requests with the `job_reference` from the a previous `QueryAssets`
+// call. Note, the query result has approximately 10 GB limitation
+// enforced by BigQuery
+// (https://cloud.google.com/bigquery/docs/best-practices-performance-output).
+// Queries return larger results will result in errors.
+//
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), or a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123"). Only
+//     assets belonging to the `parent` will be returned.
+func (r *V1Service) QueryAssets(parent string, queryassetsrequest *QueryAssetsRequest) *V1QueryAssetsCall {
+	c := &V1QueryAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.queryassetsrequest = queryassetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1QueryAssetsCall) Fields(s ...googleapi.Field) *V1QueryAssetsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1QueryAssetsCall) Context(ctx context.Context) *V1QueryAssetsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1QueryAssetsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1QueryAssetsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryassetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:queryAssets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.queryAssets" call.
+// Exactly one of *QueryAssetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *QueryAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1QueryAssetsCall) Do(opts ...googleapi.CallOption) (*QueryAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Issue a job that queries assets using a SQL statement compatible with [BigQuery SQL](https://cloud.google.com/bigquery/docs/introduction-sql). If the query execution finishes within timeout and there's no pagination, the full query results will be returned in the `QueryAssetsResponse`. Otherwise, full query results can be obtained by issuing extra requests with the `job_reference` from the a previous `QueryAssets` call. Note, the query result has approximately 10 GB limitation enforced by [BigQuery](https://cloud.google.com/bigquery/docs/best-practices-performance-output). Queries return larger results will result in errors.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:queryAssets",
+	//   "httpMethod": "POST",
+	//   "id": "cloudasset.queryAssets",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The relative name of the root asset. This can only be an organization number (such as \"organizations/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"), or a folder number (such as \"folders/123\"). Only assets belonging to the `parent` will be returned.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:queryAssets",
+	//   "request": {
+	//     "$ref": "QueryAssetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "QueryAssetsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -9235,10 +11156,10 @@ func (c *V1SearchAllIamPoliciesCall) OrderBy(orderBy string) *V1SearchAllIamPoli
 
 // PageSize sets the optional parameter "pageSize": The page size for
 // search result pagination. Page size is capped at 500 even if a larger
-// value is given. If set to zero, server will pick an appropriate
-// default. Returned results may be fewer than requested. When this
-// happens, there could be more results as long as `next_page_token` is
-// returned.
+// value is given. If set to zero or a negative value, server will pick
+// an appropriate default. Returned results may be fewer than requested.
+// When this happens, there could be more results as long as
+// `next_page_token` is returned.
 func (c *V1SearchAllIamPoliciesCall) PageSize(pageSize int64) *V1SearchAllIamPoliciesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9259,11 +11180,10 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // (https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query)
 // for more information. If not specified or empty, it will search all
 // the IAM policies within the specified `scope`. Note that the query
-// string is compared against each Cloud IAM policy binding, including
-// its principals, roles, and Cloud IAM conditions. The returned Cloud
-// IAM policies will only contain the bindings that match your query. To
-// learn more about the IAM policy structure, see the IAM policy
-// documentation
+// string is compared against each IAM policy binding, including its
+// principals, roles, and IAM conditions. The returned IAM policies will
+// only contain the bindings that match your query. To learn more about
+// the IAM policy structure, see the IAM policy documentation
 // (https://cloud.google.com/iam/help/allow-policies/structure).
 // Examples: * `policy:amy@gmail.com` to find IAM policy bindings that
 // specify user "amy@gmail.com". * `policy:roles/compute.admin` to find
@@ -9372,17 +11292,17 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchAllIamPoliciesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9416,7 +11336,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
+	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero or a negative value, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9427,7 +11347,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its principals, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see the [IAM policy documentation](https://cloud.google.com/iam/help/allow-policies/structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the principal type \"user\".",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each IAM policy binding, including its principals, roles, and IAM conditions. The returned IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see the [IAM policy documentation](https://cloud.google.com/iam/help/allow-policies/structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the principal type \"user\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9482,10 +11402,11 @@ type V1SearchAllResourcesCall struct {
 	header_      http.Header
 }
 
-// SearchAllResources: Searches all Cloud resources within the specified
-// scope, such as a project, folder, or organization. The caller must be
-// granted the `cloudasset.assets.searchAllResources` permission on the
-// desired scope, otherwise the request will be rejected.
+// SearchAllResources: Searches all Google Cloud resources within the
+// specified scope, such as a project, folder, or organization. The
+// caller must be granted the `cloudasset.assets.searchAllResources`
+// permission on the desired scope, otherwise the request will be
+// rejected.
 //
 //   - scope: A scope can be a project, a folder, or an organization. The
 //     search is limited to the resources within the `scope`. The caller
@@ -9525,10 +11446,11 @@ func (c *V1SearchAllResourcesCall) AssetTypes(assetTypes ...string) *V1SearchAll
 // descending order. Redundant space characters are ignored. Example:
 // "location DESC, name". Only singular primitive fields in the response
 // are sortable: * name * assetType * project * displayName *
-// description * location * kmsKey * createTime * updateTime * state *
+// description * location * createTime * updateTime * state *
 // parentFullResourceName * parentAssetType All the other fields such as
-// repeated fields (e.g., `networkTags`), map fields (e.g., `labels`)
-// and struct fields (e.g., `additionalAttributes`) are not supported.
+// repeated fields (e.g., `networkTags`, `kmsKeys`), map fields (e.g.,
+// `labels`) and struct fields (e.g., `additionalAttributes`) are not
+// supported.
 func (c *V1SearchAllResourcesCall) OrderBy(orderBy string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -9536,10 +11458,10 @@ func (c *V1SearchAllResourcesCall) OrderBy(orderBy string) *V1SearchAllResources
 
 // PageSize sets the optional parameter "pageSize": The page size for
 // search result pagination. Page size is capped at 500 even if a larger
-// value is given. If set to zero, server will pick an appropriate
-// default. Returned results may be fewer than requested. When this
-// happens, there could be more results as long as `next_page_token` is
-// returned.
+// value is given. If set to zero or a negative value, server will pick
+// an appropriate default. Returned results may be fewer than requested.
+// When this happens, there could be more results as long as
+// `next_page_token` is returned.
 func (c *V1SearchAllResourcesCall) PageSize(pageSize int64) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9560,59 +11482,67 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 // (https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)
 // for more information. If not specified or empty, it will search all
 // the resources within the specified `scope`. Examples: *
-// `name:Important` to find Cloud resources whose name contains
-// "Important" as a word. * `name=Important` to find the Cloud resource
-// whose name is exactly "Important". * `displayName:Impor*` to find
-// Cloud resources whose display name contains "Impor" as a prefix of
-// any word in the field. * `location:us-west*` to find Cloud resources
-// whose location contains both "us" and "west" as prefixes. *
-// `labels:prod` to find Cloud resources whose labels contain "prod" as
-// a key or value. * `labels.env:prod` to find Cloud resources that have
-// a label "env" and its value is "prod". * `labels.env:*` to find Cloud
-// resources that have a label "env". * `kmsKey:key` to find Cloud
-// resources encrypted with a customer-managed encryption key whose name
+// `name:Important` to find Google Cloud resources whose name contains
+// "Important" as a word. * `name=Important` to find the Google Cloud
+// resource whose name is exactly "Important". * `displayName:Impor*` to
+// find Google Cloud resources whose display name contains "Impor" as a
+// prefix of any word in the field. * `location:us-west*` to find Google
+// Cloud resources whose location contains both "us" and "west" as
+// prefixes. * `labels:prod` to find Google Cloud resources whose labels
+// contain "prod" as a key or value. * `labels.env:prod` to find Google
+// Cloud resources that have a label "env" and its value is "prod". *
+// `labels.env:*` to find Google Cloud resources that have a label
+// "env". * `kmsKey:key` to find Google Cloud resources encrypted with a
+// customer-managed encryption key whose name contains "key" as a word.
+// This field is deprecated. Please use the `kmsKeys` field to retrieve
+// Cloud KMS key information. * `kmsKeys:key` to find Google Cloud
+// resources encrypted with customer-managed encryption keys whose name
 // contains the word "key". * `relationships:instance-group-1` to find
-// Cloud resources that have relationships with "instance-group-1" in
-// the related resource name. *
-// `relationships:INSTANCE_TO_INSTANCEGROUP` to find compute instances
-// that have relationships of type "INSTANCE_TO_INSTANCEGROUP". *
+// Google Cloud resources that have relationships with
+// "instance-group-1" in the related resource name. *
+// `relationships:INSTANCE_TO_INSTANCEGROUP` to find Compute Engine
+// instances that have relationships of type
+// "INSTANCE_TO_INSTANCEGROUP". *
 // `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find
-// compute instances that have relationships with "instance-group-1" in
-// the compute instance group resource name, for relationship type
-// "INSTANCE_TO_INSTANCEGROUP". * `state:ACTIVE` to find Cloud resources
-// whose state contains "ACTIVE" as a word. * `NOT state:ACTIVE` to find
-// Cloud resources whose state doesn't contain "ACTIVE" as a word. *
-// `createTime<1609459200` to find Cloud resources that were created
-// before "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp
-// of "2021-01-01 00:00:00 UTC" in seconds. * `updateTime>1609459200` to
-// find Cloud resources that were updated after "2021-01-01 00:00:00
-// UTC". 1609459200 is the epoch timestamp of "2021-01-01 00:00:00 UTC"
-// in seconds. * `Important` to find Cloud resources that contain
-// "Important" as a word in any of the searchable fields. * `Impor*` to
-// find Cloud resources that contain "Impor" as a prefix of any word in
-// any of the searchable fields. * `Important location:(us-west1 OR
-// global)` to find Cloud resources that contain "Important" as a word
-// in any of the searchable fields and are also located in the
-// "us-west1" region or the "global" location.
+// Compute Engine instances that have relationships with
+// "instance-group-1" in the Compute Engine instance group resource
+// name, for relationship type "INSTANCE_TO_INSTANCEGROUP". *
+// `state:ACTIVE` to find Google Cloud resources whose state contains
+// "ACTIVE" as a word. * `NOT state:ACTIVE` to find Google Cloud
+// resources whose state doesn't contain "ACTIVE" as a word. *
+// `createTime<1609459200` to find Google Cloud resources that were
+// created before "2021-01-01 00:00:00 UTC". 1609459200 is the epoch
+// timestamp of "2021-01-01 00:00:00 UTC" in seconds. *
+// `updateTime>1609459200` to find Google Cloud resources that were
+// updated after "2021-01-01 00:00:00 UTC". 1609459200 is the epoch
+// timestamp of "2021-01-01 00:00:00 UTC" in seconds. * `Important` to
+// find Google Cloud resources that contain "Important" as a word in any
+// of the searchable fields. * `Impor*` to find Google Cloud resources
+// that contain "Impor" as a prefix of any word in any of the searchable
+// fields. * `Important location:(us-west1 OR global)` to find Google
+// Cloud resources that contain "Important" as a word in any of the
+// searchable fields and are also located in the "us-west1" region or
+// the "global" location.
 func (c *V1SearchAllResourcesCall) Query(query string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // ReadMask sets the optional parameter "readMask": A comma-separated
-// list of fields specifying which fields to be returned in
-// ResourceSearchResult. Only '*' or combination of top level fields can
-// be specified. Field names of both snake_case and camelCase are
-// supported. Examples: "*", "name,location",
-// "name,versionedResources". The read_mask paths must be valid field
-// paths listed but not limited to (both snake_case and camelCase are
-// supported): * name * assetType * project * displayName * description
-// * location * tagKeys * tagValues * tagValueIds * labels * networkTags
-// * kmsKey * createTime * updateTime * state * additionalAttributes *
-// versionedResources If read_mask is not specified, all fields except
-// versionedResources will be returned. If only '*' is specified, all
-// fields including versionedResources will be returned. Any invalid
-// field path will trigger INVALID_ARGUMENT error.
+// list of fields that you want returned in the results. The following
+// fields are returned by default if not specified: * `name` *
+// `assetType` * `project` * `folders` * `organization` * `displayName`
+// * `description` * `location` * `labels` * `networkTags` * `kmsKeys` *
+// `createTime` * `updateTime` * `state` * `additionalAttributes` *
+// `parentFullResourceName` * `parentAssetType` Some fields of large
+// size, such as `versionedResources` and `attachedResources`, are not
+// returned by default, but you can specify them in the `read_mask`
+// parameter if you want to include them. If "*" is specified, all
+// available fields
+// (https://cloud.google.com/asset-inventory/docs/reference/rest/v1/TopLevel/searchAllResources#resourcesearchresult)
+// are returned. Examples: "name,location",
+// "name,versionedResources", "*". Any invalid field path will
+// trigger INVALID_ARGUMENT error.
 func (c *V1SearchAllResourcesCall) ReadMask(readMask string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -9693,17 +11623,17 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchAllResourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9717,7 +11647,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all Cloud resources within the specified scope, such as a project, folder, or organization. The caller must be granted the `cloudasset.assets.searchAllResources` permission on the desired scope, otherwise the request will be rejected.",
+	//   "description": "Searches all Google Cloud resources within the specified scope, such as a project, folder, or organization. The caller must be granted the `cloudasset.assets.searchAllResources` permission on the desired scope, otherwise the request will be rejected.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:searchAllResources",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.searchAllResources",
@@ -9732,12 +11662,12 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. A comma-separated list of fields specifying the sorting order of the results. The default order is ascending. Add \" DESC\" after the field name to indicate descending order. Redundant space characters are ignored. Example: \"location DESC, name\". Only singular primitive fields in the response are sortable: * name * assetType * project * displayName * description * location * kmsKey * createTime * updateTime * state * parentFullResourceName * parentAssetType All the other fields such as repeated fields (e.g., `networkTags`), map fields (e.g., `labels`) and struct fields (e.g., `additionalAttributes`) are not supported.",
+	//       "description": "Optional. A comma-separated list of fields specifying the sorting order of the results. The default order is ascending. Add \" DESC\" after the field name to indicate descending order. Redundant space characters are ignored. Example: \"location DESC, name\". Only singular primitive fields in the response are sortable: * name * assetType * project * displayName * description * location * createTime * updateTime * state * parentFullResourceName * parentAssetType All the other fields such as repeated fields (e.g., `networkTags`, `kmsKeys`), map fields (e.g., `labels`) and struct fields (e.g., `additionalAttributes`) are not supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
+	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero or a negative value, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9748,12 +11678,12 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `kmsKey:key` to find Cloud resources encrypted with a customer-managed encryption key whose name contains the word \"key\". * `relationships:instance-group-1` to find Cloud resources that have relationships with \"instance-group-1\" in the related resource name. * `relationships:INSTANCE_TO_INSTANCEGROUP` to find compute instances that have relationships of type \"INSTANCE_TO_INSTANCEGROUP\". * `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find compute instances that have relationships with \"instance-group-1\" in the compute instance group resource name, for relationship type \"INSTANCE_TO_INSTANCEGROUP\". * `state:ACTIVE` to find Cloud resources whose state contains \"ACTIVE\" as a word. * `NOT state:ACTIVE` to find Cloud resources whose state doesn't contain \"ACTIVE\" as a word. * `createTime\u003c1609459200` to find Cloud resources that were created before \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `updateTime\u003e1609459200` to find Cloud resources that were updated after \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Google Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Google Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Google Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Google Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Google Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Google Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Google Cloud resources that have a label \"env\". * `kmsKey:key` to find Google Cloud resources encrypted with a customer-managed encryption key whose name contains \"key\" as a word. This field is deprecated. Please use the `kmsKeys` field to retrieve Cloud KMS key information. * `kmsKeys:key` to find Google Cloud resources encrypted with customer-managed encryption keys whose name contains the word \"key\". * `relationships:instance-group-1` to find Google Cloud resources that have relationships with \"instance-group-1\" in the related resource name. * `relationships:INSTANCE_TO_INSTANCEGROUP` to find Compute Engine instances that have relationships of type \"INSTANCE_TO_INSTANCEGROUP\". * `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find Compute Engine instances that have relationships with \"instance-group-1\" in the Compute Engine instance group resource name, for relationship type \"INSTANCE_TO_INSTANCEGROUP\". * `state:ACTIVE` to find Google Cloud resources whose state contains \"ACTIVE\" as a word. * `NOT state:ACTIVE` to find Google Cloud resources whose state doesn't contain \"ACTIVE\" as a word. * `createTime\u003c1609459200` to find Google Cloud resources that were created before \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `updateTime\u003e1609459200` to find Google Cloud resources that were updated after \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `Important` to find Google Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Google Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Google Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Optional. A comma-separated list of fields specifying which fields to be returned in ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both snake_case and camelCase are supported. Examples: `\"*\"`, `\"name,location\"`, `\"name,versionedResources\"`. The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase are supported): * name * assetType * project * displayName * description * location * tagKeys * tagValues * tagValueIds * labels * networkTags * kmsKey * createTime * updateTime * state * additionalAttributes * versionedResources If read_mask is not specified, all fields except versionedResources will be returned. If only '*' is specified, all fields including versionedResources will be returned. Any invalid field path will trigger INVALID_ARGUMENT error.",
+	//       "description": "Optional. A comma-separated list of fields that you want returned in the results. The following fields are returned by default if not specified: * `name` * `assetType` * `project` * `folders` * `organization` * `displayName` * `description` * `location` * `labels` * `networkTags` * `kmsKeys` * `createTime` * `updateTime` * `state` * `additionalAttributes` * `parentFullResourceName` * `parentAssetType` Some fields of large size, such as `versionedResources` and `attachedResources`, are not returned by default, but you can specify them in the `read_mask` parameter if you want to include them. If `\"*\"` is specified, all [available fields](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/TopLevel/searchAllResources#resourcesearchresult) are returned. Examples: `\"name,location\"`, `\"name,versionedResources\"`, `\"*\"`. Any invalid field path will trigger INVALID_ARGUMENT error.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

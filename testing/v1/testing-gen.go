@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "testing:v1"
 const apiName = "testing"
@@ -93,8 +94,8 @@ const (
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
-// NewService creates a new Service.
-func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+// NewService creates a new APIService.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
@@ -117,23 +118,23 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	return s, nil
 }
 
-// New creates a new Service. It uses the provided http.Client for requests.
+// New creates a new APIService. It uses the provided http.Client for requests.
 //
 // Deprecated: please use NewService instead.
 // To provide a custom HTTP client, use option.WithHTTPClient.
 // If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
-func New(client *http.Client) (*Service, error) {
+func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath}
 	s.ApplicationDetailService = NewApplicationDetailServiceService(s)
 	s.Projects = NewProjectsService(s)
 	s.TestEnvironmentCatalog = NewTestEnvironmentCatalogService(s)
 	return s, nil
 }
 
-type Service struct {
+type APIService struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
@@ -145,50 +146,50 @@ type Service struct {
 	TestEnvironmentCatalog *TestEnvironmentCatalogService
 }
 
-func (s *Service) userAgent() string {
+func (s *APIService) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewApplicationDetailServiceService(s *Service) *ApplicationDetailServiceService {
+func NewApplicationDetailServiceService(s *APIService) *ApplicationDetailServiceService {
 	rs := &ApplicationDetailServiceService{s: s}
 	return rs
 }
 
 type ApplicationDetailServiceService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsService(s *Service) *ProjectsService {
+func NewProjectsService(s *APIService) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.TestMatrices = NewProjectsTestMatricesService(s)
 	return rs
 }
 
 type ProjectsService struct {
-	s *Service
+	s *APIService
 
 	TestMatrices *ProjectsTestMatricesService
 }
 
-func NewProjectsTestMatricesService(s *Service) *ProjectsTestMatricesService {
+func NewProjectsTestMatricesService(s *APIService) *ProjectsTestMatricesService {
 	rs := &ProjectsTestMatricesService{s: s}
 	return rs
 }
 
 type ProjectsTestMatricesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewTestEnvironmentCatalogService(s *Service) *TestEnvironmentCatalogService {
+func NewTestEnvironmentCatalogService(s *APIService) *TestEnvironmentCatalogService {
 	rs := &TestEnvironmentCatalogService{s: s}
 	return rs
 }
 
 type TestEnvironmentCatalogService struct {
-	s *Service
+	s *APIService
 }
 
 // Account: Identifies an account and how to log into it.
@@ -506,6 +507,9 @@ type AndroidModel struct {
 	// Name: The human-readable marketing name for this device model.
 	// Examples: "Nexus 5", "Galaxy S5".
 	Name string `json:"name,omitempty"`
+
+	// PerVersionInfo: Version-specific information of an Android model.
+	PerVersionInfo []*PerAndroidVersionInfo `json:"perVersionInfo,omitempty"`
 
 	// ScreenDensity: Screen density in DPI. This corresponds to
 	// ro.sf.lcd_density
@@ -846,6 +850,9 @@ type ApkManifest struct {
 	// to run.
 	MaxSdkVersion int64 `json:"maxSdkVersion,omitempty"`
 
+	// Metadata: Meta-data tags defined in the manifest.
+	Metadata []*Metadata `json:"metadata,omitempty"`
+
 	// MinSdkVersion: Minimum API level required for the application to run.
 	MinSdkVersion int64 `json:"minSdkVersion,omitempty"`
 
@@ -853,9 +860,15 @@ type ApkManifest struct {
 	// "com.example.foo".
 	PackageName string `json:"packageName,omitempty"`
 
+	// Services: Services contained in the tag.
+	Services []*Service `json:"services,omitempty"`
+
 	// TargetSdkVersion: Specifies the API Level on which the application is
 	// designed to run.
 	TargetSdkVersion int64 `json:"targetSdkVersion,omitempty"`
+
+	// UsesFeature: Feature usage tags defined in the manifest.
+	UsesFeature []*UsesFeature `json:"usesFeature,omitempty"`
 
 	// UsesPermission: Permissions declared to be used by the application
 	UsesPermission []string `json:"usesPermission,omitempty"`
@@ -1658,6 +1671,9 @@ type IosModel struct {
 	// "iPhone 4s", "iPad Mini 2".
 	Name string `json:"name,omitempty"`
 
+	// PerVersionInfo: Version-specific information of an iOS model.
+	PerVersionInfo []*PerIosVersionInfo `json:"perVersionInfo,omitempty"`
+
 	// ScreenDensity: Screen density in DPI.
 	ScreenDensity int64 `json:"screenDensity,omitempty"`
 
@@ -1697,6 +1713,45 @@ type IosModel struct {
 
 func (s *IosModel) MarshalJSON() ([]byte, error) {
 	type NoMethod IosModel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IosRoboTest: A test that explores an iOS application on an iOS
+// device.
+type IosRoboTest struct {
+	// AppBundleId: The bundle ID for the app-under-test. This is determined
+	// by examining the application's "Info.plist" file.
+	AppBundleId string `json:"appBundleId,omitempty"`
+
+	// AppIpa: Required. The ipa stored at this file should be used to run
+	// the test.
+	AppIpa *FileReference `json:"appIpa,omitempty"`
+
+	// RoboScript: An optional Roboscript to customize the crawl. See
+	// https://firebase.google.com/docs/test-lab/android/robo-scripts-reference
+	// for more information about Roboscripts.
+	RoboScript *FileReference `json:"roboScript,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppBundleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppBundleId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IosRoboTest) MarshalJSON() ([]byte, error) {
+	type NoMethod IosRoboTest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1976,7 +2031,7 @@ type ManualSharding struct {
 	// specify at least one shard if this field is present. When you select
 	// one or more physical devices, the number of repeated
 	// test_targets_for_shard must be <= 50. When you select one or more ARM
-	// virtual devices, it must be <= 50. When you select only x86 virtual
+	// virtual devices, it must be <= 100. When you select only x86 virtual
 	// devices, it must be <= 500.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
@@ -2000,6 +2055,38 @@ type ManualSharding struct {
 
 func (s *ManualSharding) MarshalJSON() ([]byte, error) {
 	type NoMethod ManualSharding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Metadata: A tag within a manifest.
+// https://developer.android.com/guide/topics/manifest/meta-data-element.html
+type Metadata struct {
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// Value: The android:value value
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2062,6 +2149,10 @@ func (s *NetworkConfigurationCatalog) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfigurationCatalog
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NoActivityIntent: Skips the starting activity
+type NoActivityIntent struct {
 }
 
 // ObbFile: An opaque binary blob file to install on the device before
@@ -2131,6 +2222,125 @@ type Orientation struct {
 
 func (s *Orientation) MarshalJSON() ([]byte, error) {
 	type NoMethod Orientation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerAndroidVersionInfo: A version-specific information of an Android
+// model.
+type PerAndroidVersionInfo struct {
+	// DeviceCapacity: The number of online devices for an Android version.
+	//
+	// Possible values:
+	//   "DEVICE_CAPACITY_UNSPECIFIED" - The value of device capacity is
+	// unknown or unset.
+	//   "DEVICE_CAPACITY_HIGH" - Devices that are high in capacity (The lab
+	// has a large number of these devices). These devices are generally
+	// suggested for running a large number of simultaneous tests (e.g. more
+	// than 100 tests). Please note that high capacity devices do not
+	// guarantee short wait times due to several factors: 1. Traffic (how
+	// heavily they are used at any given moment) 2. High capacity devices
+	// are prioritized for certain usages, which may cause user tests to be
+	// slower than selecting other similar device types.
+	//   "DEVICE_CAPACITY_MEDIUM" - Devices that are medium in capacity (The
+	// lab has a decent number of these devices, though not as many as high
+	// capacity devices). These devices are suitable for fewer test runs
+	// (e.g. fewer than 100 tests) and only for low shard counts (e.g. less
+	// than 10 shards).
+	//   "DEVICE_CAPACITY_LOW" - Devices that are low in capacity (The lab
+	// has a small number of these devices). These devices may be used if
+	// users need to test on this specific device model and version. Please
+	// note that due to low capacity, the tests may take much longer to
+	// finish, especially if a large number of tests are invoked at once.
+	// These devices are not suitable for test sharding.
+	//   "DEVICE_CAPACITY_NONE" - Devices that are completely missing from
+	// the lab. These devices are unavailable either temporarily or
+	// permanently and should not be requested. If the device is also marked
+	// as deprecated, this state is very likely permanent.
+	DeviceCapacity string `json:"deviceCapacity,omitempty"`
+
+	// VersionId: An Android version.
+	VersionId string `json:"versionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceCapacity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceCapacity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerAndroidVersionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PerAndroidVersionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerIosVersionInfo: A version-specific information of an iOS model.
+type PerIosVersionInfo struct {
+	// DeviceCapacity: The number of online devices for an iOS version.
+	//
+	// Possible values:
+	//   "DEVICE_CAPACITY_UNSPECIFIED" - The value of device capacity is
+	// unknown or unset.
+	//   "DEVICE_CAPACITY_HIGH" - Devices that are high in capacity (The lab
+	// has a large number of these devices). These devices are generally
+	// suggested for running a large number of simultaneous tests (e.g. more
+	// than 100 tests). Please note that high capacity devices do not
+	// guarantee short wait times due to several factors: 1. Traffic (how
+	// heavily they are used at any given moment) 2. High capacity devices
+	// are prioritized for certain usages, which may cause user tests to be
+	// slower than selecting other similar device types.
+	//   "DEVICE_CAPACITY_MEDIUM" - Devices that are medium in capacity (The
+	// lab has a decent number of these devices, though not as many as high
+	// capacity devices). These devices are suitable for fewer test runs
+	// (e.g. fewer than 100 tests) and only for low shard counts (e.g. less
+	// than 10 shards).
+	//   "DEVICE_CAPACITY_LOW" - Devices that are low in capacity (The lab
+	// has a small number of these devices). These devices may be used if
+	// users need to test on this specific device model and version. Please
+	// note that due to low capacity, the tests may take much longer to
+	// finish, especially if a large number of tests are invoked at once.
+	// These devices are not suitable for test sharding.
+	//   "DEVICE_CAPACITY_NONE" - Devices that are completely missing from
+	// the lab. These devices are unavailable either temporarily or
+	// permanently and should not be requested. If the device is also marked
+	// as deprecated, this state is very likely permanent.
+	DeviceCapacity string `json:"deviceCapacity,omitempty"`
+
+	// VersionId: An iOS version.
+	VersionId string `json:"versionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceCapacity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceCapacity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerIosVersionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PerIosVersionInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2320,6 +2530,9 @@ type RoboStartingIntent struct {
 	// LauncherActivity: An intent that starts the main launcher activity.
 	LauncherActivity *LauncherActivityIntent `json:"launcherActivity,omitempty"`
 
+	// NoActivity: Skips the starting activity
+	NoActivity *NoActivityIntent `json:"noActivity,omitempty"`
+
 	// StartActivity: An intent that starts an activity with specific
 	// details.
 	StartActivity *StartActivityIntent `json:"startActivity,omitempty"`
@@ -2351,8 +2564,44 @@ func (s *RoboStartingIntent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Service: The section of an tag.
+// https://developer.android.com/guide/topics/manifest/service-element
+type Service struct {
+	// IntentFilter: Intent filters in the service
+	IntentFilter []*IntentFilter `json:"intentFilter,omitempty"`
+
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentFilter") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Service) MarshalJSON() ([]byte, error) {
+	type NoMethod Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Shard: Output only. Details about the shard.
 type Shard struct {
+	// EstimatedShardDuration: Output only. The estimated shard duration
+	// based on previous test case timing records, if available.
+	EstimatedShardDuration string `json:"estimatedShardDuration,omitempty"`
+
 	// NumShards: Output only. The total number of shards.
 	NumShards int64 `json:"numShards,omitempty"`
 
@@ -2363,20 +2612,22 @@ type Shard struct {
 	// set for manual sharding.
 	TestTargetsForShard *TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NumShards") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "EstimatedShardDuration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NumShards") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EstimatedShardDuration")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2391,6 +2642,10 @@ type ShardingOption struct {
 	// ManualSharding: Shards test cases into the specified groups of
 	// packages, classes, and/or methods.
 	ManualSharding *ManualSharding `json:"manualSharding,omitempty"`
+
+	// SmartSharding: Shards test based on previous test case timing
+	// records.
+	SmartSharding *SmartSharding `json:"smartSharding,omitempty"`
 
 	// UniformSharding: Uniformly shards test cases given a total number of
 	// shards.
@@ -2416,6 +2671,65 @@ type ShardingOption struct {
 
 func (s *ShardingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod ShardingOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SmartSharding: Shards test based on previous test case timing
+// records.
+type SmartSharding struct {
+	// TargetedShardDuration: The amount of time tests within a shard should
+	// take. Default: 300 seconds (5 minutes). The minimum allowed: 120
+	// seconds (2 minutes). The shard count is dynamically set based on
+	// time, up to the maximum shard limit (described below). To guarantee
+	// at least one test case for each shard, the number of shards will not
+	// exceed the number of test cases. Shard duration will be exceeded if:
+	// - The maximum shard limit is reached and there is more calculated
+	// test time remaining to allocate into shards. - Any individual test is
+	// estimated to be longer than the targeted shard duration. Shard
+	// duration is not guaranteed because smart sharding uses test case
+	// history and default durations which may not be accurate. The rules
+	// for finding the test case timing records are: - If the service has
+	// processed a test case in the last 30 days, the record of the latest
+	// successful test case will be used. - For new test cases, the average
+	// duration of other known test cases will be used. - If there are no
+	// previous test case timing records available, the default test case
+	// duration is 15 seconds. Because the actual shard duration can exceed
+	// the targeted shard duration, we recommend that you set the targeted
+	// value at least 5 minutes less than the maximum allowed test timeout
+	// (45 minutes for physical devices and 60 minutes for virtual), or that
+	// you use the custom test timeout value that you set. This approach
+	// avoids cancelling the shard before all tests can finish. Note that
+	// there is a limit for maximum number of shards. When you select one or
+	// more physical devices, the number of shards must be <= 50. When you
+	// select one or more ARM virtual devices, it must be <= 100. When you
+	// select only x86 virtual devices, it must be <= 500. To guarantee at
+	// least one test case for per shard, the number of shards will not
+	// exceed the number of test cases. Each shard created counts toward
+	// daily test quota.
+	TargetedShardDuration string `json:"targetedShardDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TargetedShardDuration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetedShardDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SmartSharding) MarshalJSON() ([]byte, error) {
+	type NoMethod SmartSharding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2709,8 +3023,8 @@ type TestMatrix struct {
 	// Orchestrator can be disabled by using DO_NOT_USE_ORCHESTRATOR
 	// OrchestratorOption.
 	//   "NO_TEST_RUNNER_CLASS" - The test APK does not contain the test
-	// runner class specified by user or in the manifest file. This can be
-	// caused by either of the following reasons: - the user provided a
+	// runner class specified by the user or in the manifest file. This can
+	// be caused by one of the following reasons: - the user provided a
 	// runner class name that's incorrect, or - the test runner isn't built
 	// into the test APK (might be in the app APK instead).
 	//   "NO_LAUNCHER_ACTIVITY" - A main launcher activity could not be
@@ -2762,6 +3076,15 @@ type TestMatrix struct {
 	// permission to access the APK file.
 	//   "INVALID_APK_PREVIEW_SDK" - APK is built for a preview SDK which is
 	// unsupported
+	//   "MATRIX_TOO_LARGE" - The matrix expanded to contain too many
+	// executions.
+	//   "TEST_QUOTA_EXCEEDED" - Not enough test quota to run the executions
+	// in this matrix.
+	//   "SERVICE_NOT_ACTIVATED" - A required cloud service api is not
+	// activated. See:
+	// https://firebase.google.com/docs/test-lab/android/continuous#requirements
+	//   "UNKNOWN_PERMISSION_ERROR" - There was an unknown permission issue
+	// running this test.
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
 	// OutcomeSummary: Output Only. The overall outcome of the test. Only
@@ -2773,7 +3096,7 @@ type TestMatrix struct {
 	//   "SUCCESS" - The test matrix run was successful, for instance: - All
 	// the test cases passed. - Robo did not detect a crash of the
 	// application under test.
-	//   "FAILURE" - A run failed, for instance: - One or more test case
+	//   "FAILURE" - A run failed, for instance: - One or more test cases
 	// failed. - A test timed out. - The application under test crashed.
 	//   "INCONCLUSIVE" - Something unexpected happened. The run should
 	// still be considered unsuccessful but this is likely a transient
@@ -2902,13 +3225,10 @@ type TestSetup struct {
 	// TestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.
 	NetworkProfile string `json:"networkProfile,omitempty"`
 
-	// Systrace: Deprecated: Systrace uses Python 2 which has been sunset
-	// 2020-01-01. Support of Systrace may stop at any time, at which point
-	// no Systrace file will be provided in the results. Systrace
-	// configuration for the run. If set a systrace will be taken, starting
-	// on test start and lasting for the configured duration. The systrace
-	// file thus obtained is put in the results bucket together with the
-	// other artifacts from the run.
+	// Systrace: Systrace configuration for the run. Deprecated: Systrace
+	// used Python 2 which was sunsetted on 2020-01-01. Systrace is no
+	// longer supported in the Cloud Testing API, and no Systrace file will
+	// be provided in the results.
 	Systrace *SystraceSetup `json:"systrace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
@@ -2952,6 +3272,9 @@ type TestSpecification struct {
 	// DisableVideoRecording: Disables video recording. May reduce test
 	// latency.
 	DisableVideoRecording bool `json:"disableVideoRecording,omitempty"`
+
+	// IosRoboTest: An iOS Robo test.
+	IosRoboTest *IosRoboTest `json:"iosRoboTest,omitempty"`
 
 	// IosTestLoop: An iOS application with a test loop.
 	IosTestLoop *IosTestLoop `json:"iosTestLoop,omitempty"`
@@ -3206,7 +3529,7 @@ type UniformSharding struct {
 	// always be a positive number that is no greater than the total number
 	// of test cases. When you select one or more physical devices, the
 	// number of shards must be <= 50. When you select one or more ARM
-	// virtual devices, it must be <= 50. When you select only x86 virtual
+	// virtual devices, it must be <= 100. When you select only x86 virtual
 	// devices, it must be <= 500.
 	NumShards int64 `json:"numShards,omitempty"`
 
@@ -3229,6 +3552,38 @@ type UniformSharding struct {
 
 func (s *UniformSharding) MarshalJSON() ([]byte, error) {
 	type NoMethod UniformSharding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UsesFeature: A tag within a manifest.
+// https://developer.android.com/guide/topics/manifest/uses-feature-element.html
+type UsesFeature struct {
+	// IsRequired: The android:required value
+	IsRequired bool `json:"isRequired,omitempty"`
+
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsRequired") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsRequired") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsesFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod UsesFeature
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3268,7 +3623,7 @@ func (s *XcodeVersion) MarshalJSON() ([]byte, error) {
 // method id "testing.applicationDetailService.getApkDetails":
 
 type ApplicationDetailServiceGetApkDetailsCall struct {
-	s             *Service
+	s             *APIService
 	filereference *FileReference
 	urlParams_    gensupport.URLParams
 	ctx_          context.Context
@@ -3346,17 +3701,17 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetApkDetailsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3393,7 +3748,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 // method id "testing.projects.testMatrices.cancel":
 
 type ProjectsTestMatricesCancelCall struct {
-	s            *Service
+	s            *APIService
 	projectId    string
 	testMatrixId string
 	urlParams_   gensupport.URLParams
@@ -3481,17 +3836,17 @@ func (c *ProjectsTestMatricesCancelCall) Do(opts ...googleapi.CallOption) (*Canc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CancelTestMatrixResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3541,7 +3896,7 @@ func (c *ProjectsTestMatricesCancelCall) Do(opts ...googleapi.CallOption) (*Canc
 // method id "testing.projects.testMatrices.create":
 
 type ProjectsTestMatricesCreateCall struct {
-	s          *Service
+	s          *APIService
 	projectId  string
 	testmatrix *TestMatrix
 	urlParams_ gensupport.URLParams
@@ -3552,10 +3907,13 @@ type ProjectsTestMatricesCreateCall struct {
 // Create: Creates and runs a matrix of tests according to the given
 // specifications. Unsupported environments will be returned in the
 // state UNSUPPORTED. A test matrix is limited to use at most 2000
-// devices in parallel. May return any of the following canonical error
-// codes: - PERMISSION_DENIED - if the user is not authorized to write
-// to project - INVALID_ARGUMENT - if the request is malformed or if the
-// matrix tries to use too many simultaneous devices.
+// devices in parallel. The returned matrix will not yet contain the
+// executions that will be created for this matrix. Execution creation
+// happens later on and will require a call to GetTestMatrix. May return
+// any of the following canonical error codes: - PERMISSION_DENIED - if
+// the user is not authorized to write to project - INVALID_ARGUMENT -
+// if the request is malformed or if the matrix tries to use too many
+// simultaneous devices.
 //
 // - projectId: The GCE project under which this job will run.
 func (r *ProjectsTestMatricesService) Create(projectId string, testmatrix *TestMatrix) *ProjectsTestMatricesCreateCall {
@@ -3641,17 +3999,17 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestMatrix{
 		ServerResponse: googleapi.ServerResponse{
@@ -3665,7 +4023,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
+	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. The returned matrix will not yet contain the executions that will be created for this matrix. Execution creation happens later on and will require a call to GetTestMatrix. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices",
 	//   "httpMethod": "POST",
 	//   "id": "testing.projects.testMatrices.create",
@@ -3702,7 +4060,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 // method id "testing.projects.testMatrices.get":
 
 type ProjectsTestMatricesGetCall struct {
-	s            *Service
+	s            *APIService
 	projectId    string
 	testMatrixId string
 	urlParams_   gensupport.URLParams
@@ -3711,10 +4069,14 @@ type ProjectsTestMatricesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Checks the status of a test matrix. May return any of the
-// following canonical error codes: - PERMISSION_DENIED - if the user is
-// not authorized to read project - INVALID_ARGUMENT - if the request is
-// malformed - NOT_FOUND - if the Test Matrix does not exist
+// Get: Checks the status of a test matrix and the executions once they
+// are created. The test matrix will contain the list of test executions
+// to run if and only if the resultStorage.toolResultsExecution fields
+// have been populated. Note: Flaky test executions may be added to the
+// matrix at a later stage. May return any of the following canonical
+// error codes: - PERMISSION_DENIED - if the user is not authorized to
+// read project - INVALID_ARGUMENT - if the request is malformed -
+// NOT_FOUND - if the Test Matrix does not exist
 //
 //   - projectId: Cloud project that owns the test matrix.
 //   - testMatrixId: Unique test matrix id which was assigned by the
@@ -3802,17 +4164,17 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestMatrix{
 		ServerResponse: googleapi.ServerResponse{
@@ -3826,7 +4188,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks the status of a test matrix. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
+	//   "description": "Checks the status of a test matrix and the executions once they are created. The test matrix will contain the list of test executions to run if and only if the resultStorage.toolResultsExecution fields have been populated. Note: Flaky test executions may be added to the matrix at a later stage. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices/{testMatrixId}",
 	//   "httpMethod": "GET",
 	//   "id": "testing.projects.testMatrices.get",
@@ -3863,7 +4225,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 // method id "testing.testEnvironmentCatalog.get":
 
 type TestEnvironmentCatalogGetCall struct {
-	s               *Service
+	s               *APIService
 	environmentType string
 	urlParams_      gensupport.URLParams
 	ifNoneMatch_    string
@@ -3965,17 +4327,17 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestEnvironmentCatalog{
 		ServerResponse: googleapi.ServerResponse{

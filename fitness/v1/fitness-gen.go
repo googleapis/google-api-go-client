@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "fitness:v1"
 const apiName = "fitness"
@@ -1544,17 +1545,17 @@ func (c *UsersDataSourcesCreateCall) Do(opts ...googleapi.CallOption) (*DataSour
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
 		ServerResponse: googleapi.ServerResponse{
@@ -1694,17 +1695,17 @@ func (c *UsersDataSourcesDeleteCall) Do(opts ...googleapi.CallOption) (*DataSour
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
 		ServerResponse: googleapi.ServerResponse{
@@ -1861,17 +1862,17 @@ func (c *UsersDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSource,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
 		ServerResponse: googleapi.ServerResponse{
@@ -2046,17 +2047,17 @@ func (c *UsersDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDataSo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDataSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2219,17 +2220,17 @@ func (c *UsersDataSourcesUpdateCall) Do(opts ...googleapi.CallOption) (*DataSour
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
 		ServerResponse: googleapi.ServerResponse{
@@ -2407,17 +2408,17 @@ func (c *UsersDataSourcesDataPointChangesListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDataPointChangesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2613,7 +2614,7 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do(opts ...googleapi.CallOption) er
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -2799,17 +2800,17 @@ func (c *UsersDataSourcesDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Dataset{
 		ServerResponse: googleapi.ServerResponse{
@@ -3019,17 +3020,17 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Dataset{
 		ServerResponse: googleapi.ServerResponse{
@@ -3209,17 +3210,17 @@ func (c *UsersDatasetAggregateCall) Do(opts ...googleapi.CallOption) (*Aggregate
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AggregateResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3364,7 +3365,7 @@ func (c *UsersSessionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -3546,17 +3547,17 @@ func (c *UsersSessionsListCall) Do(opts ...googleapi.CallOption) (*ListSessionsR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSessionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3758,17 +3759,17 @@ func (c *UsersSessionsUpdateCall) Do(opts ...googleapi.CallOption) (*Session, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Session{
 		ServerResponse: googleapi.ServerResponse{

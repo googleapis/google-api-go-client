@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "transcoder:v1"
 const apiName = "transcoder"
@@ -212,6 +213,10 @@ func (s *AdBreak) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Aes128Encryption: Configuration for AES-128 encryption.
+type Aes128Encryption struct {
+}
+
 // Animation: Animation types.
 type Animation struct {
 	// AnimationEnd: End previous animation.
@@ -247,7 +252,7 @@ func (s *Animation) MarshalJSON() ([]byte, error) {
 }
 
 // AnimationEnd: End previous overlay animation from the video. Without
-// AnimationEnd, the overlay object will keep the state of previous
+// `AnimationEnd`, the overlay object will keep the state of previous
 // animation until the end of the video.
 type AnimationEnd struct {
 	// StartTimeOffset: The time to end overlay object, in seconds. Default:
@@ -420,11 +425,11 @@ func (s *Audio) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AudioMapping: The mapping for the `Job.edit_list` atoms with audio
-// `EditAtom.inputs`.
+// AudioMapping: The mapping for the JobConfig.edit_list atoms with
+// audio EditAtom.inputs.
 type AudioMapping struct {
-	// AtomKey: Required. The `EditAtom.key` that references the atom with
-	// audio inputs in the `Job.edit_list`.
+	// AtomKey: Required. The EditAtom.key that references the atom with
+	// audio inputs in the JobConfig.edit_list.
 	AtomKey string `json:"atomKey,omitempty"`
 
 	// GainDb: Audio volume control in dB. Negative values decrease volume,
@@ -435,7 +440,7 @@ type AudioMapping struct {
 	// input audio stream.
 	InputChannel int64 `json:"inputChannel,omitempty"`
 
-	// InputKey: Required. The `Input.key` that identifies the input file.
+	// InputKey: Required. The Input.key that identifies the input file.
 	InputKey string `json:"inputKey,omitempty"`
 
 	// InputTrack: Required. The zero-based index of the track in the input
@@ -506,8 +511,18 @@ type AudioStream struct {
 	// `ac3` - `eac3`
 	Codec string `json:"codec,omitempty"`
 
-	// Mapping: The mapping for the `Job.edit_list` atoms with audio
-	// `EditAtom.inputs`.
+	// DisplayName: The name for this particular audio stream that will be
+	// added to the HLS/DASH manifest. Not supported in MP4 files.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
+	// For more information, see
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier. Not
+	// supported in MP4 files.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mapping: The mapping for the JobConfig.edit_list atoms with audio
+	// EditAtom.inputs.
 	Mapping []*AudioMapping `json:"mapping,omitempty"`
 
 	// SampleRateHertz: The audio sample rate in Hertz. The default is 48000
@@ -577,6 +592,10 @@ func (s *BwdifConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BwdifConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Clearkey: Clearkey configuration.
+type Clearkey struct {
 }
 
 // Color: Color preprocessing configuration. **Note:** This
@@ -676,6 +695,49 @@ type Crop struct {
 
 func (s *Crop) MarshalJSON() ([]byte, error) {
 	type NoMethod Crop
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DashConfig: `DASH` manifest configuration.
+type DashConfig struct {
+	// SegmentReferenceScheme: The segment reference scheme for a `DASH`
+	// manifest. The default is `SEGMENT_LIST`.
+	//
+	// Possible values:
+	//   "SEGMENT_REFERENCE_SCHEME_UNSPECIFIED" - The segment reference
+	// scheme is not specified.
+	//   "SEGMENT_LIST" - Explicitly lists the URLs of media files for each
+	// segment. For example, if SegmentSettings.individual_segments is
+	// `true`, then the manifest contains fields similar to the following:
+	// ```xml ... ```
+	//   "SEGMENT_TEMPLATE_NUMBER" - SegmentSettings.individual_segments
+	// must be set to `true` to use this segment reference scheme. Uses the
+	// DASH specification `` tag to determine the URLs of media files for
+	// each segment. For example: ```xml ... ```
+	SegmentReferenceScheme string `json:"segmentReferenceScheme,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SegmentReferenceScheme") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SegmentReferenceScheme")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DashConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DashConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -808,6 +870,43 @@ func (s *Denoise) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// DrmSystems: Defines configuration for DRM systems in use.
+type DrmSystems struct {
+	// Clearkey: Clearkey configuration.
+	Clearkey *Clearkey `json:"clearkey,omitempty"`
+
+	// Fairplay: Fairplay configuration.
+	Fairplay *Fairplay `json:"fairplay,omitempty"`
+
+	// Playready: Playready configuration.
+	Playready *Playready `json:"playready,omitempty"`
+
+	// Widevine: Widevine configuration.
+	Widevine *Widevine `json:"widevine,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Clearkey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Clearkey") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DrmSystems) MarshalJSON() ([]byte, error) {
+	type NoMethod DrmSystems
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EditAtom: Edit atom.
 type EditAtom struct {
 	// EndTimeOffset: End time in seconds for the atom, relative to the
@@ -815,8 +914,8 @@ type EditAtom struct {
 	// `inputs` are used until the end of the atom.
 	EndTimeOffset string `json:"endTimeOffset,omitempty"`
 
-	// Inputs: List of `Input.key`s identifying files that should be used in
-	// this atom. The listed `inputs` must have the same timeline.
+	// Inputs: List of Input.key values identifying files that should be
+	// used in this atom. The listed `inputs` must have the same timeline.
 	Inputs []string `json:"inputs,omitempty"`
 
 	// Key: A unique key for this atom. Must be specified when using
@@ -901,6 +1000,54 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Encryption: Encryption settings.
+type Encryption struct {
+	// Aes128: Configuration for AES-128 encryption.
+	Aes128 *Aes128Encryption `json:"aes128,omitempty"`
+
+	// DrmSystems: Required. DRM system(s) to use; at least one must be
+	// specified. If a DRM system is omitted, it is considered disabled.
+	DrmSystems *DrmSystems `json:"drmSystems,omitempty"`
+
+	// Id: Required. Identifier for this set of encryption options.
+	Id string `json:"id,omitempty"`
+
+	// MpegCenc: Configuration for MPEG Common Encryption (MPEG-CENC).
+	MpegCenc *MpegCommonEncryption `json:"mpegCenc,omitempty"`
+
+	// SampleAes: Configuration for SAMPLE-AES encryption.
+	SampleAes *SampleAesEncryption `json:"sampleAes,omitempty"`
+
+	// SecretManagerKeySource: Keys are stored in Google Secret Manager.
+	SecretManagerKeySource *SecretManagerSource `json:"secretManagerKeySource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aes128") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Aes128") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Encryption) MarshalJSON() ([]byte, error) {
+	type NoMethod Encryption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Fairplay: Fairplay configuration.
+type Fairplay struct {
+}
+
 // H264CodecSettings: H264 codec settings.
 type H264CodecSettings struct {
 	// AllowOpenGop: Specifies whether an open Group of Pictures (GOP)
@@ -914,8 +1061,8 @@ type H264CodecSettings struct {
 	AqStrength float64 `json:"aqStrength,omitempty"`
 
 	// BFrameCount: The number of consecutive B-frames. Must be greater than
-	// or equal to zero. Must be less than `VideoStream.gop_frame_count` if
-	// set. The default is 0.
+	// or equal to zero. Must be less than H264CodecSettings.gop_frame_count
+	// if set. The default is 0.
 	BFrameCount int64 `json:"bFrameCount,omitempty"`
 
 	// BPyramid: Allow B-pyramid for reference frame selection. This may not
@@ -932,8 +1079,8 @@ type H264CodecSettings struct {
 	CrfLevel int64 `json:"crfLevel,omitempty"`
 
 	// EnableTwoPass: Use two-pass encoding strategy to achieve better video
-	// quality. `VideoStream.rate_control_mode` must be `vbr`. The default
-	// is `false`.
+	// quality. H264CodecSettings.rate_control_mode must be `vbr`. The
+	// default is `false`.
 	EnableTwoPass bool `json:"enableTwoPass,omitempty"`
 
 	// EntropyCoder: The entropy coder to use. The default is `cabac`.
@@ -962,7 +1109,11 @@ type H264CodecSettings struct {
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
-	// input height is used.
+	// input height is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the height, in pixels, per the
+	// horizontal ASR. The API calculates the width per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
@@ -988,9 +1139,9 @@ type H264CodecSettings struct {
 	// fields you set in the `H264CodecSettings` message.
 	Profile string `json:"profile,omitempty"`
 
-	// RateControlMode: Specify the `rate_control_mode`. The default is
-	// `vbr`. Supported rate control modes: - `vbr` - variable bitrate -
-	// `crf` - constant rate factor
+	// RateControlMode: Specify the mode. The default is `vbr`. Supported
+	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
+	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
@@ -1001,18 +1152,22 @@ type H264CodecSettings struct {
 
 	// VbvFullnessBits: Initial fullness of the Video Buffering Verifier
 	// (VBV) buffer in bits. Must be greater than zero. The default is equal
-	// to 90% of `VideoStream.vbv_size_bits`.
+	// to 90% of H264CodecSettings.vbv_size_bits.
 	VbvFullnessBits int64 `json:"vbvFullnessBits,omitempty"`
 
 	// VbvSizeBits: Size of the Video Buffering Verifier (VBV) buffer in
 	// bits. Must be greater than zero. The default is equal to
-	// `VideoStream.bitrate_bps`.
+	// H264CodecSettings.bitrate_bps.
 	VbvSizeBits int64 `json:"vbvSizeBits,omitempty"`
 
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
 	// specified height and input aspect ratio. If both are omitted, the
-	// input width is used.
+	// input width is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the width, in pixels, per the
+	// horizontal ASR. The API calculates the height per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowOpenGop") to
@@ -1067,8 +1222,8 @@ type H265CodecSettings struct {
 	AqStrength float64 `json:"aqStrength,omitempty"`
 
 	// BFrameCount: The number of consecutive B-frames. Must be greater than
-	// or equal to zero. Must be less than `VideoStream.gop_frame_count` if
-	// set. The default is 0.
+	// or equal to zero. Must be less than H265CodecSettings.gop_frame_count
+	// if set. The default is 0.
 	BFrameCount int64 `json:"bFrameCount,omitempty"`
 
 	// BPyramid: Allow B-pyramid for reference frame selection. This may not
@@ -1085,8 +1240,8 @@ type H265CodecSettings struct {
 	CrfLevel int64 `json:"crfLevel,omitempty"`
 
 	// EnableTwoPass: Use two-pass encoding strategy to achieve better video
-	// quality. `VideoStream.rate_control_mode` must be `vbr`. The default
-	// is `false`.
+	// quality. H265CodecSettings.rate_control_mode must be `vbr`. The
+	// default is `false`.
 	EnableTwoPass bool `json:"enableTwoPass,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
@@ -1111,7 +1266,11 @@ type H265CodecSettings struct {
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
-	// input height is used.
+	// input height is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the height, in pixels, per the
+	// horizontal ASR. The API calculates the width per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
@@ -1141,9 +1300,9 @@ type H265CodecSettings struct {
 	// the `H265CodecSettings` message.
 	Profile string `json:"profile,omitempty"`
 
-	// RateControlMode: Specify the `rate_control_mode`. The default is
-	// `vbr`. Supported rate control modes: - `vbr` - variable bitrate -
-	// `crf` - constant rate factor
+	// RateControlMode: Specify the mode. The default is `vbr`. Supported
+	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
+	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
@@ -1154,7 +1313,7 @@ type H265CodecSettings struct {
 
 	// VbvFullnessBits: Initial fullness of the Video Buffering Verifier
 	// (VBV) buffer in bits. Must be greater than zero. The default is equal
-	// to 90% of `VideoStream.vbv_size_bits`.
+	// to 90% of H265CodecSettings.vbv_size_bits.
 	VbvFullnessBits int64 `json:"vbvFullnessBits,omitempty"`
 
 	// VbvSizeBits: Size of the Video Buffering Verifier (VBV) buffer in
@@ -1165,7 +1324,11 @@ type H265CodecSettings struct {
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
 	// specified height and input aspect ratio. If both are omitted, the
-	// input width is used.
+	// input width is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the width, in pixels, per the
+	// horizontal ASR. The API calculates the height per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowOpenGop") to
@@ -1207,7 +1370,7 @@ func (s *H265CodecSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Image: Overlaid jpeg image.
+// Image: Overlaid image.
 type Image struct {
 	// Alpha: Target image opacity. Valid values are from `1.0` (solid,
 	// default) to `0.0` (transparent), exclusive. Set this to a value
@@ -1220,9 +1383,9 @@ type Image struct {
 	// original image resolution, set both `x` and `y` to `0.0`.
 	Resolution *NormalizedCoordinate `json:"resolution,omitempty"`
 
-	// Uri: Required. URI of the JPEG image in Cloud Storage. For example,
-	// `gs://bucket/inputs/image.jpeg`. JPEG is the only supported image
-	// type.
+	// Uri: Required. URI of the image in Cloud Storage. For example,
+	// `gs://bucket/inputs/image.png`. Only PNG and JPEG images are
+	// supported.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alpha") to
@@ -1274,7 +1437,7 @@ type Input struct {
 	// Uri: URI of the media. Input files must be at least 5 seconds in
 	// duration and stored in Cloud Storage (for example,
 	// `gs://bucket/inputs/file.mp4`). If empty, the value is populated from
-	// `Job.input_uri`. See Supported input and output formats
+	// Job.input_uri. See Supported input and output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 
@@ -1303,6 +1466,12 @@ func (s *Input) MarshalJSON() ([]byte, error) {
 
 // Job: Transcoding job resource.
 type Job struct {
+	// BatchModePriority: The processing priority of a batch job. This field
+	// can only be set for batch mode jobs. The default value is 0. This
+	// value cannot be negative. Higher values correspond to higher
+	// priorities for the job.
+	BatchModePriority int64 `json:"batchModePriority,omitempty"`
+
 	// Config: The configuration for this job.
 	Config *JobConfig `json:"config,omitempty"`
 
@@ -1313,7 +1482,8 @@ type Job struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Error: Output only. An error object that describes the reason for the
-	// failure. This property is always present when `state` is `FAILED`.
+	// failure. This property is always present when ProcessingState is
+	// `FAILED`.
 	Error *Status `json:"error,omitempty"`
 
 	// InputUri: Input only. Specify the `input_uri` to populate empty `uri`
@@ -1329,9 +1499,32 @@ type Job struct {
 	// organize and group your jobs.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// Mode: The processing mode of the job. The default is
+	// `PROCESSING_MODE_INTERACTIVE`.
+	//
+	// Possible values:
+	//   "PROCESSING_MODE_UNSPECIFIED" - The job processing mode is not
+	// specified.
+	//   "PROCESSING_MODE_INTERACTIVE" - The job processing mode is
+	// interactive mode. Interactive job will either be ran or rejected if
+	// quota does not allow for it.
+	//   "PROCESSING_MODE_BATCH" - The job processing mode is batch mode.
+	// Batch mode allows queuing of jobs.
+	Mode string `json:"mode,omitempty"`
+
 	// Name: The resource name of the job. Format:
 	// `projects/{project_number}/locations/{location}/jobs/{job}`
 	Name string `json:"name,omitempty"`
+
+	// Optimization: Optional. The optimization strategy of the job. The
+	// default is `AUTODETECT`.
+	//
+	// Possible values:
+	//   "OPTIMIZATION_STRATEGY_UNSPECIFIED" - The optimization strategy is
+	// not specified.
+	//   "AUTODETECT" - Prioritize job processing speed.
+	//   "DISABLED" - Disable all optimizations.
+	Optimization string `json:"optimization,omitempty"`
 
 	// OutputUri: Input only. Specify the `output_uri` to populate an empty
 	// `Job.config.output.uri` or `JobTemplate.config.output.uri` when using
@@ -1353,13 +1546,13 @@ type Job struct {
 	//   "RUNNING" - The job is being processed.
 	//   "SUCCEEDED" - The job has been completed successfully.
 	//   "FAILED" - The job has failed. For additional information, see
-	// `failure_reason` and `failure_details`
+	// [Troubleshooting](https://cloud.google.com/transcoder/docs/troubleshoo
+	// ting).
 	State string `json:"state,omitempty"`
 
 	// TemplateId: Input only. Specify the `template_id` to use for
-	// populating `Job.config`. The default is `preset/web-hd`. Preset
-	// Transcoder templates: - `preset/{preset_id}` - User defined
-	// JobTemplate: `{job_template_id}`
+	// populating `Job.config`. The default is `preset/web-hd`, which is the
+	// only supported preset. User defined JobTemplate: `{job_template_id}`
 	TemplateId string `json:"templateId,omitempty"`
 
 	// TtlAfterCompletionDays: Job time to live value in days, which will be
@@ -1372,20 +1565,21 @@ type Job struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BatchModePriority")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BatchModePriority") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1401,12 +1595,18 @@ type JobConfig struct {
 	// in the output manifests.
 	AdBreaks []*AdBreak `json:"adBreaks,omitempty"`
 
-	// EditList: List of `Edit atom`s. Defines the ultimate timeline of the
+	// EditList: List of edit atoms. Defines the ultimate timeline of the
 	// resulting file or manifest.
 	EditList []*EditAtom `json:"editList,omitempty"`
 
 	// ElementaryStreams: List of elementary streams.
 	ElementaryStreams []*ElementaryStream `json:"elementaryStreams,omitempty"`
+
+	// Encryptions: List of encryption configurations for the content. Each
+	// configuration has an ID. Specify this ID in the
+	// MuxStream.encryption_id field to indicate the configuration to use
+	// for that `MuxStream` output.
+	Encryptions []*Encryption `json:"encryptions,omitempty"`
 
 	// Inputs: List of input assets stored in Cloud Storage.
 	Inputs []*Input `json:"inputs,omitempty"`
@@ -1574,27 +1774,30 @@ func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 
 // Manifest: Manifest configuration.
 type Manifest struct {
+	// Dash: `DASH` manifest configuration.
+	Dash *DashConfig `json:"dash,omitempty"`
+
 	// FileName: The name of the generated file. The default is `manifest`
-	// with the extension suffix corresponding to the `Manifest.type`.
+	// with the extension suffix corresponding to the Manifest.type.
 	FileName string `json:"fileName,omitempty"`
 
-	// MuxStreams: Required. List of user given `MuxStream.key`s that should
-	// appear in this manifest. When `Manifest.type` is `HLS`, a media
-	// manifest with name `MuxStream.key` and `.m3u8` extension is generated
-	// for each element of the `Manifest.mux_streams`.
+	// MuxStreams: Required. List of user supplied MuxStream.key values that
+	// should appear in this manifest. When Manifest.type is `HLS`, a media
+	// manifest with name MuxStream.key and `.m3u8` extension is generated
+	// for each element in this list.
 	MuxStreams []string `json:"muxStreams,omitempty"`
 
-	// Type: Required. Type of the manifest, can be `HLS` or `DASH`.
+	// Type: Required. Type of the manifest.
 	//
 	// Possible values:
 	//   "MANIFEST_TYPE_UNSPECIFIED" - The manifest type is not specified.
-	//   "HLS" - Create `HLS` manifest. The corresponding file extension is
+	//   "HLS" - Create an HLS manifest. The corresponding file extension is
 	// `.m3u8`.
-	//   "DASH" - Create `DASH` manifest. The corresponding file extension
-	// is `.mpd`.
+	//   "DASH" - Create an MPEG-DASH manifest. The corresponding file
+	// extension is `.mpd`.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FileName") to
+	// ForceSendFields is a list of field names (e.g. "Dash") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1602,8 +1805,8 @@ type Manifest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FileName") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Dash") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1617,6 +1820,36 @@ func (s *Manifest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MpegCommonEncryption: Configuration for MPEG Common Encryption
+// (MPEG-CENC).
+type MpegCommonEncryption struct {
+	// Scheme: Required. Specify the encryption scheme. Supported encryption
+	// schemes: - `cenc` - `cbcs`
+	Scheme string `json:"scheme,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scheme") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scheme") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MpegCommonEncryption) MarshalJSON() ([]byte, error) {
+	type NoMethod MpegCommonEncryption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MuxStream: Multiplexing settings for output stream.
 type MuxStream struct {
 	// Container: The container format. The default is `mp4` Supported
@@ -1626,19 +1859,22 @@ type MuxStream struct {
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats)
 	Container string `json:"container,omitempty"`
 
-	// ElementaryStreams: List of `ElementaryStream.key`s multiplexed in
+	// ElementaryStreams: List of ElementaryStream.key values multiplexed in
 	// this stream.
 	ElementaryStreams []string `json:"elementaryStreams,omitempty"`
 
+	// EncryptionId: Identifier of the encryption configuration to use. If
+	// omitted, output will be unencrypted.
+	EncryptionId string `json:"encryptionId,omitempty"`
+
 	// FileName: The name of the generated file. The default is
-	// `MuxStream.key` with the extension suffix corresponding to the
-	// `MuxStream.container`. Individual segments also have an incremental
+	// MuxStream.key with the extension suffix corresponding to the
+	// MuxStream.container. Individual segments also have an incremental
 	// 10-digit zero-padded suffix starting from 0 before the extension,
 	// such as `mux_stream0000000123.ts`.
 	FileName string `json:"fileName,omitempty"`
 
-	// Key: A unique key for this multiplexed stream. HLS media manifests
-	// will be named `MuxStream.key` with the `.m3u8` extension suffix.
+	// Key: A unique key for this multiplexed stream.
 	Key string `json:"key,omitempty"`
 
 	// SegmentSettings: Segment settings for `ts`, `fmp4` and `vtt`.
@@ -1719,7 +1955,7 @@ func (s *NormalizedCoordinate) UnmarshalJSON(data []byte) error {
 type Output struct {
 	// Uri: URI for the output file(s). For example,
 	// `gs://my-bucket/outputs/`. If empty, the value is populated from
-	// `Job.output_uri`. See Supported input and output formats
+	// Job.output_uri. See Supported input and output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
 
@@ -1748,7 +1984,7 @@ func (s *Output) MarshalJSON() ([]byte, error) {
 
 // Overlay: Overlay configuration.
 type Overlay struct {
-	// Animations: List of Animations. The list should be chronological,
+	// Animations: List of animations. The list should be chronological,
 	// without any time overlap.
 	Animations []*Animation `json:"animations,omitempty"`
 
@@ -1818,6 +2054,10 @@ func (s *Pad) MarshalJSON() ([]byte, error) {
 	type NoMethod Pad
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Playready: Playready configuration.
+type Playready struct {
 }
 
 // PreprocessingConfig: Preprocessing configurations.
@@ -1891,6 +2131,43 @@ type PubsubDestination struct {
 
 func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SampleAesEncryption: Configuration for SAMPLE-AES encryption.
+type SampleAesEncryption struct {
+}
+
+// SecretManagerSource: Configuration for secrets stored in Google
+// Secret Manager.
+type SecretManagerSource struct {
+	// SecretVersion: Required. The name of the Secret Version containing
+	// the encryption key in the following format:
+	// `projects/{project}/secrets/{secret_id}/versions/{version_number}`
+	// Note that only numbered versions are supported. Aliases like "latest"
+	// are not supported.
+	SecretVersion string `json:"secretVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SecretVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SecretVersion") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretManagerSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretManagerSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1971,14 +2248,22 @@ type SpriteSheet struct {
 	// an even integer. To preserve the source aspect ratio, set the
 	// SpriteSheet.sprite_height_pixels field or the
 	// SpriteSheet.sprite_width_pixels field, but not both (the API will
-	// automatically calculate the missing field).
+	// automatically calculate the missing field). For portrait videos that
+	// contain horizontal ASR and rotation metadata, provide the height, in
+	// pixels, per the horizontal ASR. The API calculates the width per the
+	// horizontal ASR. The API detects any rotation metadata and swaps the
+	// requested height and width for the output.
 	SpriteHeightPixels int64 `json:"spriteHeightPixels,omitempty"`
 
 	// SpriteWidthPixels: Required. The width of sprite in pixels. Must be
 	// an even integer. To preserve the source aspect ratio, set the
 	// SpriteSheet.sprite_width_pixels field or the
 	// SpriteSheet.sprite_height_pixels field, but not both (the API will
-	// automatically calculate the missing field).
+	// automatically calculate the missing field). For portrait videos that
+	// contain horizontal ASR and rotation metadata, provide the width, in
+	// pixels, per the horizontal ASR. The API calculates the height per the
+	// horizontal ASR. The API detects any rotation metadata and swaps the
+	// requested height and width for the output.
 	SpriteWidthPixels int64 `json:"spriteWidthPixels,omitempty"`
 
 	// StartTimeOffset: Start time in seconds, relative to the output file
@@ -2057,14 +2342,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TextMapping: The mapping for the `Job.edit_list` atoms with text
-// `EditAtom.inputs`.
+// TextMapping: The mapping for the JobConfig.edit_list atoms with text
+// EditAtom.inputs.
 type TextMapping struct {
-	// AtomKey: Required. The `EditAtom.key` that references atom with text
-	// inputs in the `Job.edit_list`.
+	// AtomKey: Required. The EditAtom.key that references atom with text
+	// inputs in the JobConfig.edit_list.
 	AtomKey string `json:"atomKey,omitempty"`
 
-	// InputKey: Required. The `Input.key` that identifies the input file.
+	// InputKey: Required. The Input.key that identifies the input file.
 	InputKey string `json:"inputKey,omitempty"`
 
 	// InputTrack: Required. The zero-based index of the track in the input
@@ -2102,8 +2387,18 @@ type TextStream struct {
 	// `webvtt`
 	Codec string `json:"codec,omitempty"`
 
-	// Mapping: The mapping for the `Job.edit_list` atoms with text
-	// `EditAtom.inputs`.
+	// DisplayName: The name for this particular text stream that will be
+	// added to the HLS/DASH manifest. Not supported in MP4 files.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
+	// For more information, see
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier. Not
+	// supported in MP4 files.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mapping: The mapping for the JobConfig.edit_list atoms with text
+	// EditAtom.inputs.
 	Mapping []*TextMapping `json:"mapping,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Codec") to
@@ -2196,7 +2491,11 @@ type Vp9CodecSettings struct {
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
-	// input height is used.
+	// input height is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the height, in pixels, per the
+	// horizontal ASR. The API calculates the width per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
@@ -2215,14 +2514,18 @@ type Vp9CodecSettings struct {
 	// set in the `Vp9CodecSettings` message.
 	Profile string `json:"profile,omitempty"`
 
-	// RateControlMode: Specify the `rate_control_mode`. The default is
-	// `vbr`. Supported rate control modes: - `vbr` - variable bitrate
+	// RateControlMode: Specify the mode. The default is `vbr`. Supported
+	// rate control modes: - `vbr` - variable bitrate
 	RateControlMode string `json:"rateControlMode,omitempty"`
 
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
 	// specified height and input aspect ratio. If both are omitted, the
-	// input width is used.
+	// input width is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the width, in pixels, per the
+	// horizontal ASR. The API calculates the height per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BitrateBps") to
@@ -2260,6 +2563,10 @@ func (s *Vp9CodecSettings) UnmarshalJSON(data []byte) error {
 	}
 	s.FrameRate = float64(s1.FrameRate)
 	return nil
+}
+
+// Widevine: Widevine configuration.
+type Widevine struct {
 }
 
 // YadifConfig: Yet Another Deinterlacing Filter Configuration.
@@ -2407,17 +2714,17 @@ func (c *ProjectsLocationsJobTemplatesCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &JobTemplate{
 		ServerResponse: googleapi.ServerResponse{
@@ -2557,17 +2864,17 @@ func (c *ProjectsLocationsJobTemplatesDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2710,17 +3017,17 @@ func (c *ProjectsLocationsJobTemplatesGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &JobTemplate{
 		ServerResponse: googleapi.ServerResponse{
@@ -2887,17 +3194,17 @@ func (c *ProjectsLocationsJobTemplatesListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListJobTemplatesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3069,17 +3376,17 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -3213,17 +3520,17 @@ func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3365,17 +3672,17 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -3541,17 +3848,17 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListJobsResponse{
 		ServerResponse: googleapi.ServerResponse{

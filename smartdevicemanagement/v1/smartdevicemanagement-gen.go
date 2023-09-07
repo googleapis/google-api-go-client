@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -25,7 +25,7 @@
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.SdmThermostatServiceScope))
+//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.UserinfoEmailScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "smartdevicemanagement:v1"
 const apiName = "smartdevicemanagement"
@@ -87,15 +88,15 @@ const (
 	// See and/or control the devices that you selected
 	SdmServiceScope = "https://www.googleapis.com/auth/sdm.service"
 
-	// See and control the Nest thermostats that you select
-	SdmThermostatServiceScope = "https://www.googleapis.com/auth/sdm.thermostat.service"
+	// See your primary Google Account email address
+	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/sdm.service",
-		"https://www.googleapis.com/auth/sdm.thermostat.service",
+		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -307,10 +308,6 @@ type GoogleHomeEnterpriseSdmV1ListDevicesResponse struct {
 	// Devices: The list of devices.
 	Devices []*GoogleHomeEnterpriseSdmV1Device `json:"devices,omitempty"`
 
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -341,10 +338,6 @@ func (s *GoogleHomeEnterpriseSdmV1ListDevicesResponse) MarshalJSON() ([]byte, er
 // GoogleHomeEnterpriseSdmV1ListRoomsResponse: Response message for
 // SmartDeviceManagementService.ListRooms
 type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rooms: The list of rooms.
 	Rooms []*GoogleHomeEnterpriseSdmV1Room `json:"rooms,omitempty"`
 
@@ -352,7 +345,7 @@ type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "Rooms") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -360,10 +353,10 @@ type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Rooms") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -378,10 +371,6 @@ func (s *GoogleHomeEnterpriseSdmV1ListRoomsResponse) MarshalJSON() ([]byte, erro
 // GoogleHomeEnterpriseSdmV1ListStructuresResponse: Response message for
 // SmartDeviceManagementService.ListStructures
 type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Structures: The list of structures.
 	Structures []*GoogleHomeEnterpriseSdmV1Structure `json:"structures,omitempty"`
 
@@ -389,7 +378,7 @@ type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "Structures") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -397,10 +386,10 @@ type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Structures") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -616,17 +605,17 @@ func (c *EnterprisesDevicesExecuteCommandCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -665,7 +654,7 @@ func (c *EnterprisesDevicesExecuteCommandCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -767,17 +756,17 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleHom
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleHomeEnterpriseSdmV1Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -813,7 +802,7 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleHom
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -845,21 +834,6 @@ func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListC
 // match): 'customName=wing'
 func (c *EnterprisesDevicesListCall) Filter(filter string) *EnterprisesDevicesListCall {
 	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Optional requested
-// page size. Server may return fewer devices than requested. If
-// unspecified, server will pick an appropriate default.
-func (c *EnterprisesDevicesListCall) PageSize(pageSize int64) *EnterprisesDevicesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Optional token of
-// the page to retrieve.
-func (c *EnterprisesDevicesListCall) PageToken(pageToken string) *EnterprisesDevicesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -940,17 +914,17 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleHomeEnterpriseSdmV1ListDevicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -977,17 +951,6 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "pageSize": {
-	//       "description": "Optional requested page size. Server may return fewer devices than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional token of the page to retrieve.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent enterprise to list devices under. E.g. \"enterprises/XYZ\".",
 	//       "location": "path",
@@ -1002,31 +965,10 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *EnterprisesDevicesListCall) Pages(ctx context.Context, f func(*GoogleHomeEnterpriseSdmV1ListDevicesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 // method id "smartdevicemanagement.enterprises.structures.get":
@@ -1126,17 +1068,17 @@ func (c *EnterprisesStructuresGetCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleHomeEnterpriseSdmV1Structure{
 		ServerResponse: googleapi.ServerResponse{
@@ -1172,7 +1114,7 @@ func (c *EnterprisesStructuresGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -1203,21 +1145,6 @@ func (r *EnterprisesStructuresService) List(parent string) *EnterprisesStructure
 // structures.
 func (c *EnterprisesStructuresListCall) Filter(filter string) *EnterprisesStructuresListCall {
 	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer structures than requested. If unspecified,
-// server will pick an appropriate default.
-func (c *EnterprisesStructuresListCall) PageSize(pageSize int64) *EnterprisesStructuresListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The token of the
-// page to retrieve.
-func (c *EnterprisesStructuresListCall) PageToken(pageToken string) *EnterprisesStructuresListCall {
-	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -1300,17 +1227,17 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleHomeEnterpriseSdmV1ListStructuresResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1337,17 +1264,6 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer structures than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token of the page to retrieve.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent enterprise to list structures under. E.g. \"enterprises/XYZ\".",
 	//       "location": "path",
@@ -1362,31 +1278,10 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *EnterprisesStructuresListCall) Pages(ctx context.Context, f func(*GoogleHomeEnterpriseSdmV1ListStructuresResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 // method id "smartdevicemanagement.enterprises.structures.rooms.get":
@@ -1485,17 +1380,17 @@ func (c *EnterprisesStructuresRoomsGetCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleHomeEnterpriseSdmV1Room{
 		ServerResponse: googleapi.ServerResponse{
@@ -1531,7 +1426,7 @@ func (c *EnterprisesStructuresRoomsGetCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -1555,21 +1450,6 @@ type EnterprisesStructuresRoomsListCall struct {
 func (r *EnterprisesStructuresRoomsService) List(parent string) *EnterprisesStructuresRoomsListCall {
 	c := &EnterprisesStructuresRoomsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer rooms than requested. If unspecified, server
-// will pick an appropriate default.
-func (c *EnterprisesStructuresRoomsListCall) PageSize(pageSize int64) *EnterprisesStructuresRoomsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The token of the
-// page to retrieve.
-func (c *EnterprisesStructuresRoomsListCall) PageToken(pageToken string) *EnterprisesStructuresRoomsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -1650,17 +1530,17 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleHomeEnterpriseSdmV1ListRoomsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1682,17 +1562,6 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer rooms than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token of the page to retrieve.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent resource name of the rooms requested. For example: \"enterprises/XYZ/structures/ABC\".",
 	//       "location": "path",
@@ -1707,29 +1576,8 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *EnterprisesStructuresRoomsListCall) Pages(ctx context.Context, f func(*GoogleHomeEnterpriseSdmV1ListRoomsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }

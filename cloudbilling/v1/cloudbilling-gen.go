@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,7 +6,7 @@
 
 // Package cloudbilling provides access to the Cloud Billing API.
 //
-// For product documentation, see: https://cloud.google.com/billing/
+// For product documentation, see: https://cloud.google.com/billing/docs/apis
 //
 // # Creating a client
 //
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudbilling:v1"
 const apiName = "cloudbilling"
@@ -430,7 +431,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -447,9 +450,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -832,7 +833,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -841,17 +842,17 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1091,23 +1092,22 @@ type ProjectBillingInfo struct {
 	// `billingAccounts/012345-567890-ABCDEF`.
 	BillingAccountName string `json:"billingAccountName,omitempty"`
 
-	// BillingEnabled: True if the project is associated with an open
-	// billing account, to which usage on the project is charged. False if
-	// the project is associated with a closed billing account, or no
-	// billing account at all, and therefore cannot use paid services. This
-	// field is read-only.
+	// BillingEnabled: Output only. True if the project is associated with
+	// an open billing account, to which usage on the project is charged.
+	// False if the project is associated with a closed billing account, or
+	// no billing account at all, and therefore cannot use paid services.
 	BillingEnabled bool `json:"billingEnabled,omitempty"`
 
-	// Name: The resource name for the `ProjectBillingInfo`; has the form
-	// `projects/{project_id}/billingInfo`. For example, the resource name
-	// for the billing information for project `tokyo-rain-123` would be
-	// `projects/tokyo-rain-123/billingInfo`. This field is read-only.
+	// Name: Output only. The resource name for the `ProjectBillingInfo`;
+	// has the form `projects/{project_id}/billingInfo`. For example, the
+	// resource name for the billing information for project
+	// `tokyo-rain-123` would be `projects/tokyo-rain-123/billingInfo`.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The ID of the project that this `ProjectBillingInfo`
-	// represents, such as `tokyo-rain-123`. This is a convenience field so
-	// that you don't need to parse the `name` field to obtain a project ID.
-	// This field is read-only.
+	// ProjectId: Output only. The ID of the project that this
+	// `ProjectBillingInfo` represents, such as `tokyo-rain-123`. This is a
+	// convenience field so that you don't need to parse the `name` field to
+	// obtain a project ID.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1409,7 +1409,7 @@ type BillingAccountsCreateCall struct {
 // which is typically given to billing account administrators
 // (https://cloud.google.com/billing/docs/how-to/billing-access). This
 // method will return an error if the parent account has not been
-// provisioned as a reseller account.
+// provisioned for subaccounts.
 func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *BillingAccountsCreateCall {
 	c := &BillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.billingaccount = billingaccount
@@ -1480,17 +1480,17 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BillingAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -1504,7 +1504,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	}
 	return ret, nil
 	// {
-	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned as a reseller account.",
+	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned for subaccounts.",
 	//   "flatPath": "v1/billingAccounts",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbilling.billingAccounts.create",
@@ -1623,17 +1623,17 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BillingAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -1795,17 +1795,17 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -1873,10 +1873,9 @@ func (r *BillingAccountsService) List() *BillingAccountsListCall {
 }
 
 // Filter sets the optional parameter "filter": Options for how to
-// filter the returned billing accounts. Currently this only supports
-// filtering for subaccounts
-// (https://cloud.google.com/billing/docs/concepts) under a single
-// provided reseller billing account. (e.g.
+// filter the returned billing accounts. This only supports filtering
+// for subaccounts (https://cloud.google.com/billing/docs/concepts)
+// under a single provided parent billing account. (e.g.
 // "master_billing_account=billingAccounts/012345-678901-ABCDEF").
 // Boolean algebra and other fields are not currently supported.
 func (c *BillingAccountsListCall) Filter(filter string) *BillingAccountsListCall {
@@ -1973,17 +1972,17 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBillingAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2004,7 +2003,7 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. Currently this only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided reseller billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
+	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2154,17 +2153,17 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BillingAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -2310,17 +2309,17 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2459,17 +2458,17 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2633,17 +2632,17 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProjectBillingInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2819,17 +2818,17 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectBillingInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -2989,17 +2988,17 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectBillingInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -3148,17 +3147,17 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3366,17 +3365,17 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSkusResponse{
 		ServerResponse: googleapi.ServerResponse{

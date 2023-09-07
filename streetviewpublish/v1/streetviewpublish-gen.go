@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "streetviewpublish:v1"
 const apiName = "streetviewpublish"
@@ -791,6 +792,44 @@ func (s *Measurement3d) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// NoOverlapGpsFailureDetails: Details related to
+// PhotoSequenceProcessingFailureReason#NO_OVERLAP_GPS.
+type NoOverlapGpsFailureDetails struct {
+	// GpsEndTime: Time of last recorded GPS point.
+	GpsEndTime string `json:"gpsEndTime,omitempty"`
+
+	// GpsStartTime: Time of first recorded GPS point.
+	GpsStartTime string `json:"gpsStartTime,omitempty"`
+
+	// VideoEndTime: End time of video.
+	VideoEndTime string `json:"videoEndTime,omitempty"`
+
+	// VideoStartTime: Start time of video.
+	VideoStartTime string `json:"videoStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GpsEndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GpsEndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NoOverlapGpsFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NoOverlapGpsFailureDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NotOutdoorsFailureDetails: Details related to
 // ProcessingFailureReason#NOT_OUTDOORS. If there are multiple indoor
 // frames found, the first frame is recorded here.
@@ -847,8 +886,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1359,6 +1398,9 @@ type ProcessingFailureDetails struct {
 	// InsufficientGpsDetails: See InsufficientGpsFailureDetails.
 	InsufficientGpsDetails *InsufficientGpsFailureDetails `json:"insufficientGpsDetails,omitempty"`
 
+	// NoOverlapGpsDetails: See NoOverlapGpsFailureDetails.
+	NoOverlapGpsDetails *NoOverlapGpsFailureDetails `json:"noOverlapGpsDetails,omitempty"`
+
 	// NotOutdoorsDetails: See NotOutdoorsFailureDetails.
 	NotOutdoorsDetails *NotOutdoorsFailureDetails `json:"notOutdoorsDetails,omitempty"`
 
@@ -1441,7 +1483,7 @@ type UpdatePhotoRequest struct {
 	// entirely replaced with the new Photo metadata in this request. The
 	// update fails if invalid fields are specified. Multiple fields can be
 	// specified in a comma-delimited list. The following fields are valid:
-	// * `pose.heading` * `pose.latLngPair` * `pose.pitch` * `pose.roll` *
+	// * `pose.heading` * `pose.lat_lng_pair` * `pose.pitch` * `pose.roll` *
 	// `pose.level` * `pose.altitude` * `connections` * `places` > Note:
 	// When updateMask contains repeated fields, the entire set of repeated
 	// values get replaced with the new contents. For example, if updateMask
@@ -1601,17 +1643,17 @@ func (c *PhotoCreateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Photo{
 		ServerResponse: googleapi.ServerResponse{
@@ -1729,17 +1771,17 @@ func (c *PhotoDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1907,17 +1949,17 @@ func (c *PhotoGetCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Photo{
 		ServerResponse: googleapi.ServerResponse{
@@ -2069,17 +2111,17 @@ func (c *PhotoStartUploadCall) Do(opts ...googleapi.CallOption) (*UploadRef, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UploadRef{
 		ServerResponse: googleapi.ServerResponse{
@@ -2149,7 +2191,7 @@ func (r *PhotoService) Update(id string, photo *Photo) *PhotoUpdateCall {
 // Photo metadata in this request. The update fails if invalid fields
 // are specified. Multiple fields can be specified in a comma-delimited
 // list. The following fields are valid: * `pose.heading` *
-// `pose.latLngPair` * `pose.pitch` * `pose.roll` * `pose.level` *
+// `pose.lat_lng_pair` * `pose.pitch` * `pose.roll` * `pose.level` *
 // `pose.altitude` * `connections` * `places` > Note: When updateMask
 // contains repeated fields, the entire set of repeated values get
 // replaced with the new contents. For example, if updateMask contains
@@ -2227,17 +2269,17 @@ func (c *PhotoUpdateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Photo{
 		ServerResponse: googleapi.ServerResponse{
@@ -2266,7 +2308,7 @@ func (c *PhotoUpdateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask that identifies fields on the photo metadata to update. If not present, the old Photo metadata is entirely replaced with the new Photo metadata in this request. The update fails if invalid fields are specified. Multiple fields can be specified in a comma-delimited list. The following fields are valid: * `pose.heading` * `pose.latLngPair` * `pose.pitch` * `pose.roll` * `pose.level` * `pose.altitude` * `connections` * `places` \u003e Note: When updateMask contains repeated fields, the entire set of repeated values get replaced with the new contents. For example, if updateMask contains `connections` and `UpdatePhotoRequest.photo.connections` is empty, all connections are removed.",
+	//       "description": "Required. Mask that identifies fields on the photo metadata to update. If not present, the old Photo metadata is entirely replaced with the new Photo metadata in this request. The update fails if invalid fields are specified. Multiple fields can be specified in a comma-delimited list. The following fields are valid: * `pose.heading` * `pose.lat_lng_pair` * `pose.pitch` * `pose.roll` * `pose.level` * `pose.altitude` * `connections` * `places` \u003e Note: When updateMask contains repeated fields, the entire set of repeated values get replaced with the new contents. For example, if updateMask contains `connections` and `UpdatePhotoRequest.photo.connections` is empty, all connections are removed.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2391,17 +2433,17 @@ func (c *PhotoSequenceCreateCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2537,17 +2579,17 @@ func (c *PhotoSequenceDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2720,17 +2762,17 @@ func (c *PhotoSequenceGetCall) Do(opts ...googleapi.CallOption) (*Operation, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2764,6 +2806,7 @@ func (c *PhotoSequenceGetCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "deprecated": true,
 	//       "description": "Specifies if a download URL for the photo sequence should be returned in `download_url` of individual photos in the PhotoSequence response. \u003e Note: Currently not implemented.",
 	//       "enum": [
 	//         "BASIC",
@@ -2873,17 +2916,17 @@ func (c *PhotoSequenceStartUploadCall) Do(opts ...googleapi.CallOption) (*Upload
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UploadRef{
 		ServerResponse: googleapi.ServerResponse{
@@ -2937,11 +2980,12 @@ func (r *PhotoSequencesService) List() *PhotoSequencesListCall {
 // Filter sets the optional parameter "filter": The filter expression.
 // For example: `imagery_type=SPHERICAL`. The filters supported are:
 // `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`,
-// `min_longitude`, `max_longitude`, and `filename_query`. See
+// `min_longitude`, `max_longitude`, `filename_query`,
+// `min_capture_time_seconds`, `max_capture_time_seconds. See
 // https://google.aip.dev/160 for more information. Filename queries
-// should sent as a Phrase in order to support multple words and special
-// characters by adding escaped quotes. Ex: filename_query="example of a
-// phrase.mp4"
+// should sent as a Phrase in order to support multiple words and
+// special characters by adding escaped quotes. Ex:
+// filename_query="example of a phrase.mp4"
 func (c *PhotoSequencesListCall) Filter(filter string) *PhotoSequencesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3037,17 +3081,17 @@ func (c *PhotoSequencesListCall) Do(opts ...googleapi.CallOption) (*ListPhotoSeq
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPhotoSequencesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3068,7 +3112,7 @@ func (c *PhotoSequencesListCall) Do(opts ...googleapi.CallOption) (*ListPhotoSeq
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter expression. For example: `imagery_type=SPHERICAL`. The filters supported are: `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, and `filename_query`. See https://google.aip.dev/160 for more information. Filename queries should sent as a Phrase in order to support multple words and special characters by adding escaped quotes. Ex: filename_query=\"example of a phrase.mp4\"",
+	//       "description": "Optional. The filter expression. For example: `imagery_type=SPHERICAL`. The filters supported are: `imagery_type`, `processing_state`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`, `filename_query`, `min_capture_time_seconds`, `max_capture_time_seconds. See https://google.aip.dev/160 for more information. Filename queries should sent as a Phrase in order to support multiple words and special characters by adding escaped quotes. Ex: filename_query=\"example of a phrase.mp4\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3203,17 +3247,17 @@ func (c *PhotosBatchDeleteCall) Do(opts ...googleapi.CallOption) (*BatchDeletePh
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchDeletePhotosResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3377,17 +3421,17 @@ func (c *PhotosBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetPhotosRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetPhotosResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3536,17 +3580,17 @@ func (c *PhotosBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdatePh
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchUpdatePhotosResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3601,8 +3645,8 @@ func (r *PhotosService) List() *PhotosListCall {
 // Filter sets the optional parameter "filter": The filter expression.
 // For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters
 // supported are: `placeId`, `min_latitude`, `max_latitude`,
-// `min_longitude`, and `max_longitude`. See https://google.aip.dev/160
-// for more information.
+// `min_longitude`, `max_longitude`. See https://google.aip.dev/160 for
+// more information.
 func (c *PhotosListCall) Filter(filter string) *PhotosListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3726,17 +3770,17 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPhotosResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3757,7 +3801,7 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters supported are: `placeId`, `min_latitude`, `max_latitude`, `min_longitude`, and `max_longitude`. See https://google.aip.dev/160 for more information.",
+	//       "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The filters supported are: `placeId`, `min_latitude`, `max_latitude`, `min_longitude`, `max_longitude`. See https://google.aip.dev/160 for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

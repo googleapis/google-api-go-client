@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "datastream:v1alpha1"
 const apiName = "datastream"
@@ -1081,7 +1082,7 @@ func (s *ListStreamsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1453,8 +1454,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2522,17 +2523,17 @@ func (c *ProjectsLocationsFetchStaticIpsCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FetchStaticIpsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2546,6 +2547,7 @@ func (c *ProjectsLocationsFetchStaticIpsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "The FetchStaticIps API call exposes the static IP addresses used by Datastream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}:fetchStaticIps",
 	//   "httpMethod": "GET",
@@ -2700,17 +2702,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2872,17 +2874,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3073,17 +3075,17 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3097,6 +3099,7 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a connection profile in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles",
 	//   "httpMethod": "POST",
@@ -3235,17 +3238,17 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3259,6 +3262,7 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a connection profile..",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
 	//   "httpMethod": "DELETE",
@@ -3384,17 +3388,17 @@ func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DiscoverConnectionProfileResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3408,6 +3412,7 @@ func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to discover a connection profile. The discover API call exposes the data objects and metadata belonging to the profile. Typically, a request returns children data objects under a parent data object that's optionally supplied in the request.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles:discover",
 	//   "httpMethod": "POST",
@@ -3533,17 +3538,17 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ConnectionProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -3557,6 +3562,7 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a connection profile.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
 	//   "httpMethod": "GET",
@@ -3712,17 +3718,17 @@ func (c *ProjectsLocationsConnectionProfilesListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListConnectionProfilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3736,6 +3742,7 @@ func (c *ProjectsLocationsConnectionProfilesListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list connection profiles created in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles",
 	//   "httpMethod": "GET",
@@ -3930,17 +3937,17 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3954,6 +3961,7 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to update the parameters of a connection profile.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
 	//   "httpMethod": "PATCH",
@@ -4097,17 +4105,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4235,17 +4243,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4383,17 +4391,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4447,14 +4455,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -4559,17 +4560,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4583,7 +4584,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "datastream.projects.locations.operations.list",
@@ -4760,17 +4761,17 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4784,6 +4785,7 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a private connectivity configuration.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections",
 	//   "httpMethod": "POST",
@@ -4930,17 +4932,17 @@ func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4954,6 +4956,7 @@ func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a private connectivity configuration.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}",
 	//   "httpMethod": "DELETE",
@@ -5087,17 +5090,17 @@ func (c *ProjectsLocationsPrivateConnectionsGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PrivateConnection{
 		ServerResponse: googleapi.ServerResponse{
@@ -5111,6 +5114,7 @@ func (c *ProjectsLocationsPrivateConnectionsGetCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a private connectivity configuration.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}",
 	//   "httpMethod": "GET",
@@ -5267,17 +5271,17 @@ func (c *ProjectsLocationsPrivateConnectionsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPrivateConnectionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5291,6 +5295,7 @@ func (c *ProjectsLocationsPrivateConnectionsListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list private connectivity configurations in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections",
 	//   "httpMethod": "GET",
@@ -5473,17 +5478,17 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5497,6 +5502,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a route for a private connectivity in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
 	//   "httpMethod": "POST",
@@ -5635,17 +5641,17 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5659,6 +5665,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a route.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes/{routesId}",
 	//   "httpMethod": "DELETE",
@@ -5786,17 +5793,17 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Route{
 		ServerResponse: googleapi.ServerResponse{
@@ -5810,6 +5817,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a route.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes/{routesId}",
 	//   "httpMethod": "GET",
@@ -5964,17 +5972,17 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRoutesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5988,6 +5996,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list routes created for a private connectivity in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
 	//   "httpMethod": "GET",
@@ -6184,17 +6193,17 @@ func (c *ProjectsLocationsStreamsCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6208,6 +6217,7 @@ func (c *ProjectsLocationsStreamsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams",
 	//   "httpMethod": "POST",
@@ -6356,17 +6366,17 @@ func (c *ProjectsLocationsStreamsDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6380,6 +6390,7 @@ func (c *ProjectsLocationsStreamsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
 	//   "httpMethod": "DELETE",
@@ -6501,17 +6512,17 @@ func (c *ProjectsLocationsStreamsFetchErrorsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6525,6 +6536,7 @@ func (c *ProjectsLocationsStreamsFetchErrorsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to fetch any errors associated with a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}:fetchErrors",
 	//   "httpMethod": "POST",
@@ -6650,17 +6662,17 @@ func (c *ProjectsLocationsStreamsGetCall) Do(opts ...googleapi.CallOption) (*Str
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Stream{
 		ServerResponse: googleapi.ServerResponse{
@@ -6674,6 +6686,7 @@ func (c *ProjectsLocationsStreamsGetCall) Do(opts ...googleapi.CallOption) (*Str
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
 	//   "httpMethod": "GET",
@@ -6827,17 +6840,17 @@ func (c *ProjectsLocationsStreamsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListStreamsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6851,6 +6864,7 @@ func (c *ProjectsLocationsStreamsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list streams in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams",
 	//   "httpMethod": "GET",
@@ -7051,17 +7065,17 @@ func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7075,6 +7089,7 @@ func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to update the configuration of a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
 	//   "httpMethod": "PATCH",
@@ -7221,17 +7236,17 @@ func (c *ProjectsLocationsStreamsObjectsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StreamObject{
 		ServerResponse: googleapi.ServerResponse{
@@ -7245,6 +7260,7 @@ func (c *ProjectsLocationsStreamsObjectsGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a stream object.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}",
 	//   "httpMethod": "GET",
@@ -7385,17 +7401,17 @@ func (c *ProjectsLocationsStreamsObjectsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListStreamObjectsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7409,6 +7425,7 @@ func (c *ProjectsLocationsStreamsObjectsListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list the objects of a specific stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects",
 	//   "httpMethod": "GET",
@@ -7551,17 +7568,17 @@ func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StartBackfillJobResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7575,6 +7592,7 @@ func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Starts backfill job for the specified stream object.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:startBackfillJob",
 	//   "httpMethod": "POST",
@@ -7685,17 +7703,17 @@ func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StopBackfillJobResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7709,6 +7727,7 @@ func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Stops the backfill job for the specified stream object.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:stopBackfillJob",
 	//   "httpMethod": "POST",

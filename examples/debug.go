@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 )
@@ -22,11 +21,11 @@ func (t *logTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 	os.Stdout.Write([]byte("\n[request]\n"))
 	if req.Body != nil {
-		req.Body = ioutil.NopCloser(&readButCopy{req.Body, &buf})
+		req.Body = io.NopCloser(&readButCopy{req.Body, &buf})
 	}
 	req.Write(os.Stdout)
 	if req.Body != nil {
-		req.Body = ioutil.NopCloser(&buf)
+		req.Body = io.NopCloser(&buf)
 	}
 	os.Stdout.Write([]byte("\n[/request]\n"))
 
@@ -40,7 +39,7 @@ func (t *logTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 		res.Body = nil
 		res.Write(os.Stdout)
 		if body != nil {
-			res.Body = ioutil.NopCloser(&echoAsRead{body})
+			res.Body = io.NopCloser(&echoAsRead{body})
 		}
 	}
 

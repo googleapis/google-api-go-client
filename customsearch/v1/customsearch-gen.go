@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "customsearch:v1"
 const apiName = "customsearch"
@@ -341,7 +342,7 @@ func (s *Result) MarshalJSON() ([]byte, error) {
 
 // ResultImage: Image belonging to a custom search result.
 type ResultImage struct {
-	// ByteSize: The size of the image, in pixels.
+	// ByteSize: The size of the image, in bytes.
 	ByteSize int64 `json:"byteSize,omitempty"`
 
 	// ContextLink: A URL pointing to the webpage hosting the image.
@@ -1772,17 +1773,17 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Search{
 		ServerResponse: googleapi.ServerResponse{
@@ -2018,6 +2019,13 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//         "high",
 	//         "medium",
 	//         "off"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "SafeSearch mode unspecified. (Falls back to engine's configuration.)",
@@ -2545,17 +2553,17 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Search{
 		ServerResponse: googleapi.ServerResponse{
@@ -2791,6 +2799,13 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//         "high",
 	//         "medium",
 	//         "off"
+	//       ],
+	//       "enumDeprecated": [
+	//         false,
+	//         false,
+	//         true,
+	//         true,
+	//         false
 	//       ],
 	//       "enumDescriptions": [
 	//         "SafeSearch mode unspecified. (Falls back to engine's configuration.)",

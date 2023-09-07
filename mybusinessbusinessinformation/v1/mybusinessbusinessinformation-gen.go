@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "mybusinessbusinessinformation:v1"
 const apiName = "mybusinessbusinessinformation"
@@ -244,36 +245,6 @@ type AdWordsLocationExtensions struct {
 
 func (s *AdWordsLocationExtensions) MarshalJSON() ([]byte, error) {
 	type NoMethod AdWordsLocationExtensions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AssociateLocationRequest: Request message for
-// Locations.AssociateLocationRequest.
-type AssociateLocationRequest struct {
-	// PlaceId: The association to establish. If not set, it indicates no
-	// match.
-	PlaceId string `json:"placeId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PlaceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PlaceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AssociateLocationRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod AssociateLocationRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -734,11 +705,6 @@ func (s *ChainUri) MarshalJSON() ([]byte, error) {
 	type NoMethod ChainUri
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ClearLocationAssociationRequest: Request message for
-// Locations.ClearLocationAssociationRequest.
-type ClearLocationAssociationRequest struct {
 }
 
 // Date: Represents a whole or partial calendar date, such as a
@@ -2513,17 +2479,17 @@ func (c *AccountsLocationsCreateCall) Do(opts ...googleapi.CallOption) (*Locatio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2720,17 +2686,17 @@ func (c *AccountsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2960,17 +2926,17 @@ func (c *AttributesListCall) Do(opts ...googleapi.CallOption) (*ListAttributeMet
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAttributeMetadataResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3189,17 +3155,17 @@ func (c *CategoriesBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetCate
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetCategoriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3407,17 +3373,17 @@ func (c *CategoriesListCall) Do(opts ...googleapi.CallOption) (*ListCategoriesRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCategoriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3605,17 +3571,17 @@ func (c *ChainsGetCall) Do(opts ...googleapi.CallOption) (*Chain, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Chain{
 		ServerResponse: googleapi.ServerResponse{
@@ -3757,17 +3723,17 @@ func (c *ChainsSearchCall) Do(opts ...googleapi.CallOption) (*SearchChainsRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchChainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3889,17 +3855,17 @@ func (c *GoogleLocationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGoo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchGoogleLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3925,289 +3891,6 @@ func (c *GoogleLocationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGoo
 	//   },
 	//   "response": {
 	//     "$ref": "SearchGoogleLocationsResponse"
-	//   }
-	// }
-
-}
-
-// method id "mybusinessbusinessinformation.locations.associate":
-
-type LocationsAssociateCall struct {
-	s                        *Service
-	name                     string
-	associatelocationrequest *AssociateLocationRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// Associate: Associates a location to a place ID. Any previous
-// association is overwritten. This operation is only valid if the
-// location is unverified. The association must be valid, that is, it
-// appears in the list of `SearchGoogleLocations`.
-//
-// - name: The resource name of the location to associate.
-func (r *LocationsService) Associate(name string, associatelocationrequest *AssociateLocationRequest) *LocationsAssociateCall {
-	c := &LocationsAssociateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.associatelocationrequest = associatelocationrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LocationsAssociateCall) Fields(s ...googleapi.Field) *LocationsAssociateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LocationsAssociateCall) Context(ctx context.Context) *LocationsAssociateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LocationsAssociateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LocationsAssociateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.associatelocationrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:associate")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "mybusinessbusinessinformation.locations.associate" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *LocationsAssociateCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Associates a location to a place ID. Any previous association is overwritten. This operation is only valid if the location is unverified. The association must be valid, that is, it appears in the list of `SearchGoogleLocations`.",
-	//   "flatPath": "v1/locations/{locationsId}:associate",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessbusinessinformation.locations.associate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the location to associate.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:associate",
-	//   "request": {
-	//     "$ref": "AssociateLocationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
-}
-
-// method id "mybusinessbusinessinformation.locations.clearLocationAssociation":
-
-type LocationsClearLocationAssociationCall struct {
-	s                               *Service
-	name                            string
-	clearlocationassociationrequest *ClearLocationAssociationRequest
-	urlParams_                      gensupport.URLParams
-	ctx_                            context.Context
-	header_                         http.Header
-}
-
-// ClearLocationAssociation: Clears an association between a location
-// and its place ID. This operation is only valid if the location is
-// unverified.
-//
-// - name: The resource name of the location to disassociate.
-func (r *LocationsService) ClearLocationAssociation(name string, clearlocationassociationrequest *ClearLocationAssociationRequest) *LocationsClearLocationAssociationCall {
-	c := &LocationsClearLocationAssociationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.clearlocationassociationrequest = clearlocationassociationrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LocationsClearLocationAssociationCall) Fields(s ...googleapi.Field) *LocationsClearLocationAssociationCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LocationsClearLocationAssociationCall) Context(ctx context.Context) *LocationsClearLocationAssociationCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LocationsClearLocationAssociationCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LocationsClearLocationAssociationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clearlocationassociationrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:clearLocationAssociation")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "mybusinessbusinessinformation.locations.clearLocationAssociation" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *LocationsClearLocationAssociationCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Clears an association between a location and its place ID. This operation is only valid if the location is unverified.",
-	//   "flatPath": "v1/locations/{locationsId}:clearLocationAssociation",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessbusinessinformation.locations.clearLocationAssociation",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the location to disassociate.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:clearLocationAssociation",
-	//   "request": {
-	//     "$ref": "ClearLocationAssociationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
 	//   }
 	// }
 
@@ -4298,17 +3981,17 @@ func (c *LocationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4448,17 +4131,17 @@ func (c *LocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -4598,17 +4281,17 @@ func (c *LocationsGetAttributesCall) Do(opts ...googleapi.CallOption) (*Attribut
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -4749,17 +4432,17 @@ func (c *LocationsGetGoogleUpdatedCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleUpdatedLocation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4908,17 +4591,17 @@ func (c *LocationsPatchCall) Do(opts ...googleapi.CallOption) (*Location, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -5075,17 +4758,17 @@ func (c *LocationsUpdateAttributesCall) Do(opts ...googleapi.CallOption) (*Attri
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -5229,17 +4912,17 @@ func (c *LocationsAttributesGetGoogleUpdatedCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Attributes{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "calendar:v3"
 const apiName = "calendar"
@@ -1360,6 +1361,7 @@ type Event struct {
 	// - "default" - A regular event or not further specified.
 	// - "outOfOffice" - An out-of-office event.
 	// - "focusTime" - A focus-time event.
+	// - "workingLocation" - A working location event. Developer Preview.
 	EventType string `json:"eventType,omitempty"`
 
 	// ExtendedProperties: Extended properties of the event.
@@ -1545,6 +1547,10 @@ type Event struct {
 	// - "confidential" - The event is private. This value is provided for
 	// compatibility reasons.
 	Visibility string `json:"visibility,omitempty"`
+
+	// WorkingLocationProperties: Working Location event data. Developer
+	// Preview.
+	WorkingLocationProperties *EventWorkingLocationProperties `json:"workingLocationProperties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2011,6 +2017,118 @@ type EventReminder struct {
 
 func (s *EventReminder) MarshalJSON() ([]byte, error) {
 	type NoMethod EventReminder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EventWorkingLocationProperties struct {
+	// CustomLocation: If present, specifies that the user is working from a
+	// custom location.
+	CustomLocation *EventWorkingLocationPropertiesCustomLocation `json:"customLocation,omitempty"`
+
+	// HomeOffice: If present, specifies that the user is working at home.
+	HomeOffice interface{} `json:"homeOffice,omitempty"`
+
+	// OfficeLocation: If present, specifies that the user is working from
+	// an office.
+	OfficeLocation *EventWorkingLocationPropertiesOfficeLocation `json:"officeLocation,omitempty"`
+
+	// Type: Indicates what kind of location this is. Any details are
+	// specified in a sub-field of the specified name (but which may be
+	// missing if empty). Any other fields are ignored.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventWorkingLocationProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod EventWorkingLocationProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventWorkingLocationPropertiesCustomLocation: If present, specifies
+// that the user is working from a custom location.
+type EventWorkingLocationPropertiesCustomLocation struct {
+	// Label: An optional extra label for additional information.
+	Label string `json:"label,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventWorkingLocationPropertiesCustomLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod EventWorkingLocationPropertiesCustomLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventWorkingLocationPropertiesOfficeLocation: If present, specifies
+// that the user is working from an office.
+type EventWorkingLocationPropertiesOfficeLocation struct {
+	// BuildingId: An optional building identifier. This should reference a
+	// building ID in the organization's Resources database.
+	BuildingId string `json:"buildingId,omitempty"`
+
+	// DeskId: An optional arbitrary desk identifier.
+	DeskId string `json:"deskId,omitempty"`
+
+	// FloorId: An optional arbitrary floor identifier.
+	FloorId string `json:"floorId,omitempty"`
+
+	// FloorSectionId: An optional arbitrary floor section identifier.
+	FloorSectionId string `json:"floorSectionId,omitempty"`
+
+	// Label: An optional extra label for additional information.
+	Label string `json:"label,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildingId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildingId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventWorkingLocationPropertiesOfficeLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod EventWorkingLocationPropertiesOfficeLocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2482,7 +2600,7 @@ func (c *AclDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -2617,17 +2735,17 @@ func (c *AclGetCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AclRule{
 		ServerResponse: googleapi.ServerResponse{
@@ -2773,17 +2891,17 @@ func (c *AclInsertCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AclRule{
 		ServerResponse: googleapi.ServerResponse{
@@ -2969,17 +3087,17 @@ func (c *AclListCall) Do(opts ...googleapi.CallOption) (*Acl, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Acl{
 		ServerResponse: googleapi.ServerResponse{
@@ -3167,17 +3285,17 @@ func (c *AclPatchCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AclRule{
 		ServerResponse: googleapi.ServerResponse{
@@ -3335,17 +3453,17 @@ func (c *AclUpdateCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AclRule{
 		ServerResponse: googleapi.ServerResponse{
@@ -3531,17 +3649,17 @@ func (c *AclWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -3686,7 +3804,7 @@ func (c *CalendarListDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -3810,17 +3928,17 @@ func (c *CalendarListGetCall) Do(opts ...googleapi.CallOption) (*CalendarListEnt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CalendarListEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -3951,17 +4069,17 @@ func (c *CalendarListInsertCall) Do(opts ...googleapi.CallOption) (*CalendarList
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CalendarListEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -4156,17 +4274,17 @@ func (c *CalendarListListCall) Do(opts ...googleapi.CallOption) (*CalendarList, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CalendarList{
 		ServerResponse: googleapi.ServerResponse{
@@ -4365,17 +4483,17 @@ func (c *CalendarListPatchCall) Do(opts ...googleapi.CallOption) (*CalendarListE
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CalendarListEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -4523,17 +4641,17 @@ func (c *CalendarListUpdateCall) Do(opts ...googleapi.CallOption) (*CalendarList
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CalendarListEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -4730,17 +4848,17 @@ func (c *CalendarListWatchCall) Do(opts ...googleapi.CallOption) (*Channel, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4900,7 +5018,7 @@ func (c *CalendarsClearCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5006,7 +5124,7 @@ func (c *CalendarsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5130,17 +5248,17 @@ func (c *CalendarsGetCall) Do(opts ...googleapi.CallOption) (*Calendar, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Calendar{
 		ServerResponse: googleapi.ServerResponse{
@@ -5261,17 +5379,17 @@ func (c *CalendarsInsertCall) Do(opts ...googleapi.CallOption) (*Calendar, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Calendar{
 		ServerResponse: googleapi.ServerResponse{
@@ -5394,17 +5512,17 @@ func (c *CalendarsPatchCall) Do(opts ...googleapi.CallOption) (*Calendar, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Calendar{
 		ServerResponse: googleapi.ServerResponse{
@@ -5537,17 +5655,17 @@ func (c *CalendarsUpdateCall) Do(opts ...googleapi.CallOption) (*Calendar, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Calendar{
 		ServerResponse: googleapi.ServerResponse{
@@ -5665,7 +5783,7 @@ func (c *ChannelsStopCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5776,17 +5894,17 @@ func (c *ColorsGetCall) Do(opts ...googleapi.CallOption) (*Colors, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Colors{
 		ServerResponse: googleapi.ServerResponse{
@@ -5927,7 +6045,7 @@ func (c *EventsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -6111,17 +6229,17 @@ func (c *EventsGetCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Event{
 		ServerResponse: googleapi.ServerResponse{
@@ -6299,17 +6417,17 @@ func (c *EventsImportCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Event{
 		ServerResponse: googleapi.ServerResponse{
@@ -6518,17 +6636,17 @@ func (c *EventsInsertCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Event{
 		ServerResponse: googleapi.ServerResponse{
@@ -6788,17 +6906,17 @@ func (c *EventsInstancesCall) Do(opts ...googleapi.CallOption) (*Events, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Events{
 		ServerResponse: googleapi.ServerResponse{
@@ -6953,6 +7071,27 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 	return c
 }
 
+// EventTypes sets the optional parameter "eventTypes": Event types to
+// return.  Possible values are:
+// - "default"
+// - "focusTime"
+// - "outOfOffice"This parameter can be repeated multiple times to
+// return events of different types. Currently, this is the only allowed
+// value for this field:
+// - ["default", "focusTime", "outOfOffice"] This value is the
+// default.
+//
+// If you're enrolled in the Working Location developer preview program,
+// in addition to the default value above you can also set the
+// "workingLocation" event type:
+// - ["default", "focusTime", "outOfOffice", "workingLocation"]
+// - ["workingLocation"] Additional combinations of these four event
+// types will be made available in later releases. Developer Preview.
+func (c *EventsListCall) EventTypes(eventTypes ...string) *EventsListCall {
+	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
+	return c
+}
+
 // ICalUID sets the optional parameter "iCalUID": Specifies an event ID
 // in the iCalendar format to be provided in the response.  Use this if
 // you want to search for an event by its iCalendar ID.
@@ -7080,9 +7219,11 @@ func (c *EventsListCall) SingleEvents(singleEvents bool) *EventsListCall {
 // - sharedExtendedProperty
 // - timeMin
 // - timeMax
-// - updatedMin If the syncToken expires, the server will respond with a
-// 410 GONE response code and the client should clear its storage and
-// perform a full synchronization without any syncToken.
+// - updatedMin All other query parameters should be the same as for the
+// initial synchronization to avoid undefined behavior. If the syncToken
+// expires, the server will respond with a 410 GONE response code and
+// the client should clear its storage and perform a full
+// synchronization without any syncToken.
 // Learn more about incremental synchronization.
 //
 //	The default is to return all entries.
@@ -7205,17 +7346,17 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Events{
 		ServerResponse: googleapi.ServerResponse{
@@ -7245,6 +7386,12 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventTypes": {
+	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\"This parameter can be repeated multiple times to return events of different types. Currently, this is the only allowed value for this field: \n- [\"default\", \"focusTime\", \"outOfOffice\"] This value is the default.\n\nIf you're enrolled in the Working Location developer preview program, in addition to the default value above you can also set the \"workingLocation\" event type: \n- [\"default\", \"focusTime\", \"outOfOffice\", \"workingLocation\"] \n- [\"workingLocation\"] Additional combinations of these four event types will be made available in later releases. Developer Preview.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
@@ -7318,7 +7465,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "boolean"
 	//     },
 	//     "syncToken": {
-	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin All other query parameters should be the same as for the initial synchronization to avoid undefined behavior. If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7502,17 +7649,17 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Event{
 		ServerResponse: googleapi.ServerResponse{
@@ -7750,17 +7897,17 @@ func (c *EventsPatchCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Event{
 		ServerResponse: googleapi.ServerResponse{
@@ -7970,17 +8117,17 @@ func (c *EventsQuickAddCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Event{
 		ServerResponse: googleapi.ServerResponse{
@@ -8211,17 +8358,17 @@ func (c *EventsUpdateCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Event{
 		ServerResponse: googleapi.ServerResponse{
@@ -8347,6 +8494,27 @@ func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchC
 // provided).
 func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWatchCall {
 	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
+	return c
+}
+
+// EventTypes sets the optional parameter "eventTypes": Event types to
+// return.  Possible values are:
+// - "default"
+// - "focusTime"
+// - "outOfOffice"This parameter can be repeated multiple times to
+// return events of different types. Currently, this is the only allowed
+// value for this field:
+// - ["default", "focusTime", "outOfOffice"] This value is the
+// default.
+//
+// If you're enrolled in the Working Location developer preview program,
+// in addition to the default value above you can also set the
+// "workingLocation" event type:
+// - ["default", "focusTime", "outOfOffice", "workingLocation"]
+// - ["workingLocation"] Additional combinations of these four event
+// types will be made available in later releases. Developer Preview.
+func (c *EventsWatchCall) EventTypes(eventTypes ...string) *EventsWatchCall {
+	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
 }
 
@@ -8477,9 +8645,11 @@ func (c *EventsWatchCall) SingleEvents(singleEvents bool) *EventsWatchCall {
 // - sharedExtendedProperty
 // - timeMin
 // - timeMax
-// - updatedMin If the syncToken expires, the server will respond with a
-// 410 GONE response code and the client should clear its storage and
-// perform a full synchronization without any syncToken.
+// - updatedMin All other query parameters should be the same as for the
+// initial synchronization to avoid undefined behavior. If the syncToken
+// expires, the server will respond with a 410 GONE response code and
+// the client should clear its storage and perform a full
+// synchronization without any syncToken.
 // Learn more about incremental synchronization.
 //
 //	The default is to return all entries.
@@ -8594,17 +8764,17 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -8634,6 +8804,12 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventTypes": {
+	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\"This parameter can be repeated multiple times to return events of different types. Currently, this is the only allowed value for this field: \n- [\"default\", \"focusTime\", \"outOfOffice\"] This value is the default.\n\nIf you're enrolled in the Working Location developer preview program, in addition to the default value above you can also set the \"workingLocation\" event type: \n- [\"default\", \"focusTime\", \"outOfOffice\", \"workingLocation\"] \n- [\"workingLocation\"] Additional combinations of these four event types will be made available in later releases. Developer Preview.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
@@ -8707,7 +8883,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "boolean"
 	//     },
 	//     "syncToken": {
-	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin All other query parameters should be the same as for the initial synchronization to avoid undefined behavior. If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8835,17 +9011,17 @@ func (c *FreebusyQueryCall) Do(opts ...googleapi.CallOption) (*FreeBusyResponse,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FreeBusyResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8972,17 +9148,17 @@ func (c *SettingsGetCall) Do(opts ...googleapi.CallOption) (*Setting, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Setting{
 		ServerResponse: googleapi.ServerResponse{
@@ -9141,17 +9317,17 @@ func (c *SettingsListCall) Do(opts ...googleapi.CallOption) (*Settings, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Settings{
 		ServerResponse: googleapi.ServerResponse{
@@ -9333,17 +9509,17 @@ func (c *SettingsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "iam:v2beta"
 const apiName = "iam"
@@ -491,7 +492,7 @@ type GoogleIamV2betaPolicy struct {
 	// Etag: An opaque tag that identifies the current version of the
 	// `Policy`. IAM uses this value to help manage concurrent updates, so
 	// they do not cause one update to be overwritten by another. If this
-	// field is present in a CreatePolicy request, the value is ignored.
+	// field is present in a CreatePolicyRequest, the value is ignored.
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: Output only. The kind of the `Policy`. Always contains the
@@ -636,8 +637,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -884,17 +885,17 @@ func (c *PoliciesCreatePolicyCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1041,17 +1042,17 @@ func (c *PoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1199,17 +1200,17 @@ func (c *PoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleIamV2betaPoli
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV2betaPolicy{
 		ServerResponse: googleapi.ServerResponse{
@@ -1373,17 +1374,17 @@ func (c *PoliciesListPoliciesCall) Do(opts ...googleapi.CallOption) (*GoogleIamV
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV2betaListPoliciesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1559,17 +1560,17 @@ func (c *PoliciesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1710,17 +1711,17 @@ func (c *PoliciesOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{

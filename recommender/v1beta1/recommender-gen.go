@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "recommender:v1beta1"
 const apiName = "recommender"
@@ -120,8 +121,10 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.BillingAccounts = NewBillingAccountsService(s)
 	s.Folders = NewFoldersService(s)
+	s.InsightTypes = NewInsightTypesService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
+	s.Recommenders = NewRecommendersService(s)
 	return s, nil
 }
 
@@ -134,9 +137,13 @@ type Service struct {
 
 	Folders *FoldersService
 
+	InsightTypes *InsightTypesService
+
 	Organizations *OrganizationsService
 
 	Projects *ProjectsService
+
+	Recommenders *RecommendersService
 }
 
 func (s *Service) userAgent() string {
@@ -284,6 +291,15 @@ type FoldersLocationsRecommendersRecommendationsService struct {
 	s *Service
 }
 
+func NewInsightTypesService(s *Service) *InsightTypesService {
+	rs := &InsightTypesService{s: s}
+	return rs
+}
+
+type InsightTypesService struct {
+	s *Service
+}
+
 func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.Locations = NewOrganizationsLocationsService(s)
@@ -419,6 +435,15 @@ func NewProjectsLocationsRecommendersRecommendationsService(s *Service) *Project
 }
 
 type ProjectsLocationsRecommendersRecommendationsService struct {
+	s *Service
+}
+
+func NewRecommendersService(s *Service) *RecommendersService {
+	rs := &RecommendersService{s: s}
+	return rs
+}
+
+type RecommendersService struct {
 	s *Service
 }
 
@@ -686,6 +711,35 @@ func (s *GoogleCloudRecommenderV1beta1InsightStateInfo) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1InsightType: The type of insight.
+type GoogleCloudRecommenderV1beta1InsightType struct {
+	// Name: The insight_type’s name in format insightTypes/{insight_type}
+	// eg: insightTypes/google.iam.policy.Insight
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1InsightType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1InsightType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1InsightTypeConfig: Configuration for an
 // InsightType.
 type GoogleCloudRecommenderV1beta1InsightTypeConfig struct {
@@ -781,6 +835,44 @@ func (s *GoogleCloudRecommenderV1beta1InsightTypeGenerationConfig) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1ListInsightTypesResponse: Response for
+// the `ListInsightTypes` method. Next ID: 3
+type GoogleCloudRecommenderV1beta1ListInsightTypesResponse struct {
+	// InsightTypes: The set of recommenders available
+	InsightTypes []*GoogleCloudRecommenderV1beta1InsightType `json:"insightTypes,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InsightTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InsightTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1ListInsightTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1ListInsightTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1ListInsightsResponse: Response to the
 // `ListInsights` method.
 type GoogleCloudRecommenderV1beta1ListInsightsResponse struct {
@@ -856,6 +948,44 @@ func (s *GoogleCloudRecommenderV1beta1ListRecommendationsResponse) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1ListRecommendersResponse: Response for
+// the `ListRecommender` method. Next ID: 3
+type GoogleCloudRecommenderV1beta1ListRecommendersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Recommenders: The set of recommenders available
+	Recommenders []*GoogleCloudRecommenderV1beta1RecommenderType `json:"recommenders,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1ListRecommendersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1ListRecommendersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest: Request for
 // the `MarkInsightAccepted` method.
 type GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest struct {
@@ -922,6 +1052,35 @@ type GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest struct {
 
 func (s *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest:
+// Request for the `MarkRecommendationDismissed` Method.
+type GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest struct {
+	// Etag: Fingerprint of the Recommendation. Provides optimistic locking.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1429,6 +1588,37 @@ func (s *GoogleCloudRecommenderV1beta1RecommenderGenerationConfig) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1RecommenderType: The type of a
+// recommender.
+type GoogleCloudRecommenderV1beta1RecommenderType struct {
+	// Name: The recommender's name in format
+	// RecommenderTypes/{recommender_type} eg:
+	// recommenderTypes/google.iam.policy.Recommender
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1RecommenderType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1RecommenderType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1ReliabilityProjection: Contains
 // information on the impact of a reliability recommendation.
 type GoogleCloudRecommenderV1beta1ReliabilityProjection struct {
@@ -1727,17 +1917,17 @@ func (c *BillingAccountsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1InsightTypeConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -1886,17 +2076,17 @@ func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1InsightTypeConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -2048,17 +2238,17 @@ func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -2136,12 +2326,15 @@ func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Filter(filter string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2243,17 +2436,17 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListInsightsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2276,7 +2469,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2425,17 +2618,17 @@ func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -2586,17 +2779,17 @@ func (c *BillingAccountsLocationsRecommendersGetConfigCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1RecommenderConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -2745,17 +2938,17 @@ func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1RecommenderConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -2908,17 +3101,17 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2997,12 +3190,16 @@ func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Filter(filter string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3105,17 +3302,17 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListRecommendationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3138,7 +3335,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3289,17 +3486,17 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3332,6 +3529,155 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) Do(
 	//   "path": "v1beta1/{+name}:markClaimed",
 	//   "request": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.billingAccounts.locations.recommenders.recommendations.markDismissed":
+
+type BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall struct {
+	s                                                               *Service
+	name                                                            string
+	googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// MarkDismissed: Mark the Recommendation State as Dismissed. Users can
+// use this method to indicate to the Recommender API that an ACTIVE
+// recommendation has to be marked back as DISMISSED.
+// MarkRecommendationDismissed can be applied to recommendations in
+// ACTIVE state. Requires the recommender.*.update IAM permission for
+// the specified recommender.
+//
+// - name: Name of the recommendation.
+func (r *BillingAccountsLocationsRecommendersRecommendationsService) MarkDismissed(name string, googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest) *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c := &BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest = googlecloudrecommenderv1beta1markrecommendationdismissedrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) Context(ctx context.Context) *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:markDismissed")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.billingAccounts.locations.recommenders.recommendations.markDismissed" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1Recommendation or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1beta1Recommendation.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1Recommendation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1Recommendation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Mark the Recommendation State as Dismissed. Users can use this method to indicate to the Recommender API that an ACTIVE recommendation has to be marked back as DISMISSED. MarkRecommendationDismissed can be applied to recommendations in ACTIVE state. Requires the recommender.*.update IAM permission for the specified recommender.",
+	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markDismissed",
+	//   "httpMethod": "POST",
+	//   "id": "recommender.billingAccounts.locations.recommenders.recommendations.markDismissed",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the recommendation.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:markDismissed",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
@@ -3440,17 +3786,17 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3591,17 +3937,17 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3742,17 +4088,17 @@ func (c *FoldersLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -3830,12 +4176,15 @@ func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *Folde
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *FoldersLocationsInsightTypesInsightsListCall) Filter(filter string) *FoldersLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3937,17 +4286,17 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListInsightsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3970,7 +4319,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4119,17 +4468,17 @@ func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -4271,17 +4620,17 @@ func (c *FoldersLocationsRecommendersRecommendationsGetCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4360,12 +4709,16 @@ func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string)
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *FoldersLocationsRecommendersRecommendationsListCall) Filter(filter string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4468,17 +4821,17 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListRecommendationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4501,7 +4854,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4652,17 +5005,17 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4695,6 +5048,155 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ...
 	//   "path": "v1beta1/{+name}:markClaimed",
 	//   "request": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.folders.locations.recommenders.recommendations.markDismissed":
+
+type FoldersLocationsRecommendersRecommendationsMarkDismissedCall struct {
+	s                                                               *Service
+	name                                                            string
+	googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// MarkDismissed: Mark the Recommendation State as Dismissed. Users can
+// use this method to indicate to the Recommender API that an ACTIVE
+// recommendation has to be marked back as DISMISSED.
+// MarkRecommendationDismissed can be applied to recommendations in
+// ACTIVE state. Requires the recommender.*.update IAM permission for
+// the specified recommender.
+//
+// - name: Name of the recommendation.
+func (r *FoldersLocationsRecommendersRecommendationsService) MarkDismissed(name string, googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest) *FoldersLocationsRecommendersRecommendationsMarkDismissedCall {
+	c := &FoldersLocationsRecommendersRecommendationsMarkDismissedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest = googlecloudrecommenderv1beta1markrecommendationdismissedrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) Fields(s ...googleapi.Field) *FoldersLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) Context(ctx context.Context) *FoldersLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:markDismissed")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.folders.locations.recommenders.recommendations.markDismissed" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1Recommendation or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1beta1Recommendation.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1Recommendation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1Recommendation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Mark the Recommendation State as Dismissed. Users can use this method to indicate to the Recommender API that an ACTIVE recommendation has to be marked back as DISMISSED. MarkRecommendationDismissed can be applied to recommendations in ACTIVE state. Requires the recommender.*.update IAM permission for the specified recommender.",
+	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markDismissed",
+	//   "httpMethod": "POST",
+	//   "id": "recommender.folders.locations.recommenders.recommendations.markDismissed",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the recommendation.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:markDismissed",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
@@ -4803,17 +5305,17 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4954,17 +5456,17 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5006,6 +5508,186 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts .
 	//   ]
 	// }
 
+}
+
+// method id "recommender.insightTypes.list":
+
+type InsightTypesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists available InsightTypes. No IAM permissions are required.
+func (r *InsightTypesService) List() *InsightTypesListCall {
+	c := &InsightTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// InsightTypes to return per page. The service may return fewer than
+// this value.
+func (c *InsightTypesListCall) PageSize(pageSize int64) *InsightTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListRecommenders` call. Provide this to
+// retrieve the subsequent page.
+func (c *InsightTypesListCall) PageToken(pageToken string) *InsightTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InsightTypesListCall) Fields(s ...googleapi.Field) *InsightTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InsightTypesListCall) IfNoneMatch(entityTag string) *InsightTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InsightTypesListCall) Context(ctx context.Context) *InsightTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InsightTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InsightTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/insightTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.insightTypes.list" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1ListInsightTypesResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudRecommenderV1beta1ListInsightTypesResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *InsightTypesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1ListInsightTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1ListInsightTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists available InsightTypes. No IAM permissions are required.",
+	//   "flatPath": "v1beta1/insightTypes",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.insightTypes.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The number of InsightTypes to return per page. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListRecommenders` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/insightTypes",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1ListInsightTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InsightTypesListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommenderV1beta1ListInsightTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "recommender.organizations.locations.insightTypes.getConfig":
@@ -5114,17 +5796,17 @@ func (c *OrganizationsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1InsightTypeConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5273,17 +5955,17 @@ func (c *OrganizationsLocationsInsightTypesUpdateConfigCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1InsightTypeConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5435,17 +6117,17 @@ func (c *OrganizationsLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -5523,12 +6205,15 @@ func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) 
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *OrganizationsLocationsInsightTypesInsightsListCall) Filter(filter string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5630,17 +6315,17 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListInsightsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5663,7 +6348,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5812,17 +6497,17 @@ func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -5973,17 +6658,17 @@ func (c *OrganizationsLocationsRecommendersGetConfigCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1RecommenderConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6132,17 +6817,17 @@ func (c *OrganizationsLocationsRecommendersUpdateConfigCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1RecommenderConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6295,17 +6980,17 @@ func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6384,12 +7069,16 @@ func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent s
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Filter(filter string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6492,17 +7181,17 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListRecommendationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6525,7 +7214,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6676,17 +7365,17 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6719,6 +7408,155 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) Do(op
 	//   "path": "v1beta1/{+name}:markClaimed",
 	//   "request": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.organizations.locations.recommenders.recommendations.markDismissed":
+
+type OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall struct {
+	s                                                               *Service
+	name                                                            string
+	googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// MarkDismissed: Mark the Recommendation State as Dismissed. Users can
+// use this method to indicate to the Recommender API that an ACTIVE
+// recommendation has to be marked back as DISMISSED.
+// MarkRecommendationDismissed can be applied to recommendations in
+// ACTIVE state. Requires the recommender.*.update IAM permission for
+// the specified recommender.
+//
+// - name: Name of the recommendation.
+func (r *OrganizationsLocationsRecommendersRecommendationsService) MarkDismissed(name string, googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest) *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c := &OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest = googlecloudrecommenderv1beta1markrecommendationdismissedrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) Fields(s ...googleapi.Field) *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) Context(ctx context.Context) *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:markDismissed")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.organizations.locations.recommenders.recommendations.markDismissed" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1Recommendation or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1beta1Recommendation.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1Recommendation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1Recommendation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Mark the Recommendation State as Dismissed. Users can use this method to indicate to the Recommender API that an ACTIVE recommendation has to be marked back as DISMISSED. MarkRecommendationDismissed can be applied to recommendations in ACTIVE state. Requires the recommender.*.update IAM permission for the specified recommender.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markDismissed",
+	//   "httpMethod": "POST",
+	//   "id": "recommender.organizations.locations.recommenders.recommendations.markDismissed",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the recommendation.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:markDismissed",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
@@ -6827,17 +7665,17 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6978,17 +7816,17 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7138,17 +7976,17 @@ func (c *ProjectsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1InsightTypeConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -7297,17 +8135,17 @@ func (c *ProjectsLocationsInsightTypesUpdateConfigCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1InsightTypeConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -7459,17 +8297,17 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -7547,12 +8385,15 @@ func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *Proj
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *ProjectsLocationsInsightTypesInsightsListCall) Filter(filter string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7654,17 +8495,17 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListInsightsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7687,7 +8528,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7836,17 +8677,17 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Insight{
 		ServerResponse: googleapi.ServerResponse{
@@ -7997,17 +8838,17 @@ func (c *ProjectsLocationsRecommendersGetConfigCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1RecommenderConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -8156,17 +8997,17 @@ func (c *ProjectsLocationsRecommendersUpdateConfigCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1RecommenderConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -8319,17 +9160,17 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8408,12 +9249,16 @@ func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) Filter(filter string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8516,17 +9361,17 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1ListRecommendationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8549,7 +9394,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8700,17 +9545,17 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8743,6 +9588,155 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ..
 	//   "path": "v1beta1/{+name}:markClaimed",
 	//   "request": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.projects.locations.recommenders.recommendations.markDismissed":
+
+type ProjectsLocationsRecommendersRecommendationsMarkDismissedCall struct {
+	s                                                               *Service
+	name                                                            string
+	googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// MarkDismissed: Mark the Recommendation State as Dismissed. Users can
+// use this method to indicate to the Recommender API that an ACTIVE
+// recommendation has to be marked back as DISMISSED.
+// MarkRecommendationDismissed can be applied to recommendations in
+// ACTIVE state. Requires the recommender.*.update IAM permission for
+// the specified recommender.
+//
+// - name: Name of the recommendation.
+func (r *ProjectsLocationsRecommendersRecommendationsService) MarkDismissed(name string, googlecloudrecommenderv1beta1markrecommendationdismissedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest) *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c := &ProjectsLocationsRecommendersRecommendationsMarkDismissedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest = googlecloudrecommenderv1beta1markrecommendationdismissedrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) Fields(s ...googleapi.Field) *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) Context(ctx context.Context) *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommenderv1beta1markrecommendationdismissedrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:markDismissed")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.projects.locations.recommenders.recommendations.markDismissed" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1Recommendation or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1beta1Recommendation.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1Recommendation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1Recommendation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Mark the Recommendation State as Dismissed. Users can use this method to indicate to the Recommender API that an ACTIVE recommendation has to be marked back as DISMISSED. MarkRecommendationDismissed can be applied to recommendations in ACTIVE state. Requires the recommender.*.update IAM permission for the specified recommender.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markDismissed",
+	//   "httpMethod": "POST",
+	//   "id": "recommender.projects.locations.recommenders.recommendations.markDismissed",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the recommendation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:markDismissed",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1MarkRecommendationDismissedRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecommenderV1beta1Recommendation"
@@ -8851,17 +9845,17 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9002,17 +9996,17 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRecommenderV1beta1Recommendation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9054,4 +10048,185 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts 
 	//   ]
 	// }
 
+}
+
+// method id "recommender.recommenders.list":
+
+type RecommendersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all available Recommenders. No IAM permissions are
+// required.
+func (r *RecommendersService) List() *RecommendersListCall {
+	c := &RecommendersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// RecommenderTypes to return per page. The service may return fewer
+// than this value.
+func (c *RecommendersListCall) PageSize(pageSize int64) *RecommendersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListRecommenders` call. Provide this to
+// retrieve the subsequent page.
+func (c *RecommendersListCall) PageToken(pageToken string) *RecommendersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecommendersListCall) Fields(s ...googleapi.Field) *RecommendersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RecommendersListCall) IfNoneMatch(entityTag string) *RecommendersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecommendersListCall) Context(ctx context.Context) *RecommendersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecommendersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecommendersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/recommenders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.recommenders.list" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1ListRecommendersResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudRecommenderV1beta1ListRecommendersResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RecommendersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1ListRecommendersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecommenderV1beta1ListRecommendersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all available Recommenders. No IAM permissions are required.",
+	//   "flatPath": "v1beta1/recommenders",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.recommenders.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The number of RecommenderTypes to return per page. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListRecommenders` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/recommenders",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1ListRecommendersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RecommendersListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommenderV1beta1ListRecommendersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

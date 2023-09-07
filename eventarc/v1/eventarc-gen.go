@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "eventarc:v1"
 const apiName = "eventarc"
@@ -344,7 +345,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -361,9 +364,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -407,9 +408,9 @@ type Channel struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CryptoKeyName: Optional. Resource name of a KMS crypto key (managed
-	// by the user) used to encrypt/decrypt their event data. It must match
-	// the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	// CryptoKeyName: Resource name of a KMS crypto key (managed by the
+	// user) used to encrypt/decrypt their event data. It must match the
+	// pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 
 	// Name: Required. The resource name of the channel. Must be unique
@@ -588,7 +589,10 @@ func (s *CloudRun) MarshalJSON() ([]byte, error) {
 type Destination struct {
 	// CloudFunction: The Cloud Function resource name. Only Cloud Functions
 	// V2 is supported. Format:
-	// `projects/{project}/locations/{location}/functions/{function}`
+	// `projects/{project}/locations/{location}/functions/{function}` This
+	// is a read-only field. Creating Cloud Functions V2 triggers is only
+	// supported via the Cloud Functions product. An error will be returned
+	// if the user sets this value.
 	CloudFunction string `json:"cloudFunction,omitempty"`
 
 	// CloudRun: Cloud Run fully-managed resource that receives the events.
@@ -643,14 +647,17 @@ type Empty struct {
 // attributes.
 type EventFilter struct {
 	// Attribute: Required. The name of a CloudEvents attribute. Currently,
-	// only a subset of attributes are supported for filtering. All triggers
-	// MUST provide a filter for the 'type' attribute.
+	// only a subset of attributes are supported for filtering. You can
+	// retrieve a specific provider's supported event types
+	// (/eventarc/docs/list-providers#describe-provider). All triggers MUST
+	// provide a filter for the 'type' attribute.
 	Attribute string `json:"attribute,omitempty"`
 
 	// Operator: Optional. The operator used for matching the events with
 	// the value of the filter. If not specified, only events that have an
-	// exact key-value pair specified in the filter are matched. The only
-	// allowed value is `match-path-pattern`.
+	// exact key-value pair specified in the filter are matched. The allowed
+	// values are `path_pattern` and `match-path-pattern`. `path_pattern` is
+	// only allowed for GCFv1 triggers.
 	Operator string `json:"operator,omitempty"`
 
 	// Value: Required. The value for the attribute.
@@ -988,8 +995,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1275,7 +1282,7 @@ func (s *ListTriggersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1391,7 +1398,7 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1400,17 +1407,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1846,9 +1853,15 @@ type Trigger struct {
 	// to ensure that the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// EventFilters: Required. null The list of filters that applies to
-	// event attributes. Only events that match all the provided filters are
-	// sent to the destination.
+	// EventDataContentType: Optional. EventDataContentType specifies the
+	// type of payload in MIME format that is expected from the CloudEvent
+	// data field. This is set to `application/json` if the value is not
+	// defined.
+	EventDataContentType string `json:"eventDataContentType,omitempty"`
+
+	// EventFilters: Required. Unordered list. The list of filters that
+	// applies to event attributes. Only events that match all the provided
+	// filters are sent to the destination.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
 
 	// Labels: Optional. User labels attached to the triggers that can be
@@ -1862,22 +1875,17 @@ type Trigger struct {
 
 	// ServiceAccount: Optional. The IAM service account email associated
 	// with the trigger. The service account represents the identity of the
-	// trigger. The principal who calls this API must have the
-	// `iam.serviceAccounts.actAs` permission in the service account. See
-	// https://cloud.google.com/iam/docs/understanding-service-accounts?hl=en#sa_common
-	// for more information. For Cloud Run destinations, this service
-	// account is used to generate identity tokens when invoking the
-	// service. See
-	// https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-account
-	// for information on how to invoke authenticated Cloud Run services. To
-	// create Audit Log triggers, the service account should also have the
-	// `roles/eventarc.eventReceiver` IAM role.
+	// trigger. The `iam.serviceAccounts.actAs` permission must be granted
+	// on the service account to allow a principal to impersonate the
+	// service account. For more information, see the Roles and permissions
+	// (/eventarc/docs/all-roles-permissions) page specific to the trigger
+	// destination.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Transport: Optional. To deliver messages, Eventarc might use other
-	// GCP products as a transport intermediary. This field contains a
-	// reference to that transport intermediary. This information can be
-	// used for debugging purposes.
+	// Google Cloud products as a transport intermediary. This field
+	// contains a reference to that transport intermediary. This information
+	// can be used for debugging purposes.
 	Transport *Transport `json:"transport,omitempty"`
 
 	// Uid: Output only. Server-assigned unique identifier for the trigger.
@@ -2010,17 +2018,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2156,17 +2164,17 @@ func (c *ProjectsLocationsGetGoogleChannelConfigCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleChannelConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -2328,17 +2336,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2514,17 +2522,17 @@ func (c *ProjectsLocationsUpdateGoogleChannelConfigCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleChannelConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -2672,17 +2680,17 @@ func (c *ProjectsLocationsChannelConnectionsCreateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2812,17 +2820,17 @@ func (c *ProjectsLocationsChannelConnectionsDeleteCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2958,17 +2966,17 @@ func (c *ProjectsLocationsChannelConnectionsGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ChannelConnection{
 		ServerResponse: googleapi.ServerResponse{
@@ -3127,17 +3135,17 @@ func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3298,17 +3306,17 @@ func (c *ProjectsLocationsChannelConnectionsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListChannelConnectionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3474,17 +3482,17 @@ func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3624,17 +3632,17 @@ func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3706,8 +3714,8 @@ func (c *ProjectsLocationsChannelsCreateCall) ChannelId(channelId string) *Proje
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsChannelsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsChannelsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3780,17 +3788,17 @@ func (c *ProjectsLocationsChannelsCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3825,7 +3833,7 @@ func (c *ProjectsLocationsChannelsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3863,8 +3871,8 @@ func (r *ProjectsLocationsChannelsService) Delete(name string) *ProjectsLocation
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsChannelsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsChannelsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3932,17 +3940,17 @@ func (c *ProjectsLocationsChannelsDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3972,7 +3980,7 @@ func (c *ProjectsLocationsChannelsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4083,17 +4091,17 @@ func (c *ProjectsLocationsChannelsGetCall) Do(opts ...googleapi.CallOption) (*Ch
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4252,17 +4260,17 @@ func (c *ProjectsLocationsChannelsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4431,17 +4439,17 @@ func (c *ProjectsLocationsChannelsListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4552,8 +4560,8 @@ func (c *ProjectsLocationsChannelsPatchCall) UpdateMask(updateMask string) *Proj
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsChannelsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsChannelsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -4626,17 +4634,17 @@ func (c *ProjectsLocationsChannelsPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4672,7 +4680,7 @@ func (c *ProjectsLocationsChannelsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4784,17 +4792,17 @@ func (c *ProjectsLocationsChannelsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4934,17 +4942,17 @@ func (c *ProjectsLocationsChannelsTestIamPermissionsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5085,17 +5093,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5223,17 +5231,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5371,17 +5379,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5435,14 +5443,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -5548,17 +5549,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5572,7 +5573,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "eventarc.projects.locations.operations.list",
@@ -5731,17 +5732,17 @@ func (c *ProjectsLocationsProvidersGetCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Provider{
 		ServerResponse: googleapi.ServerResponse{
@@ -5911,17 +5912,17 @@ func (c *ProjectsLocationsProvidersListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProvidersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6032,8 +6033,8 @@ func (c *ProjectsLocationsTriggersCreateCall) TriggerId(triggerId string) *Proje
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6106,17 +6107,17 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6151,7 +6152,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6205,8 +6206,8 @@ func (c *ProjectsLocationsTriggersDeleteCall) Etag(etag string) *ProjectsLocatio
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6274,17 +6275,17 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6324,7 +6325,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6435,17 +6436,17 @@ func (c *ProjectsLocationsTriggersGetCall) Do(opts ...googleapi.CallOption) (*Tr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Trigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -6604,17 +6605,17 @@ func (c *ProjectsLocationsTriggersGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6793,17 +6794,17 @@ func (c *ProjectsLocationsTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTriggersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6927,8 +6928,8 @@ func (c *ProjectsLocationsTriggersPatchCall) UpdateMask(updateMask string) *Proj
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -7001,17 +7002,17 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7052,7 +7053,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -7164,17 +7165,17 @@ func (c *ProjectsLocationsTriggersSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7314,17 +7315,17 @@ func (c *ProjectsLocationsTriggersTestIamPermissionsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "businessprofileperformance:v1"
 const apiName = "businessprofileperformance"
@@ -170,6 +171,117 @@ type LocationsSearchkeywordsImpressionsMonthlyService struct {
 	s *Service
 }
 
+// DailyMetricTimeSeries: Represents a single datapoint, where each
+// datapoint is a DailyMetric-DailySubEntityType-TimeSeries tuple.
+type DailyMetricTimeSeries struct {
+	// DailyMetric: The DailyMetric that the TimeSeries represents.
+	//
+	// Possible values:
+	//   "DAILY_METRIC_UNKNOWN" - Represents the default unknown value.
+	//   "BUSINESS_IMPRESSIONS_DESKTOP_MAPS" - Business impressions on
+	// Google Maps on Desktop devices. Multiple impressions by a unique user
+	// within a single day are counted as a single impression.
+	//   "BUSINESS_IMPRESSIONS_DESKTOP_SEARCH" - Business impressions on
+	// Google Search on Desktop devices. Multiple impressions by a unique
+	// user within a single day are counted as a single impression.
+	//   "BUSINESS_IMPRESSIONS_MOBILE_MAPS" - Business impressions on Google
+	// Maps on Mobile devices. Multiple impressions by a unique user within
+	// a single day are counted as a single impression.
+	//   "BUSINESS_IMPRESSIONS_MOBILE_SEARCH" - Business impressions on
+	// Google Search on Mobile devices. Multiple impressions by a unique
+	// user within a single day are counted as a single impression.
+	//   "BUSINESS_CONVERSATIONS" - The number of message conversations
+	// received on the business profile.
+	//   "BUSINESS_DIRECTION_REQUESTS" - The number of times a direction
+	// request was requested to the business location.
+	//   "CALL_CLICKS" - The number of times the business profile call
+	// button was clicked.
+	//   "WEBSITE_CLICKS" - The number of times the business profile website
+	// was clicked.
+	//   "BUSINESS_BOOKINGS" - The number of bookings made from the business
+	// profile via Reserve with Google.
+	//   "BUSINESS_FOOD_ORDERS" - The number of food orders received from
+	// the business profile.
+	//   "BUSINESS_FOOD_MENU_CLICKS" - The number of clicks to view or
+	// interact with the menu content on the business profile. Multiple
+	// clicks by a unique user within a single day are counted as 1.
+	DailyMetric string `json:"dailyMetric,omitempty"`
+
+	// DailySubEntityType: The DailySubEntityType that the TimeSeries
+	// represents. Will not be present when breakdown does not exist.
+	DailySubEntityType *DailySubEntityType `json:"dailySubEntityType,omitempty"`
+
+	// TimeSeries: List of datapoints where each datapoint is a date-value
+	// pair.
+	TimeSeries *TimeSeries `json:"timeSeries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DailyMetric") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DailyMetric") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DailyMetricTimeSeries) MarshalJSON() ([]byte, error) {
+	type NoMethod DailyMetricTimeSeries
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DailySubEntityType: Represents all possible subentity types that are
+// associated with DailyMetrics.
+type DailySubEntityType struct {
+	// DayOfWeek: Represents the day of the week. Eg: MONDAY. Currently
+	// supported DailyMetrics = NONE.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+
+	// TimeOfDay: Represents the time of the day in 24 hour format. Eg:
+	// 13:34:20 Currently supported DailyMetrics = NONE.
+	TimeOfDay *TimeOfDay `json:"timeOfDay,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DailySubEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod DailySubEntityType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
@@ -224,7 +336,8 @@ type DatedValue struct {
 	// month value if the day field is not set.
 	Date *Date `json:"date,omitempty"`
 
-	// Value: The value of the datapoint.
+	// Value: The value of the datapoint. This will not be present when the
+	// value is zero.
 	Value int64 `json:"value,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
@@ -246,6 +359,42 @@ type DatedValue struct {
 
 func (s *DatedValue) MarshalJSON() ([]byte, error) {
 	type NoMethod DatedValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FetchMultiDailyMetricsTimeSeriesResponse: Represents the response for
+// FetchMultiDailyMetricsTimeSeries.
+type FetchMultiDailyMetricsTimeSeriesResponse struct {
+	// MultiDailyMetricTimeSeries: DailyMetrics and their corresponding time
+	// series.
+	MultiDailyMetricTimeSeries []*MultiDailyMetricTimeSeries `json:"multiDailyMetricTimeSeries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MultiDailyMetricTimeSeries") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MultiDailyMetricTimeSeries") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FetchMultiDailyMetricsTimeSeriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchMultiDailyMetricsTimeSeriesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -355,6 +504,37 @@ func (s *ListSearchKeywordImpressionsMonthlyResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MultiDailyMetricTimeSeries: Represents a list of tuples of
+// DailyMetric-DailySubEntityType-TimeSeries.
+type MultiDailyMetricTimeSeries struct {
+	// DailyMetricTimeSeries: List of DailyMetric-TimeSeries pairs.
+	DailyMetricTimeSeries []*DailyMetricTimeSeries `json:"dailyMetricTimeSeries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DailyMetricTimeSeries") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DailyMetricTimeSeries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiDailyMetricTimeSeries) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiDailyMetricTimeSeries
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SearchKeywordCount: Represents a single search keyword and its value.
 type SearchKeywordCount struct {
 	// InsightsValue: One of either: 1) The sum of the number of unique
@@ -389,6 +569,50 @@ func (s *SearchKeywordCount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TimeOfDay: Represents a time of day. The date and time zone are
+// either not significant or are specified elsewhere. An API may choose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
+	// 59. An API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimeSeries: Represents a timeseries.
 type TimeSeries struct {
 	// DatedValues: List of datapoints in the timeseries, where each
@@ -416,6 +640,336 @@ func (s *TimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeries
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "businessprofileperformance.locations.fetchMultiDailyMetricsTimeSeries":
+
+type LocationsFetchMultiDailyMetricsTimeSeriesCall struct {
+	s            *Service
+	location     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchMultiDailyMetricsTimeSeries:  Returns the values for each date
+// from a given time range and optionally the sub entity type, where
+// applicable, that are associated with the specific daily metrics.
+// Example request: `GET
+// https://businessprofileperformance.googleapis.com/v1/locations/12345:fetchMultiDailyMetricsTimeSeries?dailyMetrics=WEBSITE_CLICKS&dailyMetrics=CALL_CLICKS&daily_range.start_date.year=2022&daily_range.start_date.month=1&daily_range.start_date.day=1&daily_range.end_date.year=2022&daily_range.end_date.month=3&daily_range.end_date.day=31`
+//
+//   - location: The location for which the time series should be fetched.
+//     Format: locations/{location_id} where location_id is an
+//     unobfuscated listing id.
+func (r *LocationsService) FetchMultiDailyMetricsTimeSeries(location string) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c := &LocationsFetchMultiDailyMetricsTimeSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	return c
+}
+
+// DailyMetrics sets the optional parameter "dailyMetrics": Required.
+// The metrics to retrieve time series for.
+//
+// Possible values:
+//
+//	"DAILY_METRIC_UNKNOWN" - Represents the default unknown value.
+//	"BUSINESS_IMPRESSIONS_DESKTOP_MAPS" - Business impressions on
+//
+// Google Maps on Desktop devices. Multiple impressions by a unique user
+// within a single day are counted as a single impression.
+//
+//	"BUSINESS_IMPRESSIONS_DESKTOP_SEARCH" - Business impressions on
+//
+// Google Search on Desktop devices. Multiple impressions by a unique
+// user within a single day are counted as a single impression.
+//
+//	"BUSINESS_IMPRESSIONS_MOBILE_MAPS" - Business impressions on Google
+//
+// Maps on Mobile devices. Multiple impressions by a unique user within
+// a single day are counted as a single impression.
+//
+//	"BUSINESS_IMPRESSIONS_MOBILE_SEARCH" - Business impressions on
+//
+// Google Search on Mobile devices. Multiple impressions by a unique
+// user within a single day are counted as a single impression.
+//
+//	"BUSINESS_CONVERSATIONS" - The number of message conversations
+//
+// received on the business profile.
+//
+//	"BUSINESS_DIRECTION_REQUESTS" - The number of times a direction
+//
+// request was requested to the business location.
+//
+//	"CALL_CLICKS" - The number of times the business profile call
+//
+// button was clicked.
+//
+//	"WEBSITE_CLICKS" - The number of times the business profile website
+//
+// was clicked.
+//
+//	"BUSINESS_BOOKINGS" - The number of bookings made from the business
+//
+// profile via Reserve with Google.
+//
+//	"BUSINESS_FOOD_ORDERS" - The number of food orders received from
+//
+// the business profile.
+//
+//	"BUSINESS_FOOD_MENU_CLICKS" - The number of clicks to view or
+//
+// interact with the menu content on the business profile. Multiple
+// clicks by a unique user within a single day are counted as 1.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) DailyMetrics(dailyMetrics ...string) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.SetMulti("dailyMetrics", append([]string{}, dailyMetrics...))
+	return c
+}
+
+// DailyRangeEndDateDay sets the optional parameter
+// "dailyRange.endDate.day": Day of a month. Must be from 1 to 31 and
+// valid for the year and month, or 0 to specify a year by itself or a
+// year and month where the day isn't significant.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) DailyRangeEndDateDay(dailyRangeEndDateDay int64) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.Set("dailyRange.endDate.day", fmt.Sprint(dailyRangeEndDateDay))
+	return c
+}
+
+// DailyRangeEndDateMonth sets the optional parameter
+// "dailyRange.endDate.month": Month of a year. Must be from 1 to 12, or
+// 0 to specify a year without a month and day.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) DailyRangeEndDateMonth(dailyRangeEndDateMonth int64) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.Set("dailyRange.endDate.month", fmt.Sprint(dailyRangeEndDateMonth))
+	return c
+}
+
+// DailyRangeEndDateYear sets the optional parameter
+// "dailyRange.endDate.year": Year of the date. Must be from 1 to 9999,
+// or 0 to specify a date without a year.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) DailyRangeEndDateYear(dailyRangeEndDateYear int64) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.Set("dailyRange.endDate.year", fmt.Sprint(dailyRangeEndDateYear))
+	return c
+}
+
+// DailyRangeStartDateDay sets the optional parameter
+// "dailyRange.startDate.day": Day of a month. Must be from 1 to 31 and
+// valid for the year and month, or 0 to specify a year by itself or a
+// year and month where the day isn't significant.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) DailyRangeStartDateDay(dailyRangeStartDateDay int64) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.Set("dailyRange.startDate.day", fmt.Sprint(dailyRangeStartDateDay))
+	return c
+}
+
+// DailyRangeStartDateMonth sets the optional parameter
+// "dailyRange.startDate.month": Month of a year. Must be from 1 to 12,
+// or 0 to specify a year without a month and day.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) DailyRangeStartDateMonth(dailyRangeStartDateMonth int64) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.Set("dailyRange.startDate.month", fmt.Sprint(dailyRangeStartDateMonth))
+	return c
+}
+
+// DailyRangeStartDateYear sets the optional parameter
+// "dailyRange.startDate.year": Year of the date. Must be from 1 to
+// 9999, or 0 to specify a date without a year.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) DailyRangeStartDateYear(dailyRangeStartDateYear int64) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.Set("dailyRange.startDate.year", fmt.Sprint(dailyRangeStartDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) Fields(s ...googleapi.Field) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) IfNoneMatch(entityTag string) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) Context(ctx context.Context) *LocationsFetchMultiDailyMetricsTimeSeriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}:fetchMultiDailyMetricsTimeSeries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "businessprofileperformance.locations.fetchMultiDailyMetricsTimeSeries" call.
+// Exactly one of *FetchMultiDailyMetricsTimeSeriesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *FetchMultiDailyMetricsTimeSeriesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LocationsFetchMultiDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption) (*FetchMultiDailyMetricsTimeSeriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchMultiDailyMetricsTimeSeriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Returns the values for each date from a given time range and optionally the sub entity type, where applicable, that are associated with the specific daily metrics. Example request: `GET https://businessprofileperformance.googleapis.com/v1/locations/12345:fetchMultiDailyMetricsTimeSeries?dailyMetrics=WEBSITE_CLICKS\u0026dailyMetrics=CALL_CLICKS\u0026daily_range.start_date.year=2022\u0026daily_range.start_date.month=1\u0026daily_range.start_date.day=1\u0026daily_range.end_date.year=2022\u0026daily_range.end_date.month=3\u0026daily_range.end_date.day=31`",
+	//   "flatPath": "v1/locations/{locationsId}:fetchMultiDailyMetricsTimeSeries",
+	//   "httpMethod": "GET",
+	//   "id": "businessprofileperformance.locations.fetchMultiDailyMetricsTimeSeries",
+	//   "parameterOrder": [
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "dailyMetrics": {
+	//       "description": "Required. The metrics to retrieve time series for.",
+	//       "enum": [
+	//         "DAILY_METRIC_UNKNOWN",
+	//         "BUSINESS_IMPRESSIONS_DESKTOP_MAPS",
+	//         "BUSINESS_IMPRESSIONS_DESKTOP_SEARCH",
+	//         "BUSINESS_IMPRESSIONS_MOBILE_MAPS",
+	//         "BUSINESS_IMPRESSIONS_MOBILE_SEARCH",
+	//         "BUSINESS_CONVERSATIONS",
+	//         "BUSINESS_DIRECTION_REQUESTS",
+	//         "CALL_CLICKS",
+	//         "WEBSITE_CLICKS",
+	//         "BUSINESS_BOOKINGS",
+	//         "BUSINESS_FOOD_ORDERS",
+	//         "BUSINESS_FOOD_MENU_CLICKS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Represents the default unknown value.",
+	//         "Business impressions on Google Maps on Desktop devices. Multiple impressions by a unique user within a single day are counted as a single impression.",
+	//         "Business impressions on Google Search on Desktop devices. Multiple impressions by a unique user within a single day are counted as a single impression.",
+	//         "Business impressions on Google Maps on Mobile devices. Multiple impressions by a unique user within a single day are counted as a single impression.",
+	//         "Business impressions on Google Search on Mobile devices. Multiple impressions by a unique user within a single day are counted as a single impression.",
+	//         "The number of message conversations received on the business profile.",
+	//         "The number of times a direction request was requested to the business location.",
+	//         "The number of times the business profile call button was clicked.",
+	//         "The number of times the business profile website was clicked.",
+	//         "The number of bookings made from the business profile via Reserve with Google.",
+	//         "The number of food orders received from the business profile.",
+	//         "The number of clicks to view or interact with the menu content on the business profile. Multiple clicks by a unique user within a single day are counted as 1."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "dailyRange.endDate.day": {
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "dailyRange.endDate.month": {
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "dailyRange.endDate.year": {
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "dailyRange.startDate.day": {
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "dailyRange.startDate.month": {
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "dailyRange.startDate.year": {
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "location": {
+	//       "description": "Required. The location for which the time series should be fetched. Format: locations/{location_id} where location_id is an unobfuscated listing id.",
+	//       "location": "path",
+	//       "pattern": "^locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+location}:fetchMultiDailyMetricsTimeSeries",
+	//   "response": {
+	//     "$ref": "FetchMultiDailyMetricsTimeSeriesResponse"
+	//   }
+	// }
+
 }
 
 // method id "businessprofileperformance.locations.getDailyMetricsTimeSeries":
@@ -485,13 +1039,18 @@ func (r *LocationsService) GetDailyMetricsTimeSeries(name string) *LocationsGetD
 //
 // was clicked.
 //
-//	"BUSINESS_BOOKINGS" - The number of bookings received from the
+//	"BUSINESS_BOOKINGS" - The number of bookings made from the business
 //
-// business profile.
+// profile via Reserve with Google.
 //
 //	"BUSINESS_FOOD_ORDERS" - The number of food orders received from
 //
 // the business profile.
+//
+//	"BUSINESS_FOOD_MENU_CLICKS" - The number of clicks to view or
+//
+// interact with the menu content on the business profile. Multiple
+// clicks by a unique user within a single day are counted as 1.
 func (c *LocationsGetDailyMetricsTimeSeriesCall) DailyMetric(dailyMetric string) *LocationsGetDailyMetricsTimeSeriesCall {
 	c.urlParams_.Set("dailyMetric", dailyMetric)
 	return c
@@ -549,7 +1108,7 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) DailyRangeStartDateYear(dailyRa
 
 // DailySubEntityTypeDayOfWeek sets the optional parameter
 // "dailySubEntityType.dayOfWeek": Represents the day of the week. Eg:
-// MONDAY.
+// MONDAY. Currently supported DailyMetrics = NONE.
 //
 // Possible values:
 //
@@ -676,17 +1235,17 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetDailyMetricsTimeSeriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -721,7 +1280,8 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	//         "CALL_CLICKS",
 	//         "WEBSITE_CLICKS",
 	//         "BUSINESS_BOOKINGS",
-	//         "BUSINESS_FOOD_ORDERS"
+	//         "BUSINESS_FOOD_ORDERS",
+	//         "BUSINESS_FOOD_MENU_CLICKS"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Represents the default unknown value.",
@@ -733,8 +1293,9 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	//         "The number of times a direction request was requested to the business location.",
 	//         "The number of times the business profile call button was clicked.",
 	//         "The number of times the business profile website was clicked.",
-	//         "The number of bookings received from the business profile.",
-	//         "The number of food orders received from the business profile."
+	//         "The number of bookings made from the business profile via Reserve with Google.",
+	//         "The number of food orders received from the business profile.",
+	//         "The number of clicks to view or interact with the menu content on the business profile. Multiple clicks by a unique user within a single day are counted as 1."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -776,7 +1337,7 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	//       "type": "integer"
 	//     },
 	//     "dailySubEntityType.dayOfWeek": {
-	//       "description": "Represents the day of the week. Eg: MONDAY.",
+	//       "description": "Represents the day of the week. Eg: MONDAY. Currently supported DailyMetrics = NONE.",
 	//       "enum": [
 	//         "DAY_OF_WEEK_UNSPECIFIED",
 	//         "MONDAY",
@@ -1007,17 +1568,17 @@ func (c *LocationsSearchkeywordsImpressionsMonthlyListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSearchKeywordImpressionsMonthlyResponse{
 		ServerResponse: googleapi.ServerResponse{

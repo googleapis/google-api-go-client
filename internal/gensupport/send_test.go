@@ -6,10 +6,13 @@ package gensupport
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"net/http"
 	"testing"
 
-	"golang.org/x/xerrors"
+	"github.com/google/go-cmp/cmp"
+	"github.com/googleapis/gax-go/v2/callctx"
 )
 
 func TestSendRequest(t *testing.T) {
@@ -32,10 +35,43 @@ func TestSendRequestWithRetry(t *testing.T) {
 	}
 }
 
+type headerRoundTripper struct {
+	wantHeader http.Header
+}
+
+func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	// Ignore x-goog headers sent by SendRequestWithRetry
+	r.Header.Del("X-Goog-Api-Client")
+	r.Header.Del("X-Goog-Gcs-Idempotency-Token")
+	if diff := cmp.Diff(r.Header, rt.wantHeader); diff != "" {
+		return nil, fmt.Errorf("headers don't match: %v", diff)
+	}
+	return &http.Response{StatusCode: 200}, nil
+}
+
+// Ensure that headers set via the context are passed through to the request as expected.
+func TestSendRequestHeader(t *testing.T) {
+	ctx := context.Background()
+	ctx = callctx.SetHeaders(ctx, "foo", "100", "bar", "200")
+	client := http.Client{
+		Transport: &headerRoundTripper{
+			wantHeader: map[string][]string{"Foo": {"100"}, "Bar": {"200"}},
+		},
+	}
+	req, _ := http.NewRequest("GET", "url", nil)
+	if _, err := SendRequest(ctx, &client, req); err != nil {
+		t.Errorf("SendRequest: %v", err)
+	}
+	req2, _ := http.NewRequest("GET", "url", nil)
+	if _, err := SendRequestWithRetry(ctx, &client, req2, nil); err != nil {
+		t.Errorf("SendRequest: %v", err)
+	}
+}
+
 type brokenRoundTripper struct{}
 
 func (t *brokenRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
-	return nil, xerrors.New("this should not happen")
+	return nil, errors.New("this should not happen")
 }
 
 func TestCanceledContextDoesNotPerformRequest(t *testing.T) {
@@ -47,7 +83,7 @@ func TestCanceledContextDoesNotPerformRequest(t *testing.T) {
 		ctx, cancel := context.WithCancel(context.Background())
 		cancel()
 		_, err := SendRequestWithRetry(ctx, &client, req, nil)
-		if !xerrors.Is(err, context.Canceled) {
+		if !errors.Is(err, context.Canceled) {
 			t.Fatalf("got %v, want %v", err, context.Canceled)
 		}
 	}

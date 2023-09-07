@@ -8,7 +8,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"math"
 	"net/http"
 	"net/http/httptest"
@@ -47,7 +47,7 @@ func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if h.location != "" {
 		w.Header().Set("Location", h.location)
 	}
-	h.body, h.err = ioutil.ReadAll(r.Body)
+	h.body, h.err = io.ReadAll(r.Body)
 	fmt.Fprintf(w, "{}")
 }
 
@@ -394,6 +394,20 @@ func TestUnmarshalSpecialFloats(t *testing.T) {
 		}
 		if !fleq(*got.DoubleValue, test.want) {
 			t.Errorf("got\n%+v\nwant\n%+v", *got.DoubleValue, test.want)
+		}
+	}
+}
+
+func TestUnmarshalArrayFloats(t *testing.T) {
+	in := `{"bounds": [3, "Infinity", "-Infinity", "NaN"]}`
+	want := []float64{3, math.Inf(1), math.Inf(-1), math.NaN()}
+	var got mon.Explicit
+	if err := json.Unmarshal([]byte(in), &got); err != nil {
+		t.Fatal(err)
+	}
+	for i := range want {
+		if !fleq(got.Bounds[i], want[i]) {
+			t.Errorf("got\n%+v\nwant\n%+v", got.Bounds[i], want)
 		}
 	}
 }

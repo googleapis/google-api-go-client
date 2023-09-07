@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "artifactregistry:v1beta2"
 const apiName = "artifactregistry"
@@ -345,7 +346,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -362,9 +365,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -468,7 +469,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsArtifactregistryV1beta2File: Files store content that
 // is potentially associated with Packages or Versions.
 type GoogleDevtoolsArtifactregistryV1beta2File struct {
-	// CreateTime: The time when the File was created.
+	// CreateTime: Output only. The time when the File was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Hashes: The hashes of the file content.
@@ -486,7 +487,7 @@ type GoogleDevtoolsArtifactregistryV1beta2File struct {
 	// SizeBytes: The size of the File in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
-	// UpdateTime: The time when the File was last updated.
+	// UpdateTime: Output only. The time when the File was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1031,7 +1032,7 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1151,8 +1152,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1202,7 +1203,7 @@ type Package struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: The name of the package, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1".
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`.
 	// If the package ID part contains slashes, the slashes are escaped.
 	Name string `json:"name,omitempty"`
 
@@ -1251,7 +1252,7 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1260,17 +1261,17 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -1395,7 +1396,7 @@ func (s *ProjectSettings) MarshalJSON() ([]byte, error) {
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
-	// CreateTime: The time when the repository was created.
+	// CreateTime: Output only. The time when the repository was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: The user-provided description of the repository.
@@ -1410,6 +1411,7 @@ type Repository struct {
 	//   "NPM" - NPM package format.
 	//   "APT" - APT package format.
 	//   "YUM" - YUM package format.
+	//   "GOOGET" - GooGet package format.
 	//   "PYTHON" - Python package format.
 	Format string `json:"format,omitempty"`
 
@@ -1436,12 +1438,17 @@ type Repository struct {
 	// "projects/p1/locations/us-central1/repositories/repo1".
 	Name string `json:"name,omitempty"`
 
+	// SatisfiesPzs: Output only. If set, the repository satisfies physical
+	// zone separation.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// SizeBytes: Output only. The size, in bytes, of all artifact storage
 	// in this repository. Repositories that are generally available or in
 	// public preview use this to calculate storage costs.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
-	// UpdateTime: The time when the repository was last updated.
+	// UpdateTime: Output only. The time when the repository was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1810,8 +1817,8 @@ type Version struct {
 
 	// Metadata: Output only. Repository-specific Metadata stored against
 	// this version. The fields returned are defined by the underlying
-	// repository-specific resource. Currently, the only resource in use is
-	// DockerImage
+	// repository-specific resource. Currently, the resources could be:
+	// DockerImage MavenArtifact
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The name of the version, for example:
@@ -1993,17 +2000,17 @@ func (c *ProjectsGetProjectSettingsCall) Do(opts ...googleapi.CallOption) (*Proj
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -2142,17 +2149,17 @@ func (c *ProjectsUpdateProjectSettingsCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -2297,17 +2304,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2470,17 +2477,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2656,17 +2663,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2806,17 +2813,17 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2949,17 +2956,17 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3095,17 +3102,17 @@ func (c *ProjectsLocationsRepositoriesGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Repository{
 		ServerResponse: googleapi.ServerResponse{
@@ -3263,17 +3270,17 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3431,17 +3438,17 @@ func (c *ProjectsLocationsRepositoriesListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRepositoriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3612,17 +3619,17 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Repository{
 		ServerResponse: googleapi.ServerResponse{
@@ -3763,17 +3770,17 @@ func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3909,17 +3916,17 @@ func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4056,17 +4063,17 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4253,17 +4260,17 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -4279,7 +4286,7 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Do(opts ...googlea
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &UploadAptArtifactMediaResponse{
@@ -4433,17 +4440,17 @@ func (c *ProjectsLocationsRepositoriesFilesGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleDevtoolsArtifactregistryV1beta2File{
 		ServerResponse: googleapi.ServerResponse{
@@ -4466,7 +4473,7 @@ func (c *ProjectsLocationsRepositoriesFilesGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the file to retrieve.",
+	//       "description": "Required. The name of the file to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/files/.*$",
 	//       "required": true,
@@ -4609,17 +4616,17 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4658,7 +4665,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
+	//       "description": "Required. The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,
@@ -4780,17 +4787,17 @@ func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4926,17 +4933,17 @@ func (c *ProjectsLocationsRepositoriesPackagesGetCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Package{
 		ServerResponse: googleapi.ServerResponse{
@@ -5088,17 +5095,17 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPackagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5268,17 +5275,17 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Tag{
 		ServerResponse: googleapi.ServerResponse{
@@ -5408,17 +5415,17 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5554,17 +5561,17 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Tag{
 		ServerResponse: googleapi.ServerResponse{
@@ -5619,7 +5626,10 @@ type ProjectsLocationsRepositoriesPackagesTagsListCall struct {
 
 // List: Lists tags.
 //
-// - parent: The name of the parent resource whose tags will be listed.
+//   - parent: The name of the parent package whose tags will be listed.
+//     For example:
+//     `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`
+//     .
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) List(parent string) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5727,17 +5737,17 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTagsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5776,7 +5786,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the parent resource whose tags will be listed.",
+	//       "description": "The name of the parent package whose tags will be listed. For example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
 	//       "required": true,
@@ -5916,17 +5926,17 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Tag{
 		ServerResponse: googleapi.ServerResponse{
@@ -6066,17 +6076,17 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6236,17 +6246,17 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -6439,17 +6449,17 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6635,17 +6645,17 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6832,17 +6842,17 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -6858,7 +6868,7 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsUploadCall) Do(opts ...googlea
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &UploadYumArtifactMediaResponse{

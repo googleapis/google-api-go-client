@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -73,6 +73,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "speech:v1"
 const apiName = "speech"
@@ -208,6 +209,34 @@ type SpeechService struct {
 	s *Service
 }
 
+type ABNFGrammar struct {
+	// AbnfStrings: All declarations and rules of an ABNF grammar broken up
+	// into multiple strings that will end up concatenated.
+	AbnfStrings []string `json:"abnfStrings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AbnfStrings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbnfStrings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ABNFGrammar) MarshalJSON() ([]byte, error) {
+	type NoMethod ABNFGrammar
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClassItem: An item of the class.
 type ClassItem struct {
 	// Value: The class item's value.
@@ -320,6 +349,22 @@ type CustomClass struct {
 
 	// Items: A collection of class items.
 	Items []*ClassItem `json:"items,omitempty"`
+
+	// KmsKeyName: Output only. The KMS key name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#keys) with
+	// which the content of the ClassItem is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// KmsKeyVersionName: Output only. The KMS key version name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#key_versions)
+	// with which content of the ClassItem is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}/cryptoKeyVersions/{crypto_key_version}`.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
 
 	// Name: The resource name of the custom class.
 	Name string `json:"name,omitempty"`
@@ -577,6 +622,10 @@ type LongRunningRecognizeResponse struct {
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
+	// SpeechAdaptationInfo: Provides information on speech adaptation
+	// behavior in response
+	SpeechAdaptationInfo *SpeechAdaptationInfo `json:"speechAdaptationInfo,omitempty"`
+
 	// TotalBilledTime: When available, billed audio seconds for the
 	// corresponding request.
 	TotalBilledTime string `json:"totalBilledTime,omitempty"`
@@ -629,8 +678,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -689,8 +738,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // `us` (US North America), and `eu` (Europe). If you are calling the
 // `speech.googleapis.com` endpoint, use the `global` location. To
 // specify a region, use a regional endpoint
-// (/speech-to-text/docs/endpoints) with matching `us` or `eu` location
-// value.
+// (https://cloud.google.com/speech-to-text/docs/endpoints) with
+// matching `us` or `eu` location value.
 type Phrase struct {
 	// Boost: Hint Boost. Overrides the boost set at the phrase set level.
 	// Positive value will increase the probability that a specific phrase
@@ -699,8 +748,8 @@ type Phrase struct {
 	// well. Negative boost will simply be ignored. Though `boost` can
 	// accept a wide range of positive values, most use cases are best
 	// served with values between 0 and 20. We recommend using a binary
-	// search approach to finding the optimal value for your use case.
-	// Speech recognition will skip PhraseSets with a boost value of 0.
+	// search approach to finding the optimal value for your use case as
+	// well as adding phrases both with and without boost to your requests.
 	Boost float64 `json:"boost,omitempty"`
 
 	// Value: The phrase itself.
@@ -754,9 +803,25 @@ type PhraseSet struct {
 	// simply be ignored. Though `boost` can accept a wide range of positive
 	// values, most use cases are best served with values between 0
 	// (exclusive) and 20. We recommend using a binary search approach to
-	// finding the optimal value for your use case. Speech recognition will
-	// skip PhraseSets with a boost value of 0.
+	// finding the optimal value for your use case as well as adding phrases
+	// both with and without boost to your requests.
 	Boost float64 `json:"boost,omitempty"`
+
+	// KmsKeyName: Output only. The KMS key name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#keys) with
+	// which the content of the PhraseSet is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// KmsKeyVersionName: Output only. The KMS key version name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#key_versions)
+	// with which content of the PhraseSet is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}/cryptoKeyVersions/{crypto_key_version}`.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
 
 	// Name: The resource name of the phrase set.
 	Name string `json:"name,omitempty"`
@@ -874,12 +939,11 @@ type RecognitionConfig struct {
 
 	// AudioChannelCount: The number of channels in the input audio data.
 	// ONLY set this for MULTI-CHANNEL recognition. Valid values for
-	// LINEAR16 and FLAC are `1`-`8`. Valid values for OGG_OPUS are
-	// '1'-'254'. Valid value for MULAW, AMR, AMR_WB and
-	// SPEEX_WITH_HEADER_BYTE is only `1`. If `0` or omitted, defaults to
-	// one channel (mono). Note: We only recognize the first channel by
-	// default. To perform independent recognition on each channel set
-	// `enable_separate_recognition_per_channel` to 'true'.
+	// LINEAR16, OGG_OPUS and FLAC are `1`-`8`. Valid value for MULAW, AMR,
+	// AMR_WB and SPEEX_WITH_HEADER_BYTE is only `1`. If `0` or omitted,
+	// defaults to one channel (mono). Note: We only recognize the first
+	// channel by default. To perform independent recognition on each
+	// channel set `enable_separate_recognition_per_channel` to 'true'.
 	AudioChannelCount int64 `json:"audioChannelCount,omitempty"`
 
 	// DiarizationConfig: Config to enable speaker diarization and set
@@ -1221,6 +1285,10 @@ type RecognizeResponse struct {
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
+	// SpeechAdaptationInfo: Provides information on adaptation behavior in
+	// response
+	SpeechAdaptationInfo *SpeechAdaptationInfo `json:"speechAdaptationInfo,omitempty"`
+
 	// TotalBilledTime: When available, billed audio seconds for the
 	// corresponding request.
 	TotalBilledTime string `json:"totalBilledTime,omitempty"`
@@ -1256,7 +1324,7 @@ func (s *RecognizeResponse) MarshalJSON() ([]byte, error) {
 type SpeakerDiarizationConfig struct {
 	// EnableSpeakerDiarization: If 'true', enables speaker detection for
 	// each recognized word in the top alternative of the recognition result
-	// using a speaker_tag provided in the WordInfo.
+	// using a speaker_label provided in the WordInfo.
 	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
 
 	// MaxSpeakerCount: Maximum number of speakers in the conversation. This
@@ -1301,6 +1369,11 @@ func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
 
 // SpeechAdaptation: Speech adaptation configuration.
 type SpeechAdaptation struct {
+	// AbnfGrammar: Augmented Backus-Naur form (ABNF) is a standardized
+	// grammar notation comprised by a set of derivation rules. See
+	// specifications: https://www.w3.org/TR/speech-grammar
+	AbnfGrammar *ABNFGrammar `json:"abnfGrammar,omitempty"`
+
 	// CustomClasses: A collection of custom classes. To specify the classes
 	// inline, leave the class' `name` blank and fill in the rest of its
 	// fields, giving it a unique `custom_class_id`. Refer to the inline
@@ -1316,7 +1389,7 @@ type SpeechAdaptation struct {
 	// fields. Any phrase set can use any custom class.
 	PhraseSets []*PhraseSet `json:"phraseSets,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomClasses") to
+	// ForceSendFields is a list of field names (e.g. "AbnfGrammar") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1324,7 +1397,7 @@ type SpeechAdaptation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomClasses") to include
+	// NullFields is a list of field names (e.g. "AbnfGrammar") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -1335,6 +1408,41 @@ type SpeechAdaptation struct {
 
 func (s *SpeechAdaptation) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechAdaptation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpeechAdaptationInfo: Information on speech adaptation use in results
+type SpeechAdaptationInfo struct {
+	// AdaptationTimeout: Whether there was a timeout when applying speech
+	// adaptation. If true, adaptation had no effect in the response
+	// transcript.
+	AdaptationTimeout bool `json:"adaptationTimeout,omitempty"`
+
+	// TimeoutMessage: If set, returns a message specifying which part of
+	// the speech adaptation request timed out.
+	TimeoutMessage string `json:"timeoutMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptationTimeout")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptationTimeout") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpeechAdaptationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SpeechAdaptationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1606,11 +1714,21 @@ type WordInfo struct {
 	// can vary.
 	EndTime string `json:"endTime,omitempty"`
 
+	// SpeakerLabel: Output only. A label value assigned for every unique
+	// speaker within the audio. This field specifies which speaker was
+	// detected to have spoken this word. For some models, like
+	// medical_conversation this can be actual speaker role, for example
+	// "patient" or "provider", but generally this would be a number
+	// identifying a speaker. This field is only set if
+	// enable_speaker_diarization = 'true' and only for the top alternative.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
+
 	// SpeakerTag: Output only. A distinct integer value is assigned for
 	// every speaker within the audio. This field specifies which one of
 	// those speakers was detected to have spoken this word. Value ranges
 	// from '1' to diarization_speaker_count. speaker_tag is set if
-	// enable_speaker_diarization = 'true' and only in the top alternative.
+	// enable_speaker_diarization = 'true' and only for the top alternative.
+	// Note: Use speaker_label instead.
 	SpeakerTag int64 `json:"speakerTag,omitempty"`
 
 	// StartTime: Time offset relative to the beginning of the audio, and
@@ -1757,17 +1875,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1820,14 +1938,7 @@ type OperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 func (r *OperationsService) List() *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1933,17 +2044,17 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1957,7 +2068,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "speech.operations.list",
@@ -2113,17 +2224,17 @@ func (c *ProjectsLocationsCustomClassesCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomClass{
 		ServerResponse: googleapi.ServerResponse{
@@ -2255,17 +2366,17 @@ func (c *ProjectsLocationsCustomClassesDeleteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2403,17 +2514,17 @@ func (c *ProjectsLocationsCustomClassesGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomClass{
 		ServerResponse: googleapi.ServerResponse{
@@ -2575,17 +2686,17 @@ func (c *ProjectsLocationsCustomClassesListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCustomClassesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2753,17 +2864,17 @@ func (c *ProjectsLocationsCustomClassesPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomClass{
 		ServerResponse: googleapi.ServerResponse{
@@ -2830,11 +2941,11 @@ type ProjectsLocationsPhraseSetsCreateCall struct {
 // the PhraseSet.
 //
 //   - parent: The parent resource where this phrase set will be created.
-//     Format: `projects/{project}/locations/{location}/phraseSets`
-//     Speech-to-Text supports three locations: `global`, `us` (US North
-//     America), and `eu` (Europe). If you are calling the
-//     `speech.googleapis.com` endpoint, use the `global` location. To
-//     specify a region, use a regional endpoint
+//     Format: `projects/{project}/locations/{location}` Speech-to-Text
+//     supports three locations: `global`, `us` (US North America), and
+//     `eu` (Europe). If you are calling the `speech.googleapis.com`
+//     endpoint, use the `global` location. To specify a region, use a
+//     regional endpoint
 //     (https://cloud.google.com/speech-to-text/docs/endpoints) with
 //     matching `us` or `eu` location value.
 func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
@@ -2911,17 +3022,17 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PhraseSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -2944,7 +3055,7 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource where this phrase set will be created. Format: `projects/{project}/locations/{location}/phraseSets` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "description": "Required. The parent resource where this phrase set will be created. Format: `projects/{project}/locations/{location}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3047,17 +3158,17 @@ func (c *ProjectsLocationsPhraseSetsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3200,17 +3311,17 @@ func (c *ProjectsLocationsPhraseSetsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PhraseSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -3372,17 +3483,17 @@ func (c *ProjectsLocationsPhraseSetsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPhraseSetResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3550,17 +3661,17 @@ func (c *ProjectsLocationsPhraseSetsPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PhraseSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -3696,17 +3807,17 @@ func (c *SpeechLongrunningrecognizeCall) Do(opts ...googleapi.CallOption) (*Oper
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3822,17 +3933,17 @@ func (c *SpeechRecognizeCall) Do(opts ...googleapi.CallOption) (*RecognizeRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RecognizeResponse{
 		ServerResponse: googleapi.ServerResponse{

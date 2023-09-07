@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "securitycenter:v1"
 const apiName = "securitycenter"
@@ -149,6 +150,8 @@ func NewFoldersService(s *Service) *FoldersService {
 	rs.BigQueryExports = NewFoldersBigQueryExportsService(s)
 	rs.Findings = NewFoldersFindingsService(s)
 	rs.MuteConfigs = NewFoldersMuteConfigsService(s)
+	rs.NotificationConfigs = NewFoldersNotificationConfigsService(s)
+	rs.SecurityHealthAnalyticsSettings = NewFoldersSecurityHealthAnalyticsSettingsService(s)
 	rs.Sources = NewFoldersSourcesService(s)
 	return rs
 }
@@ -163,6 +166,10 @@ type FoldersService struct {
 	Findings *FoldersFindingsService
 
 	MuteConfigs *FoldersMuteConfigsService
+
+	NotificationConfigs *FoldersNotificationConfigsService
+
+	SecurityHealthAnalyticsSettings *FoldersSecurityHealthAnalyticsSettingsService
 
 	Sources *FoldersSourcesService
 }
@@ -203,6 +210,48 @@ type FoldersMuteConfigsService struct {
 	s *Service
 }
 
+func NewFoldersNotificationConfigsService(s *Service) *FoldersNotificationConfigsService {
+	rs := &FoldersNotificationConfigsService{s: s}
+	return rs
+}
+
+type FoldersNotificationConfigsService struct {
+	s *Service
+}
+
+func NewFoldersSecurityHealthAnalyticsSettingsService(s *Service) *FoldersSecurityHealthAnalyticsSettingsService {
+	rs := &FoldersSecurityHealthAnalyticsSettingsService{s: s}
+	rs.CustomModules = NewFoldersSecurityHealthAnalyticsSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewFoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type FoldersSecurityHealthAnalyticsSettingsService struct {
+	s *Service
+
+	CustomModules *FoldersSecurityHealthAnalyticsSettingsCustomModulesService
+
+	EffectiveCustomModules *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService
+}
+
+func NewFoldersSecurityHealthAnalyticsSettingsCustomModulesService(s *Service) *FoldersSecurityHealthAnalyticsSettingsCustomModulesService {
+	rs := &FoldersSecurityHealthAnalyticsSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewFoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s *Service) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService {
+	rs := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService struct {
+	s *Service
+}
+
 func NewFoldersSourcesService(s *Service) *FoldersSourcesService {
 	rs := &FoldersSourcesService{s: s}
 	rs.Findings = NewFoldersSourcesFindingsService(s)
@@ -240,10 +289,14 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.Assets = NewOrganizationsAssetsService(s)
 	rs.BigQueryExports = NewOrganizationsBigQueryExportsService(s)
+	rs.EventThreatDetectionSettings = NewOrganizationsEventThreatDetectionSettingsService(s)
 	rs.Findings = NewOrganizationsFindingsService(s)
 	rs.MuteConfigs = NewOrganizationsMuteConfigsService(s)
 	rs.NotificationConfigs = NewOrganizationsNotificationConfigsService(s)
 	rs.Operations = NewOrganizationsOperationsService(s)
+	rs.ResourceValueConfigs = NewOrganizationsResourceValueConfigsService(s)
+	rs.SecurityHealthAnalyticsSettings = NewOrganizationsSecurityHealthAnalyticsSettingsService(s)
+	rs.Simulations = NewOrganizationsSimulationsService(s)
 	rs.Sources = NewOrganizationsSourcesService(s)
 	return rs
 }
@@ -255,6 +308,8 @@ type OrganizationsService struct {
 
 	BigQueryExports *OrganizationsBigQueryExportsService
 
+	EventThreatDetectionSettings *OrganizationsEventThreatDetectionSettingsService
+
 	Findings *OrganizationsFindingsService
 
 	MuteConfigs *OrganizationsMuteConfigsService
@@ -262,6 +317,12 @@ type OrganizationsService struct {
 	NotificationConfigs *OrganizationsNotificationConfigsService
 
 	Operations *OrganizationsOperationsService
+
+	ResourceValueConfigs *OrganizationsResourceValueConfigsService
+
+	SecurityHealthAnalyticsSettings *OrganizationsSecurityHealthAnalyticsSettingsService
+
+	Simulations *OrganizationsSimulationsService
 
 	Sources *OrganizationsSourcesService
 }
@@ -281,6 +342,27 @@ func NewOrganizationsBigQueryExportsService(s *Service) *OrganizationsBigQueryEx
 }
 
 type OrganizationsBigQueryExportsService struct {
+	s *Service
+}
+
+func NewOrganizationsEventThreatDetectionSettingsService(s *Service) *OrganizationsEventThreatDetectionSettingsService {
+	rs := &OrganizationsEventThreatDetectionSettingsService{s: s}
+	rs.CustomModules = NewOrganizationsEventThreatDetectionSettingsCustomModulesService(s)
+	return rs
+}
+
+type OrganizationsEventThreatDetectionSettingsService struct {
+	s *Service
+
+	CustomModules *OrganizationsEventThreatDetectionSettingsCustomModulesService
+}
+
+func NewOrganizationsEventThreatDetectionSettingsCustomModulesService(s *Service) *OrganizationsEventThreatDetectionSettingsCustomModulesService {
+	rs := &OrganizationsEventThreatDetectionSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type OrganizationsEventThreatDetectionSettingsCustomModulesService struct {
 	s *Service
 }
 
@@ -317,6 +399,129 @@ func NewOrganizationsOperationsService(s *Service) *OrganizationsOperationsServi
 }
 
 type OrganizationsOperationsService struct {
+	s *Service
+}
+
+func NewOrganizationsResourceValueConfigsService(s *Service) *OrganizationsResourceValueConfigsService {
+	rs := &OrganizationsResourceValueConfigsService{s: s}
+	return rs
+}
+
+type OrganizationsResourceValueConfigsService struct {
+	s *Service
+}
+
+func NewOrganizationsSecurityHealthAnalyticsSettingsService(s *Service) *OrganizationsSecurityHealthAnalyticsSettingsService {
+	rs := &OrganizationsSecurityHealthAnalyticsSettingsService{s: s}
+	rs.CustomModules = NewOrganizationsSecurityHealthAnalyticsSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewOrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type OrganizationsSecurityHealthAnalyticsSettingsService struct {
+	s *Service
+
+	CustomModules *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService
+
+	EffectiveCustomModules *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService
+}
+
+func NewOrganizationsSecurityHealthAnalyticsSettingsCustomModulesService(s *Service) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService {
+	rs := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewOrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s *Service) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService {
+	rs := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService struct {
+	s *Service
+}
+
+func NewOrganizationsSimulationsService(s *Service) *OrganizationsSimulationsService {
+	rs := &OrganizationsSimulationsService{s: s}
+	rs.AttackExposureResults = NewOrganizationsSimulationsAttackExposureResultsService(s)
+	rs.AttackPaths = NewOrganizationsSimulationsAttackPathsService(s)
+	rs.ValuedResources = NewOrganizationsSimulationsValuedResourcesService(s)
+	return rs
+}
+
+type OrganizationsSimulationsService struct {
+	s *Service
+
+	AttackExposureResults *OrganizationsSimulationsAttackExposureResultsService
+
+	AttackPaths *OrganizationsSimulationsAttackPathsService
+
+	ValuedResources *OrganizationsSimulationsValuedResourcesService
+}
+
+func NewOrganizationsSimulationsAttackExposureResultsService(s *Service) *OrganizationsSimulationsAttackExposureResultsService {
+	rs := &OrganizationsSimulationsAttackExposureResultsService{s: s}
+	rs.AttackPaths = NewOrganizationsSimulationsAttackExposureResultsAttackPathsService(s)
+	rs.ValuedResources = NewOrganizationsSimulationsAttackExposureResultsValuedResourcesService(s)
+	return rs
+}
+
+type OrganizationsSimulationsAttackExposureResultsService struct {
+	s *Service
+
+	AttackPaths *OrganizationsSimulationsAttackExposureResultsAttackPathsService
+
+	ValuedResources *OrganizationsSimulationsAttackExposureResultsValuedResourcesService
+}
+
+func NewOrganizationsSimulationsAttackExposureResultsAttackPathsService(s *Service) *OrganizationsSimulationsAttackExposureResultsAttackPathsService {
+	rs := &OrganizationsSimulationsAttackExposureResultsAttackPathsService{s: s}
+	return rs
+}
+
+type OrganizationsSimulationsAttackExposureResultsAttackPathsService struct {
+	s *Service
+}
+
+func NewOrganizationsSimulationsAttackExposureResultsValuedResourcesService(s *Service) *OrganizationsSimulationsAttackExposureResultsValuedResourcesService {
+	rs := &OrganizationsSimulationsAttackExposureResultsValuedResourcesService{s: s}
+	return rs
+}
+
+type OrganizationsSimulationsAttackExposureResultsValuedResourcesService struct {
+	s *Service
+}
+
+func NewOrganizationsSimulationsAttackPathsService(s *Service) *OrganizationsSimulationsAttackPathsService {
+	rs := &OrganizationsSimulationsAttackPathsService{s: s}
+	return rs
+}
+
+type OrganizationsSimulationsAttackPathsService struct {
+	s *Service
+}
+
+func NewOrganizationsSimulationsValuedResourcesService(s *Service) *OrganizationsSimulationsValuedResourcesService {
+	rs := &OrganizationsSimulationsValuedResourcesService{s: s}
+	rs.AttackPaths = NewOrganizationsSimulationsValuedResourcesAttackPathsService(s)
+	return rs
+}
+
+type OrganizationsSimulationsValuedResourcesService struct {
+	s *Service
+
+	AttackPaths *OrganizationsSimulationsValuedResourcesAttackPathsService
+}
+
+func NewOrganizationsSimulationsValuedResourcesAttackPathsService(s *Service) *OrganizationsSimulationsValuedResourcesAttackPathsService {
+	rs := &OrganizationsSimulationsValuedResourcesAttackPathsService{s: s}
+	return rs
+}
+
+type OrganizationsSimulationsValuedResourcesAttackPathsService struct {
 	s *Service
 }
 
@@ -359,6 +564,8 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.BigQueryExports = NewProjectsBigQueryExportsService(s)
 	rs.Findings = NewProjectsFindingsService(s)
 	rs.MuteConfigs = NewProjectsMuteConfigsService(s)
+	rs.NotificationConfigs = NewProjectsNotificationConfigsService(s)
+	rs.SecurityHealthAnalyticsSettings = NewProjectsSecurityHealthAnalyticsSettingsService(s)
 	rs.Sources = NewProjectsSourcesService(s)
 	return rs
 }
@@ -373,6 +580,10 @@ type ProjectsService struct {
 	Findings *ProjectsFindingsService
 
 	MuteConfigs *ProjectsMuteConfigsService
+
+	NotificationConfigs *ProjectsNotificationConfigsService
+
+	SecurityHealthAnalyticsSettings *ProjectsSecurityHealthAnalyticsSettingsService
 
 	Sources *ProjectsSourcesService
 }
@@ -410,6 +621,48 @@ func NewProjectsMuteConfigsService(s *Service) *ProjectsMuteConfigsService {
 }
 
 type ProjectsMuteConfigsService struct {
+	s *Service
+}
+
+func NewProjectsNotificationConfigsService(s *Service) *ProjectsNotificationConfigsService {
+	rs := &ProjectsNotificationConfigsService{s: s}
+	return rs
+}
+
+type ProjectsNotificationConfigsService struct {
+	s *Service
+}
+
+func NewProjectsSecurityHealthAnalyticsSettingsService(s *Service) *ProjectsSecurityHealthAnalyticsSettingsService {
+	rs := &ProjectsSecurityHealthAnalyticsSettingsService{s: s}
+	rs.CustomModules = NewProjectsSecurityHealthAnalyticsSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type ProjectsSecurityHealthAnalyticsSettingsService struct {
+	s *Service
+
+	CustomModules *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService
+
+	EffectiveCustomModules *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService
+}
+
+func NewProjectsSecurityHealthAnalyticsSettingsCustomModulesService(s *Service) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService {
+	rs := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s *Service) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService {
+	rs := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService struct {
 	s *Service
 }
 
@@ -460,53 +713,60 @@ type Access struct {
 	MethodName string `json:"methodName,omitempty"`
 
 	// PrincipalEmail: Associated email, such as "foo@google.com". The email
-	// address of the authenticated user (or service account on behalf of
-	// third party principal) making the request. For third party identity
-	// callers, the `principal_subject` field is populated instead of this
-	// field. For privacy reasons, the principal email address is sometimes
-	// redacted. For more information, see Caller identities in audit logs
-	// (https://cloud.google.com/logging/docs/audit#user-id).
+	// address of the authenticated user or a service account acting on
+	// behalf of a third party principal making the request. For third party
+	// identity callers, the `principal_subject` field is populated instead
+	// of this field. For privacy reasons, the principal email address is
+	// sometimes redacted. For more information, see Caller identities in
+	// audit logs (https://cloud.google.com/logging/docs/audit#user-id).
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
-	// PrincipalSubject: A string representing the principal_subject
-	// associated with the identity. As compared to `principal_email`,
-	// supports principals that aren't associated with email addresses, such
-	// as third party principals. For most identities, the format will be
-	// `principal://iam.googleapis.com/{identity pool
-	// name}/subjects/{subject}` except for some GKE identities
-	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
-	// legacy format `serviceAccount:{identity pool name}[{subject}]`
+	// PrincipalSubject: A string that represents the principal_subject that
+	// is associated with the identity. Unlike `principal_email`,
+	// `principal_subject` supports principals that aren't associated with
+	// email addresses, such as third party principals. For most identities,
+	// the format is `principal://iam.googleapis.com/{identity pool
+	// name}/subject/{subject}`. Some GKE identities, such as GKE_WORKLOAD,
+	// FREEFORM, and GKE_HUB_WORKLOAD, still use the legacy format
+	// `serviceAccount:{identity pool name}[{subject}]`.
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 
-	// ServiceAccountDelegationInfo: Identity delegation history of an
-	// authenticated service account that makes the request. It contains
-	// information on the real authorities that try to access GCP resources
-	// by delegating on a service account. When multiple authorities are
+	// ServiceAccountDelegationInfo: The identity delegation history of an
+	// authenticated service account that made the request. The
+	// `serviceAccountDelegationInfo[]` object contains information about
+	// the real authorities that try to access Google Cloud resources by
+	// delegating on a service account. When multiple authorities are
 	// present, they are guaranteed to be sorted based on the original
 	// ordering of the identity delegation events.
 	ServiceAccountDelegationInfo []*ServiceAccountDelegationInfo `json:"serviceAccountDelegationInfo,omitempty"`
 
-	// ServiceAccountKeyName: The name of the service account key used to
-	// create or exchange credentials for authenticating the service account
-	// making the request. This is a scheme-less URI full resource name. For
-	// example:
+	// ServiceAccountKeyName: The name of the service account key that was
+	// used to create or exchange credentials when authenticating the
+	// service account that made the request. This is a scheme-less URI full
+	// resource name. For example:
 	// "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/
-	// keys/{key}"
+	// keys/{key}".
 	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
 
 	// ServiceName: This is the API service that the service account made a
 	// call to, e.g. "iam.googleapis.com"
 	ServiceName string `json:"serviceName,omitempty"`
 
-	// UserAgentFamily: What kind of user agent is associated, e.g.
-	// operating system shells, embedded or stand-alone applications, etc.
+	// UserAgent: The caller's user agent string associated with the
+	// finding.
+	UserAgent string `json:"userAgent,omitempty"`
+
+	// UserAgentFamily: Type of user agent associated with the finding. For
+	// example, an operating system shell or an embedded or standalone
+	// application.
 	UserAgentFamily string `json:"userAgentFamily,omitempty"`
 
-	// Username: A string representing a username. This is likely not an IAM
-	// principal. For instance, this may be the system user name if the
-	// finding is VM-related, or this may be some type of application login
-	// user name, depending on the type of finding.
-	Username string `json:"username,omitempty"`
+	// UserName: A string that represents a username. The username provided
+	// depends on the type of the finding and is likely not an IAM
+	// principal. For example, this can be a system username if the finding
+	// is related to a virtual machine, or it can be an application login
+	// username.
+	UserName string `json:"userName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
 	// unconditionally include in API requests. By default, fields with
@@ -532,13 +792,14 @@ func (s *Access) MarshalJSON() ([]byte, error) {
 }
 
 // AccessReview: Conveys information about a Kubernetes access review
-// (e.g. kubectl auth can-i ...) that was involved in a finding.
+// (such as one returned by a `kubectl auth can-i`
+// (https://kubernetes.io/docs/reference/access-authn-authz/authorization/#checking-api-access)
+// command) that was involved in a finding.
 type AccessReview struct {
-	// Group: Group is the API Group of the Resource. "*" means all.
+	// Group: The API group of the resource. "*" means all.
 	Group string `json:"group,omitempty"`
 
-	// Name: Name is the name of the resource being requested. Empty means
-	// all.
+	// Name: The name of the resource being requested. Empty means all.
 	Name string `json:"name,omitempty"`
 
 	// Ns: Namespace of the action being requested. Currently, there is no
@@ -546,18 +807,17 @@ type AccessReview struct {
 	// represented by "" (empty).
 	Ns string `json:"ns,omitempty"`
 
-	// Resource: Resource is the optional resource type requested. "*" means
-	// all.
+	// Resource: The optional resource type requested. "*" means all.
 	Resource string `json:"resource,omitempty"`
 
-	// Subresource: Subresource is the optional subresource type.
+	// Subresource: The optional subresource type.
 	Subresource string `json:"subresource,omitempty"`
 
-	// Verb: Verb is a Kubernetes resource API verb, like: get, list, watch,
-	// create, update, delete, proxy. "*" means all.
+	// Verb: A Kubernetes resource API verb, like get, list, watch, create,
+	// update, delete, proxy. "*" means all.
 	Verb string `json:"verb,omitempty"`
 
-	// Version: Version is the API Version of the Resource. "*" means all.
+	// Version: The API version of the resource. "*" means all.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Group") to
@@ -698,6 +958,250 @@ func (s *AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AttackExposure: An attack exposure contains the results of an attack
+// path simulation run.
+type AttackExposure struct {
+	// AttackExposureResult: The resource name of the attack path simulation
+	// result that contains the details regarding this attack exposure
+	// score. Example: organizations/123/attackExposureResults/456
+	AttackExposureResult string `json:"attackExposureResult,omitempty"`
+
+	// ExposedHighValueResourcesCount: The number of high value resources
+	// that are exposed as a result of this finding.
+	ExposedHighValueResourcesCount int64 `json:"exposedHighValueResourcesCount,omitempty"`
+
+	// ExposedLowValueResourcesCount: The number of high value resources
+	// that are exposed as a result of this finding.
+	ExposedLowValueResourcesCount int64 `json:"exposedLowValueResourcesCount,omitempty"`
+
+	// ExposedMediumValueResourcesCount: The number of medium value
+	// resources that are exposed as a result of this finding.
+	ExposedMediumValueResourcesCount int64 `json:"exposedMediumValueResourcesCount,omitempty"`
+
+	// LatestCalculationTime: The most recent time the attack exposure was
+	// updated on this finding.
+	LatestCalculationTime string `json:"latestCalculationTime,omitempty"`
+
+	// Score: A number between 0 (inclusive) and infinity that represents
+	// how important this finding is to remediate. The higher the score, the
+	// more important it is to remediate.
+	Score float64 `json:"score,omitempty"`
+
+	// State: What state this AttackExposure is in. This captures whether or
+	// not an attack exposure has been calculated or not.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is not specified.
+	//   "CALCULATED" - The attack exposure has been calculated.
+	//   "NOT_CALCULATED" - The attack exposure has not been calculated.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AttackExposureResult") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttackExposureResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttackExposure) MarshalJSON() ([]byte, error) {
+	type NoMethod AttackExposure
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *AttackExposure) UnmarshalJSON(data []byte) error {
+	type NoMethod AttackExposure
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
+// AttackPath: A path that an attacker could take to reach an exposed
+// resource.
+type AttackPath struct {
+	// Edges: A list of the edges between nodes in this attack path.
+	Edges []*AttackPathEdge `json:"edges,omitempty"`
+
+	// Name: The attack path name, for example,
+	// `organizations/12/simulation/34/valuedResources/56/attackPaths/78`
+	Name string `json:"name,omitempty"`
+
+	// PathNodes: A list of nodes that exist in this attack path.
+	PathNodes []*AttackPathNode `json:"pathNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Edges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Edges") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttackPath) MarshalJSON() ([]byte, error) {
+	type NoMethod AttackPath
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttackPathEdge: Represents a connection between a source node and a
+// destination node in this attack path.
+type AttackPathEdge struct {
+	// Destination: The attack node uuid of the destination node.
+	Destination string `json:"destination,omitempty"`
+
+	// Source: The attack node uuid of the source node.
+	Source string `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Destination") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttackPathEdge) MarshalJSON() ([]byte, error) {
+	type NoMethod AttackPathEdge
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttackPathNode: Represents one point that an attacker passes through
+// in this attack path.
+type AttackPathNode struct {
+	// AssociatedFindings: The findings associated with this node in the
+	// attack path.
+	AssociatedFindings []*PathNodeAssociatedFinding `json:"associatedFindings,omitempty"`
+
+	// AttackSteps: A list of attack step nodes that exist in this attack
+	// path node.
+	AttackSteps []*AttackStepNode `json:"attackSteps,omitempty"`
+
+	// DisplayName: Human-readable name of this resource.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Resource: The name of the resource at this point in the attack path.
+	// The format of the name follows the Cloud Asset Inventory resource
+	// name format
+	// ("https://cloud.google.com/asset-inventory/docs/resource-name-format")
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceType: The supported resource type
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types")
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// Uuid: Unique id of the attack path node.
+	Uuid string `json:"uuid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssociatedFindings")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssociatedFindings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttackPathNode) MarshalJSON() ([]byte, error) {
+	type NoMethod AttackPathNode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttackStepNode: Detailed steps the attack can take between path
+// nodes.
+type AttackStepNode struct {
+	// Description: Attack step description
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: User friendly name of the attack step
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Labels: Attack step labels for metadata
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Type: Attack step type. Can be either AND, OR or DEFENSE
+	//
+	// Possible values:
+	//   "NODE_TYPE_UNSPECIFIED" - Type not specified
+	//   "NODE_TYPE_AND" - Incoming edge joined with AND
+	//   "NODE_TYPE_OR" - Incoming edge joined with OR
+	//   "NODE_TYPE_DEFENSE" - Incoming edge is defense
+	//   "NODE_TYPE_ATTACKER" - Incoming edge is attacker
+	Type string `json:"type,omitempty"`
+
+	// Uuid: Unique ID for one Node
+	Uuid string `json:"uuid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttackStepNode) MarshalJSON() ([]byte, error) {
+	type NoMethod AttackStepNode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -795,6 +1299,70 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreateResourceValueConfigsRequest: Request message to create
+// multiple resource value configs
+type BatchCreateResourceValueConfigsRequest struct {
+	// Requests: Required. The resource value configs to be created.
+	Requests []*CreateResourceValueConfigRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateResourceValueConfigsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateResourceValueConfigsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreateResourceValueConfigsResponse: Response message for
+// BatchCreateResourceValueConfigs
+type BatchCreateResourceValueConfigsResponse struct {
+	// ResourceValueConfigs: The resource value configs created
+	ResourceValueConfigs []*GoogleCloudSecuritycenterV1ResourceValueConfig `json:"resourceValueConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ResourceValueConfigs") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceValueConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateResourceValueConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateResourceValueConfigsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -824,7 +1392,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -841,9 +1411,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -918,17 +1486,102 @@ func (s *BulkMuteFindingsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudDlpDataProfile: The data profile
+// (https://cloud.google.com/dlp/docs/data-profiles) associated with the
+// finding.
+type CloudDlpDataProfile struct {
+	// DataProfile: Name of the data profile, for example,
+	// `projects/123/locations/europe/tableProfiles/8383929`.
+	DataProfile string `json:"dataProfile,omitempty"`
+
+	// ParentType: The resource hierarchy level at which the data profile
+	// was generated.
+	//
+	// Possible values:
+	//   "PARENT_TYPE_UNSPECIFIED" - Unspecified parent type.
+	//   "ORGANIZATION" - Organization-level configurations.
+	//   "PROJECT" - Project-level configurations.
+	ParentType string `json:"parentType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataProfile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataProfile") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudDlpDataProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudDlpDataProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudDlpInspection: Details about the Cloud Data Loss Prevention
+// (Cloud DLP) inspection job
+// (https://cloud.google.com/dlp/docs/concepts-job-triggers) that
+// produced the finding.
+type CloudDlpInspection struct {
+	// FullScan: Whether Cloud DLP scanned the complete resource or a
+	// sampled subset.
+	FullScan bool `json:"fullScan,omitempty"`
+
+	// InfoType: The type of information (or *infoType
+	// (https://cloud.google.com/dlp/docs/infotypes-reference)*) found, for
+	// example, `EMAIL_ADDRESS` or `STREET_ADDRESS`.
+	InfoType string `json:"infoType,omitempty"`
+
+	// InfoTypeCount: The number of times Cloud DLP found this infoType
+	// within this job and resource.
+	InfoTypeCount int64 `json:"infoTypeCount,omitempty,string"`
+
+	// InspectJob: Name of the inspection job, for example,
+	// `projects/123/locations/europe/dlpJobs/i-8383929`.
+	InspectJob string `json:"inspectJob,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullScan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullScan") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudDlpInspection) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudDlpInspection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Compliance: Contains compliance information about a security standard
 // indicating unmet recommendations.
 type Compliance struct {
-	// Ids: Policies within the standard/benchmark e.g. A.12.4.1
+	// Ids: Policies within the standard or benchmark, for example, A.12.4.1
 	Ids []string `json:"ids,omitempty"`
 
-	// Standard: Refers to industry wide standards or benchmarks e.g. "cis",
-	// "pci", "owasp", etc.
+	// Standard: Industry-wide compliance standards or benchmarks, such as
+	// CIS, PCI, and OWASP.
 	Standard string `json:"standard,omitempty"`
 
-	// Version: Version of the standard/benchmark e.g. 1.1
+	// Version: Version of the standard or benchmark, for example, 1.1
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ids") to
@@ -1005,9 +1658,9 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Contact: Representa a single contact's email address
+// Contact: The email address of a contact.
 type Contact struct {
-	// Email: An email address e.g. "person123@company.com"
+	// Email: An email address. For example, "person123@company.com".
 	Email string `json:"email,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -1033,7 +1686,7 @@ func (s *Contact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ContactDetails: The details pertaining to specific contacts
+// ContactDetails: Details about specific contacts
 type ContactDetails struct {
 	// Contacts: A list of contacts
 	Contacts []*Contact `json:"contacts,omitempty"`
@@ -1063,7 +1716,10 @@ func (s *ContactDetails) MarshalJSON() ([]byte, error) {
 
 // Container: Container associated with the finding.
 type Container struct {
-	// ImageId: Optional container image id, when provided by the container
+	// CreateTime: The time that the container was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ImageId: Optional container image ID, if provided by the container
 	// runtime. Uniquely identifies the container image launched using a
 	// container image digest.
 	ImageId string `json:"imageId,omitempty"`
@@ -1071,14 +1727,15 @@ type Container struct {
 	// Labels: Container labels, as provided by the container runtime.
 	Labels []*Label `json:"labels,omitempty"`
 
-	// Name: Container name.
+	// Name: Name of the container.
 	Name string `json:"name,omitempty"`
 
-	// Uri: Container image URI provided when configuring a pod/container.
-	// May identify a container image version using mutable tags.
+	// Uri: Container image URI provided when configuring a pod or
+	// container. This string can identify a container image version using
+	// mutable tags.
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ImageId") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1086,7 +1743,7 @@ type Container struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ImageId") to include in
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1097,6 +1754,115 @@ type Container struct {
 
 func (s *Container) MarshalJSON() ([]byte, error) {
 	type NoMethod Container
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateResourceValueConfigRequest: Request message to create single
+// resource value config
+type CreateResourceValueConfigRequest struct {
+	// Parent: Required. Resource name of the new ResourceValueConfig's
+	// parent.
+	Parent string `json:"parent,omitempty"`
+
+	// ResourceValueConfig: Required. The resource value config being
+	// created.
+	ResourceValueConfig *GoogleCloudSecuritycenterV1ResourceValueConfig `json:"resourceValueConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateResourceValueConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateResourceValueConfigRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomModuleValidationError: An error encountered while validating
+// the uploaded configuration of an Event Threat Detection Custom
+// Module.
+type CustomModuleValidationError struct {
+	// Description: A description of the error, suitable for human
+	// consumption. Required.
+	Description string `json:"description,omitempty"`
+
+	// End: The end position of the error in the uploaded text version of
+	// the module. This field may be omitted if no specific position
+	// applies, or if one could not be computed..
+	End *Position `json:"end,omitempty"`
+
+	// FieldPath: The path, in RFC 8901 JSON Pointer format, to the field
+	// that failed validation. This may be left empty if no specific field
+	// is affected.
+	FieldPath string `json:"fieldPath,omitempty"`
+
+	// Start: The initial position of the error in the uploaded text version
+	// of the module. This field may be omitted if no specific position
+	// applies, or if one could not be computed.
+	Start *Position `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomModuleValidationError) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomModuleValidationError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomModuleValidationErrors: A list of zero or more errors
+// encountered while validating the uploaded configuration of an Event
+// Threat Detection Custom Module.
+type CustomModuleValidationErrors struct {
+	Errors []*CustomModuleValidationError `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomModuleValidationErrors) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomModuleValidationErrors
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1301,31 +2067,41 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 
 // Database: Represents database access information, such as queries. A
 // database may be a sub-resource of an instance (as in the case of
-// CloudSQL instances or Cloud Spanner instances), or the database
-// instance itself. Some database resources may not have the full
-// resource name populated because these resource types are not yet
-// supported by Cloud Asset Inventory (e.g. CloudSQL databases). In
-// these cases only the display name will be provided.
+// Cloud SQL instances or Cloud Spanner instances), or the database
+// instance itself. Some database resources might not have the full
+// resource name (https://google.aip.dev/122#full-resource-names)
+// populated because these resource types, such as Cloud SQL databases,
+// are not yet supported by Cloud Asset Inventory. In these cases only
+// the display name is provided.
 type Database struct {
-	// DisplayName: The human readable name of the database the user
+	// DisplayName: The human-readable name of the database that the user
 	// connected to.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Grantees: The target usernames/roles/groups of a SQL privilege grant
-	// (not an IAM policy change).
+	// Grantees: The target usernames, roles, or groups of an SQL privilege
+	// grant, which is not an IAM policy change.
 	Grantees []string `json:"grantees,omitempty"`
 
-	// Name: The full resource name of the database the user connected to,
-	// if it is supported by CAI.
-	// (https://google.aip.dev/122#full-resource-names)
+	// Name: Some database resources may not have the full resource name
+	// (https://google.aip.dev/122#full-resource-names) populated because
+	// these resource types are not yet supported by Cloud Asset Inventory
+	// (e.g. Cloud SQL databases). In these cases only the display name will
+	// be provided. The full resource name
+	// (https://google.aip.dev/122#full-resource-names) of the database that
+	// the user connected to, if it is supported by Cloud Asset Inventory.
 	Name string `json:"name,omitempty"`
 
-	// Query: The SQL statement associated with the relevant access.
+	// Query: The SQL statement that is associated with the database access.
 	Query string `json:"query,omitempty"`
 
-	// UserName: The username used to connect to the DB. This may not
-	// necessarily be an IAM principal, and has no required format.
+	// UserName: The username used to connect to the database. The username
+	// might not be an IAM principal and does not have a set format.
 	UserName string `json:"userName,omitempty"`
+
+	// Version: The version of the database, for example, POSTGRES_14. See
+	// the complete list
+	// (https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/SqlDatabaseVersion).
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -1409,8 +2185,8 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EnvironmentVariable: EnvironmentVariable is a name-value pair to
-// store environment variables for Process.
+// EnvironmentVariable: A name-value pair representing an environment
+// variable used in an operating system process.
 type EnvironmentVariable struct {
 	// Name: Environment variable name as a JSON encoded string.
 	Name string `json:"name,omitempty"`
@@ -1441,16 +2217,89 @@ func (s *EnvironmentVariable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExfilResource: Resource that has been exfiltrated or exfiltrated_to.
+// EventThreatDetectionCustomModule: Represents an instance of an Event
+// Threat Detection custom module, including its full module name,
+// display name, enablement state, and last updated time. You can create
+// a custom module at the organization level only.
+type EventThreatDetectionCustomModule struct {
+	// Config: Config for the module. For the resident module, its config
+	// value is defined at this level. For the inherited module, its config
+	// value is inherited from the ancestor module.
+	Config googleapi.RawMessage `json:"config,omitempty"`
+
+	// Description: The description for the module.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The human readable name to be displayed for the module.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnablementState: The state of enablement for the module at the given
+	// level of the hierarchy.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
+	//   "ENABLED" - The module is enabled at the given level.
+	//   "DISABLED" - The module is disabled at the given level.
+	EnablementState string `json:"enablementState,omitempty"`
+
+	// LastEditor: Output only. The editor the module was last updated by.
+	LastEditor string `json:"lastEditor,omitempty"`
+
+	// Name: Immutable. The resource name of the Event Threat Detection
+	// custom module. Its format is: *
+	// "organizations/{organization}/eventThreatDetectionSettings/customModul
+	// es/{module}". *
+	// "folders/{folder}/eventThreatDetectionSettings/customModules/{module}"
+	// . *
+	// "projects/{project}/eventThreatDetectionSettings/customModules/{module
+	// }".
+	Name string `json:"name,omitempty"`
+
+	// Type: Type for the module. e.g. CONFIGURABLE_BAD_IP.
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Output only. The time the module was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventThreatDetectionCustomModule) MarshalJSON() ([]byte, error) {
+	type NoMethod EventThreatDetectionCustomModule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExfilResource: Resource where data was exfiltrated from or
+// exfiltrated to.
 type ExfilResource struct {
-	// Components: Subcomponents of the asset that is exfiltrated - these
-	// could be URIs used during exfiltration, table names, databases,
-	// filenames, etc. For example, multiple tables may be exfiltrated from
-	// the same CloudSQL instance, or multiple files from the same Cloud
-	// Storage bucket.
+	// Components: Subcomponents of the asset that was exfiltrated, like
+	// URIs used during exfiltration, table names, databases, and filenames.
+	// For example, multiple tables might have been exfiltrated from the
+	// same Cloud SQL instance, or multiple files might have been
+	// exfiltrated from the same Cloud Storage bucket.
 	Components []string `json:"components,omitempty"`
 
-	// Name: Resource's URI (https://google.aip.dev/122#full-resource-names)
+	// Name: The resource's full resource name
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name).
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Components") to
@@ -1476,10 +2325,10 @@ func (s *ExfilResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Exfiltration: Exfiltration represents a data exfiltration attempt of
-// one or more sources to one or more targets. Sources represent the
-// source of data that is exfiltrated, and Targets represents the
-// destination the data was copied to.
+// Exfiltration: Exfiltration represents a data exfiltration attempt
+// from one or more sources to one or more targets. The `sources`
+// attribute lists the sources of the exfiltrated data. The `targets`
+// attribute lists the destinations the data was copied to.
 type Exfiltration struct {
 	// Sources: If there are multiple sources, then the data is considered
 	// "joined" between them. For instance, BigQuery can join multiple
@@ -1576,8 +2425,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // File: File information about the related binary/library used by an
 // executable, or the script used by a script interpreter
 type File struct {
-	// Contents: Prefix of the file contents as a JSON encoded string.
-	// (Currently only populated for Malicious Script Executed findings.)
+	// Contents: Prefix of the file contents as a JSON-encoded string.
 	Contents string `json:"contents,omitempty"`
 
 	// HashedSize: The length in bytes of the file prefix that was hashed.
@@ -1629,10 +2477,13 @@ func (s *File) MarshalJSON() ([]byte, error) {
 // scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
-	// Access: Access details associated to the Finding, such as more
-	// information on the caller, which method was accessed, from where,
-	// etc.
+	// Access: Access details associated with the finding, such as more
+	// information on the caller, which method was accessed, and from where.
 	Access *Access `json:"access,omitempty"`
+
+	// AttackExposure: The results of an attack path simulation relevant to
+	// this finding.
+	AttackExposure *AttackExposure `json:"attackExposure,omitempty"`
 
 	// CanonicalName: The canonical name of the finding. It's either
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
@@ -1647,6 +2498,14 @@ type Finding struct {
 	// source. This field is immutable after creation time. Example:
 	// "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
+
+	// CloudDlpDataProfile: Cloud DLP data profile that is associated with
+	// the finding.
+	CloudDlpDataProfile *CloudDlpDataProfile `json:"cloudDlpDataProfile,omitempty"`
+
+	// CloudDlpInspection: Cloud Data Loss Prevention (Cloud DLP) inspection
+	// results that are associated with the finding.
+	CloudDlpInspection *CloudDlpInspection `json:"cloudDlpInspection,omitempty"`
 
 	// Compliances: Contains compliance information for security standards
 	// associated to the finding.
@@ -1665,7 +2524,7 @@ type Finding struct {
 	// "email": "person2@company.com" } ] } }
 	Contacts map[string]ContactDetails `json:"contacts,omitempty"`
 
-	// Containers: Containers associated with the finding. containers
+	// Containers: Containers associated with the finding. This field
 	// provides information for both Kubernetes and non-Kubernetes
 	// containers.
 	Containers []*Container `json:"containers,omitempty"`
@@ -1677,7 +2536,7 @@ type Finding struct {
 	// Database: Database associated with the finding.
 	Database *Database `json:"database,omitempty"`
 
-	// Description: Contains more detail about the finding.
+	// Description: Contains more details about the finding.
 	Description string `json:"description,omitempty"`
 
 	// EventTime: The time the finding was first detected. If an existing
@@ -1689,7 +2548,7 @@ type Finding struct {
 	// must not be set to a value greater than the current timestamp.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// Exfiltration: Represents exfiltration associated with the Finding.
+	// Exfiltration: Represents exfiltrations associated with the finding.
 	Exfiltration *Exfiltration `json:"exfiltration,omitempty"`
 
 	// ExternalSystems: Output only. Third party SIEM/SOAR fields within
@@ -1702,6 +2561,9 @@ type Finding struct {
 	// finding can be found. This field is guaranteed to be either empty or
 	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
+
+	// Files: File associated with the finding.
+	Files []*File `json:"files,omitempty"`
 
 	// FindingClass: The class of the finding.
 	//
@@ -1718,15 +2580,19 @@ type Finding struct {
 	// functionality.
 	FindingClass string `json:"findingClass,omitempty"`
 
-	// IamBindings: Represents IAM bindings associated with the Finding.
+	// IamBindings: Represents IAM bindings associated with the finding.
 	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
 
-	// Indicator: Represents what's commonly known as an Indicator of
-	// compromise (IoC) in computer forensics. This is an artifact observed
+	// Indicator: Represents what's commonly known as an *indicator of
+	// compromise* (IoC) in computer forensics. This is an artifact observed
 	// on a network or in an operating system that, with high confidence,
-	// indicates a computer intrusion. Reference:
-	// https://en.wikipedia.org/wiki/Indicator_of_compromise
+	// indicates a computer intrusion. For more information, see Indicator
+	// of compromise
+	// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 	Indicator *Indicator `json:"indicator,omitempty"`
+
+	// KernelRootkit: Signature of the kernel rootkit.
+	KernelRootkit *KernelRootkit `json:"kernelRootkit,omitempty"`
 
 	// Kubernetes: Kubernetes resources associated with the finding.
 	Kubernetes *Kubernetes `json:"kubernetes,omitempty"`
@@ -1734,6 +2600,12 @@ type Finding struct {
 	// MitreAttack: MITRE ATT&CK tactics and techniques related to this
 	// finding. See: https://attack.mitre.org
 	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
+
+	// ModuleName: Unique identifier of the module which generated the
+	// finding. Example:
+	// folders/598186756061/securityHealthAnalyticsSettings/customModules/567
+	// 99441161885
+	ModuleName string `json:"moduleName,omitempty"`
 
 	// Mute: Indicates the mute state of a finding (either muted, unmuted or
 	// undefined). Unlike other attributes of a finding, a finding provider
@@ -1746,24 +2618,26 @@ type Finding struct {
 	//   "UNDEFINED" - Finding has never been muted/unmuted.
 	Mute string `json:"mute,omitempty"`
 
-	// MuteInitiator: First known as mute_annotation. Records additional
-	// information about the mute operation e.g. mute config that muted the
-	// finding, user who muted the finding, etc. Unlike other attributes of
-	// a finding, a finding provider shouldn't set the value of mute.
+	// MuteInitiator: Records additional information about the mute
+	// operation, for example, the mute configuration
+	// (/security-command-center/docs/how-to-mute-findings) that muted the
+	// finding and the user who muted the finding.
 	MuteInitiator string `json:"muteInitiator,omitempty"`
 
 	// MuteUpdateTime: Output only. The most recent time this finding was
 	// muted or unmuted.
 	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
 
-	// Name: The relative resource name of this finding. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Example:
+	// Name: The relative resource name
+	// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+	// of the finding. Example:
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-	// _id}"
+	// _id}",
+	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+	// "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 	Name string `json:"name,omitempty"`
 
-	// NextSteps: Next steps associate to the finding.
+	// NextSteps: Steps to address the finding.
 	NextSteps string `json:"nextSteps,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
@@ -1806,7 +2680,7 @@ type Finding struct {
 	// direct ability to execute arbitrary code, exfiltrate data, and
 	// otherwise gain additional access and privileges to cloud resources
 	// and workloads. Examples include publicly accessible unprotected user
-	// data, public SSH access with weak or no passwords, etc. Threat:
+	// data and public SSH access with weak or no passwords. Threat:
 	// Indicates a threat that is able to access, modify, or delete data or
 	// execute unauthorized code within existing resources.
 	//   "HIGH" - Vulnerability: A high risk vulnerability can be easily
@@ -1855,8 +2729,8 @@ type Finding struct {
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
-	// Vulnerability: Represents vulnerability specific fields like cve,
-	// cvss scores etc. CVE stands for Common Vulnerabilities and Exposures
+	// Vulnerability: Represents vulnerability-specific fields like CVE and
+	// CVSS scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
 	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
 
@@ -2023,7 +2897,7 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV1BigQueryExport: Configures how to deliver
 // Findings to BigQuery Instance.
 type GoogleCloudSecuritycenterV1BigQueryExport struct {
-	// CreateTime: Output only. The time at which the big query export was
+	// CreateTime: Output only. The time at which the BigQuery export was
 	// created. This field is set by the server and will be ignored if
 	// provided on export on creation.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2051,7 +2925,7 @@ type GoogleCloudSecuritycenterV1BigQueryExport struct {
 	Filter string `json:"filter,omitempty"`
 
 	// MostRecentEditor: Output only. Email address of the user who last
-	// edited the big query export. This field is set by the server and will
+	// edited the BigQuery export. This field is set by the server and will
 	// be ignored if provided on export creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
 
@@ -2066,12 +2940,12 @@ type GoogleCloudSecuritycenterV1BigQueryExport struct {
 	Name string `json:"name,omitempty"`
 
 	// Principal: Output only. The service account that needs permission to
-	// create table, upload data to the big query dataset.
+	// create table and upload data to the BigQuery dataset.
 	Principal string `json:"principal,omitempty"`
 
-	// UpdateTime: Output only. The most recent time at which the big export
-	// was updated. This field is set by the server and will be ignored if
-	// provided on export creation or update.
+	// UpdateTime: Output only. The most recent time at which the BigQuery
+	// export was updated. This field is set by the server and will be
+	// ignored if provided on export creation or update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2104,17 +2978,17 @@ func (s *GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error
 // GoogleCloudSecuritycenterV1Binding: Represents a Kubernetes
 // RoleBinding or ClusterRoleBinding.
 type GoogleCloudSecuritycenterV1Binding struct {
-	// Name: Name for binding.
+	// Name: Name for the binding.
 	Name string `json:"name,omitempty"`
 
-	// Ns: Namespace for binding.
+	// Ns: Namespace for the binding.
 	Ns string `json:"ns,omitempty"`
 
 	// Role: The Role or ClusterRole referenced by the binding.
 	Role *Role `json:"role,omitempty"`
 
-	// Subjects: Represents the subjects(s) bound to the role. Not always
-	// available for PATCH requests.
+	// Subjects: Represents one or more subjects that are bound to the role.
+	// Not always available for PATCH requests.
 	Subjects []*Subject `json:"subjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2145,14 +3019,166 @@ func (s *GoogleCloudSecuritycenterV1Binding) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 }
 
-// GoogleCloudSecuritycenterV1ExposedResource: A resource that is
-// exposed as a result of a finding.
-type GoogleCloudSecuritycenterV1ExposedResource struct {
+// GoogleCloudSecuritycenterV1CustomConfig: Defines the properties in a
+// custom module configuration for Security Health Analytics. Use the
+// custom module configuration to create custom detectors that generate
+// custom findings for resources that you specify.
+type GoogleCloudSecuritycenterV1CustomConfig struct {
+	// CustomOutput: Custom output properties.
+	CustomOutput *GoogleCloudSecuritycenterV1CustomOutputSpec `json:"customOutput,omitempty"`
+
+	// Description: Text that describes the vulnerability or
+	// misconfiguration that the custom module detects. This explanation is
+	// returned with each finding instance to help investigators understand
+	// the detected issue. The text must be enclosed in quotation marks.
+	Description string `json:"description,omitempty"`
+
+	// Predicate: The CEL expression to evaluate to produce findings. When
+	// the expression evaluates to true against a resource, a finding is
+	// generated.
+	Predicate *Expr `json:"predicate,omitempty"`
+
+	// Recommendation: An explanation of the recommended steps that security
+	// teams can take to resolve the detected issue. This explanation is
+	// returned with each finding generated by this module in the
+	// `nextSteps` property of the finding JSON.
+	Recommendation string `json:"recommendation,omitempty"`
+
+	// ResourceSelector: The resource types that the custom module operates
+	// on. Each custom module can specify up to 5 resource types.
+	ResourceSelector *GoogleCloudSecuritycenterV1ResourceSelector `json:"resourceSelector,omitempty"`
+
+	// Severity: The severity to assign to findings generated by the module.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	//   "MEDIUM" - Medium severity.
+	//   "LOW" - Low severity.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomOutput") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomOutput") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
-// GoogleCloudSecuritycenterV1ExposurePath: A path that an attacker
-// could take to reach an exposed resource.
-type GoogleCloudSecuritycenterV1ExposurePath struct {
+func (s *GoogleCloudSecuritycenterV1CustomConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1CustomConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1CustomOutputSpec: A set of optional
+// name-value pairs that define custom source properties to return with
+// each finding that is generated by the custom module. The custom
+// source properties that are defined here are included in the finding
+// JSON under `sourceProperties`.
+type GoogleCloudSecuritycenterV1CustomOutputSpec struct {
+	// Properties: A list of custom output properties to add to the finding.
+	Properties []*GoogleCloudSecuritycenterV1Property `json:"properties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Properties") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1CustomOutputSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1CustomOutputSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModul
+// e: An EffectiveSecurityHealthAnalyticsCustomModule is the
+// representation of a Security Health Analytics custom module at a
+// specified level of the resource hierarchy: organization, folder, or
+// project. If a custom module is inherited from a parent organization
+// or folder, the value of the `enablementState` property in
+// EffectiveSecurityHealthAnalyticsCustomModule is set to the value that
+// is effective in the parent, instead of `INHERITED`. For example, if
+// the module is enabled in a parent organization or folder, the
+// effective enablement_state for the module in all child folders or
+// projects is also `enabled`.
+// EffectiveSecurityHealthAnalyticsCustomModule is read-only.
+type GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule struct {
+	// CustomConfig: Output only. The user-specified configuration for the
+	// module.
+	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
+
+	// DisplayName: Output only. The display name for the custom module. The
+	// name must be between 1 and 128 characters, start with a lowercase
+	// letter, and contain alphanumeric characters or underscores only.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnablementState: Output only. The effective state of enablement for
+	// the module at the given level of the hierarchy.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
+	//   "ENABLED" - The module is enabled at the given level.
+	//   "DISABLED" - The module is disabled at the given level.
+	EnablementState string `json:"enablementState,omitempty"`
+
+	// Name: Output only. The resource name of the custom module. Its format
+	// is
+	// "organizations/{organization}/securityHealthAnalyticsSettings/effectiv
+	// eCustomModules/{customModule}", or
+	// "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModul
+	// es/{customModule}", or
+	// "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomMod
+	// ules/{customModule}"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
@@ -2170,10 +3196,10 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// external system.
 	ExternalUid string `json:"externalUid,omitempty"`
 
-	// Name: External System Name e.g. jira, demisto, etc. e.g.:
-	// `organizations/1234/sources/5678/findings/123456/externalSystems/jira`
-	//  `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-	// `projects/1234/sources/5678/findings/123456/externalSystems/jira`
+	// Name: Full resource name of the external system, for example:
+	// "organizations/1234/sources/5678/findings/123456/externalSystems/jira"
+	// , "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+	// "projects/1234/sources/5678/findings/123456/externalSystems/jira"
 	Name string `json:"name,omitempty"`
 
 	// Status: Most recent status of the corresponding finding's
@@ -2317,6 +3343,40 @@ func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV1Property: An individual name-value pair
+// that defines a custom source property.
+type GoogleCloudSecuritycenterV1Property struct {
+	// Name: Name of the property for the custom output.
+	Name string `json:"name,omitempty"`
+
+	// ValueExpression: The CEL expression for the custom output. A resource
+	// property can be specified to return the value of the property or a
+	// text string enclosed in quotation marks.
+	ValueExpression *Expr `json:"valueExpression,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1Property
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1Resource: Information related to the
 // Google Cloud resource.
 type GoogleCloudSecuritycenterV1Resource struct {
@@ -2371,12 +3431,62 @@ func (s *GoogleCloudSecuritycenterV1Resource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV1ResourceSelector: Resource for selecting
+// resource type.
+type GoogleCloudSecuritycenterV1ResourceSelector struct {
+	// ResourceTypes: The resource types to run the detector on.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ResourceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1ResourceValueConfig: A resource value
 // config is a mapping configuration of user's tag values to resource
 // values. Used by the attack path simulation.
 type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
+	// CreateTime: Output only. Timestamp this resource value config was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Description of the resource value config.
+	Description string `json:"description,omitempty"`
+
 	// Name: Name for the resource value config
 	Name string `json:"name,omitempty"`
+
+	// ResourceLabelsSelector: List of resource labels to search for,
+	// evaluated with AND. E.g. "resource_labels_selector": {"key": "value",
+	// "env": "prod"} will match resources with labels "key": "value" AND
+	// "env": "prod"
+	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
+	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
+
+	// ResourceType: Apply resource_value only to resources that match
+	// resource_type. resource_type will be checked with "AND" of other
+	// resources. E.g. "storage.googleapis.com/Bucket" with resource_value
+	// "HIGH" will apply "HIGH" value only to
+	// "storage.googleapis.com/Bucket" resources.
+	ResourceType string `json:"resourceType,omitempty"`
 
 	// ResourceValue: Required. Resource value level this expression
 	// represents
@@ -2389,13 +3499,26 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	//   "NONE" - No resource value, e.g. ignore these resources
 	ResourceValue string `json:"resourceValue,omitempty"`
 
+	// Scope: Project or folder to scope this config to. For example,
+	// "project/456" would apply this config only to resources in
+	// "project/456" scope will be checked with "AND" of other resources.
+	Scope string `json:"scope,omitempty"`
+
 	// TagValues: Required. Tag values combined with AND to check against.
 	// Values in the form "tagValues/123" E.g. [ "tagValues/123",
 	// "tagValues/456", "tagValues/789" ]
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// UpdateTime: Output only. Timestamp this resource value config was
+	// last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2403,8 +3526,8 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2454,6 +3577,89 @@ type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
 
 func (s *GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule:
+// Represents an instance of a Security Health Analytics custom module,
+// including its full module name, display name, enablement state, and
+// last updated time. You can create a custom module at the
+// organization, folder, or project level. Custom modules that you
+// create at the organization or folder level are inherited by the child
+// folders and projects.
+type GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule struct {
+	// AncestorModule: Output only. If empty, indicates that the custom
+	// module was created in the organization, folder, or project in which
+	// you are viewing the custom module. Otherwise, `ancestor_module`
+	// specifies the organization or folder from which the custom module is
+	// inherited.
+	AncestorModule string `json:"ancestorModule,omitempty"`
+
+	// CustomConfig: The user specified custom configuration for the module.
+	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
+
+	// DisplayName: The display name of the Security Health Analytics custom
+	// module. This display name becomes the finding category for all
+	// findings that are returned by this custom module. The display name
+	// must be between 1 and 128 characters, start with a lowercase letter,
+	// and contain alphanumeric characters or underscores only.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnablementState: The enablement state of the custom module.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
+	//   "ENABLED" - The module is enabled at the given CRM resource.
+	//   "DISABLED" - The module is disabled at the given CRM resource.
+	//   "INHERITED" - State is inherited from an ancestor module. The
+	// module will either be effectively ENABLED or DISABLED based on its
+	// closest non-inherited ancestor module in the CRM hierarchy.
+	EnablementState string `json:"enablementState,omitempty"`
+
+	// LastEditor: Output only. The editor that last updated the custom
+	// module.
+	LastEditor string `json:"lastEditor,omitempty"`
+
+	// Name: Immutable. The resource name of the custom module. Its format
+	// is
+	// "organizations/{organization}/securityHealthAnalyticsSettings/customMo
+	// dules/{customModule}", or
+	// "folders/{folder}/securityHealthAnalyticsSettings/customModules/{custo
+	// mModule}", or
+	// "projects/{project}/securityHealthAnalyticsSettings/customModules/{cus
+	// tomModule}" The id {customModule} is server-generated and is not user
+	// settable. It will be a numeric id containing 1-20 digits.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The time at which the custom module was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AncestorModule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AncestorModule") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3188,7 +4394,7 @@ type IamBinding struct {
 	Action string `json:"action,omitempty"`
 
 	// Member: A single identity requesting access for a Cloud Platform
-	// resource, e.g. "foo@google.com".
+	// resource, for example, "foo@google.com".
 	Member string `json:"member,omitempty"`
 
 	// Role: Role that is assigned to "members". For example,
@@ -3251,16 +4457,18 @@ func (s *IamPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Indicator: Represents what's commonly known as an Indicator of
-// compromise (IoC) in computer forensics. This is an artifact observed
+// Indicator: Represents what's commonly known as an _indicator of
+// compromise_ (IoC) in computer forensics. This is an artifact observed
 // on a network or in an operating system that, with high confidence,
-// indicates a computer intrusion. Reference:
-// https://en.wikipedia.org/wiki/Indicator_of_compromise
+// indicates a computer intrusion. For more information, see Indicator
+// of compromise
+// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 type Indicator struct {
 	// Domains: List of domains associated to the Finding.
 	Domains []string `json:"domains,omitempty"`
 
-	// IpAddresses: List of ip addresses associated to the Finding.
+	// IpAddresses: The list of IP addresses that are associated with the
+	// finding.
 	IpAddresses []string `json:"ipAddresses,omitempty"`
 
 	// Signatures: The list of matched signatures indicating that the given
@@ -3293,30 +4501,100 @@ func (s *Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Kubernetes: Kubernetes related attributes.
+// KernelRootkit: Kernel mode rootkit signatures.
+type KernelRootkit struct {
+	// Name: Rootkit name, when available.
+	Name string `json:"name,omitempty"`
+
+	// UnexpectedCodeModification: True if unexpected modifications of
+	// kernel code memory are present.
+	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
+
+	// UnexpectedFtraceHandler: True if `ftrace` points are present with
+	// callbacks pointing to regions that are not in the expected kernel or
+	// module code range.
+	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
+
+	// UnexpectedInterruptHandler: True if interrupt handlers that are are
+	// not in the expected kernel or module code regions are present.
+	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
+
+	// UnexpectedKernelCodePages: True if kernel code pages that are not in
+	// the expected kernel or module code regions are present.
+	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
+
+	// UnexpectedKprobeHandler: True if `kprobe` points are present with
+	// callbacks pointing to regions that are not in the expected kernel or
+	// module code range.
+	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
+
+	// UnexpectedProcessesInRunqueue: True if unexpected processes in the
+	// scheduler run queue are present. Such processes are in the run queue,
+	// but not in the process task list.
+	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
+
+	// UnexpectedReadOnlyDataModification: True if unexpected modifications
+	// of kernel read-only data memory are present.
+	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
+
+	// UnexpectedSystemCallHandler: True if system call handlers that are
+	// are not in the expected kernel or module code regions are present.
+	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
+	type NoMethod KernelRootkit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Kubernetes: Kubernetes-related attributes.
 type Kubernetes struct {
 	// AccessReviews: Provides information on any Kubernetes access reviews
-	// (i.e. privilege checks) relevant to the finding.
+	// (privilege checks) relevant to the finding.
 	AccessReviews []*AccessReview `json:"accessReviews,omitempty"`
 
 	// Bindings: Provides Kubernetes role binding information for findings
-	// that involve RoleBindings or ClusterRoleBindings.
+	// that involve RoleBindings or ClusterRoleBindings
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
 	Bindings []*GoogleCloudSecuritycenterV1Binding `json:"bindings,omitempty"`
 
-	// NodePools: GKE Node Pools associated with the finding. This field
-	// will contain NodePool information for each Node, when it is
-	// available.
+	// NodePools: GKE node pools
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools)
+	// associated with the finding. This field contains node pool
+	// information for each node, when it is available.
 	NodePools []*NodePool `json:"nodePools,omitempty"`
 
-	// Nodes: Provides Kubernetes Node information.
+	// Nodes: Provides Kubernetes node
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture#nodes)
+	// information.
 	Nodes []*Node `json:"nodes,omitempty"`
 
-	// Pods: Kubernetes Pods associated with the finding. This field will
-	// contain Pod records for each container that is owned by a Pod.
+	// Pods: Kubernetes Pods
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/pod)
+	// associated with the finding. This field contains Pod records for each
+	// container that is owned by a Pod.
 	Pods []*Pod `json:"pods,omitempty"`
 
 	// Roles: Provides Kubernetes role information for findings that involve
-	// Roles or ClusterRoles.
+	// Roles or ClusterRoles
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
 	Roles []*Role `json:"roles,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessReviews") to
@@ -3342,13 +4620,15 @@ func (s *Kubernetes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Label: Label represents a generic name=value label. Label has
-// separate name and value fields to support filtering with contains().
+// Label: Represents a generic name-value label. A label has separate
+// name and value fields to support filtering with the `contains()`
+// function. For more information, see Filtering on array-type fields
+// (https://cloud.google.com/security-command-center/docs/how-to-api-list-findings#array-contains-filtering).
 type Label struct {
-	// Name: Label name.
+	// Name: Name of the label.
 	Name string `json:"name,omitempty"`
 
-	// Value: Label value.
+	// Value: Value that corresponds to the label's name.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -3455,6 +4735,44 @@ func (s *ListAssetsResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListAttackPathsResponse: Response message for listing the attack
+// paths for a given simulation or valued resource.
+type ListAttackPathsResponse struct {
+	// AttackPaths: The attack paths that the attack path simulation
+	// identified.
+	AttackPaths []*AttackPath `json:"attackPaths,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AttackPaths") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttackPaths") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAttackPathsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAttackPathsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListBigQueryExportsResponse: Response message for listing BigQuery
 // exports.
 type ListBigQueryExportsResponse struct {
@@ -3490,6 +4808,127 @@ type ListBigQueryExportsResponse struct {
 
 func (s *ListBigQueryExportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBigQueryExportsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListDescendantSecurityHealthAnalyticsCustomModulesResponse: Response
+// message for listing descendant Security Health Analytics custom
+// modules.
+type ListDescendantSecurityHealthAnalyticsCustomModulesResponse struct {
+	// NextPageToken: If not empty, indicates that there may be more custom
+	// modules to be returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityHealthAnalyticsCustomModules: Custom modules belonging to the
+	// requested parent and its descendants.
+	SecurityHealthAnalyticsCustomModules []*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule `json:"securityHealthAnalyticsCustomModules,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDescendantSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDescendantSecurityHealthAnalyticsCustomModulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEffectiveSecurityHealthAnalyticsCustomModulesResponse: Response
+// message for listing effective Security Health Analytics custom
+// modules.
+type ListEffectiveSecurityHealthAnalyticsCustomModulesResponse struct {
+	// EffectiveSecurityHealthAnalyticsCustomModules: Effective custom
+	// modules belonging to the requested parent.
+	EffectiveSecurityHealthAnalyticsCustomModules []*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule `json:"effectiveSecurityHealthAnalyticsCustomModules,omitempty"`
+
+	// NextPageToken: If not empty, indicates that there may be more
+	// effective custom modules to be returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveSecurityHealthAnalyticsCustomModules") to unconditionally
+	// include in API requests. By default, fields with empty or default
+	// values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EffectiveSecurityHealthAnalyticsCustomModules") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEffectiveSecurityHealthAnalyticsCustomModulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEventThreatDetectionCustomModulesResponse: Response for listing
+// Event Threat Detection custom modules.
+type ListEventThreatDetectionCustomModulesResponse struct {
+	// EventThreatDetectionCustomModules: Custom modules belonging to the
+	// requested parent.
+	EventThreatDetectionCustomModules []*EventThreatDetectionCustomModule `json:"eventThreatDetectionCustomModules,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EventThreatDetectionCustomModules") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EventThreatDetectionCustomModules") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEventThreatDetectionCustomModulesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3695,6 +5134,82 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListResourceValueConfigsResponse: Response message to list resource
+// value configs
+type ListResourceValueConfigsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ResourceValueConfigs: The resource value configs from the specified
+	// parent.
+	ResourceValueConfigs []*GoogleCloudSecuritycenterV1ResourceValueConfig `json:"resourceValueConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListResourceValueConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListResourceValueConfigsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSecurityHealthAnalyticsCustomModulesResponse: Response message
+// for listing Security Health Analytics custom modules.
+type ListSecurityHealthAnalyticsCustomModulesResponse struct {
+	// NextPageToken: If not empty, indicates that there may be more custom
+	// modules to be returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityHealthAnalyticsCustomModules: Custom modules belonging to the
+	// requested parent.
+	SecurityHealthAnalyticsCustomModules []*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule `json:"securityHealthAnalyticsCustomModules,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSecurityHealthAnalyticsCustomModulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSourcesResponse: Response message for listing sources.
 type ListSourcesResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
@@ -3727,6 +5242,47 @@ type ListSourcesResponse struct {
 
 func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSourcesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListValuedResourcesResponse: Response message for listing the valued
+// resources for a given simulation.
+type ListValuedResourcesResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: The estimated total number of results matching the query.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ValuedResources: The valued resources that the attack path simulation
+	// identified.
+	ValuedResources []*ValuedResource `json:"valuedResources,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListValuedResourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListValuedResourcesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3827,6 +5383,8 @@ type MitreAttack struct {
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "DEFAULT_ACCOUNTS" - T1078.001
+	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -3894,6 +5452,8 @@ type MitreAttack struct {
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "DEFAULT_ACCOUNTS" - T1078.001
+	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.
@@ -3924,10 +5484,11 @@ func (s *MitreAttack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Node: Kubernetes Nodes associated with the finding.
+// Node: Kubernetes nodes associated with the finding.
 type Node struct {
-	// Name: Full Resource name of the Compute Engine VM running the cluster
-	// node.
+	// Name: Full resource name
+	// (https://google.aip.dev/122#full-resource-names) of the Compute
+	// Engine VM running the cluster node.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -3953,9 +5514,9 @@ func (s *Node) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NodePool: Provides GKE Node Pool information.
+// NodePool: Provides GKE node pool information.
 type NodePool struct {
-	// Name: Kubernetes Node pool name.
+	// Name: Kubernetes node pool name.
 	Name string `json:"name,omitempty"`
 
 	// Nodes: Nodes associated with the finding.
@@ -3997,7 +5558,8 @@ type NotificationConfig struct {
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
 	// Example:
 	// "organizations/{organization_id}/notificationConfigs/notify_public_buc
-	// ket".
+	// ket", "folders/{folder_id}/notificationConfigs/notify_public_bucket",
+	// or "projects/{project_id}/notificationConfigs/notify_public_bucket".
 	Name string `json:"name,omitempty"`
 
 	// PubsubTopic: The Pub/Sub topic to send notifications to. Its format
@@ -4064,8 +5626,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -4110,7 +5672,7 @@ type OrganizationSettings struct {
 
 	// EnableAssetDiscovery: A flag that indicates if Asset Discovery should
 	// be enabled. If the flag is set to `true`, then discovery of assets
-	// will occur. If it is set to `false, all historical assets will
+	// will occur. If it is set to `false`, all historical assets will
 	// remain, but discovery of future assets will not occur.
 	EnableAssetDiscovery bool `json:"enableAssetDiscovery,omitempty"`
 
@@ -4148,7 +5710,45 @@ func (s *OrganizationSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Pod: Kubernetes Pod.
+// PathNodeAssociatedFinding: A finding that is associated with this
+// node in the attack path.
+type PathNodeAssociatedFinding struct {
+	// CanonicalFinding: Canonical name of the associated findings. Example:
+	// organizations/123/sources/456/findings/789
+	CanonicalFinding string `json:"canonicalFinding,omitempty"`
+
+	// FindingCategory: The additional taxonomy group within findings from a
+	// given source.
+	FindingCategory string `json:"findingCategory,omitempty"`
+
+	// Name: Full resource name of the finding.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanonicalFinding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanonicalFinding") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathNodeAssociatedFinding) MarshalJSON() ([]byte, error) {
+	type NoMethod PathNodeAssociatedFinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Pod: A Kubernetes Pod.
 type Pod struct {
 	// Containers: Pod containers associated with this finding, if any.
 	Containers []*Container `json:"containers,omitempty"`
@@ -4200,7 +5800,7 @@ func (s *Pod) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -4209,17 +5809,17 @@ func (s *Pod) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -4296,6 +5896,35 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Position: A position in the uploaded text version of a module.
+type Position struct {
+	ColumnNumber int64 `json:"columnNumber,omitempty"`
+
+	LineNumber int64 `json:"lineNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnNumber") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Position) MarshalJSON() ([]byte, error) {
+	type NoMethod Position
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Process: Represents an operating system process.
 type Process struct {
 	// Args: Process arguments as JSON encoded strings.
@@ -4316,19 +5945,19 @@ type Process struct {
 	// Libraries: File information for libraries loaded by the process.
 	Libraries []*File `json:"libraries,omitempty"`
 
-	// Name: The process name visible in utilities like `top` and `ps`; it
-	// can be accessed via `/proc/[pid]/comm` and changed with
-	// `prctl(PR_SET_NAME)`.
+	// Name: The process name, as displayed in utilities like `top` and
+	// `ps`. This name can be accessed through `/proc/[pid]/comm` and
+	// changed with `prctl(PR_SET_NAME)`.
 	Name string `json:"name,omitempty"`
 
-	// ParentPid: The parent process id.
+	// ParentPid: The parent process ID.
 	ParentPid int64 `json:"parentPid,omitempty,string"`
 
-	// Pid: The process id.
+	// Pid: The process ID.
 	Pid int64 `json:"pid,omitempty,string"`
 
 	// Script: When the process represents the invocation of a script,
-	// `binary` provides information about the interpreter while `script`
+	// `binary` provides information about the interpreter, while `script`
 	// provides information about the script file provided to the
 	// interpreter.
 	Script *File `json:"script,omitempty"`
@@ -4471,6 +6100,35 @@ type Resource struct {
 
 func (s *Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod Resource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceValueConfigMetadata: Metadata about a ResourceValueConfig.
+// For example, id and name.
+type ResourceValueConfigMetadata struct {
+	// Name: Resource value config name
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceValueConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceValueConfigMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4799,6 +6457,46 @@ func (s *SetMuteRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Simulation: Attack path simulation
+type Simulation struct {
+	// CreateTime: Output only. Time simulation was created
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: Full resource name of the Simulation:
+	// organizations/123/simulations/456
+	Name string `json:"name,omitempty"`
+
+	// ResourceValueConfigsMetadata: Resource value configurations' metadata
+	// used in this simulation. Maximum of 100.
+	ResourceValueConfigsMetadata []*ResourceValueConfigMetadata `json:"resourceValueConfigsMetadata,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Simulation) MarshalJSON() ([]byte, error) {
+	type NoMethod Simulation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Source: Security Command Center finding source. A finding source is
 // an entity or a mechanism that can produce a finding. A source is like
 // a container of findings that come from the same scanner, logger,
@@ -4941,22 +6639,22 @@ func (s *StreamingConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subject: Represents a Kubernetes Subject.
+// Subject: Represents a Kubernetes subject.
 type Subject struct {
-	// Kind: Authentication type for subject.
+	// Kind: Authentication type for the subject.
 	//
 	// Possible values:
 	//   "AUTH_TYPE_UNSPECIFIED" - Authentication is not specified.
 	//   "USER" - User with valid certificate.
 	//   "SERVICEACCOUNT" - Users managed by Kubernetes API with credentials
-	// stored as Secrets.
+	// stored as secrets.
 	//   "GROUP" - Collection of users.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name for subject.
+	// Name: Name for the subject.
 	Name string `json:"name,omitempty"`
 
-	// Ns: Namespace for subject.
+	// Ns: Namespace for the subject.
 	Ns string `json:"ns,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -5048,6 +6746,148 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ValidateEventThreatDetectionCustomModuleRequest: Request to validate
+// an Event Threat Detection custom module.
+type ValidateEventThreatDetectionCustomModuleRequest struct {
+	// RawText: Required. The raw text of the module's contents. Used to
+	// generate error messages.
+	RawText string `json:"rawText,omitempty"`
+
+	// Type: Required. The type of the module (e.g. CONFIGURABLE_BAD_IP).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RawText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RawText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidateEventThreatDetectionCustomModuleRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateEventThreatDetectionCustomModuleRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidateEventThreatDetectionCustomModuleResponse: Response to
+// validating an Event Threat Detection custom module.
+type ValidateEventThreatDetectionCustomModuleResponse struct {
+	// Errors: A list of errors returned by the validator. If the list is
+	// empty, there were no errors.
+	Errors *CustomModuleValidationErrors `json:"errors,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidateEventThreatDetectionCustomModuleResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateEventThreatDetectionCustomModuleResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValuedResource: A resource that is determined to have value to a
+// user's system
+type ValuedResource struct {
+	// DisplayName: Human-readable name of the valued resource.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExposedScore: Exposed score for this valued resource. A value of 0
+	// means no exposure was detected exposure.
+	ExposedScore float64 `json:"exposedScore,omitempty"`
+
+	// Name: Valued resource name, for example, e.g.:
+	// `organizations/123/simulations/456/valuedResources/789`
+	Name string `json:"name,omitempty"`
+
+	// Resource: The full resource name
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// of the valued resource.
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceType: The resource type
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// of the valued resource.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ResourceValue: How valuable this resource is.
+	//
+	// Possible values:
+	//   "RESOURCE_VALUE_UNSPECIFIED" - The resource value isn't specified.
+	//   "RESOURCE_VALUE_LOW" - This is a low-value resource.
+	//   "RESOURCE_VALUE_MEDIUM" - This is a medium-value resource.
+	//   "RESOURCE_VALUE_HIGH" - This is a high-value resource.
+	ResourceValue string `json:"resourceValue,omitempty"`
+
+	// ResourceValueConfigsUsed: List of resource value configurations'
+	// metadata used to determine the value of this resource. Maximum of
+	// 100.
+	ResourceValueConfigsUsed []*ResourceValueConfigMetadata `json:"resourceValueConfigsUsed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValuedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ValuedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ValuedResource) UnmarshalJSON(data []byte) error {
+	type NoMethod ValuedResource
+	var s1 struct {
+		ExposedScore gensupport.JSONFloat64 `json:"exposedScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ExposedScore = float64(s1.ExposedScore)
+	return nil
+}
+
 // Vulnerability: Refers to common vulnerability fields e.g. cve, cvss,
 // cwe etc.
 type Vulnerability struct {
@@ -5120,9 +6960,9 @@ type FoldersAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the organization to groupBy. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent to group the assets by. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
 	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5197,17 +7037,17 @@ func (c *FoldersAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5221,6 +7061,7 @@ func (c *FoldersAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsR
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Filters an organization's assets and groups them by their specified properties.",
 	//   "flatPath": "v1/folders/{foldersId}/assets:group",
 	//   "httpMethod": "POST",
@@ -5230,7 +7071,7 @@ func (c *FoldersAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsR
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent to group the assets by. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -5285,9 +7126,11 @@ type FoldersAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the organization assets should belong to. Its
-//     format is "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent resource that contains the assets.
+//     The value that you can specify on parent depends on the method in
+//     which you specify parent. You can specify one of the following
+//     values: "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5492,17 +7335,17 @@ func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5516,6 +7359,7 @@ func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRes
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Lists an organization's assets.",
 	//   "flatPath": "v1/folders/{foldersId}/assets",
 	//   "httpMethod": "GET",
@@ -5558,7 +7402,7 @@ func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRes
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource that contains the assets. The value that you can specify on parent depends on the method in which you specify parent. You can specify one of the following values: \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -5715,17 +7559,17 @@ func (c *FoldersAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecurityMarks{
 		ServerResponse: googleapi.ServerResponse{
@@ -5792,11 +7636,11 @@ type FoldersBigQueryExportsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a big query export.
+// Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new big query export's parent. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: The name of the parent resource of the new BigQuery export.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *FoldersBigQueryExportsCreateCall {
 	c := &FoldersBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5806,9 +7650,9 @@ func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecurit
 
 // BigQueryExportId sets the optional parameter "bigQueryExportId":
 // Required. Unique identifier provided by the client within the parent
-// scope. It must consist of lower case letters, numbers, and hyphen,
-// with the first character a letter, the last a letter or a number, and
-// a 63 character maximum.
+// scope. It must consist of only lowercase letters, numbers, and
+// hyphens, must start with a letter, must end with either a letter or a
+// number, and must be 63 characters or less.
 func (c *FoldersBigQueryExportsCreateCall) BigQueryExportId(bigQueryExportId string) *FoldersBigQueryExportsCreateCall {
 	c.urlParams_.Set("bigQueryExportId", bigQueryExportId)
 	return c
@@ -5883,17 +7727,17 @@ func (c *FoldersBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -5907,7 +7751,7 @@ func (c *FoldersBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a big query export.",
+	//   "description": "Creates a BigQuery export.",
 	//   "flatPath": "v1/folders/{foldersId}/bigQueryExports",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.folders.bigQueryExports.create",
@@ -5916,12 +7760,12 @@ func (c *FoldersBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "bigQueryExportId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource of the new BigQuery export. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -5952,9 +7796,9 @@ type FoldersBigQueryExportsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing big query export.
+// Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the big query export to delete. Its format is
+//   - name: The name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -6026,17 +7870,17 @@ func (c *FoldersBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6050,7 +7894,7 @@ func (c *FoldersBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing big query export.",
+	//   "description": "Deletes an existing BigQuery export.",
 	//   "flatPath": "v1/folders/{foldersId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.folders.bigQueryExports.delete",
@@ -6059,7 +7903,7 @@ func (c *FoldersBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. The name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -6088,9 +7932,9 @@ type FoldersBigQueryExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a big query export.
+// Get: Gets a BigQuery export.
 //
-//   - name: Name of the big query export to retrieve. Its format is
+//   - name: Name of the BigQuery export to retrieve. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -6177,17 +8021,17 @@ func (c *FoldersBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -6201,7 +8045,7 @@ func (c *FoldersBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a big query export.",
+	//   "description": "Gets a BigQuery export.",
 	//   "flatPath": "v1/folders/{foldersId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.bigQueryExports.get",
@@ -6210,7 +8054,7 @@ func (c *FoldersBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -6348,17 +8192,17 @@ func (c *FoldersBigQueryExportsListCall) Do(opts ...googleapi.CallOption) (*List
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBigQueryExportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6535,17 +8379,17 @@ func (c *FoldersBigQueryExportsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -6688,17 +8532,17 @@ func (c *FoldersFindingsBulkMuteCall) Do(opts ...googleapi.CallOption) (*Operati
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6767,9 +8611,9 @@ func (r *FoldersMuteConfigsService) Create(parent string, googlecloudsecuritycen
 
 // MuteConfigId sets the optional parameter "muteConfigId": Required.
 // Unique identifier provided by the client within the parent scope. It
-// must consist of lower case letters, numbers, and hyphen, with the
-// first character a letter, the last a letter or a number, and a 63
-// character maximum.
+// must consist of only lowercase letters, numbers, and hyphens, must
+// start with a letter, must end with either a letter or a number, and
+// must be 63 characters or less.
 func (c *FoldersMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *FoldersMuteConfigsCreateCall {
 	c.urlParams_.Set("muteConfigId", muteConfigId)
 	return c
@@ -6843,17 +8687,17 @@ func (c *FoldersMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6876,7 +8720,7 @@ func (c *FoldersMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "muteConfigId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6986,17 +8830,17 @@ func (c *FoldersMuteConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7136,17 +8980,17 @@ func (c *FoldersMuteConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -7303,17 +9147,17 @@ func (c *FoldersMuteConfigsListCall) Do(opts ...googleapi.CallOption) (*ListMute
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListMuteConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7485,17 +9329,17 @@ func (c *FoldersMuteConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -7545,6 +9389,2184 @@ func (c *FoldersMuteConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleC
 
 }
 
+// method id "securitycenter.folders.notificationConfigs.create":
+
+type FoldersNotificationConfigsCreateCall struct {
+	s                  *Service
+	parent             string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a notification config.
+//
+//   - parent: Resource name of the new notification config's parent. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
+func (r *FoldersNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *FoldersNotificationConfigsCreateCall {
+	c := &FoldersNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// ConfigId sets the optional parameter "configId": Required. Unique
+// identifier provided by the client within the parent scope. It must be
+// between 1 and 128 characters and contain alphanumeric characters,
+// underscores, or hyphens only.
+func (c *FoldersNotificationConfigsCreateCall) ConfigId(configId string) *FoldersNotificationConfigsCreateCall {
+	c.urlParams_.Set("configId", configId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsCreateCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsCreateCall) Context(ctx context.Context) *FoldersNotificationConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.create" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a notification config.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.notificationConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "configId": {
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters and contain alphanumeric characters, underscores, or hyphens only.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.notificationConfigs.delete":
+
+type FoldersNotificationConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a notification config.
+//
+//   - name: Name of the notification config to delete. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
+func (r *FoldersNotificationConfigsService) Delete(name string) *FoldersNotificationConfigsDeleteCall {
+	c := &FoldersNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsDeleteCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsDeleteCall) Context(ctx context.Context) *FoldersNotificationConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a notification config.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.folders.notificationConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.notificationConfigs.get":
+
+type FoldersNotificationConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a notification config.
+//
+//   - name: Name of the notification config to get. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
+func (r *FoldersNotificationConfigsService) Get(name string) *FoldersNotificationConfigsGetCall {
+	c := &FoldersNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsGetCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersNotificationConfigsGetCall) IfNoneMatch(entityTag string) *FoldersNotificationConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsGetCall) Context(ctx context.Context) *FoldersNotificationConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.get" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a notification config.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.notificationConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.notificationConfigs.list":
+
+type FoldersNotificationConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists notification configs.
+//
+//   - parent: The name of the parent in which to list the notification
+//     configurations. Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
+func (r *FoldersNotificationConfigsService) List(parent string) *FoldersNotificationConfigsListCall {
+	c := &FoldersNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersNotificationConfigsListCall) PageSize(pageSize int64) *FoldersNotificationConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListNotificationConfigsResponse`; indicates that this is
+// a continuation of a prior `ListNotificationConfigs` call, and that
+// the system should return the next page of data.
+func (c *FoldersNotificationConfigsListCall) PageToken(pageToken string) *FoldersNotificationConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsListCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersNotificationConfigsListCall) IfNoneMatch(entityTag string) *FoldersNotificationConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsListCall) Context(ctx context.Context) *FoldersNotificationConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.list" call.
+// Exactly one of *ListNotificationConfigsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListNotificationConfigsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*ListNotificationConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListNotificationConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists notification configs.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.notificationConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListNotificationConfigsResponse`; indicates that this is a continuation of a prior `ListNotificationConfigs` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the parent in which to list the notification configurations. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "response": {
+	//     "$ref": "ListNotificationConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersNotificationConfigsListCall) Pages(ctx context.Context, f func(*ListNotificationConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.notificationConfigs.patch":
+
+type FoldersNotificationConfigsPatchCall struct {
+	s                  *Service
+	name               string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch:  Updates a notification config. The following update fields
+// are allowed: description, pubsub_topic, streaming_config.filter
+//
+//   - name: The relative resource name of this notification config. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/notificationConfigs/notify_public_b
+//     ucket",
+//     "folders/{folder_id}/notificationConfigs/notify_public_bucket", or
+//     "projects/{project_id}/notificationConfigs/notify_public_bucket".
+func (r *FoldersNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *FoldersNotificationConfigsPatchCall {
+	c := &FoldersNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the notification config. If empty all mutable
+// fields will be updated.
+func (c *FoldersNotificationConfigsPatchCall) UpdateMask(updateMask string) *FoldersNotificationConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsPatchCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsPatchCall) Context(ctx context.Context) *FoldersNotificationConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.patch" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.notificationConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\", \"folders/{folder_id}/notificationConfigs/notify_public_bucket\", or \"projects/{project_id}/notificationConfigs/notify_public_bucket\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the notification config. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.create":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Create: Creates a resident SecurityHealthAnalyticsCustomModule at the
+// scope of the given CRM parent, and also creates inherited
+// SecurityHealthAnalyticsCustomModules for all CRM descendants of the
+// given parent. These modules are enabled by default.
+//
+//   - parent: Resource name of the new custom module's parent. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.create" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the new custom module's parent. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.delete":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified SecurityHealthAnalyticsCustomModule and
+// all of its descendants in the CRM hierarchy. This method is only
+// supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.get":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a SecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a SecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.list":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all SecurityHealthAnalyticsCustomModules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent, and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list custom modules. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) PageSize(pageSize int64) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) PageToken(pageToken string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.list" call.
+// Exactly one of *ListSecurityHealthAnalyticsCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListSecurityHealthAnalyticsCustomModulesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.listDescendant":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Returns a list of all resident
+// SecurityHealthAnalyticsCustomModules under the given CRM parent and
+// all of the parent’s CRM descendants.
+//
+//   - parent: Name of parent to list descendant custom modules. Its
+//     format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all resident SecurityHealthAnalyticsCustomModules under the given CRM parent and all of the parent’s CRM descendants.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list descendant custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.patch":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
+	s                                                              *Service
+	name                                                           string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Patch: Updates the SecurityHealthAnalyticsCustomModule under the
+// given name based on the given update mask. Updating the enablement
+// state is supported on both resident and inherited modules (though
+// resident modules cannot have an enablement state of "inherited").
+// Updating the display name and custom config of a module is supported
+// on resident modules only.
+//
+//   - name: Immutable. The resource name of the custom module. Its format
+//     is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}", or
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}" The id {customModule} is server-generated and is not
+//     user settable. It will be a numeric id containing 1-20 digits.
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.patch" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the custom module. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\" The id {customModule} is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.get":
+
+type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the effective custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/effect
+//     iveCustomModules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomMod
+//     ules/{customModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomM
+//     odules/{customModule}".
+func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the effective custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.list":
+
+type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all
+// EffectiveSecurityHealthAnalyticsCustomModules for the given parent.
+// This includes resident modules defined at the scope of the parent,
+// and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list effective custom modules. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list effective custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "securitycenter.folders.sources.list":
 
 type FoldersSourcesListCall struct {
@@ -7559,8 +11581,8 @@ type FoldersSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//     should be "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7659,17 +11681,17 @@ func (c *FoldersSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSourcesR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7703,7 +11725,7 @@ func (c *FoldersSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSourcesR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -7841,17 +11863,17 @@ func (c *FoldersSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption) (*Gro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupFindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8133,17 +12155,17 @@ func (c *FoldersSourcesFindingsListCall) Do(opts ...googleapi.CallOption) (*List
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8258,11 +12280,13 @@ type FoldersSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *FoldersSourcesFindingsService) Patch(name string, finding *Finding) *FoldersSourcesFindingsPatchCall {
 	c := &FoldersSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8348,17 +12372,17 @@ func (c *FoldersSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Fin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -8381,7 +12405,7 @@ func (c *FoldersSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Fin
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "description": "The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -8421,13 +12445,13 @@ type FoldersSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}",
-//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *FoldersSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *FoldersSourcesFindingsSetMuteCall {
 	c := &FoldersSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8502,17 +12526,17 @@ func (c *FoldersSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*F
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -8535,7 +12559,7 @@ func (c *FoldersSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*F
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -8569,11 +12593,13 @@ type FoldersSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}".
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8648,17 +12674,17 @@ func (c *FoldersSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -8681,7 +12707,7 @@ func (c *FoldersSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -8814,17 +12840,17 @@ func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecurityMarks{
 		ServerResponse: googleapi.ServerResponse{
@@ -8893,10 +12919,11 @@ type FoldersSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-//   - name: External System Name e.g. jira, demisto, etc. e.g.:
-//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: Full resource name of the external system, for example:
+//     "organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a",
+//     "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+//     "projects/1234/sources/5678/findings/123456/externalSystems/jira".
 func (r *FoldersSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *FoldersSourcesFindingsExternalSystemsPatchCall {
 	c := &FoldersSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8981,17 +13008,17 @@ func (c *FoldersSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1ExternalSystem{
 		ServerResponse: googleapi.ServerResponse{
@@ -9014,7 +13041,7 @@ func (c *FoldersSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+	//       "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,
@@ -9138,17 +13165,17 @@ func (c *OrganizationsGetOrganizationSettingsCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &OrganizationSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -9287,17 +13314,17 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &OrganizationSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -9361,9 +13388,9 @@ type OrganizationsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the organization to groupBy. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent to group the assets by. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9438,17 +13465,17 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9462,6 +13489,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Filters an organization's assets and groups them by their specified properties.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets:group",
 	//   "httpMethod": "POST",
@@ -9471,7 +13499,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent to group the assets by. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -9526,9 +13554,11 @@ type OrganizationsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the organization assets should belong to. Its
-//     format is "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent resource that contains the assets.
+//     The value that you can specify on parent depends on the method in
+//     which you specify parent. You can specify one of the following
+//     values: "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9733,17 +13763,17 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9757,6 +13787,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Lists an organization's assets.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets",
 	//   "httpMethod": "GET",
@@ -9799,7 +13830,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource that contains the assets. The value that you can specify on parent depends on the method in which you specify parent. You can specify one of the following values: \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -9936,17 +13967,17 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9960,6 +13991,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Runs asset discovery. The discovery is tracked with a long-running operation. This API can only be called with limited frequency for an organization. If it is called too frequently the caller will receive a TOO_MANY_REQUESTS error.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets:runDiscovery",
 	//   "httpMethod": "POST",
@@ -10102,17 +14134,17 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecurityMarks{
 		ServerResponse: googleapi.ServerResponse{
@@ -10179,11 +14211,11 @@ type OrganizationsBigQueryExportsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a big query export.
+// Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new big query export's parent. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: The name of the parent resource of the new BigQuery export.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *OrganizationsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *OrganizationsBigQueryExportsCreateCall {
 	c := &OrganizationsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10193,9 +14225,9 @@ func (r *OrganizationsBigQueryExportsService) Create(parent string, googleclouds
 
 // BigQueryExportId sets the optional parameter "bigQueryExportId":
 // Required. Unique identifier provided by the client within the parent
-// scope. It must consist of lower case letters, numbers, and hyphen,
-// with the first character a letter, the last a letter or a number, and
-// a 63 character maximum.
+// scope. It must consist of only lowercase letters, numbers, and
+// hyphens, must start with a letter, must end with either a letter or a
+// number, and must be 63 characters or less.
 func (c *OrganizationsBigQueryExportsCreateCall) BigQueryExportId(bigQueryExportId string) *OrganizationsBigQueryExportsCreateCall {
 	c.urlParams_.Set("bigQueryExportId", bigQueryExportId)
 	return c
@@ -10270,17 +14302,17 @@ func (c *OrganizationsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -10294,7 +14326,7 @@ func (c *OrganizationsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a big query export.",
+	//   "description": "Creates a BigQuery export.",
 	//   "flatPath": "v1/organizations/{organizationsId}/bigQueryExports",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.bigQueryExports.create",
@@ -10303,12 +14335,12 @@ func (c *OrganizationsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "bigQueryExportId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource of the new BigQuery export. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -10339,9 +14371,9 @@ type OrganizationsBigQueryExportsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing big query export.
+// Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the big query export to delete. Its format is
+//   - name: The name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -10413,17 +14445,17 @@ func (c *OrganizationsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -10437,7 +14469,7 @@ func (c *OrganizationsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing big query export.",
+	//   "description": "Deletes an existing BigQuery export.",
 	//   "flatPath": "v1/organizations/{organizationsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.organizations.bigQueryExports.delete",
@@ -10446,7 +14478,7 @@ func (c *OrganizationsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. The name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -10475,9 +14507,9 @@ type OrganizationsBigQueryExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a big query export.
+// Get: Gets a BigQuery export.
 //
-//   - name: Name of the big query export to retrieve. Its format is
+//   - name: Name of the BigQuery export to retrieve. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -10564,17 +14596,17 @@ func (c *OrganizationsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -10588,7 +14620,7 @@ func (c *OrganizationsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a big query export.",
+	//   "description": "Gets a BigQuery export.",
 	//   "flatPath": "v1/organizations/{organizationsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.bigQueryExports.get",
@@ -10597,7 +14629,7 @@ func (c *OrganizationsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -10735,17 +14767,17 @@ func (c *OrganizationsBigQueryExportsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBigQueryExportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10922,17 +14954,17 @@ func (c *OrganizationsBigQueryExportsPatchCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -10974,6 +15006,941 @@ func (c *OrganizationsBigQueryExportsPatchCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudSecuritycenterV1BigQueryExport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.validateCustomModule":
+
+type OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall struct {
+	s                                               *Service
+	parent                                          string
+	validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// ValidateCustomModule: Validates the given Event Threat Detection
+// custom module.
+//
+//   - parent: Resource name of the parent to validate the Custom Module
+//     under. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings".
+func (r *OrganizationsEventThreatDetectionSettingsService) ValidateCustomModule(parent string, validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest) *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall {
+	c := &OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.validateeventthreatdetectioncustommodulerequest = validateeventthreatdetectioncustommodulerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.validateeventthreatdetectioncustommodulerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:validateCustomModule")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.validateCustomModule" call.
+// Exactly one of *ValidateEventThreatDetectionCustomModuleResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ValidateEventThreatDetectionCustomModuleResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall) Do(opts ...googleapi.CallOption) (*ValidateEventThreatDetectionCustomModuleResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ValidateEventThreatDetectionCustomModuleResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Validates the given Event Threat Detection custom module.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings:validateCustomModule",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.validateCustomModule",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the parent to validate the Custom Module under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:validateCustomModule",
+	//   "request": {
+	//     "$ref": "ValidateEventThreatDetectionCustomModuleRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ValidateEventThreatDetectionCustomModuleResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.customModules.create":
+
+type OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall struct {
+	s                                *Service
+	parent                           string
+	eventthreatdetectioncustommodule *EventThreatDetectionCustomModule
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates an Event Threat Detection custom module.
+//
+//   - parent: The new custom module's parent. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings".
+func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Create(parent string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall {
+	c := &OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.eventthreatdetectioncustommodule = eventthreatdetectioncustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventthreatdetectioncustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.customModules.create" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an Event Threat Detection custom module.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The new custom module's parent. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.customModules.delete":
+
+type OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an Event Threat Detection custom module.
+//
+//   - name: Name of the custom module to delete. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}".
+func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Delete(name string) *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c := &OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an Event Threat Detection custom module.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.customModules.get":
+
+type OrganizationsEventThreatDetectionSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Event Threat Detection custom module.
+//
+//   - name: Name of the custom module to get. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}".
+func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Get(name string) *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall {
+	c := &OrganizationsEventThreatDetectionSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.customModules.get" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an Event Threat Detection custom module.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.customModules.list":
+
+type OrganizationsEventThreatDetectionSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Event Threat Detection custom modules.
+//
+//   - parent: Name of the parent to list custom modules under. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) List(parent string) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
+	c := &OrganizationsEventThreatDetectionSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) PageSize(pageSize int64) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListEventThreatDetectionCustomModules`
+// call. Provide this to retrieve the subsequent page. When paginating,
+// all other parameters provided to
+// `ListEventThreatDetectionCustomModules` must match the call that
+// provided the page token.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) PageToken(pageToken string) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.customModules.list" call.
+// Exactly one of *ListEventThreatDetectionCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEventThreatDetectionCustomModulesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Event Threat Detection custom modules.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.customModules.patch":
+
+type OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall struct {
+	s                                *Service
+	name                             string
+	eventthreatdetectioncustommodule *EventThreatDetectionCustomModule
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Patch: Updates an Event Threat Detection custom module.
+//
+//   - name: Immutable. The resource name of the Event Threat Detection
+//     custom module. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
+func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c := &OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.eventthreatdetectioncustommodule = eventthreatdetectioncustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated. If empty all mutable fields will be updated.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventthreatdetectioncustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.customModules.patch" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an Event Threat Detection custom module.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the Event Threat Detection custom module. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -11075,17 +16042,17 @@ func (c *OrganizationsFindingsBulkMuteCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11154,9 +16121,9 @@ func (r *OrganizationsMuteConfigsService) Create(parent string, googlecloudsecur
 
 // MuteConfigId sets the optional parameter "muteConfigId": Required.
 // Unique identifier provided by the client within the parent scope. It
-// must consist of lower case letters, numbers, and hyphen, with the
-// first character a letter, the last a letter or a number, and a 63
-// character maximum.
+// must consist of only lowercase letters, numbers, and hyphens, must
+// start with a letter, must end with either a letter or a number, and
+// must be 63 characters or less.
 func (c *OrganizationsMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *OrganizationsMuteConfigsCreateCall {
 	c.urlParams_.Set("muteConfigId", muteConfigId)
 	return c
@@ -11230,17 +16197,17 @@ func (c *OrganizationsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -11263,7 +16230,7 @@ func (c *OrganizationsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "muteConfigId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11373,17 +16340,17 @@ func (c *OrganizationsMuteConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -11523,17 +16490,17 @@ func (c *OrganizationsMuteConfigsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -11690,17 +16657,17 @@ func (c *OrganizationsMuteConfigsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListMuteConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11872,17 +16839,17 @@ func (c *OrganizationsMuteConfigsPatchCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -11946,8 +16913,8 @@ type OrganizationsNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its
-//     format is "organizations/[organization_id]" or
-//     "projects/[project_id]".
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsCreateCall {
 	c := &OrganizationsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11957,8 +16924,8 @@ func (r *OrganizationsNotificationConfigsService) Create(parent string, notifica
 
 // ConfigId sets the optional parameter "configId": Required. Unique
 // identifier provided by the client within the parent scope. It must be
-// between 1 and 128 characters, and contains alphanumeric characters,
-// underscores or hyphens only.
+// between 1 and 128 characters and contain alphanumeric characters,
+// underscores, or hyphens only.
 func (c *OrganizationsNotificationConfigsCreateCall) ConfigId(configId string) *OrganizationsNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
 	return c
@@ -12031,17 +16998,17 @@ func (c *OrganizationsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &NotificationConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -12064,12 +17031,12 @@ func (c *OrganizationsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters and contain alphanumeric characters, underscores, or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\" or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -12103,7 +17070,9 @@ type OrganizationsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Delete(name string) *OrganizationsNotificationConfigsDeleteCall {
 	c := &OrganizationsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12172,17 +17141,17 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -12205,7 +17174,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -12237,7 +17206,9 @@ type OrganizationsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Get(name string) *OrganizationsNotificationConfigsGetCall {
 	c := &OrganizationsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12319,17 +17290,17 @@ func (c *OrganizationsNotificationConfigsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &NotificationConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -12352,7 +17323,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -12383,9 +17354,9 @@ type OrganizationsNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-//   - parent: Name of the organization to list notification configs. Its
-//     format is "organizations/[organization_id]" or
-//     "projects/[project_id]".
+//   - parent: The name of the parent in which to list the notification
+//     configurations. Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) List(parent string) *OrganizationsNotificationConfigsListCall {
 	c := &OrganizationsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12484,17 +17455,17 @@ func (c *OrganizationsNotificationConfigsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListNotificationConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12528,7 +17499,7 @@ func (c *OrganizationsNotificationConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\" or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent in which to list the notification configurations. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -12585,7 +17556,9 @@ type OrganizationsNotificationConfigsPatchCall struct {
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
 //     "organizations/{organization_id}/notificationConfigs/notify_public_b
-//     ucket".
+//     ucket",
+//     "folders/{folder_id}/notificationConfigs/notify_public_bucket", or
+//     "projects/{project_id}/notificationConfigs/notify_public_bucket".
 func (r *OrganizationsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsPatchCall {
 	c := &OrganizationsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12668,17 +17641,17 @@ func (c *OrganizationsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &NotificationConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -12701,7 +17674,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\", \"folders/{folder_id}/notificationConfigs/notify_public_bucket\", or \"projects/{project_id}/notificationConfigs/notify_public_bucket\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -12818,17 +17791,17 @@ func (c *OrganizationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -12953,17 +17926,17 @@ func (c *OrganizationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -13101,17 +18074,17 @@ func (c *OrganizationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -13165,14 +18138,7 @@ type OrganizationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
@@ -13277,17 +18243,17 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13301,7 +18267,7 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/organizations/{organizationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.operations.list",
@@ -13348,6 +18314,3386 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.resourceValueConfigs.batchCreate":
+
+type OrganizationsResourceValueConfigsBatchCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	batchcreateresourcevalueconfigsrequest *BatchCreateResourceValueConfigsRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// BatchCreate: Creates a ResourceValueConfig for an organization. Maps
+// user's tags to difference resource values for use by the attack path
+// simulation.
+//
+//   - parent: Resource name of the new ResourceValueConfig's parent. The
+//     parent field in the CreateResourceValueConfigRequest messages must
+//     either be empty or match this field.
+func (r *OrganizationsResourceValueConfigsService) BatchCreate(parent string, batchcreateresourcevalueconfigsrequest *BatchCreateResourceValueConfigsRequest) *OrganizationsResourceValueConfigsBatchCreateCall {
+	c := &OrganizationsResourceValueConfigsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchcreateresourcevalueconfigsrequest = batchcreateresourcevalueconfigsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsResourceValueConfigsBatchCreateCall) Fields(s ...googleapi.Field) *OrganizationsResourceValueConfigsBatchCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsResourceValueConfigsBatchCreateCall) Context(ctx context.Context) *OrganizationsResourceValueConfigsBatchCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsResourceValueConfigsBatchCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsResourceValueConfigsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreateresourcevalueconfigsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourceValueConfigs:batchCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.resourceValueConfigs.batchCreate" call.
+// Exactly one of *BatchCreateResourceValueConfigsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *BatchCreateResourceValueConfigsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsResourceValueConfigsBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreateResourceValueConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchCreateResourceValueConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a ResourceValueConfig for an organization. Maps user's tags to difference resource values for use by the attack path simulation.",
+	//   "flatPath": "v1/organizations/{organizationsId}/resourceValueConfigs:batchCreate",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.organizations.resourceValueConfigs.batchCreate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the new ResourceValueConfig's parent. The parent field in the CreateResourceValueConfigRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/resourceValueConfigs:batchCreate",
+	//   "request": {
+	//     "$ref": "BatchCreateResourceValueConfigsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchCreateResourceValueConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.resourceValueConfigs.delete":
+
+type OrganizationsResourceValueConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a ResourceValueConfig.
+//
+// - name: Name of the ResourceValueConfig to delete.
+func (r *OrganizationsResourceValueConfigsService) Delete(name string) *OrganizationsResourceValueConfigsDeleteCall {
+	c := &OrganizationsResourceValueConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsResourceValueConfigsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsResourceValueConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsResourceValueConfigsDeleteCall) Context(ctx context.Context) *OrganizationsResourceValueConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsResourceValueConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsResourceValueConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.resourceValueConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsResourceValueConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a ResourceValueConfig.",
+	//   "flatPath": "v1/organizations/{organizationsId}/resourceValueConfigs/{resourceValueConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.organizations.resourceValueConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the ResourceValueConfig to delete",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/resourceValueConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.resourceValueConfigs.get":
+
+type OrganizationsResourceValueConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a ResourceValueConfig.
+//
+//   - name: Name of the resource value config to retrieve. Its format is
+//     organizations/{organization}/resourceValueConfigs/{config_id}.
+func (r *OrganizationsResourceValueConfigsService) Get(name string) *OrganizationsResourceValueConfigsGetCall {
+	c := &OrganizationsResourceValueConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsResourceValueConfigsGetCall) Fields(s ...googleapi.Field) *OrganizationsResourceValueConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsResourceValueConfigsGetCall) IfNoneMatch(entityTag string) *OrganizationsResourceValueConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsResourceValueConfigsGetCall) Context(ctx context.Context) *OrganizationsResourceValueConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsResourceValueConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsResourceValueConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.resourceValueConfigs.get" call.
+// Exactly one of *GoogleCloudSecuritycenterV1ResourceValueConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1ResourceValueConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsResourceValueConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1ResourceValueConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1ResourceValueConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a ResourceValueConfig.",
+	//   "flatPath": "v1/organizations/{organizationsId}/resourceValueConfigs/{resourceValueConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.resourceValueConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the resource value config to retrieve. Its format is organizations/{organization}/resourceValueConfigs/{config_id}.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/resourceValueConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1ResourceValueConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.resourceValueConfigs.list":
+
+type OrganizationsResourceValueConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all ResourceValueConfigs.
+//
+//   - parent: The parent, which owns the collection of resource value
+//     configs. Its format is "organizations/[organization_id]".
+func (r *OrganizationsResourceValueConfigsService) List(parent string) *OrganizationsResourceValueConfigsListCall {
+	c := &OrganizationsResourceValueConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// results to return. The service may return fewer than this value. If
+// unspecified, at most 10 configs will be returned. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsResourceValueConfigsListCall) PageSize(pageSize int64) *OrganizationsResourceValueConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListResourceValueConfigs` call. Provide
+// this to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListResourceValueConfigs` must match the call
+// that provided the page token. page_size can be specified, and the new
+// page_size will be used.
+func (c *OrganizationsResourceValueConfigsListCall) PageToken(pageToken string) *OrganizationsResourceValueConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsResourceValueConfigsListCall) Fields(s ...googleapi.Field) *OrganizationsResourceValueConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsResourceValueConfigsListCall) IfNoneMatch(entityTag string) *OrganizationsResourceValueConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsResourceValueConfigsListCall) Context(ctx context.Context) *OrganizationsResourceValueConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsResourceValueConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsResourceValueConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourceValueConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.resourceValueConfigs.list" call.
+// Exactly one of *ListResourceValueConfigsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListResourceValueConfigsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsResourceValueConfigsListCall) Do(opts ...googleapi.CallOption) (*ListResourceValueConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListResourceValueConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all ResourceValueConfigs.",
+	//   "flatPath": "v1/organizations/{organizationsId}/resourceValueConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.resourceValueConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The number of results to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListResourceValueConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListResourceValueConfigs` must match the call that provided the page token. page_size can be specified, and the new page_size will be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns the collection of resource value configs. Its format is \"organizations/[organization_id]\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/resourceValueConfigs",
+	//   "response": {
+	//     "$ref": "ListResourceValueConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsResourceValueConfigsListCall) Pages(ctx context.Context, f func(*ListResourceValueConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.resourceValueConfigs.patch":
+
+type OrganizationsResourceValueConfigsPatchCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudsecuritycenterv1resourcevalueconfig *GoogleCloudSecuritycenterV1ResourceValueConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Patch: Updates an existing ResourceValueConfigs with new rules.
+//
+// - name: Name for the resource value config.
+func (r *OrganizationsResourceValueConfigsService) Patch(name string, googlecloudsecuritycenterv1resourcevalueconfig *GoogleCloudSecuritycenterV1ResourceValueConfig) *OrganizationsResourceValueConfigsPatchCall {
+	c := &OrganizationsResourceValueConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudsecuritycenterv1resourcevalueconfig = googlecloudsecuritycenterv1resourcevalueconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated. If empty all mutable fields will be updated.
+func (c *OrganizationsResourceValueConfigsPatchCall) UpdateMask(updateMask string) *OrganizationsResourceValueConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsResourceValueConfigsPatchCall) Fields(s ...googleapi.Field) *OrganizationsResourceValueConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsResourceValueConfigsPatchCall) Context(ctx context.Context) *OrganizationsResourceValueConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsResourceValueConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsResourceValueConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1resourcevalueconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.resourceValueConfigs.patch" call.
+// Exactly one of *GoogleCloudSecuritycenterV1ResourceValueConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1ResourceValueConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsResourceValueConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1ResourceValueConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1ResourceValueConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing ResourceValueConfigs with new rules.",
+	//   "flatPath": "v1/organizations/{organizationsId}/resourceValueConfigs/{resourceValueConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.organizations.resourceValueConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name for the resource value config",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/resourceValueConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1ResourceValueConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1ResourceValueConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.create":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Create: Creates a resident SecurityHealthAnalyticsCustomModule at the
+// scope of the given CRM parent, and also creates inherited
+// SecurityHealthAnalyticsCustomModules for all CRM descendants of the
+// given parent. These modules are enabled by default.
+//
+//   - parent: Resource name of the new custom module's parent. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.create" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the new custom module's parent. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.delete":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified SecurityHealthAnalyticsCustomModule and
+// all of its descendants in the CRM hierarchy. This method is only
+// supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.get":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a SecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a SecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.list":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all SecurityHealthAnalyticsCustomModules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent, and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list custom modules. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageSize(pageSize int64) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageToken(pageToken string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.list" call.
+// Exactly one of *ListSecurityHealthAnalyticsCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListSecurityHealthAnalyticsCustomModulesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.listDescendant":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Returns a list of all resident
+// SecurityHealthAnalyticsCustomModules under the given CRM parent and
+// all of the parent’s CRM descendants.
+//
+//   - parent: Name of parent to list descendant custom modules. Its
+//     format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all resident SecurityHealthAnalyticsCustomModules under the given CRM parent and all of the parent’s CRM descendants.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list descendant custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.patch":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
+	s                                                              *Service
+	name                                                           string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Patch: Updates the SecurityHealthAnalyticsCustomModule under the
+// given name based on the given update mask. Updating the enablement
+// state is supported on both resident and inherited modules (though
+// resident modules cannot have an enablement state of "inherited").
+// Updating the display name and custom config of a module is supported
+// on resident modules only.
+//
+//   - name: Immutable. The resource name of the custom module. Its format
+//     is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}", or
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}" The id {customModule} is server-generated and is not
+//     user settable. It will be a numeric id containing 1-20 digits.
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.patch" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the custom module. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\" The id {customModule} is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.get":
+
+type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the effective custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/effect
+//     iveCustomModules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomMod
+//     ules/{customModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomM
+//     odules/{customModule}".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the effective custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.list":
+
+type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all
+// EffectiveSecurityHealthAnalyticsCustomModules for the given parent.
+// This includes resident modules defined at the scope of the parent,
+// and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list effective custom modules. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list effective custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.simulations.get":
+
+type OrganizationsSimulationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the simulation by name or the latest simulation for the
+// given organization.
+//
+//   - name: The organization name or simulation name of this simulation
+//     Valid format: "organizations/{organization}/simulations/latest"
+//     "organizations/{organization}/simulations/{simulation}".
+func (r *OrganizationsSimulationsService) Get(name string) *OrganizationsSimulationsGetCall {
+	c := &OrganizationsSimulationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSimulationsGetCall) Fields(s ...googleapi.Field) *OrganizationsSimulationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSimulationsGetCall) IfNoneMatch(entityTag string) *OrganizationsSimulationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSimulationsGetCall) Context(ctx context.Context) *OrganizationsSimulationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSimulationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSimulationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.simulations.get" call.
+// Exactly one of *Simulation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Simulation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSimulationsGetCall) Do(opts ...googleapi.CallOption) (*Simulation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Simulation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the simulation by name or the latest simulation for the given organization.",
+	//   "flatPath": "v1/organizations/{organizationsId}/simulations/{simulationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.simulations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The organization name or simulation name of this simulation Valid format: \"organizations/{organization}/simulations/latest\" \"organizations/{organization}/simulations/{simulation}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/simulations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Simulation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.simulations.attackExposureResults.attackPaths.list":
+
+type OrganizationsSimulationsAttackExposureResultsAttackPathsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the attack paths for a set of simulation results or
+// valued resources and filter.
+//
+//   - parent: Name of parent to list attack paths. Valid formats:
+//     "organizations/{organization}",
+//     "organizations/{organization}/simulations/{simulation}"
+//     "organizations/{organization}/simulations/{simulation}/attackExposur
+//     eResults/{attack_exposure_result_v2}"
+//     "organizations/{organization}/simulations/{simulation}/valuedResourc
+//     es/{valued_resource}".
+func (r *OrganizationsSimulationsAttackExposureResultsAttackPathsService) List(parent string) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
+	c := &OrganizationsSimulationsAttackExposureResultsAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression
+// that filters the attack path in the response. Supported fields: *
+// `valued_resources` supports =
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) Filter(filter string) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) PageSize(pageSize int64) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListAttackPathsResponse`; indicates that this is a
+// continuation of a prior `ListAttackPaths` call, and that the system
+// should return the next page of data.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) PageToken(pageToken string) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) Fields(s ...googleapi.Field) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) IfNoneMatch(entityTag string) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) Context(ctx context.Context) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attackPaths")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.simulations.attackExposureResults.attackPaths.list" call.
+// Exactly one of *ListAttackPathsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAttackPathsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) Do(opts ...googleapi.CallOption) (*ListAttackPathsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAttackPathsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the attack paths for a set of simulation results or valued resources and filter.",
+	//   "flatPath": "v1/organizations/{organizationsId}/simulations/{simulationsId}/attackExposureResults/{attackExposureResultsId}/attackPaths",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.simulations.attackExposureResults.attackPaths.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression that filters the attack path in the response. Supported fields: * `valued_resources` supports =",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListAttackPathsResponse`; indicates that this is a continuation of a prior `ListAttackPaths` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list attack paths. Valid formats: \"organizations/{organization}\", \"organizations/{organization}/simulations/{simulation}\" \"organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}\" \"organizations/{organization}/simulations/{simulation}/valuedResources/{valued_resource}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/simulations/[^/]+/attackExposureResults/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/attackPaths",
+	//   "response": {
+	//     "$ref": "ListAttackPathsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall) Pages(ctx context.Context, f func(*ListAttackPathsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.simulations.attackExposureResults.valuedResources.list":
+
+type OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the valued resources for a set of simulation results and
+// filter.
+//
+//   - parent: Name of parent to list valued resources. Valid formats:
+//     "organizations/{organization}",
+//     "organizations/{organization}/simulations/{simulation}"
+//     "organizations/{organization}/simulations/{simulation}/attackExposur
+//     eResults/{attack_exposure_result_v2}".
+func (r *OrganizationsSimulationsAttackExposureResultsValuedResourcesService) List(parent string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c := &OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression
+// that filters the valued resources in the response. Supported fields:
+// * `resource_value` supports = * `resource_type` supports =
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) Filter(filter string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) PageSize(pageSize int64) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListValuedResourcesResponse`; indicates that this is a
+// continuation of a prior `ListValuedResources` call, and that the
+// system should return the next page of data.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) PageToken(pageToken string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) Fields(s ...googleapi.Field) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) IfNoneMatch(entityTag string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) Context(ctx context.Context) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/valuedResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.simulations.attackExposureResults.valuedResources.list" call.
+// Exactly one of *ListValuedResourcesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListValuedResourcesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) Do(opts ...googleapi.CallOption) (*ListValuedResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListValuedResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the valued resources for a set of simulation results and filter.",
+	//   "flatPath": "v1/organizations/{organizationsId}/simulations/{simulationsId}/attackExposureResults/{attackExposureResultsId}/valuedResources",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.simulations.attackExposureResults.valuedResources.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression that filters the valued resources in the response. Supported fields: * `resource_value` supports = * `resource_type` supports =",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListValuedResourcesResponse`; indicates that this is a continuation of a prior `ListValuedResources` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list valued resources. Valid formats: \"organizations/{organization}\", \"organizations/{organization}/simulations/{simulation}\" \"organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/simulations/[^/]+/attackExposureResults/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/valuedResources",
+	//   "response": {
+	//     "$ref": "ListValuedResourcesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) Pages(ctx context.Context, f func(*ListValuedResourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.simulations.attackPaths.list":
+
+type OrganizationsSimulationsAttackPathsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the attack paths for a set of simulation results or
+// valued resources and filter.
+//
+//   - parent: Name of parent to list attack paths. Valid formats:
+//     "organizations/{organization}",
+//     "organizations/{organization}/simulations/{simulation}"
+//     "organizations/{organization}/simulations/{simulation}/attackExposur
+//     eResults/{attack_exposure_result_v2}"
+//     "organizations/{organization}/simulations/{simulation}/valuedResourc
+//     es/{valued_resource}".
+func (r *OrganizationsSimulationsAttackPathsService) List(parent string) *OrganizationsSimulationsAttackPathsListCall {
+	c := &OrganizationsSimulationsAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression
+// that filters the attack path in the response. Supported fields: *
+// `valued_resources` supports =
+func (c *OrganizationsSimulationsAttackPathsListCall) Filter(filter string) *OrganizationsSimulationsAttackPathsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSimulationsAttackPathsListCall) PageSize(pageSize int64) *OrganizationsSimulationsAttackPathsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListAttackPathsResponse`; indicates that this is a
+// continuation of a prior `ListAttackPaths` call, and that the system
+// should return the next page of data.
+func (c *OrganizationsSimulationsAttackPathsListCall) PageToken(pageToken string) *OrganizationsSimulationsAttackPathsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSimulationsAttackPathsListCall) Fields(s ...googleapi.Field) *OrganizationsSimulationsAttackPathsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSimulationsAttackPathsListCall) IfNoneMatch(entityTag string) *OrganizationsSimulationsAttackPathsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSimulationsAttackPathsListCall) Context(ctx context.Context) *OrganizationsSimulationsAttackPathsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSimulationsAttackPathsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSimulationsAttackPathsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attackPaths")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.simulations.attackPaths.list" call.
+// Exactly one of *ListAttackPathsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAttackPathsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSimulationsAttackPathsListCall) Do(opts ...googleapi.CallOption) (*ListAttackPathsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAttackPathsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the attack paths for a set of simulation results or valued resources and filter.",
+	//   "flatPath": "v1/organizations/{organizationsId}/simulations/{simulationsId}/attackPaths",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.simulations.attackPaths.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression that filters the attack path in the response. Supported fields: * `valued_resources` supports =",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListAttackPathsResponse`; indicates that this is a continuation of a prior `ListAttackPaths` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list attack paths. Valid formats: \"organizations/{organization}\", \"organizations/{organization}/simulations/{simulation}\" \"organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}\" \"organizations/{organization}/simulations/{simulation}/valuedResources/{valued_resource}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/simulations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/attackPaths",
+	//   "response": {
+	//     "$ref": "ListAttackPathsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSimulationsAttackPathsListCall) Pages(ctx context.Context, f func(*ListAttackPathsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.simulations.valuedResources.list":
+
+type OrganizationsSimulationsValuedResourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the valued resources for a set of simulation results and
+// filter.
+//
+//   - parent: Name of parent to list valued resources. Valid formats:
+//     "organizations/{organization}",
+//     "organizations/{organization}/simulations/{simulation}"
+//     "organizations/{organization}/simulations/{simulation}/attackExposur
+//     eResults/{attack_exposure_result_v2}".
+func (r *OrganizationsSimulationsValuedResourcesService) List(parent string) *OrganizationsSimulationsValuedResourcesListCall {
+	c := &OrganizationsSimulationsValuedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression
+// that filters the valued resources in the response. Supported fields:
+// * `resource_value` supports = * `resource_type` supports =
+func (c *OrganizationsSimulationsValuedResourcesListCall) Filter(filter string) *OrganizationsSimulationsValuedResourcesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSimulationsValuedResourcesListCall) PageSize(pageSize int64) *OrganizationsSimulationsValuedResourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListValuedResourcesResponse`; indicates that this is a
+// continuation of a prior `ListValuedResources` call, and that the
+// system should return the next page of data.
+func (c *OrganizationsSimulationsValuedResourcesListCall) PageToken(pageToken string) *OrganizationsSimulationsValuedResourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSimulationsValuedResourcesListCall) Fields(s ...googleapi.Field) *OrganizationsSimulationsValuedResourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSimulationsValuedResourcesListCall) IfNoneMatch(entityTag string) *OrganizationsSimulationsValuedResourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSimulationsValuedResourcesListCall) Context(ctx context.Context) *OrganizationsSimulationsValuedResourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSimulationsValuedResourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSimulationsValuedResourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/valuedResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.simulations.valuedResources.list" call.
+// Exactly one of *ListValuedResourcesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListValuedResourcesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSimulationsValuedResourcesListCall) Do(opts ...googleapi.CallOption) (*ListValuedResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListValuedResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the valued resources for a set of simulation results and filter.",
+	//   "flatPath": "v1/organizations/{organizationsId}/simulations/{simulationsId}/valuedResources",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.simulations.valuedResources.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression that filters the valued resources in the response. Supported fields: * `resource_value` supports = * `resource_type` supports =",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListValuedResourcesResponse`; indicates that this is a continuation of a prior `ListValuedResources` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list valued resources. Valid formats: \"organizations/{organization}\", \"organizations/{organization}/simulations/{simulation}\" \"organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/simulations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/valuedResources",
+	//   "response": {
+	//     "$ref": "ListValuedResourcesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSimulationsValuedResourcesListCall) Pages(ctx context.Context, f func(*ListValuedResourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.simulations.valuedResources.attackPaths.list":
+
+type OrganizationsSimulationsValuedResourcesAttackPathsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the attack paths for a set of simulation results or
+// valued resources and filter.
+//
+//   - parent: Name of parent to list attack paths. Valid formats:
+//     "organizations/{organization}",
+//     "organizations/{organization}/simulations/{simulation}"
+//     "organizations/{organization}/simulations/{simulation}/attackExposur
+//     eResults/{attack_exposure_result_v2}"
+//     "organizations/{organization}/simulations/{simulation}/valuedResourc
+//     es/{valued_resource}".
+func (r *OrganizationsSimulationsValuedResourcesAttackPathsService) List(parent string) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
+	c := &OrganizationsSimulationsValuedResourcesAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression
+// that filters the attack path in the response. Supported fields: *
+// `valued_resources` supports =
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) Filter(filter string) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) PageSize(pageSize int64) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListAttackPathsResponse`; indicates that this is a
+// continuation of a prior `ListAttackPaths` call, and that the system
+// should return the next page of data.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) PageToken(pageToken string) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) Fields(s ...googleapi.Field) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) IfNoneMatch(entityTag string) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) Context(ctx context.Context) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attackPaths")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.simulations.valuedResources.attackPaths.list" call.
+// Exactly one of *ListAttackPathsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAttackPathsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) Do(opts ...googleapi.CallOption) (*ListAttackPathsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAttackPathsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the attack paths for a set of simulation results or valued resources and filter.",
+	//   "flatPath": "v1/organizations/{organizationsId}/simulations/{simulationsId}/valuedResources/{valuedResourcesId}/attackPaths",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.simulations.valuedResources.attackPaths.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression that filters the attack path in the response. Supported fields: * `valued_resources` supports =",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListAttackPathsResponse`; indicates that this is a continuation of a prior `ListAttackPaths` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list attack paths. Valid formats: \"organizations/{organization}\", \"organizations/{organization}/simulations/{simulation}\" \"organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}\" \"organizations/{organization}/simulations/{simulation}/valuedResources/{valued_resource}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/simulations/[^/]+/valuedResources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/attackPaths",
+	//   "response": {
+	//     "$ref": "ListAttackPathsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSimulationsValuedResourcesAttackPathsListCall) Pages(ctx context.Context, f func(*ListAttackPathsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -13454,17 +21800,17 @@ func (c *OrganizationsSourcesCreateCall) Do(opts ...googleapi.CallOption) (*Sour
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Source{
 		ServerResponse: googleapi.ServerResponse{
@@ -13604,17 +21950,17 @@ func (c *OrganizationsSourcesGetCall) Do(opts ...googleapi.CallOption) (*Source,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Source{
 		ServerResponse: googleapi.ServerResponse{
@@ -13746,17 +22092,17 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -13814,8 +22160,8 @@ type OrganizationsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//     should be "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13914,17 +22260,17 @@ func (c *OrganizationsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13958,7 +22304,7 @@ func (c *OrganizationsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -14095,17 +22441,17 @@ func (c *OrganizationsSourcesPatchCall) Do(opts ...googleapi.CallOption) (*Sourc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Source{
 		ServerResponse: googleapi.ServerResponse{
@@ -14246,17 +22592,17 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -14392,17 +22738,17 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14545,17 +22891,17 @@ func (c *OrganizationsSourcesFindingsCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -14703,17 +23049,17 @@ func (c *OrganizationsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupFindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14995,17 +23341,17 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15120,11 +23466,13 @@ type OrganizationsSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *OrganizationsSourcesFindingsService) Patch(name string, finding *Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15210,17 +23558,17 @@ func (c *OrganizationsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -15243,7 +23591,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "description": "The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -15283,13 +23631,13 @@ type OrganizationsSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}",
-//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *OrganizationsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *OrganizationsSourcesFindingsSetMuteCall {
 	c := &OrganizationsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15364,17 +23712,17 @@ func (c *OrganizationsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -15397,7 +23745,7 @@ func (c *OrganizationsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -15431,11 +23779,13 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}".
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15510,17 +23860,17 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -15543,7 +23893,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -15676,17 +24026,17 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecurityMarks{
 		ServerResponse: googleapi.ServerResponse{
@@ -15755,10 +24105,11 @@ type OrganizationsSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-//   - name: External System Name e.g. jira, demisto, etc. e.g.:
-//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: Full resource name of the external system, for example:
+//     "organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a",
+//     "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+//     "projects/1234/sources/5678/findings/123456/externalSystems/jira".
 func (r *OrganizationsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *OrganizationsSourcesFindingsExternalSystemsPatchCall {
 	c := &OrganizationsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15843,17 +24194,17 @@ func (c *OrganizationsSourcesFindingsExternalSystemsPatchCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1ExternalSystem{
 		ServerResponse: googleapi.ServerResponse{
@@ -15876,7 +24227,7 @@ func (c *OrganizationsSourcesFindingsExternalSystemsPatchCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+	//       "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,
@@ -15917,9 +24268,9 @@ type ProjectsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the organization to groupBy. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent to group the assets by. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
 	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15994,17 +24345,17 @@ func (c *ProjectsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssets
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16018,6 +24369,7 @@ func (c *ProjectsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssets
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Filters an organization's assets and groups them by their specified properties.",
 	//   "flatPath": "v1/projects/{projectsId}/assets:group",
 	//   "httpMethod": "POST",
@@ -16027,7 +24379,7 @@ func (c *ProjectsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssets
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent to group the assets by. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16082,9 +24434,11 @@ type ProjectsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the organization assets should belong to. Its
-//     format is "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent resource that contains the assets.
+//     The value that you can specify on parent depends on the method in
+//     which you specify parent. You can specify one of the following
+//     values: "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16289,17 +24643,17 @@ func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16313,6 +24667,7 @@ func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRe
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Lists an organization's assets.",
 	//   "flatPath": "v1/projects/{projectsId}/assets",
 	//   "httpMethod": "GET",
@@ -16355,7 +24710,7 @@ func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource that contains the assets. The value that you can specify on parent depends on the method in which you specify parent. You can specify one of the following values: \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16512,17 +24867,17 @@ func (c *ProjectsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecurityMarks{
 		ServerResponse: googleapi.ServerResponse{
@@ -16589,11 +24944,11 @@ type ProjectsBigQueryExportsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a big query export.
+// Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new big query export's parent. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: The name of the parent resource of the new BigQuery export.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *ProjectsBigQueryExportsCreateCall {
 	c := &ProjectsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16603,9 +24958,9 @@ func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuri
 
 // BigQueryExportId sets the optional parameter "bigQueryExportId":
 // Required. Unique identifier provided by the client within the parent
-// scope. It must consist of lower case letters, numbers, and hyphen,
-// with the first character a letter, the last a letter or a number, and
-// a 63 character maximum.
+// scope. It must consist of only lowercase letters, numbers, and
+// hyphens, must start with a letter, must end with either a letter or a
+// number, and must be 63 characters or less.
 func (c *ProjectsBigQueryExportsCreateCall) BigQueryExportId(bigQueryExportId string) *ProjectsBigQueryExportsCreateCall {
 	c.urlParams_.Set("bigQueryExportId", bigQueryExportId)
 	return c
@@ -16680,17 +25035,17 @@ func (c *ProjectsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -16704,7 +25059,7 @@ func (c *ProjectsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a big query export.",
+	//   "description": "Creates a BigQuery export.",
 	//   "flatPath": "v1/projects/{projectsId}/bigQueryExports",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.projects.bigQueryExports.create",
@@ -16713,12 +25068,12 @@ func (c *ProjectsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "bigQueryExportId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource of the new BigQuery export. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16749,9 +25104,9 @@ type ProjectsBigQueryExportsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing big query export.
+// Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the big query export to delete. Its format is
+//   - name: The name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -16823,17 +25178,17 @@ func (c *ProjectsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -16847,7 +25202,7 @@ func (c *ProjectsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing big query export.",
+	//   "description": "Deletes an existing BigQuery export.",
 	//   "flatPath": "v1/projects/{projectsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.projects.bigQueryExports.delete",
@@ -16856,7 +25211,7 @@ func (c *ProjectsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. The name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -16885,9 +25240,9 @@ type ProjectsBigQueryExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a big query export.
+// Get: Gets a BigQuery export.
 //
-//   - name: Name of the big query export to retrieve. Its format is
+//   - name: Name of the BigQuery export to retrieve. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -16974,17 +25329,17 @@ func (c *ProjectsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -16998,7 +25353,7 @@ func (c *ProjectsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a big query export.",
+	//   "description": "Gets a BigQuery export.",
 	//   "flatPath": "v1/projects/{projectsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.bigQueryExports.get",
@@ -17007,7 +25362,7 @@ func (c *ProjectsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -17145,17 +25500,17 @@ func (c *ProjectsBigQueryExportsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBigQueryExportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -17332,17 +25687,17 @@ func (c *ProjectsBigQueryExportsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1BigQueryExport{
 		ServerResponse: googleapi.ServerResponse{
@@ -17485,17 +25840,17 @@ func (c *ProjectsFindingsBulkMuteCall) Do(opts ...googleapi.CallOption) (*Operat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -17564,9 +25919,9 @@ func (r *ProjectsMuteConfigsService) Create(parent string, googlecloudsecurityce
 
 // MuteConfigId sets the optional parameter "muteConfigId": Required.
 // Unique identifier provided by the client within the parent scope. It
-// must consist of lower case letters, numbers, and hyphen, with the
-// first character a letter, the last a letter or a number, and a 63
-// character maximum.
+// must consist of only lowercase letters, numbers, and hyphens, must
+// start with a letter, must end with either a letter or a number, and
+// must be 63 characters or less.
 func (c *ProjectsMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *ProjectsMuteConfigsCreateCall {
 	c.urlParams_.Set("muteConfigId", muteConfigId)
 	return c
@@ -17640,17 +25995,17 @@ func (c *ProjectsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -17673,7 +26028,7 @@ func (c *ProjectsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "muteConfigId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17783,17 +26138,17 @@ func (c *ProjectsMuteConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -17933,17 +26288,17 @@ func (c *ProjectsMuteConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -18100,17 +26455,17 @@ func (c *ProjectsMuteConfigsListCall) Do(opts ...googleapi.CallOption) (*ListMut
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListMuteConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18282,17 +26637,17 @@ func (c *ProjectsMuteConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1MuteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -18342,6 +26697,2184 @@ func (c *ProjectsMuteConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 
 }
 
+// method id "securitycenter.projects.notificationConfigs.create":
+
+type ProjectsNotificationConfigsCreateCall struct {
+	s                  *Service
+	parent             string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a notification config.
+//
+//   - parent: Resource name of the new notification config's parent. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
+func (r *ProjectsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *ProjectsNotificationConfigsCreateCall {
+	c := &ProjectsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// ConfigId sets the optional parameter "configId": Required. Unique
+// identifier provided by the client within the parent scope. It must be
+// between 1 and 128 characters and contain alphanumeric characters,
+// underscores, or hyphens only.
+func (c *ProjectsNotificationConfigsCreateCall) ConfigId(configId string) *ProjectsNotificationConfigsCreateCall {
+	c.urlParams_.Set("configId", configId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsCreateCall) Context(ctx context.Context) *ProjectsNotificationConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.create" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a notification config.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.notificationConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "configId": {
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters and contain alphanumeric characters, underscores, or hyphens only.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.notificationConfigs.delete":
+
+type ProjectsNotificationConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a notification config.
+//
+//   - name: Name of the notification config to delete. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
+func (r *ProjectsNotificationConfigsService) Delete(name string) *ProjectsNotificationConfigsDeleteCall {
+	c := &ProjectsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsDeleteCall) Context(ctx context.Context) *ProjectsNotificationConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a notification config.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.projects.notificationConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.notificationConfigs.get":
+
+type ProjectsNotificationConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a notification config.
+//
+//   - name: Name of the notification config to get. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
+func (r *ProjectsNotificationConfigsService) Get(name string) *ProjectsNotificationConfigsGetCall {
+	c := &ProjectsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsNotificationConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsNotificationConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsGetCall) Context(ctx context.Context) *ProjectsNotificationConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.get" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a notification config.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.notificationConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.notificationConfigs.list":
+
+type ProjectsNotificationConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists notification configs.
+//
+//   - parent: The name of the parent in which to list the notification
+//     configurations. Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
+func (r *ProjectsNotificationConfigsService) List(parent string) *ProjectsNotificationConfigsListCall {
+	c := &ProjectsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsNotificationConfigsListCall) PageSize(pageSize int64) *ProjectsNotificationConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListNotificationConfigsResponse`; indicates that this is
+// a continuation of a prior `ListNotificationConfigs` call, and that
+// the system should return the next page of data.
+func (c *ProjectsNotificationConfigsListCall) PageToken(pageToken string) *ProjectsNotificationConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsListCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsNotificationConfigsListCall) IfNoneMatch(entityTag string) *ProjectsNotificationConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsListCall) Context(ctx context.Context) *ProjectsNotificationConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.list" call.
+// Exactly one of *ListNotificationConfigsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListNotificationConfigsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*ListNotificationConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListNotificationConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists notification configs.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.notificationConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListNotificationConfigsResponse`; indicates that this is a continuation of a prior `ListNotificationConfigs` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the parent in which to list the notification configurations. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "response": {
+	//     "$ref": "ListNotificationConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsNotificationConfigsListCall) Pages(ctx context.Context, f func(*ListNotificationConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.notificationConfigs.patch":
+
+type ProjectsNotificationConfigsPatchCall struct {
+	s                  *Service
+	name               string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch:  Updates a notification config. The following update fields
+// are allowed: description, pubsub_topic, streaming_config.filter
+//
+//   - name: The relative resource name of this notification config. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/notificationConfigs/notify_public_b
+//     ucket",
+//     "folders/{folder_id}/notificationConfigs/notify_public_bucket", or
+//     "projects/{project_id}/notificationConfigs/notify_public_bucket".
+func (r *ProjectsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *ProjectsNotificationConfigsPatchCall {
+	c := &ProjectsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the notification config. If empty all mutable
+// fields will be updated.
+func (c *ProjectsNotificationConfigsPatchCall) UpdateMask(updateMask string) *ProjectsNotificationConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsPatchCall) Context(ctx context.Context) *ProjectsNotificationConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.patch" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.notificationConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\", \"folders/{folder_id}/notificationConfigs/notify_public_bucket\", or \"projects/{project_id}/notificationConfigs/notify_public_bucket\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the notification config. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.create":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Create: Creates a resident SecurityHealthAnalyticsCustomModule at the
+// scope of the given CRM parent, and also creates inherited
+// SecurityHealthAnalyticsCustomModules for all CRM descendants of the
+// given parent. These modules are enabled by default.
+//
+//   - parent: Resource name of the new custom module's parent. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.create" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the new custom module's parent. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.delete":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified SecurityHealthAnalyticsCustomModule and
+// all of its descendants in the CRM hierarchy. This method is only
+// supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.get":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a SecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a SecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.list":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all SecurityHealthAnalyticsCustomModules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent, and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list custom modules. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageSize(pageSize int64) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageToken(pageToken string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.list" call.
+// Exactly one of *ListSecurityHealthAnalyticsCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListSecurityHealthAnalyticsCustomModulesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.listDescendant":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Returns a list of all resident
+// SecurityHealthAnalyticsCustomModules under the given CRM parent and
+// all of the parent’s CRM descendants.
+//
+//   - parent: Name of parent to list descendant custom modules. Its
+//     format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all resident SecurityHealthAnalyticsCustomModules under the given CRM parent and all of the parent’s CRM descendants.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list descendant custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.patch":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
+	s                                                              *Service
+	name                                                           string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Patch: Updates the SecurityHealthAnalyticsCustomModule under the
+// given name based on the given update mask. Updating the enablement
+// state is supported on both resident and inherited modules (though
+// resident modules cannot have an enablement state of "inherited").
+// Updating the display name and custom config of a module is supported
+// on resident modules only.
+//
+//   - name: Immutable. The resource name of the custom module. Its format
+//     is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}", or
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}" The id {customModule} is server-generated and is not
+//     user settable. It will be a numeric id containing 1-20 digits.
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.patch" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the custom module. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\" The id {customModule} is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.get":
+
+type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the effective custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/effect
+//     iveCustomModules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomMod
+//     ules/{customModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomM
+//     odules/{customModule}".
+func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the effective custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.list":
+
+type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all
+// EffectiveSecurityHealthAnalyticsCustomModules for the given parent.
+// This includes resident modules defined at the scope of the parent,
+// and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list effective custom modules. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list effective custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "securitycenter.projects.sources.list":
 
 type ProjectsSourcesListCall struct {
@@ -18356,8 +28889,8 @@ type ProjectsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//     should be "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18456,17 +28989,17 @@ func (c *ProjectsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSources
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18500,7 +29033,7 @@ func (c *ProjectsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSources
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -18638,17 +29171,17 @@ func (c *ProjectsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption) (*Gr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupFindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18930,17 +29463,17 @@ func (c *ProjectsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -19055,11 +29588,13 @@ type ProjectsSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *ProjectsSourcesFindingsService) Patch(name string, finding *Finding) *ProjectsSourcesFindingsPatchCall {
 	c := &ProjectsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19145,17 +29680,17 @@ func (c *ProjectsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Fi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -19178,7 +29713,7 @@ func (c *ProjectsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Fi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "description": "The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -19218,13 +29753,13 @@ type ProjectsSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}",
-//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *ProjectsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *ProjectsSourcesFindingsSetMuteCall {
 	c := &ProjectsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19299,17 +29834,17 @@ func (c *ProjectsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -19332,7 +29867,7 @@ func (c *ProjectsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -19366,11 +29901,13 @@ type ProjectsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}".
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19445,17 +29982,17 @@ func (c *ProjectsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -19478,7 +30015,7 @@ func (c *ProjectsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -19611,17 +30148,17 @@ func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecurityMarks{
 		ServerResponse: googleapi.ServerResponse{
@@ -19690,10 +30227,11 @@ type ProjectsSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-//   - name: External System Name e.g. jira, demisto, etc. e.g.:
-//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: Full resource name of the external system, for example:
+//     "organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a",
+//     "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+//     "projects/1234/sources/5678/findings/123456/externalSystems/jira".
 func (r *ProjectsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *ProjectsSourcesFindingsExternalSystemsPatchCall {
 	c := &ProjectsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19778,17 +30316,17 @@ func (c *ProjectsSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudSecuritycenterV1ExternalSystem{
 		ServerResponse: googleapi.ServerResponse{
@@ -19811,7 +30349,7 @@ func (c *ProjectsSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+	//       "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,

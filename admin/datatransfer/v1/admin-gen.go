@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "admin:datatransfer_v1"
 const apiName = "admin"
@@ -165,13 +166,16 @@ type TransfersService struct {
 	s *Service
 }
 
-// Application: Applications resources represent applications installed
+// Application: Application resources represent applications installed
 // on the domain that support transferring ownership of user data.
 type Application struct {
 	// Etag: Etag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The application's ID.
+	// Id: The application's ID. Retrievable by using the
+	// `applications.list()`
+	// (/admin-sdk/data-transfer/reference/rest/v1/applications/list)
+	// method.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies the resource as a DataTransfer Application Resource.
@@ -181,8 +185,8 @@ type Application struct {
 	Name string `json:"name,omitempty"`
 
 	// TransferParams: The list of all possible transfer parameters for this
-	// application. These parameters can be used to select the data of the
-	// user in this application to be transferred.
+	// application. These parameters select which categories of the user's
+	// data to transfer.
 	TransferParams []*ApplicationTransferParam `json:"transferParams,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -220,11 +224,14 @@ type ApplicationDataTransfer struct {
 
 	// ApplicationTransferParams: The transfer parameters for the
 	// application. These parameters are used to select the data which will
-	// get transferred in context of this application.
+	// get transferred in context of this application. For more information
+	// about the specific values available for each application, see the
+	// Transfer parameters (/admin-sdk/data-transfer/v1/parameters)
+	// reference.
 	ApplicationTransferParams []*ApplicationTransferParam `json:"applicationTransferParams,omitempty"`
 
-	// ApplicationTransferStatus: Current status of transfer for this
-	// application. (Read-only)
+	// ApplicationTransferStatus: Read-only. Current status of transfer for
+	// this application.
 	ApplicationTransferStatus string `json:"applicationTransferStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
@@ -253,11 +260,11 @@ func (s *ApplicationDataTransfer) MarshalJSON() ([]byte, error) {
 // ApplicationTransferParam: Template for application transfer
 // parameters.
 type ApplicationTransferParam struct {
-	// Key: The type of the transfer parameter. eg: 'PRIVACY_LEVEL'
+	// Key: The type of the transfer parameter, such as `PRIVACY_LEVEL`.
 	Key string `json:"key,omitempty"`
 
-	// Value: The value of the corresponding transfer parameter. eg:
-	// 'PRIVATE' or 'SHARED'
+	// Value: The value of the transfer parameter, such as `PRIVATE` or
+	// `SHARED`.
 	Value []string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -285,8 +292,8 @@ func (s *ApplicationTransferParam) MarshalJSON() ([]byte, error) {
 
 // ApplicationsListResponse: Template for a collection of Applications.
 type ApplicationsListResponse struct {
-	// Applications: List of applications that support data transfer and are
-	// also installed for the customer.
+	// Applications: The list of applications that support data transfer and
+	// are also installed for the customer.
 	Applications []*Application `json:"applications,omitempty"`
 
 	// Etag: ETag of the resource.
@@ -295,8 +302,7 @@ type ApplicationsListResponse struct {
 	// Kind: Identifies the resource as a collection of Applications.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Continuation token which will be used to specify next
-	// page in list API.
+	// NextPageToken: Token to specify the next page in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -329,17 +335,17 @@ func (s *ApplicationsListResponse) MarshalJSON() ([]byte, error) {
 // DataTransfer: A Transfer resource represents the transfer of the
 // ownership of user data between users.
 type DataTransfer struct {
-	// ApplicationDataTransfers: List of per application data transfer
-	// resources. It contains data transfer details of the applications
-	// associated with this transfer resource. Note that this list is also
-	// used to specify the applications for which data transfer has to be
-	// done at the time of the transfer resource creation.
+	// ApplicationDataTransfers: The list of per-application data transfer
+	// resources. It contains details of the applications associated with
+	// this transfer resource, and also specifies the applications for which
+	// data transfer has to be done at the time of the transfer resource
+	// creation.
 	ApplicationDataTransfers []*ApplicationDataTransfer `json:"applicationDataTransfers,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The transfer's ID (Read-only).
+	// Id: Read-only. The transfer's ID.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Identifies the resource as a DataTransfer request.
@@ -351,11 +357,11 @@ type DataTransfer struct {
 	// OldOwnerUserId: ID of the user whose data is being transferred.
 	OldOwnerUserId string `json:"oldOwnerUserId,omitempty"`
 
-	// OverallTransferStatusCode: Overall transfer status (Read-only).
+	// OverallTransferStatusCode: Read-only. Overall transfer status.
 	OverallTransferStatusCode string `json:"overallTransferStatusCode,omitempty"`
 
-	// RequestTime: The time at which the data transfer was requested
-	// (Read-only).
+	// RequestTime: Read-only. The time at which the data transfer was
+	// requested.
 	RequestTime string `json:"requestTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -400,8 +406,7 @@ type DataTransfersListResponse struct {
 	// requests.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Continuation token which will be used to specify next
-	// page in list API.
+	// NextPageToken: Token to specify the next page in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -527,17 +532,17 @@ func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Application{
 		ServerResponse: googleapi.ServerResponse{
@@ -689,17 +694,17 @@ func (c *ApplicationsListCall) Do(opts ...googleapi.CallOption) (*ApplicationsLi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApplicationsListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -867,17 +872,17 @@ func (c *TransfersGetCall) Do(opts ...googleapi.CallOption) (*DataTransfer, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataTransfer{
 		ServerResponse: googleapi.ServerResponse{
@@ -928,7 +933,9 @@ type TransfersInsertCall struct {
 	header_      http.Header
 }
 
-// Insert: Inserts a data transfer request.
+// Insert: Inserts a data transfer request. See the Transfer parameters
+// (/admin-sdk/data-transfer/v1/parameters) reference for specific
+// application requirements.
 func (r *TransfersService) Insert(datatransfer *DataTransfer) *TransfersInsertCall {
 	c := &TransfersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datatransfer = datatransfer
@@ -999,17 +1006,17 @@ func (c *TransfersInsertCall) Do(opts ...googleapi.CallOption) (*DataTransfer, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataTransfer{
 		ServerResponse: googleapi.ServerResponse{
@@ -1023,7 +1030,7 @@ func (c *TransfersInsertCall) Do(opts ...googleapi.CallOption) (*DataTransfer, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Inserts a data transfer request.",
+	//   "description": "Inserts a data transfer request. See the [Transfer parameters](/admin-sdk/data-transfer/v1/parameters) reference for specific application requirements.",
 	//   "flatPath": "admin/datatransfer/v1/transfers",
 	//   "httpMethod": "POST",
 	//   "id": "datatransfer.transfers.insert",
@@ -1173,17 +1180,17 @@ func (c *TransfersListCall) Do(opts ...googleapi.CallOption) (*DataTransfersList
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataTransfersListResponse{
 		ServerResponse: googleapi.ServerResponse{

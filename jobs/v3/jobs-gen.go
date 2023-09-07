@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "jobs:v3"
 const apiName = "jobs"
@@ -560,13 +561,15 @@ type Company struct {
 	// ImageUri: Optional. A URI that hosts the employer's company logo.
 	ImageUri string `json:"imageUri,omitempty"`
 
-	// KeywordSearchableJobCustomAttributes: Optional. A list of keys of
-	// filterable Job.custom_attributes, whose corresponding `string_values`
-	// are used in keyword search. Jobs with `string_values` under these
-	// specified field keys are returned if any of the values matches the
-	// search keyword. Custom field values with parenthesis, brackets and
-	// special symbols won't be properly searchable, and those keyword
-	// queries need to be surrounded by quotes.
+	// KeywordSearchableJobCustomAttributes: Optional. This field is
+	// deprecated. Please set the searchability of the custom attribute in
+	// the Job.custom_attributes going forward. A list of keys of filterable
+	// Job.custom_attributes, whose corresponding `string_values` are used
+	// in keyword search. Jobs with `string_values` under these specified
+	// field keys are returned if any of the values matches the search
+	// keyword. Custom field values with parenthesis, brackets and special
+	// symbols won't be properly searchable, and those keyword queries need
+	// to be surrounded by quotes.
 	KeywordSearchableJobCustomAttributes []string `json:"keywordSearchableJobCustomAttributes,omitempty"`
 
 	// Name: Required during company update. The resource name for a
@@ -2821,8 +2824,8 @@ type NamespacedDebugInput struct {
 	// enrollment selection (at all diversion points). Automatic enrollment
 	// selection means experiment selection process based on the
 	// experiment's automatic enrollment condition. This does not disable
-	// selection of forced experiments. Setting this filed to false does not
-	// change anything in experiment selection process.
+	// selection of forced experiments. Setting this field to false does not
+	// change anything in the experiment selection process.
 	DisableAutomaticEnrollmentSelection bool `json:"disableAutomaticEnrollmentSelection,omitempty"`
 
 	// DisableExpNames: Set of experiment names to be disabled. If an
@@ -2854,8 +2857,8 @@ type NamespacedDebugInput struct {
 	// selection (at all diversion points). Manual enrollment selection
 	// means experiment selection process based on the request's manual
 	// enrollment states (a.k.a. opt-in experiments). This does not disable
-	// selection of forced experiments. Setting this filed to false does not
-	// change anything in experiment selection process.
+	// selection of forced experiments. Setting this field to false does not
+	// change anything in the experiment selection process.
 	DisableManualEnrollmentSelection bool `json:"disableManualEnrollmentSelection,omitempty"`
 
 	// DisableOrganicSelection: If true, disable organic experiment
@@ -2865,8 +2868,8 @@ type NamespacedDebugInput struct {
 	// forced experiments. This is useful in cases when it is not known
 	// whether experiment selection behavior is responsible for a error or
 	// breakage. Disabling organic selection may help to isolate the cause
-	// of a given problem. Setting this filed to false does not change
-	// anything in experiment selection process.
+	// of a given problem. Setting this field to false does not change
+	// anything in the experiment selection process.
 	DisableOrganicSelection bool `json:"disableOrganicSelection,omitempty"`
 
 	// ForcedFlags: Flags to force in a particular experiment state. Map
@@ -2877,10 +2880,8 @@ type NamespacedDebugInput struct {
 	// Map from rollout name to rollout value.
 	ForcedRollouts map[string]bool `json:"forcedRollouts,omitempty"`
 
-	// TestingMode: If set to ALL_OFF, organic selection will be disabled;
-	// if set to ALL_ON, organic selection will be disabled, and only select
-	// launch experiments will receive traffic. See
-	// go/mendel-aoao-runtime-design.
+	// TestingMode: Sets different testing modes. See the documentation in
+	// the TestingMode message for more information.
 	//
 	// Possible values:
 	//   "TESTING_MODE_UNSPECIFIED"
@@ -2947,6 +2948,23 @@ func (s *NumericBucketingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod NumericBucketingOption
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *NumericBucketingOption) UnmarshalJSON(data []byte) error {
+	type NoMethod NumericBucketingOption
+	var s1 struct {
+		BucketBounds []gensupport.JSONFloat64 `json:"bucketBounds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BucketBounds = make([]float64, len(s1.BucketBounds))
+	for i := range s1.BucketBounds {
+		s.BucketBounds[i] = float64(s1.BucketBounds[i])
+	}
+	return nil
 }
 
 // NumericBucketingResult: Output only. Custom numeric bucketing result.
@@ -3873,17 +3891,17 @@ func (c *ProjectsCompleteCall) Do(opts ...googleapi.CallOption) (*CompleteQueryR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CompleteQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3911,6 +3929,7 @@ func (c *ProjectsCompleteCall) Do(opts ...googleapi.CallOption) (*CompleteQueryR
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
+	//       "deprecated": true,
 	//       "description": "Deprecated. Use language_codes instead. Optional. The language of the query. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). For CompletionType.JOB_TITLE type, only open jobs with the same language_code are returned. For CompletionType.COMPANY_NAME type, only companies having open jobs with the same language_code are returned. For CompletionType.COMBINED type, only open jobs with the same language_code or companies having open jobs with the same language_code are returned. The maximum number of allowed characters is 255.",
 	//       "location": "query",
 	//       "type": "string"
@@ -4077,17 +4096,17 @@ func (c *ProjectsClientEventsCreateCall) Do(opts ...googleapi.CallOption) (*Clie
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientEvent{
 		ServerResponse: googleapi.ServerResponse{
@@ -4222,17 +4241,17 @@ func (c *ProjectsCompaniesCreateCall) Do(opts ...googleapi.CallOption) (*Company
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Company{
 		ServerResponse: googleapi.ServerResponse{
@@ -4361,17 +4380,17 @@ func (c *ProjectsCompaniesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4510,17 +4529,17 @@ func (c *ProjectsCompaniesGetCall) Do(opts ...googleapi.CallOption) (*Company, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Company{
 		ServerResponse: googleapi.ServerResponse{
@@ -4683,17 +4702,17 @@ func (c *ProjectsCompaniesListCall) Do(opts ...googleapi.CallOption) (*ListCompa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCompaniesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4866,17 +4885,17 @@ func (c *ProjectsCompaniesPatchCall) Do(opts ...googleapi.CallOption) (*Company,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Company{
 		ServerResponse: googleapi.ServerResponse{
@@ -5011,17 +5030,17 @@ func (c *ProjectsJobsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5157,17 +5176,17 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -5296,17 +5315,17 @@ func (c *ProjectsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5446,17 +5465,17 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -5659,17 +5678,17 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5862,17 +5881,17 @@ func (c *ProjectsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -6009,17 +6028,17 @@ func (c *ProjectsJobsSearchCall) Do(opts ...googleapi.CallOption) (*SearchJobsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6182,17 +6201,17 @@ func (c *ProjectsJobsSearchForAlertCall) Do(opts ...googleapi.CallOption) (*Sear
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchJobsResponse{
 		ServerResponse: googleapi.ServerResponse{

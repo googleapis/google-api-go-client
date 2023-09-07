@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "notebooks:v1"
 const apiName = "notebooks"
@@ -231,9 +232,10 @@ type ProjectsLocationsSchedulesService struct {
 }
 
 // AcceleratorConfig: Definition of a hardware accelerator. Note that
-// not all combinations of `type` and `core_count` are valid. Check GPUs
-// on Compute Engine (/compute/docs/gpus/#gpus-list) to find a valid
-// combination. TPUs are not supported.
+// not all combinations of `type` and `core_count` are valid. See GPUs
+// on Compute Engine
+// (https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a
+// valid combination. TPUs are not supported.
 type AcceleratorConfig struct {
 	// CoreCount: Count of cores of this accelerator.
 	CoreCount int64 `json:"coreCount,omitempty,string"`
@@ -310,7 +312,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -327,9 +331,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -432,6 +434,133 @@ func (s *DataprocParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DiagnoseInstanceRequest: Request for creating a notebook instance
+// diagnostic file.
+type DiagnoseInstanceRequest struct {
+	// DiagnosticConfig: Required. Defines flags that are used to run the
+	// diagnostic tool
+	DiagnosticConfig *DiagnosticConfig `json:"diagnosticConfig,omitempty"`
+
+	// TimeoutMinutes: Optional. Maxmium amount of time in minutes before
+	// the operation times out.
+	TimeoutMinutes int64 `json:"timeoutMinutes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiagnosticConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiagnosticConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiagnoseInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DiagnoseInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiagnoseRuntimeRequest: Request for creating a notebook instance
+// diagnostic file.
+type DiagnoseRuntimeRequest struct {
+	// DiagnosticConfig: Required. Defines flags that are used to run the
+	// diagnostic tool
+	DiagnosticConfig *DiagnosticConfig `json:"diagnosticConfig,omitempty"`
+
+	// TimeoutMinutes: Optional. Maxmium amount of time in minutes before
+	// the operation times out.
+	TimeoutMinutes int64 `json:"timeoutMinutes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiagnosticConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiagnosticConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiagnoseRuntimeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DiagnoseRuntimeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiagnosticConfig: Defines flags that are used to run the diagnostic
+// tool
+type DiagnosticConfig struct {
+	// CopyHomeFilesFlagEnabled: Optional. Enables flag to copy all
+	// `/home/jupyter` folder contents
+	CopyHomeFilesFlagEnabled bool `json:"copyHomeFilesFlagEnabled,omitempty"`
+
+	// GcsBucket: Required. User Cloud Storage bucket location (REQUIRED).
+	// Must be formatted with path prefix (`gs://$GCS_BUCKET`). Permissions:
+	// User Managed Notebooks: - storage.buckets.writer: Must be given to
+	// the project's service account attached to VM. Google Managed
+	// Notebooks: - storage.buckets.writer: Must be given to the project's
+	// service account or user credentials attached to VM depending on
+	// authentication mode. Cloud Storage bucket Log file will be written to
+	// `gs://$GCS_BUCKET/$RELATIVE_PATH/$VM_DATE_$TIME.tar.gz`
+	GcsBucket string `json:"gcsBucket,omitempty"`
+
+	// PacketCaptureFlagEnabled: Optional. Enables flag to capture packets
+	// from the instance for 30 seconds
+	PacketCaptureFlagEnabled bool `json:"packetCaptureFlagEnabled,omitempty"`
+
+	// RelativePath: Optional. Defines the relative storage path in the
+	// Cloud Storage bucket where the diagnostic logs will be written:
+	// Default path will be the root directory of the Cloud Storage bucket
+	// (`gs://$GCS_BUCKET/$DATE_$TIME.tar.gz`) Example of full path where
+	// Log file will be written: `gs://$GCS_BUCKET/$RELATIVE_PATH/`
+	RelativePath string `json:"relativePath,omitempty"`
+
+	// RepairFlagEnabled: Optional. Enables flag to repair service for
+	// instance
+	RepairFlagEnabled bool `json:"repairFlagEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CopyHomeFilesFlagEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CopyHomeFilesFlagEnabled")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiagnosticConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DiagnosticConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Disk: An instance-attached disk resource.
 type Disk struct {
 	// AutoDelete: Indicates whether the disk will be auto-deleted when the
@@ -444,13 +573,13 @@ type Disk struct {
 	Boot bool `json:"boot,omitempty"`
 
 	// DeviceName: Indicates a unique device name of your choice that is
-	// reflected into the /dev/disk/by-id/google-* tree of a Linux operating
-	// system running within the instance. This name can be used to
-	// reference the device for mounting, resizing, and so on, from within
-	// the instance. If not specified, the server chooses a default device
-	// name to apply to this disk, in the form persistent-disk-x, where x is
-	// a number assigned by Google Compute Engine.This field is only
-	// applicable for persistent disks.
+	// reflected into the `/dev/disk/by-id/google-*` tree of a Linux
+	// operating system running within the instance. This name can be used
+	// to reference the device for mounting, resizing, and so on, from
+	// within the instance. If not specified, the server chooses a default
+	// device name to apply to this disk, in the form persistent-disk-x,
+	// where x is a number assigned by Google Compute Engine.This field is
+	// only applicable for persistent disks.
 	DeviceName string `json:"deviceName,omitempty"`
 
 	// DiskSizeGb: Indicates the size of the disk in base-2 GB.
@@ -471,7 +600,7 @@ type Disk struct {
 	// disks must always use SCSI and the request will fail if you attempt
 	// to attach a persistent disk in any other format than SCSI. Local SSDs
 	// can use either NVME or SCSI. For performance characteristics of SCSI
-	// over NVMe, see Local SSD performance. Valid values: * NVME * SCSI
+	// over NVMe, see Local SSD performance. Valid values: * `NVME` * `SCSI`
 	Interface string `json:"interface,omitempty"`
 
 	// Kind: Type of the resource. Always compute#attachedDisk for attached
@@ -483,17 +612,17 @@ type Disk struct {
 	// and marketplace images.
 	Licenses []string `json:"licenses,omitempty"`
 
-	// Mode: The mode in which to attach this disk, either READ_WRITE or
-	// READ_ONLY. If not specified, the default is to attach the disk in
-	// READ_WRITE mode. Valid values: * READ_ONLY * READ_WRITE
+	// Mode: The mode in which to attach this disk, either `READ_WRITE` or
+	// `READ_ONLY`. If not specified, the default is to attach the disk in
+	// `READ_WRITE` mode. Valid values: * `READ_ONLY` * `READ_WRITE`
 	Mode string `json:"mode,omitempty"`
 
 	// Source: Indicates a valid partial or full URL to an existing
 	// Persistent Disk resource.
 	Source string `json:"source,omitempty"`
 
-	// Type: Indicates the type of the disk, either SCRATCH or PERSISTENT.
-	// Valid values: * PERSISTENT * SCRATCH
+	// Type: Indicates the type of the disk, either `SCRATCH` or
+	// `PERSISTENT`. Valid values: * `PERSISTENT` * `SCRATCH`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoDelete") to
@@ -1002,8 +1131,8 @@ func (s *GetInstanceHealthResponse) MarshalJSON() ([]byte, error) {
 type GuestOsFeature struct {
 	// Type: The ID of a supported feature. Read Enabling guest operating
 	// system features to see a list of available options. Valid values: *
-	// FEATURE_TYPE_UNSPECIFIED * MULTI_IP_SUBNET * SECURE_BOOT *
-	// UEFI_COMPATIBLE * VIRTIO_SCSI_MULTIQUEUE * WINDOWS
+	// `FEATURE_TYPE_UNSPECIFIED` * `MULTI_IP_SUBNET` * `SECURE_BOOT` *
+	// `UEFI_COMPATIBLE` * `VIRTIO_SCSI_MULTIQUEUE` * `WINDOWS`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -1034,7 +1163,7 @@ type Instance struct {
 	// AcceleratorConfig: The hardware accelerator used on this instance. If
 	// you use accelerators, make sure that your configuration has enough
 	// vCPUs and memory to support the `machine_type` you have selected
-	// (/compute/docs/gpus/#gpus-list).
+	// (https://cloud.google.com/compute/docs/gpus/#gpus-list).
 	AcceleratorConfig *AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
 	// BootDiskSizeGb: Input only. The size of the boot disk in GB attached
@@ -1128,11 +1257,16 @@ type Instance struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. The Compute Engine machine type
-	// (/compute/docs/machine-types) of this instance.
+	// (https://cloud.google.com/compute/docs/machine-types) of this
+	// instance.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Metadata: Custom metadata to apply to this instance.
 	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// Migrated: Output only. Bool indicating whether this notebook has been
+	// migrated to a Workbench Instance
+	Migrated bool `json:"migrated,omitempty"`
 
 	// Name: Output only. The name of this notebook instance. Format:
 	// `projects/{project_id}/locations/{location}/instances/{instance_id}`
@@ -1155,7 +1289,8 @@ type Instance struct {
 	// the proxy.
 	NoProxyAccess bool `json:"noProxyAccess,omitempty"`
 
-	// NoPublicIp: If true, no public IP will be assigned to this instance.
+	// NoPublicIp: If true, no external IP will be assigned to this
+	// instance.
 	NoPublicIp bool `json:"noPublicIp,omitempty"`
 
 	// NoRemoveDataDisk: Input only. If true, the data disk will not be auto
@@ -1166,6 +1301,10 @@ type Instance struct {
 	// after a notebook instance fully boots up. The path must be a URL or
 	// Cloud Storage path (`gs://path-to-file/file-name`).
 	PostStartupScript string `json:"postStartupScript,omitempty"`
+
+	// PreMigrationCheck: Output only. Check how possible a migration from
+	// UmN to WbI is.
+	PreMigrationCheck *PreMigrationCheck `json:"preMigrationCheck,omitempty"`
 
 	// ProxyUri: Output only. The proxy endpoint that is used to access the
 	// Jupyter notebook.
@@ -1439,7 +1578,7 @@ type ListInstancesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Unreachable: Locations that could not be reached. For example,
-	// ['us-west1-a', 'us-central1-b']. A ListInstancesResponse will only
+	// `['us-west1-a', 'us-central1-b']`. A ListInstancesResponse will only
 	// contain either instances or unreachables,
 	Unreachable []string `json:"unreachable,omitempty"`
 
@@ -1554,8 +1693,8 @@ type ListRuntimesResponse struct {
 	Runtimes []*Runtime `json:"runtimes,omitempty"`
 
 	// Unreachable: Locations that could not be reached. For example,
-	// ['us-west1', 'us-central1']. A ListRuntimesResponse will only contain
-	// either runtimes or unreachables,
+	// `['us-west1', 'us-central1']`. A ListRuntimesResponse will only
+	// contain either runtimes or unreachables,
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1641,11 +1780,11 @@ type LocalDisk struct {
 	Boot bool `json:"boot,omitempty"`
 
 	// DeviceName: Optional. Output only. Specifies a unique device name of
-	// your choice that is reflected into the /dev/disk/by-id/google-* tree
-	// of a Linux operating system running within the instance. This name
-	// can be used to reference the device for mounting, resizing, and so
-	// on, from within the instance. If not specified, the server chooses a
-	// default device name to apply to this disk, in the form
+	// your choice that is reflected into the `/dev/disk/by-id/google-*`
+	// tree of a Linux operating system running within the instance. This
+	// name can be used to reference the device for mounting, resizing, and
+	// so on, from within the instance. If not specified, the server chooses
+	// a default device name to apply to this disk, in the form
 	// persistent-disk-x, where x is a number assigned by Google Compute
 	// Engine. This field is only applicable for persistent disks.
 	DeviceName string `json:"deviceName,omitempty"`
@@ -1673,7 +1812,7 @@ type LocalDisk struct {
 	// disks must always use SCSI and the request will fail if you attempt
 	// to attach a persistent disk in any other format than SCSI. Local SSDs
 	// can use either NVME or SCSI. For performance characteristics of SCSI
-	// over NVMe, see Local SSD performance. Valid values: * NVME * SCSI
+	// over NVMe, see Local SSD performance. Valid values: * `NVME` * `SCSI`
 	Interface string `json:"interface,omitempty"`
 
 	// Kind: Output only. Type of the resource. Always compute#attachedDisk
@@ -1683,18 +1822,18 @@ type LocalDisk struct {
 	// Licenses: Output only. Any valid publicly visible licenses.
 	Licenses []string `json:"licenses,omitempty"`
 
-	// Mode: The mode in which to attach this disk, either READ_WRITE or
-	// READ_ONLY. If not specified, the default is to attach the disk in
-	// READ_WRITE mode. Valid values: * READ_ONLY * READ_WRITE
+	// Mode: The mode in which to attach this disk, either `READ_WRITE` or
+	// `READ_ONLY`. If not specified, the default is to attach the disk in
+	// `READ_WRITE` mode. Valid values: * `READ_ONLY` * `READ_WRITE`
 	Mode string `json:"mode,omitempty"`
 
 	// Source: Specifies a valid partial or full URL to an existing
 	// Persistent Disk resource.
 	Source string `json:"source,omitempty"`
 
-	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT.
-	// If not specified, the default is PERSISTENT. Valid values: *
-	// PERSISTENT * SCRATCH
+	// Type: Specifies the type of the disk, either `SCRATCH` or
+	// `PERSISTENT`. If not specified, the default is `PERSISTENT`. Valid
+	// values: * `PERSISTENT` * `SCRATCH`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoDelete") to
@@ -1780,7 +1919,7 @@ func (s *LocalDiskInitializeParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -2051,6 +2190,47 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PreMigrationCheck: PreMigrationCheck checks how feasible a migration
+// from UmN is.
+type PreMigrationCheck struct {
+	// Message: Message provides a summary or workaround.
+	Message string `json:"message,omitempty"`
+
+	// Result: Result returns the result of the check.
+	//
+	// Possible values:
+	//   "RESULT_UNSPECIFIED" - Default type.
+	//   "IDENTICAL" - UmN can be migrated to WbI as is minus non-relevant
+	// parts.
+	//   "PARTIAL" - Part of the UmN won't be ported. The migration might
+	// default some values.
+	//   "NOT_RECOMMENDED" - UmN has too many unsupported options for a
+	// migration to WbI.
+	Result string `json:"result,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PreMigrationCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod PreMigrationCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RefreshRuntimeTokenInternalRequest: Request for getting a new access
 // token.
 type RefreshRuntimeTokenInternalRequest struct {
@@ -2145,6 +2325,39 @@ type RegisterInstanceRequest struct {
 
 func (s *RegisterInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RegisterInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportInstanceEventRequest: Request for reporting a Managed Notebook
+// Event.
+type ReportInstanceEventRequest struct {
+	// Event: Required. The Event to be reported.
+	Event *Event `json:"event,omitempty"`
+
+	// VmId: Required. The VM hardware token for authenticating the VM.
+	// https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+	VmId string `json:"vmId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Event") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportInstanceEventRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportInstanceEventRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2297,7 +2510,7 @@ func (s *ResetRuntimeRequest) MarshalJSON() ([]byte, error) {
 // RollbackInstanceRequest: Request for rollbacking a notebook instance
 type RollbackInstanceRequest struct {
 	// TargetSnapshot: Required. The snapshot for rollback. Example:
-	// "projects/test-project/global/snapshots/krwlzipynril".
+	// `projects/test-project/global/snapshots/krwlzipynril`.
 	TargetSnapshot string `json:"targetSnapshot,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetSnapshot") to
@@ -2346,9 +2559,22 @@ type Runtime struct {
 	// running. Applies to ACTIVE state.
 	HealthState string `json:"healthState,omitempty"`
 
+	// Labels: Optional. The labels to associate with this Managed Notebook
+	// or Runtime. Label **keys** must contain 1 to 63 characters, and must
+	// conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label
+	// **values** may be empty, but, if present, must contain 1 to 63
+	// characters, and must conform to RFC 1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
+	// associated with a cluster.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Metrics: Output only. Contains Runtime daemon metrics such as Service
 	// status and JupyterLab stats.
 	Metrics *RuntimeMetrics `json:"metrics,omitempty"`
+
+	// Migrated: Output only. Bool indicating whether this notebook has been
+	// migrated to a Workbench Instance
+	Migrated bool `json:"migrated,omitempty"`
 
 	// Name: Output only. The resource name of the runtime. Format:
 	// `projects/{project}/locations/{location}/runtimes/{runtimeId}`
@@ -2411,7 +2637,6 @@ func (s *Runtime) MarshalJSON() ([]byte, error) {
 }
 
 // RuntimeAcceleratorConfig: Definition of the types of hardware
-// accelerators that can be used. Definition of the types of hardware
 // accelerators that can be used. See Compute Engine AcceleratorTypes
 // (https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes).
 // Examples: * `nvidia-tesla-k80` * `nvidia-tesla-p100` *
@@ -2425,13 +2650,13 @@ type RuntimeAcceleratorConfig struct {
 	//
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Accelerator type is not specified.
-	//   "NVIDIA_TESLA_K80" - b/241005111 K80 deprecation in Google Managed
-	// Notebooks Accelerator type is Nvidia Tesla K80.
+	//   "NVIDIA_TESLA_K80" - Accelerator type is Nvidia Tesla K80.
 	//   "NVIDIA_TESLA_P100" - Accelerator type is Nvidia Tesla P100.
 	//   "NVIDIA_TESLA_V100" - Accelerator type is Nvidia Tesla V100.
 	//   "NVIDIA_TESLA_P4" - Accelerator type is Nvidia Tesla P4.
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
-	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100.
+	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100 - 40GB.
+	//   "NVIDIA_L4" - Accelerator type is Nvidia L4.
 	//   "TPU_V2" - (Coming soon) Accelerator type is TPU V2.
 	//   "TPU_V3" - (Coming soon) Accelerator type is TPU V3.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
@@ -2519,8 +2744,8 @@ type RuntimeGuestOsFeature struct {
 	// system features
 	// (https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features)
 	// to see a list of available options. Valid values: *
-	// FEATURE_TYPE_UNSPECIFIED * MULTI_IP_SUBNET * SECURE_BOOT *
-	// UEFI_COMPATIBLE * VIRTIO_SCSI_MULTIQUEUE * WINDOWS
+	// `FEATURE_TYPE_UNSPECIFIED` * `MULTI_IP_SUBNET` * `SECURE_BOOT` *
+	// `UEFI_COMPATIBLE` * `VIRTIO_SCSI_MULTIQUEUE` * `WINDOWS`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -2576,7 +2801,7 @@ func (s *RuntimeMetrics) MarshalJSON() ([]byte, error) {
 }
 
 // RuntimeShieldedInstanceConfig: A set of Shielded Instance options.
-// Check Images using supported Shielded VM features
+// See Images using supported Shielded VM features
 // (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
 // Not all combinations are valid.
 type RuntimeShieldedInstanceConfig struct {
@@ -2658,6 +2883,10 @@ type RuntimeSoftwareConfig struct {
 	// in the notebook instance.
 	Kernels []*ContainerImage `json:"kernels,omitempty"`
 
+	// MixerDisabled: Bool indicating whether mixer client should be
+	// disabled. Default: False
+	MixerDisabled bool `json:"mixerDisabled,omitempty"`
+
 	// NotebookUpgradeSchedule: Cron expression in UTC timezone, used to
 	// schedule instance auto upgrade. Please follow the cron format
 	// (https://en.wikipedia.org/wiki/Cron).
@@ -2682,6 +2911,10 @@ type RuntimeSoftwareConfig struct {
 	// Upgradeable: Output only. Bool indicating whether an newer image is
 	// available in an image family.
 	Upgradeable bool `json:"upgradeable,omitempty"`
+
+	// Version: Output only. version of boot image such as M100, from
+	// release label of the image.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomGpuDriverPath")
 	// to unconditionally include in API requests. By default, fields with
@@ -2714,7 +2947,7 @@ type Schedule struct {
 
 	// CronSchedule: Cron-tab formatted schedule by which the job will
 	// execute. Format: minute, hour, day of month, month, day of week, e.g.
-	// 0 0 * * WED = every Wednesday More examples:
+	// `0 0 * * WED` = every Wednesday More examples:
 	// https://crontab.guru/examples.html
 	CronSchedule string `json:"cronSchedule,omitempty"`
 
@@ -2722,8 +2955,8 @@ type Schedule struct {
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Output only. Display name used for UI purposes. Name can
-	// only contain alphanumeric characters, hyphens '-', and underscores
-	// '_'.
+	// only contain alphanumeric characters, hyphens `-`, and underscores
+	// `_`.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ExecutionTemplate: Notebook Execution Template corresponding to this
@@ -2794,7 +3027,7 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 
 // SchedulerAcceleratorConfig: Definition of a hardware accelerator.
 // Note that not all combinations of `type` and `core_count` are valid.
-// Check GPUs on Compute Engine
+// See GPUs on Compute Engine
 // (https://cloud.google.com/compute/docs/gpus) to find a valid
 // combination. TPUs are not supported.
 type SchedulerAcceleratorConfig struct {
@@ -2874,7 +3107,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // accelerator.
 type SetInstanceAcceleratorRequest struct {
 	// CoreCount: Required. Count of cores of this accelerator. Note that
-	// not all combinations of `type` and `core_count` are valid. Check GPUs
+	// not all combinations of `type` and `core_count` are valid. See GPUs
 	// on Compute Engine
 	// (https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a
 	// valid combination. TPUs are not supported.
@@ -2982,9 +3215,10 @@ func (s *SetInstanceMachineTypeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ShieldedInstanceConfig: A set of Shielded Instance options. Check
-// [Images using supported Shielded VM features] Not all combinations
-// are valid.
+// ShieldedInstanceConfig: A set of Shielded Instance options. See
+// Images using supported Shielded VM features
+// (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
+// Not all combinations are valid.
 type ShieldedInstanceConfig struct {
 	// EnableIntegrityMonitoring: Defines whether the instance has integrity
 	// monitoring enabled. Enables monitoring and attestation of the boot
@@ -3401,7 +3635,7 @@ type UpgradeHistoryEntry struct {
 	State string `json:"state,omitempty"`
 
 	// TargetImage: Target VM Image. Format:
-	// ainotebooks-vm/project/image-name/name.
+	// `ainotebooks-vm/project/image-name/name`.
 	TargetImage string `json:"targetImage,omitempty"`
 
 	// TargetVersion: Target VM Version, like m63.
@@ -3513,19 +3747,50 @@ func (s *UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpgradeRuntimeRequest: Request for upgrading a Managed Notebook
+// Runtime to the latest version. option
+// (google.api.message_visibility).restriction =
+// "TRUSTED_TESTER,SPECIAL_TESTER";
+type UpgradeRuntimeRequest struct {
+	// RequestId: Idempotent request UUID.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpgradeRuntimeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeRuntimeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VertexAIParameters: Parameters used in Vertex AI JobType executions.
 type VertexAIParameters struct {
 	// Env: Environment variables. At most 100 environment variables can be
-	// specified and unique. Example: GCP_BUCKET=gs://my-bucket/samples/
+	// specified and unique. Example: `GCP_BUCKET=gs://my-bucket/samples/`
 	Env map[string]string `json:"env,omitempty"`
 
 	// Network: The full name of the Compute Engine network
-	// (/compute/docs/networks-and-firewalls#networks) to which the Job
-	// should be peered. For example,
+	// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks)
+	// to which the Job should be peered. For example,
 	// `projects/12345/global/networks/myVPC`. Format
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert)
 	// is of the form `projects/{project}/global/networks/{network}`. Where
-	// {project} is a project number, as in `12345`, and {network} is a
+	// `{project}` is a project number, as in `12345`, and `{network}` is a
 	// network name. Private services access must already be configured for
 	// the network. If left unspecified, the job is not peered with any
 	// network.
@@ -3856,17 +4121,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -4028,17 +4293,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4214,17 +4479,17 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4356,17 +4621,17 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4504,17 +4769,17 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -4665,17 +4930,17 @@ func (c *ProjectsLocationsEnvironmentsListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEnvironmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4843,17 +5108,17 @@ func (c *ProjectsLocationsExecutionsCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4985,17 +5250,17 @@ func (c *ProjectsLocationsExecutionsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5133,17 +5398,17 @@ func (c *ProjectsLocationsExecutionsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -5206,7 +5471,7 @@ func (r *ProjectsLocationsExecutionsService) List(parent string) *ProjectsLocati
 
 // Filter sets the optional parameter "filter": Filter applied to
 // resulting executions. Currently only supports filtering executions by
-// a specified schedule_id. Format: `schedule_id=`
+// a specified `schedule_id`. Format: `schedule_id=`
 func (c *ProjectsLocationsExecutionsListCall) Filter(filter string) *ProjectsLocationsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5308,17 +5573,17 @@ func (c *ProjectsLocationsExecutionsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListExecutionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5341,7 +5606,7 @@ func (c *ProjectsLocationsExecutionsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter applied to resulting executions. Currently only supports filtering executions by a specified schedule_id. Format: `schedule_id=`",
+	//       "description": "Filter applied to resulting executions. Currently only supports filtering executions by a specified `schedule_id`. Format: `schedule_id=`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5496,17 +5761,17 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5637,17 +5902,17 @@ func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5678,6 +5943,150 @@ func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) 
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "notebooks.projects.locations.instances.diagnose":
+
+type ProjectsLocationsInstancesDiagnoseCall struct {
+	s                       *Service
+	name                    string
+	diagnoseinstancerequest *DiagnoseInstanceRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Diagnose: Creates a Diagnostic File and runs Diagnostic Tool given an
+// Instance.
+//
+//   - name: Format:
+//     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) Diagnose(name string, diagnoseinstancerequest *DiagnoseInstanceRequest) *ProjectsLocationsInstancesDiagnoseCall {
+	c := &ProjectsLocationsInstancesDiagnoseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.diagnoseinstancerequest = diagnoseinstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesDiagnoseCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDiagnoseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesDiagnoseCall) Context(ctx context.Context) *ProjectsLocationsInstancesDiagnoseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesDiagnoseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesDiagnoseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.diagnoseinstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:diagnose")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.instances.diagnose" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesDiagnoseCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Diagnostic File and runs Diagnostic Tool given an Instance.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:diagnose",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.instances.diagnose",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:diagnose",
+	//   "request": {
+	//     "$ref": "DiagnoseInstanceRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -5784,17 +6193,17 @@ func (c *ProjectsLocationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*I
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Instance{
 		ServerResponse: googleapi.ServerResponse{
@@ -5953,17 +6362,17 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6021,7 +6430,7 @@ type ProjectsLocationsInstancesGetInstanceHealthCall struct {
 	header_      http.Header
 }
 
-// GetInstanceHealth: Check if a notebook instance is healthy.
+// GetInstanceHealth: Checks whether a notebook instance is healthy.
 //
 //   - name: Format:
 //     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
@@ -6106,17 +6515,17 @@ func (c *ProjectsLocationsInstancesGetInstanceHealthCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetInstanceHealthResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6130,7 +6539,7 @@ func (c *ProjectsLocationsInstancesGetInstanceHealthCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Check if a notebook instance is healthy.",
+	//   "description": "Checks whether a notebook instance is healthy.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:getInstanceHealth",
 	//   "httpMethod": "GET",
 	//   "id": "notebooks.projects.locations.instances.getInstanceHealth",
@@ -6168,7 +6577,7 @@ type ProjectsLocationsInstancesIsUpgradeableCall struct {
 	header_          http.Header
 }
 
-// IsUpgradeable: Check if a notebook instance is upgradable.
+// IsUpgradeable: Checks whether a notebook instance is upgradable.
 //
 //   - notebookInstance: Format:
 //     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
@@ -6269,17 +6678,17 @@ func (c *ProjectsLocationsInstancesIsUpgradeableCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IsInstanceUpgradeableResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6293,7 +6702,7 @@ func (c *ProjectsLocationsInstancesIsUpgradeableCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Check if a notebook instance is upgradable.",
+	//   "description": "Checks whether a notebook instance is upgradable.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:isUpgradeable",
 	//   "httpMethod": "GET",
 	//   "id": "notebooks.projects.locations.instances.isUpgradeable",
@@ -6449,17 +6858,17 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInstancesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6624,17 +7033,17 @@ func (c *ProjectsLocationsInstancesRegisterCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6770,17 +7179,17 @@ func (c *ProjectsLocationsInstancesReportCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6813,6 +7222,149 @@ func (c *ProjectsLocationsInstancesReportCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v1/{+name}:report",
 	//   "request": {
 	//     "$ref": "ReportInstanceInfoRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "notebooks.projects.locations.instances.reportEvent":
+
+type ProjectsLocationsInstancesReportEventCall struct {
+	s                          *Service
+	name                       string
+	reportinstanceeventrequest *ReportInstanceEventRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// ReportEvent: Reports and processes an instance event.
+//
+//   - name: Format:
+//     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) ReportEvent(name string, reportinstanceeventrequest *ReportInstanceEventRequest) *ProjectsLocationsInstancesReportEventCall {
+	c := &ProjectsLocationsInstancesReportEventCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.reportinstanceeventrequest = reportinstanceeventrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesReportEventCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesReportEventCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesReportEventCall) Context(ctx context.Context) *ProjectsLocationsInstancesReportEventCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesReportEventCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesReportEventCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportinstanceeventrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reportEvent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.instances.reportEvent" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesReportEventCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reports and processes an instance event.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:reportEvent",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.instances.reportEvent",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:reportEvent",
+	//   "request": {
+	//     "$ref": "ReportInstanceEventRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -6913,17 +7465,17 @@ func (c *ProjectsLocationsInstancesResetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7056,17 +7608,17 @@ func (c *ProjectsLocationsInstancesRollbackCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7199,17 +7751,17 @@ func (c *ProjectsLocationsInstancesSetAcceleratorCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7346,17 +7898,17 @@ func (c *ProjectsLocationsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7489,17 +8041,17 @@ func (c *ProjectsLocationsInstancesSetLabelsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7632,17 +8184,17 @@ func (c *ProjectsLocationsInstancesSetMachineTypeCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7775,17 +8327,17 @@ func (c *ProjectsLocationsInstancesStartCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7918,17 +8470,17 @@ func (c *ProjectsLocationsInstancesStopCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8068,17 +8620,17 @@ func (c *ProjectsLocationsInstancesTestIamPermissionsCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8211,17 +8763,17 @@ func (c *ProjectsLocationsInstancesUpdateConfigCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8355,17 +8907,17 @@ func (c *ProjectsLocationsInstancesUpdateMetadataItemsCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UpdateInstanceMetadataItemsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8499,17 +9051,17 @@ func (c *ProjectsLocationsInstancesUpdateShieldedInstanceConfigCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8642,17 +9194,17 @@ func (c *ProjectsLocationsInstancesUpgradeCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8786,17 +9338,17 @@ func (c *ProjectsLocationsInstancesUpgradeInternalCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8937,17 +9489,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -9075,17 +9627,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -9223,17 +9775,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9287,14 +9839,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -9399,17 +9944,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9423,7 +9968,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "notebooks.projects.locations.operations.list",
@@ -9589,17 +10134,17 @@ func (c *ProjectsLocationsRuntimesCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9742,17 +10287,17 @@ func (c *ProjectsLocationsRuntimesDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9788,6 +10333,150 @@ func (c *ProjectsLocationsRuntimesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "notebooks.projects.locations.runtimes.diagnose":
+
+type ProjectsLocationsRuntimesDiagnoseCall struct {
+	s                      *Service
+	name                   string
+	diagnoseruntimerequest *DiagnoseRuntimeRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Diagnose: Creates a Diagnostic File and runs Diagnostic Tool given a
+// Runtime.
+//
+//   - name: Format:
+//     `projects/{project_id}/locations/{location}/runtimes/{runtimes_id}`.
+func (r *ProjectsLocationsRuntimesService) Diagnose(name string, diagnoseruntimerequest *DiagnoseRuntimeRequest) *ProjectsLocationsRuntimesDiagnoseCall {
+	c := &ProjectsLocationsRuntimesDiagnoseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.diagnoseruntimerequest = diagnoseruntimerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesDiagnoseCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesDiagnoseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesDiagnoseCall) Context(ctx context.Context) *ProjectsLocationsRuntimesDiagnoseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesDiagnoseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesDiagnoseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.diagnoseruntimerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:diagnose")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.diagnose" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRuntimesDiagnoseCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Diagnostic File and runs Diagnostic Tool given a Runtime.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:diagnose",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.runtimes.diagnose",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtimes_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:diagnose",
+	//   "request": {
+	//     "$ref": "DiagnoseRuntimeRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -9895,17 +10584,17 @@ func (c *ProjectsLocationsRuntimesGetCall) Do(opts ...googleapi.CallOption) (*Ru
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Runtime{
 		ServerResponse: googleapi.ServerResponse{
@@ -10064,17 +10753,17 @@ func (c *ProjectsLocationsRuntimesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -10231,17 +10920,17 @@ func (c *ProjectsLocationsRuntimesListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRuntimesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10351,11 +11040,12 @@ func (c *ProjectsLocationsRuntimesPatchCall) RequestId(requestId string) *Projec
 // the new value, as follows: { "software_config":{ "kernels": [{
 // 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu',
 // 'tag': 'latest' }], } } Currently, only the following fields can be
-// updated: - software_config.kernels -
-// software_config.post_startup_script -
-// software_config.custom_gpu_driver_path -
-// software_config.idle_shutdown - software_config.idle_shutdown_timeout
-// - software_config.disable_terminal
+// updated: - `software_config.kernels` -
+// `software_config.post_startup_script` -
+// `software_config.custom_gpu_driver_path` -
+// `software_config.idle_shutdown` -
+// `software_config.idle_shutdown_timeout` -
+// `software_config.disable_terminal` - `labels`
 func (c *ProjectsLocationsRuntimesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRuntimesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10428,17 +11118,17 @@ func (c *ProjectsLocationsRuntimesPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10473,7 +11163,7 @@ func (c *ProjectsLocationsRuntimesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to `Runtime`, of the field to update. For example, to change the software configuration kernels, the `update_mask` parameter would be specified as `software_config.kernels`, and the `PATCH` request body would specify the new value, as follows: { \"software_config\":{ \"kernels\": [{ 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag': 'latest' }], } } Currently, only the following fields can be updated: - software_config.kernels - software_config.post_startup_script - software_config.custom_gpu_driver_path - software_config.idle_shutdown - software_config.idle_shutdown_timeout - software_config.disable_terminal",
+	//       "description": "Required. Specifies the path, relative to `Runtime`, of the field to update. For example, to change the software configuration kernels, the `update_mask` parameter would be specified as `software_config.kernels`, and the `PATCH` request body would specify the new value, as follows: { \"software_config\":{ \"kernels\": [{ 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag': 'latest' }], } } Currently, only the following fields can be updated: - `software_config.kernels` - `software_config.post_startup_script` - `software_config.custom_gpu_driver_path` - `software_config.idle_shutdown` - `software_config.idle_shutdown_timeout` - `software_config.disable_terminal` - `labels`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10585,17 +11275,17 @@ func (c *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RefreshRuntimeTokenInternalResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10650,7 +11340,7 @@ type ProjectsLocationsRuntimesReportEventCall struct {
 	header_                   http.Header
 }
 
-// ReportEvent: Report and process a runtime event.
+// ReportEvent: Reports and processes a runtime event.
 //
 //   - name: Format:
 //     `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`.
@@ -10728,17 +11418,17 @@ func (c *ProjectsLocationsRuntimesReportEventCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -10752,7 +11442,7 @@ func (c *ProjectsLocationsRuntimesReportEventCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Report and process a runtime event.",
+	//   "description": "Reports and processes a runtime event.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:reportEvent",
 	//   "httpMethod": "POST",
 	//   "id": "notebooks.projects.locations.runtimes.reportEvent",
@@ -10871,17 +11561,17 @@ func (c *ProjectsLocationsRuntimesResetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11018,17 +11708,17 @@ func (c *ProjectsLocationsRuntimesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -11164,17 +11854,17 @@ func (c *ProjectsLocationsRuntimesStartCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11310,17 +12000,17 @@ func (c *ProjectsLocationsRuntimesStopCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11453,17 +12143,17 @@ func (c *ProjectsLocationsRuntimesSwitchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11603,17 +12293,17 @@ func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11649,6 +12339,149 @@ func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) Do(opts ...googleapi.C
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "notebooks.projects.locations.runtimes.upgrade":
+
+type ProjectsLocationsRuntimesUpgradeCall struct {
+	s                     *Service
+	name                  string
+	upgraderuntimerequest *UpgradeRuntimeRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Upgrade: Upgrades a Managed Notebook Runtime to the latest version.
+//
+//   - name: Format:
+//     `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`.
+func (r *ProjectsLocationsRuntimesService) Upgrade(name string, upgraderuntimerequest *UpgradeRuntimeRequest) *ProjectsLocationsRuntimesUpgradeCall {
+	c := &ProjectsLocationsRuntimesUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.upgraderuntimerequest = upgraderuntimerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesUpgradeCall) Context(ctx context.Context) *ProjectsLocationsRuntimesUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.upgraderuntimerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:upgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.upgrade" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRuntimesUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upgrades a Managed Notebook Runtime to the latest version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:upgrade",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.runtimes.upgrade",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:upgrade",
+	//   "request": {
+	//     "$ref": "UpgradeRuntimeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -11753,17 +12586,17 @@ func (c *ProjectsLocationsSchedulesCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -11894,17 +12727,17 @@ func (c *ProjectsLocationsSchedulesDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -12041,17 +12874,17 @@ func (c *ProjectsLocationsSchedulesGetCall) Do(opts ...googleapi.CallOption) (*S
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Schedule{
 		ServerResponse: googleapi.ServerResponse{
@@ -12216,17 +13049,17 @@ func (c *ProjectsLocationsSchedulesListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSchedulesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12399,17 +13232,17 @@ func (c *ProjectsLocationsSchedulesTriggerCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{

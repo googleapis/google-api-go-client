@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -77,6 +77,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "dialogflow:v2beta1"
 const apiName = "dialogflow"
@@ -156,6 +157,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.KnowledgeBases = NewProjectsKnowledgeBasesService(s)
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.Operations = NewProjectsOperationsService(s)
+	rs.Suggestions = NewProjectsSuggestionsService(s)
 	return rs
 }
 
@@ -175,6 +177,8 @@ type ProjectsService struct {
 	Locations *ProjectsLocationsService
 
 	Operations *ProjectsOperationsService
+
+	Suggestions *ProjectsSuggestionsService
 }
 
 func NewProjectsAgentService(s *Service) *ProjectsAgentService {
@@ -470,6 +474,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
 	rs.KnowledgeBases = NewProjectsLocationsKnowledgeBasesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.Suggestions = NewProjectsLocationsSuggestionsService(s)
 	return rs
 }
 
@@ -487,6 +492,8 @@ type ProjectsLocationsService struct {
 	KnowledgeBases *ProjectsLocationsKnowledgeBasesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	Suggestions *ProjectsLocationsSuggestionsService
 }
 
 func NewProjectsLocationsAgentService(s *Service) *ProjectsLocationsAgentService {
@@ -759,6 +766,15 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsSuggestionsService(s *Service) *ProjectsLocationsSuggestionsService {
+	rs := &ProjectsLocationsSuggestionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSuggestionsService struct {
+	s *Service
+}
+
 func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 	rs := &ProjectsOperationsService{s: s}
 	return rs
@@ -768,11 +784,20 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsSuggestionsService(s *Service) *ProjectsSuggestionsService {
+	rs := &ProjectsSuggestionsService{s: s}
+	return rs
+}
+
+type ProjectsSuggestionsService struct {
+	s *Service
+}
+
 // GoogleCloudDialogflowCxV3AudioInput: Represents the natural speech
 // audio to be processed.
 type GoogleCloudDialogflowCxV3AudioInput struct {
 	// Audio: The natural language speech audio to be processed. A single
-	// request can contain up to 1 minute of speech audio data. The
+	// request can contain up to 2 minutes of speech audio data. The
 	// transcribed text cannot contain more than 256 bytes. For
 	// non-streaming audio detect intent, both `config` and `audio` must be
 	// provided. For streaming audio detect intent, `config` must be
@@ -909,6 +934,36 @@ type GoogleCloudDialogflowCxV3ContinuousTestResult struct {
 
 func (s *GoogleCloudDialogflowCxV3ContinuousTestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ContinuousTestResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ConversationSignals: This message is used to
+// hold all the Conversation Signals data, which will be converted to
+// JSON and exported to BigQuery.
+type GoogleCloudDialogflowCxV3ConversationSignals struct {
+	// TurnSignals: Required. Turn signals for the current turn.
+	TurnSignals *GoogleCloudDialogflowCxV3TurnSignals `json:"turnSignals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TurnSignals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TurnSignals") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ConversationSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ConversationSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1258,9 +1313,9 @@ type GoogleCloudDialogflowCxV3Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.
@@ -1476,12 +1531,18 @@ func (s *GoogleCloudDialogflowCxV3EventInput) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowCxV3ExportAgentResponse: The response message
 // for Agents.ExportAgent.
 type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
-	// AgentContent: Uncompressed raw byte content for agent.
+	// AgentContent: Uncompressed raw byte content for agent. This field is
+	// populated if none of `agent_uri` and `git_destination` are specified
+	// in ExportAgentRequest.
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
-	// is populated only if `agent_uri` is specified in ExportAgentRequest.
+	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// CommitSha: Commit SHA of the git push. This field is populated if
+	// `git_destination` is specified in ExportAgentRequest.
+	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
 	// unconditionally include in API requests. By default, fields with
@@ -2170,7 +2231,11 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// using the standard version of the specified model. Refer to Cloud
 	// Speech API documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details.
+	// for more details. If you specify a model, the following models
+	// typically have the best performance: - phone_call (best for Agent
+	// Assist and telephony) - latest_short (best for Dialogflow
+	// non-telephony) - command_and_search (best for very short utterances
+	// and commands)
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -2523,7 +2588,9 @@ type GoogleCloudDialogflowCxV3Page struct {
 	// transition routes. * If multiple transition route groups within a
 	// page contain the same intent, then the first group in the ordered
 	// list takes precedence.
-	// Format:`projects//locations//agents//flows//transitionRouteGroups/`.
+	// Format:`projects//locations//agents//flows//transitionRouteGroups/`
+	// or `projects//locations//agents//transitionRouteGroups/` for
+	// agent-level groups.
 	TransitionRouteGroups []string `json:"transitionRouteGroups,omitempty"`
 
 	// TransitionRoutes: A list of transitions for the transition rules of
@@ -2699,6 +2766,7 @@ func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() (
 // can contain one of: 1. A conversational query in the form of text. 2.
 // An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3AudioInput `json:"audio,omitempty"`
@@ -2791,6 +2859,11 @@ func (s *GoogleCloudDialogflowCxV3ReloadDocumentOperationMetadata) MarshalJSON()
 // more sophisticated user experience scenarios, where the text
 // displayed to the user may differ from what is heard.
 type GoogleCloudDialogflowCxV3ResponseMessage struct {
+	// Channel: The channel which the response is associated with. Clients
+	// can specify the channel via QueryParameters.channel, and only
+	// associated channel response will be returned.
+	Channel string `json:"channel,omitempty"`
+
 	// ConversationSuccess: Indicates that the conversation succeeded.
 	ConversationSuccess *GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess `json:"conversationSuccess,omitempty"`
 
@@ -2825,6 +2898,17 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	// any way.
 	PlayAudio *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio `json:"playAudio,omitempty"`
 
+	// ResponseType: Response type.
+	//
+	// Possible values:
+	//   "RESPONSE_TYPE_UNSPECIFIED" - Not specified.
+	//   "ENTRY_PROMPT" - The response is from an entry prompt in the page.
+	//   "PARAMETER_PROMPT" - The response is from form-filling prompt in
+	// the page.
+	//   "HANDLER_PROMPT" - The response is from a transition route or an
+	// event handler in the page or flow or transition route group.
+	ResponseType string `json:"responseType,omitempty"`
+
 	// TelephonyTransferCall: A signal that the client should transfer the
 	// phone call connected to this agent to a third-party endpoint.
 	TelephonyTransferCall *GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall `json:"telephonyTransferCall,omitempty"`
@@ -2832,21 +2916,20 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowCxV3ResponseMessageText `json:"text,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConversationSuccess")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConversationSuccess") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3519,8 +3602,8 @@ func (s *GoogleCloudDialogflowCxV3TestError) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowCxV3TestRunDifference: The description of
 // differences between original and replayed agent output.
 type GoogleCloudDialogflowCxV3TestRunDifference struct {
-	// Description: A description of the diff, showing the actual output vs
-	// expected output.
+	// Description: A human readable description of the diff, showing the
+	// actual output vs expected output.
 	Description string `json:"description,omitempty"`
 
 	// Type: The type of diff.
@@ -3531,6 +3614,7 @@ type GoogleCloudDialogflowCxV3TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -3652,6 +3736,91 @@ func (s *GoogleCloudDialogflowCxV3TransitionRoute) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3TurnSignals: Collection of all signals that
+// were extracted for a single turn of the conversation.
+type GoogleCloudDialogflowCxV3TurnSignals struct {
+	// AgentEscalated: Whether agent responded with LiveAgentHandoff
+	// fulfillment.
+	AgentEscalated bool `json:"agentEscalated,omitempty"`
+
+	// DtmfUsed: Whether user was using DTMF input.
+	DtmfUsed bool `json:"dtmfUsed,omitempty"`
+
+	// FailureReasons: Failure reasons of the turn.
+	//
+	// Possible values:
+	//   "FAILURE_REASON_UNSPECIFIED" - Failure reason is not assigned.
+	//   "FAILED_INTENT" - Whether NLU failed to recognize user intent.
+	//   "FAILED_WEBHOOK" - Whether webhook failed during the turn.
+	FailureReasons []string `json:"failureReasons,omitempty"`
+
+	// NoMatch: Whether NLU predicted NO_MATCH.
+	NoMatch bool `json:"noMatch,omitempty"`
+
+	// NoUserInput: Whether user provided no input.
+	NoUserInput bool `json:"noUserInput,omitempty"`
+
+	// ReachedEndPage: Whether turn resulted in End Session page.
+	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
+
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
+	// UserEscalated: Whether user was specifically asking for a live agent.
+	UserEscalated bool `json:"userEscalated,omitempty"`
+
+	// WebhookStatuses: Human-readable statuses of the webhooks triggered
+	// during this turn.
+	WebhookStatuses []string `json:"webhookStatuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentEscalated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentEscalated") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3TurnSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
+}
+
 // GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata: Metadata
 // for UpdateDocument operation.
 type GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata struct {
@@ -3751,8 +3920,32 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -3764,6 +3957,14 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -3798,6 +3999,10 @@ type GoogleCloudDialogflowCxV3WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
 	DetectIntentResponseId string `json:"detectIntentResponseId,omitempty"`
+
+	// DtmfDigits: If DTMF was provided as input, this field will contain
+	// the DTMF digits.
+	DtmfDigits string `json:"dtmfDigits,omitempty"`
 
 	// FulfillmentInfo: Always present. Information about the fulfillment
 	// that triggered this webhook call.
@@ -4181,7 +4386,7 @@ func (s *GoogleCloudDialogflowCxV3WebhookServiceDirectoryConfig) MarshalJSON() (
 // speech audio to be processed.
 type GoogleCloudDialogflowCxV3beta1AudioInput struct {
 	// Audio: The natural language speech audio to be processed. A single
-	// request can contain up to 1 minute of speech audio data. The
+	// request can contain up to 2 minutes of speech audio data. The
 	// transcribed text cannot contain more than 256 bytes. For
 	// non-streaming audio detect intent, both `config` and `audio` must be
 	// provided. For streaming audio detect intent, `config` must be
@@ -4318,6 +4523,36 @@ type GoogleCloudDialogflowCxV3beta1ContinuousTestResult struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ContinuousTestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ContinuousTestResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ConversationSignals: This message is
+// used to hold all the Conversation Signals data, which will be
+// converted to JSON and exported to BigQuery.
+type GoogleCloudDialogflowCxV3beta1ConversationSignals struct {
+	// TurnSignals: Required. Turn signals for the current turn.
+	TurnSignals *GoogleCloudDialogflowCxV3beta1TurnSignals `json:"turnSignals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TurnSignals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TurnSignals") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ConversationSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ConversationSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4667,9 +4902,9 @@ type GoogleCloudDialogflowCxV3beta1Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.
@@ -4886,12 +5121,18 @@ func (s *GoogleCloudDialogflowCxV3beta1EventInput) MarshalJSON() ([]byte, error)
 // GoogleCloudDialogflowCxV3beta1ExportAgentResponse: The response
 // message for Agents.ExportAgent.
 type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
-	// AgentContent: Uncompressed raw byte content for agent.
+	// AgentContent: Uncompressed raw byte content for agent. This field is
+	// populated if none of `agent_uri` and `git_destination` are specified
+	// in ExportAgentRequest.
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
-	// is populated only if `agent_uri` is specified in ExportAgentRequest.
+	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
+
+	// CommitSha: Commit SHA of the git push. This field is populated if
+	// `git_destination` is specified in ExportAgentRequest.
+	CommitSha string `json:"commitSha,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
 	// unconditionally include in API requests. By default, fields with
@@ -5582,7 +5823,11 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// using the standard version of the specified model. Refer to Cloud
 	// Speech API documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details.
+	// for more details. If you specify a model, the following models
+	// typically have the best performance: - phone_call (best for Agent
+	// Assist and telephony) - latest_short (best for Dialogflow
+	// non-telephony) - command_and_search (best for very short utterances
+	// and commands)
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -5936,7 +6181,9 @@ type GoogleCloudDialogflowCxV3beta1Page struct {
 	// transition routes. * If multiple transition route groups within a
 	// page contain the same intent, then the first group in the ordered
 	// list takes precedence.
-	// Format:`projects//locations//agents//flows//transitionRouteGroups/`.
+	// Format:`projects//locations//agents//flows//transitionRouteGroups/`
+	// or `projects//locations//agents//transitionRouteGroups/` for
+	// agent-level groups.
 	TransitionRouteGroups []string `json:"transitionRouteGroups,omitempty"`
 
 	// TransitionRoutes: A list of transitions for the transition rules of
@@ -6112,6 +6359,7 @@ func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSO
 // It can contain one of: 1. A conversational query in the form of text.
 // 2. An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3beta1AudioInput `json:"audio,omitempty"`
@@ -6204,6 +6452,11 @@ func (s *GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata) MarshalJ
 // more sophisticated user experience scenarios, where the text
 // displayed to the user may differ from what is heard.
 type GoogleCloudDialogflowCxV3beta1ResponseMessage struct {
+	// Channel: The channel which the response is associated with. Clients
+	// can specify the channel via QueryParameters.channel, and only
+	// associated channel response will be returned.
+	Channel string `json:"channel,omitempty"`
+
 	// ConversationSuccess: Indicates that the conversation succeeded.
 	ConversationSuccess *GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess `json:"conversationSuccess,omitempty"`
 
@@ -6245,21 +6498,20 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessage struct {
 	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowCxV3beta1ResponseMessageText `json:"text,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConversationSuccess")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConversationSuccess") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6934,8 +7186,8 @@ func (s *GoogleCloudDialogflowCxV3beta1TestError) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowCxV3beta1TestRunDifference: The description of
 // differences between original and replayed agent output.
 type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
-	// Description: A description of the diff, showing the actual output vs
-	// expected output.
+	// Description: A human readable description of the diff, showing the
+	// actual output vs expected output.
 	Description string `json:"description,omitempty"`
 
 	// Type: The type of diff.
@@ -6946,6 +7198,7 @@ type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -7067,6 +7320,91 @@ func (s *GoogleCloudDialogflowCxV3beta1TransitionRoute) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1TurnSignals: Collection of all signals
+// that were extracted for a single turn of the conversation.
+type GoogleCloudDialogflowCxV3beta1TurnSignals struct {
+	// AgentEscalated: Whether agent responded with LiveAgentHandoff
+	// fulfillment.
+	AgentEscalated bool `json:"agentEscalated,omitempty"`
+
+	// DtmfUsed: Whether user was using DTMF input.
+	DtmfUsed bool `json:"dtmfUsed,omitempty"`
+
+	// FailureReasons: Failure reasons of the turn.
+	//
+	// Possible values:
+	//   "FAILURE_REASON_UNSPECIFIED" - Failure reason is not assigned.
+	//   "FAILED_INTENT" - Whether NLU failed to recognize user intent.
+	//   "FAILED_WEBHOOK" - Whether webhook failed during the turn.
+	FailureReasons []string `json:"failureReasons,omitempty"`
+
+	// NoMatch: Whether NLU predicted NO_MATCH.
+	NoMatch bool `json:"noMatch,omitempty"`
+
+	// NoUserInput: Whether user provided no input.
+	NoUserInput bool `json:"noUserInput,omitempty"`
+
+	// ReachedEndPage: Whether turn resulted in End Session page.
+	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
+
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
+	// UserEscalated: Whether user was specifically asking for a live agent.
+	UserEscalated bool `json:"userEscalated,omitempty"`
+
+	// WebhookStatuses: Human-readable statuses of the webhooks triggered
+	// during this turn.
+	WebhookStatuses []string `json:"webhookStatuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentEscalated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentEscalated") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
+}
+
 // GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata:
 // Metadata for UpdateDocument operation.
 type GoogleCloudDialogflowCxV3beta1UpdateDocumentOperationMetadata struct {
@@ -7166,8 +7504,32 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	// "\nsubjectAltName='DNS:www.example.com'") ```
 	AllowedCaCerts []string `json:"allowedCaCerts,omitempty"`
 
+	// HttpMethod: Optional. HTTP method for the flexible webhook calls.
+	// Standard webhook always uses POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method not specified.
+	//   "POST" - HTTP POST Method.
+	//   "GET" - HTTP GET Method.
+	//   "HEAD" - HTTP HEAD Method.
+	//   "PUT" - HTTP PUT Method.
+	//   "DELETE" - HTTP DELETE Method.
+	//   "PATCH" - HTTP PATCH Method.
+	//   "OPTIONS" - HTTP OPTIONS Method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// ParameterMapping: Optional. Maps the values extracted from specific
+	// fields of the flexible webhook response into session parameters. -
+	// Key: session parameter name - Value: field path in the webhook
+	// response
+	ParameterMapping map[string]string `json:"parameterMapping,omitempty"`
+
 	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
+
+	// RequestBody: Optional. Defines a custom JSON object as request body
+	// to send to flexible webhook.
+	RequestBody string `json:"requestBody,omitempty"`
 
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
@@ -7179,6 +7541,14 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 
 	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
+
+	// WebhookType: Optional. Type of the webhook.
+	//
+	// Possible values:
+	//   "WEBHOOK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Represents a standard webhook.
+	//   "FLEXIBLE" - Represents a flexible webhook.
+	WebhookType string `json:"webhookType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedCaCerts") to
 	// unconditionally include in API requests. By default, fields with
@@ -7213,6 +7583,10 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
 	DetectIntentResponseId string `json:"detectIntentResponseId,omitempty"`
+
+	// DtmfDigits: If DTMF was provided as input, this field will contain
+	// the DTMF digits.
+	DtmfDigits string `json:"dtmfDigits,omitempty"`
 
 	// FulfillmentInfo: Always present. Information about the fulfillment
 	// that triggered this webhook call.
@@ -7874,7 +8248,7 @@ type GoogleCloudDialogflowV2Context struct {
 	// `projects//agent/sessions//contexts/`, or
 	// `projects//agent/environments//users//sessions//contexts/`. The
 	// `Context ID` is always converted to lowercase, may only contain
-	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
+	// characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
 	// user. The following context names are reserved for internal use by
@@ -7886,13 +8260,14 @@ type GoogleCloudDialogflowV2Context struct {
 	// Parameters: Optional. The collection of parameters associated with
 	// this context. Depending on your protocol or client library language,
 	// this is a map, associative array, symbol table, dictionary, or JSON
-	// object composed of a collection of (MapKey, MapValue) pairs: - MapKey
-	// type: string - MapKey value: parameter name - MapValue type: - If
-	// parameter's entity type is a composite entity: map - Else: depending
-	// on parameter value type, could be one of string, number, boolean,
-	// null, list or map - MapValue value: - If parameter's entity type is a
-	// composite entity: map from composite entity property names to
-	// property values - Else: parameter value
+	// object composed of a collection of (MapKey, MapValue) pairs: * MapKey
+	// type: string * MapKey value: parameter name * MapValue type: If
+	// parameter's entity type is a composite entity then use map,
+	// otherwise, depending on the parameter value type, it could be one of
+	// string, number, boolean, null, list or map. * MapValue value: If
+	// parameter's entity type is a composite entity then use map from
+	// composite entity property names to property values, otherwise, use
+	// parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LifespanCount") to
@@ -8397,13 +8772,13 @@ type GoogleCloudDialogflowV2EventInput struct {
 	// Parameters: The collection of parameters associated with the event.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
-	// MapKey value: parameter name - MapValue type: - If parameter's entity
-	// type is a composite entity: map - Else: depending on parameter value
-	// type, could be one of string, number, boolean, null, list or map -
-	// MapValue value: - If parameter's entity type is a composite entity:
-	// map from composite entity property names to property values - Else:
-	// parameter value
+	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
+	// MapKey value: parameter name * MapValue type: If parameter's entity
+	// type is a composite entity then use map, otherwise, depending on the
+	// parameter value type, it could be one of string, number, boolean,
+	// null, list or map. * MapValue value: If parameter's entity type is a
+	// composite entity then use map from composite entity property names to
+	// property values, otherwise, use parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -8562,7 +8937,7 @@ func (s *GoogleCloudDialogflowV2FaqAnswer) UnmarshalJSON(data []byte) error {
 // for the output.
 type GoogleCloudDialogflowV2GcsDestination struct {
 	// Uri: The Google Cloud Storage URIs for the output. A URI is of the
-	// form: gs://bucket/object-prefix-or-name Whether a prefix or name is
+	// form: `gs://bucket/object-prefix-or-name` Whether a prefix or name is
 	// used depends on the use case. The requesting user must have
 	// "write-permission" to the bucket.
 	Uri string `json:"uri,omitempty"`
@@ -10437,13 +10812,13 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	// Parameters: The collection of extracted parameters. Depending on your
 	// protocol or client library language, this is a map, associative
 	// array, symbol table, dictionary, or JSON object composed of a
-	// collection of (MapKey, MapValue) pairs: - MapKey type: string -
-	// MapKey value: parameter name - MapValue type: - If parameter's entity
-	// type is a composite entity: map - Else: depending on parameter value
-	// type, could be one of string, number, boolean, null, list or map -
-	// MapValue value: - If parameter's entity type is a composite entity:
-	// map from composite entity property names to property values - Else:
-	// parameter value
+	// collection of (MapKey, MapValue) pairs: * MapKey type: string *
+	// MapKey value: parameter name * MapValue type: If parameter's entity
+	// type is a composite entity then use map, otherwise, depending on the
+	// parameter value type, it could be one of string, number, boolean,
+	// null, list or map. * MapValue value: If parameter's entity type is a
+	// composite entity then use map from composite entity property names to
+	// property values, otherwise, use parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text: - If natural
@@ -10520,7 +10895,9 @@ func (s *GoogleCloudDialogflowV2QueryResult) UnmarshalJSON(data []byte) error {
 
 // GoogleCloudDialogflowV2Sentiment: The sentiment, such as
 // positive/negative feeling or association, for a unit of analysis,
-// such as the query text.
+// such as the query text. See:
+// https://cloud.google.com/natural-language/docs/basics#interpreting_sentiment_analysis_values
+// for how to interpret the result.
 type GoogleCloudDialogflowV2Sentiment struct {
 	// Magnitude: A non-negative number in the [0, +inf) range, which
 	// represents the absolute magnitude of sentiment, regardless of score
@@ -11400,6 +11777,9 @@ type GoogleCloudDialogflowV2beta1AgentAssistantRecord struct {
 	// ArticleSuggestionAnswer: Output only. The article suggestion answer.
 	ArticleSuggestionAnswer *GoogleCloudDialogflowV2beta1ArticleAnswer `json:"articleSuggestionAnswer,omitempty"`
 
+	// DialogflowAssistAnswer: Output only. The Dialogflow assist answer.
+	DialogflowAssistAnswer *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer `json:"dialogflowAssistAnswer,omitempty"`
+
 	// FaqAnswer: Output only. The FAQ answer.
 	FaqAnswer *GoogleCloudDialogflowV2beta1FaqAnswer `json:"faqAnswer,omitempty"`
 
@@ -11460,9 +11840,9 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// MessageSendTime: Optional. The send time of the message from end user
 	// or human agent's perspective. It is used for identifying the same
 	// message under one participant. Given two messages under the same
-	// participant: - If send time are different regardless of whether the
+	// participant: * If send time are different regardless of whether the
 	// content of the messages are exactly the same, the conversation will
-	// regard them as two distinct messages sent by the participant. - If
+	// regard them as two distinct messages sent by the participant. * If
 	// send time is the same regardless of whether the content of the
 	// messages are exactly the same, the conversation will regard them as
 	// same message, and ignore the message received later. If the value is
@@ -11484,6 +11864,9 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// ASCII characters. A random UUID is recommended. This request is only
 	// idempotent if a `request_id` is provided.
 	RequestId string `json:"requestId,omitempty"`
+
+	// SuggestionInput: An input representing the selection of a suggestion.
+	SuggestionInput *GoogleCloudDialogflowV2beta1SuggestionInput `json:"suggestionInput,omitempty"`
 
 	// TextInput: The natural language text to be processed.
 	TextInput *GoogleCloudDialogflowV2beta1TextInput `json:"textInput,omitempty"`
@@ -11648,7 +12031,9 @@ type GoogleCloudDialogflowV2beta1AnswerFeedback struct {
 	ClickTime string `json:"clickTime,omitempty"`
 
 	// Clicked: Indicates whether the answer/item was clicked by the human
-	// agent or not. Default to false.
+	// agent or not. Default to false. For knowledge search, the answer
+	// record is considered to be clicked if the answer was copied or any
+	// URI was clicked.
 	Clicked bool `json:"clicked,omitempty"`
 
 	// CorrectnessLevel: The correctness level of the specific answer.
@@ -11886,6 +12271,12 @@ type GoogleCloudDialogflowV2beta1AutomatedAgentConfig struct {
 	// specified, the default `draft` environment is used.
 	Agent string `json:"agent,omitempty"`
 
+	// SessionTtl: Optional. Sets Dialogflow CX session life time. By
+	// default, a Dialogflow CX session remains active and its data is
+	// stored for 30 minutes after the last request is sent for the session.
+	// This value should be no longer than 1 day.
+	SessionTtl string `json:"sessionTtl,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -11929,6 +12320,11 @@ type GoogleCloudDialogflowV2beta1AutomatedAgentReply struct {
 	// barge-in.
 	//   "FINAL" - Final reply.
 	AutomatedAgentReplyType string `json:"automatedAgentReplyType,omitempty"`
+
+	// CxCurrentPage: The unique identifier of the current Dialogflow CX
+	// conversation page. Format:
+	// `projects//locations//agents//flows//pages/`.
+	CxCurrentPage string `json:"cxCurrentPage,omitempty"`
 
 	// CxSessionParameters: The collection of current Dialogflow CX agent
 	// session parameters at the time of this response. Deprecated: Use
@@ -12001,6 +12397,62 @@ func (s *GoogleCloudDialogflowV2beta1AutomatedAgentReply) UnmarshalJSON(data []b
 	return nil
 }
 
+// GoogleCloudDialogflowV2beta1BargeInConfig: Configuration of the
+// barge-in behavior. Barge-in instructs the API to return a detected
+// utterance at a proper time while the client is playing back the
+// response audio from a previous request. When the client sees the
+// utterance, it should stop the playback and immediately get ready for
+// receiving the responses for the current request. The barge-in
+// handling requires the client to start streaming audio input as soon
+// as it starts playing back the audio from the previous response. The
+// playback is modeled into two phases: * No barge-in phase: which goes
+// first and during which speech detection should not be carried out. *
+// Barge-in phase: which follows the no barge-in phase and during which
+// the API starts speech detection and may inform the client that an
+// utterance has been detected. Note that no-speech event is not
+// expected in this phase. The client provides this configuration in
+// terms of the durations of those two phases. The durations are
+// measured in terms of the audio length fromt the the start of the
+// input audio. The flow goes like below: ``` --> Time without speech
+// detection | utterance only | utterance or no-speech event | |
+// +-------------+ | +------------+ | +---------------+ ----------+ no
+// barge-in +-|-+ barge-in +-|-+ normal period +-----------
+// +-------------+ | +------------+ | +---------------+ ``` No-speech
+// event is a response with END_OF_UTTERANCE without any transcript
+// following up.
+type GoogleCloudDialogflowV2beta1BargeInConfig struct {
+	// NoBargeInDuration: Duration that is not eligible for barge-in at the
+	// beginning of the input audio.
+	NoBargeInDuration string `json:"noBargeInDuration,omitempty"`
+
+	// TotalDuration: Total duration for the playback at the beginning of
+	// the input audio.
+	TotalDuration string `json:"totalDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NoBargeInDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NoBargeInDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1BargeInConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1BargeInConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest: The request
 // message for EntityTypes.BatchCreateEntities.
 type GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest struct {
@@ -12039,7 +12491,7 @@ func (s *GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest) MarshalJSON() (
 // GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest: The request
 // message for Conversations.BatchCreateMessagesRequest.
 type GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest struct {
-	// Requests: Required. A maximum of 1000 Messages can be created in a
+	// Requests: Required. A maximum of 300 messages can be created in a
 	// batch. CreateMessageRequest.message.send_time is required. All
 	// created messages will have identical Message.create_time.
 	Requests []*GoogleCloudDialogflowV2beta1CreateMessageRequest `json:"requests,omitempty"`
@@ -12427,6 +12879,8 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata s
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -12478,6 +12932,8 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -12619,7 +13075,7 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// `projects//agent/environments//users//sessions//contexts/`, -
 	// `projects//locations//agent/environments//users//sessions//contexts/`,
 	//  The `Context ID` is always converted to lowercase, may only contain
-	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
+	// characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
 	// user. The following context names are reserved for internal use by
@@ -12631,13 +13087,14 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// Parameters: Optional. The collection of parameters associated with
 	// this context. Depending on your protocol or client library language,
 	// this is a map, associative array, symbol table, dictionary, or JSON
-	// object composed of a collection of (MapKey, MapValue) pairs: - MapKey
-	// type: string - MapKey value: parameter name - MapValue type: - If
-	// parameter's entity type is a composite entity: map - Else: depending
-	// on parameter value type, could be one of string, number, boolean,
-	// null, list or map - MapValue value: - If parameter's entity type is a
-	// composite entity: map from composite entity property names to
-	// property values - Else: parameter value
+	// object composed of a collection of (MapKey, MapValue) pairs: * MapKey
+	// type: string * MapKey value: parameter name * MapValue type: If
+	// parameter's entity type is a composite entity then use map,
+	// otherwise, depending on the parameter value type, it could be one of
+	// string, number, boolean, null, list or map. * MapValue value: If
+	// parameter's entity type is a composite entity then use map from
+	// composite entity property names to property values, otherwise, use
+	// parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12899,6 +13356,12 @@ type GoogleCloudDialogflowV2beta1ConversationProfile struct {
 	// America/New_York, Europe/Paris. Defaults to America/New_York.
 	TimeZone string `json:"timeZone,omitempty"`
 
+	// TtsConfig: Configuration for Text-to-Speech synthesization. Used by
+	// Phone Gateway to specify synthesization options. If agent defines
+	// synthesization options as well, agent settings overrides the option
+	// here.
+	TtsConfig *GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig `json:"ttsConfig,omitempty"`
+
 	// UpdateTime: Output only. Update time of the conversation profile.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -13084,6 +13547,42 @@ type GoogleCloudDialogflowV2beta1DetectIntentResponse struct {
 
 func (s *GoogleCloudDialogflowV2beta1DetectIntentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1DetectIntentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1DialogflowAssistAnswer: Represents a
+// Dialogflow assist answer.
+type GoogleCloudDialogflowV2beta1DialogflowAssistAnswer struct {
+	// AnswerRecord: The name of answer record, in the format of
+	// "projects//locations//answerRecords/"
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// IntentSuggestion: An intent suggestion generated from conversation.
+	IntentSuggestion *GoogleCloudDialogflowV2beta1IntentSuggestion `json:"intentSuggestion,omitempty"`
+
+	// QueryResult: Result from v2 agent.
+	QueryResult *GoogleCloudDialogflowV2beta1QueryResult `json:"queryResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1DialogflowAssistAnswer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13604,13 +14103,13 @@ type GoogleCloudDialogflowV2beta1EventInput struct {
 	// Parameters: The collection of parameters associated with the event.
 	// Depending on your protocol or client library language, this is a map,
 	// associative array, symbol table, dictionary, or JSON object composed
-	// of a collection of (MapKey, MapValue) pairs: - MapKey type: string -
-	// MapKey value: parameter name - MapValue type: - If parameter's entity
-	// type is a composite entity: map - Else: depending on parameter value
-	// type, could be one of string, number, boolean, null, list or map -
-	// MapValue value: - If parameter's entity type is a composite entity:
-	// map from composite entity property names to property values - Else:
-	// parameter value
+	// of a collection of (MapKey, MapValue) pairs: * MapKey type: string *
+	// MapKey value: parameter name * MapValue type: If parameter's entity
+	// type is a composite entity then use map, otherwise, depending on the
+	// parameter value type, it could be one of string, number, boolean,
+	// null, list or map. * MapValue value: If parameter's entity type is a
+	// composite entity then use map from composite entity property names to
+	// property values, otherwise, use parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -13948,7 +14447,7 @@ func (s *GoogleCloudDialogflowV2beta1FulfillmentGenericWebService) MarshalJSON()
 // location for the output.
 type GoogleCloudDialogflowV2beta1GcsDestination struct {
 	// Uri: Required. The Google Cloud Storage URIs for the output. A URI is
-	// of the form: gs://bucket/object-prefix-or-name Whether a prefix or
+	// of the form: `gs://bucket/object-prefix-or-name` Whether a prefix or
 	// name is used depends on the use case. The requesting user must have
 	// "write-permission" to the bucket.
 	Uri string `json:"uri,omitempty"`
@@ -13980,7 +14479,7 @@ func (s *GoogleCloudDialogflowV2beta1GcsDestination) MarshalJSON() ([]byte, erro
 // for single input.
 type GoogleCloudDialogflowV2beta1GcsSource struct {
 	// Uri: Required. The Google Cloud Storage URIs for the inputs. A URI is
-	// of the form: gs://bucket/object-prefix-or-name Whether a prefix or
+	// of the form: `gs://bucket/object-prefix-or-name` Whether a prefix or
 	// name is used depends on the use case.
 	Uri string `json:"uri,omitempty"`
 
@@ -14011,8 +14510,8 @@ func (s *GoogleCloudDialogflowV2beta1GcsSource) MarshalJSON() ([]byte, error) {
 // locations for the inputs.
 type GoogleCloudDialogflowV2beta1GcsSources struct {
 	// Uris: Required. Google Cloud Storage URIs for the inputs. A URI is of
-	// the form: gs://bucket/object-prefix-or-name Whether a prefix or name
-	// is used depends on the use case.
+	// the form: `gs://bucket/object-prefix-or-name` Whether a prefix or
+	// name is used depends on the use case.
 	Uris []string `json:"uris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uris") to
@@ -14034,6 +14533,168 @@ type GoogleCloudDialogflowV2beta1GcsSources struct {
 
 func (s *GoogleCloudDialogflowV2beta1GcsSources) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1GcsSources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest: The
+// request message for Conversations.GenerateStatelessSummary.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest struct {
+	// ConversationProfile: Required. A ConversationProfile containing
+	// information required for Summary generation. Required fields:
+	// {language_code, security_settings} Optional fields:
+	// {agent_assistant_config}
+	ConversationProfile *GoogleCloudDialogflowV2beta1ConversationProfile `json:"conversationProfile,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used as
+	// context for generating a Summary. If empty, the latest message of the
+	// conversation will be used. The format is specific to the user and the
+	// names of the messages provided.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// MaxContextSize: Max number of messages prior to and including
+	// [latest_message] to use as context when compiling the suggestion. By
+	// default 500 and at most 1000.
+	MaxContextSize int64 `json:"maxContextSize,omitempty"`
+
+	// StatelessConversation: Required. The conversation to suggest a
+	// summary for.
+	StatelessConversation *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation `json:"statelessConversation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConv
+// ersation: The minimum amount of information required to generate a
+// Summary without having a Conversation resource created.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation struct {
+	// Messages: Required. The messages that the Summary will be generated
+	// from. It is expected that this message content is already redacted
+	// and does not contain any PII. Required fields: {content,
+	// language_code, participant, participant_role} Optional fields:
+	// {send_time} If send_time is not provided, then the messages must be
+	// provided in chronological order.
+	Messages []*GoogleCloudDialogflowV2beta1Message `json:"messages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Messages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Messages") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequestMinimalConversation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse: The
+// response message for Conversations.GenerateStatelessSummary.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse struct {
+	// ContextSize: Number of messages prior to and including
+	// last_conversation_message used to compile the suggestion. It may be
+	// smaller than the GenerateStatelessSummaryRequest.context_size field
+	// in the request if there weren't that many messages in the
+	// conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used as
+	// context for compiling suggestion. The format is specific to the user
+	// and the names of the messages provided.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// Summary: Generated summary.
+	Summary *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary `json:"summary,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary:
+// Generated summary for a conversation.
+type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary struct {
+	// Text: The summary content that is concatenated into one string.
+	Text string `json:"text,omitempty"`
+
+	// TextSections: The summary content that is divided into sections. The
+	// key is the section's name and the value is the section's content.
+	// There is no specific format for the key or value.
+	TextSections map[string]string `json:"textSections,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponseSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14087,24 +14748,32 @@ func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig) MarshalJSON() ([
 // Supported feature: ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY,
 // CONVERSATION_SUMMARIZATION.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig struct {
+	// BaselineModelVersion: Version of current baseline model. It will be
+	// ignored if model is set. Valid versions are: Article Suggestion
+	// baseline model: - 0.9 - 1.0 (default) Summarization baseline model: -
+	// 1.0
+	BaselineModelVersion string `json:"baselineModelVersion,omitempty"`
+
 	// Model: Conversation model resource name. Format:
 	// `projects//conversationModels/`.
 	Model string `json:"model,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Model") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BaselineModelVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Model") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BaselineModelVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -14252,7 +14921,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfi
 
 	// EnableEventBasedSuggestion: Automatically iterates all participants
 	// and tries to compile suggestions. Supported features:
-	// ARTICLE_SUGGESTION, FAQ, DIALOGFLOW_ASSIST.
+	// ARTICLE_SUGGESTION, FAQ, DIALOGFLOW_ASSIST, ENTITY_EXTRACTION.
 	EnableEventBasedSuggestion bool `json:"enableEventBasedSuggestion,omitempty"`
 
 	// QueryConfig: Configs of query.
@@ -14306,7 +14975,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig 
 	// until you have desired results. If this field is not set, it is
 	// default to 0.0, which means that all suggestions are returned.
 	// Supported features: ARTICLE_SUGGESTION, FAQ, SMART_REPLY,
-	// SMART_COMPOSE.
+	// SMART_COMPOSE, KNOWLEDGE_SEARCH, KNOWLEDGE_ASSIST, ENTITY_EXTRACTION.
 	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
 
 	// ContextFilterSettings: Determines how recent conversation context is
@@ -14315,7 +14984,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfig 
 	ContextFilterSettings *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigContextFilterSettings `json:"contextFilterSettings,omitempty"`
 
 	// DialogflowQuerySource: Query from Dialogflow agent. It is used by
-	// DIALOGFLOW_ASSIST.
+	// DIALOGFLOW_ASSIST, ENTITY_EXTRACTION.
 	DialogflowQuerySource *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource `json:"dialogflowQuerySource,omitempty"`
 
 	// DocumentQuerySource: Query from knowledge base document. It is used
@@ -14411,13 +15080,17 @@ func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryCon
 
 // GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryCo
 // nfigDialogflowQuerySource: Dialogflow source setting. Supported
-// feature: DIALOGFLOW_ASSIST.
+// feature: DIALOGFLOW_ASSIST, ENTITY_EXTRACTION.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource struct {
 	// Agent: Required. The name of a dialogflow virtual agent used for end
 	// user side intent detection and suggestion. Format:
 	// `projects//locations//agent`. When multiple agents are allowed in the
 	// same Dialogflow project.
 	Agent string `json:"agent,omitempty"`
+
+	// HumanAgentSideConfig: The Dialogflow assist configuration for human
+	// agent.
+	HumanAgentSideConfig *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig `json:"humanAgentSideConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
@@ -14438,6 +15111,38 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigD
 
 func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryCo
+// nfigDialogflowQuerySourceHumanAgentSideConfig: The configuration used
+// for human agent side Dialogflow assist suggestion.
+type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig struct {
+	// Agent: Optional. The name of a dialogflow virtual agent used for
+	// intent detection and suggestion triggered by human agent. Format:
+	// `projects//locations//agent`.
+	Agent string `json:"agent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Agent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Agent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySourceHumanAgentSideConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14792,9 +15497,9 @@ type GoogleCloudDialogflowV2beta1ImportDocumentsRequest struct {
 	// the documents.
 	DocumentTemplate *GoogleCloudDialogflowV2beta1ImportDocumentTemplate `json:"documentTemplate,omitempty"`
 
-	// GcsSource: The Google Cloud Storage location for the documents. The
-	// path can include a wildcard. These URIs may have the forms `gs:///`.
-	// `gs:////*.`.
+	// GcsSource: Optional. The Google Cloud Storage location for the
+	// documents. The path can include a wildcard. These URIs may have the
+	// forms `gs:///`. `gs:////*.`.
 	GcsSource *GoogleCloudDialogflowV2beta1GcsSources `json:"gcsSource,omitempty"`
 
 	// ImportGcsCustomMetadata: Whether to import custom metadata from
@@ -14898,11 +15603,19 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// must be 16000.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
+	// BargeInConfig: Configuration of barge-in behavior during the
+	// streaming of input audio.
+	BargeInConfig *GoogleCloudDialogflowV2beta1BargeInConfig `json:"bargeInConfig,omitempty"`
+
 	// DisableNoSpeechRecognizedEvent: Only used in
 	// Participants.AnalyzeContent and Participants.StreamingAnalyzeContent.
 	// If `false` and recognition doesn't return any result, trigger
 	// `NO_SPEECH_RECOGNIZED` event to Dialogflow agent.
 	DisableNoSpeechRecognizedEvent bool `json:"disableNoSpeechRecognizedEvent,omitempty"`
+
+	// EnableAutomaticPunctuation: Enable automatic punctuation option at
+	// the speech backend.
+	EnableAutomaticPunctuation bool `json:"enableAutomaticPunctuation,omitempty"`
 
 	// EnableWordInfo: If `true`, Dialogflow returns SpeechWordInfo in
 	// StreamingRecognitionResult with information about the recognized
@@ -14927,7 +15640,11 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// the standard version of the specified model. Refer to Cloud Speech
 	// API documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details.
+	// for more details. If you specify a model, the following models
+	// typically have the best performance: - phone_call (best for Agent
+	// Assist and telephony) - latest_short (best for Dialogflow
+	// non-telephony) - command_and_search (best for very short utterances
+	// and commands)
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Which variant of the Speech model to use.
@@ -14959,9 +15676,9 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// Cloud Speech documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics#phrase-hints)
 	// for more details. This field is deprecated. Please use
-	// speech_contexts () instead. If you specify both phrase_hints () and
-	// speech_contexts (), Dialogflow will treat the phrase_hints () as a
-	// single additional SpeechContext ().
+	// `speech_contexts` () instead. If you specify both `phrase_hints` ()
+	// and `speech_contexts` (), Dialogflow will treat the `phrase_hints` ()
+	// as a single additional `SpeechContext` ().
 	PhraseHints []string `json:"phraseHints,omitempty"`
 
 	// SampleRateHertz: Required. Sample rate (in Hertz) of the audio
@@ -15246,6 +15963,43 @@ type GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo struct {
 
 func (s *GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentInput: Represents the intent to
+// trigger programmatically rather than as a result of natural language
+// processing. The intent input is only used for V3 agent.
+type GoogleCloudDialogflowV2beta1IntentInput struct {
+	// Intent: Required. The unique identifier of the intent in V3 agent.
+	// Format: `projects//locations//locations//agents//intents/`.
+	Intent string `json:"intent,omitempty"`
+
+	// LanguageCode: Required. The language of this conversational query.
+	// See Language Support
+	// (https://cloud.google.com/dialogflow/docs/reference/language) for a
+	// list of the currently supported language codes.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Intent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Intent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16906,6 +17660,44 @@ func (s *GoogleCloudDialogflowV2beta1IntentParameter) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1IntentSuggestion: Represents an intent
+// suggestion.
+type GoogleCloudDialogflowV2beta1IntentSuggestion struct {
+	// Description: Human readable description for better understanding an
+	// intent like its scope, content, result etc. Maximum character limit:
+	// 140 characters.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The display name of the intent.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IntentV2: The unique identifier of this intent. Format:
+	// `projects//locations//agent/intents/`.
+	IntentV2 string `json:"intentV2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentSuggestion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1IntentTrainingPhrase: Represents an
 // example that the agent is trained on.
 type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
@@ -17897,8 +18689,8 @@ type GoogleCloudDialogflowV2beta1NotificationConfig struct {
 	// Possible values:
 	//   "MESSAGE_FORMAT_UNSPECIFIED" - If it is unspecified, PROTO will be
 	// used.
-	//   "PROTO" - Pubsub message will be serialized proto.
-	//   "JSON" - Pubsub message will be json.
+	//   "PROTO" - Pub/Sub message will be serialized proto.
+	//   "JSON" - Pub/Sub message will be json.
 	MessageFormat string `json:"messageFormat,omitempty"`
 
 	// Topic: Name of the Pub/Sub topic to publish conversation events like
@@ -18098,15 +18890,15 @@ type GoogleCloudDialogflowV2beta1Participant struct {
 	// the participant. 2. If you set this field in AnalyzeContent or
 	// StreamingAnalyzeContent, Dialogflow will update
 	// Participant.obfuscated_external_user_id. Dialogflow uses this user id
-	// for following purposes: 1) Billing and measurement. If user with the
-	// same obfuscated_external_user_id is created in a later conversation,
-	// dialogflow will know it's the same user. 2) Agent assist suggestion
-	// personalization. For example, Dialogflow can use it to provide
-	// personalized smart reply suggestions for this user. Note: * Please
-	// never pass raw user ids to Dialogflow. Always obfuscate your user id
-	// first. * Dialogflow only accepts a UTF-8 encoded string, e.g., a hex
-	// digest of a hash function like SHA-512. * The length of the user id
-	// must be <= 256 characters.
+	// for billing and measurement. If a user with the same
+	// obfuscated_external_user_id is created in a later conversation,
+	// Dialogflow will know it's the same user. Dialogflow also uses this
+	// user id for Agent Assist suggestion personalization. For example,
+	// Dialogflow can use it to provide personalized smart reply suggestions
+	// for this user. Note: * Please never pass raw user ids to Dialogflow.
+	// Always obfuscate your user id first. * Dialogflow only accepts a
+	// UTF-8 encoded string, e.g., a hex digest of a hash function like
+	// SHA-512. * The length of the user id must be <= 256 characters.
 	ObfuscatedExternalUserId string `json:"obfuscatedExternalUserId,omitempty"`
 
 	// Role: Immutable. The role this participant plays in the conversation.
@@ -18215,6 +19007,11 @@ type GoogleCloudDialogflowV2beta1QueryParameters struct {
 	// `WebhookRequest.original_detect_intent_request.payload` field sent to
 	// your webhook.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// Platform: The platform of the virtual agent response messages. If not
+	// empty, only emits messages from this platform in the response. Valid
+	// values are the enum names of platform.
+	Platform string `json:"platform,omitempty"`
 
 	// ResetContexts: Specifies whether to delete all contexts in the
 	// current session before the new ones are activated.
@@ -18345,13 +19142,13 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	// Parameters: The collection of extracted parameters. Depending on your
 	// protocol or client library language, this is a map, associative
 	// array, symbol table, dictionary, or JSON object composed of a
-	// collection of (MapKey, MapValue) pairs: - MapKey type: string -
-	// MapKey value: parameter name - MapValue type: - If parameter's entity
-	// type is a composite entity: map - Else: depending on parameter value
-	// type, could be one of string, number, boolean, null, list or map -
-	// MapValue value: - If parameter's entity type is a composite entity:
-	// map from composite entity property names to property values - Else:
-	// parameter value
+	// collection of (MapKey, MapValue) pairs: * MapKey type: string *
+	// MapKey value: parameter name * MapValue type: If parameter's entity
+	// type is a composite entity then use map, otherwise, depending on the
+	// parameter value type, it could be one of string, number, boolean,
+	// null, list or map. * MapValue value: If parameter's entity type is a
+	// composite entity then use map from composite entity property names to
+	// property values, otherwise, use parameter value.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text: - If natural
@@ -18767,7 +19564,9 @@ func (s *GoogleCloudDialogflowV2beta1SearchAgentsResponse) MarshalJSON() ([]byte
 
 // GoogleCloudDialogflowV2beta1Sentiment: The sentiment, such as
 // positive/negative feeling or association, for a unit of analysis,
-// such as the query text.
+// such as the query text. See:
+// https://cloud.google.com/natural-language/docs/basics#interpreting_sentiment_analysis_values
+// for how to interpret the result.
 type GoogleCloudDialogflowV2beta1Sentiment struct {
 	// Magnitude: A non-negative number in the [0, +inf) range, which
 	// represents the absolute magnitude of sentiment, regardless of score
@@ -18993,6 +19792,8 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata str
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
@@ -19177,6 +19978,14 @@ func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) e
 // GoogleCloudDialogflowV2beta1SpeechToTextConfig: Configures speech
 // transcription for ConversationProfile.
 type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
+	// Model: Which Speech model to select. Select the model best suited to
+	// your domain to get best results. If a model is not explicitly
+	// specified, then a default model is used. Refer to Cloud Speech API
+	// documentation
+	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
+	// for more details.
+	Model string `json:"model,omitempty"`
+
 	// SpeechModelVariant: The speech model used in speech to text.
 	// `SPEECH_MODEL_VARIANT_UNSPECIFIED`, `USE_BEST_AVAILABLE` will be
 	// treated as `USE_ENHANCED`. It can be overridden in
@@ -19207,21 +20016,20 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// to make your project eligible.
 	SpeechModelVariant string `json:"speechModelVariant,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SpeechModelVariant")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SpeechModelVariant") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -19356,6 +20164,10 @@ func (s *GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]b
 // GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest: The
 // request message for Conversations.SuggestConversationSummary.
 type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
+	// AssistQueryParams: Parameters for a human assist query. Only used for
+	// POC/demo purpose.
+	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
+
 	// ContextSize: Max number of messages prior to and including
 	// [latest_message] to use as context when compiling the suggestion. By
 	// default 500 and at most 1000.
@@ -19367,20 +20179,21 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
 	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ContextSize") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AssistQueryParams")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContextSize") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssistQueryParams") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -19469,6 +20282,48 @@ type GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary struc
 
 func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse: The
+// response message for Participants.SuggestDialogflowAssists.
+type GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse struct {
+	// ContextSize: Number of messages prior to and including latest_message
+	// to compile the suggestion. It may be smaller than the
+	// SuggestDialogflowAssistsRequest.context_size field in the request if
+	// there aren't that many messages in the conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+
+	// DialogflowAssistAnswers: Output only. Multiple reply options provided
+	// by Dialogflow assist service. The order is based on the rank of the
+	// model prediction.
+	DialogflowAssistAnswers []*GoogleCloudDialogflowV2beta1DialogflowAssistAnswer `json:"dialogflowAssistAnswers,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used to
+	// suggest answer. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19812,6 +20667,8 @@ type GoogleCloudDialogflowV2beta1SuggestionFeature struct {
 	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
 	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "DIALOGFLOW_ASSIST" - Run Dialogflow assist model for chat, which
+	// will return automated agent response as suggestion.
 	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
 	// for chat.
 	Type string `json:"type,omitempty"`
@@ -19839,6 +20696,61 @@ func (s *GoogleCloudDialogflowV2beta1SuggestionFeature) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1SuggestionInput: Represents the selection
+// of a suggestion.
+type GoogleCloudDialogflowV2beta1SuggestionInput struct {
+	// AnswerRecord: Required. The ID of a suggestion selected by the human
+	// agent. The suggestion(s) were generated in a previous call to request
+	// Dialogflow assist. The format is:
+	// `projects//locations//answerRecords/` where is an alphanumeric
+	// string.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// IntentInput: The intent to be triggered on V3 agent.
+	IntentInput *GoogleCloudDialogflowV2beta1IntentInput `json:"intentInput,omitempty"`
+
+	// Parameters: In Dialogflow assist for v3, the user can submit a form
+	// by sending a SuggestionInput. The form is uniquely determined by the
+	// answer_record field, which identifies a v3 QueryResult containing the
+	// current page. The form parameters are specified via the parameters
+	// field. Depending on your protocol or client library language, this is
+	// a map, associative array, symbol table, dictionary, or JSON object
+	// composed of a collection of (MapKey, MapValue) pairs: * MapKey type:
+	// string * MapKey value: parameter name * MapValue type: If parameter's
+	// entity type is a composite entity then use map, otherwise, depending
+	// on the parameter value type, it could be one of string, number,
+	// boolean, null, list or map. * MapValue value: If parameter's entity
+	// type is a composite entity then use map from composite entity
+	// property names to property values, otherwise, use parameter value.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+
+	// TextOverride: Optional. If the customer edited the suggestion before
+	// using it, include the revised text here.
+	TextOverride *GoogleCloudDialogflowV2beta1TextInput `json:"textOverride,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestionInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestionInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1SuggestionResult: One response of
 // different type of suggestion response which is used in the response
 // of Participants.AnalyzeContent and Participants.AnalyzeContent, as
@@ -19850,6 +20762,14 @@ type GoogleCloudDialogflowV2beta1SuggestionResult struct {
 	// SuggestArticlesResponse: SuggestArticlesResponse if request is for
 	// ARTICLE_SUGGESTION.
 	SuggestArticlesResponse *GoogleCloudDialogflowV2beta1SuggestArticlesResponse `json:"suggestArticlesResponse,omitempty"`
+
+	// SuggestDialogflowAssistsResponse: SuggestDialogflowAssistsResponse if
+	// request is for DIALOGFLOW_ASSIST.
+	SuggestDialogflowAssistsResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestDialogflowAssistsResponse,omitempty"`
+
+	// SuggestEntityExtractionResponse: SuggestDialogflowAssistsResponse if
+	// request is for ENTITY_EXTRACTION.
+	SuggestEntityExtractionResponse *GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse `json:"suggestEntityExtractionResponse,omitempty"`
 
 	// SuggestFaqAnswersResponse: SuggestFaqAnswersResponse if request is
 	// for FAQ_ANSWER.
@@ -20121,13 +21041,13 @@ type GoogleCloudDialogflowV2beta1TrainAgentRequest struct {
 // validation error.
 type GoogleCloudDialogflowV2beta1ValidationError struct {
 	// Entries: The names of the entries that the error is associated with.
-	// Format: - "projects//agent", if the error is associated with the
-	// entire agent. - "projects//agent/intents/", if the error is
+	// Format: - `projects//agent`, if the error is associated with the
+	// entire agent. - `projects//agent/intents/`, if the error is
 	// associated with certain intents. -
-	// "projects//agent/intents//trainingPhrases/", if the error is
+	// `projects//agent/intents//trainingPhrases/`, if the error is
 	// associated with certain intent training phrases. -
-	// "projects//agent/intents//parameters/", if the error is associated
-	// with certain intent parameters. - "projects//agent/entities/", if the
+	// `projects//agent/intents//parameters/`, if the error is associated
+	// with certain intent parameters. - `projects//agent/entities/`, if the
 	// error is associated with certain entities.
 	Entries []string `json:"entries,omitempty"`
 
@@ -20468,6 +21388,36 @@ func (s *GoogleCloudDialogflowV2beta1WebhookResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV3alpha1ConversationSignals: This message is
+// used to hold all the Conversation Signals data, which will be
+// converted to JSON and exported to BigQuery.
+type GoogleCloudDialogflowV3alpha1ConversationSignals struct {
+	// TurnSignals: Required. Turn signals for the current turn.
+	TurnSignals *GoogleCloudDialogflowV3alpha1TurnSignals `json:"turnSignals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TurnSignals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TurnSignals") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV3alpha1ConversationSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV3alpha1ConversationSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata:
 // Metadata for CreateDocument operation.
 type GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata struct {
@@ -20653,6 +21603,95 @@ func (s *GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata) MarshalJS
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV3alpha1TurnSignals: Collection of all signals
+// that were extracted for a single turn of the conversation.
+type GoogleCloudDialogflowV3alpha1TurnSignals struct {
+	// AgentEscalated: Whether agent responded with LiveAgentHandoff
+	// fulfillment.
+	AgentEscalated bool `json:"agentEscalated,omitempty"`
+
+	// DtmfUsed: Whether user was using DTMF input.
+	DtmfUsed bool `json:"dtmfUsed,omitempty"`
+
+	// FailureReasons: Failure reasons of the turn.
+	//
+	// Possible values:
+	//   "FAILURE_REASON_UNSPECIFIED" - Failure reason is not assigned.
+	//   "FAILED_INTENT" - Whether NLU failed to recognize user intent.
+	//   "FAILED_WEBHOOK" - Whether webhook failed during the turn.
+	FailureReasons []string `json:"failureReasons,omitempty"`
+
+	// NoMatch: Whether NLU predicted NO_MATCH.
+	NoMatch bool `json:"noMatch,omitempty"`
+
+	// NoUserInput: Whether user provided no input.
+	NoUserInput bool `json:"noUserInput,omitempty"`
+
+	// ReachedEndPage: Whether turn resulted in End Session page.
+	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
+
+	// SentimentMagnitude: Sentiment magnitude of the user utterance if
+	// sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentMagnitude float64 `json:"sentimentMagnitude,omitempty"`
+
+	// SentimentScore: Sentiment score of the user utterance if sentiment
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was
+	// enabled.
+	SentimentScore float64 `json:"sentimentScore,omitempty"`
+
+	// TriggeredAbandonmentEvent: Whether agent has triggered the event
+	// corresponding to user abandoning the conversation.
+	TriggeredAbandonmentEvent bool `json:"triggeredAbandonmentEvent,omitempty"`
+
+	// UserEscalated: Whether user was specifically asking for a live agent.
+	UserEscalated bool `json:"userEscalated,omitempty"`
+
+	// WebhookStatuses: Human-readable statuses of the webhooks triggered
+	// during this turn.
+	WebhookStatuses []string `json:"webhookStatuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentEscalated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentEscalated") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV3alpha1TurnSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV3alpha1TurnSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
+	var s1 struct {
+		SentimentMagnitude gensupport.JSONFloat64 `json:"sentimentMagnitude"`
+		SentimentScore     gensupport.JSONFloat64 `json:"sentimentScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
+	s.SentimentScore = float64(s1.SentimentScore)
+	return nil
+}
+
 // GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata:
 // Metadata for UpdateDocument operation.
 type GoogleCloudDialogflowV3alpha1UpdateDocumentOperationMetadata struct {
@@ -20720,8 +21759,8 @@ func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudLocationLocation: A resource that represents Google Cloud
-// Platform location.
+// GoogleCloudLocationLocation: A resource that represents a Google
+// Cloud location.
 type GoogleCloudLocationLocation struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -20833,8 +21872,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -21060,17 +22099,17 @@ func (c *ProjectsDeleteAgentCall) Do(opts ...googleapi.CallOption) (*GoogleProto
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -21209,17 +22248,17 @@ func (c *ProjectsGetAgentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDia
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Agent{
 		ServerResponse: googleapi.ServerResponse{
@@ -21360,17 +22399,17 @@ func (c *ProjectsSetAgentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDia
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Agent{
 		ServerResponse: googleapi.ServerResponse{
@@ -21516,17 +22555,17 @@ func (c *ProjectsAgentExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -21669,17 +22708,17 @@ func (c *ProjectsAgentGetFulfillmentCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Fulfillment{
 		ServerResponse: googleapi.ServerResponse{
@@ -21832,17 +22871,17 @@ func (c *ProjectsAgentGetValidationResultCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ValidationResult{
 		ServerResponse: googleapi.ServerResponse{
@@ -21996,17 +23035,17 @@ func (c *ProjectsAgentImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -22157,17 +23196,17 @@ func (c *ProjectsAgentRestoreCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -22329,17 +23368,17 @@ func (c *ProjectsAgentSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SearchAgentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22512,17 +23551,17 @@ func (c *ProjectsAgentTrainCall) Do(opts ...googleapi.CallOption) (*GoogleLongru
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -22667,17 +23706,17 @@ func (c *ProjectsAgentUpdateFulfillmentCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Fulfillment{
 		ServerResponse: googleapi.ServerResponse{
@@ -22828,17 +23867,17 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -22981,17 +24020,17 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -23139,17 +24178,17 @@ func (c *ProjectsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -23284,17 +24323,17 @@ func (c *ProjectsAgentEntityTypesDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -23444,17 +24483,17 @@ func (c *ProjectsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -23623,17 +24662,17 @@ func (c *ProjectsAgentEntityTypesListCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListEntityTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -23823,17 +24862,17 @@ func (c *ProjectsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -23989,17 +25028,17 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -24144,17 +25183,17 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -24300,17 +25339,17 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -24452,17 +25491,17 @@ func (c *ProjectsAgentEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -24595,17 +25634,17 @@ func (c *ProjectsAgentEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -24745,17 +25784,17 @@ func (c *ProjectsAgentEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -24910,17 +25949,17 @@ func (c *ProjectsAgentEnvironmentsGetHistoryCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EnvironmentHistory{
 		ServerResponse: googleapi.ServerResponse{
@@ -25107,17 +26146,17 @@ func (c *ProjectsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListEnvironmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -25310,17 +26349,17 @@ func (c *ProjectsAgentEnvironmentsPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -25519,17 +26558,17 @@ func (c *ProjectsAgentEnvironmentsIntentsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListIntentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -25710,17 +26749,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -25879,17 +26918,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1DetectIntentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -26032,17 +27071,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -26176,17 +27215,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -26332,17 +27371,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -26503,17 +27542,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListContextsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -26606,7 +27645,7 @@ type ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -26695,17 +27734,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -26728,7 +27767,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -26858,17 +27897,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -27005,17 +28044,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -27164,17 +28203,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -27339,17 +28378,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -27532,17 +28571,17 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -27693,17 +28732,17 @@ func (c *ProjectsAgentIntentsBatchDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27846,17 +28885,17 @@ func (c *ProjectsAgentIntentsBatchUpdateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -28018,17 +29057,17 @@ func (c *ProjectsAgentIntentsCreateCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Intent{
 		ServerResponse: googleapi.ServerResponse{
@@ -28178,17 +29217,17 @@ func (c *ProjectsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -28352,17 +29391,17 @@ func (c *ProjectsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Intent{
 		ServerResponse: googleapi.ServerResponse{
@@ -28565,17 +29604,17 @@ func (c *ProjectsAgentIntentsListCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListIntentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -28793,17 +29832,17 @@ func (c *ProjectsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Intent{
 		ServerResponse: googleapi.ServerResponse{
@@ -28965,17 +30004,17 @@ func (c *ProjectsAgentKnowledgeBasesCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -29112,17 +30151,17 @@ func (c *ProjectsAgentKnowledgeBasesDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -29269,17 +30308,17 @@ func (c *ProjectsAgentKnowledgeBasesGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -29455,17 +30494,17 @@ func (c *ProjectsAgentKnowledgeBasesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -29647,17 +30686,17 @@ func (c *ProjectsAgentKnowledgeBasesPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -29812,17 +30851,17 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -29962,17 +31001,17 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -30113,17 +31152,17 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -30295,17 +31334,17 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -30489,17 +31528,17 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -30652,17 +31691,17 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -30796,17 +31835,17 @@ func (c *ProjectsAgentSessionsDeleteContextsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -30965,17 +32004,17 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1DetectIntentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -31118,17 +32157,17 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -31262,17 +32301,17 @@ func (c *ProjectsAgentSessionsContextsDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -31418,17 +32457,17 @@ func (c *ProjectsAgentSessionsContextsGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -31589,17 +32628,17 @@ func (c *ProjectsAgentSessionsContextsListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListContextsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -31692,7 +32731,7 @@ type ProjectsAgentSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -31781,17 +32820,17 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -31814,7 +32853,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -31944,17 +32983,17 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -32091,17 +33130,17 @@ func (c *ProjectsAgentSessionsEntityTypesDeleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -32250,17 +33289,17 @@ func (c *ProjectsAgentSessionsEntityTypesGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -32425,17 +33464,17 @@ func (c *ProjectsAgentSessionsEntityTypesListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -32618,17 +33657,17 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -32770,17 +33809,17 @@ func (c *ProjectsAgentVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -32908,17 +33947,17 @@ func (c *ProjectsAgentVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -33058,17 +34097,17 @@ func (c *ProjectsAgentVersionsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -33222,17 +34261,17 @@ func (c *ProjectsAgentVersionsListCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -33407,17 +34446,17 @@ func (c *ProjectsAgentVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -33566,17 +34605,17 @@ func (c *ProjectsAnswerRecordsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1AnswerRecord{
 		ServerResponse: googleapi.ServerResponse{
@@ -33590,6 +34629,7 @@ func (c *ProjectsAnswerRecordsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated. Retrieves a specific answer record.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/answerRecords/{answerRecordsId}",
 	//   "httpMethod": "GET",
@@ -33741,17 +34781,17 @@ func (c *ProjectsAnswerRecordsListCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListAnswerRecordsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -33774,6 +34814,7 @@ func (c *ProjectsAnswerRecordsListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
+	//       "deprecated": true,
 	//       "description": "Optional. Filters to restrict results to specific answer records. For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
@@ -33929,17 +34970,17 @@ func (c *ProjectsAnswerRecordsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1AnswerRecord{
 		ServerResponse: googleapi.ServerResponse{
@@ -34086,17 +35127,17 @@ func (c *ProjectsConversationProfilesClearSuggestionFeatureConfigCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -34237,17 +35278,17 @@ func (c *ProjectsConversationProfilesCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ConversationProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -34374,17 +35415,17 @@ func (c *ProjectsConversationProfilesDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -34526,17 +35567,17 @@ func (c *ProjectsConversationProfilesGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ConversationProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -34692,17 +35733,17 @@ func (c *ProjectsConversationProfilesListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListConversationProfilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -34879,17 +35920,17 @@ func (c *ProjectsConversationProfilesPatchCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ConversationProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -35042,17 +36083,17 @@ func (c *ProjectsConversationProfilesSetSuggestionFeatureConfigCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -35189,17 +36230,17 @@ func (c *ProjectsConversationsCompleteCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Conversation{
 		ServerResponse: googleapi.ServerResponse{
@@ -35281,7 +36322,7 @@ func (r *ProjectsConversationsService) Create(parentid string, googleclouddialog
 // Identifier of the conversation. Generally it's auto generated by
 // Google. Only set it if you cannot wait for the response to return a
 // auto-generated one to you. The conversation ID must be compliant with
-// the regression fomula "a-zA-Z*" with the characters length in range
+// the regression fomula `a-zA-Z*` with the characters length in range
 // of [3,64]. If the field is provided, the caller is resposible for 1.
 // the uniqueness of the ID, otherwise the request will be rejected. 2.
 // the consistency for whether to use custom ID or not under a project
@@ -35360,17 +36401,17 @@ func (c *ProjectsConversationsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Conversation{
 		ServerResponse: googleapi.ServerResponse{
@@ -35393,7 +36434,7 @@ func (c *ProjectsConversationsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "conversationId": {
-	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula \"a-zA-Z*\" with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
+	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula `a-zA-Z*` with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -35518,17 +36559,17 @@ func (c *ProjectsConversationsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Conversation{
 		ServerResponse: googleapi.ServerResponse{
@@ -35699,17 +36740,17 @@ func (c *ProjectsConversationsListCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListConversationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -35881,17 +36922,17 @@ func (c *ProjectsConversationsMessagesBatchCreateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1BatchCreateMessagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -36064,17 +37105,17 @@ func (c *ProjectsConversationsMessagesListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListMessagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -36248,17 +37289,17 @@ func (c *ProjectsConversationsParticipantsAnalyzeContentCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1AnalyzeContentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -36393,17 +37434,17 @@ func (c *ProjectsConversationsParticipantsCreateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Participant{
 		ServerResponse: googleapi.ServerResponse{
@@ -36545,17 +37586,17 @@ func (c *ProjectsConversationsParticipantsGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Participant{
 		ServerResponse: googleapi.ServerResponse{
@@ -36710,17 +37751,17 @@ func (c *ProjectsConversationsParticipantsListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListParticipantsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -36891,17 +37932,17 @@ func (c *ProjectsConversationsParticipantsPatchCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Participant{
 		ServerResponse: googleapi.ServerResponse{
@@ -37048,17 +38089,17 @@ func (c *ProjectsConversationsParticipantsSuggestionsCompileCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1CompileSuggestionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -37072,6 +38113,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsCompileCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated. use SuggestArticles and SuggestFaqAnswers instead. Gets suggestions for a participant based on specific historical messages. Note that ListSuggestions will only list the auto-generated suggestions, while CompileSuggestion will try to compile suggestion based on the provided conversation context in the real time.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}/suggestions:compile",
 	//   "httpMethod": "POST",
@@ -37241,17 +38283,17 @@ func (c *ProjectsConversationsParticipantsSuggestionsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListSuggestionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -37265,6 +38307,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated: Use inline suggestion, event based suggestion or Suggestion* API instead. See HumanAgentAssistantConfig.name for more details. Removal Date: 2020-09-01. Retrieves suggestions for live agents. This method should be used by human agent client software to fetch auto generated suggestions in real-time, while the conversation with an end user is in progress. The functionality is implemented in terms of the [list pagination](https://cloud.google.com/apis/design/design_patterns#list_pagination) design pattern. The client app should use the `next_page_token` field to fetch the next batch of suggestions. `suggestions` are sorted by `create_time` in descending order. To fetch latest suggestion, just set `page_size` to 1. To fetch new suggestions without duplication, send request with filter `create_time_epoch_microseconds \u003e [first item's create_time of previous request]` and empty page_token.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}/suggestions",
 	//   "httpMethod": "GET",
@@ -37425,17 +38468,17 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestArticlesCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestArticlesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -37572,17 +38615,17 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestFaqAnswersCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -37720,17 +38763,17 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall) Do
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -37869,17 +38912,17 @@ func (c *ProjectsConversationsSuggestionsSuggestConversationSummaryCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -38017,17 +39060,17 @@ func (c *ProjectsKnowledgeBasesCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -38164,17 +39207,17 @@ func (c *ProjectsKnowledgeBasesDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -38321,17 +39364,17 @@ func (c *ProjectsKnowledgeBasesGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -38507,17 +39550,17 @@ func (c *ProjectsKnowledgeBasesListCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -38699,17 +39742,17 @@ func (c *ProjectsKnowledgeBasesPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -38864,17 +39907,17 @@ func (c *ProjectsKnowledgeBasesDocumentsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -39014,17 +40057,17 @@ func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -39165,17 +40208,17 @@ func (c *ProjectsKnowledgeBasesDocumentsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -39313,17 +40356,17 @@ func (c *ProjectsKnowledgeBasesDocumentsImportCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -39498,17 +40541,17 @@ func (c *ProjectsKnowledgeBasesDocumentsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -39692,17 +40735,17 @@ func (c *ProjectsKnowledgeBasesDocumentsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -39855,17 +40898,17 @@ func (c *ProjectsKnowledgeBasesDocumentsReloadCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -39992,17 +41035,17 @@ func (c *ProjectsLocationsDeleteAgentCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -40139,17 +41182,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudLocationLocation{
 		ServerResponse: googleapi.ServerResponse{
@@ -40288,17 +41331,17 @@ func (c *ProjectsLocationsGetAgentCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Agent{
 		ServerResponse: googleapi.ServerResponse{
@@ -40463,17 +41506,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudLocationListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -40651,17 +41694,17 @@ func (c *ProjectsLocationsSetAgentCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Agent{
 		ServerResponse: googleapi.ServerResponse{
@@ -40807,17 +41850,17 @@ func (c *ProjectsLocationsAgentExportCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -40960,17 +42003,17 @@ func (c *ProjectsLocationsAgentGetFulfillmentCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Fulfillment{
 		ServerResponse: googleapi.ServerResponse{
@@ -41123,17 +42166,17 @@ func (c *ProjectsLocationsAgentGetValidationResultCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ValidationResult{
 		ServerResponse: googleapi.ServerResponse{
@@ -41287,17 +42330,17 @@ func (c *ProjectsLocationsAgentImportCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -41448,17 +42491,17 @@ func (c *ProjectsLocationsAgentRestoreCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -41620,17 +42663,17 @@ func (c *ProjectsLocationsAgentSearchCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SearchAgentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -41803,17 +42846,17 @@ func (c *ProjectsLocationsAgentTrainCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -41958,17 +43001,17 @@ func (c *ProjectsLocationsAgentUpdateFulfillmentCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Fulfillment{
 		ServerResponse: googleapi.ServerResponse{
@@ -42119,17 +43162,17 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -42272,17 +43315,17 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -42430,17 +43473,17 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -42575,17 +43618,17 @@ func (c *ProjectsLocationsAgentEntityTypesDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -42735,17 +43778,17 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -42914,17 +43957,17 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListEntityTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -43114,17 +44157,17 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -43280,17 +44323,17 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -43435,17 +44478,17 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -43591,17 +44634,17 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -43743,17 +44786,17 @@ func (c *ProjectsLocationsAgentEnvironmentsCreateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -43886,17 +44929,17 @@ func (c *ProjectsLocationsAgentEnvironmentsDeleteCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -44036,17 +45079,17 @@ func (c *ProjectsLocationsAgentEnvironmentsGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -44201,17 +45244,17 @@ func (c *ProjectsLocationsAgentEnvironmentsGetHistoryCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1EnvironmentHistory{
 		ServerResponse: googleapi.ServerResponse{
@@ -44398,17 +45441,17 @@ func (c *ProjectsLocationsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListEnvironmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -44601,17 +45644,17 @@ func (c *ProjectsLocationsAgentEnvironmentsPatchCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -44810,17 +45853,17 @@ func (c *ProjectsLocationsAgentEnvironmentsIntentsListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListIntentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -45001,17 +46044,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -45170,17 +46213,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1DetectIntentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -45323,17 +46366,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -45467,17 +46510,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -45623,17 +46666,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -45794,17 +46837,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListContextsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -45897,7 +46940,7 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -45986,17 +47029,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -46019,7 +47062,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -46149,17 +47192,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -46296,17 +47339,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -46455,17 +47498,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -46630,17 +47673,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -46823,17 +47866,17 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Do
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -46984,17 +48027,17 @@ func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -47137,17 +48180,17 @@ func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -47309,17 +48352,17 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Intent{
 		ServerResponse: googleapi.ServerResponse{
@@ -47469,17 +48512,17 @@ func (c *ProjectsLocationsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -47643,17 +48686,17 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Intent{
 		ServerResponse: googleapi.ServerResponse{
@@ -47856,17 +48899,17 @@ func (c *ProjectsLocationsAgentIntentsListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListIntentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -48084,17 +49127,17 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Intent{
 		ServerResponse: googleapi.ServerResponse{
@@ -48252,17 +49295,17 @@ func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -48421,17 +49464,17 @@ func (c *ProjectsLocationsAgentSessionsDetectIntentCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1DetectIntentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -48574,17 +49617,17 @@ func (c *ProjectsLocationsAgentSessionsContextsCreateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -48718,17 +49761,17 @@ func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -48874,17 +49917,17 @@ func (c *ProjectsLocationsAgentSessionsContextsGetCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -49045,17 +50088,17 @@ func (c *ProjectsLocationsAgentSessionsContextsListCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListContextsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -49148,7 +50191,7 @@ type ProjectsLocationsAgentSessionsContextsPatchCall struct {
 //     `projects//agent/environments//users//sessions//contexts/`, -
 //     `projects//locations//agent/environments//users//sessions//contexts/
 //     `, The `Context ID` is always converted to lowercase, may only
-//     contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//     contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes
 //     long. If `Environment ID` is not specified, we assume default
 //     'draft' environment. If `User ID` is not specified, we assume
 //     default '-' user. The following context names are reserved for
@@ -49237,17 +50280,17 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Context{
 		ServerResponse: googleapi.ServerResponse{
@@ -49270,7 +50313,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -49400,17 +50443,17 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -49547,17 +50590,17 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -49706,17 +50749,17 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -49881,17 +50924,17 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -50074,17 +51117,17 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SessionEntityType{
 		ServerResponse: googleapi.ServerResponse{
@@ -50226,17 +51269,17 @@ func (c *ProjectsLocationsAgentVersionsCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -50364,17 +51407,17 @@ func (c *ProjectsLocationsAgentVersionsDeleteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -50514,17 +51557,17 @@ func (c *ProjectsLocationsAgentVersionsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -50678,17 +51721,17 @@ func (c *ProjectsLocationsAgentVersionsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -50863,17 +51906,17 @@ func (c *ProjectsLocationsAgentVersionsPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -51022,17 +52065,17 @@ func (c *ProjectsLocationsAnswerRecordsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1AnswerRecord{
 		ServerResponse: googleapi.ServerResponse{
@@ -51046,6 +52089,7 @@ func (c *ProjectsLocationsAnswerRecordsGetCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated. Retrieves a specific answer record.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/answerRecords/{answerRecordsId}",
 	//   "httpMethod": "GET",
@@ -51197,17 +52241,17 @@ func (c *ProjectsLocationsAnswerRecordsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListAnswerRecordsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -51230,6 +52274,7 @@ func (c *ProjectsLocationsAnswerRecordsListCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "filter": {
+	//       "deprecated": true,
 	//       "description": "Optional. Filters to restrict results to specific answer records. For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
@@ -51385,17 +52430,17 @@ func (c *ProjectsLocationsAnswerRecordsPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1AnswerRecord{
 		ServerResponse: googleapi.ServerResponse{
@@ -51542,17 +52587,17 @@ func (c *ProjectsLocationsConversationProfilesClearSuggestionFeatureConfigCall) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -51693,17 +52738,17 @@ func (c *ProjectsLocationsConversationProfilesCreateCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ConversationProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -51830,17 +52875,17 @@ func (c *ProjectsLocationsConversationProfilesDeleteCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -51982,17 +53027,17 @@ func (c *ProjectsLocationsConversationProfilesGetCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ConversationProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -52148,17 +53193,17 @@ func (c *ProjectsLocationsConversationProfilesListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListConversationProfilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -52335,17 +53380,17 @@ func (c *ProjectsLocationsConversationProfilesPatchCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ConversationProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -52498,17 +53543,17 @@ func (c *ProjectsLocationsConversationProfilesSetSuggestionFeatureConfigCall) Do
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -52645,17 +53690,17 @@ func (c *ProjectsLocationsConversationsCompleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Conversation{
 		ServerResponse: googleapi.ServerResponse{
@@ -52737,7 +53782,7 @@ func (r *ProjectsLocationsConversationsService) Create(parentid string, googlecl
 // Identifier of the conversation. Generally it's auto generated by
 // Google. Only set it if you cannot wait for the response to return a
 // auto-generated one to you. The conversation ID must be compliant with
-// the regression fomula "a-zA-Z*" with the characters length in range
+// the regression fomula `a-zA-Z*` with the characters length in range
 // of [3,64]. If the field is provided, the caller is resposible for 1.
 // the uniqueness of the ID, otherwise the request will be rejected. 2.
 // the consistency for whether to use custom ID or not under a project
@@ -52816,17 +53861,17 @@ func (c *ProjectsLocationsConversationsCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Conversation{
 		ServerResponse: googleapi.ServerResponse{
@@ -52849,7 +53894,7 @@ func (c *ProjectsLocationsConversationsCreateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "conversationId": {
-	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula \"a-zA-Z*\" with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
+	//       "description": "Optional. Identifier of the conversation. Generally it's auto generated by Google. Only set it if you cannot wait for the response to return a auto-generated one to you. The conversation ID must be compliant with the regression fomula `a-zA-Z*` with the characters length in range of [3,64]. If the field is provided, the caller is resposible for 1. the uniqueness of the ID, otherwise the request will be rejected. 2. the consistency for whether to use custom ID or not under a project to better ensure uniqueness.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -52974,17 +54019,17 @@ func (c *ProjectsLocationsConversationsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Conversation{
 		ServerResponse: googleapi.ServerResponse{
@@ -53155,17 +54200,17 @@ func (c *ProjectsLocationsConversationsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListConversationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -53337,17 +54382,17 @@ func (c *ProjectsLocationsConversationsMessagesBatchCreateCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1BatchCreateMessagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -53520,17 +54565,17 @@ func (c *ProjectsLocationsConversationsMessagesListCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListMessagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -53704,17 +54749,17 @@ func (c *ProjectsLocationsConversationsParticipantsAnalyzeContentCall) Do(opts .
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1AnalyzeContentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -53849,17 +54894,17 @@ func (c *ProjectsLocationsConversationsParticipantsCreateCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Participant{
 		ServerResponse: googleapi.ServerResponse{
@@ -54001,17 +55046,17 @@ func (c *ProjectsLocationsConversationsParticipantsGetCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Participant{
 		ServerResponse: googleapi.ServerResponse{
@@ -54166,17 +55211,17 @@ func (c *ProjectsLocationsConversationsParticipantsListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListParticipantsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -54347,17 +55392,17 @@ func (c *ProjectsLocationsConversationsParticipantsPatchCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Participant{
 		ServerResponse: googleapi.ServerResponse{
@@ -54503,17 +55548,17 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestArticlesCal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestArticlesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -54650,17 +55695,17 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestFaqAnswersC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -54798,17 +55843,17 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartReplie
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -54947,17 +55992,17 @@ func (c *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -55095,17 +56140,17 @@ func (c *ProjectsLocationsKnowledgeBasesCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -55242,17 +56287,17 @@ func (c *ProjectsLocationsKnowledgeBasesDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -55399,17 +56444,17 @@ func (c *ProjectsLocationsKnowledgeBasesGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -55585,17 +56630,17 @@ func (c *ProjectsLocationsKnowledgeBasesListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -55777,17 +56822,17 @@ func (c *ProjectsLocationsKnowledgeBasesPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1KnowledgeBase{
 		ServerResponse: googleapi.ServerResponse{
@@ -55942,17 +56987,17 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -56092,17 +57137,17 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsDeleteCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -56243,17 +57288,17 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsGetCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -56391,17 +57436,17 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsImportCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -56576,17 +57621,17 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDialogflowV2beta1ListDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -56770,17 +57815,17 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsPatchCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -56933,17 +57978,17 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsReloadCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -57078,17 +58123,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -57227,17 +58272,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -57292,14 +58337,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -57405,17 +58443,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -57429,7 +58467,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "dialogflow.projects.locations.operations.list",
@@ -57492,6 +58530,154 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "dialogflow.projects.locations.suggestions.generateStatelessSummary":
+
+type ProjectsLocationsSuggestionsGenerateStatelessSummaryCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// GenerateStatelessSummary: Generates and returns a summary for a
+// conversation that does not have a resource created for it.
+//
+//   - parent: The parent resource to charge for the Summary's generation.
+//     Format: `projects//locations/`.
+func (r *ProjectsLocationsSuggestionsService) GenerateStatelessSummary(parent string, googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall {
+	c := &ProjectsLocationsSuggestionsGenerateStatelessSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1generatestatelesssummaryrequest = googleclouddialogflowv2beta1generatestatelesssummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Fields(s ...googleapi.Field) *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Context(ctx context.Context) *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1generatestatelesssummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/suggestions:generateStatelessSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.suggestions.generateStatelessSummary" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSuggestionsGenerateStatelessSummaryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates and returns a summary for a conversation that does not have a resource created for it.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/suggestions:generateStatelessSummary",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.suggestions.generateStatelessSummary",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource to charge for the Summary's generation. Format: `projects//locations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/suggestions:generateStatelessSummary",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
 }
 
 // method id "dialogflow.projects.operations.cancel":
@@ -57584,17 +58770,17 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -57733,17 +58919,17 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -57798,14 +58984,7 @@ type ProjectsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
@@ -57911,17 +59090,17 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -57935,7 +59114,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "dialogflow.projects.operations.list",
@@ -57998,4 +59177,152 @@ func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLo
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "dialogflow.projects.suggestions.generateStatelessSummary":
+
+type ProjectsSuggestionsGenerateStatelessSummaryCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// GenerateStatelessSummary: Generates and returns a summary for a
+// conversation that does not have a resource created for it.
+//
+//   - parent: The parent resource to charge for the Summary's generation.
+//     Format: `projects//locations/`.
+func (r *ProjectsSuggestionsService) GenerateStatelessSummary(parent string, googleclouddialogflowv2beta1generatestatelesssummaryrequest *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest) *ProjectsSuggestionsGenerateStatelessSummaryCall {
+	c := &ProjectsSuggestionsGenerateStatelessSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1generatestatelesssummaryrequest = googleclouddialogflowv2beta1generatestatelesssummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Fields(s ...googleapi.Field) *ProjectsSuggestionsGenerateStatelessSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Context(ctx context.Context) *ProjectsSuggestionsGenerateStatelessSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1generatestatelesssummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/suggestions:generateStatelessSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.suggestions.generateStatelessSummary" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSuggestionsGenerateStatelessSummaryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates and returns a summary for a conversation that does not have a resource created for it.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/suggestions:generateStatelessSummary",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.suggestions.generateStatelessSummary",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource to charge for the Summary's generation. Format: `projects//locations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/suggestions:generateStatelessSummary",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1GenerateStatelessSummaryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
 }

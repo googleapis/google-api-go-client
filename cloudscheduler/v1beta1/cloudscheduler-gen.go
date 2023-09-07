@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudscheduler:v1beta1"
 const apiName = "cloudscheduler"
@@ -199,18 +200,18 @@ type AppEngineHttpTarget struct {
 	// `X-CloudScheduler-JobName`: This header will contain the job name. *
 	// `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified
 	// in the unix-cron format, this header will contain the job schedule
-	// time in RFC3339 UTC "Zulu" format. If the job has an body, Cloud
-	// Scheduler sets the following headers: * `Content-Type`: By default,
-	// the `Content-Type` header is set to "application/octet-stream". The
-	// default can be overridden by explictly setting `Content-Type` to a
-	// particular media type when the job is created. For example,
-	// `Content-Type` can be set to "application/json". *
-	// `Content-Length`: This is computed by Cloud Scheduler. This value is
-	// output only. It cannot be changed. The headers below are output only.
-	// They cannot be set or overridden: * `X-Google-*`: For Google internal
-	// use only. * `X-AppEngine-*`: For Google internal use only. In
-	// addition, some App Engine headers, which contain job-specific
-	// information, are also be sent to the job handler.
+	// time in RFC3339 UTC "Zulu" format. If the job has a body and the
+	// following headers are not set by the user, Cloud Scheduler sets
+	// default values: * `Content-Type`: This will be set to
+	// "application/octet-stream". You can override this default by
+	// explicitly setting `Content-Type` to a particular media type when
+	// creating the job. For example, you can set `Content-Type` to
+	// "application/json". The headers below are output only. They cannot
+	// be set or overridden: * `Content-Length`: This is computed by Cloud
+	// Scheduler. * `X-Google-*`: For Google internal use only. *
+	// `X-AppEngine-*`: For Google internal use only. In addition, some App
+	// Engine headers, which contain job-specific information, are also be
+	// sent to the job handler.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. PATCH and OPTIONS
@@ -362,22 +363,29 @@ type HttpTarget struct {
 	// with an incompatible HttpMethod.
 	Body string `json:"body,omitempty"`
 
-	// Headers: The user can specify HTTP request headers to send with the
-	// job's HTTP request. This map contains the header field names and
-	// values. Repeated headers are not supported, but a header value can
-	// contain commas. These headers represent a subset of the headers that
-	// will accompany the job's HTTP request. Some HTTP request headers will
-	// be ignored or replaced. A partial list of headers that will be
-	// ignored or replaced is below: - Host: This will be computed by Cloud
-	// Scheduler and derived from uri. * `Content-Length`: This will be
-	// computed by Cloud Scheduler. * `User-Agent`: This will be set to
-	// "Google-Cloud-Scheduler". * `X-Google-*`: Google internal use only.
-	// * `X-AppEngine-*`: Google internal use only. * `X-CloudScheduler`:
-	// This header will be set to true. * `X-CloudScheduler-JobName`: This
-	// header will contain the job name. * `X-CloudScheduler-ScheduleTime`:
-	// For Cloud Scheduler jobs specified in the unix-cron format, this
-	// header will contain the job schedule time in RFC3339 UTC "Zulu"
-	// format. The total size of headers must be less than 80KB.
+	// Headers: HTTP request headers. This map contains the header field
+	// names and values. The user can specify HTTP request headers to send
+	// with the job's HTTP request. Repeated headers are not supported, but
+	// a header value can contain commas. The following headers represent a
+	// subset of the headers that accompany the job's HTTP request. Some
+	// HTTP request headers are ignored or replaced. A partial list of
+	// headers that are ignored or replaced is below: * Host: This will be
+	// computed by Cloud Scheduler and derived from uri. * `Content-Length`:
+	// This will be computed by Cloud Scheduler. * `User-Agent`: This will
+	// be set to "Google-Cloud-Scheduler". * `X-Google-*`: Google internal
+	// use only. * `X-AppEngine-*`: Google internal use only. *
+	// `X-CloudScheduler`: This header will be set to true. *
+	// `X-CloudScheduler-JobName`: This header will contain the job name. *
+	// `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified
+	// in the unix-cron format, this header will contain the job schedule
+	// time in RFC3339 UTC "Zulu" format. If the job has a body and the
+	// following headers are not set by the user, Cloud Scheduler sets
+	// default values: * `Content-Type`: This will be set to
+	// "application/octet-stream". You can override this default by
+	// explicitly setting `Content-Type` to a particular media type when
+	// creating the job. For example, you can set `Content-Type` to
+	// "application/json". The total size of headers must be less than
+	// 80KB.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: Which HTTP method to use for the request.
@@ -658,7 +666,7 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -803,24 +811,24 @@ type PauseJobRequest struct {
 // (https://cloud.google.com/pubsub/quotas) for more information about
 // message limits.
 type PubsubMessage struct {
-	// Attributes: Attributes for this message. If this field is empty, the
-	// message must contain non-empty data. This can be used to filter
-	// messages on the subscription.
+	// Attributes: Optional. Attributes for this message. If this field is
+	// empty, the message must contain non-empty data. This can be used to
+	// filter messages on the subscription.
 	Attributes map[string]string `json:"attributes,omitempty"`
 
-	// Data: The message data field. If this field is empty, the message
-	// must contain at least one attribute.
+	// Data: Optional. The message data field. If this field is empty, the
+	// message must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
-	// MessageId: ID of this message, assigned by the server when the
-	// message is published. Guaranteed to be unique within the topic. This
-	// value may be read by a subscriber that receives a `PubsubMessage` via
-	// a `Pull` call or a push delivery. It must not be populated by the
-	// publisher in a `Publish` call.
+	// MessageId: Optional. ID of this message, assigned by the server when
+	// the message is published. Guaranteed to be unique within the topic.
+	// This value may be read by a subscriber that receives a
+	// `PubsubMessage` via a `Pull` call or a push delivery. It must not be
+	// populated by the publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
-	// OrderingKey: If non-empty, identifies related messages for which
-	// publish order should be respected. If a `Subscription` has
+	// OrderingKey: Optional. If non-empty, identifies related messages for
+	// which publish order should be respected. If a `Subscription` has
 	// `enable_message_ordering` set to `true`, messages published with the
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
@@ -829,9 +837,9 @@ type PubsubMessage struct {
 	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
-	// PublishTime: The time at which the message was published, populated
-	// by the server when it receives the `Publish` call. It must not be
-	// populated by the publisher in a `Publish` call.
+	// PublishTime: Optional. The time at which the message was published,
+	// populated by the server when it receives the `Publish` call. It must
+	// not be populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -920,8 +928,8 @@ type RetryConfig struct {
 	// doubles `max_doublings` times, then increases linearly, and finally
 	// retries at intervals of max_backoff_duration up to retry_count times.
 	// For example, if min_backoff_duration is 10s, max_backoff_duration is
-	// 300s, and `max_doublings` is 3, then the a job will first be retried
-	// in 10s. The retry interval will double three times, and then increase
+	// 300s, and `max_doublings` is 3, then the job will first be retried in
+	// 10s. The retry interval will double three times, and then increase
 	// linearly by 2^3 * 10s. Finally, the job will retry at intervals of
 	// max_backoff_duration until the job has been attempted retry_count
 	// times. Thus, the requests will retry at 10s, 20s, 40s, 80s, 160s,
@@ -1148,17 +1156,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -1320,17 +1328,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1497,17 +1505,17 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -1643,17 +1651,17 @@ func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1795,17 +1803,17 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -1983,17 +1991,17 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2188,17 +2196,17 @@ func (c *ProjectsLocationsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Job,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -2340,17 +2348,17 @@ func (c *ProjectsLocationsJobsPauseCall) Do(opts ...googleapi.CallOption) (*Job,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -2486,17 +2494,17 @@ func (c *ProjectsLocationsJobsResumeCall) Do(opts ...googleapi.CallOption) (*Job
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -2630,17 +2638,17 @@ func (c *ProjectsLocationsJobsRunCall) Do(opts ...googleapi.CallOption) (*Job, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{

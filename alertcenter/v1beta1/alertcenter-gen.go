@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "alertcenter:v1beta1"
 const apiName = "alertcenter"
@@ -167,6 +168,58 @@ func NewV1beta1Service(s *Service) *V1beta1Service {
 
 type V1beta1Service struct {
 	s *Service
+}
+
+// AbuseDetected: A generic alert for abusive user activity occurring
+// with a customer.
+type AbuseDetected struct {
+	// AdditionalDetails: List of abusive users/entities to be displayed in
+	// a table in the alert.
+	AdditionalDetails *EntityList `json:"additionalDetails,omitempty"`
+
+	// Product: Product that the abuse is originating from.
+	Product string `json:"product,omitempty"`
+
+	// SubAlertId: Unique identifier of each sub alert that is onboarded.
+	SubAlertId string `json:"subAlertId,omitempty"`
+
+	// VariationType: Variation of AbuseDetected alerts. The variation_type
+	// determines the texts displayed the alert details. This differs from
+	// sub_alert_id because each sub alert can have multiple
+	// variation_types, representing different stages of the alert.
+	//
+	// Possible values:
+	//   "ABUSE_DETECTED_VARIATION_TYPE_UNSPECIFIED" - AbuseDetected alert
+	// variation type unspecified. No alert should be unspecified.
+	//   "DRIVE_ABUSIVE_CONTENT" - Variation displayed for Drive abusive
+	// content alerts.
+	//   "LIMITED_DISABLE" - Variation displayed for Limited Disable alerts,
+	// when a Google service is disabled for a user, totally or partially,
+	// due to the user's abusive behavior.
+	VariationType string `json:"variationType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AbuseDetected) MarshalJSON() ([]byte, error) {
+	type NoMethod AbuseDetected
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AccountSuspensionDetails: Details about why an account is receiving
@@ -385,8 +438,8 @@ type Alert struct {
 	// CreateTime: Output only. The time this alert was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CustomerId: Output only. The unique identifier of the Google account
-	// of the customer.
+	// CustomerId: Output only. The unique identifier of the Google
+	// Workspace account of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Data: Optional. The data associated with this alert, for example
@@ -476,8 +529,8 @@ type AlertFeedback struct {
 	// CreateTime: Output only. The time this feedback was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CustomerId: Output only. The unique identifier of the Google account
-	// of the customer.
+	// CustomerId: Output only. The unique identifier of the Google
+	// Workspace account of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Email: Output only. The email of the user that provided the feedback.
@@ -531,8 +584,8 @@ type AlertMetadata struct {
 	// Assignee: The email address of the user assigned to the alert.
 	Assignee string `json:"assignee,omitempty"`
 
-	// CustomerId: Output only. The unique identifier of the Google account
-	// of the customer.
+	// CustomerId: Output only. The unique identifier of the Google
+	// Workspace account of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Etag: Optional. `etag` is used for optimistic concurrency control as
@@ -588,16 +641,17 @@ func (s *AlertMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // ApnsCertificateExpirationInfo: The explanation message associated
-// with ApnsCertificationExpiring and ApnsCertificationExpired alerts.
+// with "APNS certificate is expiring soon" and "APNS certificate has
+// expired" alerts.
 type ApnsCertificateExpirationInfo struct {
-	// AppleId: The Apple ID used for the certificate, may be blank if
-	// admins did not enter it.
+	// AppleId: The Apple ID used to create the certificate. It may be blank
+	// if admins didn't enter it.
 	AppleId string `json:"appleId,omitempty"`
 
-	// ExpirationTime: The expiration date of the APNS Certificate.
+	// ExpirationTime: The expiration date of the APNS certificate.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
-	// Uid: The UID for the certificate.
+	// Uid: The UID of the certificate.
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppleId") to
@@ -822,11 +876,15 @@ func (s *BadWhitelist) MarshalJSON() ([]byte, error) {
 // BatchDeleteAlertsRequest: A request to perform batch delete on
 // alerts.
 type BatchDeleteAlertsRequest struct {
-	// AlertId: Required. list of alert IDs.
+	// AlertId: Required. The list of alert IDs to delete.
 	AlertId []string `json:"alertId,omitempty"`
 
 	// CustomerId: Optional. The unique identifier of the Google Workspace
-	// organization account of the customer the alerts are associated with.
+	// account of the customer the alerts are associated with. The
+	// `customer_id` must have the initial "C" stripped (for example,
+	// `046psxkn`). Inferred from the caller identity if not provided. Find
+	// your customer ID
+	// (https://support.google.com/cloudidentity/answer/10070793).
 	CustomerId string `json:"customerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertId") to
@@ -855,7 +913,7 @@ func (s *BatchDeleteAlertsRequest) MarshalJSON() ([]byte, error) {
 // BatchDeleteAlertsResponse: Response to batch delete operation on
 // alerts.
 type BatchDeleteAlertsResponse struct {
-	// FailedAlertStatus: The status details for each failed alert_id.
+	// FailedAlertStatus: The status details for each failed `alert_id`.
 	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
 
 	// SuccessAlertIds: The successful list of alert IDs.
@@ -892,11 +950,15 @@ func (s *BatchDeleteAlertsResponse) MarshalJSON() ([]byte, error) {
 // BatchUndeleteAlertsRequest: A request to perform batch undelete on
 // alerts.
 type BatchUndeleteAlertsRequest struct {
-	// AlertId: Required. list of alert IDs.
+	// AlertId: Required. The list of alert IDs to undelete.
 	AlertId []string `json:"alertId,omitempty"`
 
 	// CustomerId: Optional. The unique identifier of the Google Workspace
-	// organization account of the customer the alerts are associated with.
+	// account of the customer the alerts are associated with. The
+	// `customer_id` must have the initial "C" stripped (for example,
+	// `046psxkn`). Inferred from the caller identity if not provided. Find
+	// your customer ID
+	// (https://support.google.com/cloudidentity/answer/10070793).
 	CustomerId string `json:"customerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertId") to
@@ -925,7 +987,7 @@ func (s *BatchUndeleteAlertsRequest) MarshalJSON() ([]byte, error) {
 // BatchUndeleteAlertsResponse: Response to batch undelete operation on
 // alerts.
 type BatchUndeleteAlertsResponse struct {
-	// FailedAlertStatus: The status details for each failed alert_id.
+	// FailedAlertStatus: The status details for each failed `alert_id`.
 	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
 
 	// SuccessAlertIds: The successful list of alert IDs.
@@ -1251,6 +1313,79 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Entity: Individual entity affected by, or related to, an alert.
+type Entity struct {
+	// Link: Link to a Security Investigation Tool search based on this
+	// entity, if available.
+	Link string `json:"link,omitempty"`
+
+	// Name: Human-readable name of this entity, such as an email address,
+	// file ID, or device name.
+	Name string `json:"name,omitempty"`
+
+	// Values: Extra values beyond name. The order of values should align
+	// with headers in EntityList.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Link") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Link") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Entity) MarshalJSON() ([]byte, error) {
+	type NoMethod Entity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EntityList: EntityList stores entities in a format that can be
+// translated to a table in the Alert Center UI.
+type EntityList struct {
+	// Entities: List of entities affected by the alert.
+	Entities []*Entity `json:"entities,omitempty"`
+
+	// Headers: Headers of the values in entities. If no value is defined in
+	// Entity, this field should be empty.
+	Headers []string `json:"headers,omitempty"`
+
+	// Name: Name of the key detail used to display this entity list.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EntityList) MarshalJSON() ([]byte, error) {
+	type NoMethod EntityList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GmailMessageInfo: Details of a message in phishing spike alert.
 type GmailMessageInfo struct {
 	// AttachmentsSha256Hash: The `SHA256` hash of email's attachment and
@@ -1276,6 +1411,9 @@ type GmailMessageInfo struct {
 
 	// Recipient: The recipient of this email.
 	Recipient string `json:"recipient,omitempty"`
+
+	// SentTime: The sent time of the email.
+	SentTime string `json:"sentTime,omitempty"`
 
 	// SubjectText: The email subject text (only available for reported
 	// emails).
@@ -1958,6 +2096,7 @@ type RuleViolationInfo struct {
 	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
 	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
 	// sharing a file externally.
+	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action
@@ -1981,6 +2120,7 @@ type RuleViolationInfo struct {
 	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
 	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
 	// sharing a file externally.
+	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action
@@ -2385,12 +2525,103 @@ func (s *SuspiciousActivitySecurityDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TransferError: Details for an invalid transfer or forward.
+type TransferError struct {
+	// Email: User's email address. This may be unavailable if the entity
+	// was deleted.
+	Email string `json:"email,omitempty"`
+
+	// EntityType: Type of entity being transferred to. For ring group
+	// members, this should always be USER.
+	//
+	// Possible values:
+	//   "TRANSFER_ENTITY_TYPE_UNSPECIFIED" - Entity type wasn't set.
+	//   "TRANSFER_AUTO_ATTENDANT" - Transfer to auto attendant.
+	//   "TRANSFER_RING_GROUP" - Transfer to ring group.
+	//   "TRANSFER_USER" - Transfer to user.
+	EntityType string `json:"entityType,omitempty"`
+
+	// Id: Ring group or auto attendant ID. Not set for users.
+	Id string `json:"id,omitempty"`
+
+	// InvalidReason: Reason for the error.
+	//
+	// Possible values:
+	//   "TRANSFER_INVALID_REASON_UNSPECIFIED" - Reason wasn't specified.
+	//   "TRANSFER_TARGET_DELETED" - The transfer target can't be
+	// found—most likely it was deleted.
+	//   "UNLICENSED" - The user's Google Voice license was removed.
+	//   "SUSPENDED" - The user's Google Workspace account was suspended.
+	//   "NO_PHONE_NUMBER" - The transfer target no longer has a phone
+	// number. This reason should become deprecated once we support
+	// numberless transfer.
+	InvalidReason string `json:"invalidReason,omitempty"`
+
+	// Name: User's full name, or the ring group / auto attendant name. This
+	// may be unavailable if the entity was deleted.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransferError) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TransferMisconfiguration: Error related to transferring or forwarding
+// a phone call.
+type TransferMisconfiguration struct {
+	// Errors: Details for each invalid transfer or forward.
+	Errors []*TransferError `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransferMisconfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferMisconfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UndeleteAlertRequest: A request to undelete a specific alert that was
 // marked for deletion.
 type UndeleteAlertRequest struct {
 	// CustomerId: Optional. The unique identifier of the Google Workspace
-	// organization account of the customer the alert is associated with.
-	// Inferred from the caller identity if not provided.
+	// account of the customer the alert is associated with. The
+	// `customer_id` must have the initial "C" stripped (for example,
+	// `046psxkn`). Inferred from the caller identity if not provided. Find
+	// your customer ID
+	// (https://support.google.com/cloudidentity/answer/10070793).
 	CustomerId string `json:"customerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
@@ -2509,6 +2740,123 @@ func (s *UserDefinedDetectorInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VoiceMisconfiguration: An alert triggered when Google Voice
+// configuration becomes invalid, generally due to an external entity
+// being modified or deleted.
+type VoiceMisconfiguration struct {
+	// EntityName: Name of the entity whose configuration is now invalid.
+	EntityName string `json:"entityName,omitempty"`
+
+	// EntityType: Type of the entity whose configuration is now invalid.
+	//
+	// Possible values:
+	//   "ENTITY_TYPE_UNSPECIFIED" - Entity type wasn't set.
+	//   "AUTO_ATTENDANT" - Invalid auto attendant.
+	//   "RING_GROUP" - Invalid ring group.
+	EntityType string `json:"entityType,omitempty"`
+
+	// FixUri: Link that the admin can follow to fix the issue.
+	FixUri string `json:"fixUri,omitempty"`
+
+	// MembersMisconfiguration: Issue(s) with members of a ring group.
+	MembersMisconfiguration *TransferMisconfiguration `json:"membersMisconfiguration,omitempty"`
+
+	// TransferMisconfiguration: Issue(s) with transferring or forwarding to
+	// an external entity.
+	TransferMisconfiguration *TransferMisconfiguration `json:"transferMisconfiguration,omitempty"`
+
+	// VoicemailMisconfiguration: Issue(s) with sending to voicemail.
+	VoicemailMisconfiguration *VoicemailMisconfiguration `json:"voicemailMisconfiguration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VoiceMisconfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod VoiceMisconfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VoicemailMisconfiguration: Issue(s) with sending to voicemail.
+type VoicemailMisconfiguration struct {
+	// Errors: Issue(s) with voicemail recipients.
+	Errors []*VoicemailRecipientError `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VoicemailMisconfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod VoicemailMisconfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VoicemailRecipientError: Issue(s) with a voicemail recipient.
+type VoicemailRecipientError struct {
+	// Email: Email address of the invalid recipient. This may be
+	// unavailable if the recipient was deleted.
+	Email string `json:"email,omitempty"`
+
+	// InvalidReason: Reason for the error.
+	//
+	// Possible values:
+	//   "EMAIL_INVALID_REASON_UNSPECIFIED" - Reason wasn't specified.
+	//   "OUT_OF_QUOTA" - User can't receive emails due to insufficient
+	// quota.
+	//   "RECIPIENT_DELETED" - All recipients were deleted.
+	InvalidReason string `json:"invalidReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VoicemailRecipientError) MarshalJSON() ([]byte, error) {
+	type NoMethod VoicemailRecipientError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "alertcenter.alerts.batchDelete":
 
 type AlertsBatchDeleteCall struct {
@@ -2590,17 +2938,17 @@ func (c *AlertsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*BatchDeleteAl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchDeleteAlertsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2715,17 +3063,17 @@ func (c *AlertsBatchUndeleteCall) Do(opts ...googleapi.CallOption) (*BatchUndele
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchUndeleteAlertsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2783,9 +3131,11 @@ func (r *AlertsService) Delete(alertId string) *AlertsDeleteCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert is associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsDeleteCall) CustomerId(customerId string) *AlertsDeleteCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -2853,17 +3203,17 @@ func (c *AlertsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2892,7 +3242,7 @@ func (c *AlertsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2930,9 +3280,11 @@ func (r *AlertsService) Get(alertId string) *AlertsGetCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert is associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsGetCall) CustomerId(customerId string) *AlertsGetCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3013,17 +3365,17 @@ func (c *AlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Alert{
 		ServerResponse: googleapi.ServerResponse{
@@ -3052,7 +3404,7 @@ func (c *AlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3090,9 +3442,11 @@ func (r *AlertsService) GetMetadata(alertId string) *AlertsGetMetadataCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert metadata is associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// metadata is associated with. The `customer_id` must have the initial
+// "C" stripped (for example, `046psxkn`). Inferred from the caller
+// identity if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsGetMetadataCall) CustomerId(customerId string) *AlertsGetMetadataCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3173,17 +3527,17 @@ func (c *AlertsGetMetadataCall) Do(opts ...googleapi.CallOption) (*AlertMetadata
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AlertMetadata{
 		ServerResponse: googleapi.ServerResponse{
@@ -3212,7 +3566,7 @@ func (c *AlertsGetMetadataCall) Do(opts ...googleapi.CallOption) (*AlertMetadata
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert metadata is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert metadata is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3245,9 +3599,11 @@ func (r *AlertsService) List() *AlertsListCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alerts are associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alerts
+// are associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3363,17 +3719,17 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAlertsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3394,7 +3750,7 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alerts are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alerts are associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3545,17 +3901,17 @@ func (c *AlertsUndeleteCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Alert{
 		ServerResponse: googleapi.ServerResponse{
@@ -3623,9 +3979,11 @@ func (r *AlertsFeedbackService) Create(alertId string, alertfeedback *AlertFeedb
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert is associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsFeedbackCreateCall) CustomerId(customerId string) *AlertsFeedbackCreateCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3698,17 +4056,17 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AlertFeedback{
 		ServerResponse: googleapi.ServerResponse{
@@ -3737,7 +4095,7 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3779,9 +4137,11 @@ func (r *AlertsFeedbackService) List(alertId string) *AlertsFeedbackListCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert feedback are associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3872,17 +4232,17 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAlertFeedbackResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3911,7 +4271,7 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert feedback are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3949,9 +4309,11 @@ func (r *V1beta1Service) GetSettings() *V1beta1GetSettingsCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert settings are associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// settings are associated with. The `customer_id` must/ have the
+// initial "C" stripped (for example, `046psxkn`). Inferred from the
+// caller identity if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *V1beta1GetSettingsCall) CustomerId(customerId string) *V1beta1GetSettingsCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -4029,17 +4391,17 @@ func (c *V1beta1GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Settings{
 		ServerResponse: googleapi.ServerResponse{
@@ -4060,7 +4422,7 @@ func (c *V1beta1GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert settings are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert settings are associated with. The `customer_id` must/ have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4094,9 +4456,11 @@ func (r *V1beta1Service) UpdateSettings(settings *Settings) *V1beta1UpdateSettin
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert settings are associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// settings are associated with. The `customer_id` must have the initial
+// "C" stripped (for example, `046psxkn`). Inferred from the caller
+// identity if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *V1beta1UpdateSettingsCall) CustomerId(customerId string) *V1beta1UpdateSettingsCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -4166,17 +4530,17 @@ func (c *V1beta1UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Settings{
 		ServerResponse: googleapi.ServerResponse{
@@ -4197,7 +4561,7 @@ func (c *V1beta1UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert settings are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert settings are associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

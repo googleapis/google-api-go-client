@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "tpu:v2alpha1"
 const apiName = "tpu"
@@ -154,6 +155,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AcceleratorTypes = NewProjectsLocationsAcceleratorTypesService(s)
 	rs.Nodes = NewProjectsLocationsNodesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.QueuedResources = NewProjectsLocationsQueuedResourcesService(s)
 	rs.RuntimeVersions = NewProjectsLocationsRuntimeVersionsService(s)
 	return rs
 }
@@ -166,6 +168,8 @@ type ProjectsLocationsService struct {
 	Nodes *ProjectsLocationsNodesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	QueuedResources *ProjectsLocationsQueuedResourcesService
 
 	RuntimeVersions *ProjectsLocationsRuntimeVersionsService
 }
@@ -197,6 +201,15 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsQueuedResourcesService(s *Service) *ProjectsLocationsQueuedResourcesService {
+	rs := &ProjectsLocationsQueuedResourcesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsQueuedResourcesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsRuntimeVersionsService(s *Service) *ProjectsLocationsRuntimeVersionsService {
 	rs := &ProjectsLocationsRuntimeVersionsService{s: s}
 	return rs
@@ -206,20 +219,21 @@ type ProjectsLocationsRuntimeVersionsService struct {
 	s *Service
 }
 
-// AcceleratorType: A accelerator type that a Node can be configured
-// with.
-type AcceleratorType struct {
-	// Name: The resource name.
-	Name string `json:"name,omitempty"`
+// AcceleratorConfig: A TPU accelerator configuration.
+type AcceleratorConfig struct {
+	// Topology: Required. Topology of TPU in chips.
+	Topology string `json:"topology,omitempty"`
 
-	// Type: the accelerator type.
+	// Type: Required. Type of TPU.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified version.
+	//   "V2" - TPU v2.
+	//   "V3" - TPU v3.
+	//   "V4" - TPU v4.
 	Type string `json:"type,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Topology") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -227,8 +241,8 @@ type AcceleratorType struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Topology") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -236,10 +250,54 @@ type AcceleratorType struct {
 	NullFields []string `json:"-"`
 }
 
+func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorType: A accelerator type that a Node can be configured
+// with.
+type AcceleratorType struct {
+	// AcceleratorConfigs: The accelerator config.
+	AcceleratorConfigs []*AcceleratorConfig `json:"acceleratorConfigs,omitempty"`
+
+	// Name: The resource name.
+	Name string `json:"name,omitempty"`
+
+	// Type: The accelerator type.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceleratorConfigs")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceleratorConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
 func (s *AcceleratorType) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceleratorType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AcceptedData: Further data for the accepted state.
+type AcceptedData struct {
 }
 
 // AccessConfig: An access config attached to the TPU worker.
@@ -269,6 +327,10 @@ func (s *AccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ActiveData: Further data for the active state.
+type ActiveData struct {
 }
 
 // AttachedDisk: A node-attached disk resource. Next ID: 8;
@@ -311,6 +373,18 @@ func (s *AttachedDisk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BestEffort: BestEffort tier definition.
+type BestEffort struct {
+}
+
+// CreatingData: Further data for the creating state.
+type CreatingData struct {
+}
+
+// DeletingData: Further data for the deleting state.
+type DeletingData struct {
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -320,6 +394,35 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// FailedData: Further data for the failed state.
+type FailedData struct {
+	// Error: The error that caused the queued resource to enter the FAILED
+	// state.
+	Error *Status `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FailedData) MarshalJSON() ([]byte, error) {
+	type NoMethod FailedData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GenerateServiceIdentityRequest: Request for GenerateServiceIdentity.
@@ -424,6 +527,40 @@ func (s *GetGuestAttributesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Guaranteed: Guaranteed tier definition.
+type Guaranteed struct {
+	// MinDuration: Optional. Defines the minimum duration of the guarantee.
+	// If specified, the requested resources will only be provisioned if
+	// they can be allocated for at least the given duration.
+	MinDuration string `json:"minDuration,omitempty"`
+
+	// Reserved: Optional. Specifies the request should be scheduled on
+	// reserved capacity.
+	Reserved bool `json:"reserved,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinDuration") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Guaranteed) MarshalJSON() ([]byte, error) {
+	type NoMethod Guaranteed
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GuestAttributes: A guest attributes.
 type GuestAttributes struct {
 	// QueryPath: The path to be queried. This can be the default namespace
@@ -515,6 +652,44 @@ type GuestAttributesValue struct {
 
 func (s *GuestAttributesValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestAttributesValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Interval: Represents a time interval, encoded as a Timestamp start
+// (inclusive) and a Timestamp end (exclusive). The start must be less
+// than or equal to the end. When the start equals the end, the interval
+// is empty (matches no time). When both start and end are unspecified,
+// the interval matches any time.
+type Interval struct {
+	// EndTime: Optional. Exclusive end of the interval. If specified, a
+	// Timestamp matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Optional. Inclusive start of the interval. If specified, a
+	// Timestamp matching this interval will have to be the same or after
+	// the start.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Interval) MarshalJSON() ([]byte, error) {
+	type NoMethod Interval
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -670,6 +845,44 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListQueuedResourcesResponse: Response for ListQueuedResources.
+type ListQueuedResourcesResponse struct {
+	// NextPageToken: The next page token or empty if none.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// QueuedResources: The listed queued resources.
+	QueuedResources []*QueuedResource `json:"queuedResources,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListQueuedResourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListQueuedResourcesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListRuntimeVersionsResponse: Response for ListRuntimeVersions.
 type ListRuntimeVersionsResponse struct {
 	// NextPageToken: The next page token or empty if none.
@@ -708,7 +921,7 @@ func (s *ListRuntimeVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -754,6 +967,46 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MultiNodeParams: Parameters to specify for multi-node QueuedResource
+// requests. This field must be populated in case of multi-node requests
+// instead of node_id. It's an error to specify both node_id and
+// multi_node_params.
+type MultiNodeParams struct {
+	// NodeCount: Required. Number of nodes with this spec. The system will
+	// attempt to provison "node_count" nodes as part of the request. This
+	// needs to be > 1.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+
+	// NodeIdPrefix: Prefix of node_ids in case of multi-node request Should
+	// follow the `^[A-Za-z0-9_.~+%-]+$` regex format. If node_count = 3 and
+	// node_id_prefix = "np", node ids of nodes created will be "np-0",
+	// "np-1", "np-2". If this field is not provided we use
+	// queued_resource_id as the node_id_prefix.
+	NodeIdPrefix string `json:"nodeIdPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NodeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NodeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiNodeParams) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiNodeParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -840,6 +1093,9 @@ func (s *NetworkEndpoint) MarshalJSON() ([]byte, error) {
 
 // Node: A TPU instance.
 type Node struct {
+	// AcceleratorConfig: The AccleratorConfig for the TPU Node.
+	AcceleratorConfig *AcceleratorConfig `json:"acceleratorConfig,omitempty"`
+
 	// AcceleratorType: The type of hardware accelerators associated with
 	// this node.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
@@ -899,6 +1155,10 @@ type Node struct {
 	// startup-script and shutdown-script
 	Metadata map[string]string `json:"metadata,omitempty"`
 
+	// MultisliceNode: Output only. Whether the Node belongs to a Multislice
+	// group.
+	MultisliceNode bool `json:"multisliceNode,omitempty"`
+
 	// Name: Output only. Immutable. The name of the TPU.
 	Name string `json:"name,omitempty"`
 
@@ -909,6 +1169,10 @@ type Node struct {
 	// workers can be accessed and sent work. It is recommended that runtime
 	// clients of the node reach out to the 0th entry in this map first.
 	NetworkEndpoints []*NetworkEndpoint `json:"networkEndpoints,omitempty"`
+
+	// QueuedResource: Output only. The qualified name of the QueuedResource
+	// that requested this Node.
+	QueuedResource string `json:"queuedResource,omitempty"`
 
 	// RuntimeVersion: Required. The runtime version running in the Node.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
@@ -934,7 +1198,7 @@ type Node struct {
 	//   "REIMAGING" - TPU node is undergoing reimaging.
 	//   "DELETING" - TPU node is being deleted.
 	//   "REPAIRING" - TPU node is being repaired and may be unusable.
-	// Details can be found in the `help_description` field.
+	// Details can be found in the 'help_description' field.
 	//   "STOPPED" - TPU node is stopped.
 	//   "STOPPING" - TPU node is currently stopping.
 	//   "STARTING" - TPU node is currently starting.
@@ -959,15 +1223,15 @@ type Node struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AcceleratorType") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AcceleratorType") to
+	// NullFields is a list of field names (e.g. "AcceleratorConfig") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -979,6 +1243,51 @@ type Node struct {
 
 func (s *Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodeSpec: Details of the TPU node(s) being requested. Users can
+// request either a single node or multiple nodes. NodeSpec provides the
+// specification for node(s) to be created.
+type NodeSpec struct {
+	// MultiNodeParams: Optional. Fields to specify in case of multi-node
+	// request.
+	MultiNodeParams *MultiNodeParams `json:"multiNodeParams,omitempty"`
+
+	// Node: Required. The node.
+	Node *Node `json:"node,omitempty"`
+
+	// NodeId: The unqualified resource name. Should follow the
+	// `^[A-Za-z0-9_.~+%-]+$` regex format. This is only specified when
+	// requesting a single node. In case of multi-node requests,
+	// multi_node_params must be populated instead. It's an error to specify
+	// both node_id and multi_node_params.
+	NodeId string `json:"nodeId,omitempty"`
+
+	// Parent: Required. The parent resource name.
+	Parent string `json:"parent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MultiNodeParams") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MultiNodeParams") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1008,8 +1317,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1091,6 +1400,206 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProvisioningData: Further data for the provisioning state.
+type ProvisioningData struct {
+}
+
+// QueuedResource: A QueuedResource represents a request for resources
+// that will be placed in a queue and fulfilled when the necessary
+// resources are available.
+type QueuedResource struct {
+	// BestEffort: The BestEffort tier.
+	BestEffort *BestEffort `json:"bestEffort,omitempty"`
+
+	// Guaranteed: The Guaranteed tier.
+	Guaranteed *Guaranteed `json:"guaranteed,omitempty"`
+
+	// Name: Output only. Immutable. The name of the QueuedResource.
+	Name string `json:"name,omitempty"`
+
+	// QueueingPolicy: The queueing policy of the QueuedRequest.
+	QueueingPolicy *QueueingPolicy `json:"queueingPolicy,omitempty"`
+
+	// ReservationName: Name of the reservation in which the resource should
+	// be provisioned. Format:
+	// projects/{project}/locations/{zone}/reservations/{reservation}
+	ReservationName string `json:"reservationName,omitempty"`
+
+	// Spot: Optional. The Spot tier.
+	Spot *Spot `json:"spot,omitempty"`
+
+	// State: Output only. State of the QueuedResource request.
+	State *QueuedResourceState `json:"state,omitempty"`
+
+	// Tpu: Defines a TPU resource.
+	Tpu *Tpu `json:"tpu,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BestEffort") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BestEffort") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueuedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod QueuedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueuedResourceState: QueuedResourceState defines the details of the
+// QueuedResource request.
+type QueuedResourceState struct {
+	// AcceptedData: Further data for the accepted state.
+	AcceptedData *AcceptedData `json:"acceptedData,omitempty"`
+
+	// ActiveData: Further data for the active state.
+	ActiveData *ActiveData `json:"activeData,omitempty"`
+
+	// CreatingData: Further data for the creating state.
+	CreatingData *CreatingData `json:"creatingData,omitempty"`
+
+	// DeletingData: Further data for the deleting state.
+	DeletingData *DeletingData `json:"deletingData,omitempty"`
+
+	// FailedData: Further data for the failed state.
+	FailedData *FailedData `json:"failedData,omitempty"`
+
+	// ProvisioningData: Further data for the provisioning state.
+	ProvisioningData *ProvisioningData `json:"provisioningData,omitempty"`
+
+	// State: State of the QueuedResource request.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State of the QueuedResource request is not
+	// known/set.
+	//   "CREATING" - The QueuedResource request has been received. We're
+	// still working on determining if we will be able to honor this
+	// request.
+	//   "ACCEPTED" - The QueuedResource request has passed initial
+	// validation/admission control and has been persisted in the queue.
+	//   "PROVISIONING" - The QueuedResource request has been selected. The
+	// associated resources are currently being provisioned (or very soon
+	// will begin provisioning).
+	//   "FAILED" - The request could not be completed. This may be due to
+	// some late-discovered problem with the request itself, or due to
+	// unavailability of resources within the constraints of the request
+	// (e.g., the 'valid until' start timing constraint expired).
+	//   "DELETING" - The QueuedResource is being deleted.
+	//   "ACTIVE" - The resources specified in the QueuedResource request
+	// have been provisioned and are ready for use by the end-user/consumer.
+	//   "SUSPENDING" - The resources specified in the QueuedResource
+	// request are being deleted. This may have been initiated by the user,
+	// or the Cloud TPU service. Inspect the state data for more details.
+	//   "SUSPENDED" - The resources specified in the QueuedResource request
+	// have been deleted.
+	State string `json:"state,omitempty"`
+
+	// StateInitiator: Output only. The initiator of the QueuedResources's
+	// current state.
+	//
+	// Possible values:
+	//   "STATE_INITIATOR_UNSPECIFIED" - The state initiator is unspecified.
+	//   "USER" - The current QueuedResource state was initiated by the
+	// user.
+	//   "SERVICE" - The current QueuedResource state was initiated by the
+	// service.
+	StateInitiator string `json:"stateInitiator,omitempty"`
+
+	// SuspendedData: Further data for the suspended state.
+	SuspendedData *SuspendedData `json:"suspendedData,omitempty"`
+
+	// SuspendingData: Further data for the suspending state.
+	SuspendingData *SuspendingData `json:"suspendingData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceptedData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceptedData") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueuedResourceState) MarshalJSON() ([]byte, error) {
+	type NoMethod QueuedResourceState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueueingPolicy: Defines the policy of the QueuedRequest.
+type QueueingPolicy struct {
+	// ValidAfterDuration: A relative time after which resources may be
+	// created.
+	ValidAfterDuration string `json:"validAfterDuration,omitempty"`
+
+	// ValidAfterTime: An absolute time at which resources may be created.
+	ValidAfterTime string `json:"validAfterTime,omitempty"`
+
+	// ValidInterval: An absolute time interval within which resources may
+	// be created.
+	ValidInterval *Interval `json:"validInterval,omitempty"`
+
+	// ValidUntilDuration: A relative time after which resources should not
+	// be created. If the request cannot be fulfilled by this time the
+	// request will be failed.
+	ValidUntilDuration string `json:"validUntilDuration,omitempty"`
+
+	// ValidUntilTime: An absolute time after which resources should not be
+	// created. If the request cannot be fulfilled by this time the request
+	// will be failed.
+	ValidUntilTime string `json:"validUntilTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ValidAfterDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ValidAfterDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueueingPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod QueueingPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResetQueuedResourceRequest: Request for ResetQueuedResource.
+type ResetQueuedResourceRequest struct {
 }
 
 // RuntimeVersion: A runtime version that a Node can be configured with.
@@ -1283,6 +1792,10 @@ func (s *SimulateMaintenanceEventRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Spot: Spot tier definition.
+type Spot struct {
+}
+
 // StartNodeRequest: Request for StartNode.
 type StartNodeRequest struct {
 }
@@ -1335,6 +1848,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 type StopNodeRequest struct {
 }
 
+// SuspendedData: Further data for the suspended state.
+type SuspendedData struct {
+}
+
+// SuspendingData: Further data for the suspending state.
+type SuspendingData struct {
+}
+
 // Symptom: A Symptom instance.
 type Symptom struct {
 	// CreateTime: Timestamp when the Symptom is created.
@@ -1380,6 +1901,34 @@ type Symptom struct {
 
 func (s *Symptom) MarshalJSON() ([]byte, error) {
 	type NoMethod Symptom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Tpu: Details of the TPU resource(s) being requested.
+type Tpu struct {
+	// NodeSpec: The TPU node(s) being requested.
+	NodeSpec []*NodeSpec `json:"nodeSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NodeSpec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NodeSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Tpu) MarshalJSON() ([]byte, error) {
+	type NoMethod Tpu
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1473,17 +2022,17 @@ func (c *ProjectsLocationsGenerateServiceIdentityCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GenerateServiceIdentityResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1622,17 +2171,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -1794,17 +2343,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1977,17 +2526,17 @@ func (c *ProjectsLocationsAcceleratorTypesGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AcceleratorType{
 		ServerResponse: googleapi.ServerResponse{
@@ -2149,17 +2698,17 @@ func (c *ProjectsLocationsAcceleratorTypesListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAcceleratorTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2344,17 +2893,17 @@ func (c *ProjectsLocationsNodesCreateCall) Do(opts ...googleapi.CallOption) (*Op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2496,17 +3045,17 @@ func (c *ProjectsLocationsNodesDeleteCall) Do(opts ...googleapi.CallOption) (*Op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2647,17 +3196,17 @@ func (c *ProjectsLocationsNodesGetCall) Do(opts ...googleapi.CallOption) (*Node,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Node{
 		ServerResponse: googleapi.ServerResponse{
@@ -2786,17 +3335,17 @@ func (c *ProjectsLocationsNodesGetGuestAttributesCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetGuestAttributesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2949,17 +3498,17 @@ func (c *ProjectsLocationsNodesListCall) Do(opts ...googleapi.CallOption) (*List
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListNodesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3128,17 +3677,17 @@ func (c *ProjectsLocationsNodesPatchCall) Do(opts ...googleapi.CallOption) (*Ope
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3276,17 +3825,17 @@ func (c *ProjectsLocationsNodesSimulateMaintenanceEventCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3418,17 +3967,17 @@ func (c *ProjectsLocationsNodesStartCall) Do(opts ...googleapi.CallOption) (*Ope
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3451,7 +4000,7 @@ func (c *ProjectsLocationsNodesStartCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -3561,17 +4110,17 @@ func (c *ProjectsLocationsNodesStopCall) Do(opts ...googleapi.CallOption) (*Oper
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3594,7 +4143,7 @@ func (c *ProjectsLocationsNodesStopCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -3705,17 +4254,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3840,17 +4389,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3988,17 +4537,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4052,14 +4601,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -4164,17 +4706,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4188,7 +4730,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v2alpha1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "tpu.projects.locations.operations.list",
@@ -4250,6 +4792,813 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "tpu.projects.locations.queuedResources.create":
+
+type ProjectsLocationsQueuedResourcesCreateCall struct {
+	s              *Service
+	parent         string
+	queuedresource *QueuedResource
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a QueuedResource TPU instance.
+//
+// - parent: The parent resource name.
+func (r *ProjectsLocationsQueuedResourcesService) Create(parent string, queuedresource *QueuedResource) *ProjectsLocationsQueuedResourcesCreateCall {
+	c := &ProjectsLocationsQueuedResourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.queuedresource = queuedresource
+	return c
+}
+
+// QueuedResourceId sets the optional parameter "queuedResourceId": The
+// unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$`
+// regex format.
+func (c *ProjectsLocationsQueuedResourcesCreateCall) QueuedResourceId(queuedResourceId string) *ProjectsLocationsQueuedResourcesCreateCall {
+	c.urlParams_.Set("queuedResourceId", queuedResourceId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request
+// UUID.
+func (c *ProjectsLocationsQueuedResourcesCreateCall) RequestId(requestId string) *ProjectsLocationsQueuedResourcesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsQueuedResourcesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuedResourcesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsQueuedResourcesCreateCall) Context(ctx context.Context) *ProjectsLocationsQueuedResourcesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsQueuedResourcesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuedResourcesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queuedresource)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha1/{+parent}/queuedResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tpu.projects.locations.queuedResources.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuedResourcesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a QueuedResource TPU instance.",
+	//   "flatPath": "v2alpha1/projects/{projectsId}/locations/{locationsId}/queuedResources",
+	//   "httpMethod": "POST",
+	//   "id": "tpu.projects.locations.queuedResources.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "queuedResourceId": {
+	//       "description": "The unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Idempotent request UUID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha1/{+parent}/queuedResources",
+	//   "request": {
+	//     "$ref": "QueuedResource"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "tpu.projects.locations.queuedResources.delete":
+
+type ProjectsLocationsQueuedResourcesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a QueuedResource TPU instance.
+//
+// - name: The resource name.
+func (r *ProjectsLocationsQueuedResourcesService) Delete(name string) *ProjectsLocationsQueuedResourcesDeleteCall {
+	c := &ProjectsLocationsQueuedResourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, all
+// running nodes belonging to this queued resource will be deleted first
+// and then the queued resource will be deleted. Otherwise (i.e.
+// force=false), the queued resource will only be deleted if its nodes
+// have already been deleted or the queued resource is in the ACCEPTED,
+// FAILED, or SUSPENDED state.
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) Force(force bool) *ProjectsLocationsQueuedResourcesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request
+// UUID.
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) RequestId(requestId string) *ProjectsLocationsQueuedResourcesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuedResourcesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) Context(ctx context.Context) *ProjectsLocationsQueuedResourcesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tpu.projects.locations.queuedResources.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuedResourcesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a QueuedResource TPU instance.",
+	//   "flatPath": "v2alpha1/projects/{projectsId}/locations/{locationsId}/queuedResources/{queuedResourcesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "tpu.projects.locations.queuedResources.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "If set to true, all running nodes belonging to this queued resource will be deleted first and then the queued resource will be deleted. Otherwise (i.e. force=false), the queued resource will only be deleted if its nodes have already been deleted or the queued resource is in the ACCEPTED, FAILED, or SUSPENDED state.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. The resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/queuedResources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Idempotent request UUID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "tpu.projects.locations.queuedResources.get":
+
+type ProjectsLocationsQueuedResourcesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a queued resource.
+//
+// - name: The resource name.
+func (r *ProjectsLocationsQueuedResourcesService) Get(name string) *ProjectsLocationsQueuedResourcesGetCall {
+	c := &ProjectsLocationsQueuedResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsQueuedResourcesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuedResourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsQueuedResourcesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueuedResourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsQueuedResourcesGetCall) Context(ctx context.Context) *ProjectsLocationsQueuedResourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsQueuedResourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuedResourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tpu.projects.locations.queuedResources.get" call.
+// Exactly one of *QueuedResource or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *QueuedResource.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuedResourcesGetCall) Do(opts ...googleapi.CallOption) (*QueuedResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueuedResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a queued resource.",
+	//   "flatPath": "v2alpha1/projects/{projectsId}/locations/{locationsId}/queuedResources/{queuedResourcesId}",
+	//   "httpMethod": "GET",
+	//   "id": "tpu.projects.locations.queuedResources.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/queuedResources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha1/{+name}",
+	//   "response": {
+	//     "$ref": "QueuedResource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "tpu.projects.locations.queuedResources.list":
+
+type ProjectsLocationsQueuedResourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists queued resources.
+//
+// - parent: The parent resource name.
+func (r *ProjectsLocationsQueuedResourcesService) List(parent string) *ProjectsLocationsQueuedResourcesListCall {
+	c := &ProjectsLocationsQueuedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return.
+func (c *ProjectsLocationsQueuedResourcesListCall) PageSize(pageSize int64) *ProjectsLocationsQueuedResourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous List request, if any.
+func (c *ProjectsLocationsQueuedResourcesListCall) PageToken(pageToken string) *ProjectsLocationsQueuedResourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsQueuedResourcesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuedResourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsQueuedResourcesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueuedResourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsQueuedResourcesListCall) Context(ctx context.Context) *ProjectsLocationsQueuedResourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsQueuedResourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuedResourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha1/{+parent}/queuedResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tpu.projects.locations.queuedResources.list" call.
+// Exactly one of *ListQueuedResourcesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListQueuedResourcesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuedResourcesListCall) Do(opts ...googleapi.CallOption) (*ListQueuedResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListQueuedResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists queued resources.",
+	//   "flatPath": "v2alpha1/projects/{projectsId}/locations/{locationsId}/queuedResources",
+	//   "httpMethod": "GET",
+	//   "id": "tpu.projects.locations.queuedResources.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha1/{+parent}/queuedResources",
+	//   "response": {
+	//     "$ref": "ListQueuedResourcesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsQueuedResourcesListCall) Pages(ctx context.Context, f func(*ListQueuedResourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "tpu.projects.locations.queuedResources.reset":
+
+type ProjectsLocationsQueuedResourcesResetCall struct {
+	s                          *Service
+	name                       string
+	resetqueuedresourcerequest *ResetQueuedResourceRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Reset: Resets a QueuedResource TPU instance
+//
+// - name: The name of the queued resource.
+func (r *ProjectsLocationsQueuedResourcesService) Reset(name string, resetqueuedresourcerequest *ResetQueuedResourceRequest) *ProjectsLocationsQueuedResourcesResetCall {
+	c := &ProjectsLocationsQueuedResourcesResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resetqueuedresourcerequest = resetqueuedresourcerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsQueuedResourcesResetCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuedResourcesResetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsQueuedResourcesResetCall) Context(ctx context.Context) *ProjectsLocationsQueuedResourcesResetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsQueuedResourcesResetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuedResourcesResetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resetqueuedresourcerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha1/{+name}:reset")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tpu.projects.locations.queuedResources.reset" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuedResourcesResetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Resets a QueuedResource TPU instance",
+	//   "flatPath": "v2alpha1/projects/{projectsId}/locations/{locationsId}/queuedResources/{queuedResourcesId}:reset",
+	//   "httpMethod": "POST",
+	//   "id": "tpu.projects.locations.queuedResources.reset",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the queued resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/queuedResources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha1/{+name}:reset",
+	//   "request": {
+	//     "$ref": "ResetQueuedResourceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "tpu.projects.locations.runtimeVersions.get":
@@ -4347,17 +5696,17 @@ func (c *ProjectsLocationsRuntimeVersionsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RuntimeVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -4519,17 +5868,17 @@ func (c *ProjectsLocationsRuntimeVersionsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRuntimeVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{

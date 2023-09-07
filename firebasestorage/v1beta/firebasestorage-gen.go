@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "firebasestorage:v1beta"
 const apiName = "firebasestorage"
@@ -174,21 +175,14 @@ type AddFirebaseRequest struct {
 // Bucket: A storage bucket and its relation to a parent Firebase
 // project.
 type Bucket struct {
-	// Location: Output only. Location of the storage bucket.
-	Location string `json:"location,omitempty"`
-
 	// Name: Resource name of the bucket.
 	Name string `json:"name,omitempty"`
-
-	// Reconciling: Output only. Represents whether a bucket is being moved
-	// to a new location, in which case reconciling is set to true.
-	Reconciling bool `json:"reconciling,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Location") to
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -196,8 +190,8 @@ type Bucket struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Location") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -406,7 +400,7 @@ type ProjectsBucketsAddFirebaseCall struct {
 //
 //   - bucket: Resource name of the bucket, mirrors the ID of the
 //     underlying Google Cloud Storage bucket,
-//     `projects/{project_number}/buckets/{bucket_id}`.
+//     `projects/{project_id_or_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) AddFirebase(bucket string, addfirebaserequest *AddFirebaseRequest) *ProjectsBucketsAddFirebaseCall {
 	c := &ProjectsBucketsAddFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -481,17 +475,17 @@ func (c *ProjectsBucketsAddFirebaseCall) Do(opts ...googleapi.CallOption) (*Buck
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Bucket{
 		ServerResponse: googleapi.ServerResponse{
@@ -514,7 +508,7 @@ func (c *ProjectsBucketsAddFirebaseCall) Do(opts ...googleapi.CallOption) (*Buck
 	//   ],
 	//   "parameters": {
 	//     "bucket": {
-	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_id_or_number}/buckets/{bucket_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -551,7 +545,7 @@ type ProjectsBucketsGetCall struct {
 //
 //   - name: Resource name of the bucket, mirrors the ID of the underlying
 //     Google Cloud Storage bucket,
-//     `projects/{project_number}/buckets/{bucket_id}`.
+//     `projects/{project_id_or_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) Get(name string) *ProjectsBucketsGetCall {
 	c := &ProjectsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -633,17 +627,17 @@ func (c *ProjectsBucketsGetCall) Do(opts ...googleapi.CallOption) (*Bucket, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Bucket{
 		ServerResponse: googleapi.ServerResponse{
@@ -666,7 +660,7 @@ func (c *ProjectsBucketsGetCall) Do(opts ...googleapi.CallOption) (*Bucket, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_id_or_number}/buckets/{bucket_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/buckets/[^/]+$",
 	//       "required": true,
@@ -699,7 +693,7 @@ type ProjectsBucketsListCall struct {
 // List: Lists the linked storage buckets for a project.
 //
 //   - parent: Resource name of the parent Firebase project,
-//     `projects/{project_number}`.
+//     `projects/{project_id_or_number}`.
 func (r *ProjectsBucketsService) List(parent string) *ProjectsBucketsListCall {
 	c := &ProjectsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -798,17 +792,17 @@ func (c *ProjectsBucketsListCall) Do(opts ...googleapi.CallOption) (*ListBuckets
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBucketsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -842,7 +836,7 @@ func (c *ProjectsBucketsListCall) Do(opts ...googleapi.CallOption) (*ListBuckets
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent Firebase project, `projects/{project_number}`.",
+	//       "description": "Required. Resource name of the parent Firebase project, `projects/{project_id_or_number}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -898,7 +892,7 @@ type ProjectsBucketsRemoveFirebaseCall struct {
 //
 //   - bucket: Resource name of the bucket, mirrors the ID of the
 //     underlying Google Cloud Storage bucket,
-//     `projects/{project_number}/buckets/{bucket_id}`.
+//     `projects/{project_id_or_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) RemoveFirebase(bucket string, removefirebaserequest *RemoveFirebaseRequest) *ProjectsBucketsRemoveFirebaseCall {
 	c := &ProjectsBucketsRemoveFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -973,17 +967,17 @@ func (c *ProjectsBucketsRemoveFirebaseCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1006,7 +1000,7 @@ func (c *ProjectsBucketsRemoveFirebaseCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "bucket": {
-	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+	//       "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_id_or_number}/buckets/{bucket_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/buckets/[^/]+$",
 	//       "required": true,

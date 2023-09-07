@@ -118,6 +118,34 @@ func Validate(ctx context.Context, idToken string, audience string) (*Payload, e
 	return defaultValidator.validate(ctx, idToken, audience)
 }
 
+// GetPayload just gets the payload part of the token.
+//
+// WARNING: THIS FUNCTION DOES NOT VALIDATE THE TOKEN.
+//
+// In fact, it explicitly skips the validation part. It should only be used to inspect the payload
+// content of a token, perhaps for debugging purposes, as a means to try to figure out why the
+// validation failed. Note that if Validate() succeeds, it already returns the exact payload that
+// this function returns.
+func (v *Validator) GetPayload(ctx context.Context, idToken string) (*Payload, error) {
+	jwt, err := parseJWT(idToken)
+	if err != nil {
+		return nil, err
+	}
+	return jwt.parsedPayload()
+}
+
+// GetPayload just gets the payload part of the token.
+//
+// WARNING: THIS FUNCTION DOES NOT VALIDATE THE TOKEN.
+//
+// In fact, it explicitly skips the validation part. It should only be used to inspect the payload
+// content of a token, perhaps for debugging purposes, as a means to try to figure out why the
+// validation failed. Note that if Validate() succeeds, it already returns the exact payload that
+// this function returns.
+func GetPayload(ctx context.Context, idToken string) (*Payload, error) {
+	return defaultValidator.GetPayload(ctx, idToken)
+}
+
 func (v *Validator) validate(ctx context.Context, idToken string, audience string) (*Payload, error) {
 	jwt, err := parseJWT(idToken)
 	if err != nil {
@@ -141,7 +169,7 @@ func (v *Validator) validate(ctx context.Context, idToken string, audience strin
 	}
 
 	if now().Unix() > payload.Expires {
-		return nil, fmt.Errorf("idtoken: token expired")
+		return nil, fmt.Errorf("idtoken: token expired: now=%v, expires=%v", now().Unix(), payload.Expires)
 	}
 
 	switch header.Algorithm {

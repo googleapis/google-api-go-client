@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/admin-sdk/alertcenter/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	alertcenterService, err := alertcenter.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	alertcenterService, err := alertcenter.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	alertcenterService, err := alertcenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package alertcenter // import "google.golang.org/api/alertcenter/v1beta1"
 
 import (
@@ -218,6 +231,65 @@ type AbuseDetected struct {
 
 func (s *AbuseDetected) MarshalJSON() ([]byte, error) {
 	type NoMethod AbuseDetected
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccessApproval: Alert that is triggered when Google support requests
+// to access customer data.
+type AccessApproval struct {
+	// JustificationReason: Justification for data access based on
+	// justification enums.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_UNSPECIFIED" - Justification unspecified
+	//   "CUSTOMER_INITIATED_SUPPORT" - Customer Initiated Support
+	//   "GOOGLE_INITIATED_REVIEW" - Google Initiated Review
+	//   "GOOGLE_INITIATED_SERVICE" - Google Initiated Service
+	//   "THIRD_PARTY_DATA_REQUEST" - Third Party Data Request
+	//   "GOOGLE_RESPONSE_TO_PRODUCTION_ALERT" - Google Response to
+	// Production Alert
+	JustificationReason []string `json:"justificationReason,omitempty"`
+
+	// OfficeLocation: Office location of Google staff requesting access
+	// such as "US".
+	OfficeLocation string `json:"officeLocation,omitempty"`
+
+	// Products: Products within scope of the Access Approvals request.
+	Products []string `json:"products,omitempty"`
+
+	// RequestId: ID of the Access Approvals request. This is a helpful
+	// field when requesting support from Google.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Scope: Scope of access, also known as a resource. This is further
+	// narrowed down by the product field.
+	Scope string `json:"scope,omitempty"`
+
+	// Tickets: Support tickets related to this Access Approvals request.
+	// Populated if there is an associated case number.
+	Tickets []*SupportTicket `json:"tickets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JustificationReason")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JustificationReason") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessApproval) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessApproval
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2436,6 +2508,37 @@ type SuperAdminPasswordResetEvent struct {
 
 func (s *SuperAdminPasswordResetEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod SuperAdminPasswordResetEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SupportTicket: Support ticket related to Access Approvals request
+type SupportTicket struct {
+	// TicketId: Support ticket ID
+	TicketId string `json:"ticketId,omitempty"`
+
+	// TicketUrl: Link to support ticket
+	TicketUrl string `json:"ticketUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TicketId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TicketId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SupportTicket) MarshalJSON() ([]byte, error) {
+	type NoMethod SupportTicket
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://mapsplatform.google.com/maps-products/#places-section
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	placesService, err := places.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	placesService, err := places.NewService(ctx, option.WithScopes(places.MapsPlatformPlacesTextsearchScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	placesService, err := places.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	placesService, err := places.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package places // import "google.golang.org/api/places/v1"
 
 import (
@@ -304,42 +318,6 @@ func (s *GoogleMapsPlacesV1Circle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleMapsPlacesV1Int32Range: int 32 range. Both min and max are
-// optional. If only min is set, then the range only has a lower bound.
-// If only max is set, then range only has an upper bound. At least one
-// of min and max must be set. Values are inclusive.
-type GoogleMapsPlacesV1Int32Range struct {
-	// Max: Upper bound. If unset, behavior is documented on the range
-	// field.
-	Max int64 `json:"max,omitempty"`
-
-	// Min: Lower bound. If unset, behavior is documented on the range
-	// field.
-	Min int64 `json:"min,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Max") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Max") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleMapsPlacesV1Int32Range) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleMapsPlacesV1Int32Range
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleMapsPlacesV1Place: All the information representing a Place.
 type GoogleMapsPlacesV1Place struct {
 	// AddressComponents: Output only. Repeated components for each locality
@@ -529,8 +507,8 @@ type GoogleMapsPlacesV1Place struct {
 	// individual store, not the overall chain.
 	WebsiteUri string `json:"websiteUri,omitempty"`
 
-	// WheelchairAccessibleEntrance: Output only. Specifies if the place has
-	// an entrance that is wheelchair-accessible.
+	// WheelchairAccessibleEntrance: Output only. [Deprecated!] Specifies if
+	// the place has an entrance that is wheelchair-accessible.
 	WheelchairAccessibleEntrance bool `json:"wheelchairAccessibleEntrance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddressComponents")
@@ -757,11 +735,6 @@ type GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint struct {
 	// Date: Output only. Date in the local timezone for the place.
 	Date *GoogleTypeDate `json:"date,omitempty"`
 
-	// DateDeprecated: Output only. Date of the endpoint expressed in
-	// RFC3339 format in the local timezone for the place. For example
-	// 2010-12-31.
-	DateDeprecated string `json:"dateDeprecated,omitempty"`
-
 	// Day: Output only. A day of the week, as an integer in the range 0-6.
 	// 0 is Sunday, 1 is Monday, etc.
 	Day int64 `json:"day,omitempty"`
@@ -947,12 +920,6 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// https://developers.google.com/maps/faq#languagesupport.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Location: [Deprecated!]The region to search. Setting location would
-	// usually yields better results. Recommended to set. This location
-	// serves as a bias unless strict_restriction is set to true, which
-	// turns the location to a strict restriction.
-	Location *GoogleMapsPlacesV1SearchTextRequestLocation `json:"location,omitempty"`
-
 	// LocationBias: The region to search. This location serves as a bias
 	// which means results around given location might be returned. Cannot
 	// be set along with location_restriction.
@@ -997,13 +964,6 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// services.
 	PriceLevels []string `json:"priceLevels,omitempty"`
 
-	// PriceRange: [Deprecated!]Used to restrict the search to places that
-	// are within a certain price range. This is on a scale of 0 to 4. Set a
-	// minimum of 0 or set a maximum of 4 has no effect on the search
-	// results. Min price is default to 0 and max price is default to 4.
-	// Default value will be used if either min or max is unset.
-	PriceRange *GoogleMapsPlacesV1Int32Range `json:"priceRange,omitempty"`
-
 	// RankPreference: How results will be ranked in the response.
 	//
 	// Possible values:
@@ -1015,8 +975,9 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	RankPreference string `json:"rankPreference,omitempty"`
 
 	// RegionCode: The Unicode country/region code (CLDR) of the location
-	// where the request is coming from. It is used to display the place
-	// details, like region-specific place name, if available. For more
+	// where the request is coming from. This parameter is used to display
+	// the place details, like region-specific place name, if available. The
+	// parameter can affect results based on applicable law. For more
 	// information, see
 	// http://www.unicode.org/reports/tr35/#unicode_region_subtag. Note that
 	// 3-digit region codes are not currently supported.
@@ -1065,40 +1026,6 @@ func (s *GoogleMapsPlacesV1SearchTextRequest) UnmarshalJSON(data []byte) error {
 	}
 	s.MinRating = float64(s1.MinRating)
 	return nil
-}
-
-// GoogleMapsPlacesV1SearchTextRequestLocation: [Deprecated!]The region
-// to search.
-type GoogleMapsPlacesV1SearchTextRequestLocation struct {
-	// Rectangle: A rectangle box defined by northeast and southwest corner.
-	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
-
-	// StrictRestriction: Make location field a strict restriction and
-	// filter out POIs outside of the given location. If location type field
-	// is unset this field will have no effect.
-	StrictRestriction bool `json:"strictRestriction,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Rectangle") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Rectangle") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleMapsPlacesV1SearchTextRequestLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleMapsPlacesV1SearchTextRequestLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1SearchTextRequestLocationBias: The region to

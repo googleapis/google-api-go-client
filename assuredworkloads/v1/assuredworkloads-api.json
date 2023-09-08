@@ -519,7 +519,7 @@
       }
     }
   },
-  "revision": "20230811",
+  "revision": "20230831",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest": {
@@ -567,7 +567,8 @@
             "ISR_REGIONS",
             "ISR_REGIONS_AND_SUPPORT",
             "CA_PROTECTED_B",
-            "IL5"
+            "IL5",
+            "JP_REGIONS_AND_SUPPORT"
           ],
           "enumDescriptions": [
             "Unknown compliance regime.",
@@ -586,7 +587,8 @@
             "Assured Workloads for Israel",
             "Assured Workloads for Israel Regions",
             "Assured Workloads for Canada Protected B regime",
-            "Information protection as per DoD IL5 requirements."
+            "Information protection as per DoD IL5 requirements.",
+            "Assured Workloads for Japan Regions"
           ],
           "type": "string"
         },
@@ -833,16 +835,14 @@
             "REMEDIATION_BOOLEAN_ORG_POLICY_VIOLATION",
             "REMEDIATION_LIST_ALLOWED_VALUES_ORG_POLICY_VIOLATION",
             "REMEDIATION_LIST_DENIED_VALUES_ORG_POLICY_VIOLATION",
-            "REMEDIATION_RESTRICT_CMEK_CRYPTO_KEY_PROJECTS_ORG_POLICY_VIOLATION",
-            "REMEDIATION_RESOURCE_VIOLATION"
+            "REMEDIATION_RESTRICT_CMEK_CRYPTO_KEY_PROJECTS_ORG_POLICY_VIOLATION"
           ],
           "enumDescriptions": [
             "Unspecified remediation type",
             "Remediation type for boolean org policy",
             "Remediation type for list org policy which have allowed values in the monitoring rule",
             "Remediation type for list org policy which have denied values in the monitoring rule",
-            "Remediation type for gcp.restrictCmekCryptoKeyProjects",
-            "Remediation type for resource violation."
+            "Remediation type for gcp.restrictCmekCryptoKeyProjects"
           ],
           "readOnly": true,
           "type": "string"
@@ -948,7 +948,8 @@
             "ISR_REGIONS",
             "ISR_REGIONS_AND_SUPPORT",
             "CA_PROTECTED_B",
-            "IL5"
+            "IL5",
+            "JP_REGIONS_AND_SUPPORT"
           ],
           "enumDescriptions": [
             "Unknown compliance regime.",
@@ -967,7 +968,8 @@
             "Assured Workloads for Israel",
             "Assured Workloads for Israel Regions",
             "Assured Workloads for Canada Protected B regime",
-            "Information protection as per DoD IL5 requirements."
+            "Information protection as per DoD IL5 requirements.",
+            "Assured Workloads for Japan Regions"
           ],
           "type": "string"
         },

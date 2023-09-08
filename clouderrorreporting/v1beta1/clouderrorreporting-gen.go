@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/error-reporting/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	clouderrorreportingService, err := clouderrorreporting.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	clouderrorreportingService, err := clouderrorreporting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	clouderrorreportingService, err := clouderrorreporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package clouderrorreporting // import "google.golang.org/api/clouderrorreporting/v1beta1"
 
 import (
@@ -283,9 +296,13 @@ func (s *ErrorEvent) MarshalJSON() ([]byte, error) {
 
 // ErrorGroup: Description of a group of similar error events.
 type ErrorGroup struct {
-	// GroupId: Group IDs are unique for a given project. If the same kind
-	// of error occurs in different service contexts, it will receive the
-	// same group ID.
+	// GroupId: An opaque identifier of the group. This field is assigned by
+	// the Error Reporting system and always populated. In the group
+	// resource name, the `group_id` is a unique identifier for a particular
+	// error group. The identifier is derived from key parts of the
+	// error-log content and is treated as Service Data. For information
+	// about how Service Data is handled, see Google Cloud Privacy Notice
+	// (https://cloud.google.com/terms/cloud-privacy-notice).
 	GroupId string `json:"groupId,omitempty"`
 
 	// Name: The group resource name. Written as

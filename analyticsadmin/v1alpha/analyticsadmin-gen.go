@@ -8,6 +8,17 @@
 //
 // For product documentation, see: http://code.google.com/apis/analytics/docs/mgmt/home.html
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	analyticsadminService, err := analyticsadmin.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	analyticsadminService, err := analyticsadmin.NewService(ctx, option.WithScopes(analyticsadmin.AnalyticsReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	analyticsadminService, err := analyticsadmin.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	analyticsadminService, err := analyticsadmin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package analyticsadmin // import "google.golang.org/api/analyticsadmin/v1alpha"
 
 import (
@@ -334,6 +348,7 @@ func NewPropertiesDataStreamsService(s *Service) *PropertiesDataStreamsService {
 	rs := &PropertiesDataStreamsService{s: s}
 	rs.EventCreateRules = NewPropertiesDataStreamsEventCreateRulesService(s)
 	rs.MeasurementProtocolSecrets = NewPropertiesDataStreamsMeasurementProtocolSecretsService(s)
+	rs.SKAdNetworkConversionValueSchema = NewPropertiesDataStreamsSKAdNetworkConversionValueSchemaService(s)
 	return rs
 }
 
@@ -343,6 +358,8 @@ type PropertiesDataStreamsService struct {
 	EventCreateRules *PropertiesDataStreamsEventCreateRulesService
 
 	MeasurementProtocolSecrets *PropertiesDataStreamsMeasurementProtocolSecretsService
+
+	SKAdNetworkConversionValueSchema *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService
 }
 
 func NewPropertiesDataStreamsEventCreateRulesService(s *Service) *PropertiesDataStreamsEventCreateRulesService {
@@ -360,6 +377,15 @@ func NewPropertiesDataStreamsMeasurementProtocolSecretsService(s *Service) *Prop
 }
 
 type PropertiesDataStreamsMeasurementProtocolSecretsService struct {
+	s *Service
+}
+
+func NewPropertiesDataStreamsSKAdNetworkConversionValueSchemaService(s *Service) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService {
+	rs := &PropertiesDataStreamsSKAdNetworkConversionValueSchemaService{s: s}
+	return rs
+}
+
+type PropertiesDataStreamsSKAdNetworkConversionValueSchemaService struct {
 	s *Service
 }
 
@@ -2994,6 +3020,10 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// history.
 	SearchAds360Link *GoogleAnalyticsAdminV1alphaSearchAds360Link `json:"searchAds360Link,omitempty"`
 
+	// SkadnetworkConversionValueSchema: A snapshot of
+	// SKAdNetworkConversionValueSchema resource in change history.
+	SkadnetworkConversionValueSchema *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema `json:"skadnetworkConversionValueSchema,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3410,6 +3440,65 @@ type GoogleAnalyticsAdminV1alphaConversionEvent struct {
 
 func (s *GoogleAnalyticsAdminV1alphaConversionEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaConversionEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaConversionValues: Conversion value
+// settings for a postback window for SKAdNetwork conversion value
+// schema.
+type GoogleAnalyticsAdminV1alphaConversionValues struct {
+	// CoarseValue: Required. A coarse grained conversion value. This value
+	// is not guaranteed to be unique.
+	//
+	// Possible values:
+	//   "COARSE_VALUE_UNSPECIFIED" - Coarse value not specified.
+	//   "COARSE_VALUE_LOW" - Coarse value of low.
+	//   "COARSE_VALUE_MEDIUM" - Coarse value of medium.
+	//   "COARSE_VALUE_HIGH" - Coarse value of high.
+	CoarseValue string `json:"coarseValue,omitempty"`
+
+	// DisplayName: Display name of the SKAdNetwork conversion value. The
+	// max allowed display name length is 50 UTF-16 code units.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EventMappings: Event conditions that must be met for this Conversion
+	// Value to be achieved. The conditions in this list are ANDed together.
+	// It must have minimum of 1 entry and maximum of 3 entries, if the
+	// postback window is enabled.
+	EventMappings []*GoogleAnalyticsAdminV1alphaEventMapping `json:"eventMappings,omitempty"`
+
+	// FineValue: The fine-grained conversion value. This is applicable only
+	// to the first postback window. Its valid values are [0,63], both
+	// inclusive. It must be set for postback window 1, and must not be set
+	// for postback window 2 & 3. This value is not guaranteed to be unique.
+	// If the configuration for the first postback window is re-used for
+	// second or third postback windows this field has no effect.
+	FineValue int64 `json:"fineValue,omitempty"`
+
+	// LockEnabled: If true, the SDK should lock to this conversion value
+	// for the current postback window.
+	LockEnabled bool `json:"lockEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CoarseValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CoarseValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaConversionValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaConversionValues
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4370,6 +4459,72 @@ func (s *GoogleAnalyticsAdminV1alphaEventCreateRule) MarshalJSON() ([]byte, erro
 	type NoMethod GoogleAnalyticsAdminV1alphaEventCreateRule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaEventMapping: Event setting conditions to
+// match an event.
+type GoogleAnalyticsAdminV1alphaEventMapping struct {
+	// EventName: Required. Name of the GA4 event. It must always be set.
+	// The max allowed display name length is 40 UTF-16 code units.
+	EventName string `json:"eventName,omitempty"`
+
+	// MaxEventCount: The maximum number of times the event occurred. If not
+	// set, maximum event count won't be checked.
+	MaxEventCount int64 `json:"maxEventCount,omitempty,string"`
+
+	// MaxEventValue: The maximum revenue generated due to the event.
+	// Revenue currency will be defined at the property level. If not set,
+	// maximum event value won't be checked.
+	MaxEventValue float64 `json:"maxEventValue,omitempty"`
+
+	// MinEventCount: At least one of the following four min/max values must
+	// be set. The values set will be ANDed together to qualify an event.
+	// The minimum number of times the event occurred. If not set, minimum
+	// event count won't be checked.
+	MinEventCount int64 `json:"minEventCount,omitempty,string"`
+
+	// MinEventValue: The minimum revenue generated due to the event.
+	// Revenue currency will be defined at the property level. If not set,
+	// minimum event value won't be checked.
+	MinEventValue float64 `json:"minEventValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaEventMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaEventMapping
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAnalyticsAdminV1alphaEventMapping) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAnalyticsAdminV1alphaEventMapping
+	var s1 struct {
+		MaxEventValue gensupport.JSONFloat64 `json:"maxEventValue"`
+		MinEventValue gensupport.JSONFloat64 `json:"minEventValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxEventValue = float64(s1.MaxEventValue)
+	s.MinEventValue = float64(s1.MinEventValue)
+	return nil
 }
 
 // GoogleAnalyticsAdminV1alphaExpandedDataSet: A resource message
@@ -5848,6 +6003,47 @@ func (s *GoogleAnalyticsAdminV1alphaListPropertiesResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasRespon
+// se: Response message for ListSKAdNetworkConversionValueSchemas RPC
+type GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages. Currently, Google Analytics supports only one
+	// SKAdNetworkConversionValueSchema per dataStream, so this will never
+	// be populated.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SkadnetworkConversionValueSchemas: List of
+	// SKAdNetworkConversionValueSchemas. This will have at most one value.
+	SkadnetworkConversionValueSchemas []*GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema `json:"skadnetworkConversionValueSchemas,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse: Response
 // message for ListSearchAds360Links RPC.
 type GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse struct {
@@ -6117,6 +6313,49 @@ type GoogleAnalyticsAdminV1alphaParameterMutation struct {
 
 func (s *GoogleAnalyticsAdminV1alphaParameterMutation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaParameterMutation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaPostbackWindow: Settings for a SKAdNetwork
+// conversion postback window.
+type GoogleAnalyticsAdminV1alphaPostbackWindow struct {
+	// ConversionValues: Ordering of the repeated field will be used to
+	// prioritize the conversion value settings. Lower indexed entries are
+	// prioritized higher. The first conversion value setting that evaluates
+	// to true will be selected. It must have at least one entry if
+	// enable_postback_window_settings is set to true. It can have maximum
+	// of 128 entries.
+	ConversionValues []*GoogleAnalyticsAdminV1alphaConversionValues `json:"conversionValues,omitempty"`
+
+	// PostbackWindowSettingsEnabled: If enable_postback_window_settings is
+	// true, conversion_values must be populated and will be used for
+	// determining when and how to set the Conversion Value on a client
+	// device and exporting schema to linked Ads accounts. If false, the
+	// settings are not used, but are retained in case they may be used in
+	// the future. This must always be true for postback_window_one.
+	PostbackWindowSettingsEnabled bool `json:"postbackWindowSettingsEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversionValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversionValues") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaPostbackWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaPostbackWindow
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6523,6 +6762,76 @@ func (s *GoogleAnalyticsAdminV1alphaRunAccessReportResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema:
+// SKAdNetwork conversion value schema of an iOS stream.
+type GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema struct {
+	// ApplyConversionValues: If enabled, the GA SDK will set conversion
+	// values using this schema definition, and schema will be exported to
+	// any Google Ads accounts linked to this property. If disabled, the GA
+	// SDK will not automatically set conversion values, and also the schema
+	// will not be exported to Ads.
+	ApplyConversionValues bool `json:"applyConversionValues,omitempty"`
+
+	// Name: Output only. Resource name of the schema. This will be child of
+	// ONLY an iOS stream, and there can be at most one such child under an
+	// iOS stream. Format:
+	// properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionVa
+	// lueSchema
+	Name string `json:"name,omitempty"`
+
+	// PostbackWindowOne: Required. The conversion value settings for the
+	// first postback window. These differ from values for postback window
+	// two and three in that they contain a "Fine" grained conversion value
+	// (a numeric value). Conversion values for this postback window must be
+	// set. The other windows are optional and may inherit this window's
+	// settings if unset or disabled.
+	PostbackWindowOne *GoogleAnalyticsAdminV1alphaPostbackWindow `json:"postbackWindowOne,omitempty"`
+
+	// PostbackWindowThree: The conversion value settings for the third
+	// postback window. This field should only be set if the user chose to
+	// define different conversion values for this postback window. It is
+	// allowed to configure window 3 without setting window 2. In case
+	// window 1 & 2 settings are set and enable_postback_window_settings for
+	// this postback window is set to false, the schema will inherit
+	// settings from postback_window_two.
+	PostbackWindowThree *GoogleAnalyticsAdminV1alphaPostbackWindow `json:"postbackWindowThree,omitempty"`
+
+	// PostbackWindowTwo: The conversion value settings for the second
+	// postback window. This field should only be configured if there is a
+	// need to define different conversion values for this postback window.
+	// If enable_postback_window_settings is set to false for this postback
+	// window, the values from postback_window_one will be used.
+	PostbackWindowTwo *GoogleAnalyticsAdminV1alphaPostbackWindow `json:"postbackWindowTwo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplyConversionValues") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplyConversionValues") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaSearchAds360Link: A link between a GA4
 // property and a Search Ads 360 entity.
 type GoogleAnalyticsAdminV1alphaSearchAds360Link struct {
@@ -6662,6 +6971,8 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "CHANNEL_GROUP" - ChannelGroup resource
 	//   "ENHANCED_MEASUREMENT_SETTINGS" - EnhancedMeasurementSettings
 	// resource
+	//   "SKADNETWORK_CONVERSION_VALUE_SCHEMA" -
+	// SKAdNetworkConversionValueSchema resource
 	//   "ADSENSE_LINK" - AdSenseLink resource
 	//   "AUDIENCE" - Audience resource
 	//   "EVENT_CREATE_RULE" - EventCreateRule resource
@@ -23316,6 +23627,809 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...go
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.create":
+
+type PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googleanalyticsadminv1alphaskadnetworkconversionvalueschema *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// Create: Creates a SKAdNetworkConversionValueSchema.
+//
+//   - parent: The parent resource where this schema will be created.
+//     Format: properties/{property}/dataStreams/{dataStream}.
+func (r *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService) Create(parent string, googleanalyticsadminv1alphaskadnetworkconversionvalueschema *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall {
+	c := &PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphaskadnetworkconversionvalueschema = googleanalyticsadminv1alphaskadnetworkconversionvalueschema
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall) Context(ctx context.Context) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaskadnetworkconversionvalueschema)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/sKAdNetworkConversionValueSchema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.create" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema.ServerRes
+// ponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a SKAdNetworkConversionValueSchema.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/sKAdNetworkConversionValueSchema",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this schema will be created. Format: properties/{property}/dataStreams/{dataStream}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/sKAdNetworkConversionValueSchema",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.delete":
+
+type PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes target SKAdNetworkConversionValueSchema.
+//
+//   - name: The name of the SKAdNetworkConversionValueSchema to delete.
+//     Format:
+//     properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversion
+//     ValueSchema/{skadnetwork_conversion_value_schema}.
+func (r *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService) Delete(name string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall {
+	c := &PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall) Context(ctx context.Context) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes target SKAdNetworkConversionValueSchema.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/sKAdNetworkConversionValueSchema/{sKAdNetworkConversionValueSchemaId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SKAdNetworkConversionValueSchema to delete. Format: properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema/{skadnetwork_conversion_value_schema}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/sKAdNetworkConversionValueSchema/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.get":
+
+type PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Looks up a single SKAdNetworkConversionValueSchema.
+//
+//   - name: The resource name of SKAdNetwork conversion value schema to
+//     look up. Format:
+//     properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversion
+//     ValueSchema/{skadnetwork_conversion_value_schema}.
+func (r *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService) Get(name string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall {
+	c := &PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall) Context(ctx context.Context) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.get" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema.ServerRes
+// ponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Looks up a single SKAdNetworkConversionValueSchema.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/sKAdNetworkConversionValueSchema/{sKAdNetworkConversionValueSchemaId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of SKAdNetwork conversion value schema to look up. Format: properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema/{skadnetwork_conversion_value_schema}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/sKAdNetworkConversionValueSchema/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.list":
+
+type PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SKAdNetworkConversionValueSchema on a stream. Properties
+// can have at most one SKAdNetworkConversionValueSchema.
+//
+//   - parent: Format:
+//     properties/{property_id}/dataStreams/{dataStream}/sKAdNetworkConvers
+//     ionValueSchema Example:
+//     properties/1234/dataStreams/5678/sKAdNetworkConversionValueSchema.
+func (r *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService) List(parent string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall {
+	c := &PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. The service may return fewer than this value,
+// even if there are additional pages. If unspecified, at most 50
+// resources will be returned. The maximum value is 200; (higher values
+// will be coerced to the maximum)
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) PageSize(pageSize int64) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSKAdNetworkConversionValueSchemas`
+// call. Provide this to retrieve the subsequent page. When paginating,
+// all other parameters provided to
+// `ListSKAdNetworkConversionValueSchema` must match the call that
+// provided the page token.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) PageToken(pageToken string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) Context(ctx context.Context) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/sKAdNetworkConversionValueSchema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.list" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasRespo
+// nse or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasRespo
+// nse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists SKAdNetworkConversionValueSchema on a stream. Properties can have at most one SKAdNetworkConversionValueSchema.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/sKAdNetworkConversionValueSchema",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListSKAdNetworkConversionValueSchemas` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSKAdNetworkConversionValueSchema` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Format: properties/{property_id}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema Example: properties/1234/dataStreams/5678/sKAdNetworkConversionValueSchema",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/sKAdNetworkConversionValueSchema",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.patch":
+
+type PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall struct {
+	s                                                           *Service
+	name                                                        string
+	googleanalyticsadminv1alphaskadnetworkconversionvalueschema *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// Patch: Updates a SKAdNetworkConversionValueSchema.
+//
+//   - name: Output only. Resource name of the schema. This will be child
+//     of ONLY an iOS stream, and there can be at most one such child
+//     under an iOS stream. Format:
+//     properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversion
+//     ValueSchema.
+func (r *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService) Patch(name string, googleanalyticsadminv1alphaskadnetworkconversionvalueschema *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall {
+	c := &PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaskadnetworkconversionvalueschema = googleanalyticsadminv1alphaskadnetworkconversionvalueschema
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Omitted fields will not be updated.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall) Context(ctx context.Context) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaskadnetworkconversionvalueschema)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.patch" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema.ServerRes
+// ponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a SKAdNetworkConversionValueSchema.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/sKAdNetworkConversionValueSchema/{sKAdNetworkConversionValueSchemaId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.dataStreams.sKAdNetworkConversionValueSchema.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the schema. This will be child of ONLY an iOS stream, and there can be at most one such child under an iOS stream. Format: properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/sKAdNetworkConversionValueSchema/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

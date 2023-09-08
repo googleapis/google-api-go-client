@@ -8,6 +8,17 @@
 //
 // For product documentation, see: http://developers.google.com/chrome/policy
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	chromepolicyService, err := chromepolicy.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithScopes(chromepolicy.ChromeManagementPolicyReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package chromepolicy // import "google.golang.org/api/chromepolicy/v1"
 
 import (
@@ -2148,6 +2162,21 @@ func (s *Proto2FieldDescriptorProto) MarshalJSON() ([]byte, error) {
 
 // Proto2FileDescriptorProto: Describes a complete .proto file.
 type Proto2FileDescriptorProto struct {
+	// EditionEnum: The edition of the proto file.
+	//
+	// Possible values:
+	//   "EDITION_UNKNOWN" - A placeholder for an unknown edition value.
+	//   "EDITION_2023" - Editions that have been released. The specific
+	// values are arbitrary and should not be depended on, but they will
+	// always be time-ordered for easy comparison.
+	//   "EDITION_1_TEST_ONLY" - Placeholder editions for testing feature
+	// resolution. These should not be used or relyed on outside of tests.
+	//   "EDITION_2_TEST_ONLY"
+	//   "EDITION_99997_TEST_ONLY"
+	//   "EDITION_99998_TEST_ONLY"
+	//   "EDITION_99999_TEST_ONLY"
+	EditionEnum string `json:"editionEnum,omitempty"`
+
 	EnumType []*Proto2EnumDescriptorProto `json:"enumType,omitempty"`
 
 	// MessageType: All top-level definitions in this file.
@@ -2164,7 +2193,7 @@ type Proto2FileDescriptorProto struct {
 	// value must be "editions".
 	Syntax string `json:"syntax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EnumType") to
+	// ForceSendFields is a list of field names (e.g. "EditionEnum") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2172,10 +2201,10 @@ type Proto2FileDescriptorProto struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnumType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "EditionEnum") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

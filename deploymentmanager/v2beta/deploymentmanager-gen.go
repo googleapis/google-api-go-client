@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/deployment-manager
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	deploymentmanagerService, err := deploymentmanager.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithScopes(deploymentmanager.NdevCloudmanReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package deploymentmanager // import "google.golang.org/api/deploymentmanager/v2beta"
 
 import (
@@ -512,6 +526,57 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BulkInsertOperationStatus struct {
+	// CreatedVmCount: [Output Only] Count of VMs successfully created so
+	// far.
+	CreatedVmCount int64 `json:"createdVmCount,omitempty"`
+
+	// DeletedVmCount: [Output Only] Count of VMs that got deleted during
+	// rollback.
+	DeletedVmCount int64 `json:"deletedVmCount,omitempty"`
+
+	// FailedToCreateVmCount: [Output Only] Count of VMs that started
+	// creating but encountered an error.
+	FailedToCreateVmCount int64 `json:"failedToCreateVmCount,omitempty"`
+
+	// Status: [Output Only] Creation status of BulkInsert operation -
+	// information if the flow is rolling forward or rolling back.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED"
+	//   "CREATING" - Rolling forward - creating VMs.
+	//   "ROLLING_BACK" - Rolling back - cleaning up after an error.
+	//   "DONE" - Done
+	Status string `json:"status,omitempty"`
+
+	// TargetVmCount: [Output Only] Count of VMs originally planned to be
+	// created.
+	TargetVmCount int64 `json:"targetVmCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreatedVmCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedVmCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkInsertOperationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkInsertOperationStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1263,6 +1328,35 @@ func (s *InputMapping) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type InstancesBulkInsertOperationMetadata struct {
+	// PerLocationStatus: Status information per location (location name is
+	// key). Example key: zones/us-central1-a
+	PerLocationStatus map[string]BulkInsertOperationStatus `json:"perLocationStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PerLocationStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PerLocationStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancesBulkInsertOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesBulkInsertOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Manifest struct {
 	// Config: Output only. The YAML configuration for this manifest.
 	Config *ConfigFile `json:"config,omitempty"`
@@ -1372,7 +1466,7 @@ func (s *ManifestsListResponse) MarshalJSON() ([]byte, error) {
 // Operations can be global, regional or zonal. - For global operations,
 // use the `globalOperations` resource. - For regional operations, use
 // the `regionOperations` resource. - For zonal operations, use the
-// `zonalOperations` resource. For more information, read Global,
+// `zoneOperations` resource. For more information, read Global,
 // Regional, and Zonal Resources.
 type Operation struct {
 	// ClientOperationId: [Output Only] The value of `requestId` if you
@@ -1412,6 +1506,8 @@ type Operation struct {
 	// This value is in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
+	InstancesBulkInsertOperationMetadata *InstancesBulkInsertOperationMetadata `json:"instancesBulkInsertOperationMetadata,omitempty"`
+
 	// Kind: [Output Only] Type of the resource. Always `compute#operation`
 	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
@@ -1442,6 +1538,11 @@ type Operation struct {
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// SetCommonInstanceMetadataOperationMetadata: [Output Only] If the
+	// operation is for projects.setCommonInstanceMetadata, this field will
+	// contain information on all underlying zonal actions and their state.
+	SetCommonInstanceMetadataOperationMetadata *SetCommonInstanceMetadataOperationMetadata `json:"setCommonInstanceMetadataOperationMetadata,omitempty"`
+
 	// StartTime: [Output Only] The time that this operation was started by
 	// the server. This value is in RFC3339 text format.
 	StartTime string `json:"startTime,omitempty"`
@@ -1469,7 +1570,8 @@ type Operation struct {
 	TargetLink string `json:"targetLink,omitempty"`
 
 	// User: [Output Only] User who requested the operation, for example:
-	// `user@example.com`.
+	// `user@example.com` or `alice_smith_identifier
+	// (global/workforcePools/example-com-us-employees)`.
 	User string `json:"user,omitempty"`
 
 	// Warnings: [Output Only] If warning messages are generated during
@@ -1807,7 +1909,7 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1816,17 +1918,17 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2520,6 +2622,125 @@ type ServiceAccount struct {
 
 func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SetCommonInstanceMetadataOperationMetadata struct {
+	// ClientOperationId: [Output Only] The client operation id.
+	ClientOperationId string `json:"clientOperationId,omitempty"`
+
+	// PerLocationOperations: [Output Only] Status information per location
+	// (location name is key). Example key: zones/us-central1-a
+	PerLocationOperations map[string]SetCommonInstanceMetadataOperationMetadataPerLocationOperationInfo `json:"perLocationOperations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientOperationId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientOperationId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SetCommonInstanceMetadataOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SetCommonInstanceMetadataOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SetCommonInstanceMetadataOperationMetadataPerLocationOperationInfo struct {
+	// Error: [Output Only] If state is `ABANDONED` or `FAILED`, this field
+	// is populated.
+	Error *Status `json:"error,omitempty"`
+
+	// State: [Output Only] Status of the action, which can be one of the
+	// following: `PROPAGATING`, `PROPAGATED`, `ABANDONED`, `FAILED`, or
+	// `DONE`.
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "PROPAGATING" - Operation is not yet confirmed to have been created
+	// in the location.
+	//   "PROPAGATED" - Operation is confirmed to be in the location.
+	//   "ABANDONED" - Operation not tracked in this location e.g. zone is
+	// marked as DOWN.
+	//   "FAILED" - Operation is in an error state.
+	//   "DONE" - Operation has completed successfully.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SetCommonInstanceMetadataOperationMetadataPerLocationOperationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SetCommonInstanceMetadataOperationMetadataPerLocationOperationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

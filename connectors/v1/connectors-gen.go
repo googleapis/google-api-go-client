@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/apigee/docs/api-platform/connectors/about-connectors
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	connectorsService, err := connectors.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	connectorsService, err := connectors.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	connectorsService, err := connectors.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package connectors // import "google.golang.org/api/connectors/v1"
 
 import (
@@ -1114,6 +1127,9 @@ func (s *Connector) MarshalJSON() ([]byte, error) {
 // rate limit threshold which need to be configurable for every
 // connector version
 type ConnectorInfraConfig struct {
+	// HpaConfig: HPA autoscaling config.
+	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
+
 	// InternalclientRatelimitThreshold: Max QPS supported for internal
 	// requests originating from Connd.
 	InternalclientRatelimitThreshold int64 `json:"internalclientRatelimitThreshold,omitempty,string"`
@@ -1122,22 +1138,26 @@ type ConnectorInfraConfig struct {
 	// throttling of requests.
 	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "InternalclientRatelimitThreshold") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ResourceLimits: System resource limits.
+	ResourceLimits *ResourceLimits `json:"resourceLimits,omitempty"`
+
+	// ResourceRequests: System resource requests.
+	ResourceRequests *ResourceRequests `json:"resourceRequests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HpaConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "InternalclientRatelimitThreshold") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "HpaConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1256,6 +1276,9 @@ func (s *ConnectorVersion) MarshalJSON() ([]byte, error) {
 // like rate limit threshold which need to be configurable for every
 // connector version
 type ConnectorVersionInfraConfig struct {
+	// HpaConfig: Output only. HPA autoscaling config.
+	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
+
 	// InternalclientRatelimitThreshold: Output only. Max QPS supported for
 	// internal requests originating from Connd.
 	InternalclientRatelimitThreshold int64 `json:"internalclientRatelimitThreshold,omitempty,string"`
@@ -1264,22 +1287,26 @@ type ConnectorVersionInfraConfig struct {
 	// version before throttling of requests.
 	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "InternalclientRatelimitThreshold") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ResourceLimits: Output only. System resource limits.
+	ResourceLimits *ResourceLimits `json:"resourceLimits,omitempty"`
+
+	// ResourceRequests: Output only. System resource requests.
+	ResourceRequests *ResourceRequests `json:"resourceRequests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HpaConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "InternalclientRatelimitThreshold") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "HpaConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2347,6 +2374,42 @@ type FieldComparison struct {
 
 func (s *FieldComparison) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldComparison
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HPAConfig: Autoscaling config for connector deployment system
+// metrics.
+type HPAConfig struct {
+	// CpuUtilizationThreshold: Output only. Percent CPU utilization where
+	// HPA triggers autoscaling.
+	CpuUtilizationThreshold int64 `json:"cpuUtilizationThreshold,omitempty,string"`
+
+	// MemoryUtilizationThreshold: Output only. Percent Memory utilization
+	// where HPA triggers autoscaling.
+	MemoryUtilizationThreshold int64 `json:"memoryUtilizationThreshold,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CpuUtilizationThreshold") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuUtilizationThreshold")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HPAConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod HPAConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3642,6 +3705,70 @@ type Resource struct {
 
 func (s *Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod Resource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceLimits: Resource limits defined for connection pods of a
+// given connector type.
+type ResourceLimits struct {
+	// Cpu: Output only. CPU limit.
+	Cpu string `json:"cpu,omitempty"`
+
+	// Memory: Output only. Memory limit.
+	Memory string `json:"memory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cpu") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cpu") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceRequests: Resource requests defined for connection pods of a
+// given connector type.
+type ResourceRequests struct {
+	// Cpu: Output only. CPU request.
+	Cpu string `json:"cpu,omitempty"`
+
+	// Memory: Output only. Memory request.
+	Memory string `json:"memory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cpu") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cpu") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceRequests) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceRequests
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

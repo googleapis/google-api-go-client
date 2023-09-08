@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/datastream/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	datastreamService, err := datastream.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	datastreamService, err := datastream.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	datastreamService, err := datastream.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package datastream // import "google.golang.org/api/datastream/v1"
 
 import (
@@ -1369,11 +1382,11 @@ func (s *MysqlDatabase) MarshalJSON() ([]byte, error) {
 
 // MysqlLogPosition: MySQL log position
 type MysqlLogPosition struct {
-	// LogFile: The binary log file name.
+	// LogFile: Required. The binary log file name.
 	LogFile string `json:"logFile,omitempty"`
 
-	// LogPosition: The position within the binary log file. Default is head
-	// of file.
+	// LogPosition: Optional. The position within the binary log file.
+	// Default is head of file.
 	LogPosition int64 `json:"logPosition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LogFile") to
@@ -1842,6 +1855,10 @@ type OracleProfile struct {
 	// Hostname: Required. Hostname for the Oracle connection.
 	Hostname string `json:"hostname,omitempty"`
 
+	// OracleSslConfig: Optional. SSL configuration for the Oracle
+	// connection.
+	OracleSslConfig *OracleSslConfig `json:"oracleSslConfig,omitempty"`
+
 	// Password: Required. Password for the Oracle connection.
 	Password string `json:"password,omitempty"`
 
@@ -1980,6 +1997,39 @@ type OracleSourceConfig struct {
 
 func (s *OracleSourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleSourceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OracleSslConfig: Oracle SSL configuration information.
+type OracleSslConfig struct {
+	// CaCertificate: Input only. PEM-encoded certificate of the CA that
+	// signed the source database server's certificate.
+	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// CaCertificateSet: Output only. Indicates whether the ca_certificate
+	// field has been set for this Connection-Profile.
+	CaCertificateSet bool `json:"caCertificateSet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaCertificate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleSslConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleSslConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2781,6 +2831,10 @@ type Stream struct {
 
 	// Labels: Labels.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastRecoveryTime: Output only. If the stream was recovered, the time
+	// of the last recovery. Note: This field is currently experimental.
+	LastRecoveryTime string `json:"lastRecoveryTime,omitempty"`
 
 	// Name: Output only. The stream's name.
 	Name string `json:"name,omitempty"`
@@ -7471,8 +7525,8 @@ func (r *ProjectsLocationsStreamsService) Patch(name string, stream *Stream) *Pr
 
 // CdcStrategySpecificStartPositionMysqlLogPositionLogFile sets the
 // optional parameter
-// "cdcStrategy.specificStartPosition.mysqlLogPosition.logFile": The
-// binary log file name.
+// "cdcStrategy.specificStartPosition.mysqlLogPosition.logFile":
+// Required. The binary log file name.
 func (c *ProjectsLocationsStreamsPatchCall) CdcStrategySpecificStartPositionMysqlLogPositionLogFile(cdcStrategySpecificStartPositionMysqlLogPositionLogFile string) *ProjectsLocationsStreamsPatchCall {
 	c.urlParams_.Set("cdcStrategy.specificStartPosition.mysqlLogPosition.logFile", cdcStrategySpecificStartPositionMysqlLogPositionLogFile)
 	return c
@@ -7630,12 +7684,12 @@ func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "cdcStrategy.specificStartPosition.mysqlLogPosition.logFile": {
-	//       "description": "The binary log file name.",
+	//       "description": "Required. The binary log file name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "cdcStrategy.specificStartPosition.mysqlLogPosition.logPosition": {
-	//       "description": "The position within the binary log file. Default is head of file.",
+	//       "description": "Optional. The position within the binary log file. Default is head of file.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

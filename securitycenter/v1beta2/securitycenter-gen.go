@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/security-command-center
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	securitycenterService, err := securitycenter.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	securitycenterService, err := securitycenter.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	securitycenterService, err := securitycenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package securitycenter // import "google.golang.org/api/securitycenter/v1beta2"
 
 import (
@@ -1511,6 +1524,10 @@ type Exfiltration struct {
 	// complete copy of the "joined" source data.
 	Targets []*ExfilResource `json:"targets,omitempty"`
 
+	// TotalExfiltratedBytes: Total exfiltrated bytes processed for the
+	// entire job.
+	TotalExfiltratedBytes int64 `json:"totalExfiltratedBytes,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "Sources") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2278,12 +2295,12 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// system.
 	Assignees []string `json:"assignees,omitempty"`
 
-	// ExternalSystemUpdateTime: The most recent time when the corresponding
-	// finding's ticket/tracker was updated in the external system.
+	// ExternalSystemUpdateTime: The time when the case was last updated, as
+	// reported by the external system.
 	ExternalSystemUpdateTime string `json:"externalSystemUpdateTime,omitempty"`
 
-	// ExternalUid: Identifier that's used to track the given finding in the
-	// external system.
+	// ExternalUid: The identifier that's used to track the finding's
+	// corresponding case in the external system.
 	ExternalUid string `json:"externalUid,omitempty"`
 
 	// Name: Full resource name of the external system, for example:
@@ -2292,8 +2309,8 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// "projects/1234/sources/5678/findings/123456/externalSystems/jira"
 	Name string `json:"name,omitempty"`
 
-	// Status: Most recent status of the corresponding finding's
-	// ticket/tracker in the external system.
+	// Status: The most recent status of the finding's corresponding case,
+	// as reported by the external system.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Assignees") to
@@ -4189,6 +4206,7 @@ type Subscription struct {
 	//   "TIER_UNSPECIFIED" - Default value. This value is unused.
 	//   "STANDARD" - The standard tier.
 	//   "PREMIUM" - The premium tier.
+	//   "ENTERPRISE" - The enterprise tier.
 	Tier string `json:"tier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

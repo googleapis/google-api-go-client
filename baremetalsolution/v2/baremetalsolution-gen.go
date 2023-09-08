@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/bare-metal
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	baremetalsolutionService, err := baremetalsolution.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	baremetalsolutionService, err := baremetalsolution.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	baremetalsolutionService, err := baremetalsolution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package baremetalsolution // import "google.golang.org/api/baremetalsolution/v2"
 
 import (
@@ -570,8 +583,8 @@ type Instance struct {
 	OsImage string `json:"osImage,omitempty"`
 
 	// Pod: Immutable. Pod name. Pod is an independent part of
-	// infrastructure. Instance can be connected to the assets (networks,
-	// volumes) allocated in the same pod only.
+	// infrastructure. Instance can only be connected to the assets
+	// (networks, volumes) allocated in the same pod.
 	Pod string `json:"pod,omitempty"`
 
 	// State: Output only. The state of the server.
@@ -658,7 +671,7 @@ type InstanceConfig struct {
 	// InstanceConfig.multivlan_config is true.
 	LogicalInterfaces []*GoogleCloudBaremetalsolutionV2LogicalInterface `json:"logicalInterfaces,omitempty"`
 
-	// Name: Output only. The name of the instance config.
+	// Name: The name of the instance config.
 	Name string `json:"name,omitempty"`
 
 	// NetworkConfig: The type of network configuration on the instance.
@@ -684,8 +697,8 @@ type InstanceConfig struct {
 	// InstanceConfig.multivlan_config is false.
 	PrivateNetwork *NetworkAddress `json:"privateNetwork,omitempty"`
 
-	// SshKeyNames: List of names of ssh keys used to provision the
-	// instance.
+	// SshKeyNames: Optional. List of names of ssh keys used to provision
+	// the instance.
 	SshKeyNames []string `json:"sshKeyNames,omitempty"`
 
 	// UserNote: User note field, it can be used by customers to add
@@ -1455,7 +1468,9 @@ type Network struct {
 	// `projects/{project}/locations/{location}/networks/{network}`
 	Name string `json:"name,omitempty"`
 
-	// Pod: Output only. Pod name.
+	// Pod: Immutable. Pod name. Pod is an independent part of
+	// infrastructure. Network can only be connected to the assets
+	// (instances, nfsshares) allocated in the same pod.
 	Pod string `json:"pod,omitempty"`
 
 	// Reservations: List of IP address reservations in this network. When
@@ -1823,6 +1838,11 @@ type NfsShare struct {
 	// instead.
 	NfsShareId string `json:"nfsShareId,omitempty"`
 
+	// Pod: Immutable. Pod name. Pod is an independent part of
+	// infrastructure. NFSShare can only be connected to the assets
+	// (networks, instances) allocated in the same pod.
+	Pod string `json:"pod,omitempty"`
+
 	// RequestedSizeGib: The requested size, in GiB.
 	RequestedSizeGib int64 `json:"requestedSizeGib,omitempty,string"`
 
@@ -2015,6 +2035,11 @@ type ProvisioningConfig struct {
 
 	// Networks: Networks to be created.
 	Networks []*NetworkConfig `json:"networks,omitempty"`
+
+	// Pod: Optional. Pod name. Pod is an independent part of
+	// infrastructure. Instance can be connected to the assets (networks,
+	// volumes, nfsshares) allocated in the same pod only.
+	Pod string `json:"pod,omitempty"`
 
 	// State: Output only. State of ProvisioningConfig.
 	//
@@ -2749,7 +2774,9 @@ type Volume struct {
 	//   "VOLUME_PERFORMANCE_TIER_HT" - High throughput aggregates.
 	PerformanceTier string `json:"performanceTier,omitempty"`
 
-	// Pod: Immutable. Pod name.
+	// Pod: Immutable. Pod name. Pod is an independent part of
+	// infrastructure. Volume can only be connected to the instances
+	// allocated in the same pod.
 	Pod string `json:"pod,omitempty"`
 
 	// Protocol: Output only. Storage protocol for the Volume.
@@ -2787,10 +2814,6 @@ type Volume struct {
 	// and usage on the storage volume.
 	SnapshotReservationDetail *SnapshotReservationDetail `json:"snapshotReservationDetail,omitempty"`
 
-	// SnapshotSchedulePolicy: The name of the snapshot schedule policy in
-	// use for this volume, if any.
-	SnapshotSchedulePolicy string `json:"snapshotSchedulePolicy,omitempty"`
-
 	// State: The state of this storage volume.
 	//
 	// Possible values:
@@ -2802,11 +2825,6 @@ type Volume struct {
 	//   "COOL_OFF" - The storage volume is in cool off state. It will be
 	// deleted after `expire_time`.
 	State string `json:"state,omitempty"`
-
-	// StorageAggregatePool: Input only. Name of the storage aggregate pool
-	// to allocate the volume in. Can be used only for
-	// VOLUME_PERFORMANCE_TIER_ASSIGNED volumes.
-	StorageAggregatePool string `json:"storageAggregatePool,omitempty"`
 
 	// StorageType: The storage type for this volume.
 	//
@@ -2901,11 +2919,6 @@ type VolumeConfig struct {
 
 	// SnapshotsEnabled: Whether snapshots should be enabled.
 	SnapshotsEnabled bool `json:"snapshotsEnabled,omitempty"`
-
-	// StorageAggregatePool: Input only. Name of the storage aggregate pool
-	// to allocate the volume in. Can be used only for
-	// VOLUME_PERFORMANCE_TIER_ASSIGNED volumes.
-	StorageAggregatePool string `json:"storageAggregatePool,omitempty"`
 
 	// Type: The type of this Volume.
 	//

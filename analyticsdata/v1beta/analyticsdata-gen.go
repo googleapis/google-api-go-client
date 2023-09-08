@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/analytics/devguides/reporting/data/v1/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	analyticsdataService, err := analyticsdata.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithScopes(analyticsdata.AnalyticsReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package analyticsdata // import "google.golang.org/api/analyticsdata/v1beta"
 
 import (
@@ -792,14 +806,20 @@ type Dimension struct {
 
 	// Name: The name of the dimension. See the API Dimensions
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions)
-	// for the list of dimension names. If `dimensionExpression` is
-	// specified, `name` can be any string that you would like within the
-	// allowed character set. For example if a `dimensionExpression`
-	// concatenates `country` and `city`, you could call that dimension
-	// `countryAndCity`. Dimension names that you choose must match the
-	// regular expression `^[a-zA-Z0-9_]$`. Dimensions are referenced by
-	// `name` in `dimensionFilter`, `orderBys`, `dimensionExpression`, and
-	// `pivots`.
+	// for the list of dimension names supported by core reporting methods
+	// such as `runReport` and `batchRunReports`. See Realtime Dimensions
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema#dimensions)
+	// for the list of dimension names supported by the `runRealtimeReport`
+	// method. See Funnel Dimensions
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/exploration-api-schema#dimensions)
+	// for the list of dimension names supported by the `runFunnelReport`
+	// method. If `dimensionExpression` is specified, `name` can be any
+	// string that you would like within the allowed character set. For
+	// example if a `dimensionExpression` concatenates `country` and `city`,
+	// you could call that dimension `countryAndCity`. Dimension names that
+	// you choose must match the regular expression `^[a-zA-Z0-9_]$`.
+	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
+	// `dimensionExpression`, and `pivots`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionExpression")
@@ -1260,13 +1280,19 @@ type Metric struct {
 
 	// Name: The name of the metric. See the API Metrics
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics)
-	// for the list of metric names. If `expression` is specified, `name`
-	// can be any string that you would like within the allowed character
-	// set. For example if `expression` is `screenPageViews/sessions`, you
-	// could call that metric's name = `viewsPerSession`. Metric names that
-	// you choose must match the regular expression `^[a-zA-Z0-9_]$`.
-	// Metrics are referenced by `name` in `metricFilter`, `orderBys`, and
-	// metric `expression`.
+	// for the list of metric names supported by core reporting methods such
+	// as `runReport` and `batchRunReports`. See Realtime Metrics
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema#metrics)
+	// for the list of metric names supported by the `runRealtimeReport`
+	// method. See Funnel Metrics
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/exploration-api-schema#metrics)
+	// for the list of metric names supported by the `runFunnelReport`
+	// method. If `expression` is specified, `name` can be any string that
+	// you would like within the allowed character set. For example if
+	// `expression` is `screenPageViews/sessions`, you could call that
+	// metric's name = `viewsPerSession`. Metric names that you choose must
+	// match the regular expression `^[a-zA-Z0-9_]$`. Metrics are referenced
+	// by `name` in `metricFilter`, `orderBys`, and metric `expression`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Expression") to

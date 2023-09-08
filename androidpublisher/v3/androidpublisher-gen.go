@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/android-publisher
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	androidpublisherService, err := androidpublisher.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	androidpublisherService, err := androidpublisher.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	androidpublisherService, err := androidpublisher.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package androidpublisher // import "google.golang.org/api/androidpublisher/v3"
 
 import (
@@ -5458,6 +5471,8 @@ type SubscriptionItemPriceChangeDetails struct {
 	//   "PRICE_DECREASE" - If the subscription price is decreasing.
 	//   "PRICE_INCREASE" - If the subscription price is increasing and the
 	// user needs to accept it.
+	//   "OPT_OUT_PRICE_INCREASE" - If the subscription price is increasing
+	// with opt out mode.
 	PriceChangeMode string `json:"priceChangeMode,omitempty"`
 
 	// PriceChangeState: State the price change is currently in.
@@ -6249,6 +6264,42 @@ type SubscriptionTaxAndComplianceSettings struct {
 
 func (s *SubscriptionTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionTaxAndComplianceSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SystemApkOptions: Options for system APKs.
+type SystemApkOptions struct {
+	// Rotated: Whether to use the rotated key for signing the system APK.
+	Rotated bool `json:"rotated,omitempty"`
+
+	// UncompressedDexFiles: Whether system APK was generated with
+	// uncompressed dex files.
+	UncompressedDexFiles bool `json:"uncompressedDexFiles,omitempty"`
+
+	// UncompressedNativeLibraries: Whether system APK was generated with
+	// uncompressed native libraries.
+	UncompressedNativeLibraries bool `json:"uncompressedNativeLibraries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Rotated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Rotated") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SystemApkOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemApkOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7171,6 +7222,9 @@ func (s *UsesPermission) MarshalJSON() ([]byte, error) {
 type Variant struct {
 	// DeviceSpec: The device spec used to generate the APK.
 	DeviceSpec *DeviceSpec `json:"deviceSpec,omitempty"`
+
+	// Options: Optional. Options applied to the generated APK.
+	Options *SystemApkOptions `json:"options,omitempty"`
 
 	// VariantId: Output only. The ID of a previously created system APK
 	// variant.

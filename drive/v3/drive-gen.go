@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/drive/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	driveService, err := drive.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	driveService, err := drive.NewService(ctx, option.WithScopes(drive.DriveScriptsScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	driveService, err := drive.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	driveService, err := drive.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package drive // import "google.golang.org/api/drive/v3"
 
 import (
@@ -648,7 +662,9 @@ func (s *Channel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Comment: A comment on a file.
+// Comment: A comment on a file. Some resource methods (such as
+// `comments.update`) require a `commentId`. Use the `comments.list`
+// method to retrieve the ID for a comment in a file.
 type Comment struct {
 	// Anchor: A region of the document represented as a JSON string. For
 	// details on defining anchor properties, refer to Manage comments and
@@ -861,7 +877,9 @@ func (s *ContentRestriction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Drive: Representation of a shared drive.
+// Drive: Representation of a shared drive. Some resource methods (such
+// as `drives.update`) require a `driveId`. Use the `drives.list` method
+// to retrieve the ID for a shared drive.
 type Drive struct {
 	// BackgroundImageFile: An image file and cropping parameters from which
 	// a background image for this shared drive is set. This is a write only
@@ -1232,7 +1250,9 @@ func (s *DriveList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// File: The metadata for a file.
+// File: The metadata for a file. Some resource methods (such as
+// `files.update`) require a `fileId`. Use the `files.list` method to
+// retrieve the ID for a file.
 type File struct {
 	// AppProperties: A collection of arbitrary key-value pairs which are
 	// private to the requesting app.
@@ -2551,7 +2571,10 @@ func (s *ModifyLabelsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Permission: A permission for a file. A permission grants a user,
-// group, domain or the world access to a file or a folder hierarchy.
+// group, domain, or the world access to a file or a folder hierarchy.
+// Some resource methods (such as `permissions.update`) require a
+// `permissionId`. Use the `permissions.list` method to retrieve the ID
+// for a file, folder, or shared drive.
 type Permission struct {
 	// AllowFileDiscovery: Whether the permission allows the file to be
 	// discovered through search. This is only applicable for permissions of
@@ -2786,7 +2809,9 @@ func (s *PermissionList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Reply: A reply to a comment on a file.
+// Reply: A reply to a comment on a file. Some resource methods (such as
+// `replies.update`) require a `replyId`. Use the `replies.list` method
+// to retrieve the ID for a reply.
 type Reply struct {
 	// Action: The action the reply performed to the parent comment. Valid
 	// values are: * `resolve` * `reopen`
@@ -2897,7 +2922,9 @@ func (s *ReplyList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Revision: The metadata for a revision to a file.
+// Revision: The metadata for a revision to a file. Some resource
+// methods (such as `revisions.update`) require a `revisionId`. Use the
+// `revisions.list` method to retrieve the ID for a revision.
 type Revision struct {
 	// ExportLinks: Output only. Links for exporting Docs Editors files to
 	// specific formats.
@@ -5544,7 +5571,7 @@ type DrivesDeleteCall struct {
 }
 
 // Delete: Permanently deletes a shared drive for which the user is an
-// organizer. The shared drive cannot contain any untrashed items.
+// `organizer`. The shared drive cannot contain any untrashed items.
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Delete(driveId string) *DrivesDeleteCall {
@@ -5632,7 +5659,7 @@ func (c *DrivesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Permanently deletes a shared drive for which the user is an organizer. The shared drive cannot contain any untrashed items.",
+	//   "description": "Permanently deletes a shared drive for which the user is an `organizer`. The shared drive cannot contain any untrashed items.",
 	//   "flatPath": "drives/{driveId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.drives.delete",
@@ -7085,9 +7112,9 @@ type FilesDeleteCall struct {
 }
 
 // Delete: Permanently deletes a file owned by the user without moving
-// it to the trash. If the file belongs to a shared drive the user must
-// be an organizer on the parent. If the target is a folder, all
-// descendants owned by the user are also deleted.
+// it to the trash. If the file belongs to a shared drive, the user must
+// be an `organizer` on the parent folder. If the target is a folder,
+// all descendants owned by the user are also deleted.
 //
 // - fileId: The ID of the file.
 func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
@@ -7181,7 +7208,7 @@ func (c *FilesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a shared drive the user must be an organizer on the parent. If the target is a folder, all descendants owned by the user are also deleted.",
+	//   "description": "Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a shared drive, the user must be an `organizer` on the parent folder. If the target is a folder, all descendants owned by the user are also deleted.",
 	//   "flatPath": "files/{fileId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.files.delete",
@@ -8315,7 +8342,7 @@ type FilesListLabelsCall struct {
 
 // ListLabels: Lists the labels on a file.
 //
-// - fileId: The ID for the file or shared drive.
+// - fileId: The ID for the file.
 func (r *FilesService) ListLabels(fileId string) *FilesListLabelsCall {
 	c := &FilesListLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8445,7 +8472,7 @@ func (c *FilesListLabelsCall) Do(opts ...googleapi.CallOption) (*LabelList, erro
 	//   ],
 	//   "parameters": {
 	//     "fileId": {
-	//       "description": "The ID for the file or shared drive.",
+	//       "description": "The ID for the file.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

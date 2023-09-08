@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/payments/reseller/subscription/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package paymentsresellersubscription // import "google.golang.org/api/paymentsresellersubscription/v1"
 
 import (
@@ -905,12 +918,6 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// available indefinitely.
 	EndTime string `json:"endTime,omitempty"`
 
-	// FiniteBillingCycleDetails: Optional. Details for a subscription line
-	// item with finite billing cycles. If unset, the line item will be
-	// charged indefinitely. Used only with
-	// PROMOTION_TYPE_REGULAR_REDUCTION.
-	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
-
 	// FreeTrialDuration: Optional. Specifies the duration of the free trial
 	// of the subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
 	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
@@ -933,8 +940,6 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
 	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
 	// introductory pricing.
-	//   "PROMOTION_TYPE_REGULAR_REDUCTION" - The promotion is a reduced
-	// price.
 	PromotionType string `json:"promotionType,omitempty"`
 
 	// RegionCodes: Output only. 2-letter ISO region code where the
@@ -1434,8 +1439,6 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
 	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
 	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
 	// introductory pricing.
-	//   "PROMOTION_TYPE_REGULAR_REDUCTION" - The promotion is a reduced
-	// price.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FreeTrialDuration")

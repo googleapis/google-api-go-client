@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/games/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	gamesService, err := games.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	gamesService, err := games.NewService(ctx, option.WithScopes(games.GamesScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	gamesService, err := games.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	gamesService, err := games.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package games // import "google.golang.org/api/games/v1"
 
 import (
@@ -85,6 +99,9 @@ const mtlsBasePath = "https://games.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your Google Play Developer account
+	AndroidpublisherScope = "https://www.googleapis.com/auth/androidpublisher"
+
 	// See, create, and delete its own configuration data in your Google
 	// Drive
 	DriveAppdataScope = "https://www.googleapis.com/auth/drive.appdata"
@@ -96,6 +113,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/androidpublisher",
 		"https://www.googleapis.com/auth/drive.appdata",
 		"https://www.googleapis.com/auth/games",
 	)
@@ -134,6 +152,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Leaderboards = NewLeaderboardsService(s)
 	s.Metagame = NewMetagameService(s)
 	s.Players = NewPlayersService(s)
+	s.Recall = NewRecallService(s)
 	s.Revisions = NewRevisionsService(s)
 	s.Scores = NewScoresService(s)
 	s.Snapshots = NewSnapshotsService(s)
@@ -159,6 +178,8 @@ type Service struct {
 	Metagame *MetagameService
 
 	Players *PlayersService
+
+	Recall *RecallService
 
 	Revisions *RevisionsService
 
@@ -239,6 +260,15 @@ type PlayersService struct {
 	s *Service
 }
 
+func NewRecallService(s *Service) *RecallService {
+	rs := &RecallService{s: s}
+	return rs
+}
+
+type RecallService struct {
+	s *Service
+}
+
 func NewRevisionsService(s *Service) *RevisionsService {
 	rs := &RevisionsService{s: s}
 	return rs
@@ -280,7 +310,6 @@ type AchievementDefinition struct {
 	// AchievementType: The type of the achievement.
 	//
 	// Possible values:
-	//   "ACHIEVEMENT_TYPE_UNSPECIFIED" - Safe default, don't use.
 	//   "STANDARD" - Achievement is either locked or unlocked.
 	//   "INCREMENTAL" - Achievement is incremental.
 	AchievementType string `json:"achievementType,omitempty"`
@@ -302,7 +331,6 @@ type AchievementDefinition struct {
 	// InitialState: The initial state of the achievement.
 	//
 	// Possible values:
-	//   "INITIAL_ACHIEVEMENT_STATE_UNSPECIFIED" - Safe default, don't use.
 	//   "HIDDEN" - Achievement is hidden.
 	//   "REVEALED" - Achievement is revealed.
 	//   "UNLOCKED" - Achievement is unlocked.
@@ -444,7 +472,6 @@ type AchievementRevealResponse struct {
 	// already unlocked.
 	//
 	// Possible values:
-	//   "REVEAL_ACHIEVEMENT_STATE_UNSPECIFIED" - Safe default, don't use.
 	//   "REVEALED" - Achievement is revealed.
 	//   "UNLOCKED" - Achievement is unlocked.
 	CurrentState string `json:"currentState,omitempty"`
@@ -650,7 +677,6 @@ type AchievementUpdateRequest struct {
 	// UpdateType: The type of update being applied.
 	//
 	// Possible values:
-	//   "ACHIEVEMENT_UPDATE_TYPE_UNSPECIFIED" - Safe default, don't use.
 	//   "REVEAL" - Achievement is revealed.
 	//   "UNLOCK" - Achievement is unlocked.
 	//   "INCREMENT" - Achievement is incremented.
@@ -689,7 +715,6 @@ type AchievementUpdateResponse struct {
 	// CurrentState: The current state of the achievement.
 	//
 	// Possible values:
-	//   "UPDATED_ACHIEVEMENT_STATE_UNSPECIFIED" - Safe default, don't use.
 	//   "HIDDEN" - Achievement is hidden.
 	//   "REVEALED" - Achievement is revealed.
 	//   "UNLOCKED" - Achievement is unlocked.
@@ -757,7 +782,6 @@ type Application struct {
 	// application.
 	//
 	// Possible values:
-	//   "APPLICATION_FEATURE_UNSPECIFIED" - Safe default, don't use.
 	//   "SNAPSHOTS" - Saved Games (snapshots).
 	EnabledFeatures []string `json:"enabledFeatures,omitempty"`
 
@@ -1038,8 +1062,6 @@ type EventBatchRecordFailure struct {
 	// FailureCause: The cause for the update failure.
 	//
 	// Possible values:
-	//   "EVENT_FAILURE_CAUSE_UNSPECIFIED" - Default value. Should not be
-	// used.
 	//   "TOO_LARGE" - A batch request was issued with more events than are
 	// allowed in a single batch.
 	//   "TIME_PERIOD_EXPIRED" - A batch was sent with data too far in the
@@ -1145,7 +1167,6 @@ type EventDefinition struct {
 	// Visibility: The visibility of event being tracked in this definition.
 	//
 	// Possible values:
-	//   "EVENT_VISIBILITY_UNSPECIFIED" - Default value. Should not be used.
 	//   "REVEALED" - This event should be visible to all users.
 	//   "HIDDEN" - This event should only be shown to users that have
 	// recorded this event at least once.
@@ -1293,8 +1314,6 @@ type EventRecordFailure struct {
 	// FailureCause: The cause for the update failure.
 	//
 	// Possible values:
-	//   "EVENT_UPDATE_FAILURE_CAUSE_UNSPECIFIED" - Default value. Should
-	// not use.
 	//   "NOT_FOUND" - An attempt was made to set an event that was not
 	// defined.
 	//   "INVALID_UPDATE_VALUE" - An attempt was made to increment an event
@@ -1617,7 +1636,6 @@ type Instance struct {
 	// PlatformType: The platform type.
 	//
 	// Possible values:
-	//   "PLATFORM_TYPE_UNSPECIFIED" - Default value. Should be unused.
 	//   "ANDROID" - Instance is for Android.
 	//   "IOS" - Instance is for iOS.
 	//   "WEB_APP" - Instance is for Web App.
@@ -1807,7 +1825,6 @@ type Leaderboard struct {
 	// Order: How scores are ordered.
 	//
 	// Possible values:
-	//   "SCORE_ORDER_UNSPECIFIED" - Default value. This value is unused.
 	//   "LARGER_IS_BETTER" - Larger values are better; scores are sorted in
 	// descending order
 	//   "SMALLER_IS_BETTER" - Smaller values are better; scores are sorted
@@ -1872,8 +1889,6 @@ type LeaderboardEntry struct {
 	// TimeSpan: The time span of this high score.
 	//
 	// Possible values:
-	//   "SCORE_TIME_SPAN_UNSPECIFIED" - Default value. This value is
-	// unused.
 	//   "ALL_TIME" - The score is an all-time score.
 	//   "WEEKLY" - The score is a weekly score.
 	//   "DAILY" - The score is a daily score.
@@ -2041,6 +2056,139 @@ func (s *LeaderboardScores) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LinkPersonaRequest: Request to link an in-game account with a PGS
+// principal (encoded in the session id).
+type LinkPersonaRequest struct {
+	// CardinalityConstraint: Required. Cardinality constraint to observe
+	// when linking a persona to a player in the scope of a game.
+	//
+	// Possible values:
+	//   "ONE_PERSONA_TO_ONE_PLAYER" - 1:1 cardinality between in-game
+	// personas and Play Games Services players. By the end of the linking
+	// operation only one entry for the player and the persona should remain
+	// in the scope of the application. Whether a new link is created or not
+	// when this constraint is specified is determined by the chosen
+	// `ConflictingLinksResolutionPolicy`: * If `KEEP_EXISTING_LINKS` is
+	// specified and the provided persona is already linked to a different
+	// player, or the player is already linked to a different persona, no
+	// new link will be created and the already existing link(s) will remain
+	// as is(are). * If `CREATE_NEW_LINK` is specified and the provided
+	// persona is already linked to a different player, or the player is
+	// already linked to another persona, the older link(s) will be removed
+	// in favour of the new link being created.
+	CardinalityConstraint string `json:"cardinalityConstraint,omitempty"`
+
+	// ConflictingLinksResolutionPolicy: Required. Resolution policy to
+	// apply when the linking of a persona to a player would result in
+	// violating the specified cardinality constraint.
+	//
+	// Possible values:
+	//   "KEEP_EXISTING_LINKS" - If link(s) between a player and persona
+	// already exists which would result in violating the specified
+	// `RecallTokensCardinalityConstraint` if the new link was created, keep
+	// the already existing link(s). For example, if Persona1-Player1 is
+	// already linked in the scope of application1 and a new link
+	// Persona1-Player2 is attempted to be created in the scope of
+	// application1, then the old link will remain and no new link will be
+	// added. Note that if the already existing links do violate the
+	// specified policy (which could occur if not all `LinkPersona` calls
+	// use the same `RecallTokensCardinalityConstraint`) this policy will
+	// leave these violations unresolved; in order to resolve conflicts, the
+	// {@link `CREATE_NEW_LINK` policy needs to be used to rewrite links
+	// resolving conflicts.
+	//   "CREATE_NEW_LINK" - If an existing link between a player and
+	// persona already exists which would result in violating the specified
+	// `RecallTokensCardinalityConstraint` if the new link was created,
+	// replace the already existing link(s) with the new link. For example,
+	// if Persona1-Player1 is already linked in the scope of application1
+	// and a new link Persona1-Player2 is attempted to be created in the
+	// scope of application1, then the old link will be removed and the new
+	// link will be added to replace it.
+	ConflictingLinksResolutionPolicy string `json:"conflictingLinksResolutionPolicy,omitempty"`
+
+	// ExpireTime: Input only. Optional expiration time.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Persona: Required. Stable identifier of the in-game account. Please
+	// refrain from re-using the same persona for different games.
+	Persona string `json:"persona,omitempty"`
+
+	// SessionId: Required. Opaque server-generated string that encodes all
+	// the necessary information to identify the PGS player / Google user
+	// and application.
+	SessionId string `json:"sessionId,omitempty"`
+
+	// Token: Required. Value of the token to create. Opaque to Play Games
+	// and assumed to be non-stable (encrypted with key rotation).
+	Token string `json:"token,omitempty"`
+
+	// Ttl: Input only. Optional time-to-live.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CardinalityConstraint") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardinalityConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkPersonaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkPersonaRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LinkPersonaResponse: Outcome of a persona linking attempt.
+type LinkPersonaResponse struct {
+	// State: Output only. State of a persona linking attempt.
+	//
+	// Possible values:
+	//   "LINK_CREATED" - The link specified in the request was created.
+	//   "PERSONA_OR_PLAYER_ALREADY_LINKED" - The link specified in the
+	// request was not created because already existing links would result
+	// in the new link violating the specified
+	// `RecallTokensCardinalityConstraint` if created.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkPersonaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkPersonaResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MetagameConfig: The metagame config resource
 type MetagameConfig struct {
 	// CurrentVersion: Current version of the metagame configuration data.
@@ -2108,7 +2256,6 @@ type Player struct {
 	// list with the game.
 	//
 	// Possible values:
-	//   "FRIEND_STATUS_UNSPECIFIED" - Default value. This value is unused.
 	//   "NO_RELATIONSHIP" - There is no relationship between the players.
 	//   "FRIEND" - The player and requester are friends.
 	FriendStatus string `json:"friendStatus,omitempty"`
@@ -2207,7 +2354,6 @@ type PlayerAchievement struct {
 	// AchievementState: The state of the achievement.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "HIDDEN" - Achievement is hidden.
 	//   "REVEALED" - Achievement is revealed.
 	//   "UNLOCKED" - Achievement is unlocked.
@@ -2463,8 +2609,6 @@ type PlayerLeaderboardScore struct {
 	// TimeSpan: The time span of this score.
 	//
 	// Possible values:
-	//   "SCORE_TIME_SPAN_UNSPECIFIED" - Default value. This value is
-	// unused.
 	//   "ALL_TIME" - The score is an all-time score.
 	//   "WEEKLY" - The score is a weekly score.
 	//   "DAILY" - The score is a daily score.
@@ -2637,8 +2781,6 @@ type PlayerScore struct {
 	// TimeSpan: The time span for this player score.
 	//
 	// Possible values:
-	//   "SCORE_TIME_SPAN_UNSPECIFIED" - Default value. This value is
-	// unused.
 	//   "ALL_TIME" - The score is an all-time score.
 	//   "WEEKLY" - The score is a weekly score.
 	//   "DAILY" - The score is a daily score.
@@ -2710,8 +2852,6 @@ type PlayerScoreResponse struct {
 	// better than the existing score for that time span.
 	//
 	// Possible values:
-	//   "SCORE_TIME_SPAN_UNSPECIFIED" - Default value. This value is
-	// unused.
 	//   "ALL_TIME" - The score is an all-time score.
 	//   "WEEKLY" - The score is a weekly score.
 	//   "DAILY" - The score is a daily score.
@@ -2802,7 +2942,6 @@ func (s *PlayerScoreSubmissionList) MarshalJSON() ([]byte, error) {
 // ProfileSettings: Profile settings
 type ProfileSettings struct {
 	// Possible values:
-	//   "FRIENDS_LIST_VISIBILITY_UNSPECIFIED" - Unused.
 	//   "VISIBLE" - The friends list is currently visible to the game.
 	//   "REQUEST_REQUIRED" - The developer does not have access to the
 	// friends list, but can call the Android API to show a consent dialog.
@@ -2846,6 +2985,139 @@ func (s *ProfileSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RecallToken: Recall token data returned from RetrievePlayerTokens RPC
+type RecallToken struct {
+	// ExpireTime: Optional. Optional expiration time of the token
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// MultiPlayerPersona: Required. Whether the persona identified by the
+	// token is linked to multiple PGS Players
+	MultiPlayerPersona bool `json:"multiPlayerPersona,omitempty"`
+
+	// Token: Required. Value of the Recall token as it is provided by the
+	// client via LinkPersona RPC
+	Token string `json:"token,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecallToken) MarshalJSON() ([]byte, error) {
+	type NoMethod RecallToken
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResetPersonaRequest: Request to remove all Recall tokens associated
+// with a persona for an app.
+type ResetPersonaRequest struct {
+	// Persona: Value of the 'persona' field as it was provided by the
+	// client in LinkPersona RPC
+	Persona string `json:"persona,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Persona") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Persona") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResetPersonaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResetPersonaRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResetPersonaResponse: Response for the ResetPersona RPC
+type ResetPersonaResponse struct {
+	// Unlinked: Required. Whether any tokens were unlinked as a result of
+	// this request.
+	Unlinked bool `json:"unlinked,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Unlinked") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Unlinked") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResetPersonaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ResetPersonaResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RetrievePlayerTokensResponse: Response for the RetrievePlayerTokens
+// RPC
+type RetrievePlayerTokensResponse struct {
+	// Tokens: Required. Recall tokens associated with the requested PGS
+	// Player principal
+	Tokens []*RecallToken `json:"tokens,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Tokens") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tokens") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetrievePlayerTokensResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrievePlayerTokensResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RevisionCheckResponse: A third party checking a revision response.
 type RevisionCheckResponse struct {
 	// ApiVersion: The version of the API this client revision should use
@@ -2859,8 +3131,6 @@ type RevisionCheckResponse struct {
 	// RevisionStatus: The result of the revision check.
 	//
 	// Possible values:
-	//   "REVISION_STATUS_UNSPECIFIED" - Default value. This value is
-	// unused.
 	//   "OK" - The revision being used is current.
 	//   "DEPRECATED" - There is currently a newer version available, but
 	// the revision being used still works.
@@ -3019,7 +3289,6 @@ type Snapshot struct {
 	// Type: The type of this snapshot.
 	//
 	// Possible values:
-	//   "SNAPSHOT_TYPE_UNSPECIFIED" - Default value. This value is unused.
 	//   "SAVE_GAME" - A snapshot representing a save game.
 	Type string `json:"type,omitempty"`
 
@@ -3247,6 +3516,79 @@ func (s *StatsResponse) UnmarshalJSON(data []byte) error {
 	s.SpendProbability = float64(s1.SpendProbability)
 	s.TotalSpendNext28Days = float64(s1.TotalSpendNext28Days)
 	return nil
+}
+
+// UnlinkPersonaRequest: Request to remove a Recall token linking PGS
+// principal and an in-game account
+type UnlinkPersonaRequest struct {
+	// Persona: Value of the 'persona' field as it was provided by the
+	// client in LinkPersona RPC
+	Persona string `json:"persona,omitempty"`
+
+	// SessionId: Required. Opaque server-generated string that encodes all
+	// the necessary information to identify the PGS player / Google user
+	// and application.
+	SessionId string `json:"sessionId,omitempty"`
+
+	// Token: Value of the Recall token as it was provided by the client in
+	// LinkPersona RPC
+	Token string `json:"token,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Persona") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Persona") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UnlinkPersonaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UnlinkPersonaRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UnlinkPersonaResponse: Response for the UnlinkPersona RPC
+type UnlinkPersonaResponse struct {
+	// Unlinked: Required. Whether a Recall token specified by the request
+	// was deleted. Can be 'false' when there were no Recall tokens
+	// satisfied the criteria from the request.
+	Unlinked bool `json:"unlinked,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Unlinked") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Unlinked") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UnlinkPersonaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UnlinkPersonaResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // method id "games.achievementDefinitions.list":
@@ -3579,7 +3921,7 @@ func (c *AchievementsIncrementCall) Do(opts ...googleapi.CallOption) (*Achieveme
 	//       "type": "string"
 	//     },
 	//     "stepsToIncrement": {
-	//       "description": "The number of steps to increment.",
+	//       "description": "Required. The number of steps to increment.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "required": true,
@@ -4095,7 +4437,7 @@ func (c *AchievementsSetStepsAtLeastCall) Do(opts ...googleapi.CallOption) (*Ach
 	//       "type": "string"
 	//     },
 	//     "steps": {
-	//       "description": "The minimum value to set the steps to.",
+	//       "description": "Required. The minimum value to set the steps to.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "required": true,
@@ -4408,7 +4750,6 @@ func (c *ApplicationsGetCall) Language(language string) *ApplicationsGetCall {
 //
 // Possible values:
 //
-//	"PLATFORM_TYPE_UNSPECIFIED" - Default value, don't use.
 //	"ANDROID" - Retrieve applications that can be played on Android.
 //	"IOS" - Retrieve applications that can be played on iOS.
 //	"WEB_APP" - Retrieve applications that can be played on desktop
@@ -4540,13 +4881,11 @@ func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, er
 	//     "platformType": {
 	//       "description": "Restrict application details returned to the specific platform.",
 	//       "enum": [
-	//         "PLATFORM_TYPE_UNSPECIFIED",
 	//         "ANDROID",
 	//         "IOS",
 	//         "WEB_APP"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value, don't use.",
 	//         "Retrieve applications that can be played on Android.",
 	//         "Retrieve applications that can be played on iOS.",
 	//         "Retrieve applications that can be played on desktop web."
@@ -4593,7 +4932,6 @@ func (c *ApplicationsGetEndPointCall) ApplicationId(applicationId string) *Appli
 //
 // Possible values:
 //
-//	"END_POINT_TYPE_UNSPECIFIED" - Default value. This value is unused.
 //	"PROFILE_CREATION" - Request a URL to create a new profile.
 //	"PROFILE_SETTINGS" - Request a URL for the Settings view.
 func (c *ApplicationsGetEndPointCall) EndPointType(endPointType string) *ApplicationsGetEndPointCall {
@@ -4698,12 +5036,10 @@ func (c *ApplicationsGetEndPointCall) Do(opts ...googleapi.CallOption) (*EndPoin
 	//     "endPointType": {
 	//       "description": "Type of endpoint being requested.",
 	//       "enum": [
-	//         "END_POINT_TYPE_UNSPECIFIED",
 	//         "PROFILE_CREATION",
 	//         "PROFILE_SETTINGS"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. This value is unused.",
 	//         "Request a URL to create a new profile.",
 	//         "Request a URL for the Settings view."
 	//       ],
@@ -6117,11 +6453,9 @@ func (c *MetagameListCategoriesByPlayerCall) Do(opts ...googleapi.CallOption) (*
 	//     "collection": {
 	//       "description": "The collection of categories for which data will be returned.",
 	//       "enum": [
-	//         "COLLECTION_UNSPECIFIED",
 	//         "ALL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. This value is unused.",
 	//         "Retrieve data for all categories. This is the default."
 	//       ],
 	//       "location": "path",
@@ -6857,6 +7191,534 @@ func (c *PlayersListCall) Pages(ctx context.Context, f func(*PlayerListResponse)
 	}
 }
 
+// method id "games.recall.linkPersona":
+
+type RecallLinkPersonaCall struct {
+	s                  *Service
+	linkpersonarequest *LinkPersonaRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// LinkPersona: Associate the PGS Player principal encoded in the
+// provided recall session id with an in-game account
+func (r *RecallService) LinkPersona(linkpersonarequest *LinkPersonaRequest) *RecallLinkPersonaCall {
+	c := &RecallLinkPersonaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.linkpersonarequest = linkpersonarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecallLinkPersonaCall) Fields(s ...googleapi.Field) *RecallLinkPersonaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecallLinkPersonaCall) Context(ctx context.Context) *RecallLinkPersonaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecallLinkPersonaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecallLinkPersonaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.linkpersonarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/recall:linkPersona")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.recall.linkPersona" call.
+// Exactly one of *LinkPersonaResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *LinkPersonaResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RecallLinkPersonaCall) Do(opts ...googleapi.CallOption) (*LinkPersonaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LinkPersonaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Associate the PGS Player principal encoded in the provided recall session id with an in-game account",
+	//   "flatPath": "games/v1/recall:linkPersona",
+	//   "httpMethod": "POST",
+	//   "id": "games.recall.linkPersona",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "games/v1/recall:linkPersona",
+	//   "request": {
+	//     "$ref": "LinkPersonaRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "LinkPersonaResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "games.recall.resetPersona":
+
+type RecallResetPersonaCall struct {
+	s                   *Service
+	resetpersonarequest *ResetPersonaRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// ResetPersona: Delete all Recall tokens linking the given persona to
+// any player (with or without a profile).
+func (r *RecallService) ResetPersona(resetpersonarequest *ResetPersonaRequest) *RecallResetPersonaCall {
+	c := &RecallResetPersonaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resetpersonarequest = resetpersonarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecallResetPersonaCall) Fields(s ...googleapi.Field) *RecallResetPersonaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecallResetPersonaCall) Context(ctx context.Context) *RecallResetPersonaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecallResetPersonaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecallResetPersonaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resetpersonarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/recall:resetPersona")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.recall.resetPersona" call.
+// Exactly one of *ResetPersonaResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ResetPersonaResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RecallResetPersonaCall) Do(opts ...googleapi.CallOption) (*ResetPersonaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResetPersonaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete all Recall tokens linking the given persona to any player (with or without a profile).",
+	//   "flatPath": "games/v1/recall:resetPersona",
+	//   "httpMethod": "POST",
+	//   "id": "games.recall.resetPersona",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "games/v1/recall:resetPersona",
+	//   "request": {
+	//     "$ref": "ResetPersonaRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ResetPersonaResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "games.recall.retrieveTokens":
+
+type RecallRetrieveTokensCall struct {
+	s            *Service
+	sessionId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveTokens: Retrieve all Recall tokens associated with the PGS
+// Player principal encoded in the provided recall session id. The API
+// is only available for users that have active PGS Player profile.
+//
+//   - sessionId: Opaque server-generated string that encodes all the
+//     necessary information to identify the PGS player / Google user and
+//     application.
+func (r *RecallService) RetrieveTokens(sessionId string) *RecallRetrieveTokensCall {
+	c := &RecallRetrieveTokensCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sessionId = sessionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecallRetrieveTokensCall) Fields(s ...googleapi.Field) *RecallRetrieveTokensCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RecallRetrieveTokensCall) IfNoneMatch(entityTag string) *RecallRetrieveTokensCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecallRetrieveTokensCall) Context(ctx context.Context) *RecallRetrieveTokensCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecallRetrieveTokensCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecallRetrieveTokensCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/recall/tokens/{sessionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sessionId": c.sessionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.recall.retrieveTokens" call.
+// Exactly one of *RetrievePlayerTokensResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RetrievePlayerTokensResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RecallRetrieveTokensCall) Do(opts ...googleapi.CallOption) (*RetrievePlayerTokensResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrievePlayerTokensResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve all Recall tokens associated with the PGS Player principal encoded in the provided recall session id. The API is only available for users that have active PGS Player profile.",
+	//   "flatPath": "games/v1/recall/tokens/{sessionId}",
+	//   "httpMethod": "GET",
+	//   "id": "games.recall.retrieveTokens",
+	//   "parameterOrder": [
+	//     "sessionId"
+	//   ],
+	//   "parameters": {
+	//     "sessionId": {
+	//       "description": "Required. Opaque server-generated string that encodes all the necessary information to identify the PGS player / Google user and application.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "games/v1/recall/tokens/{sessionId}",
+	//   "response": {
+	//     "$ref": "RetrievePlayerTokensResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "games.recall.unlinkPersona":
+
+type RecallUnlinkPersonaCall struct {
+	s                    *Service
+	unlinkpersonarequest *UnlinkPersonaRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// UnlinkPersona: Delete a Recall token linking the PGS Player principal
+// identified by the Recall session and an in-game account identified
+// either by the 'persona' or by the token value.
+func (r *RecallService) UnlinkPersona(unlinkpersonarequest *UnlinkPersonaRequest) *RecallUnlinkPersonaCall {
+	c := &RecallUnlinkPersonaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.unlinkpersonarequest = unlinkpersonarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecallUnlinkPersonaCall) Fields(s ...googleapi.Field) *RecallUnlinkPersonaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecallUnlinkPersonaCall) Context(ctx context.Context) *RecallUnlinkPersonaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecallUnlinkPersonaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecallUnlinkPersonaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.unlinkpersonarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/recall:unlinkPersona")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.recall.unlinkPersona" call.
+// Exactly one of *UnlinkPersonaResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *UnlinkPersonaResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RecallUnlinkPersonaCall) Do(opts ...googleapi.CallOption) (*UnlinkPersonaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UnlinkPersonaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a Recall token linking the PGS Player principal identified by the Recall session and an in-game account identified either by the 'persona' or by the token value.",
+	//   "flatPath": "games/v1/recall:unlinkPersona",
+	//   "httpMethod": "POST",
+	//   "id": "games.recall.unlinkPersona",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "games/v1/recall:unlinkPersona",
+	//   "request": {
+	//     "$ref": "UnlinkPersonaRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UnlinkPersonaResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "games.revisions.check":
 
 type RevisionsCheckCall struct {
@@ -6985,7 +7847,7 @@ func (c *RevisionsCheckCall) Do(opts ...googleapi.CallOption) (*RevisionCheckRes
 	//   ],
 	//   "parameters": {
 	//     "clientRevision": {
-	//       "description": "The revision of the client SDK used by your application. Format: `[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible values of `PLATFORM_TYPE` are: * `ANDROID` - Client is running the Android SDK. * `IOS` - Client is running the iOS SDK. * `WEB_APP` - Client is running as a Web App.",
+	//       "description": "Required. The revision of the client SDK used by your application. Format: `[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible values of `PLATFORM_TYPE` are: * `ANDROID` - Client is running the Android SDK. * `IOS` - Client is running the iOS SDK. * `WEB_APP` - Client is running as a Web App.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -7041,7 +7903,6 @@ func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan stri
 //
 // Possible values:
 //
-//	"INCLUDE_RANK_TYPE_UNSPECIFIED" - Default value. Should be unused.
 //	"ALL" - Retrieve all supported ranks. In HTTP, this parameter value
 //
 // can also be specified as `ALL`.
@@ -7195,7 +8056,6 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//     "includeRankType": {
 	//       "description": "The types of ranks to return. If the parameter is omitted, no ranks will be returned.",
 	//       "enum": [
-	//         "INCLUDE_RANK_TYPE_UNSPECIFIED",
 	//         "ALL",
 	//         "PUBLIC",
 	//         "SOCIAL",
@@ -7204,12 +8064,10 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//       "enumDeprecated": [
 	//         false,
 	//         false,
-	//         false,
 	//         true,
 	//         false
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. Should be unused.",
 	//         "Retrieve all supported ranks. In HTTP, this parameter value can also be specified as `ALL`.",
 	//         "Retrieve public ranks, if the player is sharing their gameplay activity publicly.",
 	//         "(Obsolete) Retrieve the social rank.",
@@ -7249,14 +8107,12 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//     "timeSpan": {
 	//       "description": "The time span for the scores and ranks you're requesting.",
 	//       "enum": [
-	//         "SCORE_TIME_SPAN_UNSPECIFIED",
 	//         "ALL",
 	//         "ALL_TIME",
 	//         "WEEKLY",
 	//         "DAILY"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. This value is unused.",
 	//         "Get the high scores for all time spans. If this is used, maxResults values will be ignored.",
 	//         "Get the all time high score.",
 	//         "List the top scores for the current day.",
@@ -7460,19 +8316,16 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//     "collection": {
 	//       "description": "The collection of scores you're requesting.",
 	//       "enum": [
-	//         "SCORE_COLLECTION_UNSPECIFIED",
 	//         "PUBLIC",
 	//         "SOCIAL",
 	//         "FRIENDS"
 	//       ],
 	//       "enumDeprecated": [
 	//         false,
-	//         false,
 	//         true,
 	//         false
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. This value is unused.",
 	//         "List all scores in the public leaderboard.",
 	//         "(Obsolete) Legacy G+ social scores.",
 	//         "List only scores of friends."
@@ -7504,15 +8357,13 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//       "type": "string"
 	//     },
 	//     "timeSpan": {
-	//       "description": "The time span for the scores and ranks you're requesting.",
+	//       "description": "Required. The time span for the scores and ranks you're requesting.",
 	//       "enum": [
-	//         "SCORE_TIME_SPAN_UNSPECIFIED",
 	//         "ALL_TIME",
 	//         "WEEKLY",
 	//         "DAILY"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. This value is unused.",
 	//         "The score is an all-time score.",
 	//         "The score is a weekly score.",
 	//         "The score is a daily score."
@@ -7734,19 +8585,16 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//     "collection": {
 	//       "description": "The collection of scores you're requesting.",
 	//       "enum": [
-	//         "SCORE_COLLECTION_UNSPECIFIED",
 	//         "PUBLIC",
 	//         "SOCIAL",
 	//         "FRIENDS"
 	//       ],
 	//       "enumDeprecated": [
 	//         false,
-	//         false,
 	//         true,
 	//         false
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. This value is unused.",
 	//         "List all scores in the public leaderboard.",
 	//         "(Obsolete) Legacy G+ social scores.",
 	//         "List only scores of friends."
@@ -7789,15 +8637,13 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//       "type": "boolean"
 	//     },
 	//     "timeSpan": {
-	//       "description": "The time span for the scores and ranks you're requesting.",
+	//       "description": "Required. The time span for the scores and ranks you're requesting.",
 	//       "enum": [
-	//         "SCORE_TIME_SPAN_UNSPECIFIED",
 	//         "ALL_TIME",
 	//         "WEEKLY",
 	//         "DAILY"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default value. This value is unused.",
 	//         "The score is an all-time score.",
 	//         "The score is a weekly score.",
 	//         "The score is a daily score."
@@ -7989,7 +8835,7 @@ func (c *ScoresSubmitCall) Do(opts ...googleapi.CallOption) (*PlayerScoreRespons
 	//       "type": "string"
 	//     },
 	//     "score": {
-	//       "description": "The score you're submitting. The submitted score is ignored if it is worse than a previously submitted score, where worse depends on the leaderboard sort order. The meaning of the score value depends on the leaderboard format type. For fixed-point, the score represents the raw value. For time, the score represents elapsed time in milliseconds. For currency, the score represents a value in micro units.",
+	//       "description": "Required. The score you're submitting. The submitted score is ignored if it is worse than a previously submitted score, where worse depends on the leaderboard sort order. The meaning of the score value depends on the leaderboard format type. For fixed-point, the score represents the raw value. For time, the score represents elapsed time in milliseconds. For currency, the score represents a value in micro units.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "required": true,

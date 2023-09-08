@@ -563,9 +563,30 @@ type TrafficStats struct {
 	SpfSuccessRatio float64 `json:"spfSuccessRatio,omitempty"`
 
 	// UserReportedSpamRatio: The ratio of user-report spam vs. email that
-	// was sent to the inbox. This metric only pertains to emails
-	// authenticated by DKIM (http://www.dkim.org/).
+	// was sent to the inbox. This is potentially inexact -- users may want
+	// to refer to the description of the interval fields
+	// userReportedSpamRatioLowerBound and userReportedSpamRatioUpperBound
+	// for more explicit accuracy guarantees. This metric only pertains to
+	// emails authenticated by DKIM (http://www.dkim.org/).
 	UserReportedSpamRatio float64 `json:"userReportedSpamRatio,omitempty"`
+
+	// UserReportedSpamRatioLowerBound: The lower bound of the confidence
+	// interval for the user reported spam ratio. If this field is set, then
+	// the value of userReportedSpamRatio is set to the midpoint of this
+	// interval and is thus inexact. However, the true ratio is guaranteed
+	// to be in between this lower bound and the corresponding upper bound
+	// 95% of the time. This metric only pertains to emails authenticated by
+	// DKIM (http://www.dkim.org/).
+	UserReportedSpamRatioLowerBound float64 `json:"userReportedSpamRatioLowerBound,omitempty"`
+
+	// UserReportedSpamRatioUpperBound: The upper bound of the confidence
+	// interval for the user reported spam ratio. If this field is set, then
+	// the value of userReportedSpamRatio is set to the midpoint of this
+	// interval and is thus inexact. However, the true ratio is guaranteed
+	// to be in between this upper bound and the corresponding lower bound
+	// 95% of the time. This metric only pertains to emails authenticated by
+	// DKIM (http://www.dkim.org/).
+	UserReportedSpamRatioUpperBound float64 `json:"userReportedSpamRatioUpperBound,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -598,12 +619,14 @@ func (s *TrafficStats) MarshalJSON() ([]byte, error) {
 func (s *TrafficStats) UnmarshalJSON(data []byte) error {
 	type NoMethod TrafficStats
 	var s1 struct {
-		DkimSuccessRatio        gensupport.JSONFloat64 `json:"dkimSuccessRatio"`
-		DmarcSuccessRatio       gensupport.JSONFloat64 `json:"dmarcSuccessRatio"`
-		InboundEncryptionRatio  gensupport.JSONFloat64 `json:"inboundEncryptionRatio"`
-		OutboundEncryptionRatio gensupport.JSONFloat64 `json:"outboundEncryptionRatio"`
-		SpfSuccessRatio         gensupport.JSONFloat64 `json:"spfSuccessRatio"`
-		UserReportedSpamRatio   gensupport.JSONFloat64 `json:"userReportedSpamRatio"`
+		DkimSuccessRatio                gensupport.JSONFloat64 `json:"dkimSuccessRatio"`
+		DmarcSuccessRatio               gensupport.JSONFloat64 `json:"dmarcSuccessRatio"`
+		InboundEncryptionRatio          gensupport.JSONFloat64 `json:"inboundEncryptionRatio"`
+		OutboundEncryptionRatio         gensupport.JSONFloat64 `json:"outboundEncryptionRatio"`
+		SpfSuccessRatio                 gensupport.JSONFloat64 `json:"spfSuccessRatio"`
+		UserReportedSpamRatio           gensupport.JSONFloat64 `json:"userReportedSpamRatio"`
+		UserReportedSpamRatioLowerBound gensupport.JSONFloat64 `json:"userReportedSpamRatioLowerBound"`
+		UserReportedSpamRatioUpperBound gensupport.JSONFloat64 `json:"userReportedSpamRatioUpperBound"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -616,6 +639,8 @@ func (s *TrafficStats) UnmarshalJSON(data []byte) error {
 	s.OutboundEncryptionRatio = float64(s1.OutboundEncryptionRatio)
 	s.SpfSuccessRatio = float64(s1.SpfSuccessRatio)
 	s.UserReportedSpamRatio = float64(s1.UserReportedSpamRatio)
+	s.UserReportedSpamRatioLowerBound = float64(s1.UserReportedSpamRatioLowerBound)
+	s.UserReportedSpamRatioUpperBound = float64(s1.UserReportedSpamRatioUpperBound)
 	return nil
 }
 

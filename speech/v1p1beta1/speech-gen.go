@@ -355,10 +355,33 @@ func (s *CreatePhraseSetRequest) MarshalJSON() ([]byte, error) {
 // passenger ship names. CustomClass items can be substituted into
 // placeholders that you set in PhraseSet phrases.
 type CustomClass struct {
+	// Annotations: Output only. Allows users to store small amounts of
+	// arbitrary data. Both the key and the value must be 63 characters or
+	// less each. At most 100 annotations. This field is not used.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// CustomClassId: If this custom class is a resource, the
 	// custom_class_id is the resource id of the CustomClass. Case
 	// sensitive.
 	CustomClassId string `json:"customClassId,omitempty"`
+
+	// DeleteTime: Output only. The time at which this resource was
+	// requested for deletion. This field is not used.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: Output only. User-settable, human-readable name for the
+	// CustomClass. Must be 63 characters or less. This field is not used.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. This checksum is computed by the server based on
+	// the value of other fields. This may be sent on update, undelete, and
+	// delete requests to ensure the client has an up-to-date value before
+	// proceeding. This field is not used.
+	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Output only. The time at which this resource will be
+	// purged. This field is not used.
+	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Items: A collection of class items.
 	Items []*ClassItem `json:"items,omitempty"`
@@ -382,11 +405,29 @@ type CustomClass struct {
 	// Name: The resource name of the custom class.
 	Name string `json:"name,omitempty"`
 
+	// Reconciling: Output only. Whether or not this CustomClass is in the
+	// process of being updated. This field is not used.
+	Reconciling bool `json:"reconciling,omitempty"`
+
+	// State: Output only. The CustomClass lifecycle state. This field is
+	// not used.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state. This is only used/useful
+	// for distinguishing unset values.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETED" - This CustomClass has been deleted.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. System-assigned unique identifier for the
+	// CustomClass. This field is not used.
+	Uid string `json:"uid,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomClassId") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -394,7 +435,7 @@ type CustomClass struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomClassId") to include
+	// NullFields is a list of field names (e.g. "Annotations") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -846,6 +887,11 @@ func (s *Phrase) UnmarshalJSON(data []byte) error {
 // PhraseSet: Provides "hints" to the speech recognizer to favor
 // specific words and phrases in the results.
 type PhraseSet struct {
+	// Annotations: Output only. Allows users to store small amounts of
+	// arbitrary data. Both the key and the value must be 63 characters or
+	// less each. At most 100 annotations. This field is not used.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// Boost: Hint Boost. Positive value will increase the probability that
 	// a specific phrase will be recognized over other similar sounding
 	// phrases. The higher the boost, the higher the chance of false
@@ -857,6 +903,24 @@ type PhraseSet struct {
 	// finding the optimal value for your use case as well as adding phrases
 	// both with and without boost to your requests.
 	Boost float64 `json:"boost,omitempty"`
+
+	// DeleteTime: Output only. The time at which this resource was
+	// requested for deletion. This field is not used.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: Output only. User-settable, human-readable name for the
+	// PhraseSet. Must be 63 characters or less. This field is not used.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. This checksum is computed by the server based on
+	// the value of other fields. This may be sent on update, undelete, and
+	// delete requests to ensure the client has an up-to-date value before
+	// proceeding. This field is not used.
+	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Output only. The time at which this resource will be
+	// purged. This field is not used.
+	ExpireTime string `json:"expireTime,omitempty"`
 
 	// KmsKeyName: Output only. The KMS key name
 	// (https://cloud.google.com/kms/docs/resource-hierarchy#keys) with
@@ -880,11 +944,29 @@ type PhraseSet struct {
 	// Phrases: A list of word and phrases.
 	Phrases []*Phrase `json:"phrases,omitempty"`
 
+	// Reconciling: Output only. Whether or not this PhraseSet is in the
+	// process of being updated. This field is not used.
+	Reconciling bool `json:"reconciling,omitempty"`
+
+	// State: Output only. The CustomClass lifecycle state. This field is
+	// not used.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state. This is only used/useful
+	// for distinguishing unset values.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETED" - This CustomClass has been deleted.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. System-assigned unique identifier for the
+	// PhraseSet. This field is not used.
+	Uid string `json:"uid,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Boost") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -892,10 +974,10 @@ type PhraseSet struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Boost") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/learnmoreurl
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	assuredworkloadsService, err := assuredworkloads.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package assuredworkloads // import "google.golang.org/api/assuredworkloads/v1beta1"
 
 import (
@@ -258,11 +271,6 @@ type GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse struct {
 	// AssetMoveAnalyses: List of analysis results for each asset in scope.
 	AssetMoveAnalyses []*GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis `json:"assetMoveAnalyses,omitempty"`
 
-	// Blockers: A list of blockers that should be addressed before moving
-	// the source project or project-based workload to the destination
-	// folder-based workload. This field is now deprecated.
-	Blockers []string `json:"blockers,omitempty"`
-
 	// NextPageToken: The next page token. Is empty if the last page is
 	// reached.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -366,6 +374,7 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
+	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -1019,6 +1028,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
+	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the
@@ -2152,8 +2162,8 @@ type OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
 }
 
 // AnalyzeWorkloadMove: Analyzes a hypothetical move of a source
-// resource to a target(destination) folder-based workload to surface
-// compliance risks.
+// resource to a target workload to surface compliance risks. The
+// analysis is best effort and is not guaranteed to be exhaustive.
 //
 //   - target: The resource ID of the folder-based destination workload.
 //     This workload is where the source resource will hypothetically be
@@ -2168,11 +2178,13 @@ func (r *OrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(target stri
 	return c
 }
 
-// AnalyzeChildAssets sets the optional parameter "analyzeChildAssets":
-// Indicates if all child assets of the source resource should also be
-// analyzed in addition to the source.
-func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AnalyzeChildAssets(analyzeChildAssets bool) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("analyzeChildAssets", fmt.Sprint(analyzeChildAssets))
+// AssetTypes sets the optional parameter "assetTypes": List of asset
+// types to be analyzed, including and under the source resource. If
+// empty, all assets are analyzed. The complete list of asset types is
+// available here
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AssetTypes(assetTypes ...string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
 	return c
 }
 
@@ -2199,18 +2211,6 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageToken(pageT
 // specifying a project ID.
 func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Project(project string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
 	c.urlParams_.Set("project", project)
-	return c
-}
-
-// Source sets the optional parameter "source": The source type is a
-// project-based workload. Specify the workloads's relative resource
-// name, formatted as:
-// "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WO
-// RKLOAD_ID}" For example:
-// "organizations/123/locations/us-east1/workloads/assured-workload-1"
-// This option is now deprecated.
-func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Source(source string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("source", source)
 	return c
 }
 
@@ -2316,7 +2316,7 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes a hypothetical move of a source resource to a target(destination) folder-based workload to surface compliance risks.",
+	//   "description": "Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
 	//   "httpMethod": "GET",
 	//   "id": "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove",
@@ -2324,10 +2324,11 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...goog
 	//     "target"
 	//   ],
 	//   "parameters": {
-	//     "analyzeChildAssets": {
-	//       "description": "Optional. Indicates if all child assets of the source resource should also be analyzed in addition to the source.",
+	//     "assetTypes": {
+	//       "description": "Optional. List of asset types to be analyzed, including and under the source resource. If empty, all assets are analyzed. The complete list of asset types is available [here](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).",
 	//       "location": "query",
-	//       "type": "boolean"
+	//       "repeated": true,
+	//       "type": "string"
 	//     },
 	//     "pageSize": {
 	//       "description": "Optional. Page size. If a value is not specified, the default value of 10 is used.",
@@ -2342,12 +2343,6 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...goog
 	//     },
 	//     "project": {
 	//       "description": "The source type is a project. Specify the project's relative resource name, formatted as either a project number or a project ID: \"projects/{PROJECT_NUMBER}\" or \"projects/{PROJECT_ID}\" For example: \"projects/951040570662\" when specifying a project number, or \"projects/my-project-123\" when specifying a project ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "source": {
-	//       "deprecated": true,
-	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\" This option is now deprecated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

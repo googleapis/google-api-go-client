@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/dynamic-links/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	firebasedynamiclinksService, err := firebasedynamiclinks.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	firebasedynamiclinksService, err := firebasedynamiclinks.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	firebasedynamiclinksService, err := firebasedynamiclinks.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package firebasedynamiclinks // import "google.golang.org/api/firebasedynamiclinks/v1"
 
 import (
@@ -777,10 +790,10 @@ type GetIosPostInstallAttributionRequest struct {
 	// Possible values:
 	//   "UNKNOWN_PAYLOAD_RETRIEVAL_METHOD" - Unknown method.
 	//   "IMPLICIT_WEAK_MATCH" - iSDK performs a server lookup by device
-	// fingerprint in the background when app is first-opened; no API called
+	// heuristics in the background when app is first-opened; no API called
 	// by developer.
 	//   "EXPLICIT_WEAK_MATCH" - iSDK performs a server lookup by device
-	// fingerprint upon a dev API call.
+	// heuristics upon a dev API call.
 	//   "EXPLICIT_STRONG_AFTER_WEAK_MATCH" - iSDK performs a strong match
 	// only if weak match is found upon a dev API call.
 	RetrievalMethod string `json:"retrievalMethod,omitempty"`
@@ -790,8 +803,8 @@ type GetIosPostInstallAttributionRequest struct {
 	SdkVersion string `json:"sdkVersion,omitempty"`
 
 	// UniqueMatchLinkToCheck: Possible unique matched link that server need
-	// to check before performing fingerprint match. If passed link is short
-	// server need to expand the link. If link is long server need to
+	// to check before performing device heuristics match. If passed link is
+	// short server need to expand the link. If link is long server need to
 	// vslidate the link.
 	UniqueMatchLinkToCheck string `json:"uniqueMatchLinkToCheck,omitempty"`
 
@@ -842,14 +855,14 @@ type GetIosPostInstallAttributionResponse struct {
 	// Possible values:
 	//   "UNKNOWN_ATTRIBUTION_CONFIDENCE" - Unset.
 	//   "WEAK" - Weak confidence, more than one matching link found or link
-	// suspected to be false positive
-	//   "DEFAULT" - Default confidence, match based on fingerprint
+	// suspected to be false positive.
+	//   "DEFAULT" - Default confidence, match based on device heuristics.
 	//   "UNIQUE" - Unique confidence, match based on "unique match link to
-	// check" or other means
+	// check" or other means.
 	AttributionConfidence string `json:"attributionConfidence,omitempty"`
 
 	// DeepLink: The deep-link attributed post-install via one of several
-	// techniques (fingerprint, copy unique).
+	// techniques (device heuristics, copy unique).
 	DeepLink string `json:"deepLink,omitempty"`
 
 	// ExternalBrowserDestinationLink: User-agent specific custom-scheme
@@ -868,7 +881,7 @@ type GetIosPostInstallAttributionResponse struct {
 	FallbackLink string `json:"fallbackLink,omitempty"`
 
 	// InvitationId: Invitation ID attributed post-install via one of
-	// several techniques (fingerprint, copy unique).
+	// several techniques (device heuristics, copy unique).
 	InvitationId string `json:"invitationId,omitempty"`
 
 	// IsStrongMatchExecutable: Instruction for iSDK to attemmpt to perform
@@ -889,7 +902,7 @@ type GetIosPostInstallAttributionResponse struct {
 	RequestIpVersion string `json:"requestIpVersion,omitempty"`
 
 	// RequestedLink: Entire FDL (short or long) attributed post-install via
-	// one of several techniques (fingerprint, copy unique).
+	// one of several techniques (device heuristics, copy unique).
 	RequestedLink string `json:"requestedLink,omitempty"`
 
 	// ResolvedLink: The entire FDL, expanded from a short link. It is the

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/tpu/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	tpuService, err := tpu.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	tpuService, err := tpu.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	tpuService, err := tpu.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package tpu // import "google.golang.org/api/tpu/v2alpha1"
 
 import (
@@ -377,8 +390,77 @@ func (s *AttachedDisk) MarshalJSON() ([]byte, error) {
 type BestEffort struct {
 }
 
+// BootDiskConfig: Boot disk configurations.
+type BootDiskConfig struct {
+	// CustomerEncryptionKey: Optional. Customer encryption key for boot
+	// disk.
+	CustomerEncryptionKey *CustomerEncryptionKey `json:"customerEncryptionKey,omitempty"`
+
+	// EnableConfidentialCompute: Optional. Whether the boot disk will be
+	// created with confidential compute mode.
+	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerEncryptionKey") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomerEncryptionKey") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BootDiskConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BootDiskConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreatingData: Further data for the creating state.
 type CreatingData struct {
+}
+
+// CustomerEncryptionKey: Customer's encryption key.
+type CustomerEncryptionKey struct {
+	// KmsKeyName: The name of the encryption key that is stored in Google
+	// Cloud KMS. For example: "kmsKeyName":
+	// "projects/kms_project_id/locations/region/keyRings/
+	// key_region/cryptoKeys/key The fully-qualifed key name may be returned
+	// for resource GET requests. For example: "kmsKeyName":
+	// "projects/kms_project_id/locations/region/keyRings/
+	// key_region/cryptoKeys/key /cryptoKeyVersions/1
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerEncryptionKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DeletingData: Further data for the deleting state.
@@ -1108,6 +1190,9 @@ type Node struct {
 	//   "V1" - TPU API V1 version.
 	//   "V2_ALPHA1" - TPU API V2Alpha1 version.
 	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// BootDiskConfig: Optional. Boot disk configuration.
+	BootDiskConfig *BootDiskConfig `json:"bootDiskConfig,omitempty"`
 
 	// CidrBlock: The CIDR block that the TPU node will use when selecting
 	// an IP address. This CIDR block must be a /29 block; the Compute

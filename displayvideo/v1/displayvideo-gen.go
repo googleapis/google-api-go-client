@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/display-video/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	displayvideoService, err := displayvideo.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	displayvideoService, err := displayvideo.NewService(ctx, option.WithScopes(displayvideo.DoubleclickbidmanagerScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	displayvideoService, err := displayvideo.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	displayvideoService, err := displayvideo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package displayvideo // import "google.golang.org/api/displayvideo/v1"
 
 import (
@@ -1604,7 +1618,10 @@ type AssignedLocation struct {
 	Name string `json:"name,omitempty"`
 
 	// TargetingOptionId: Required. The ID of the targeting option assigned
-	// to the location list. Must be of type TARGETING_TYPE_GEO_REGION.
+	// to the location list. Assigned locations can only be modified in
+	// TARGETING_LOCATION_TYPE_REGIONAL location lists. When creating or
+	// deleting assigned locations, this value must be of type
+	// TARGETING_TYPE_GEO_REGION.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3290,8 +3307,6 @@ func (s *BulkListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BulkListCampaignAssignedTargetingOptionsResponse: Response message
-// for BulkListCampaignAssignedTargetingOptions.
 type BulkListCampaignAssignedTargetingOptionsResponse struct {
 	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
@@ -3333,8 +3348,6 @@ func (s *BulkListCampaignAssignedTargetingOptionsResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BulkListInsertionOrderAssignedTargetingOptionsResponse: Response
-// message for BulkListInsertionOrderAssignedTargetingOptions.
 type BulkListInsertionOrderAssignedTargetingOptionsResponse struct {
 	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
@@ -10753,9 +10766,6 @@ type LineItem struct {
 	// integration to directly exclude any first-party audiences using
 	// audience targeting before **March 25, 2023** to account for the
 	// sunset of the exclude_first_party_audience field.
-	//   "NO_INPUT_REVENUE_MODEL_TYPE_SPECIFIED" - The partner revenue model
-	// of the line item was updated without specifying the revenue model
-	// type, which is required for updating any of the revenue model fields.
 	WarningMessages []string `json:"warningMessages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11504,8 +11514,6 @@ func (s *ListGuaranteedOrdersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListInsertionOrderAssignedTargetingOptionsResponse: Response message
-// for ListInsertionOrderAssignedTargetingOptions.
 type ListInsertionOrderAssignedTargetingOptionsResponse struct {
 	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
@@ -17227,16 +17235,6 @@ func (c *AdvertisersListCall) Filter(filter string) *AdvertisersListCall {
 	return c
 }
 
-// InternalDebuggingConfig sets the optional parameter
-// "internalDebuggingConfig": The config used in internal debugging and
-// manual testing. Use comma to separate multiple values. Examples: To
-// allow entity search to go through tangle `searchUsingTangle` To get
-// only the advertiser Ids use `idOnly`
-func (c *AdvertisersListCall) InternalDebuggingConfig(internalDebuggingConfig string) *AdvertisersListCall {
-	c.urlParams_.Set("internalDebuggingConfig", internalDebuggingConfig)
-	return c
-}
-
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
 // the list. Acceptable values are: * `displayName` (default) *
 // `entityStatus` * `updateTime` The default sorting order is ascending.
@@ -17376,11 +17374,6 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "Allows filtering by advertiser fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `advertiserId` * `displayName` * `entityStatus` * `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * All active advertisers under a partner: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` * All advertisers with an update time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All advertisers with an update time greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "internalDebuggingConfig": {
-	//       "description": "The config used in internal debugging and manual testing. Use comma to separate multiple values. Examples: To allow entity search to go through tangle `searchUsingTangle` To get only the advertiser Ids use `idOnly`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24487,9 +24480,8 @@ type AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall struct {
 // then create the assigned targeting options provided in
 // BulkEditLineItemAssignedTargetingOptionsRequest.create_requests.
 // Requests to this endpoint cannot be made concurrently with the
-// following requests updating the same line item: * UpdateLineItem *
-// CreateLineItemAssignedTargetingOption *
-// DeleteLineItemAssignedTargetingOption
+// following requests updating the same line item: * lineItems.patch *
+// assignedTargetingOptions.create * assignedTargetingOptions.delete
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - lineItemId: The ID of the line item the assigned targeting option
@@ -24596,7 +24588,7 @@ func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits targeting options under a single line item. The operation will delete the assigned targeting options provided in BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditLineItemAssignedTargetingOptionsRequest.create_requests. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * UpdateLineItem * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Bulk edits targeting options under a single line item. The operation will delete the assigned targeting options provided in BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditLineItemAssignedTargetingOptionsRequest.create_requests. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.patch * assignedTargetingOptions.create * assignedTargetingOptions.delete",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}:bulkEditLineItemAssignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkEditLineItemAssignedTargetingOptions",
@@ -25760,8 +25752,7 @@ type AdvertisersLineItemsPatchCall struct {
 // if successful. Requests to this endpoint cannot be made concurrently
 // with the following requests updating the same line item: *
 // BulkEditAssignedTargetingOptions * BulkUpdateLineItems *
-// CreateLineItemAssignedTargetingOption *
-// DeleteLineItemAssignedTargetingOption
+// assignedTargetingOptions.create * assignedTargetingOptions.delete
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the line
 //     item belongs to.
@@ -25874,7 +25865,7 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * assignedTargetingOptions.create * assignedTargetingOptions.delete",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.lineItems.patch",
@@ -25936,8 +25927,9 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 // Create: Assigns a targeting option to a line item. Returns the
 // assigned targeting option if successful. Requests to this endpoint
 // cannot be made concurrently with the following requests updating the
-// same line item: * BulkEditAssignedTargetingOptions * BulkUpdate *
-// UpdateLineItem * DeleteLineItemAssignedTargetingOption
+// same line item: * lineItems.bulkEditAssignedTargetingOptions *
+// lineItems.bulkUpdate * lineItems.patch *
+// DeleteLineItemAssignedTargetingOption
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - lineItemId: The ID of the line item the assigned targeting option
@@ -26078,7 +26070,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdate * UpdateLineItem * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * DeleteLineItemAssignedTargetingOption",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create",
@@ -26238,8 +26230,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 // Delete: Deletes an assigned targeting option from a line item.
 // Requests to this endpoint cannot be made concurrently with the
 // following requests updating the same line item: *
-// BulkEditAssignedTargetingOptions * BulkUpdate * UpdateLineItem *
-// CreateLineItemAssignedTargetingOption
+// lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate *
+// lineItems.patch * CreateLineItemAssignedTargetingOption
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - assignedTargetingOptionId: The ID of the assigned targeting option
@@ -26378,7 +26370,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdate * UpdateLineItem * CreateLineItemAssignedTargetingOption",
+	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * CreateLineItemAssignedTargetingOption",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete",
@@ -39433,14 +39425,6 @@ func (r *InventorySourcesService) Get(inventorySourceId int64) *InventorySources
 	return c
 }
 
-// AdvertiserId sets the optional parameter "advertiserId": The
-// advertiser_id is optional, when it is provided, the advertiser access
-// is used.
-func (c *InventorySourcesGetCall) AdvertiserId(advertiserId int64) *InventorySourcesGetCall {
-	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
-	return c
-}
-
 // PartnerId sets the optional parameter "partnerId": Required. The ID
 // of the DV360 partner to which the fetched inventory source is
 // permissioned.
@@ -39556,12 +39540,6 @@ func (c *InventorySourcesGetCall) Do(opts ...googleapi.CallOption) (*InventorySo
 	//     "inventorySourceId"
 	//   ],
 	//   "parameters": {
-	//     "advertiserId": {
-	//       "description": "Optional. The advertiser_id is optional, when it is provided, the advertiser access is used.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "inventorySourceId": {
 	//       "description": "Required. The ID of the inventory source to fetch.",
 	//       "format": "int64",

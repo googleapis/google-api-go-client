@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/migrate/virtual-machines
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	vmmigrationService, err := vmmigration.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	vmmigrationService, err := vmmigration.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	vmmigrationService, err := vmmigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package vmmigration // import "google.golang.org/api/vmmigration/v1"
 
 import (
@@ -614,16 +627,9 @@ type AwsSourceVmDetails struct {
 	//   "BIOS" - The firmware is BIOS.
 	Firmware string `json:"firmware,omitempty"`
 
-	// VmCapabilities: Output only. Unordered list. List of VM certain
-	// capabilities needed for some Compute Engine features.
-	//
-	// Possible values:
-	//   "VM_CAPABILITY_UNSPECIFIED" - Unknown capability.
-	//   "VM_CAPABILITY_NVME_STORAGE_ACCESS" - NVMe driver install and the
-	// VM can use NVMe PD or local SSD.
-	//   "VM_CAPABILITY_GVNIC_NETWORK_INTERFACE" - gVNIC virtual NIC driver
-	// supported.
-	VmCapabilities []string `json:"vmCapabilities,omitempty"`
+	// VmCapabilitiesInfo: Output only. Information about VM capabilities
+	// needed for some Compute Engine features.
+	VmCapabilitiesInfo *VmCapabilities `json:"vmCapabilitiesInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CommittedStorageBytes") to unconditionally include in API requests.
@@ -787,6 +793,260 @@ func (s *AwsVmsDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AzureDiskDetails: The details of an Azure VM disk.
+type AzureDiskDetails struct {
+	// DiskId: Azure disk ID.
+	DiskId string `json:"diskId,omitempty"`
+
+	// DiskNumber: The ordinal number of the disk.
+	DiskNumber int64 `json:"diskNumber,omitempty"`
+
+	// SizeGb: Size in GB.
+	SizeGb int64 `json:"sizeGb,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureDiskDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureDiskDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AzureSourceDetails: AzureSourceDetails message describes a specific
+// source details for the Azure source type.
+type AzureSourceDetails struct {
+	// AzureLocation: Immutable. The Azure location (region) that the source
+	// VMs will be migrated from.
+	AzureLocation string `json:"azureLocation,omitempty"`
+
+	// ClientSecretCreds: Azure Credentials using tenant ID, client ID and
+	// secret.
+	ClientSecretCreds *ClientSecretCredentials `json:"clientSecretCreds,omitempty"`
+
+	// Error: Output only. Provides details on the state of the Source in
+	// case of an error.
+	Error *Status `json:"error,omitempty"`
+
+	// MigrationResourcesUserTags: User specified tags to add to every M2VM
+	// generated resource in Azure. These tags will be set in addition to
+	// the default tags that are set as part of the migration process. The
+	// tags must not begin with the reserved prefix `m4ce` or `m2vm`.
+	MigrationResourcesUserTags map[string]string `json:"migrationResourcesUserTags,omitempty"`
+
+	// ResourceGroupId: Output only. The ID of the Azure resource group that
+	// contains all resources related to the migration process of this
+	// source.
+	ResourceGroupId string `json:"resourceGroupId,omitempty"`
+
+	// State: Output only. State of the source as determined by the health
+	// check.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unknown. This is used for API
+	// compatibility only and is not used by the system.
+	//   "PENDING" - The state was not sampled by the health checks yet.
+	//   "FAILED" - The source is available but might not be usable yet due
+	// to invalid credentials or another reason. The error message will
+	// contain further details.
+	//   "ACTIVE" - The source exists and its credentials were verified.
+	State string `json:"state,omitempty"`
+
+	// SubscriptionId: Immutable. Azure subscription ID.
+	SubscriptionId string `json:"subscriptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AzureLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AzureLocation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureSourceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureSourceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AzureSourceVmDetails: Represent the source Azure VM details.
+type AzureSourceVmDetails struct {
+	// CommittedStorageBytes: The total size of the disks being migrated in
+	// bytes.
+	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
+
+	// Disks: The disks attached to the source VM.
+	Disks []*AzureDiskDetails `json:"disks,omitempty"`
+
+	// Firmware: The firmware type of the source VM.
+	//
+	// Possible values:
+	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
+	//   "EFI" - The firmware is EFI.
+	//   "BIOS" - The firmware is BIOS.
+	Firmware string `json:"firmware,omitempty"`
+
+	// VmCapabilitiesInfo: Output only. Information about VM capabilities
+	// needed for some Compute Engine features.
+	VmCapabilitiesInfo *VmCapabilities `json:"vmCapabilitiesInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommittedStorageBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureSourceVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureSourceVmDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AzureVmDetails: AwsVmDetails describes a VM in AWS.
+type AzureVmDetails struct {
+	// BootOption: The VM Boot Option.
+	//
+	// Possible values:
+	//   "BOOT_OPTION_UNSPECIFIED" - The boot option is unknown.
+	//   "EFI" - The boot option is UEFI.
+	//   "BIOS" - The boot option is BIOS.
+	BootOption string `json:"bootOption,omitempty"`
+
+	// CommittedStorageMb: The total size of the storage allocated to the VM
+	// in MB.
+	CommittedStorageMb int64 `json:"committedStorageMb,omitempty,string"`
+
+	// ComputerName: The VM's ComputerName.
+	ComputerName string `json:"computerName,omitempty"`
+
+	// CpuCount: The number of cpus the VM has.
+	CpuCount int64 `json:"cpuCount,omitempty"`
+
+	// DiskCount: The number of disks the VM has, including OS disk.
+	DiskCount int64 `json:"diskCount,omitempty"`
+
+	// Disks: Description of the data disks.
+	Disks []*Disk `json:"disks,omitempty"`
+
+	// MemoryMb: The memory size of the VM in MB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// OsDescription: Description of the OS.
+	OsDescription *OSDescription `json:"osDescription,omitempty"`
+
+	// OsDisk: Description of the OS disk.
+	OsDisk *OSDisk `json:"osDisk,omitempty"`
+
+	// PowerState: The power state of the VM at the moment list was taken.
+	//
+	// Possible values:
+	//   "POWER_STATE_UNSPECIFIED" - Power state is not specified.
+	//   "STARTING" - The VM is starting.
+	//   "RUNNING" - The VM is running.
+	//   "STOPPING" - The VM is stopping.
+	//   "STOPPED" - The VM is stopped.
+	//   "DEALLOCATING" - The VM is deallocating.
+	//   "DEALLOCATED" - The VM is deallocated.
+	//   "UNKNOWN" - The VM's power state is unknown.
+	PowerState string `json:"powerState,omitempty"`
+
+	// Tags: The tags of the VM.
+	Tags map[string]string `json:"tags,omitempty"`
+
+	// VmId: The VM full path in Azure.
+	VmId string `json:"vmId,omitempty"`
+
+	// VmSize: VM size as configured in Azure. Determines the VM's hardware
+	// spec.
+	VmSize string `json:"vmSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BootOption") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BootOption") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureVmDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AzureVmsDetails: AzureVmsDetails describes VMs in Azure.
+type AzureVmsDetails struct {
+	// Details: The details of the Azure VMs.
+	Details []*AzureVmDetails `json:"details,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureVmsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureVmsDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelCloneJobRequest: Request message for 'CancelCloneJob' request.
 type CancelCloneJobRequest struct {
 }
@@ -799,6 +1059,41 @@ type CancelCutoverJobRequest struct {
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// ClientSecretCredentials: Message describing Azure Credentials using
+// tenant ID, client ID and secret.
+type ClientSecretCredentials struct {
+	// ClientId: Azure client ID.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Input only. Azure client secret.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
+	// TenantId: Azure tenant ID.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClientSecretCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientSecretCredentials
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CloneJob: CloneJob describes the process of creating a clone of a
@@ -1580,6 +1875,40 @@ func (s *DatacenterConnector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Disk: A message describing a data disk.
+type Disk struct {
+	// Lun: The disk's Logical Unit Number (LUN).
+	Lun int64 `json:"lun,omitempty"`
+
+	// Name: The disk name.
+	Name string `json:"name,omitempty"`
+
+	// SizeGb: The disk size in GB.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Lun") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Lun") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Disk) MarshalJSON() ([]byte, error) {
+	type NoMethod Disk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1595,6 +1924,9 @@ type Empty struct {
 type FetchInventoryResponse struct {
 	// AwsVms: The description of the VMs in a Source of type AWS.
 	AwsVms *AwsVmsDetails `json:"awsVms,omitempty"`
+
+	// AzureVms: The description of the VMs in a Source of type Azure.
+	AzureVms *AzureVmsDetails `json:"azureVms,omitempty"`
 
 	// NextPageToken: Output only. A token, which can be sent as
 	// `page_token` to retrieve the next page. If this field is omitted,
@@ -2272,6 +2604,10 @@ type MigratingVm struct {
 	// source.
 	AwsSourceVmDetails *AwsSourceVmDetails `json:"awsSourceVmDetails,omitempty"`
 
+	// AzureSourceVmDetails: Output only. Details of the VM from an Azure
+	// source.
+	AzureSourceVmDetails *AzureSourceVmDetails `json:"azureSourceVmDetails,omitempty"`
+
 	// ComputeEngineDisksTargetDefaults: Details of the target Persistent
 	// Disks in Compute Engine.
 	ComputeEngineDisksTargetDefaults *ComputeEngineDisksTargetDefaults `json:"computeEngineDisksTargetDefaults,omitempty"`
@@ -2382,6 +2718,10 @@ type MigratingVm struct {
 	// UpdateTime: Output only. The last time the migrating VM resource was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VmwareSourceVmDetails: Output only. Details of the VM from a Vmware
+	// source.
+	VmwareSourceVmDetails *VmwareSourceVmDetails `json:"vmwareSourceVmDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2557,6 +2897,78 @@ type NetworkInterface struct {
 
 func (s *NetworkInterface) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkInterface
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OSDescription: A message describing the VM's OS. Including OS,
+// Publisher, Offer and Plan if applicable.
+type OSDescription struct {
+	// Offer: OS offer.
+	Offer string `json:"offer,omitempty"`
+
+	// Plan: OS plan.
+	Plan string `json:"plan,omitempty"`
+
+	// Publisher: OS publisher.
+	Publisher string `json:"publisher,omitempty"`
+
+	// Type: OS type.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Offer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Offer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OSDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod OSDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OSDisk: A message describing the OS disk.
+type OSDisk struct {
+	// Name: The disk's full name.
+	Name string `json:"name,omitempty"`
+
+	// SizeGb: The disk's size in GB.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+
+	// Type: The disk's type.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OSDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod OSDisk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3033,6 +3445,9 @@ type Source struct {
 	// Aws: AWS type source details.
 	Aws *AwsSourceDetails `json:"aws,omitempty"`
 
+	// Azure: Azure type source details.
+	Azure *AzureSourceDetails `json:"azure,omitempty"`
+
 	// CreateTime: Output only. The create time timestamp.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -3378,6 +3793,50 @@ func (s *UtilizationReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VmCapabilities: Migrating VM source information about the VM
+// capabilities needed for some Compute Engine features.
+type VmCapabilities struct {
+	// LastOsCapabilitiesUpdateTime: Output only. The last time OS
+	// capabilities list was updated.
+	LastOsCapabilitiesUpdateTime string `json:"lastOsCapabilitiesUpdateTime,omitempty"`
+
+	// OsCapabilities: Output only. Unordered list. List of certain VM OS
+	// capabilities needed for some Compute Engine features.
+	//
+	// Possible values:
+	//   "OS_CAPABILITY_UNSPECIFIED" - This is for API compatibility only
+	// and is not in use.
+	//   "OS_CAPABILITY_NVME_STORAGE_ACCESS" - NVMe driver installed and the
+	// VM can use NVMe PD or local SSD.
+	//   "OS_CAPABILITY_GVNIC_NETWORK_INTERFACE" - gVNIC virtual NIC driver
+	// supported.
+	OsCapabilities []string `json:"osCapabilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LastOsCapabilitiesUpdateTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "LastOsCapabilitiesUpdateTime") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmCapabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod VmCapabilities
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VmUtilizationInfo: Utilization information of a single VM.
 type VmUtilizationInfo struct {
 	// Utilization: Utilization metrics for this VM.
@@ -3465,6 +3924,40 @@ func (s *VmUtilizationMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VmwareDiskDetails: The details of a Vmware VM disk.
+type VmwareDiskDetails struct {
+	// DiskNumber: The ordinal number of the disk.
+	DiskNumber int64 `json:"diskNumber,omitempty"`
+
+	// Label: The disk label.
+	Label string `json:"label,omitempty"`
+
+	// SizeGb: Size in GB.
+	SizeGb int64 `json:"sizeGb,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskNumber") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareDiskDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareDiskDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VmwareSourceDetails: VmwareSourceDetails message describes a specific
 // source details for the vmware source type.
 type VmwareSourceDetails struct {
@@ -3504,6 +3997,52 @@ type VmwareSourceDetails struct {
 
 func (s *VmwareSourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareSourceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmwareSourceVmDetails: Represent the source Vmware VM details.
+type VmwareSourceVmDetails struct {
+	// CommittedStorageBytes: The total size of the disks being migrated in
+	// bytes.
+	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
+
+	// Disks: The disks attached to the source VM.
+	Disks []*VmwareDiskDetails `json:"disks,omitempty"`
+
+	// Firmware: The firmware type of the source VM.
+	//
+	// Possible values:
+	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
+	//   "EFI" - The firmware is EFI.
+	//   "BIOS" - The firmware is BIOS.
+	Firmware string `json:"firmware,omitempty"`
+
+	// VmCapabilitiesInfo: Output only. Information about VM capabilities
+	// needed for some Compute Engine features.
+	VmCapabilitiesInfo *VmCapabilities `json:"vmCapabilitiesInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommittedStorageBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareSourceVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareSourceVmDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/scheduler/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	cloudschedulerService, err := cloudscheduler.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	cloudschedulerService, err := cloudscheduler.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	cloudschedulerService, err := cloudscheduler.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package cloudscheduler // import "google.golang.org/api/cloudscheduler/v1"
 
 import (
@@ -516,7 +529,11 @@ type Job struct {
 	// execution has not ended when its scheduled time occurs. If
 	// retry_count > 0 and a job attempt fails, the job will be tried a
 	// total of retry_count times, with exponential backoff, until the next
-	// scheduled start time.
+	// scheduled start time. If retry_count is 0, a job attempt will not be
+	// retried if it fails. Instead the Cloud Scheduler system will wait for
+	// the next scheduled execution time. Setting retry_count to 0 does not
+	// prevent failed jobs from running according to schedule after the
+	// failure.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ScheduleTime: Output only. The next time the job is scheduled. Note
@@ -944,13 +961,14 @@ type RetryConfig struct {
 	// RetryCount: The number of attempts that the system will make to run a
 	// job using the exponential backoff procedure described by
 	// max_doublings. The default value of retry_count is zero. If
-	// retry_count is zero, a job attempt will *not* be retried if it fails.
+	// retry_count is 0, a job attempt will not be retried if it fails.
 	// Instead the Cloud Scheduler system will wait for the next scheduled
-	// execution time. If retry_count is set to a non-zero number then Cloud
-	// Scheduler will retry failed attempts, using exponential backoff,
-	// retry_count times, or until the next scheduled execution time,
-	// whichever comes first. Values greater than 5 and negative values are
-	// not allowed.
+	// execution time. Setting retry_count to 0 does not prevent failed jobs
+	// from running according to schedule after the failure. If retry_count
+	// is set to a non-zero number then Cloud Scheduler will retry failed
+	// attempts, using exponential backoff, retry_count times, or until the
+	// next scheduled execution time, whichever comes first. Values greater
+	// than 5 and negative values are not allowed.
 	RetryCount int64 `json:"retryCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxBackoffDuration")

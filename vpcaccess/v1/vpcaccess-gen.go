@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/vpc/docs/configure-serverless-vpc-access
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	vpcaccessService, err := vpcaccess.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	vpcaccessService, err := vpcaccess.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	vpcaccessService, err := vpcaccess.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package vpcaccess // import "google.golang.org/api/vpcaccess/v1"
 
 import (
@@ -906,7 +919,7 @@ type ProjectsLocationsConnectorsCreateCall struct {
 // Create: Creates a Serverless VPC Access connector, returns an
 // operation.
 //
-//   - parent: The project id and location in which the configuration
+//   - parent: The project ID and location in which the configuration
 //     should be created, specified in the format
 //     `projects/*/locations/*`.
 func (r *ProjectsLocationsConnectorsService) Create(parent string, connector *Connector) *ProjectsLocationsConnectorsCreateCall {
@@ -1028,7 +1041,7 @@ func (c *ProjectsLocationsConnectorsCreateCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project id and location in which the configuration should be created, specified in the format `projects/*/locations/*`.",
+	//       "description": "Required. The project ID and location in which the configuration should be created, specified in the format `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

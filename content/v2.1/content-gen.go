@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/shopping-content/v2/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	contentService, err := content.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	contentService, err := content.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	contentService, err := content.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package content // import "google.golang.org/api/content/v2.1"
 
 import (
@@ -131,6 +144,7 @@ func New(client *http.Client) (*APIService, error) {
 	s.Freelistingsprogram = NewFreelistingsprogramService(s)
 	s.Liasettings = NewLiasettingsService(s)
 	s.Localinventory = NewLocalinventoryService(s)
+	s.Merchantsupport = NewMerchantsupportService(s)
 	s.Orderinvoices = NewOrderinvoicesService(s)
 	s.Orderreports = NewOrderreportsService(s)
 	s.Orderreturns = NewOrderreturnsService(s)
@@ -188,6 +202,8 @@ type APIService struct {
 	Liasettings *LiasettingsService
 
 	Localinventory *LocalinventoryService
+
+	Merchantsupport *MerchantsupportService
 
 	Orderinvoices *OrderinvoicesService
 
@@ -407,6 +423,15 @@ func NewLocalinventoryService(s *APIService) *LocalinventoryService {
 }
 
 type LocalinventoryService struct {
+	s *APIService
+}
+
+func NewMerchantsupportService(s *APIService) *MerchantsupportService {
+	rs := &MerchantsupportService{s: s}
+	return rs
+}
+
+type MerchantsupportService struct {
 	s *APIService
 }
 
@@ -1219,6 +1244,149 @@ type AccountImageImprovementsSettings struct {
 
 func (s *AccountImageImprovementsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountImageImprovementsSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccountIssue: An issue affecting specific merchant.
+type AccountIssue struct {
+	// Actions: A list of actionable steps that can be executed to solve the
+	// issue. An example is requesting a re-review or providing arguments
+	// when merchant disagrees with the issue. Actions that are supported in
+	// (your) third-party application can be rendered as buttons and should
+	// be available to merchant when they expand the issue.
+	Actions []*Action `json:"actions,omitempty"`
+
+	// Impact: Clarifies the severity of the issue. The summarizing message,
+	// if present, should be shown right under the title for each issue. It
+	// helps merchants to quickly understand the impact of the issue. The
+	// detailed breakdown helps the merchant to fully understand the impact
+	// of the issue. It can be rendered as dialog that opens when the
+	// merchant mouse over the summarized impact statement. Issues with
+	// different severity can be styled differently. They may use a
+	// different color or icon to signal the difference between `ERROR`,
+	// `WARNING` and `INFO`.
+	Impact *AccountIssueImpact `json:"impact,omitempty"`
+
+	// PrerenderedContent: Details of the issue as a pre-rendered HTML. HTML
+	// elements contain CSS classes that can be used to customize the style
+	// of the content. Always sanitize the HTML before embedding it directly
+	// to your application. The sanitizer needs to allow basic HTML tags,
+	// such as: `div`, `span`, `p`, `a`, `ul`, `li`, `table`, `tr`, `td`.
+	// For example, you can use DOMPurify
+	// (https://www.npmjs.com/package/dompurify). CSS classes: *
+	// `issue-detail` - top level container for the detail of the issue *
+	// `callout-banners` - section of the `issue-detail` with callout
+	// banners * `callout-banner` - single callout banner, inside
+	// `callout-banners` * `callout-banner-info` - callout with important
+	// information (default) * `callout-banner-warning` - callout with a
+	// warning * `callout-banner-error` - callout informing about an error
+	// (most severe) * `issue-content` - section of the `issue-detail`,
+	// contains multiple `content-element` * `content-element` - content
+	// element such as a list, link or paragraph, inside `issue-content` *
+	// `root-causes` - unordered list with items describing root causes of
+	// the issue, inside `issue-content` * `root-causes-intro` - intro text
+	// before the `root-causes` list, inside `issue-content` * `segment` -
+	// section of the text, `span` inside paragraph * `segment-attribute` -
+	// section of the text that represents a product attribute, for example
+	// 'image\_link' * `segment-literal` - section of the text that contains
+	// a special value, for example '0-1000 kg' * `segment-bold` - section
+	// of the text that should be rendered as bold * `segment-italic` -
+	// section of the text that should be rendered as italic * `tooltip` -
+	// used on paragraphs that should be rendered with a tooltip. A section
+	// of the text in such a paragraph will have a class `tooltip-text` and
+	// is intended to be shown in a mouse over dialog. If the style is not
+	// used, the `tooltip-text` section would be shown on a new line, after
+	// the main part of the text. * `tooltip-text` - marks a section of the
+	// text within a `tooltip`, that is intended to be shown in a mouse over
+	// dialog. * `tooltip-icon` - marks a section of the text within a
+	// `tooltip`, that can be replaced with a tooltip icon, for example '?'
+	// or 'i'. By default, this section contains a `br` tag, that is
+	// separating the main text and the tooltip text when the style is not
+	// used. * `tooltip-style-question` - the tooltip shows helpful
+	// information, can use the '?' as an icon. * `tooltip-style-info` - the
+	// tooltip adds additional information fitting to the context, can use
+	// the 'i' as an icon. * `content-moderation` - marks the paragraph that
+	// explains how the issue was identified. * `new-element` - Present for
+	// new elements added to the pre-rendered content in the future. To make
+	// sure that a new content element does not break your style, you can
+	// hide everything with this class.
+	PrerenderedContent string `json:"prerenderedContent,omitempty"`
+
+	// Title: Title of the issue.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccountIssueImpact: Overall impact of the issue.
+type AccountIssueImpact struct {
+	// Breakdowns: Detailed impact breakdown. Explains the types of
+	// restriction the issue has in different shopping destinations and
+	// territory. If present, it should be rendered to the merchant. Can be
+	// shown as a mouse over dropdown or a dialog. Each breakdown item
+	// represents a group of regions with the same impact details.
+	Breakdowns []*Breakdown `json:"breakdowns,omitempty"`
+
+	// Message: Optional. Message summarizing the overall impact of the
+	// issue. If present, it should be rendered to the merchant. For
+	// example: "Disapproves 90k offers in 25 countries"
+	Message string `json:"message,omitempty"`
+
+	// Severity: The severity of the issue.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Default value. Will never be provided by
+	// the API.
+	//   "ERROR" - Causes either an account suspension or an item
+	// disapproval. Errors should be resolved as soon as possible to ensure
+	// items are eligible to appear in results again.
+	//   "WARNING" - Warnings can negatively impact the performance of ads
+	// and can lead to item or account suspensions in the future unless the
+	// issue is resolved.
+	//   "INFO" - Infos are suggested optimizations to increase data
+	// quality. Resolving these issues is recommended, but not required.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakdowns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Breakdowns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountIssueImpact) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountIssueImpact
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2737,6 +2905,103 @@ func (s *AccounttaxListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Action: An actionable step that can be executed to solve the issue.
+type Action struct {
+	// BuiltinSimpleAction: Action implemented and performed in (your)
+	// third-party application. The application should point the merchant to
+	// the place, where they can access the corresponding functionality or
+	// provide instructions, if the specific functionality is not available.
+	BuiltinSimpleAction *BuiltInSimpleAction `json:"builtinSimpleAction,omitempty"`
+
+	// ButtonLabel: Label of the action button.
+	ButtonLabel string `json:"buttonLabel,omitempty"`
+
+	// ExternalAction: Action that is implemented and performed outside of
+	// (your) third-party application. The application needs to redirect the
+	// merchant to the external location where they can perform the action.
+	ExternalAction *ExternalAction `json:"externalAction,omitempty"`
+
+	// IsAvailable: Controlling whether the button is active or disabled.
+	// The value is 'false' when the action was already requested or is not
+	// available. If the action is not available then a reason will be
+	// present. If (your) third-party application shows a disabled button
+	// for action that is not available, then it should also show reasons.
+	IsAvailable bool `json:"isAvailable,omitempty"`
+
+	// Reasons: List of reasons why the action is not available. The list of
+	// reasons is empty if the action is available. If there is only one
+	// reason, it can be displayed next to the disabled button. If there are
+	// more reasons, all of them should be displayed, for example in a
+	// pop-up dialog.
+	Reasons []*ActionReason `json:"reasons,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuiltinSimpleAction")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuiltinSimpleAction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Action) MarshalJSON() ([]byte, error) {
+	type NoMethod Action
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ActionReason: A single reason why the action is not available.
+type ActionReason struct {
+	// Action: Optional. An action that needs to be performed to solve the
+	// problem represented by this reason. This action will always be
+	// available. Should be rendered as a link or button next to the
+	// summarizing message. For example, the review may be available only
+	// once merchant configure all required attributes. In such a situation
+	// this action can be a link to the form, where they can fill the
+	// missing attribute to unblock the main action.
+	Action *Action `json:"action,omitempty"`
+
+	// Detail: Detailed explanation of the reason. Should be displayed as a
+	// hint if present.
+	Detail string `json:"detail,omitempty"`
+
+	// Message: Messages summarizing the reason, why the action is not
+	// available. For example: "Review requested on Jan 03. Review requests
+	// can take a few days to complete."
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActionReason) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionReason
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ActivateBuyOnGoogleProgramRequest: Request message for the
 // ActivateProgram method.
 type ActivateBuyOnGoogleProgramRequest struct {
@@ -2784,6 +3049,41 @@ type Address struct {
 
 func (s *Address) MarshalJSON() ([]byte, error) {
 	type NoMethod Address
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AlternateDisputeResolution: The Alternate Dispute Resolution (ADR)
+// that may be available to merchants in some regions. If present, the
+// link should be shown on the same page as the list of issues.
+type AlternateDisputeResolution struct {
+	// Label: The label for the alternate dispute resolution link.
+	Label string `json:"label,omitempty"`
+
+	// Uri: The URL pointing to a page, where merchant can request
+	// alternative dispute resolution with an external body
+	// (https://support.google.com/european-union-digital-services-act-redress-options/answer/13535501).
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlternateDisputeResolution) MarshalJSON() ([]byte, error) {
+	type NoMethod AlternateDisputeResolution
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3043,6 +3343,183 @@ func (s *Brand) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Breakdown: A detailed impact breakdown for a group of regions where
+// the impact of the issue on different shopping destinations is the
+// same.
+type Breakdown struct {
+	// Details: Human readable, localized description of issue's effect on
+	// different targets. Should be rendered as a list. For example: *
+	// "Products not showing in ads" * "Products not showing organically"
+	Details []string `json:"details,omitempty"`
+
+	// Regions: Lists of regions. Should be rendered as a title for this
+	// group of details. The full list should be shown to merchant. If the
+	// list is too long, it is recommended to make it expandable.
+	Regions []*BreakdownRegion `json:"regions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Breakdown) MarshalJSON() ([]byte, error) {
+	type NoMethod Breakdown
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BreakdownRegion: Region with code and localized name.
+type BreakdownRegion struct {
+	// Code: The [CLDR territory code]
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
+	Code string `json:"code,omitempty"`
+
+	// Name: The localized name of the region. For region with code='001'
+	// the value is 'All countries' or the equivalent in other languages.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BreakdownRegion) MarshalJSON() ([]byte, error) {
+	type NoMethod BreakdownRegion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BuiltInSimpleAction: Action that is implemented and performed in
+// (your) third-party application. Represents various functionality that
+// is expected to be available to merchant and will help them with
+// resolving the issue. The application should point the merchant to the
+// place, where they can access the corresponding functionality. If the
+// functionality is not supported, it is recommended to explain the
+// situation to merchant and provide them with instructions how to solve
+// the issue.
+type BuiltInSimpleAction struct {
+	// AdditionalContent: Long text from an external source that should be
+	// available to the merchant. Present when the type is
+	// `SHOW_ADDITIONAL_CONTENT`.
+	AdditionalContent *BuiltInSimpleActionAdditionalContent `json:"additionalContent,omitempty"`
+
+	// AttributeCode: The attribute that needs to be updated. Present when
+	// the type is `EDIT_ITEM_ATTRIBUTE`. This field contains a code for
+	// attribute, represented in snake_case. You can find a list of
+	// product's attributes, with their codes here
+	// (https://support.google.com/merchants/answer/7052112).
+	AttributeCode string `json:"attributeCode,omitempty"`
+
+	// Type: The type of action that represents a functionality that is
+	// expected to be available in third-party application.
+	//
+	// Possible values:
+	//   "BUILT_IN_SIMPLE_ACTION_TYPE_UNSPECIFIED" - Default value. Will
+	// never be provided by the API.
+	//   "VERIFY_PHONE" - Redirect merchant to the part of your application
+	// where they can verify their phone.
+	//   "CLAIM_WEBSITE" - Redirect merchant to the part of your application
+	// where they can claim their website.
+	//   "ADD_PRODUCTS" - Redirect merchant to the part of your application
+	// where they can add products.
+	//   "ADD_CONTACT_INFO" - Open a form where the merchant can edit their
+	// contact information.
+	//   "LINK_ADS_ACCOUNT" - Redirect merchant to the part of your
+	// application where they can link ads account.
+	//   "ADD_BUSINESS_REGISTRATION_NUMBER" - Open a form where the merchant
+	// can add their business registration number.
+	//   "EDIT_ITEM_ATTRIBUTE" - Open a form where the merchant can edit an
+	// attribute. The attribute that needs to be updated is specified in
+	// attribute_code field of the action.
+	//   "FIX_ACCOUNT_ISSUE" - Redirect merchant from the product issues to
+	// the diagnostic page with their account issues in your application.
+	// This action will be returned only for product issues that are caused
+	// by an account issue and thus merchant should resolve the problem on
+	// the account level.
+	//   "SHOW_ADDITIONAL_CONTENT" - Show additional content to the
+	// merchant. This action will be used for example to deliver a
+	// justification from national authority.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalContent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuiltInSimpleAction) MarshalJSON() ([]byte, error) {
+	type NoMethod BuiltInSimpleAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BuiltInSimpleActionAdditionalContent: Long text from external source.
+type BuiltInSimpleActionAdditionalContent struct {
+	// Paragraphs: Long text organized into paragraphs.
+	Paragraphs []string `json:"paragraphs,omitempty"`
+
+	// Title: Title of the additional content;
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Paragraphs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Paragraphs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuiltInSimpleActionAdditionalContent) MarshalJSON() ([]byte, error) {
+	type NoMethod BuiltInSimpleActionAdditionalContent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type BusinessDayConfig struct {
 	// BusinessDays: Regular business days, such as '"monday"'. May not be
 	// empty.
@@ -3153,6 +3630,9 @@ type BuyOnGoogleProgramStatus struct {
 	//   "ACTIVE" - Merchant's program participation is active for a
 	// specific region code.
 	//   "PAUSED" - Participation has been paused.
+	//   "DEPRECATED" - The program cannot be further reactivated or paused.
+	// See more about [Buy on
+	// Google](https://support.google.com/merchants/answer/7679273).
 	ParticipationStage string `json:"participationStage,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5374,6 +5854,53 @@ type Errors struct {
 
 func (s *Errors) MarshalJSON() ([]byte, error) {
 	type NoMethod Errors
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalAction: Action that is implemented and performed outside of
+// the third-party application. It should redirect the merchant to the
+// provided URL of an external system where they can perform the action.
+// For example to request a review in the Merchant Center.
+type ExternalAction struct {
+	// Type: The type of external action.
+	//
+	// Possible values:
+	//   "EXTERNAL_ACTION_TYPE_UNSPECIFIED" - Default value. Will never be
+	// provided by the API.
+	//   "REVIEW_PRODUCT_ISSUE_IN_MERCHANT_CENTER" - Redirect to Merchant
+	// Center where the merchant can request a review for issue related to
+	// their product.
+	//   "REVIEW_ACCOUNT_ISSUE_IN_MERCHANT_CENTER" - Redirect to Merchant
+	// Center where the merchant can request a review for issue related to
+	// their account.
+	//   "LEGAL_APPEAL_IN_HELP_CENTER" - Redirect to the form in Help Center
+	// where the merchant can request a legal appeal for the issue.
+	Type string `json:"type,omitempty"`
+
+	// Uri: URL to external system, for example Merchant Center, where the
+	// merchant can perform the action.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalAction) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14024,6 +14551,149 @@ func (s *ProductId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProductIssue: An issue affecting specific product.
+type ProductIssue struct {
+	// Actions: A list of actionable steps that can be executed to solve the
+	// issue. An example is requesting a re-review or providing arguments
+	// when merchant disagrees with the issue. Actions that are supported in
+	// (your) third-party application can be rendered as buttons and should
+	// be available to merchant when they expand the issue.
+	Actions []*Action `json:"actions,omitempty"`
+
+	// Impact: Clarifies the severity of the issue. The summarizing message,
+	// if present, should be shown right under the title for each issue. It
+	// helps merchants to quickly understand the impact of the issue. The
+	// detailed breakdown helps the merchant to fully understand the impact
+	// of the issue. It can be rendered as dialog that opens when the
+	// merchant mouse over the summarized impact statement. Issues with
+	// different severity can be styled differently. They may use a
+	// different color or icon to signal the difference between `ERROR`,
+	// `WARNING` and `INFO`.
+	Impact *ProductIssueImpact `json:"impact,omitempty"`
+
+	// PrerenderedContent: Details of the issue as a pre-rendered HTML. HTML
+	// elements contain CSS classes that can be used to customize the style
+	// of the content. Always sanitize the HTML before embedding it directly
+	// to your application. The sanitizer needs to allow basic HTML tags,
+	// such as: `div`, `span`, `p`, `a`, `ul`, `li`, `table`, `tr`, `td`.
+	// For example, you can use DOMPurify
+	// (https://www.npmjs.com/package/dompurify). CSS classes: *
+	// `issue-detail` - top level container for the detail of the issue *
+	// `callout-banners` - section of the `issue-detail` with callout
+	// banners * `callout-banner` - single callout banner, inside
+	// `callout-banners` * `callout-banner-info` - callout with important
+	// information (default) * `callout-banner-warning` - callout with a
+	// warning * `callout-banner-error` - callout informing about an error
+	// (most severe) * `issue-content` - section of the `issue-detail`,
+	// contains multiple `content-element` * `content-element` - content
+	// element such as a list, link or paragraph, inside `issue-content` *
+	// `root-causes` - unordered list with items describing root causes of
+	// the issue, inside `issue-content` * `root-causes-intro` - intro text
+	// before the `root-causes` list, inside `issue-content` * `segment` -
+	// section of the text, `span` inside paragraph * `segment-attribute` -
+	// section of the text that represents a product attribute, for example
+	// 'image\_link' * `segment-literal` - section of the text that contains
+	// a special value, for example '0-1000 kg' * `segment-bold` - section
+	// of the text that should be rendered as bold * `segment-italic` -
+	// section of the text that should be rendered as italic * `tooltip` -
+	// used on paragraphs that should be rendered with a tooltip. A section
+	// of the text in such a paragraph will have a class `tooltip-text` and
+	// is intended to be shown in a mouse over dialog. If the style is not
+	// used, the `tooltip-text` section would be shown on a new line, after
+	// the main part of the text. * `tooltip-text` - marks a section of the
+	// text within a `tooltip`, that is intended to be shown in a mouse over
+	// dialog. * `tooltip-icon` - marks a section of the text within a
+	// `tooltip`, that can be replaced with a tooltip icon, for example '?'
+	// or 'i'. By default, this section contains a `br` tag, that is
+	// separating the main text and the tooltip text when the style is not
+	// used. * `tooltip-style-question` - the tooltip shows helpful
+	// information, can use the '?' as an icon. * `tooltip-style-info` - the
+	// tooltip adds additional information fitting to the context, can use
+	// the 'i' as an icon. * `content-moderation` - marks the paragraph that
+	// explains how the issue was identified. * `new-element` - Present for
+	// new elements added to the pre-rendered content in the future. To make
+	// sure that a new content element does not break your style, you can
+	// hide everything with this class.
+	PrerenderedContent string `json:"prerenderedContent,omitempty"`
+
+	// Title: Title of the issue.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductIssueImpact: Overall impact of product issue.
+type ProductIssueImpact struct {
+	// Breakdowns: Detailed impact breakdown. Explains the types of
+	// restriction the issue has in different shopping destinations and
+	// territory. If present, it should be rendered to the merchant. Can be
+	// shown as a mouse over dropdown or a dialog. Each breakdown item
+	// represents a group of regions with the same impact details.
+	Breakdowns []*Breakdown `json:"breakdowns,omitempty"`
+
+	// Message: Optional. Message summarizing the overall impact of the
+	// issue. If present, it should be rendered to the merchant. For
+	// example: "Limits visibility in France"
+	Message string `json:"message,omitempty"`
+
+	// Severity: The severity of the issue.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Default value. Will never be provided by
+	// the API.
+	//   "ERROR" - Causes either an account suspension or an item
+	// disapproval. Errors should be resolved as soon as possible to ensure
+	// items are eligible to appear in results again.
+	//   "WARNING" - Warnings can negatively impact the performance of ads
+	// and can lead to item or account suspensions in the future unless the
+	// issue is resolved.
+	//   "INFO" - Infos are suggested optimizations to increase data
+	// quality. Resolving these issues is recommended, but not required.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakdowns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Breakdowns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductIssueImpact) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductIssueImpact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ProductProductDetail struct {
 	// AttributeName: The name of the product detail.
 	AttributeName string `json:"attributeName,omitempty"`
@@ -16376,6 +17046,172 @@ type RegionalinventoryCustomBatchResponseEntry struct {
 
 func (s *RegionalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalinventoryCustomBatchResponseEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RenderAccountIssuesRequestPayload: The payload for configuring how
+// the content should be rendered.
+type RenderAccountIssuesRequestPayload struct {
+	// ContentOption: Optional. How the detailed content should be returned.
+	// Default option is to return the content as a pre-rendered HTML text.
+	//
+	// Possible values:
+	//   "CONTENT_OPTION_UNSPECIFIED" - Default value. Will never be
+	// provided by the API.
+	//   "PRE_RENDERED_HTML" - Returns the detail of the issue as a
+	// pre-rendered HTML text.
+	ContentOption string `json:"contentOption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentOption") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentOption") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenderAccountIssuesRequestPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod RenderAccountIssuesRequestPayload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RenderAccountIssuesResponse: Response containing support content and
+// actions for listed account issues.
+type RenderAccountIssuesResponse struct {
+	// AlternateDisputeResolution: The Alternate Dispute Resolution (ADR)
+	// contains a link to a page where merchant can bring their appeal to an
+	// external body
+	// (https://support.google.com/european-union-digital-services-act-redress-options/answer/13535501).
+	// If the ADR is present, it MUST be available to the merchant on the
+	// page that shows the list with their account issues.
+	AlternateDisputeResolution *AlternateDisputeResolution `json:"alternateDisputeResolution,omitempty"`
+
+	// Issues: List of account issues for a given account. This list can be
+	// shown with compressed, expandable items. In the compressed form, the
+	// title and impact should be shown for each issue. Once the issue is
+	// expanded, the detailed content and available actions should be
+	// rendered.
+	Issues []*AccountIssue `json:"issues,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AlternateDisputeResolution") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AlternateDisputeResolution") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenderAccountIssuesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RenderAccountIssuesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RenderProductIssuesRequestPayload: The payload for configuring how
+// the content should be rendered.
+type RenderProductIssuesRequestPayload struct {
+	// ContentOption: Optional. How the detailed content should be returned.
+	// Default option is to return the content as a pre-rendered HTML text.
+	//
+	// Possible values:
+	//   "CONTENT_OPTION_UNSPECIFIED" - Default value. Will never be
+	// provided by the API.
+	//   "PRE_RENDERED_HTML" - Returns the detail of the issue as a
+	// pre-rendered HTML text.
+	ContentOption string `json:"contentOption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentOption") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentOption") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenderProductIssuesRequestPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod RenderProductIssuesRequestPayload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RenderProductIssuesResponse: Response containing support content and
+// actions for listed product issues.
+type RenderProductIssuesResponse struct {
+	// AlternateDisputeResolution: The Alternate Dispute Resolution (ADR)
+	// contains a link to a page where merchant can bring their appeal to an
+	// external body
+	// (https://support.google.com/european-union-digital-services-act-redress-options/answer/13535501).
+	// If present, the link should be shown on the same page as the list of
+	// issues.
+	AlternateDisputeResolution *AlternateDisputeResolution `json:"alternateDisputeResolution,omitempty"`
+
+	// Issues: List of issues for a given product. This list can be shown
+	// with compressed, expandable items. In the compressed form, the title
+	// and impact should be shown for each issue. Once the issue is
+	// expanded, the detailed content and available actions should be
+	// rendered.
+	Issues []*ProductIssue `json:"issues,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AlternateDisputeResolution") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AlternateDisputeResolution") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenderProductIssuesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RenderProductIssuesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -32769,6 +33605,364 @@ func (c *LocalinventoryInsertCall) Do(opts ...googleapi.CallOption) (*LocalInven
 	//   },
 	//   "response": {
 	//     "$ref": "LocalInventory"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.merchantsupport.renderaccountissues":
+
+type MerchantsupportRenderaccountissuesCall struct {
+	s                                 *APIService
+	merchantId                        int64
+	renderaccountissuesrequestpayload *RenderAccountIssuesRequestPayload
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Renderaccountissues: Provide a list of merchant's issues with a
+// support content and available actions. This content and actions are
+// meant to be rendered and shown in third-party applications.
+//
+// - merchantId: The ID of the account to fetch issues for.
+func (r *MerchantsupportService) Renderaccountissues(merchantId int64, renderaccountissuesrequestpayload *RenderAccountIssuesRequestPayload) *MerchantsupportRenderaccountissuesCall {
+	c := &MerchantsupportRenderaccountissuesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.renderaccountissuesrequestpayload = renderaccountissuesrequestpayload
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The IETF
+// BCP-47 (https://tools.ietf.org/html/bcp47) language code used to
+// localize support content. If not set, the result will be in default
+// language ('en-US').
+func (c *MerchantsupportRenderaccountissuesCall) LanguageCode(languageCode string) *MerchantsupportRenderaccountissuesCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// TimeZone sets the optional parameter "timeZone": The IANA
+// (https://www.iana.org/time-zones) timezone used to localize times in
+// support content. For example 'America/Los_Angeles'. If not set,
+// results will use as a default UTC.
+func (c *MerchantsupportRenderaccountissuesCall) TimeZone(timeZone string) *MerchantsupportRenderaccountissuesCall {
+	c.urlParams_.Set("timeZone", timeZone)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MerchantsupportRenderaccountissuesCall) Fields(s ...googleapi.Field) *MerchantsupportRenderaccountissuesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MerchantsupportRenderaccountissuesCall) Context(ctx context.Context) *MerchantsupportRenderaccountissuesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MerchantsupportRenderaccountissuesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MerchantsupportRenderaccountissuesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renderaccountissuesrequestpayload)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/merchantsupport/renderaccountissues")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.merchantsupport.renderaccountissues" call.
+// Exactly one of *RenderAccountIssuesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *RenderAccountIssuesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MerchantsupportRenderaccountissuesCall) Do(opts ...googleapi.CallOption) (*RenderAccountIssuesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RenderAccountIssuesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provide a list of merchant's issues with a support content and available actions. This content and actions are meant to be rendered and shown in third-party applications.",
+	//   "flatPath": "{merchantId}/merchantsupport/renderaccountissues",
+	//   "httpMethod": "POST",
+	//   "id": "content.merchantsupport.renderaccountissues",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "Optional. The [IETF BCP-47](https://tools.ietf.org/html/bcp47) language code used to localize support content. If not set, the result will be in default language ('en-US').",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account to fetch issues for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "timeZone": {
+	//       "description": "Optional. The [IANA](https://www.iana.org/time-zones) timezone used to localize times in support content. For example 'America/Los_Angeles'. If not set, results will use as a default UTC.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/merchantsupport/renderaccountissues",
+	//   "request": {
+	//     "$ref": "RenderAccountIssuesRequestPayload"
+	//   },
+	//   "response": {
+	//     "$ref": "RenderAccountIssuesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.merchantsupport.renderproductissues":
+
+type MerchantsupportRenderproductissuesCall struct {
+	s                                 *APIService
+	merchantId                        int64
+	productId                         string
+	renderproductissuesrequestpayload *RenderProductIssuesRequestPayload
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Renderproductissues: Provide a list of issues for merchant's product
+// with a support content and available actions. This content and
+// actions are meant to be rendered and shown in third-party
+// applications.
+//
+//   - merchantId: The ID of the account that contains the product.
+//   - productId: The REST_ID
+//     (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.id)
+//     of the product to fetch issues for.
+func (r *MerchantsupportService) Renderproductissues(merchantId int64, productId string, renderproductissuesrequestpayload *RenderProductIssuesRequestPayload) *MerchantsupportRenderproductissuesCall {
+	c := &MerchantsupportRenderproductissuesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.productId = productId
+	c.renderproductissuesrequestpayload = renderproductissuesrequestpayload
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The IETF
+// BCP-47 (https://tools.ietf.org/html/bcp47) language code used to
+// localize support content. If not set, the result will be in default
+// language ('en-US').
+func (c *MerchantsupportRenderproductissuesCall) LanguageCode(languageCode string) *MerchantsupportRenderproductissuesCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// TimeZone sets the optional parameter "timeZone": The IANA
+// (https://www.iana.org/time-zones) timezone used to localize times in
+// support content. For example 'America/Los_Angeles'. If not set,
+// results will use as a default UTC.
+func (c *MerchantsupportRenderproductissuesCall) TimeZone(timeZone string) *MerchantsupportRenderproductissuesCall {
+	c.urlParams_.Set("timeZone", timeZone)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MerchantsupportRenderproductissuesCall) Fields(s ...googleapi.Field) *MerchantsupportRenderproductissuesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MerchantsupportRenderproductissuesCall) Context(ctx context.Context) *MerchantsupportRenderproductissuesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MerchantsupportRenderproductissuesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MerchantsupportRenderproductissuesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renderproductissuesrequestpayload)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/merchantsupport/renderproductissues/{productId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+		"productId":  c.productId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.merchantsupport.renderproductissues" call.
+// Exactly one of *RenderProductIssuesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *RenderProductIssuesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MerchantsupportRenderproductissuesCall) Do(opts ...googleapi.CallOption) (*RenderProductIssuesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RenderProductIssuesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provide a list of issues for merchant's product with a support content and available actions. This content and actions are meant to be rendered and shown in third-party applications.",
+	//   "flatPath": "{merchantId}/merchantsupport/renderproductissues/{productId}",
+	//   "httpMethod": "POST",
+	//   "id": "content.merchantsupport.renderproductissues",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "Optional. The [IETF BCP-47](https://tools.ietf.org/html/bcp47) language code used to localize support content. If not set, the result will be in default language ('en-US').",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that contains the product.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The [REST_ID](https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.id) of the product to fetch issues for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "timeZone": {
+	//       "description": "Optional. The [IANA](https://www.iana.org/time-zones) timezone used to localize times in support content. For example 'America/Los_Angeles'. If not set, results will use as a default UTC.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/merchantsupport/renderproductissues/{productId}",
+	//   "request": {
+	//     "$ref": "RenderProductIssuesRequestPayload"
+	//   },
+	//   "response": {
+	//     "$ref": "RenderProductIssuesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

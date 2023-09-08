@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/anthos/clusters/docs/on-prem/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	gkeonpremService, err := gkeonprem.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	gkeonpremService, err := gkeonprem.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	gkeonpremService, err := gkeonprem.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package gkeonprem // import "google.golang.org/api/gkeonprem/v1"
 
 import (
@@ -401,6 +414,9 @@ type BareMetalAdminCluster struct {
 	// bare metal admin cluster.
 	BareMetalVersion string `json:"bareMetalVersion,omitempty"`
 
+	// BinaryAuthorization: Binary Authorization related configurations.
+	BinaryAuthorization *BinaryAuthorization `json:"binaryAuthorization,omitempty"`
+
 	// ClusterOperations: Cluster operations configuration.
 	ClusterOperations *BareMetalAdminClusterOperationsConfig `json:"clusterOperations,omitempty"`
 
@@ -588,10 +604,10 @@ type BareMetalAdminControlPlaneConfig struct {
 	// https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/
 	ApiServerArgs []*BareMetalAdminApiServerArgument `json:"apiServerArgs,omitempty"`
 
-	// ControlPlaneNodePoolConfig: Configures the node pool running the
-	// control plane. If specified the corresponding NodePool will be
-	// created for the cluster's control plane. The NodePool will have the
-	// same name and namespace as the cluster.
+	// ControlPlaneNodePoolConfig: Required. Configures the node pool
+	// running the control plane. If specified the corresponding NodePool
+	// will be created for the cluster's control plane. The NodePool will
+	// have the same name and namespace as the cluster.
 	ControlPlaneNodePoolConfig *BareMetalAdminControlPlaneNodePoolConfig `json:"controlPlaneNodePoolConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiServerArgs") to
@@ -623,8 +639,8 @@ func (s *BareMetalAdminControlPlaneConfig) MarshalJSON() ([]byte, error) {
 // config so that we can flexible about supporting control plane
 // specific fields in the future.
 type BareMetalAdminControlPlaneNodePoolConfig struct {
-	// NodePoolConfig: The generic configuration for a node pool running the
-	// control plane.
+	// NodePoolConfig: Required. The generic configuration for a node pool
+	// running the control plane.
 	NodePoolConfig *BareMetalNodePoolConfig `json:"nodePoolConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NodePoolConfig") to
@@ -1360,6 +1376,9 @@ type BareMetalCluster struct {
 	// BareMetalVersion: Required. The Anthos clusters on bare metal version
 	// for your user cluster.
 	BareMetalVersion string `json:"bareMetalVersion,omitempty"`
+
+	// BinaryAuthorization: Binary Authorization related configurations.
+	BinaryAuthorization *BinaryAuthorization `json:"binaryAuthorization,omitempty"`
 
 	// ClusterOperations: Cluster operations configuration.
 	ClusterOperations *BareMetalClusterOperationsConfig `json:"clusterOperations,omitempty"`
@@ -2808,6 +2827,43 @@ func (s *BareMetalWorkloadNodeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BinaryAuthorization: Configuration for Binary Authorization.
+type BinaryAuthorization struct {
+	// EvaluationMode: Mode of operation for binauthz policy evaluation. If
+	// unspecified, defaults to DISABLED.
+	//
+	// Possible values:
+	//   "EVALUATION_MODE_UNSPECIFIED" - Default value
+	//   "DISABLED" - Disable BinaryAuthorization
+	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - Enforce Kubernetes admission
+	// requests with BinaryAuthorization using the project's singleton
+	// policy.
+	EvaluationMode string `json:"evaluationMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EvaluationMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EvaluationMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BinaryAuthorization) MarshalJSON() ([]byte, error) {
+	type NoMethod BinaryAuthorization
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -3795,8 +3851,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -4002,7 +4058,7 @@ func (s *OperationStage) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -4011,17 +4067,17 @@ func (s *OperationStage) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -5129,6 +5185,9 @@ type VmwareAdminSeesawConfig struct {
 	// MasterIp: MasterIP is the IP announced by the master of Seesaw group.
 	MasterIp string `json:"masterIp,omitempty"`
 
+	// StackdriverName: Name to be used by Stackdriver.
+	StackdriverName string `json:"stackdriverName,omitempty"`
+
 	// Vms: Names of the VMs created for this Seesaw group.
 	Vms []string `json:"vms,omitempty"`
 
@@ -5385,6 +5444,9 @@ type VmwareCluster struct {
 	// cluster.
 	Description string `json:"description,omitempty"`
 
+	// DisableBundledIngress: Disable bundled ingress.
+	DisableBundledIngress bool `json:"disableBundledIngress,omitempty"`
+
 	// EnableControlPlaneV2: Enable control plane V2. Default to false.
 	EnableControlPlaneV2 bool `json:"enableControlPlaneV2,omitempty"`
 
@@ -5464,6 +5526,9 @@ type VmwareCluster struct {
 	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// UpgradePolicy: Specifies upgrade policy for the cluster.
+	UpgradePolicy *VmwareClusterUpgradePolicy `json:"upgradePolicy,omitempty"`
+
 	// ValidationCheck: Output only. ValidationCheck represents the result
 	// of the preflight check job.
 	ValidationCheck *ValidationCheck `json:"validationCheck,omitempty"`
@@ -5500,6 +5565,37 @@ type VmwareCluster struct {
 
 func (s *VmwareCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmwareClusterUpgradePolicy: VmwareClusterUpgradePolicy defines the
+// cluster upgrade policy.
+type VmwareClusterUpgradePolicy struct {
+	// ControlPlaneOnly: Controls whether the upgrade applies to the control
+	// plane only.
+	ControlPlaneOnly bool `json:"controlPlaneOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ControlPlaneOnly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ControlPlaneOnly") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareClusterUpgradePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareClusterUpgradePolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5584,6 +5680,10 @@ func (s *VmwareControlPlaneV2Config) MarshalJSON() ([]byte, error) {
 type VmwareControlPlaneVsphereConfig struct {
 	// Datastore: The Vsphere datastore used by the control plane Node.
 	Datastore string `json:"datastore,omitempty"`
+
+	// StoragePolicyName: The Vsphere storage policy used by the control
+	// plane Node.
+	StoragePolicyName string `json:"storagePolicyName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Datastore") to
 	// unconditionally include in API requests. By default, fields with
@@ -5832,6 +5932,10 @@ type VmwareLoadBalancerConfig struct {
 
 	// MetalLbConfig: Configuration for MetalLB typed load balancers.
 	MetalLbConfig *VmwareMetalLbConfig `json:"metalLbConfig,omitempty"`
+
+	// SeesawConfig: Output only. Configuration for Seesaw typed load
+	// balancers.
+	SeesawConfig *VmwareSeesawConfig `json:"seesawConfig,omitempty"`
 
 	// VipConfig: The VIPs used by the load balancer.
 	VipConfig *VmwareVipConfig `json:"vipConfig,omitempty"`
@@ -6243,6 +6347,71 @@ func (s *VmwarePlatformConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VmwareSeesawConfig: VmwareSeesawConfig represents configuration
+// parameters for an already existing Seesaw load balancer. IMPORTANT:
+// Please note that the Anthos On-Prem API will not generate or update
+// Seesaw configurations it can only bind a pre-existing configuration
+// to a new user cluster. IMPORTANT: When attempting to create a user
+// cluster with a pre-existing Seesaw load balancer you will need to
+// follow some preparation steps before calling the
+// 'CreateVmwareCluster' API method. First you will need to create the
+// user cluster's namespace via kubectl. The namespace will need to use
+// the following naming convention : -gke-onprem-mgmt or
+// -gke-onprem-mgmt depending on whether you used the
+// 'VmwareCluster.local_name' to disambiguate collisions; for more
+// context see the documentation of 'VmwareCluster.local_name'. Once the
+// namespace is created you will need to create a secret resource via
+// kubectl. This secret will contain copies of your Seesaw credentials.
+// The Secret must be called 'user-cluster-creds' and contain Seesaw's
+// SSH and Cert credentials. The credentials must be keyed with the
+// following names: 'seesaw-ssh-private-key', 'seesaw-ssh-public-key',
+// 'seesaw-ssh-ca-key', 'seesaw-ssh-ca-cert'.
+type VmwareSeesawConfig struct {
+	// EnableHa: Enable two load balancer VMs to achieve a highly-available
+	// Seesaw load balancer.
+	EnableHa bool `json:"enableHa,omitempty"`
+
+	// Group: Required. In general the following format should be used for
+	// the Seesaw group name: seesaw-for-[cluster_name].
+	Group string `json:"group,omitempty"`
+
+	// IpBlocks: Required. The IP Blocks to be used by the Seesaw load
+	// balancer
+	IpBlocks []*VmwareIpBlock `json:"ipBlocks,omitempty"`
+
+	// MasterIp: Required. MasterIP is the IP announced by the master of
+	// Seesaw group.
+	MasterIp string `json:"masterIp,omitempty"`
+
+	// StackdriverName: Name to be used by Stackdriver.
+	StackdriverName string `json:"stackdriverName,omitempty"`
+
+	// Vms: Names of the VMs created for this Seesaw group.
+	Vms []string `json:"vms,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnableHa") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableHa") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareSeesawConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareSeesawConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VmwareStaticIpConfig: Represents the network configuration required
 // for the VMware user clusters with Static IP configurations.
 type VmwareStaticIpConfig struct {
@@ -6329,6 +6498,10 @@ type VmwareVCenterConfig struct {
 	// ResourcePool: The name of the vCenter resource pool for the user
 	// cluster.
 	ResourcePool string `json:"resourcePool,omitempty"`
+
+	// StoragePolicyName: The name of the vCenter storage policy for the
+	// user cluster.
+	StoragePolicyName string `json:"storagePolicyName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with

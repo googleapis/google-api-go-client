@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/logging/docs/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,28 +30,31 @@
 //	ctx := context.Background()
 //	loggingService, err := logging.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	loggingService, err := logging.NewService(ctx, option.WithScopes(logging.LoggingWriteScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	loggingService, err := logging.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	loggingService, err := logging.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package logging // import "google.golang.org/api/logging/v2"
 
 import (
@@ -1956,9 +1970,9 @@ type ListLogEntriesRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 
 	// PageSize: Optional. The maximum number of results to return from this
-	// request. Default is 50. If the value is negative or exceeds 1000, the
-	// request is rejected. The presence of next_page_token in the response
-	// indicates that more results might be available.
+	// request. Default is 50. If the value is negative, the request is
+	// rejected.The presence of next_page_token in the response indicates
+	// that more results might be available.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: Optional. If present, then retrieve the next batch of
@@ -2619,16 +2633,15 @@ type LogEntry struct {
 	// project "my-trace-project" and if the service that is creating the
 	// log entry receives a trace header that includes the trace ID "12345",
 	// then the service should use
-	// "projects/my-tracing-project/traces/12345".The trace field provides
-	// the link between logs and traces. By using this field, you can
-	// navigate from a log entry to a trace.
+	// "projects/my-trace-project/traces/12345".The trace field provides the
+	// link between logs and traces. By using this field, you can navigate
+	// from a log entry to a trace.
 	Trace string `json:"trace,omitempty"`
 
-	// TraceSampled: Optional. The sampling decision of the trace associated
-	// with the log entry.True means that the trace resource name in the
-	// trace field was sampled for storage in a trace backend. False means
-	// that the trace was not sampled for storage when this log entry was
-	// written, or the sampling decision was unknown at the time. A
+	// TraceSampled: Optional. The sampling decision of the span associated
+	// with the log entry at the time the log entry was created. This field
+	// corresponds to the sampled flag in the W3C trace-context
+	// specification (https://www.w3.org/TR/trace-context/#sampled-flag). A
 	// non-sampled trace value is still useful as a request correlation
 	// identifier. The default is False.
 	TraceSampled bool `json:"traceSampled,omitempty"`

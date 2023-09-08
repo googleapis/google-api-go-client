@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/dlp/docs/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,24 +30,26 @@
 //	ctx := context.Background()
 //	dlpService, err := dlp.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	dlpService, err := dlp.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	dlpService, err := dlp.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package dlp // import "google.golang.org/api/dlp/v2"
 
 import (
@@ -4971,6 +4984,54 @@ func (s *GooglePrivacyDlpV2InfoTypeDescription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2InfoTypeLikelihood: Configuration to control custom
+// minimum likelihoods per infotype. Used when certain infotypes need to
+// return with higher or lower precision than the baseline, i.e. when
+// wanting PERSON_NAME to return all possible names without lowering the
+// precision of other infotypes.
+type GooglePrivacyDlpV2InfoTypeLikelihood struct {
+	// InfoType: Type of information the likelihood threshold applies to.
+	// Only one likelihood per info_type should be provided. If
+	// InfoTypeLikelihood does not have an info_type, the configuration
+	// fails.
+	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
+
+	// MinLikelihood: Only returns findings equal or above this threshold.
+	// This field is required or else the configuration fails.
+	//
+	// Possible values:
+	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
+	//   "VERY_UNLIKELY" - Highest chance of a false positive.
+	//   "UNLIKELY" - High chance of a false positive.
+	//   "POSSIBLE" - Some matching signals. The default value.
+	//   "LIKELY" - Low chance of a false positive.
+	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
+	// positive.
+	MinLikelihood string `json:"minLikelihood,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InfoType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2InfoTypeLikelihood) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2InfoTypeLikelihood
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2InfoTypeLimit: Max findings configuration per
 // infoType, per content item or long running DlpJob.
 type GooglePrivacyDlpV2InfoTypeLimit struct {
@@ -5204,6 +5265,12 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
 	// positive.
 	MinLikelihood string `json:"minLikelihood,omitempty"`
+
+	// MinLikelihoodPerInfoType: Per infotype likelihoods. For each
+	// infotype, a user can specify a minimum likelihood, and only return
+	// that infotype if it is above that threshold. If an infotype is not
+	// included, it uses the InspectConfig min_likelihood.
+	MinLikelihoodPerInfoType []*GooglePrivacyDlpV2InfoTypeLikelihood `json:"minLikelihoodPerInfoType,omitempty"`
 
 	// RuleSet: Set of rules to apply to the findings for this
 	// InspectConfig. Exclusion rules, contained in the set are executed in

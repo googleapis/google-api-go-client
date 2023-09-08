@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/bigquery/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,28 +30,31 @@
 //	ctx := context.Background()
 //	bigqueryService, err := bigquery.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	bigqueryService, err := bigquery.NewService(ctx, option.WithScopes(bigquery.DevstorageReadWriteScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	bigqueryService, err := bigquery.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	bigqueryService, err := bigquery.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package bigquery // import "google.golang.org/api/bigquery/v2"
 
 import (
@@ -2206,6 +2220,11 @@ type Dataset struct {
 	// Etag: [Output-only] A hash of the resource.
 	Etag string `json:"etag,omitempty"`
 
+	// ExternalDatasetReference: [Optional] Information about the external
+	// metadata storage where the dataset is defined. Filled out when the
+	// dataset type is EXTERNAL.
+	ExternalDatasetReference *ExternalDatasetReference `json:"externalDatasetReference,omitempty"`
+
 	// FriendlyName: [Optional] A descriptive name for the dataset.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
@@ -3410,6 +3429,39 @@ type ExternalDataConfiguration struct {
 
 func (s *ExternalDataConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalDataConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ExternalDatasetReference struct {
+	// Connection: [Required] The connection id that is used to access the
+	// external_source. Format:
+	// projects/{project_id}/locations/{location_id}/connections/{connection_
+	// id}
+	Connection string `json:"connection,omitempty"`
+
+	// ExternalSource: [Required] External source that backs this dataset.
+	ExternalSource string `json:"externalSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Connection") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connection") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalDatasetReference) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalDatasetReference
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8794,6 +8846,12 @@ type TableFieldSchema struct {
 	// it is invalid.
 	Precision int64 `json:"precision,omitempty,string"`
 
+	// RangeElementType: Optional. The subtype of the RANGE, if the type of
+	// this field is RANGE. If the type is RANGE, this field is required.
+	// Possible values for the field element type of a RANGE include: - DATE
+	// - DATETIME - TIMESTAMP
+	RangeElementType *TableFieldSchemaRangeElementType `json:"rangeElementType,omitempty"`
+
 	// RoundingMode: Optional. Rounding Mode specification of the field. It
 	// only can be set on NUMERIC or BIGNUMERIC type fields.
 	RoundingMode string `json:"roundingMode,omitempty"`
@@ -8888,6 +8946,37 @@ type TableFieldSchemaPolicyTags struct {
 
 func (s *TableFieldSchemaPolicyTags) MarshalJSON() ([]byte, error) {
 	type NoMethod TableFieldSchemaPolicyTags
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableFieldSchemaRangeElementType: Optional. The subtype of the RANGE,
+// if the type of this field is RANGE. If the type is RANGE, this field
+// is required. Possible values for the field element type of a RANGE
+// include: - DATE - DATETIME - TIMESTAMP
+type TableFieldSchemaRangeElementType struct {
+	// Type: The field element type of a RANGE
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableFieldSchemaRangeElementType) MarshalJSON() ([]byte, error) {
+	type NoMethod TableFieldSchemaRangeElementType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

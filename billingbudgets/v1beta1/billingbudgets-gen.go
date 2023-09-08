@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/billing/docs/how-to/budget-api-overview
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	billingbudgetsService, err := billingbudgets.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithScopes(billingbudgets.CloudPlatformScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package billingbudgets // import "google.golang.org/api/billingbudgets/v1beta1"
 
 import (
@@ -176,6 +190,14 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	// notifications are sent to those with Billing Account Administrator
 	// and Billing Account User IAM roles for the target account.
 	DisableDefaultIamRecipients bool `json:"disableDefaultIamRecipients,omitempty"`
+
+	// EnableProjectLevelRecipients: Optional. When set to true, and when
+	// the budget has a single project configured, notifications will be
+	// sent to project level recipients of that project. This field will be
+	// ignored if the budget has multiple or no project configured.
+	// Currently, project level recipients are the users with `Owner` role
+	// on a cloud project.
+	EnableProjectLevelRecipients bool `json:"enableProjectLevelRecipients,omitempty"`
 
 	// MonitoringNotificationChannels: Optional. Targets to send
 	// notifications to when a threshold is exceeded. This is in addition to
@@ -1248,6 +1270,19 @@ func (c *BillingAccountsBudgetsListCall) PageToken(pageToken string) *BillingAcc
 	return c
 }
 
+// Scope sets the optional parameter "scope": Set the scope of the
+// budgets to be returned, in the format of the resource name. The scope
+// of a budget is the cost that it tracks, such as costs for a single
+// project, or the costs for all projects in a folder. Only project
+// scope (in the format of "projects/project-id" or "projects/123") is
+// supported in this field. When this field is set to a project's
+// resource name, the budgets returned are tracking the costs for that
+// project.
+func (c *BillingAccountsBudgetsListCall) Scope(scope string) *BillingAccountsBudgetsListCall {
+	c.urlParams_.Set("scope", scope)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1373,6 +1408,11 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Optional. Set the scope of the budgets to be returned, in the format of the resource name. The scope of a budget is the cost that it tracks, such as costs for a single project, or the costs for all projects in a folder. Only project scope (in the format of \"projects/project-id\" or \"projects/123\") is supported in this field. When this field is set to a project's resource name, the budgets returned are tracking the costs for that project.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

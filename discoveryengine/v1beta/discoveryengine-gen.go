@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/discovery-engine/docs
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	discoveryengineService, err := discoveryengine.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	discoveryengineService, err := discoveryengine.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	discoveryengineService, err := discoveryengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package discoveryengine // import "google.golang.org/api/discoveryengine/v1beta"
 
 import (
@@ -2071,32 +2084,6 @@ func (s *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason) MarshalJSON()
 }
 
 type GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure struct {
-	// TotalRequiredQuota: This number is an estimation on how much total
-	// quota this project needs to successfully complete indexing.
-	TotalRequiredQuota int64 `json:"totalRequiredQuota,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "TotalRequiredQuota")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TotalRequiredQuota") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata: Metadata for
@@ -2235,17 +2222,17 @@ func (s *GoogleCloudDiscoveryengineV1betaCompleteQueryResponse) MarshalJSON() ([
 // GoogleCloudDiscoveryengineV1betaCompleteQueryResponseQuerySuggestion:
 // Suggestions as search queries.
 type GoogleCloudDiscoveryengineV1betaCompleteQueryResponseQuerySuggestion struct {
-	// CompletableFieldPath: The unique document field paths that serve as
+	// CompletableFieldPaths: The unique document field paths that serve as
 	// the source of this suggestion if it was generated from completable
 	// fields. This field is only populated for the document-completable
 	// model.
-	CompletableFieldPath []string `json:"completableFieldPath,omitempty"`
+	CompletableFieldPaths []string `json:"completableFieldPaths,omitempty"`
 
 	// Suggestion: The suggestion for the query.
 	Suggestion string `json:"suggestion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "CompletableFieldPath") to unconditionally include in API requests.
+	// "CompletableFieldPaths") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -2253,7 +2240,7 @@ type GoogleCloudDiscoveryengineV1betaCompleteQueryResponseQuerySuggestion struct
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CompletableFieldPath") to
+	// NullFields is a list of field names (e.g. "CompletableFieldPaths") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2451,6 +2438,10 @@ type GoogleCloudDiscoveryengineV1betaConverseConversationRequest struct {
 	// tion}/dataStores/{data_store_id}/servingConfigs/{serving_config_id}`
 	// If this is not set, the default serving config will be used.
 	ServingConfig string `json:"servingConfig,omitempty"`
+
+	// SummarySpec: A specification for configuring the summary returned in
+	// the response.
+	SummarySpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpec `json:"summarySpec,omitempty"`
 
 	// UserLabels: The user labels applied to a resource must meet the
 	// following requirements: * Each resource can have multiple labels, up
@@ -4406,6 +4397,15 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecExtractiveCon
 	// segments. Otherwise, return the `max_extractive_segment_count`.
 	MaxExtractiveSegmentCount int64 `json:"maxExtractiveSegmentCount,omitempty"`
 
+	// NumNextSegments: Return at most `num_next_segments` segments after
+	// each selected segments.
+	NumNextSegments int64 `json:"numNextSegments,omitempty"`
+
+	// NumPreviousSegments: Specifies whether to also include the adjacent
+	// from each selected segments. Return at most `num_previous_segments`
+	// segments before each selected segments.
+	NumPreviousSegments int64 `json:"numPreviousSegments,omitempty"`
+
 	// ReturnExtractiveSegmentScore: Specifies whether to return the
 	// confidence score from the extractive segments in each search result.
 	// The default value is `false`.
@@ -5190,6 +5190,10 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult) MarshalJSON
 // GoogleCloudDiscoveryengineV1betaSearchResponseSummary: Summary of the
 // top N search result specified by the summary spec.
 type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
+	// SafetyAttributes: A collection of Safety Attribute categories and
+	// their associated confidence scores.
+	SafetyAttributes *GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes `json:"safetyAttributes,omitempty"`
+
 	// SummarySkippedReasons: Additional summary-skipped reasons. This
 	// provides the reason for ignored cases. If nothing is skipped, this
 	// field is not set.
@@ -5207,21 +5211,25 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 	// case. Google skips the summary if there are no high-relevance search
 	// results. For example, the data store contains facts about company A
 	// but the user query is asking questions about company B.
+	//   "POTENTIAL_POLICY_VIOLATION" - The potential policy violation case.
+	// Google skips the summary if there is a potential policy violation
+	// detected. This includes content that may be violent or toxic.
+	//   "LLM_ADDON_NOT_ENABLED" - The LLM addon not enabled case. Google
+	// skips the summary if the LLM addon is not enabled.
 	SummarySkippedReasons []string `json:"summarySkippedReasons,omitempty"`
 
 	// SummaryText: The summary content.
 	SummaryText string `json:"summaryText,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "SummarySkippedReasons") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "SafetyAttributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SummarySkippedReasons") to
+	// NullFields is a list of field names (e.g. "SafetyAttributes") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -5235,6 +5243,58 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummary) MarshalJSON() ([
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes:
+//
+//	Safety Attribute categories and their associated confidence scores.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes struct {
+	// Categories: The display names of Safety Attribute categories
+	// associated with the generated content. Order matches the Scores.
+	Categories []string `json:"categories,omitempty"`
+
+	// Scores: The confidence scores of the each category, higher value
+	// means higher confidence. Order matches the Categories.
+	Scores []float64 `json:"scores,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes
+	var s1 struct {
+		Scores []gensupport.JSONFloat64 `json:"scores"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Scores = make([]float64, len(s1.Scores))
+	for i := range s1.Scores {
+		s.Scores[i] = float64(s1.Scores[i])
+	}
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaTextInput: Defines text input.

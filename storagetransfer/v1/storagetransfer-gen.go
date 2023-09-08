@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/storage-transfer/docs
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	storagetransferService, err := storagetransfer.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	storagetransferService, err := storagetransfer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	storagetransferService, err := storagetransfer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package storagetransfer // import "google.golang.org/api/storagetransfer/v1"
 
 import (
@@ -344,6 +357,12 @@ type AwsS3Data struct {
 	// BucketName: Required. S3 Bucket name (see Creating a bucket
 	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).
 	BucketName string `json:"bucketName,omitempty"`
+
+	// CloudfrontDomain: Optional. Cloudfront domain name pointing to this
+	// bucket (as origin), to use when fetching. Format:
+	// `https://{id}.cloudfront.net` or any valid custom domain
+	// `https://...`
+	CloudfrontDomain string `json:"cloudfrontDomain,omitempty"`
 
 	// CredentialsSecret: Optional. The Resource name of a secret in Secret
 	// Manager. The Azure SAS token must be stored in Secret Manager in JSON

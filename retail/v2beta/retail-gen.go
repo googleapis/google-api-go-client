@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/recommendations
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	retailService, err := retail.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	retailService, err := retail.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	retailService, err := retail.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package retail // import "google.golang.org/api/retail/v2beta"
 
 import (
@@ -3428,6 +3441,9 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	// an attribute.
 	ExactSearchableOption string `json:"exactSearchableOption,omitempty"`
 
+	// FacetConfig: Contains facet options.
+	FacetConfig *GoogleCloudRetailV2betaCatalogAttributeFacetConfig `json:"facetConfig,omitempty"`
+
 	// InUse: Output only. Indicates whether this attribute has been used by
 	// any products. `True` if at least one Product is using this attribute
 	// in Product.attributes. Otherwise, this field is `False`.
@@ -3545,6 +3561,142 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 
 func (s *GoogleCloudRetailV2betaCatalogAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaCatalogAttribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaCatalogAttributeFacetConfig: Possible options
+// for the facet that corresponds to the current attribute config.
+type GoogleCloudRetailV2betaCatalogAttributeFacetConfig struct {
+	// FacetIntervals: If you don't set the facet
+	// SearchRequest.FacetSpec.FacetKey.intervals in the request to a
+	// numerical attribute, then we use the computed intervals with rounded
+	// bounds obtained from all its product numerical attribute values. The
+	// computed intervals might not be ideal for some attributes. Therefore,
+	// we give you the option to overwrite them with the facet_intervals
+	// field. The maximum of facet intervals per CatalogAttribute is 40.
+	// Each interval must have a lower bound or an upper bound. If both
+	// bounds are provided, then the lower bound must be smaller or equal
+	// than the upper bound.
+	FacetIntervals []*GoogleCloudRetailV2betaInterval `json:"facetIntervals,omitempty"`
+
+	// IgnoredFacetValues: Each instance represents a list of attribute
+	// values to ignore as facet values for a specific time range. The
+	// maximum number of instances per CatalogAttribute is 25.
+	IgnoredFacetValues []*GoogleCloudRetailV2betaCatalogAttributeFacetConfigIgnoredFacetValues `json:"ignoredFacetValues,omitempty"`
+
+	// MergedFacetValues: Each instance replaces a list of facet values by a
+	// merged facet value. If a facet value is not in any list, then it will
+	// stay the same. To avoid conflicts, only paths of length 1 are
+	// accepted. In other words, if "dark_blue" merged into "BLUE", then the
+	// latter can't merge into "blues" because this would create a path of
+	// length 2. The maximum number of instances of MergedFacetValue per
+	// CatalogAttribute is 100.
+	MergedFacetValues []*GoogleCloudRetailV2betaCatalogAttributeFacetConfigMergedFacetValue `json:"mergedFacetValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FacetIntervals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FacetIntervals") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaCatalogAttributeFacetConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCatalogAttributeFacetConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaCatalogAttributeFacetConfigIgnoredFacetValues:
+// Facet values to ignore on facets during the specified time range for
+// the given SearchResponse.Facet.key attribute.
+type GoogleCloudRetailV2betaCatalogAttributeFacetConfigIgnoredFacetValues struct {
+	// EndTime: If start time is empty and end time is not empty, then
+	// ignore these facet values before end time.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Time range for the current list of facet values to ignore.
+	// If multiple time ranges are specified for an facet value for the
+	// current attribute, consider all of them. If both are empty, ignore
+	// always. If start time and end time are set, then start time must be
+	// before end time. If start time is not empty and end time is empty,
+	// then will ignore these facet values after the start time.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Values: List of facet values to ignore for the following time range.
+	// The facet values are the same as the attribute values. There is a
+	// limit of 10 values per instance of IgnoredFacetValues. Each value can
+	// have at most 60 characters.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaCatalogAttributeFacetConfigIgnoredFacetValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCatalogAttributeFacetConfigIgnoredFacetValues
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaCatalogAttributeFacetConfigMergedFacetValue:
+// Replaces a set of facet values by the same (possibly different)
+// merged facet value. Each facet value should appear at most once as a
+// value per CatalogAttribute.
+type GoogleCloudRetailV2betaCatalogAttributeFacetConfigMergedFacetValue struct {
+	// MergedValue: All the previous values are replaced by this merged
+	// facet value. This merged_value must be non-empty and can have up to
+	// 60 characters.
+	MergedValue string `json:"mergedValue,omitempty"`
+
+	// Values: All the facet values that are replaces by the same
+	// merged_value that follows. The maximum number of values per
+	// MergedFacetValue is 25. Each value can have up to 60 characters.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MergedValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MergedValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaCatalogAttributeFacetConfigMergedFacetValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCatalogAttributeFacetConfigMergedFacetValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3890,6 +4042,11 @@ type GoogleCloudRetailV2betaCondition struct {
 	// ActiveTimeRange: Range of time(s) specifying when Condition is
 	// active. Condition true if any time range matches.
 	ActiveTimeRange []*GoogleCloudRetailV2betaConditionTimeRange `json:"activeTimeRange,omitempty"`
+
+	// PageCategories: Used to support browse uses cases. A list (up to 10
+	// entries) of categories or departments. The format should be the same
+	// as UserEvent.page_categories;
+	PageCategories []string `json:"pageCategories,omitempty"`
 
 	// QueryTerms: A list (up to 10 entries) of terms to match the query on.
 	// If not specified, match all queries. If many query terms are
@@ -7405,6 +7562,10 @@ type GoogleCloudRetailV2betaRule struct {
 	// FilterAction: Filters results.
 	FilterAction *GoogleCloudRetailV2betaRuleFilterAction `json:"filterAction,omitempty"`
 
+	// ForceReturnFacetAction: Force returns an attribute as a facet in the
+	// request.
+	ForceReturnFacetAction *GoogleCloudRetailV2betaRuleForceReturnFacetAction `json:"forceReturnFacetAction,omitempty"`
+
 	// IgnoreAction: Ignores specific terms from query during search.
 	IgnoreAction *GoogleCloudRetailV2betaRuleIgnoreAction `json:"ignoreAction,omitempty"`
 
@@ -7415,6 +7576,10 @@ type GoogleCloudRetailV2betaRule struct {
 
 	// RedirectAction: Redirects a shopper to a specific page.
 	RedirectAction *GoogleCloudRetailV2betaRuleRedirectAction `json:"redirectAction,omitempty"`
+
+	// RemoveFacetAction: Remove an attribute as a facet in the request (if
+	// present).
+	RemoveFacetAction *GoogleCloudRetailV2betaRuleRemoveFacetAction `json:"removeFacetAction,omitempty"`
 
 	// ReplacementAction: Replaces specific terms in the query.
 	ReplacementAction *GoogleCloudRetailV2betaRuleReplacementAction `json:"replacementAction,omitempty"`
@@ -7591,6 +7756,88 @@ func (s *GoogleCloudRetailV2betaRuleFilterAction) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaRuleForceReturnFacetAction: Force returns an
+// attribute/facet in the request around a certain position or above. *
+// Rule Condition: - Must specify non-empty Condition.query_terms (for
+// search only) or Condition.page_categories (for browse only), but
+// can't specify both. * Action Inputs: attribute name, position *
+// Action Result: Will force return a facet key around a certain
+// position or above if the condition is satisfied. Example: Suppose the
+// query is "shoes", the Condition.query_terms is "shoes", the
+// ForceReturnFacetAction.FacetPositionAdjustment.attribute_name is
+// "size" and the
+// ForceReturnFacetAction.FacetPositionAdjustment.position is 8. Two
+// cases: a) The facet key "size" is not already in the top 8 slots,
+// then the facet "size" will appear at a position close to 8. b) The
+// facet key "size" in among the top 8 positions in the request, then it
+// will stay at its current rank.
+type GoogleCloudRetailV2betaRuleForceReturnFacetAction struct {
+	// FacetPositionAdjustments: Each instance corresponds to a force return
+	// attribute for the given condition. There can't be more 3 instances
+	// here.
+	FacetPositionAdjustments []*GoogleCloudRetailV2betaRuleForceReturnFacetActionFacetPositionAdjustment `json:"facetPositionAdjustments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FacetPositionAdjustments") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FacetPositionAdjustments")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaRuleForceReturnFacetAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaRuleForceReturnFacetAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaRuleForceReturnFacetActionFacetPositionAdjustme
+// nt: Each facet position adjustment consists of a single attribute
+// name (i.e. facet key) along with a specified position.
+type GoogleCloudRetailV2betaRuleForceReturnFacetActionFacetPositionAdjustment struct {
+	// AttributeName: The attribute name to force return as a facet. Each
+	// attribute name should be a valid attribute name, be non-empty and
+	// contain at most 80 characters long.
+	AttributeName string `json:"attributeName,omitempty"`
+
+	// Position: This is the position in the request as explained above. It
+	// should be strictly positive be at most 100.
+	Position int64 `json:"position,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaRuleForceReturnFacetActionFacetPositionAdjustment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaRuleForceReturnFacetActionFacetPositionAdjustment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaRuleIgnoreAction: Prevents a term in the query
 // from being used in search. Example: Don't search for "shoddy".
 type GoogleCloudRetailV2betaRuleIgnoreAction struct {
@@ -7688,6 +7935,46 @@ type GoogleCloudRetailV2betaRuleRedirectAction struct {
 
 func (s *GoogleCloudRetailV2betaRuleRedirectAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaRuleRedirectAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaRuleRemoveFacetAction: Removes an
+// attribute/facet in the request if is present. * Rule Condition: -
+// Must specify non-empty Condition.query_terms (for search only) or
+// Condition.page_categories (for browse only), but can't specify both.
+// * Action Input: attribute name * Action Result: Will remove the
+// attribute (as a facet) from the request if it is present. Example:
+// Suppose the query is "shoes", the Condition.query_terms is "shoes"
+// and the attribute name "size", then facet key "size" will be removed
+// from the request (if it is present).
+type GoogleCloudRetailV2betaRuleRemoveFacetAction struct {
+	// AttributeNames: The attribute names (i.e. facet keys) to remove from
+	// the dynamic facets (if present in the request). There can't be more 3
+	// attribute names. Each attribute name should be a valid attribute
+	// name, be non-empty and contain at most 80 characters.
+	AttributeNames []string `json:"attributeNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaRuleRemoveFacetAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaRuleRemoveFacetAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

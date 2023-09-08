@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/binary-authorization/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	binaryauthorizationService, err := binaryauthorization.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package binaryauthorization // import "google.golang.org/api/binaryauthorization/v1beta1"
 
 import (
@@ -1159,9 +1172,9 @@ func (s *UserOwnedDrydockNote) MarshalJSON() ([]byte, error) {
 // ValidationHelperV1.ValidateAttestationOccurrence.
 type ValidateAttestationOccurrenceRequest struct {
 	// Attestation: Required. An AttestationOccurrence to be checked that it
-	// can be verified by the Attestor. It does not have to be an existing
+	// can be verified by the `Attestor`. It does not have to be an existing
 	// entity in Container Analysis. It must otherwise be a valid
-	// AttestationOccurrence.
+	// `AttestationOccurrence`.
 	Attestation *AttestationOccurrence `json:"attestation,omitempty"`
 
 	// OccurrenceNote: Required. The resource name of the Note to which the
@@ -2799,8 +2812,9 @@ type ProjectsAttestorsValidateAttestationOccurrenceCall struct {
 	header_                              http.Header
 }
 
-// ValidateAttestationOccurrence: Returns whether the given Attestation
-// for the given image URI was signed by the given Attestor
+// ValidateAttestationOccurrence: Returns whether the given
+// `Attestation` for the given image URI was signed by the given
+// `Attestor`
 //
 //   - attestor: The resource name of the Attestor of the occurrence, in
 //     the format `projects/*/attestors/*`.
@@ -2903,7 +2917,7 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns whether the given Attestation for the given image URI was signed by the given Attestor",
+	//   "description": "Returns whether the given `Attestation` for the given image URI was signed by the given `Attestor`",
 	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}:validateAttestationOccurrence",
 	//   "httpMethod": "POST",
 	//   "id": "binaryauthorization.projects.attestors.validateAttestationOccurrence",

@@ -345,11 +345,12 @@ func (s *AddGoogleAnalyticsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type AdminSdkConfig struct {
-	// DatabaseURL: The default Firebase Realtime Database URL.
 	DatabaseURL string `json:"databaseURL,omitempty"`
 
-	// LocationId: The ID of the Project's default GCP resource location.
-	// The location is one of the available GCP resource locations
+	// LocationId: **DEPRECATED.** _Instead, use product-specific REST APIs
+	// to find the location of resources._ The ID of the Project's default
+	// GCP resource location. The location is one of the available GCP
+	// resource locations
 	// (https://firebase.google.com/docs/projects/locations). This field is
 	// omitted if the default GCP resource location has not been finalized
 	// yet. To set a Project's default GCP resource location, call
@@ -363,8 +364,13 @@ type AdminSdkConfig struct {
 	// generally be treated as a convenience alias to reference the Project.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// StorageBucket: The default Cloud Storage for Firebase storage bucket
-	// name.
+	// StorageBucket: **DEPRECATED.** _Instead, find the default Cloud
+	// Storage for Firebase bucket using the list endpoint
+	// (https://firebase.google.com/docs/reference/rest/storage/rest/v1beta/projects.buckets/list)
+	// within the Cloud Storage for Firebase REST API. Note that the default
+	// bucket for the Project might not yet be provisioned, so the return
+	// might not contain a default bucket._ The default Cloud Storage for
+	// Firebase storage bucket name.
 	StorageBucket string `json:"storageBucket,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -628,9 +634,19 @@ func (s *AndroidAppConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DefaultResources: The default resources associated with the Project.
+// DefaultResources: **DEPRECATED.** _Auto-provisioning of these
+// resources is changing, so this object no longer reliably provides
+// information about the resources within the Project. Instead, retrieve
+// information about each resource directly from its resource-specific
+// API._ The default auto-provisioned resources associated with the
+// Project.
 type DefaultResources struct {
-	// HostingSite: Output only. The default Firebase Hosting site name, in
+	// HostingSite: Output only. **DEPRECATED.** _Instead, find the default
+	// Firebase Hosting site name using the ListSites
+	// (https://firebase.google.com/docs/reference/hosting/rest/v1beta1/projects.sites/list)
+	// within the Firebase Hosting REST API. Note that the default site for
+	// the Project might not yet be provisioned, so the return might not
+	// contain a default site._ The default Firebase Hosting site name, in
 	// the format: PROJECT_ID Though rare, your `projectId` might already be
 	// used as the name for an existing Hosting site in another project
 	// (learn more about creating non-default, additional sites
@@ -641,8 +657,10 @@ type DefaultResources struct {
 	// site name might be: `myproject123-a5c16`
 	HostingSite string `json:"hostingSite,omitempty"`
 
-	// LocationId: Output only. The ID of the Project's default GCP resource
-	// location. The location is one of the available GCP resource locations
+	// LocationId: Output only. **DEPRECATED.** _Instead, use
+	// product-specific REST APIs to find the location of resources._ The ID
+	// of the Project's default GCP resource location. The location is one
+	// of the available GCP resource locations
 	// (https://firebase.google.com/docs/projects/locations). This field is
 	// omitted if the default GCP resource location has not been finalized
 	// yet. To set a Project's default GCP resource location, call
@@ -650,7 +668,13 @@ type DefaultResources struct {
 	// after you add Firebase resources to the Project.
 	LocationId string `json:"locationId,omitempty"`
 
-	// RealtimeDatabaseInstance: Output only. The default Firebase Realtime
+	// RealtimeDatabaseInstance: Output only. **DEPRECATED.** _Instead, find
+	// the default Firebase Realtime Database instance name using the list
+	// endpoint
+	// (https://firebase.google.com/docs/reference/rest/database/database-management/rest/v1beta/projects.locations.instances/list)
+	// within the Firebase Realtime Database REST API. Note that the default
+	// instance for the Project might not yet be provisioned, so the return
+	// might not contain a default instance._ The default Firebase Realtime
 	// Database instance name, in the format: PROJECT_ID Though rare, your
 	// `projectId` might already be used as the name for an existing
 	// Realtime Database instance in another project (learn more about
@@ -662,8 +686,13 @@ type DefaultResources struct {
 	// your default database instance name might be: `myproject123-a5c16`
 	RealtimeDatabaseInstance string `json:"realtimeDatabaseInstance,omitempty"`
 
-	// StorageBucket: Output only. The default Cloud Storage for Firebase
-	// storage bucket, in the format: PROJECT_ID.appspot.com
+	// StorageBucket: Output only. **DEPRECATED.** _Instead, find the
+	// default Cloud Storage for Firebase bucket using the list endpoint
+	// (https://firebase.google.com/docs/reference/rest/storage/rest/v1beta/projects.buckets/list)
+	// within the Cloud Storage for Firebase REST API. Note that the default
+	// bucket for the Project might not yet be provisioned, so the return
+	// might not contain a default bucket._ The default Cloud Storage for
+	// Firebase storage bucket, in the format: PROJECT_ID.appspot.com
 	StorageBucket string `json:"storageBucket,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HostingSite") to
@@ -877,8 +906,11 @@ type FirebaseProject struct {
 	// Firebase or third-party services.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
-	// Resources: Output only. The default Firebase resources associated
-	// with the Project.
+	// Resources: Output only. **DEPRECATED.** _Auto-provisioning of these
+	// resources is changing, so this object no longer reliably provides
+	// information about the Project. Instead, retrieve information about
+	// each resource directly from its resource-specific API._ The default
+	// Firebase resources associated with the Project.
 	Resources *DefaultResources `json:"resources,omitempty"`
 
 	// State: Output only. The lifecycle state of the Project.
@@ -1333,7 +1365,10 @@ func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A GCP resource location that can be selected for a
+// Location: **DEPRECATED.** _This Location is no longer used to
+// determine Firebase resource locations. Instead, consult product
+// documentation to determine valid locations for each resource used in
+// your Project._ A GCP resource location that can be selected for a
 // FirebaseProject.
 type Location struct {
 	// Features: Products and services that are available in the GCP
@@ -2173,11 +2208,19 @@ type WebAppConfig struct {
 	// in the format: PROJECT_ID.firebaseapp.com
 	AuthDomain string `json:"authDomain,omitempty"`
 
-	// DatabaseURL: The default Firebase Realtime Database URL.
+	// DatabaseURL: **DEPRECATED.** _Instead, find the default Firebase
+	// Realtime Database instance name using the list endpoint
+	// (https://firebase.google.com/docs/reference/rest/database/database-management/rest/v1beta/projects.locations.instances/list)
+	// within the Firebase Realtime Database REST API. Note that the default
+	// instance for the Project might not yet be provisioned, so the return
+	// might not contain a default instance._ The default Firebase Realtime
+	// Database URL.
 	DatabaseURL string `json:"databaseURL,omitempty"`
 
-	// LocationId: The ID of the Project's default GCP resource location.
-	// The location is one of the available GCP resource locations
+	// LocationId: **DEPRECATED.** _Instead, use product-specific REST APIs
+	// to find the location of resources._ The ID of the Project's default
+	// GCP resource location. The location is one of the available GCP
+	// resource locations
 	// (https://firebase.google.com/docs/projects/locations). This field is
 	// omitted if the default GCP resource location has not been finalized
 	// yet. To set a Project's default GCP resource location, call
@@ -2209,8 +2252,13 @@ type WebAppConfig struct {
 	// `FirebaseProject`.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// StorageBucket: The default Cloud Storage for Firebase storage bucket
-	// name.
+	// StorageBucket: **DEPRECATED.** _Instead, find the default Cloud
+	// Storage for Firebase bucket using the list endpoint
+	// (https://firebase.google.com/docs/reference/rest/storage/rest/v1beta/projects.buckets/list)
+	// within the Cloud Storage for Firebase REST API. Note that the default
+	// bucket for the Project might not yet be provisioned, so the return
+	// might not contain a default bucket._ The default Cloud Storage for
+	// Firebase storage bucket name.
 	StorageBucket string `json:"storageBucket,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5800,15 +5848,18 @@ type ProjectsAvailableLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the valid Google Cloud Platform (GCP) resource locations
-// for the specified Project (including a FirebaseProject). One of these
-// locations can be selected as the Project's _default_ GCP resource
-// location (https://firebase.google.com/docs/projects/locations), which
-// is the geographical location where the Project's resources, such as
-// Cloud Firestore, will be provisioned by default. However, if the
-// default GCP resource location has already been set for the Project,
-// then this setting cannot be changed. This call checks for any
-// possible location restrictions
+// List: **DEPRECATED.** _Instead, use the applicable resource-specific
+// REST API (or associated documentation, as needed) to determine valid
+// locations for each resource used in your Project._ Lists the valid
+// Google Cloud Platform (GCP) resource locations for the specified
+// Project (including a FirebaseProject). One of these locations can be
+// selected as the Project's _default_ GCP resource location
+// (https://firebase.google.com/docs/projects/locations), which is the
+// geographical location where the Project's resources, such as Cloud
+// Firestore, will be provisioned by default. However, if the default
+// GCP resource location has already been set for the Project, then this
+// setting cannot be changed. This call checks for any possible location
+// restrictions
 // (https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations)
 // for the specified Project and, thus, might return a subset of all
 // possible GCP resource locations. To list all GCP resource locations
@@ -5949,7 +6000,8 @@ func (c *ProjectsAvailableLocationsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the valid Google Cloud Platform (GCP) resource locations for the specified Project (including a FirebaseProject). One of these locations can be selected as the Project's [_default_ GCP resource location](https://firebase.google.com/docs/projects/locations), which is the geographical location where the Project's resources, such as Cloud Firestore, will be provisioned by default. However, if the default GCP resource location has already been set for the Project, then this setting cannot be changed. This call checks for any possible [location restrictions](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations) for the specified Project and, thus, might return a subset of all possible GCP resource locations. To list all GCP resource locations (regardless of any restrictions), call the endpoint without specifying a unique project identifier (that is, `/v1beta1/{parent=projects/-}/listAvailableLocations`). To call `ListAvailableLocations` with a specified project, a member must be at minimum a Viewer of the Project. Calls without a specified project do not require any specific project permissions.",
+	//   "deprecated": true,
+	//   "description": "**DEPRECATED.** _Instead, use the applicable resource-specific REST API (or associated documentation, as needed) to determine valid locations for each resource used in your Project._ Lists the valid Google Cloud Platform (GCP) resource locations for the specified Project (including a FirebaseProject). One of these locations can be selected as the Project's [_default_ GCP resource location](https://firebase.google.com/docs/projects/locations), which is the geographical location where the Project's resources, such as Cloud Firestore, will be provisioned by default. However, if the default GCP resource location has already been set for the Project, then this setting cannot be changed. This call checks for any possible [location restrictions](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations) for the specified Project and, thus, might return a subset of all possible GCP resource locations. To list all GCP resource locations (regardless of any restrictions), call the endpoint without specifying a unique project identifier (that is, `/v1beta1/{parent=projects/-}/listAvailableLocations`). To call `ListAvailableLocations` with a specified project, a member must be at minimum a Viewer of the Project. Calls without a specified project do not require any specific project permissions.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/availableLocations",
 	//   "httpMethod": "GET",
 	//   "id": "firebase.projects.availableLocations.list",
@@ -6022,9 +6074,11 @@ type ProjectsDefaultLocationFinalizeCall struct {
 	header_                        http.Header
 }
 
-// Finalize: Sets the default Google Cloud Platform (GCP) resource
-// location for the specified FirebaseProject. This method creates an
-// App Engine application with a default Cloud Storage bucket
+// Finalize: **DEPRECATED.** _Instead, use the applicable
+// resource-specific REST API to set the location for each resource used
+// in your Project._ Sets the default Google Cloud Platform (GCP)
+// resource location for the specified FirebaseProject. This method
+// creates an App Engine application with a default Cloud Storage bucket
 // (https://cloud.google.com/appengine/docs/standard/python/googlecloudstorageclient/setting-up-cloud-storage#activating_a_cloud_storage_bucket),
 // located in the specified `locationId`
 // (#body.request_body.FIELDS.location_id). This location must be one of
@@ -6155,7 +6209,8 @@ func (c *ProjectsDefaultLocationFinalizeCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the default Google Cloud Platform (GCP) resource location for the specified FirebaseProject. This method creates an App Engine application with a [default Cloud Storage bucket](https://cloud.google.com/appengine/docs/standard/python/googlecloudstorageclient/setting-up-cloud-storage#activating_a_cloud_storage_bucket), located in the specified [`locationId`](#body.request_body.FIELDS.location_id). This location must be one of the available [GCP resource locations](https://firebase.google.com/docs/projects/locations). After the default GCP resource location is finalized, or if it was already set, it cannot be changed. The default GCP resource location for the specified `FirebaseProject` might already be set because either the underlying GCP `Project` already has an App Engine application or `FinalizeDefaultLocation` was previously called with a specified `locationId`. Any new calls to `FinalizeDefaultLocation` with a *different* specified `locationId` will return a 409 error. The result of this call is an [`Operation`](../../v1beta1/operations), which can be used to track the provisioning process. The [`response`](../../v1beta1/operations#Operation.FIELDS.response) type of the `Operation` is google.protobuf.Empty. The `Operation` can be polled by its `name` using GetOperation until `done` is true. When `done` is true, the `Operation` has either succeeded or failed. If the `Operation` has succeeded, its [`response`](../../v1beta1/operations#Operation.FIELDS.response) will be set to a google.protobuf.Empty; if the `Operation` has failed, its `error` will be set to a google.rpc.Status. The `Operation` is automatically deleted after completion, so there is no need to call DeleteOperation. All fields listed in the [request body](#request-body) are required. To call `FinalizeDefaultLocation`, a member must be an Owner of the Project.",
+	//   "deprecated": true,
+	//   "description": "**DEPRECATED.** _Instead, use the applicable resource-specific REST API to set the location for each resource used in your Project._ Sets the default Google Cloud Platform (GCP) resource location for the specified FirebaseProject. This method creates an App Engine application with a [default Cloud Storage bucket](https://cloud.google.com/appengine/docs/standard/python/googlecloudstorageclient/setting-up-cloud-storage#activating_a_cloud_storage_bucket), located in the specified [`locationId`](#body.request_body.FIELDS.location_id). This location must be one of the available [GCP resource locations](https://firebase.google.com/docs/projects/locations). After the default GCP resource location is finalized, or if it was already set, it cannot be changed. The default GCP resource location for the specified `FirebaseProject` might already be set because either the underlying GCP `Project` already has an App Engine application or `FinalizeDefaultLocation` was previously called with a specified `locationId`. Any new calls to `FinalizeDefaultLocation` with a *different* specified `locationId` will return a 409 error. The result of this call is an [`Operation`](../../v1beta1/operations), which can be used to track the provisioning process. The [`response`](../../v1beta1/operations#Operation.FIELDS.response) type of the `Operation` is google.protobuf.Empty. The `Operation` can be polled by its `name` using GetOperation until `done` is true. When `done` is true, the `Operation` has either succeeded or failed. If the `Operation` has succeeded, its [`response`](../../v1beta1/operations#Operation.FIELDS.response) will be set to a google.protobuf.Empty; if the `Operation` has failed, its `error` will be set to a google.rpc.Status. The `Operation` is automatically deleted after completion, so there is no need to call DeleteOperation. All fields listed in the [request body](#request-body) are required. To call `FinalizeDefaultLocation`, a member must be an Owner of the Project.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/defaultLocation:finalize",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.defaultLocation.finalize",

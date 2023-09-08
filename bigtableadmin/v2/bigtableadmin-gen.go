@@ -2555,8 +2555,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2782,7 +2782,7 @@ func (s *PartialUpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2791,17 +2791,17 @@ func (s *PartialUpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -8101,9 +8101,9 @@ type ProjectsInstancesClustersBackupsGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a Table resource.
-// Returns an empty policy if the resource exists but does not have a
-// policy set.
+// GetIamPolicy: Gets the access control policy for a Table or Backup
+// resource. Returns an empty policy if the resource exists but does not
+// have a policy set.
 //
 //   - resource: REQUIRED: The resource for which the policy is being
 //     requested. See Resource names
@@ -8207,7 +8207,7 @@ func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a Table resource. Returns an empty policy if the resource exists but does not have a policy set.",
+	//   "description": "Gets the access control policy for a Table or Backup resource. Returns an empty policy if the resource exists but does not have a policy set.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.clusters.backups.getIamPolicy",
@@ -8678,8 +8678,8 @@ type ProjectsInstancesClustersBackupsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a Table resource.
-// Replaces any existing policy.
+// SetIamPolicy: Sets the access control policy on a Table or Backup
+// resource. Replaces any existing policy.
 //
 //   - resource: REQUIRED: The resource for which the policy is being
 //     specified. See Resource names
@@ -8783,7 +8783,7 @@ func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a Table resource. Replaces any existing policy.",
+	//   "description": "Sets the access control policy on a Table or Backup resource. Replaces any existing policy.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.clusters.backups.setIamPolicy",
@@ -8829,7 +8829,7 @@ type ProjectsInstancesClustersBackupsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that the caller has on the
-// specified table resource.
+// specified Table or Backup resource.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is
 //     being requested. See Resource names
@@ -8933,7 +8933,7 @@ func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified table resource.",
+	//   "description": "Returns permissions that the caller has on the specified Table or Backup resource.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.clusters.backups.testIamPermissions",
@@ -10164,9 +10164,9 @@ type ProjectsInstancesTablesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a Table resource.
-// Returns an empty policy if the resource exists but does not have a
-// policy set.
+// GetIamPolicy: Gets the access control policy for a Table or Backup
+// resource. Returns an empty policy if the resource exists but does not
+// have a policy set.
 //
 //   - resource: REQUIRED: The resource for which the policy is being
 //     requested. See Resource names
@@ -10270,7 +10270,7 @@ func (c *ProjectsInstancesTablesGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a Table resource. Returns an empty policy if the resource exists but does not have a policy set.",
+	//   "description": "Gets the access control policy for a Table or Backup resource. Returns an empty policy if the resource exists but does not have a policy set.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.getIamPolicy",
@@ -11048,8 +11048,8 @@ type ProjectsInstancesTablesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a Table resource.
-// Replaces any existing policy.
+// SetIamPolicy: Sets the access control policy on a Table or Backup
+// resource. Replaces any existing policy.
 //
 //   - resource: REQUIRED: The resource for which the policy is being
 //     specified. See Resource names
@@ -11153,7 +11153,7 @@ func (c *ProjectsInstancesTablesSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a Table resource. Replaces any existing policy.",
+	//   "description": "Sets the access control policy on a Table or Backup resource. Replaces any existing policy.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.setIamPolicy",
@@ -11199,7 +11199,7 @@ type ProjectsInstancesTablesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that the caller has on the
-// specified table resource.
+// specified Table or Backup resource.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is
 //     being requested. See Resource names
@@ -11303,7 +11303,7 @@ func (c *ProjectsInstancesTablesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified table resource.",
+	//   "description": "Returns permissions that the caller has on the specified Table or Backup resource.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.testIamPermissions",

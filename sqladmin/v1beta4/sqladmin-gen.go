@@ -1270,6 +1270,10 @@ type DatabaseInstance struct {
 	// proactive database wellness job
 	OutOfDiskReport *SqlOutOfDiskReport `json:"outOfDiskReport,omitempty"`
 
+	// PrimaryDnsName: Output only. The dns name of the primary instance in
+	// a replication group.
+	PrimaryDnsName string `json:"primaryDnsName,omitempty"`
+
 	// Project: The project ID of the project containing the Cloud SQL
 	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
@@ -3013,6 +3017,7 @@ type LocationPreference struct {
 
 	// SecondaryZone: The preferred Compute Engine zone for the
 	// secondary/failover (for example: us-central1-a, us-central1-b, etc.).
+	// To disable this field, set it to 'no_secondary_zone'.
 	SecondaryZone string `json:"secondaryZone,omitempty"`
 
 	// Zone: The preferred Compute Engine zone (for example: us-central1-a,

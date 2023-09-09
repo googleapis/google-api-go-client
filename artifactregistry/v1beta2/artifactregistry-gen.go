@@ -1792,7 +1792,7 @@ type UploadYumArtifactRequest struct {
 // upload operation. This response is contained in the Operation and
 // available to users.
 type UploadYumArtifactResponse struct {
-	// YumArtifacts: The Apt artifacts updated.
+	// YumArtifacts: The Yum artifacts updated.
 	YumArtifacts []*YumArtifact `json:"yumArtifacts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "YumArtifacts") to

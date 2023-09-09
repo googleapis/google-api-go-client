@@ -230,6 +230,16 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the
+// create database operation.
+type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
+}
+
+// GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the
+// delete database operation.
+type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
+}
+
 // GoogleFirestoreAdminV1Progress: Describes the progress of the
 // operation. Unit of work is generic and must be interpreted based on
 // where Progress is used.

@@ -500,6 +500,9 @@ type Environment struct {
 	// used.
 	State string `json:"state,omitempty"`
 
+	// StorageConfig: Optional. Storage configuration for this environment.
+	StorageConfig *StorageConfig `json:"storageConfig,omitempty"`
+
 	// UpdateTime: Output only. The time at which this environment was last
 	// modified.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2132,6 +2135,10 @@ func (s *StopAirflowCommandResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StopAirflowCommandResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StorageConfig: The configuration for data storage in the environment.
+type StorageConfig struct {
 }
 
 // WebServerConfig: The configuration settings for the Airflow web

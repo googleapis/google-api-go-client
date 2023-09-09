@@ -479,8 +479,9 @@ type Authority struct {
 
 	// Issuer: Optional. A JSON Web Token (JWT) issuer URI. `issuer` must
 	// start with `https://` and be a valid URL with length <2000
-	// characters. If set, then Google will allow valid OIDC tokens from
-	// this issuer to authenticate within the workload_identity_pool. OIDC
+	// characters, it must use `location` rather than `zone` for GKE
+	// clusters. If set, then Google will allow valid OIDC tokens from this
+	// issuer to authenticate within the workload_identity_pool. OIDC
 	// discovery will be performed on this URI to validate tokens from the
 	// issuer. Clearing `issuer` disables Workload Identity. `issuer` cannot
 	// be directly modified; it must be cleared (and Workload Identity
@@ -2736,10 +2737,6 @@ type IdentityServiceAzureADConfig struct {
 	// Tenant: Kind of Azure AD account to be authenticated. Supported
 	// values are or for accounts belonging to a specific tenant.
 	Tenant string `json:"tenant,omitempty"`
-
-	// UserClaim: Optional. Claim in the AzureAD ID Token that holds the
-	// user details.
-	UserClaim string `json:"userClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with

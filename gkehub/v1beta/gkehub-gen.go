@@ -1486,7 +1486,8 @@ func (s *ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
 // Configuration for a single cluster. Intended to parallel the
 // ConfigManagement CR.
 type ConfigManagementMembershipSpec struct {
-	// Binauthz: Binauthz conifguration for the cluster.
+	// Binauthz: Binauthz conifguration for the cluster. Deprecated: This
+	// field will be ignored and should not be set.
 	Binauthz *ConfigManagementBinauthzConfig `json:"binauthz,omitempty"`
 
 	// Cluster: The user-specified cluster name used by Config Sync
@@ -2780,10 +2781,6 @@ type IdentityServiceAzureADConfig struct {
 	// Tenant: Kind of Azure AD account to be authenticated. Supported
 	// values are or for accounts belonging to a specific tenant.
 	Tenant string `json:"tenant,omitempty"`
-
-	// UserClaim: Optional. Claim in the AzureAD ID Token that holds the
-	// user details.
-	UserClaim string `json:"userClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with

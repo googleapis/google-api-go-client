@@ -2628,8 +2628,9 @@ func (s *PropertyOrder) MarshalJSON() ([]byte, error) {
 // PropertyReference: A reference to a property relative to the kind
 // expressions.
 type PropertyReference struct {
-	// Name: The name of the property. If name includes "."s, it may be
-	// interpreted as a property name path.
+	// Name: A reference to a property. Requires: * MUST be a dot-delimited
+	// (`.`) string of segments, where each segment conforms to entity
+	// property name limitations.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

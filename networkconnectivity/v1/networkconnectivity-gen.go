@@ -328,6 +328,48 @@ type ProjectsLocationsSpokesService struct {
 	s *Service
 }
 
+// AcceptHubSpokeRequest: The request for HubService.AcceptHubSpoke.
+type AcceptHubSpokeRequest struct {
+	// RequestId: Optional. A request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server
+	// will know to ignore the request if it has already been completed. The
+	// server guarantees that a request doesn't result in creation of
+	// duplicate commitments for at least 60 minutes. For example, consider
+	// a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the
+	// server can check to see whether the original operation was received.
+	// If it was, the server ignores the second request. This behavior
+	// prevents clients from mistakenly creating duplicate commitments. The
+	// request ID must be a valid UUID, with the exception that zero UUID is
+	// not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// SpokeUri: Required. The URI of the spoke to accept into the hub.
+	SpokeUri string `json:"spokeUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceptHubSpokeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceptHubSpokeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AcceptSpokeRequest: The request for HubService.AcceptSpoke.
 type AcceptSpokeRequest struct {
 	// RequestId: Optional. A request ID to identify requests. Specify a
@@ -1020,8 +1062,8 @@ type Group struct {
 	// Description: Optional. The description of the group.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Optional. Labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional. Labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -1096,8 +1138,8 @@ type Hub struct {
 	// Description: An optional description of the hub.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -2555,6 +2597,52 @@ func (s *PscConnection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RejectHubSpokeRequest: The request for HubService.RejectHubSpoke.
+type RejectHubSpokeRequest struct {
+	// Details: Optional. Additional information provided by the hub
+	// administrator.
+	Details string `json:"details,omitempty"`
+
+	// RequestId: Optional. A request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server
+	// will know to ignore the request if it has already been completed. The
+	// server guarantees that a request doesn't result in creation of
+	// duplicate commitments for at least 60 minutes. For example, consider
+	// a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the
+	// server can check to see whether the original operation was received.
+	// If it was, the server ignores the second request. This behavior
+	// prevents clients from mistakenly creating duplicate commitments. The
+	// request ID must be a valid UUID, with the exception that zero UUID is
+	// not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// SpokeUri: Required. The URI of the spoke to reject from the hub.
+	SpokeUri string `json:"spokeUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RejectHubSpokeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RejectHubSpokeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RejectSpokeRequest: The request for HubService.RejectSpoke.
 type RejectSpokeRequest struct {
 	// Details: Optional. Additional information provided by the hub
@@ -2610,8 +2698,8 @@ type Route struct {
 	// IpCidrRange: The destination IP address range.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -2703,8 +2791,8 @@ type RouteTable struct {
 	// Description: An optional description of the route table.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -3189,8 +3277,8 @@ type Spoke struct {
 	// Hub: Immutable. The name of the hub that this spoke is attached to.
 	Hub string `json:"hub,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -3997,6 +4085,149 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.acceptSpoke":
+
+type ProjectsLocationsGlobalHubsAcceptSpokeCall struct {
+	s                     *Service
+	name                  string
+	accepthubspokerequest *AcceptHubSpokeRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// AcceptSpoke: Accepts a proposal to attach a Network Connectivity
+// Center spoke to the hub.
+//
+// - name: The name of the hub.
+func (r *ProjectsLocationsGlobalHubsService) AcceptSpoke(name string, accepthubspokerequest *AcceptHubSpokeRequest) *ProjectsLocationsGlobalHubsAcceptSpokeCall {
+	c := &ProjectsLocationsGlobalHubsAcceptSpokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.accepthubspokerequest = accepthubspokerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsAcceptSpokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsAcceptSpokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accepthubspokerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:acceptSpoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.acceptSpoke" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Accepts a proposal to attach a Network Connectivity Center spoke to the hub.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}:acceptSpoke",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.acceptSpoke",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the hub.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:acceptSpoke",
+	//   "request": {
+	//     "$ref": "AcceptHubSpokeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "networkconnectivity.projects.locations.global.hubs.create":
@@ -5318,6 +5549,151 @@ func (c *ProjectsLocationsGlobalHubsPatchCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Hub"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.rejectSpoke":
+
+type ProjectsLocationsGlobalHubsRejectSpokeCall struct {
+	s                     *Service
+	name                  string
+	rejecthubspokerequest *RejectHubSpokeRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// RejectSpoke: Rejects a Network Connectivity Center spoke from being
+// attached to the hub. If the spoke was previously in the `ACTIVE`
+// state, it transitions to the `INACTIVE` state and is no longer able
+// to connect to other spokes that are attached to the hub.
+//
+// - name: The name of the hub.
+func (r *ProjectsLocationsGlobalHubsService) RejectSpoke(name string, rejecthubspokerequest *RejectHubSpokeRequest) *ProjectsLocationsGlobalHubsRejectSpokeCall {
+	c := &ProjectsLocationsGlobalHubsRejectSpokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rejecthubspokerequest = rejecthubspokerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsRejectSpokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsRejectSpokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejecthubspokerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rejectSpoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.rejectSpoke" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Rejects a Network Connectivity Center spoke from being attached to the hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}:rejectSpoke",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.rejectSpoke",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the hub.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:rejectSpoke",
+	//   "request": {
+	//     "$ref": "RejectHubSpokeRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"

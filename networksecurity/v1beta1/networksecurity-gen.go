@@ -833,7 +833,7 @@ type FirewallEndpoint struct {
 	// CreateTime: Output only. Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Labels: Labels as key value pairs
+	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. name of resource
@@ -893,7 +893,7 @@ type FirewallEndpointAssociation struct {
 	// being associated.
 	FirewallEndpoint string `json:"firewallEndpoint,omitempty"`
 
-	// Labels: Labels as key value pairs
+	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. name of resource
@@ -5322,7 +5322,7 @@ func (c *OrganizationsLocationsFirewallEndpointsListCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering results",
+	//       "description": "Optional. Filtering results",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5332,7 +5332,7 @@ func (c *OrganizationsLocationsFirewallEndpointsListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -13331,7 +13331,7 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsListCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filtering results",
+	//       "description": "Optional. Filtering results",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13341,7 +13341,7 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

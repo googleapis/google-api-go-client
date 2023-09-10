@@ -534,6 +534,41 @@ func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EphemeralDirectory: An ephemeral directory which won't persist across
+// workstation sessions. It is freshly created on every workstation
+// start operation.
+type EphemeralDirectory struct {
+	// GcePd: An EphemeralDirectory backed by a Compute Engine persistent
+	// disk.
+	GcePd *GcePersistentDisk `json:"gcePd,omitempty"`
+
+	// MountPath: Required. Location of this directory in the running
+	// workstation.
+	MountPath string `json:"mountPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcePd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcePd") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EphemeralDirectory) MarshalJSON() ([]byte, error) {
+	type NoMethod EphemeralDirectory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression
 // Language (CEL) syntax. CEL is a C-like expression language. The
 // syntax and semantics of CEL are documented at
@@ -712,6 +747,13 @@ type GceInstance struct {
 	// and the image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
+	// ServiceAccountScopes: Optional. Scopes to grant to the
+	// service_account. Various scopes are automatically added based on
+	// feature usage. When specified, users of workstations under this
+	// configuration must have `iam.serviceAccounts.actAs` on the service
+	// account.
+	ServiceAccountScopes []string `json:"serviceAccountScopes,omitempty"`
+
 	// ShieldedInstanceConfig: Optional. A set of Compute Engine Shielded
 	// instance options.
 	ShieldedInstanceConfig *GceShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
@@ -743,6 +785,52 @@ type GceInstance struct {
 
 func (s *GceInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GceInstance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GcePersistentDisk: An EphemeralDirectory is backed by a Compute
+// Engine persistent disk.
+type GcePersistentDisk struct {
+	// DiskType: Optional. Type of the disk to use. Defaults to
+	// "pd-standard".
+	DiskType string `json:"diskType,omitempty"`
+
+	// ReadOnly: Optional. Whether the disk is read only. If true, the disk
+	// may be shared by multiple VMs and source_snapshot must be set.
+	ReadOnly bool `json:"readOnly,omitempty"`
+
+	// SourceImage: Optional. Name of the disk image to use as the source
+	// for the disk. Must be empty if source_snapshot is set. Updating
+	// source_image will update content in the ephemeral directory after the
+	// workstation is restarted. This field is mutable.
+	SourceImage string `json:"sourceImage,omitempty"`
+
+	// SourceSnapshot: Optional. Name of the snapshot to use as the source
+	// for the disk. Must be empty if source_image is set. Updating
+	// source_snapshot will update content in the ephemeral directory after
+	// the workstation is restarted. This field is mutable.
+	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcePersistentDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod GcePersistentDisk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1796,6 +1884,10 @@ type Workstation struct {
 	// currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
 
+	// StartTime: Output only. Time when this workstation was most recently
+	// successfully started, regardless of the workstation's initial state.
+	StartTime string `json:"startTime,omitempty"`
+
 	// State: Output only. Current state of the workstation.
 	//
 	// Possible values:
@@ -2005,6 +2097,10 @@ type WorkstationConfig struct {
 	// after the workstation configuration is created.
 	EncryptionKey *CustomerEncryptionKey `json:"encryptionKey,omitempty"`
 
+	// EphemeralDirectories: Optional. Ephemeral directories which won't
+	// persist across workstation sessions.
+	EphemeralDirectories []*EphemeralDirectory `json:"ephemeralDirectories,omitempty"`
+
 	// Etag: Optional. Checksum computed by the server. May be sent on
 	// update and delete requests to make sure that the client has an
 	// up-to-date value before proceeding.
@@ -2044,6 +2140,14 @@ type WorkstationConfig struct {
 	// Reconciling: Output only. Indicates whether this workstation
 	// configuration is currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// ReplicaZones: Optional. Immutable. Specifies the zones used to
+	// replicate the VM and disk resources within the region. If set,
+	// exactly two zones within the workstation cluster's region must be
+	// specified—for example, `['us-central1-a', 'us-central1-f']`. If
+	// this field is empty, two default zones within the region are used.
+	// Immutable after the workstation configuration is created.
+	ReplicaZones []string `json:"replicaZones,omitempty"`
 
 	// RunningTimeout: Optional. Number of seconds that a workstation can
 	// run until it is automatically shut down. We recommend that

@@ -676,6 +676,13 @@ type GceInstance struct {
 	// and the image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
+	// ServiceAccountScopes: Optional. Scopes to grant to the
+	// service_account. Various scopes are automatically added based on
+	// feature usage. When specified, users of workstations under this
+	// configuration must have `iam.serviceAccounts.actAs` on the service
+	// account.
+	ServiceAccountScopes []string `json:"serviceAccountScopes,omitempty"`
+
 	// ShieldedInstanceConfig: Optional. A set of Compute Engine Shielded
 	// instance options.
 	ShieldedInstanceConfig *GceShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
@@ -1844,6 +1851,10 @@ type Workstation struct {
 	// currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
 
+	// StartTime: Output only. Time when this workstation was most recently
+	// successfully started, regardless of the workstation's initial state.
+	StartTime string `json:"startTime,omitempty"`
+
 	// State: Output only. Current state of the workstation.
 	//
 	// Possible values:
@@ -2085,6 +2096,14 @@ type WorkstationConfig struct {
 	// Reconciling: Output only. Indicates whether this workstation
 	// configuration is currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// ReplicaZones: Optional. Immutable. Specifies the zones used to
+	// replicate the VM and disk resources within the region. If set,
+	// exactly two zones within the workstation cluster's region must be
+	// specified—for example, `['us-central1-a', 'us-central1-f']`. If
+	// this field is empty, two default zones within the region are used.
+	// Immutable after the workstation configuration is created.
+	ReplicaZones []string `json:"replicaZones,omitempty"`
 
 	// RunningTimeout: Optional. Number of seconds that a workstation can
 	// run until it is automatically shut down. We recommend that

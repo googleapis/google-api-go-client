@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/admin-sdk/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	adminService, err := admin.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	adminService, err := admin.NewService(ctx, option.WithScopes(admin.CloudPlatformScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	adminService, err := admin.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	adminService, err := admin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package admin // import "google.golang.org/api/admin/directory/v1"
 
 import (
@@ -1565,24 +1579,31 @@ type ChromeOsDevice struct {
 	// DeprovisionReason: (Read-only) Deprovision reason.
 	//
 	// Possible values:
-	//   "deprovisionReasonUnspecified" - The deprovision reason is unknown.
-	//   "deprovisionReasonSameModelReplacement" - The device was replaced
-	// by a device with the same model.
-	//   "deprovisionReasonUpgrade" - The device was upgraded.
-	//   "deprovisionReasonDomainMove" - The device's domain was changed.
-	//   "deprovisionReasonServiceExpiration" - Service expired for the
+	//   "DEPROVISION_REASON_UNSPECIFIED" - The deprovision reason is
+	// unknown.
+	//   "DEPROVISION_REASON_SAME_MODEL_REPLACEMENT" - Same model
+	// replacement. You have return materials authorization (RMA) or you are
+	// replacing a malfunctioning device under warranty with the same device
+	// model.
+	//   "DEPROVISION_REASON_UPGRADE" - The device was upgraded.
+	//   "DEPROVISION_REASON_DOMAIN_MOVE" - The device's domain was changed.
+	//   "DEPROVISION_REASON_SERVICE_EXPIRATION" - Service expired for the
 	// device.
-	//   "deprovisionReasonOther" - The device was deprovisioned for a
+	//   "DEPROVISION_REASON_OTHER" - The device was deprovisioned for a
 	// legacy reason that is no longer supported.
-	//   "deprovisionReasonDifferentModelReplacement" - The device was
-	// replaced by a device with a different model.
-	//   "deprovisionReasonRetiringDevice" - The device was retired.
-	//   "deprovisionReasonUpgradeTransfer" - The device's perpetual upgrade
-	// was transferred to a new device.
-	//   "deprovisionReasonNotRequired" - A reason was not required. For
+	//   "DEPROVISION_REASON_DIFFERENT_MODEL_REPLACEMENT" - Different model
+	// replacement. You are replacing this device with an upgraded or newer
+	// device model.
+	//   "DEPROVISION_REASON_RETIRING_DEVICE" - Retiring from fleet. You are
+	// donating, discarding, or otherwise removing the device from use.
+	//   "DEPROVISION_REASON_UPGRADE_TRANSFER" - ChromeOS Flex upgrade
+	// transfer. This is a ChromeOS Flex device that you are replacing with
+	// a Chromebook within a year.
+	//   "DEPROVISION_REASON_NOT_REQUIRED" - A reason was not required. For
 	// example, the licenses were returned to the customer's license pool.
-	//   "deprovisionReasonRepairCenter" - The device was deprovisioned by a
-	// repair service center.
+	//   "DEPROVISION_REASON_REPAIR_CENTER" - The device was deprovisioned
+	// by the Repair Service Center. Can only be set by Repair Service
+	// Center during RMA.
 	DeprovisionReason string `json:"deprovisionReason,omitempty"`
 
 	// DeviceFiles: A list of device files to download (Read-only)
@@ -1594,18 +1615,16 @@ type ChromeOsDevice struct {
 	// DeviceLicenseType: Output only. Device license type.
 	//
 	// Possible values:
-	//   "deviceLicenseTypeUnspecified" - UNSPECIFIED type.
-	//   "enterprise" - Indicating the device is a
-	// Chromebook/Chromebox/Chromebase enterprise, which is packaged with an
-	// upgrade(license).
-	//   "enterpriseUpgrade" - Indicating the device is consuming standalone
-	// Chrome Enterprise Upgrade, a Chrome Enterprise license.
-	//   "educationUpgrade" - Indicating the device is consuming Chrome
-	// Education Upgrade(AKA Chrome EDU perpetual license).
-	//   "education" - Packaged with a license as education.
-	//   "terminal" - Packaged with a license as terminal.
-	//   "kioskUpgrade" - Indicating the device is consuming standalone
-	// Chrome Kiosk Upgrade, a Chrome Kiosk (annual) license.
+	//   "deviceLicenseTypeUnspecified" - The license type is unknown.
+	//   "enterprise" - The device is bundled with a perpetual Chrome
+	// Enterprise Upgrade.
+	//   "enterpriseUpgrade" - The device has an annual standalone Chrome
+	// Enterprise Upgrade.
+	//   "educationUpgrade" - The device has a perpetual standalone Chrome
+	// Education Upgrade.
+	//   "education" - The device is bundled with a perpetual Chrome
+	// Education Upgrade.
+	//   "kioskUpgrade" - The device has an annual Kiosk Upgrade.
 	DeviceLicenseType string `json:"deviceLicenseType,omitempty"`
 
 	// DiskVolumeReports: Reports of disk space and other info about

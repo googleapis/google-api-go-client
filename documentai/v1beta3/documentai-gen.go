@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/document-ai/docs/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	documentaiService, err := documentai.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package documentai // import "google.golang.org/api/documentai/v1beta3"
 
 import (
@@ -10749,6 +10762,36 @@ func (s *GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3FieldExtractionMetadata: Metadata for how
+// this field value is extracted.
+type GoogleCloudDocumentaiV1beta3FieldExtractionMetadata struct {
+	// SummaryOptions: Summary options config.
+	SummaryOptions *GoogleCloudDocumentaiV1beta3SummaryOptions `json:"summaryOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SummaryOptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SummaryOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3FieldExtractionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3FieldExtractionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3GcsDocument: Specifies a document stored
 // on Cloud Storage.
 type GoogleCloudDocumentaiV1beta3GcsDocument struct {
@@ -11197,17 +11240,16 @@ func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata) MarshalJSON
 }
 
 // GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest: The
-// request message for the ImportProcessorVersion method. Requirements:
-// - The Document AI Service Agent
-// (https://cloud.google.com/iam/docs/service-agents) of the destination
-// project must have Document AI Editor role
+// request message for the ImportProcessorVersion method. The Document
+// AI Service Agent (https://cloud.google.com/iam/docs/service-agents)
+// of the destination project must have Document AI Editor role
 // (https://cloud.google.com/document-ai/docs/access-control/iam-roles)
 // on the source project. The destination project is specified as part
 // of the parent field. The source project is specified as part of the
-// source field.
+// source or external_processor_version_source field.
 type GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest struct {
 	// ExternalProcessorVersionSource: The source processor version to
-	// import from, and can be from different environment and region than
+	// import from. It can be from a different environment and region than
 	// the destination processor.
 	ExternalProcessorVersionSource *GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequestExternalProcessorVersionSource `json:"externalProcessorVersionSource,omitempty"`
 
@@ -11512,8 +11554,8 @@ type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 	// their situation.
 	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
 
-	// ComputeStyleInfo: Turn on font id model and returns font style
-	// information. Use PremiumFeatures.compute_style_info instead.
+	// ComputeStyleInfo: Turn on font identification model and return font
+	// style information.
 	ComputeStyleInfo bool `json:"computeStyleInfo,omitempty"`
 
 	// EnableImageQualityScores: Enables intelligent document quality scores
@@ -11596,6 +11638,12 @@ type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
 	// OcrConfig: Only applicable to `OCR_PROCESSOR`. Returns error if set
 	// on other processor types.
 	OcrConfig *GoogleCloudDocumentaiV1beta3OcrConfig `json:"ocrConfig,omitempty"`
+
+	// SchemaOverride: Optional. Override the schema of the
+	// ProcessorVersion. Will return an Invalid Argument error if this field
+	// is set when the underlying ProcessorVersion doesn't support schema
+	// override.
+	SchemaOverride *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"schemaOverride,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OcrConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -12080,23 +12128,28 @@ func (s *GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo) MarshalJSO
 // GoogleCloudDocumentaiV1beta3PropertyMetadata: Metadata about a
 // property.
 type GoogleCloudDocumentaiV1beta3PropertyMetadata struct {
+	// FieldExtractionMetadata: Field extraction metadata on the property.
+	FieldExtractionMetadata *GoogleCloudDocumentaiV1beta3FieldExtractionMetadata `json:"fieldExtractionMetadata,omitempty"`
+
 	// Inactive: Whether the property should be considered as "inactive".
 	Inactive bool `json:"inactive,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Inactive") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "FieldExtractionMetadata") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Inactive") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FieldExtractionMetadata")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -12115,7 +12168,7 @@ type GoogleCloudDocumentaiV1beta3RawDocument struct {
 	// DisplayName: The display name of the document, it supports all
 	// Unicode characters except the following: `*`, `?`, `[`, `]`, `%`,
 	// `{`, `}`,`'`, `\", `,` `~`, `=` and `:` are reserved. If not
-	// specified, a default ID will be generated.
+	// specified, a default ID is generated.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MimeType: An IANA MIME type (RFC6838) indicating the nature and
@@ -12407,6 +12460,49 @@ func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest) MarshalJ
 // GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse:
 // Response message for the SetDefaultProcessorVersion method.
 type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiV1beta3SummaryOptions: Metadata for document
+// summarization.
+type GoogleCloudDocumentaiV1beta3SummaryOptions struct {
+	// Format: The format the summary should be in.
+	//
+	// Possible values:
+	//   "FORMAT_UNSPECIFIED" - Default.
+	//   "PARAGRAPH" - Format the output in paragraphs.
+	//   "BULLETS" - Format the output in bullets.
+	Format string `json:"format,omitempty"`
+
+	// Length: How long the summary should be.
+	//
+	// Possible values:
+	//   "LENGTH_UNSPECIFIED" - Default.
+	//   "BRIEF" - A brief summary of one or two sentences.
+	//   "MODERATE" - A paragraph-length summary.
+	//   "COMPREHENSIVE" - The longest option available.
+	Length string `json:"length,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3SummaryOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3SummaryOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata: The

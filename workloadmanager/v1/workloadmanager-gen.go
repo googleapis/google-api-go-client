@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/workload-manager/docs
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	workloadmanagerService, err := workloadmanager.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	workloadmanagerService, err := workloadmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	workloadmanagerService, err := workloadmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package workloadmanager // import "google.golang.org/api/workloadmanager/v1"
 
 import (
@@ -474,12 +487,12 @@ type Insight struct {
 	// from
 	InstanceId string `json:"instanceId,omitempty"`
 
-	// SapDiscovery: The insights data for sap system discovery. This is a
+	// SapDiscovery: The insights data for SAP system discovery. This is a
 	// copy of SAP System proto and should get updated whenever that one
 	// changes.
 	SapDiscovery *SapDiscovery `json:"sapDiscovery,omitempty"`
 
-	// SapValidation: The insights data for the sap workload validation.
+	// SapValidation: The insights data for the SAP workload validation.
 	SapValidation *SapValidation `json:"sapValidation,omitempty"`
 
 	// SentTime: Output only. [Output only] Create time stamp
@@ -852,8 +865,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1156,22 +1169,25 @@ func (s *RunEvaluationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SapDiscovery: LINT.IfChange The schema of SAP system discovery data.
+// SapDiscovery: The schema of SAP system discovery data.
 type SapDiscovery struct {
-	// ApplicationLayer: An SAP system may run without an application layer.
+	// ApplicationLayer: Optional. An SAP system may run without an
+	// application layer.
 	ApplicationLayer *SapDiscoveryComponent `json:"applicationLayer,omitempty"`
 
-	// DatabaseLayer: An SAP System must have a database.
+	// DatabaseLayer: Required. An SAP System must have a database.
 	DatabaseLayer *SapDiscoveryComponent `json:"databaseLayer,omitempty"`
 
-	// Metadata: The metadata for SAP system discovery data.
+	// Metadata: Optional. The metadata for SAP system discovery data.
 	Metadata *SapDiscoveryMetadata `json:"metadata,omitempty"`
 
-	// SystemId: A combination of database SID, database instance URI and
-	// tenant DB name to make a unique identifier per-system.
+	// SystemId: Output only. A combination of database SID, database
+	// instance URI and tenant DB name to make a unique identifier
+	// per-system.
 	SystemId string `json:"systemId,omitempty"`
 
-	// UpdateTime: Unix timestamp this system has been updated last.
+	// UpdateTime: Required. Unix timestamp this system has been updated
+	// last.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationLayer") to
@@ -1206,13 +1222,14 @@ type SapDiscoveryComponent struct {
 	// DatabaseProperties: Optional. The component is a SAP database.
 	DatabaseProperties *SapDiscoveryComponentDatabaseProperties `json:"databaseProperties,omitempty"`
 
-	// HostProject: Pantheon Project in which the resources reside.
+	// HostProject: Required. Pantheon Project in which the resources
+	// reside.
 	HostProject string `json:"hostProject,omitempty"`
 
-	// Resources: The resources in a component.
+	// Resources: Optional. The resources in a component.
 	Resources []*SapDiscoveryResource `json:"resources,omitempty"`
 
-	// Sid: The sap identifier, used by the SAP software and helps
+	// Sid: Optional. The SAP identifier, used by the SAP software and helps
 	// differentiate systems for customers.
 	Sid string `json:"sid,omitempty"`
 
@@ -1251,7 +1268,7 @@ type SapDiscoveryComponentApplicationProperties struct {
 	//   "NETWEAVER" - SAP Netweaver
 	ApplicationType string `json:"applicationType,omitempty"`
 
-	// AscsUri: Required. Resource URI of the recognized ASCS host of the
+	// AscsUri: Optional. Resource URI of the recognized ASCS host of the
 	// application.
 	AscsUri string `json:"ascsUri,omitempty"`
 
@@ -1330,17 +1347,19 @@ func (s *SapDiscoveryComponentDatabaseProperties) MarshalJSON() ([]byte, error) 
 // SapDiscoveryMetadata: Message describing SAP discovery system
 // metadata
 type SapDiscoveryMetadata struct {
-	// CustomerRegion: Customer region string for customer's use. Does not
-	// represent GCP region.
+	// CustomerRegion: Optional. Customer region string for customer's use.
+	// Does not represent GCP region.
 	CustomerRegion string `json:"customerRegion,omitempty"`
 
-	// DefinedSystem: Customer defined, something like "E-commerce pre prod"
+	// DefinedSystem: Optional. Customer defined, something like "E-commerce
+	// pre prod"
 	DefinedSystem string `json:"definedSystem,omitempty"`
 
-	// EnvironmentType: Should be "prod", "QA", "dev", "staging", etc.
+	// EnvironmentType: Optional. Should be "prod", "QA", "dev", "staging",
+	// etc.
 	EnvironmentType string `json:"environmentType,omitempty"`
 
-	// SapProduct: This sap product name
+	// SapProduct: Optional. This SAP product name
 	SapProduct string `json:"sapProduct,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomerRegion") to
@@ -1369,7 +1388,8 @@ func (s *SapDiscoveryMetadata) MarshalJSON() ([]byte, error) {
 
 // SapDiscoveryResource: Message describing a resource.
 type SapDiscoveryResource struct {
-	// RelatedResources: A list of resource URIs related to this resource.
+	// RelatedResources: Optional. A list of resource URIs related to this
+	// resource.
 	RelatedResources []string `json:"relatedResources,omitempty"`
 
 	// ResourceKind: Required. ComputeInstance, ComputeDisk, VPC, Bare Metal
@@ -1402,12 +1422,12 @@ type SapDiscoveryResource struct {
 	//   "RESOURCE_TYPE_NETWORK" - This is a network resource.
 	ResourceType string `json:"resourceType,omitempty"`
 
-	// ResourceUri: URI of the resource, includes project, location, and
-	// name.
+	// ResourceUri: Required. URI of the resource, includes project,
+	// location, and name.
 	ResourceUri string `json:"resourceUri,omitempty"`
 
-	// UpdateTime: Unix timestamp of when this resource last had its
-	// discovery data updated.
+	// UpdateTime: Required. Unix timestamp of when this resource last had
+	// its discovery data updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RelatedResources") to
@@ -1437,7 +1457,7 @@ func (s *SapDiscoveryResource) MarshalJSON() ([]byte, error) {
 // SapValidation: A presentation of SAP workload insight. The schema of
 // SAP workloads validation related data.
 type SapValidation struct {
-	// ValidationDetails: A list of SAP validation metrics data.
+	// ValidationDetails: Optional. A list of SAP validation metrics data.
 	ValidationDetails []*SapValidationValidationDetail `json:"validationDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ValidationDetails")
@@ -1467,18 +1487,34 @@ func (s *SapValidation) MarshalJSON() ([]byte, error) {
 // SapValidationValidationDetail: Message describing the SAP validation
 // metrics.
 type SapValidationValidationDetail struct {
-	// Details: The pairs of metrics data: field name & field value.
+	// Details: Optional. The pairs of metrics data: field name & field
+	// value.
 	Details map[string]string `json:"details,omitempty"`
 
-	// SapValidationType: The SAP system that the validation data is from.
+	// SapValidationType: Optional. The SAP system that the validation data
+	// is from.
 	//
 	// Possible values:
 	//   "SAP_VALIDATION_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "SYSTEM" - The SAP system named SYSTEM.
-	//   "COROSYNC" - The SAP system named COROSYNC.
-	//   "PACEMAKER" - The SAP system named PACEMAKER.
-	//   "HANA" - The SAP system named HANA.
-	//   "NETWEAVER" - The SAP system named NETWEAVER.
+	//   "SYSTEM" - The SYSTEM validation type collects underlying system
+	// data from the VM.
+	//   "COROSYNC" - The COROSYNC validation type collects Corosync
+	// configuration and runtime data. Corosync enables servers to interact
+	// as a HA cluster.
+	//   "PACEMAKER" - The PACEMAKER validation type collects Pacemaker
+	// configuration data. Pacemaker is a high-availability cluster resource
+	// manager.
+	//   "HANA" - The HANA validation type collects HANA configuration data.
+	// SAP HANA is an in-memory, column-oriented, relational database
+	// management system.
+	//   "NETWEAVER" - The NETWEAVER validation type collects NetWeaver
+	// configuration data. SAP NetWeaver is a software stack for many of SAP
+	// SE's applications.
+	//   "HANA_SECURITY" - The HANA_SECURITY validation type collects HANA
+	// configuration data as it relates to SAP security best practices.
+	//   "CUSTOM" - The CUSTOM validation type collects any customer-defined
+	// data that does not fall into any of the other categories of
+	// validations.
 	SapValidationType string `json:"sapValidationType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -1535,7 +1571,7 @@ func (s *ScannedResource) MarshalJSON() ([]byte, error) {
 // SqlserverValidation: A presentation of SQLServer workload insight.
 // The schema of SqlServer workloads validation related data.
 type SqlserverValidation struct {
-	// AgentVersion: The agent version collected this data point
+	// AgentVersion: Optional. The agent version collected this data point
 	AgentVersion string `json:"agentVersion,omitempty"`
 
 	// Instance: Required. The instance_name of the instance that the
@@ -1548,7 +1584,8 @@ type SqlserverValidation struct {
 	// Insight data comes from.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// ValidationDetails: A list of SqlServer validation metrics data.
+	// ValidationDetails: Optional. A list of SqlServer validation metrics
+	// data.
 	ValidationDetails []*SqlserverValidationValidationDetail `json:"validationDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentVersion") to
@@ -1610,7 +1647,8 @@ type SqlserverValidationValidationDetail struct {
 	// names and values.
 	Details []*SqlserverValidationDetails `json:"details,omitempty"`
 
-	// Type: The Sqlserver system that the validation data is from.
+	// Type: Optional. The Sqlserver system that the validation data is
+	// from.
 	//
 	// Possible values:
 	//   "SQLSERVER_VALIDATION_TYPE_UNSPECIFIED" - Unspecified type.
@@ -1623,6 +1661,10 @@ type SqlserverValidationValidationDetail struct {
 	//   "DB_BUFFER_POOL_EXTENSION" - The BUFFER_POOL_EXTENSION table.
 	//   "DB_MAX_SERVER_MEMORY" - The MAX_SERVER_MEMORY table.
 	//   "INSTANCE_METRICS" - The INSTANCE_METRICS table.
+	//   "DB_INDEX_FRAGMENTATION" - The DB_INDEX_FRAGMENTATION table.
+	//   "DB_TABLE_INDEX_COMPRESSION" - The DB_TABLE_INDEX_COMPRESSION
+	// table.
+	//   "DB_BACKUP_POLICY" - The DB_BACKUP_POLICY table.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to

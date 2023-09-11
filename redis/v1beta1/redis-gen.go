@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/memorystore/docs/redis/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,24 +30,26 @@
 //	ctx := context.Background()
 //	redisService, err := redis.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	redisService, err := redis.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	redisService, err := redis.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package redis // import "google.golang.org/api/redis/v1beta1"
 
 import (
@@ -1548,9 +1561,9 @@ func (s *PersistenceConfig) MarshalJSON() ([]byte, error) {
 }
 
 type PscConfig struct {
-	// Network: Required. The consumer network where the IP address of the
-	// discovery endpoint will be reserved, in the form of
-	// projects/{network_host_project}/global/networks/{network_id}.
+	// Network: Required. The network where the IP address of the discovery
+	// endpoint will be reserved, in the form of
+	// projects/{network_project}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Network") to
@@ -1592,8 +1605,8 @@ type PscConnection struct {
 	// form of projects/{project_id}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
 
-	// ProjectId: The consumer project_id where the forwarding rule is
-	// created from.
+	// ProjectId: Output only. The consumer project_id where the forwarding
+	// rule is created from.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// PscConnectionId: Output only. The PSC connection id of the forwarding
@@ -2346,14 +2359,13 @@ type ProjectsLocationsClustersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Redis cluster based on the specified tier and
-// memory size. The creation is executed asynchronously and callers may
-// check the returned operation to track its progress. Once the
-// operation is completed the Redis cluster will be fully functional.
-// The completed longrunning.Operation will contain the new cluster
-// object in the response field. The returned operation is automatically
-// deleted after a few hours, so there is no need to call
-// DeleteOperation.
+// Create: Creates a Redis cluster based on the specified properties.
+// The creation is executed asynchronously and callers may check the
+// returned operation to track its progress. Once the operation is
+// completed the Redis cluster will be fully functional. The completed
+// longrunning.Operation will contain the new cluster object in the
+// response field. The returned operation is automatically deleted after
+// a few hours, so there is no need to call DeleteOperation.
 //
 //   - parent: The resource name of the cluster location using the form:
 //     `projects/{project_id}/locations/{location_id}` where `location_id`
@@ -2474,7 +2486,7 @@ func (c *ProjectsLocationsClustersCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Redis cluster based on the specified tier and memory size. The creation is executed asynchronously and callers may check the returned operation to track its progress. Once the operation is completed the Redis cluster will be fully functional. The completed longrunning.Operation will contain the new cluster object in the response field. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.",
+	//   "description": "Creates a Redis cluster based on the specified properties. The creation is executed asynchronously and callers may check the returned operation to track its progress. Once the operation is completed the Redis cluster will be fully functional. The completed longrunning.Operation will contain the new cluster object in the response field. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters",
 	//   "httpMethod": "POST",
 	//   "id": "redis.projects.locations.clusters.create",

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/asset-inventory/docs/quickstart
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	cloudassetService, err := cloudasset.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	cloudassetService, err := cloudasset.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	cloudassetService, err := cloudasset.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package cloudasset // import "google.golang.org/api/cloudasset/v1p1beta1"
 
 import (
@@ -1096,19 +1109,18 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// `organizations/{organization_id}`
 	Parent string `json:"parent,omitempty"`
 
-	// Scopes: The scopes of a policy define which resources an ACM policy
-	// can restrict, and where ACM resources can be referenced. For example,
-	// a policy with scopes=["folders/123"] has the following behavior: -
-	// vpcsc perimeters can only restrict projects within folders/123 -
-	// access levels can only be referenced by resources within folders/123.
-	// If empty, there are no limitations on which resources can be
-	// restricted by an ACM policy, and there are no limitations on where
-	// ACM resources can be referenced. Only one policy can include a given
-	// scope (attempting to create a second policy which includes
-	// "folders/123" will result in an error). Currently, scopes cannot be
-	// modified after a policy is created. Currently, policies can only have
-	// a single scope. Format: list of `folders/{folder_number}` or
-	// `projects/{project_number}`
+	// Scopes: The scopes of the AccessPolicy. Scopes define which resources
+	// a policy can restrict and where its resources can be referenced. For
+	// example, policy A with `scopes=["folders/123"]` has the following
+	// behavior: - ServicePerimeter can only restrict projects within
+	// `folders/123`. - ServicePerimeter within policy A can only reference
+	// access levels defined within policy A. - Only one policy can include
+	// a given scope; thus, attempting to create a second policy which
+	// includes `folders/123` will result in an error. If no scopes are
+	// provided, then any resource within the organization can be
+	// restricted. Scopes cannot be modified after a policy is created.
+	// Policies can only have a single scope. Format: list of
+	// `folders/{folder_number}` or `projects/{project_number}`
 	Scopes []string `json:"scopes,omitempty"`
 
 	// Title: Required. Human readable title. Does not affect behavior.

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/authorized-buyers/apis/realtimebidding/reference/rest/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	realtimebiddingService, err := realtimebidding.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package realtimebidding // import "google.golang.org/api/realtimebidding/v1"
 
 import (
@@ -1607,13 +1620,15 @@ func (s *Endpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GetRemarketingTagResponse: Response for a request to get remarketing
-// tag.
+// GetRemarketingTagResponse: Deprecated. This will be removed in
+// October 2023. For more information, see the release notes:
+// https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
+// Response for a request to get remarketing tag.
 type GetRemarketingTagResponse struct {
-	// Snippet: A HTML tag that can be placed on the advertiser's page to
+	// Snippet: An HTML tag that can be placed on the advertiser's page to
 	// add users to a user list. For more information and code samples on
-	// using snippet on your website refer to Tag your site for remarketing
-	// ( https://support.google.com/google-ads/answer/2476688).
+	// using snippets on your website, refer to Tag your site for
+	// remarketing (https://support.google.com/google-ads/answer/2476688).
 	Snippet string `json:"snippet,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2012,9 +2027,9 @@ func (s *ListPublisherConnectionsResponse) MarshalJSON() ([]byte, error) {
 type ListUserListsResponse struct {
 	// NextPageToken: The continuation page token to send back to the server
 	// in a subsequent request. Due to a currently known issue, it is
-	// recommended that the caller keep invoking the list method till the
-	// time a next page token is not returned (even if the result set is
-	// empty).
+	// recommended that the caller keep invoking the list method until the
+	// time a next page token is not returned, even if the result set is
+	// empty.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// UserLists: List of user lists from the search.
@@ -2854,8 +2869,11 @@ func (s *UrlDownloadSize) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UrlRestriction: Represents the URL restriction (for the URL captured
-// by the pixel callback) for a user list.
+// UrlRestriction: Deprecated. This will be removed in October 2023. For
+// more information, see the release notes:
+// https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
+// Represents the URL restriction (for the URL captured by the pixel
+// callback) for a user list.
 type UrlRestriction struct {
 	// EndDate: End date (if specified) of the URL restriction. End date
 	// should be later than the start date for the date range to be valid.
@@ -2950,7 +2968,10 @@ type UserList struct {
 	//   "CLOSED" - New users cannot be added to the user list.
 	Status string `json:"status,omitempty"`
 
-	// UrlRestriction: Required. The URL restriction for the user list.
+	// UrlRestriction: Required. Deprecated. This will be removed in October
+	// 2023. For more information, see the release notes:
+	// https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
+	// The URL restriction for the user list.
 	UrlRestriction *UrlRestriction `json:"urlRestriction,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7137,19 +7158,22 @@ type BuyersGetRemarketingTagCall struct {
 	header_      http.Header
 }
 
-// GetRemarketingTag: Gets remarketing tag for a buyer. A remarketing
-// tag is a piece of JavaScript code that can be placed on a web page.
-// When a user visits a page containing a remarketing tag, Google adds
-// the user to a user list.
+// GetRemarketingTag: Deprecated. This will be removed in October 2023.
+// For more information, see the release notes:
+// https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
+// Gets remarketing tag for a buyer. A remarketing tag is a piece of
+// JavaScript code that can be placed on a web page. When a user visits
+// a page containing a remarketing tag, Google adds the user to a user
+// list.
 //
-//   - name: To fetch remarketing tag for an account, name must follow the
-//     pattern `buyers/{accountId}` where `{accountId}` represents ID of a
-//     buyer that owns the remarketing tag. For a bidder accessing
-//     remarketing tag on behalf of a child seat buyer, `{accountId}`
-//     should represent the ID of the child seat buyer. To fetch
-//     remarketing tag for a specific user list, name must follow the
-//     pattern `buyers/{accountId}/userLists/{userListId}`. See
-//     UserList.name.
+//   - name: To fetch the remarketing tag for an account, the name must
+//     follow the pattern `buyers/{accountId}`, where `{accountId}`
+//     represents the ID of the buyer that owns the remarketing tag. For a
+//     bidder accessing the remarketing tag on behalf of a child seat
+//     buyer, `{accountId}` should represent the ID of the child seat
+//     buyer. To fetch the remarketing tag for a specific user list, the
+//     name must follow the pattern
+//     `buyers/{accountId}/userLists/{userListId}`. See UserList.name.
 func (r *BuyersService) GetRemarketingTag(name string) *BuyersGetRemarketingTagCall {
 	c := &BuyersGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7255,7 +7279,7 @@ func (c *BuyersGetRemarketingTagCall) Do(opts ...googleapi.CallOption) (*GetRema
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
+	//   "description": "Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
 	//   "flatPath": "v1/buyers/{buyersId}:getRemarketingTag",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.buyers.getRemarketingTag",
@@ -7264,7 +7288,7 @@ func (c *BuyersGetRemarketingTagCall) Do(opts ...googleapi.CallOption) (*GetRema
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. To fetch remarketing tag for an account, name must follow the pattern `buyers/{accountId}` where `{accountId}` represents ID of a buyer that owns the remarketing tag. For a bidder accessing remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch remarketing tag for a specific user list, name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
+	//       "description": "Required. To fetch the remarketing tag for an account, the name must follow the pattern `buyers/{accountId}`, where `{accountId}` represents the ID of the buyer that owns the remarketing tag. For a bidder accessing the remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch the remarketing tag for a specific user list, the name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,
@@ -8236,7 +8260,7 @@ type BuyersUserListsCloseCall struct {
 	header_              http.Header
 }
 
-// Close: Change the status of a user list to CLOSED. This prevents new
+// Close: Changes the status of a user list to CLOSED. This prevents new
 // users from being added to the user list.
 //
 // - name: The name of the user list to close. See UserList.name.
@@ -8338,7 +8362,7 @@ func (c *BuyersUserListsCloseCall) Do(opts ...googleapi.CallOption) (*UserList, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Change the status of a user list to CLOSED. This prevents new users from being added to the user list.",
+	//   "description": "Changes the status of a user list to CLOSED. This prevents new users from being added to the user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}:close",
 	//   "httpMethod": "POST",
 	//   "id": "realtimebidding.buyers.userLists.close",
@@ -8379,13 +8403,13 @@ type BuyersUserListsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a new user list.
+// Create: Creates a new user list.
 //
 //   - parent: The name of the parent buyer of the user list to be
-//     retrieved that must follow the pattern `buyers/{buyerAccountId}`,
+//     retrieved, which must follow the pattern `buyers/{buyerAccountId}`,
 //     where `{buyerAccountId}` represents the account ID of the buyer who
-//     owns user lists. For a bidder accessing user lists on behalf of a
-//     child seat buyer , `{buyerAccountId}` should represent the account
+//     owns the user list. For a bidder accessing user lists on behalf of
+//     a child seat buyer, `{buyerAccountId}` should represent the account
 //     ID of the child seat buyer.
 func (r *BuyersUserListsService) Create(parent string, userlist *UserList) *BuyersUserListsCreateCall {
 	c := &BuyersUserListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8485,7 +8509,7 @@ func (c *BuyersUserListsCreateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new user list.",
+	//   "description": "Creates a new user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists",
 	//   "httpMethod": "POST",
 	//   "id": "realtimebidding.buyers.userLists.create",
@@ -8494,7 +8518,7 @@ func (c *BuyersUserListsCreateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the parent buyer of the user list to be retrieved that must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns user lists. For a bidder accessing user lists on behalf of a child seat buyer , `{buyerAccountId}` should represent the account ID of the child seat buyer.",
+	//       "description": "Required. The name of the parent buyer of the user list to be retrieved, which must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns the user list. For a bidder accessing user lists on behalf of a child seat buyer, `{buyerAccountId}` should represent the account ID of the child seat buyer.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,
@@ -8672,19 +8696,22 @@ type BuyersUserListsGetRemarketingTagCall struct {
 	header_      http.Header
 }
 
-// GetRemarketingTag: Gets remarketing tag for a buyer. A remarketing
-// tag is a piece of JavaScript code that can be placed on a web page.
-// When a user visits a page containing a remarketing tag, Google adds
-// the user to a user list.
+// GetRemarketingTag: Deprecated. This will be removed in October 2023.
+// For more information, see the release notes:
+// https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
+// Gets remarketing tag for a buyer. A remarketing tag is a piece of
+// JavaScript code that can be placed on a web page. When a user visits
+// a page containing a remarketing tag, Google adds the user to a user
+// list.
 //
-//   - name: To fetch remarketing tag for an account, name must follow the
-//     pattern `buyers/{accountId}` where `{accountId}` represents ID of a
-//     buyer that owns the remarketing tag. For a bidder accessing
-//     remarketing tag on behalf of a child seat buyer, `{accountId}`
-//     should represent the ID of the child seat buyer. To fetch
-//     remarketing tag for a specific user list, name must follow the
-//     pattern `buyers/{accountId}/userLists/{userListId}`. See
-//     UserList.name.
+//   - name: To fetch the remarketing tag for an account, the name must
+//     follow the pattern `buyers/{accountId}`, where `{accountId}`
+//     represents the ID of the buyer that owns the remarketing tag. For a
+//     bidder accessing the remarketing tag on behalf of a child seat
+//     buyer, `{accountId}` should represent the ID of the child seat
+//     buyer. To fetch the remarketing tag for a specific user list, the
+//     name must follow the pattern
+//     `buyers/{accountId}/userLists/{userListId}`. See UserList.name.
 func (r *BuyersUserListsService) GetRemarketingTag(name string) *BuyersUserListsGetRemarketingTagCall {
 	c := &BuyersUserListsGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8790,7 +8817,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
+	//   "description": "Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}:getRemarketingTag",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.buyers.userLists.getRemarketingTag",
@@ -8799,7 +8826,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. To fetch remarketing tag for an account, name must follow the pattern `buyers/{accountId}` where `{accountId}` represents ID of a buyer that owns the remarketing tag. For a bidder accessing remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch remarketing tag for a specific user list, name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
+	//       "description": "Required. To fetch the remarketing tag for an account, the name must follow the pattern `buyers/{accountId}`, where `{accountId}` represents the ID of the buyer that owns the remarketing tag. For a bidder accessing the remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch the remarketing tag for a specific user list, the name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/userLists/[^/]+$",
 	//       "required": true,
@@ -8850,7 +8877,7 @@ func (c *BuyersUserListsListCall) PageSize(pageSize int64) *BuyersUserListsListC
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation page
-// token (as received from a previous response).
+// token as received from a previous response.
 func (c *BuyersUserListsListCall) PageToken(pageToken string) *BuyersUserListsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8970,7 +8997,7 @@ func (c *BuyersUserListsListCall) Do(opts ...googleapi.CallOption) (*ListUserLis
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Continuation page token (as received from a previous response).",
+	//       "description": "Continuation page token as received from a previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9025,8 +9052,8 @@ type BuyersUserListsOpenCall struct {
 	header_             http.Header
 }
 
-// Open: Change the status of a user list to OPEN. This allows new users
-// to be added to the user list.
+// Open: Changes the status of a user list to OPEN. This allows new
+// users to be added to the user list.
 //
 // - name: The name of the user list to open. See UserList.name.
 func (r *BuyersUserListsService) Open(name string, openuserlistrequest *OpenUserListRequest) *BuyersUserListsOpenCall {
@@ -9127,7 +9154,7 @@ func (c *BuyersUserListsOpenCall) Do(opts ...googleapi.CallOption) (*UserList, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Change the status of a user list to OPEN. This allows new users to be added to the user list.",
+	//   "description": "Changes the status of a user list to OPEN. This allows new users to be added to the user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}:open",
 	//   "httpMethod": "POST",
 	//   "id": "realtimebidding.buyers.userLists.open",
@@ -9168,7 +9195,7 @@ type BuyersUserListsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Update the given user list. Only user lists with
+// Update: Updates the given user list. Only user lists with
 // URLRestrictions can be updated.
 //
 //   - name: Output only. Name of the user list that must follow the
@@ -9276,7 +9303,7 @@ func (c *BuyersUserListsUpdateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the given user list. Only user lists with URLRestrictions can be updated.",
+	//   "description": "Updates the given user list. Only user lists with URLRestrictions can be updated.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "realtimebidding.buyers.userLists.update",

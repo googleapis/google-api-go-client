@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/manufacturers/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	manufacturersService, err := manufacturers.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	manufacturersService, err := manufacturers.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	manufacturersService, err := manufacturers.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package manufacturers // import "google.golang.org/api/manufacturers/v1"
 
 import (
@@ -422,6 +435,9 @@ type Certification struct {
 	// Authority: Required. Name of the certification body.
 	Authority string `json:"authority,omitempty"`
 
+	// Code: Required. A unique code to identify the certification.
+	Code string `json:"code,omitempty"`
+
 	// Link: Optional. A URL link to the certification.
 	Link string `json:"link,omitempty"`
 
@@ -434,7 +450,7 @@ type Certification struct {
 	// ValidUntil: Optional. The expiration date (UTC).
 	ValidUntil string `json:"validUntil,omitempty"`
 
-	// Value: Required. A custom value of the certification.
+	// Value: Optional. A custom value of the certification.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Authority") to

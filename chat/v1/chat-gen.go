@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/hangouts/chat
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	chatService, err := chat.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	chatService, err := chat.NewService(ctx, option.WithScopes(chat.ChatSpacesReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	chatService, err := chat.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	chatService, err := chat.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package chat // import "google.golang.org/api/chat/v1"
 
 import (
@@ -480,13 +494,16 @@ func (s *ActionStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Annotation: Annotations associated with the plain-text body of the
-// message. Example plain-text message body: ``` Hello @FooBot how are
-// you!" ``` The corresponding annotations metadata: ```
-// "annotations":[{ "type":"USER_MENTION", "startIndex":6, "length":7,
-// "userMention": { "user": { "name":"users/{user}",
-// "displayName":"FooBot", "avatarUrl":"https://goo.gl/aeDtrS",
-// "type":"BOT" }, "type":"MENTION" } }] ```
+// Annotation: Output only. Annotations associated with the plain-text
+// body of the message. To add basic formatting to a text message, see
+// Format text messages
+// (https://developers.google.com/chat/api/guides/message-formats/text#format-texts).
+// Example plain-text message body: ``` Hello @FooBot how are you!" ```
+// The corresponding annotations metadata: ``` "annotations":[{
+// "type":"USER_MENTION", "startIndex":6, "length":7, "userMention": {
+// "user": { "name":"users/{user}", "displayName":"FooBot",
+// "avatarUrl":"https://goo.gl/aeDtrS", "type":"BOT" }, "type":"MENTION"
+// } }] ```
 type Annotation struct {
 	// Length: Length of the substring in the plain-text message body this
 	// annotation corresponds to.
@@ -812,16 +829,18 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CardWithId: Widgets for Chat apps to specify.
+// CardWithId: A card
+// (https://developers.google.com/chat/api/reference/rest/v1/cards) in a
+// Google Chat message. Only Chat apps can create cards. If your Chat
+// app authenticates as a user
+// (https://developers.google.com/chat/api/guides/auth/users), the
+// message can't contain cards.
 type CardWithId struct {
-	// Card: Cards support a defined layout, interactive UI elements like
-	// buttons, and rich media like images. Use this card to present
-	// detailed information, gather information from users, and guide users
-	// to take a next step.
+	// Card: A card. Maximum size is 32 KB.
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
 
-	// CardId: Required for `cardsV2` messages. Chat app-specified
-	// identifier for this widget. Scoped within a message.
+	// CardId: Required if the message contains multiple cards. A unique
+	// identifier for a card in a message.
 	CardId string `json:"cardId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Card") to
@@ -1260,15 +1279,18 @@ func (s *DeletionMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeprecatedEvent: Google Chat app interaction events. To learn about
-// interaction events, see Receive and respond to Google Chat app
-// interaction events
-// (https://developers.google.com/chat/api/guides/message-formats).
+// DeprecatedEvent: A Google Chat app interaction event. To learn about
+// interaction events, see Receive and respond to interactions with your
+// Google Chat app
+// (https://developers.google.com/chat/api/guides/message-formats). To
+// learn about event types and for example event payloads, see Types of
+// Google Chat app interaction events
+// (https://developers.google.com/chat/api/guides/message-formats/events).
 type DeprecatedEvent struct {
-	// Action: The form action data associated with an interactive card that
-	// was clicked. Only populated for CARD_CLICKED events. See the
-	// Interactive Cards guide (/chat/how-tos/cards-onclick) for more
-	// information.
+	// Action: For `CARD_CLICKED` interaction events, the form action data
+	// associated when a user clicks a card or dialog. To learn more, see
+	// Read form data input by users on cards
+	// (https://developers.google.com/chat/ui/read-form-data).
 	Action *FormAction `json:"action,omitempty"`
 
 	// Common: Represents information about the user's client, such as
@@ -1290,22 +1312,21 @@ type DeprecatedEvent struct {
 	// event received.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - This could be used when the corresponding
-	// interaction event is not dialog related. For example an @mention.
-	//   "REQUEST_DIALOG" - Any user action that opens a
-	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
-	//   "SUBMIT_DIALOG" - A card click interaction event from a
-	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
-	//   "CANCEL_DIALOG" - The
-	// [dialog](https://developers.google.com/chat/how-tos/dialogs) was
-	// cancelled.
+	//   "TYPE_UNSPECIFIED" - Default value. Unspecified.
+	//   "REQUEST_DIALOG" - A user opens a dialog.
+	//   "SUBMIT_DIALOG" - A user clicks an interactive element of a dialog.
+	// For example, a user fills out information in a dialog and clicks a
+	// button to submit the information.
+	//   "CANCEL_DIALOG" - A user closes a dialog without submitting
+	// information, or the dialog is canceled.
 	DialogEventType string `json:"dialogEventType,omitempty"`
 
 	// EventTime: The timestamp indicating when the interaction event
 	// occurred.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// IsDialogEvent: True when the interaction event is related to dialogs
+	// IsDialogEvent: For `CARD_CLICKED` interaction events, whether the
+	// user interacted with a dialog
 	// (https://developers.google.com/chat/how-tos/dialogs).
 	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 
@@ -1332,16 +1353,24 @@ type DeprecatedEvent struct {
 	// (https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat).
 	Token string `json:"token,omitempty"`
 
-	// Type: The type of the interaction event.
+	// Type: The type of interaction event. For details, see Types of Google
+	// Chat app interaction events
+	// (https://developers.google.com/chat/api/guides/message-formats/events).
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "MESSAGE" - A message was sent in a space.
-	//   "ADDED_TO_SPACE" - The Chat app was added to a space by a Chat user
-	// or Workspace administrator.
-	//   "REMOVED_FROM_SPACE" - The Chat app was removed from a space by a
-	// Chat user or Workspace administrator.
-	//   "CARD_CLICKED" - The Chat app's interactive card was clicked.
+	//   "MESSAGE" - A user sends the Chat app a message, or invokes the
+	// Chat app in a space.
+	//   "ADDED_TO_SPACE" - A user adds the Chat app to a space, or a Google
+	// Workspace administrator installs the Chat app in direct message
+	// spaces for users in their organization.
+	//   "REMOVED_FROM_SPACE" - A user removes the Chat app from a space.
+	//   "CARD_CLICKED" - A user clicks an interactive element of a card or
+	// dialog from a Chat app, such as a button. If a user interacts with a
+	// dialog, the `CARD_CLICKED` interaction event's `isDialogEvent` field
+	// is set to `true` and includes a
+	// [`DialogEventType`](https://developers.google.com/chat/api/reference/r
+	// est/v1/DialogEventType).
 	Type string `json:"type,omitempty"`
 
 	// User: The user that triggered the interaction event.
@@ -1842,27 +1871,22 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Card: Cards support a defined layout, interactive UI
-// elements like buttons, and rich media like images. Use cards to
-// present detailed information, gather information from users, and
-// guide users to take a next step. In Google Chat, cards appear in
-// several places: - As stand-alone messages. - Accompanying a text
-// message, just beneath the text message. - As a dialog
-// (https://developers.google.com/chat/how-tos/dialogs). Only Google
-// Chat apps can create card messages in Google Chat. If your Chat app
-// uses user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) to send
-// messages on behalf of users, the messages can't contain cards. The
-// following example JSON creates a "contact card" that features: - A
-// header with the contact's name, job title, and avatar picture. - A
-// section with the contact information, including formatted text. -
-// Buttons that users can click to share the contact, or see more or
-// less information. For more examples, see Design dynamic, interactive,
-// and consistent UIs with cards
-// (https://developers.google.com/chat/ui). !Example contact card
-// (https://developers.google.com/chat/images/card_api_reference.png)
-// ``` { "cardsV2": [ { "cardId": "unique-card-id", "card": { "header":
-// { "title": "Sasha", "subtitle": "Software Engineer", "imageUrl":
+// GoogleAppsCardV1Card: A card interface displayed in a Google Chat
+// message or Google Workspace Add-on. Cards support a defined layout,
+// interactive UI elements like buttons, and rich media like images. Use
+// cards to present detailed information, gather information from users,
+// and guide users to take a next step. To learn how to build cards, see
+// the following documentation: * For Google Chat apps, see Design
+// dynamic, interactive, and consistent UIs with cards
+// (https://developers.google.com/chat/ui). * For Google Workspace
+// Add-ons, see Card-based interfaces
+// (https://developers.google.com/apps-script/add-ons/concepts/cards).
+// **Example: Card message for a Google Chat app** !Example contact card
+// (https://developers.google.com/chat/images/card_api_reference.png) To
+// create the sample card message in Google Chat, use the following
+// JSON: ``` { "cardsV2": [ { "cardId": "unique-card-id", "card": {
+// "header": { "title": "Sasha", "subtitle": "Software Engineer",
+// "imageUrl":
 // "https://developers.google.com/chat/images/quickstart-app-avatar.png",
 //
 //	"imageType": "CIRCLE", "imageAltText": "Avatar for Sasha", },
@@ -3631,8 +3655,10 @@ func (s *ImageButton) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Inputs: Types of data inputs for widgets. Users enter data with these
-// inputs.
+// Inputs: Types of data that users can enter on cards or dialogs. To
+// learn how to process information from users, see Read form data input
+// by users on cards
+// (https://developers.google.com/chat/ui/read-form-data).
 type Inputs struct {
 	// DateInput: Date input values.
 	DateInput *DateInput `json:"dateInput,omitempty"`
@@ -4013,12 +4039,13 @@ type Membership struct {
 	// State: Output only. State of the membership.
 	//
 	// Possible values:
-	//   "MEMBERSHIP_STATE_UNSPECIFIED" - Default, don't use.
-	//   "JOINED" - The user has joined the space.
-	//   "INVITED" - The user has been invited, is able to join the space,
-	// but currently hasn't joined.
-	//   "NOT_A_MEMBER" - The user isn't a member of the space, hasn't been
-	// invited and isn't able to join the space.
+	//   "MEMBERSHIP_STATE_UNSPECIFIED" - Default value. Don't use.
+	//   "JOINED" - The user is added to the space, and can participate in
+	// the space.
+	//   "INVITED" - The user is invited to join the space, but hasn't
+	// joined it.
+	//   "NOT_A_MEMBER" - The user doesn't belong to the space and doesn't
+	// have a pending invitation to join the space.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4048,7 +4075,7 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Message: A message in Google Chat.
+// Message: A message in a Google Chat space.
 type Message struct {
 	// ActionResponse: Input only. Parameters that a Chat app can use to
 	// configure how its response is posted.
@@ -4076,17 +4103,13 @@ type Message struct {
 	// `cards_v2` can have a maximum size of 32 KB.
 	Cards []*Card `json:"cards,omitempty"`
 
-	// CardsV2: Richly formatted and interactive cards that display UI
-	// elements and editable widgets, such as: - Formatted text - Buttons -
-	// Clickable images - Checkboxes - Radio buttons - Input widgets. Cards
-	// are usually displayed below the text body of a Chat message, but can
-	// situationally appear other places, such as dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Each card can
-	// have a maximum size of 32 KB. The `cardId` is a unique identifier
-	// among cards in the same message and for identifying user input
-	// values. Currently supported widgets include: - `TextParagraph` -
-	// `DecoratedText` - `Image` - `ButtonList` - `Divider` - `TextInput` -
-	// `SelectionInput` - `Grid`
+	// CardsV2: An array of cards
+	// (https://developers.google.com/chat/api/reference/rest/v1/cards).
+	// Only Chat apps can create cards. If your Chat app authenticates as a
+	// user (https://developers.google.com/chat/api/guides/auth/users), the
+	// messages can't contain cards. To learn about cards and how to create
+	// them, see Design dynamic, interactive, and consistent UIs with cards
+	// (https://developers.google.com/chat/ui).
 	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
 
 	// ClientAssignedMessageId: A custom name for a Chat message assigned at
@@ -4169,9 +4192,12 @@ type Message struct {
 	Space *Space `json:"space,omitempty"`
 
 	// Text: Plain-text body of the message. The first link to an image,
-	// video, or web page generates a preview chip. You can also @mention a
-	// Google Chat user, or everyone in the space. To learn about creating
-	// text messages, see Create a text message
+	// video, or web page generates a preview chip
+	// (https://developers.google.com/chat/how-tos/preview-links). You can
+	// also @mention a Google Chat user
+	// (https://developers.google.com/chat/api/guides/message-formats/text#messages-@mention),
+	// or everyone in the space. To learn about creating text messages, see
+	// Create a text message
 	// (https://developers.google.com/chat/api/guides/message-formats/text).
 	Text string `json:"text,omitempty"`
 
@@ -4859,15 +4885,23 @@ func (s *TextParagraph) MarshalJSON() ([]byte, error) {
 
 // Thread: A thread in a Google Chat space. For example usage, see Start
 // or reply to a message thread
-// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+// (https://developers.google.com/chat/api/guides/v1/messages/create#create-message-thread).
+// If you specify a thread when creating a message, you can set the
+// `messageReplyOption`
+// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages/create#messagereplyoption)
+// field to determine what happens if no matching thread is found.
 type Thread struct {
-	// Name: Resource name of the thread. Example:
+	// Name: Output only. Resource name of the thread. Example:
 	// `spaces/{space}/threads/{thread}`
 	Name string `json:"name,omitempty"`
 
-	// ThreadKey: Optional. ID for the thread. Supports up to 4000
-	// characters. Input for creating or updating a thread. Otherwise,
-	// output only.
+	// ThreadKey: Optional. Input for creating or updating a thread.
+	// Otherwise, output only. ID for the thread. Supports up to 4000
+	// characters. This ID is unique to the Chat app that sets it. For
+	// example, if multiple Chat apps create a message using the same thread
+	// key, the messages are posted in different threads. To reply in a
+	// thread created by a person or another Chat app, specify the thread
+	// `name` field instead.
 	ThreadKey string `json:"threadKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -5338,10 +5372,9 @@ type MediaUploadCall struct {
 // file attachment
 // (https://developers.google.com/chat/api/guides/v1/media-and-attachments/upload).
 // Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.messages` or `chat.messages.create` authorization scope. You
-// can upload attachments up to 200 MB. Certain file types aren't
-// supported. For details, see File types blocked by Google Chat
+// (https://developers.google.com/chat/api/guides/auth/users). You can
+// upload attachments up to 200 MB. Certain file types aren't supported.
+// For details, see File types blocked by Google Chat
 // (https://support.google.com/chat/answer/7651457?&co=GENIE.Platform%3DDesktop#File%20types%20blocked%20in%20Google%20Chat).
 //
 //   - parent: Resource name of the Chat space in which the attachment is
@@ -5511,7 +5544,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*UploadAttachmentRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads an attachment. For an example, see [Upload media as a file attachment](https://developers.google.com/chat/api/guides/v1/media-and-attachments/upload). Requires user [authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.create` authorization scope. You can upload attachments up to 200 MB. Certain file types aren't supported. For details, see [File types blocked by Google Chat](https://support.google.com/chat/answer/7651457?\u0026co=GENIE.Platform%3DDesktop#File%20types%20blocked%20in%20Google%20Chat).",
+	//   "description": "Uploads an attachment. For an example, see [Upload media as a file attachment](https://developers.google.com/chat/api/guides/v1/media-and-attachments/upload). Requires user [authentication](https://developers.google.com/chat/api/guides/auth/users). You can upload attachments up to 200 MB. Certain file types aren't supported. For details, see [File types blocked by Google Chat](https://support.google.com/chat/answer/7651457?\u0026co=GENIE.Platform%3DDesktop#File%20types%20blocked%20in%20Google%20Chat).",
 	//   "flatPath": "v1/spaces/{spacesId}/attachments:upload",
 	//   "httpMethod": "POST",
 	//   "id": "chat.media.upload",
@@ -5577,8 +5610,7 @@ type SpacesCreateCall struct {
 // try a different `displayName`. An existing space within the Google
 // Workspace organization might already use this display name. Requires
 // user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.spaces.create` or `chat.spaces` scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 func (r *SpacesService) Create(space *Space) *SpacesCreateCall {
 	c := &SpacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.space = space
@@ -5683,7 +5715,7 @@ func (c *SpacesCreateCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a named space. Spaces grouped by topics aren't supported. For an example, see [Create a space](https://developers.google.com/chat/api/guides/v1/spaces/create). If you receive the error message `ALREADY_EXISTS` when creating a space, try a different `displayName`. An existing space within the Google Workspace organization might already use this display name. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
+	//   "description": "Creates a named space. Spaces grouped by topics aren't supported. For an example, see [Create a space](https://developers.google.com/chat/api/guides/v1/spaces/create). If you receive the error message `ALREADY_EXISTS` when creating a space, try a different `displayName`. An existing space within the Google Workspace organization might already use this display name. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.create",
@@ -5728,8 +5760,7 @@ type SpacesDeleteCall struct {
 // (https://developers.google.com/chat/api/guides/v1/spaces/delete).
 // Requires user authentication
 // (https://developers.google.com/chat/api/guides/auth/users) from a
-// user who has permission to delete the space, and the `chat.delete`
-// scope.
+// user who has permission to delete the space.
 //
 //   - name: Resource name of the space to delete. Format:
 //     `spaces/{space}`.
@@ -5825,7 +5856,7 @@ func (c *SpacesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a named space. Always performs a cascading delete, which means that the space's child resources—like messages posted in the space and memberships in the space—are also deleted. For an example, see [Delete a space](https://developers.google.com/chat/api/guides/v1/spaces/delete). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) from a user who has permission to delete the space, and the `chat.delete` scope.",
+	//   "description": "Deletes a named space. Always performs a cascading delete, which means that the space's child resources—like messages posted in the space and memberships in the space—are also deleted. For an example, see [Delete a space](https://developers.google.com/chat/api/guides/v1/spaces/delete). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) from a user who has permission to delete the space.",
 	//   "flatPath": "v1/spaces/{spacesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.delete",
@@ -6042,8 +6073,7 @@ type SpacesGetCall struct {
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.spaces` or `chat.spaces.readonly` authorization scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - name: Resource name of the space, in the form "spaces/*". Format:
 //     `spaces/{space}`.
@@ -6152,7 +6182,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a space. For an example, see [Get a space](https://developers.google.com/chat/api/guides/v1/spaces/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.spaces` or `chat.spaces.readonly` authorization scope.",
+	//   "description": "Returns details about a space. For an example, see [Get a space](https://developers.google.com/chat/api/guides/v1/spaces/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.get",
@@ -6200,10 +6230,9 @@ type SpacesListCall struct {
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.spaces` or `chat.spaces.readonly` authorization scope.
-// Lists spaces visible to the caller or authenticated user. Group chats
-// and DMs aren't listed until the first message is sent.
+// (https://developers.google.com/chat/api/guides/auth/users). Lists
+// spaces visible to the caller or authenticated user. Group chats and
+// DMs aren't listed until the first message is sent.
 func (r *SpacesService) List() *SpacesListCall {
 	c := &SpacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6346,7 +6375,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists spaces the caller is a member of. Group chats and DMs aren't listed until the first message is sent. For an example, see [List spaces](https://developers.google.com/chat/api/guides/v1/spaces/list). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.spaces` or `chat.spaces.readonly` authorization scope. Lists spaces visible to the caller or authenticated user. Group chats and DMs aren't listed until the first message is sent.",
+	//   "description": "Lists spaces the caller is a member of. Group chats and DMs aren't listed until the first message is sent. For an example, see [List spaces](https://developers.google.com/chat/api/guides/v1/spaces/list). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Lists spaces visible to the caller or authenticated user. Group chats and DMs aren't listed until the first message is sent.",
 	//   "flatPath": "v1/spaces",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.list",
@@ -6420,8 +6449,7 @@ type SpacesPatchCall struct {
 // `ALREADY_EXISTS`, try a different display name.. An existing space
 // within the Google Workspace organization might already use this
 // display name. Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.spaces` scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 // - name: Resource name of the space. Format: `spaces/{space}`.
 func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
@@ -6550,7 +6578,7 @@ func (c *SpacesPatchCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a space. For an example, see [Update a space](https://developers.google.com/chat/api/guides/v1/spaces/update). If you're updating the `displayName` field and receive the error message `ALREADY_EXISTS`, try a different display name.. An existing space within the Google Workspace organization might already use this display name. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces` scope.",
+	//   "description": "Updates a space. For an example, see [Update a space](https://developers.google.com/chat/api/guides/v1/spaces/update). If you're updating the `displayName` field and receive the error message `ALREADY_EXISTS`, try a different display name.. An existing space within the Google Workspace organization might already use this display name. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "chat.spaces.patch",
@@ -6629,8 +6657,7 @@ type SpacesSetupCall struct {
 // try a different `displayName`. An existing space within the Google
 // Workspace organization might already use this display name. Requires
 // user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.spaces.create` or `chat.spaces` scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 func (r *SpacesService) Setup(setupspacerequest *SetUpSpaceRequest) *SpacesSetupCall {
 	c := &SpacesSetupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.setupspacerequest = setupspacerequest
@@ -6725,7 +6752,7 @@ func (c *SpacesSetupCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a space and adds specified users to it. The calling user is automatically added to the space, and shouldn't be specified as a membership in the request. For an example, see [Set up a space](https://developers.google.com/chat/api/guides/v1/spaces/set-up). To specify the human members to add, add memberships with the appropriate `member.name` in the `SetUpSpaceRequest`. To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`. For a space or group chat, if the caller blocks or is blocked by some members, then those members aren't added to the created space. To create a direct message (DM) between the calling user and another human user, specify exactly one membership to represent the human user. If one user blocks the other, the request fails and the DM isn't created. To create a DM between the calling user and the calling app, set `Space.singleUserBotDm` to `true` and don't specify any memberships. You can only use this method to set up a DM with the calling app. To add the calling app as a member of a space or an existing DM between two human users, see [create a membership](https://developers.google.com/chat/api/guides/v1/members/create). If a DM already exists between two users, even when one user blocks the other at the time a request is made, then the existing DM is returned. Spaces with threaded replies aren't supported. If you receive the error message `ALREADY_EXISTS` when setting up a space, try a different `displayName`. An existing space within the Google Workspace organization might already use this display name. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.spaces.create` or `chat.spaces` scope.",
+	//   "description": "Creates a space and adds specified users to it. The calling user is automatically added to the space, and shouldn't be specified as a membership in the request. For an example, see [Set up a space](https://developers.google.com/chat/api/guides/v1/spaces/set-up). To specify the human members to add, add memberships with the appropriate `member.name` in the `SetUpSpaceRequest`. To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`. For a space or group chat, if the caller blocks or is blocked by some members, then those members aren't added to the created space. To create a direct message (DM) between the calling user and another human user, specify exactly one membership to represent the human user. If one user blocks the other, the request fails and the DM isn't created. To create a DM between the calling user and the calling app, set `Space.singleUserBotDm` to `true` and don't specify any memberships. You can only use this method to set up a DM with the calling app. To add the calling app as a member of a space or an existing DM between two human users, see [create a membership](https://developers.google.com/chat/api/guides/v1/members/create). If a DM already exists between two users, even when one user blocks the other at the time a request is made, then the existing DM is returned. Spaces with threaded replies aren't supported. If you receive the error message `ALREADY_EXISTS` when setting up a space, try a different `displayName`. An existing space within the Google Workspace organization might already use this display name. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces:setup",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.setup",
@@ -6766,20 +6793,18 @@ type SpacesMembersCreateCall struct {
 // the space invitation before joining. Otherwise, creating a membership
 // adds the member directly to the specified space. Requires user
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.memberships` (for human membership) or `chat.memberships.app`
-// (for app membership) scope. To specify the member to add, set the
-// `membership.member.name` in the `CreateMembershipRequest`: - To add
-// the calling app to a space or a direct message between two human
-// users, use `users/app`. Unable to add other apps to the space. - To
-// add a human user, use `users/{user}`, where `{user}` can be the email
-// address for the user. For users in the same Workspace organization
-// `{user}` can also be the `{person_id}` for the person from the People
-// API, or the `id` for the user in the Directory API. For example, if
-// the People API Person `resourceName` for `user@example.com` is
-// `people/123456789`, you can add the user to the space by setting the
-// `membership.member.name` to `users/user@example.com` or
-// `users/123456789`.
+// (https://developers.google.com/chat/api/guides/auth/users). To
+// specify the member to add, set the `membership.member.name` in the
+// `CreateMembershipRequest`: - To add the calling app to a space or a
+// direct message between two human users, use `users/app`. Unable to
+// add other apps to the space. - To add a human user, use
+// `users/{user}`, where `{user}` can be the email address for the user.
+// For users in the same Workspace organization `{user}` can also be the
+// `{person_id}` for the person from the People API, or the `id` for the
+// user in the Directory API. For example, if the People API Person
+// `resourceName` for `user@example.com` is `people/123456789`, you can
+// add the user to the space by setting the `membership.member.name` to
+// `users/user@example.com` or `users/123456789`.
 //
 //   - parent: The resource name of the space for which to create the
 //     membership. Format: spaces/{space}.
@@ -6881,7 +6906,7 @@ func (c *SpacesMembersCreateCall) Do(opts ...googleapi.CallOption) (*Membership,
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a human membership or app membership for the calling app. Creating memberships for other apps isn't supported. For an example, see [ Create a membership](https://developers.google.com/chat/api/guides/v1/members/create). When creating a membership, if the specified member has their auto-accept policy turned off, then they're invited, and must accept the space invitation before joining. Otherwise, creating a membership adds the member directly to the specified space. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.memberships` (for human membership) or `chat.memberships.app` (for app membership) scope. To specify the member to add, set the `membership.member.name` in the `CreateMembershipRequest`: - To add the calling app to a space or a direct message between two human users, use `users/app`. Unable to add other apps to the space. - To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`.",
+	//   "description": "Creates a human membership or app membership for the calling app. Creating memberships for other apps isn't supported. For an example, see [ Create a membership](https://developers.google.com/chat/api/guides/v1/members/create). When creating a membership, if the specified member has their auto-accept policy turned off, then they're invited, and must accept the space invitation before joining. Otherwise, creating a membership adds the member directly to the specified space. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users). To specify the member to add, set the `membership.member.name` in the `CreateMembershipRequest`: - To add the calling app to a space or a direct message between two human users, use `users/app`. Unable to add other apps to the space. - To add a human user, use `users/{user}`, where `{user}` can be the email address for the user. For users in the same Workspace organization `{user}` can also be the `{person_id}` for the person from the People API, or the `id` for the user in the Directory API. For example, if the People API Person `resourceName` for `user@example.com` is `people/123456789`, you can add the user to the space by setting the `membership.member.name` to `users/user@example.com` or `users/123456789`.",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.members.create",
@@ -6926,8 +6951,7 @@ type SpacesMembersDeleteCall struct {
 // Delete: Deletes a membership. For an example, see Delete a membership
 // (https://developers.google.com/chat/api/guides/v1/members/delete).
 // Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.memberships` or `chat.memberships.app` authorization scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - name: Resource name of the membership to delete. Chat apps can
 //     delete human users' or their own memberships. Chat apps can't
@@ -7032,7 +7056,7 @@ func (c *SpacesMembersDeleteCall) Do(opts ...googleapi.CallOption) (*Membership,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a membership. For an example, see [Delete a membership](https://developers.google.com/chat/api/guides/v1/members/delete). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.memberships` or `chat.memberships.app` authorization scope.",
+	//   "description": "Deletes a membership. For an example, see [Delete a membership](https://developers.google.com/chat/api/guides/v1/members/delete). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.members.delete",
@@ -7081,9 +7105,7 @@ type SpacesMembersGetCall struct {
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.memberships` or `chat.memberships.readonly` authorization
-// scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - name: Resource name of the membership to retrieve. To get the app's
 //     own membership, you can optionally use
@@ -7199,7 +7221,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a membership. For an example, see [Get a membership](https://developers.google.com/chat/api/guides/v1/members/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
+	//   "description": "Returns details about a membership. For an example, see [Get a membership](https://developers.google.com/chat/api/guides/v1/members/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.get",
@@ -7256,9 +7278,7 @@ type SpacesMembersListCall struct {
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.memberships` or `chat.memberships.readonly` authorization
-// scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - parent: The resource name of the space for which to fetch a
 //     membership list. Format: spaces/{space}.
@@ -7419,7 +7439,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists memberships in a space. For an example, see [List memberships](https://developers.google.com/chat/api/guides/v1/members/list). Listing memberships with [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/chat/api/guides/auth/users) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
+	//   "description": "Lists memberships in a space. For an example, see [List memberships](https://developers.google.com/chat/api/guides/v1/members/list). Listing memberships with [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/chat/api/guides/auth/users) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -7501,24 +7521,15 @@ type SpacesMessagesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a message. For an example, see Create a message
-// (https://developers.google.com/chat/api/guides/crudl/messages#create_a_message).
-// Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Creating a text
-// message supports both user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and [app
-// authentication]
-// (https://developers.google.com/chat/api/guides/auth/service-accounts).
-// User authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` or `chat.messages.create` authorization scope.
-// Creating a card message only supports and requires [app
-// authentication]
-// (https://developers.google.com/chat/api/guides/auth/service-accounts).
-// Because Chat provides authentication for webhooks
-// (https://developers.google.com/chat/how-tos/webhooks) as part of the
-// URL that's generated when a webhook is registered, webhooks can
-// create messages without a service account or user authentication.
+// Create: Creates a message in a Google Chat space. For an example, see
+// Create a message
+// (https://developers.google.com/chat/api/guides/v1/messages/create).
+// Calling this method requires authentication
+// (https://developers.google.com/chat/api/guides/auth) and supports the
+// following authentication types: - For text messages, user
+// authentication or app authentication are supported. - For card
+// messages, only app authentication is supported. (Only Chat apps can
+// create card messages.)
 //
 //   - parent: The resource name of the space in which to create a
 //     message. Format: `spaces/{space}`.
@@ -7680,7 +7691,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a message. For an example, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Creating a text message supports both [user authentication](https://developers.google.com/chat/api/guides/auth/users) and [app authentication] (https://developers.google.com/chat/api/guides/auth/service-accounts). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope. Creating a card message only supports and requires [app authentication] (https://developers.google.com/chat/api/guides/auth/service-accounts). Because Chat provides authentication for [webhooks](https://developers.google.com/chat/how-tos/webhooks) as part of the URL that's generated when a webhook is registered, webhooks can create messages without a service account or user authentication.",
+	//   "description": "Creates a message in a Google Chat space. For an example, see [Create a message](https://developers.google.com/chat/api/guides/v1/messages/create). Calling this method requires [authentication](https://developers.google.com/chat/api/guides/auth) and supports the following authentication types: - For text messages, user authentication or app authentication are supported. - For card messages, only app authentication is supported. (Only Chat apps can create card messages.)",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.create",
@@ -7763,10 +7774,9 @@ type SpacesMessagesDeleteCall struct {
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` authorization scope. Requests authenticated with
-// service accounts can only delete messages created by the calling Chat
-// app.
+// (https://developers.google.com/chat/api/guides/auth/users). Requests
+// authenticated with service accounts can only delete messages created
+// by the calling Chat app.
 //
 //   - name: Resource name of the message that you want to delete, in the
 //     form `spaces/*/messages/*` Example:
@@ -7875,7 +7885,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope. Requests authenticated with service accounts can only delete messages created by the calling Chat app.",
+	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only delete messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.delete",
@@ -7930,9 +7940,8 @@ type SpacesMessagesGetCall struct {
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` or `chat.messages.readonly` authorization scope.
-// Note: Might return a message from a blocked member or space.
+// (https://developers.google.com/chat/api/guides/auth/users). Note:
+// Might return a message from a blocked member or space.
 //
 //   - name: Resource name of the message to retrieve. Format:
 //     `spaces/{space}/messages/{message}` If the message begins with
@@ -8046,7 +8055,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a message. For an example, see [Read a message](https://developers.google.com/chat/api/guides/v1/messages/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.readonly` authorization scope. Note: Might return a message from a blocked member or space.",
+	//   "description": "Returns details about a message. For an example, see [Read a message](https://developers.google.com/chat/api/guides/v1/messages/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Note: Might return a message from a blocked member or space.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.get",
@@ -8090,8 +8099,7 @@ type SpacesMessagesListCall struct {
 // including messages from blocked members and spaces. For an example,
 // see List messages (/chat/api/guides/v1/messages/list). Requires user
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.messages` or `chat.messages.readonly` authorization scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - parent: The resource name of the space to list messages from.
 //     Format: `spaces/{space}`.
@@ -8267,7 +8275,7 @@ func (c *SpacesMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessages
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists messages in a space that the caller is a member of, including messages from blocked members and spaces. For an example, see [List messages](/chat/api/guides/v1/messages/list). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.readonly` authorization scope.",
+	//   "description": "Lists messages in a space that the caller is a member of, including messages from blocked members and spaces. For an example, see [List messages](/chat/api/guides/v1/messages/list). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.list",
@@ -8366,10 +8374,9 @@ type SpacesMessagesPatchCall struct {
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` authorization scope. Requests authenticated with
-// service accounts can only update messages created by the calling Chat
-// app.
+// (https://developers.google.com/chat/api/guides/auth/users). Requests
+// authenticated with service accounts can only update messages created
+// by the calling Chat app.
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
 //     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
@@ -8494,7 +8501,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope. Requests authenticated with service accounts can only update messages created by the calling Chat app.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "chat.spaces.messages.patch",
@@ -8560,10 +8567,9 @@ type SpacesMessagesUpdateCall struct {
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). User
 // authentication
-// (https://developers.google.com/chat/api/guides/auth/users) requires
-// the `chat.messages` authorization scope. Requests authenticated with
-// service accounts can only update messages created by the calling Chat
-// app.
+// (https://developers.google.com/chat/api/guides/auth/users). Requests
+// authenticated with service accounts can only update messages created
+// by the calling Chat app.
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
 //     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
@@ -8688,7 +8694,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope. Requests authenticated with service accounts can only update messages created by the calling Chat app.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",
@@ -8899,10 +8905,8 @@ type SpacesMessagesReactionsCreateCall struct {
 // see Create a reaction
 // (https://developers.google.com/chat/api/guides/v1/reactions/create).
 // Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.messages`, `chat.messages.reactions`, or
-// `chat.messages.reactions.create` scope. Only unicode emoji are
-// supported.
+// (https://developers.google.com/chat/api/guides/auth/users). Only
+// unicode emoji are supported.
 //
 //   - parent: The message where the reaction is created. Format:
 //     `spaces/{space}/messages/{message}`.
@@ -9004,7 +9008,7 @@ func (c *SpacesMessagesReactionsCreateCall) Do(opts ...googleapi.CallOption) (*R
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a reaction and adds it to a message. For an example, see [Create a reaction](https://developers.google.com/chat/api/guides/v1/reactions/create). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages`, `chat.messages.reactions`, or `chat.messages.reactions.create` scope. Only unicode emoji are supported.",
+	//   "description": "Creates a reaction and adds it to a message. For an example, see [Create a reaction](https://developers.google.com/chat/api/guides/v1/reactions/create). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users). Only unicode emoji are supported.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/reactions",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.reactions.create",
@@ -9051,8 +9055,7 @@ type SpacesMessagesReactionsDeleteCall struct {
 // reaction
 // (https://developers.google.com/chat/api/guides/v1/reactions/delete).
 // Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.messages` or `chat.messages.reactions` scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - name: Name of the reaction to delete. Format:
 //     `spaces/{space}/messages/{message}/reactions/{reaction}`.
@@ -9148,7 +9151,7 @@ func (c *SpacesMessagesReactionsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a reaction to a message. For an example, see [Delete a reaction](https://developers.google.com/chat/api/guides/v1/reactions/delete). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.reactions` scope.",
+	//   "description": "Deletes a reaction to a message. For an example, see [Delete a reaction](https://developers.google.com/chat/api/guides/v1/reactions/delete). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/reactions/{reactionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.reactions.delete",
@@ -9192,9 +9195,7 @@ type SpacesMessagesReactionsListCall struct {
 // reactions
 // (https://developers.google.com/chat/api/guides/v1/reactions/list).
 // Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and
-// `chat.messages`, `chat.messages.readonly`, `chat.messages.reactions`,
-// or `chat.messages.reactions.readonly` scope.
+// (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - parent: The message users reacted to. Format:
 //     `spaces/{space}/messages/{message}`.
@@ -9353,7 +9354,7 @@ func (c *SpacesMessagesReactionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists reactions to a message. For an example, see [List reactions](https://developers.google.com/chat/api/guides/v1/reactions/list). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and `chat.messages`, `chat.messages.readonly`, `chat.messages.reactions`, or `chat.messages.reactions.readonly` scope.",
+	//   "description": "Lists reactions to a message. For an example, see [List reactions](https://developers.google.com/chat/api/guides/v1/reactions/list). Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/reactions",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.reactions.list",

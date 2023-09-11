@@ -12,12 +12,10 @@ export GITHUB_ACCESS_TOKEN=$(cat $KOKORO_KEYSTORE_DIR/73713_yoshi-automation-git
 # Display commands being run
 set -x
 
-# Needed for our build environment
-go env -w GOFLAGS="-buildvcs=false"
-
 # cd to project dir on Kokoro instance
 cd github/google-api-go-client
 export DISCOVERY_DIR=$(pwd)
+git config --global --add safe.directory $PWD
 
 cd internal/kokoro/discogen
 go run google.golang.org/api/internal/kokoro/discogen

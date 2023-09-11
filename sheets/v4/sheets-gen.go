@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/sheets/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	sheetsService, err := sheets.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	sheetsService, err := sheets.NewService(ctx, option.WithScopes(sheets.SpreadsheetsReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	sheetsService, err := sheets.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	sheetsService, err := sheets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package sheets // import "google.golang.org/api/sheets/v4"
 
 import (
@@ -984,7 +998,7 @@ func (s *AutoResizeDimensionsRequest) MarshalJSON() ([]byte, error) {
 
 // BandedRange: A banded (alternating colors) range in a sheet.
 type BandedRange struct {
-	// BandedRangeId: The id of the banded range.
+	// BandedRangeId: The ID of the banded range.
 	BandedRangeId int64 `json:"bandedRangeId,omitempty"`
 
 	// ColumnProperties: Properties for column bands. These properties are
@@ -1533,7 +1547,7 @@ type BasicSeriesDataPointStyleOverride struct {
 	// default is used. If color is also set, this field takes precedence.
 	ColorStyle *ColorStyle `json:"colorStyle,omitempty"`
 
-	// Index: Zero based index of the series data point.
+	// Index: The zero-based index of the series data point.
 	Index int64 `json:"index,omitempty"`
 
 	// PointStyle: Point style of the series data point. Valid only if the
@@ -2245,9 +2259,9 @@ func (s *BatchUpdateValuesResponse) MarshalJSON() ([]byte, error) {
 // BigQueryDataSourceSpec: The specification of a BigQuery data source
 // that's connected to a sheet.
 type BigQueryDataSourceSpec struct {
-	// ProjectId: The ID of a BigQuery enabled GCP project with a billing
-	// account attached. For any queries executed against the data source,
-	// the project is charged.
+	// ProjectId: The ID of a BigQuery enabled Google Cloud project with a
+	// billing account attached. For any queries executed against the data
+	// source, the project is charged.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// QuerySpec: A BigQueryQuerySpec.
@@ -2308,7 +2322,7 @@ func (s *BigQueryQuerySpec) MarshalJSON() ([]byte, error) {
 }
 
 // BigQueryTableSpec: Specifies a BigQuery table definition. Only native
-// tables (https://cloud.google.com/bigquery/docs/tables-intro) is
+// tables (https://cloud.google.com/bigquery/docs/tables-intro) are
 // allowed.
 type BigQueryTableSpec struct {
 	// DatasetId: The BigQuery dataset id.
@@ -2504,8 +2518,8 @@ type BooleanRule struct {
 	Condition *BooleanCondition `json:"condition,omitempty"`
 
 	// Format: The format to apply. Conditional formatting can only apply a
-	// subset of formatting: bold, italic, strikethrough, foreground color &
-	// background color.
+	// subset of formatting: bold, italic, strikethrough, foreground color
+	// and, background color.
 	Format *CellFormat `json:"format,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -4625,7 +4639,7 @@ func (s *DataSourceRefreshDailySchedule) MarshalJSON() ([]byte, error) {
 // refresh on specific days in the month in a given time interval.
 type DataSourceRefreshMonthlySchedule struct {
 	// DaysOfMonth: Days of the month to refresh. Only 1-28 are supported,
-	// mapping to the 1st to the 28th day. At lesat one day must be
+	// mapping to the 1st to the 28th day. At least one day must be
 	// specified.
 	DaysOfMonth []int64 `json:"daysOfMonth,omitempty"`
 
@@ -4661,8 +4675,8 @@ func (s *DataSourceRefreshMonthlySchedule) MarshalJSON() ([]byte, error) {
 // Data sources in the spreadsheet are refreshed within a time interval.
 // You can specify the start time by clicking the Scheduled Refresh
 // button in the Sheets editor, but the interval is fixed at 4 hours.
-// For example, if you specify a start time of 8am , the refresh will
-// take place between 8am and 12pm every day.
+// For example, if you specify a start time of 8 AM , the refresh will
+// take place between 8 AM and 12 PM every day.
 type DataSourceRefreshSchedule struct {
 	// DailySchedule: Daily refresh schedule.
 	DailySchedule *DataSourceRefreshDailySchedule `json:"dailySchedule,omitempty"`
@@ -6369,7 +6383,7 @@ func (s *FilterCriteria) MarshalJSON() ([]byte, error) {
 
 // FilterSpec: The filter criteria associated with a specific column.
 type FilterSpec struct {
-	// ColumnIndex: The column index.
+	// ColumnIndex: The zero-based column index.
 	ColumnIndex int64 `json:"columnIndex,omitempty"`
 
 	// DataSourceColumnReference: Reference to a data source column.
@@ -7984,7 +7998,7 @@ func (s *PivotFilterCriteria) MarshalJSON() ([]byte, error) {
 // PivotFilterSpec: The pivot table filter criteria associated with a
 // specific source column offset.
 type PivotFilterSpec struct {
-	// ColumnOffsetIndex: The column offset of the source range.
+	// ColumnOffsetIndex: The zero-based column offset of the source range.
 	ColumnOffsetIndex int64 `json:"columnOffsetIndex,omitempty"`
 
 	// DataSourceColumnReference: The reference to the data source column.
@@ -8503,7 +8517,7 @@ type ProtectedRange struct {
 	// editing. Warning-based protection means that every user can edit data
 	// in the protected range, except editing will prompt a warning asking
 	// the user to confirm the edit. When writing: if this field is true,
-	// then editors is ignored. Additionally, if this field is changed from
+	// then editors are ignored. Additionally, if this field is changed from
 	// true to false and the `editors` field is not set (nor included in the
 	// field mask), then the editors will be set to all the editors in the
 	// document.
@@ -9395,9 +9409,9 @@ type SheetProperties struct {
 	// updating sheet properties, if this field is excluded then the sheet
 	// is added or moved to the end of the sheet list. When updating sheet
 	// indices or inserting sheets, movement is considered in "before the
-	// move" indexes. For example, if there were 3 sheets (S1, S2, S3) in
-	// order to move S1 ahead of S2 the index would have to be set to 2. A
-	// sheet index update request is ignored if the requested index is
+	// move" indexes. For example, if there were three sheets (S1, S2, S3)
+	// in order to move S1 ahead of S2 the index would have to be set to 2.
+	// A sheet index update request is ignored if the requested index is
 	// identical to the sheets current index or if the requested new index
 	// is equal to the current sheet index + 1.
 	Index int64 `json:"index,omitempty"`
@@ -9512,8 +9526,8 @@ type SlicerSpec struct {
 	// background_color is also set, this field takes precedence.
 	BackgroundColorStyle *ColorStyle `json:"backgroundColorStyle,omitempty"`
 
-	// ColumnIndex: The column index in the data table on which the filter
-	// is applied to.
+	// ColumnIndex: The zero-based column index in the data table on which
+	// the filter is applied to.
 	ColumnIndex int64 `json:"columnIndex,omitempty"`
 
 	// DataRange: The data range of the slicer.
@@ -11440,10 +11454,10 @@ type WaterfallChartCustomSubtotal struct {
 	// Label: A label for the subtotal column.
 	Label string `json:"label,omitempty"`
 
-	// SubtotalIndex: The 0-based index of a data point within the series.
-	// If data_is_subtotal is true, the data point at this index is the
-	// subtotal. Otherwise, the subtotal appears after the data point with
-	// this index. A series can have multiple subtotals at arbitrary
+	// SubtotalIndex: The zero-based index of a data point within the
+	// series. If data_is_subtotal is true, the data point at this index is
+	// the subtotal. Otherwise, the subtotal appears after the data point
+	// with this index. A series can have multiple subtotals at arbitrary
 	// indices, but subtotals do not affect the indices of the data points.
 	// For example, if a series has three data points, their indices will
 	// always be 0, 1, and 2, regardless of how many subtotals exist on the

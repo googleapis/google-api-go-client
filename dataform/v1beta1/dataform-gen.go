@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/dataform/docs
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	dataformService, err := dataform.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	dataformService, err := dataform.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	dataformService, err := dataform.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package dataform // import "google.golang.org/api/dataform/v1beta1"
 
 import (
@@ -1219,6 +1232,10 @@ type GitRemoteSettings struct {
 
 	// DefaultBranch: Required. The Git remote's default branch name.
 	DefaultBranch string `json:"defaultBranch,omitempty"`
+
+	// SshAuthenticationConfig: Optional. Authentication fields for remote
+	// uris using SSH protocol.
+	SshAuthenticationConfig *SshAuthenticationConfig `json:"sshAuthenticationConfig,omitempty"`
 
 	// TokenStatus: Output only. Deprecated: The field does not contain any
 	// token status information. Instead use
@@ -2808,6 +2825,41 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SshAuthenticationConfig: Configures fields for performing SSH
+// authentication.
+type SshAuthenticationConfig struct {
+	// HostPublicKey: Required. Content of a public SSH key to verify an
+	// identity of a remote Git host.
+	HostPublicKey string `json:"hostPublicKey,omitempty"`
+
+	// UserPrivateKeySecretVersion: Required. The name of the Secret Manager
+	// secret version to use as a ssh private key for Git operations. Must
+	// be in the format `projects/*/secrets/*/versions/*`.
+	UserPrivateKeySecretVersion string `json:"userPrivateKeySecretVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HostPublicKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HostPublicKey") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SshAuthenticationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SshAuthenticationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

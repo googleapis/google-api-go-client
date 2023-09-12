@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/firestore
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,28 +30,31 @@
 //	ctx := context.Background()
 //	firestoreService, err := firestore.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	firestoreService, err := firestore.NewService(ctx, option.WithScopes(firestore.DatastoreScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	firestoreService, err := firestore.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	firestoreService, err := firestore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package firestore // import "google.golang.org/api/firestore/v1"
 
 import (
@@ -948,22 +962,6 @@ type Document struct {
 	// the `read_time` of a query.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Fields: The document's fields. The map keys represent field names. A
-	// simple field name contains only characters `a` to `z`, `A` to `Z`,
-	// `0` to `9`, or `_`, and must not start with `0` to `9`. For example,
-	// `foo_bar_17`. Field names matching the regular expression `__.*__`
-	// are reserved. Reserved field names are forbidden except in certain
-	// documented contexts. The map keys, represented as UTF-8, must not
-	// exceed 1,500 bytes and cannot be empty. Field paths may be used in
-	// other contexts to refer to structured fields defined here. For
-	// `map_value`, the field path is represented by the simple or quoted
-	// field names of the containing fields, delimited by `.`. For example,
-	// the structured field "foo" : { map_value: { "x&y" : { string_value:
-	// "hello" }}}` would be represented by the field path `foo.x&y`. Within
-	// a field path, a quoted field name starts and ends with `` ` `` and
-	// may contain any character. Some characters, including `` ` ``, must
-	// be escaped using a `\`. For example, `` `x&y` `` represents `x&y` and
-	// `` `bak\`tik` `` represents `` bak`tik ``.
 	Fields map[string]Value `json:"fields,omitempty"`
 
 	// Name: The resource name of the document, for example
@@ -1351,8 +1349,9 @@ func (s *FieldFilter) MarshalJSON() ([]byte, error) {
 // FieldReference: A reference to a field in a document, ex:
 // `stats.operations`.
 type FieldReference struct {
-	// FieldPath: The relative path of the document being referenced.
-	// Requires: * Conform to document field name limitations.
+	// FieldPath: A reference to a field in a document. Requires: * MUST be
+	// a dot-delimited (`.`) string of segments, where each segment conforms
+	// to document field name limitations.
 	FieldPath string `json:"fieldPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FieldPath") to
@@ -1514,7 +1513,7 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 
 // GoogleFirestoreAdminV1Backup: A Backup of a Cloud Firestore Database.
 // The backup contains all documents and index configurations for the
-// given database at specific point in time.
+// given database at a specific point in time.
 type GoogleFirestoreAdminV1Backup struct {
 	// Database: Output only. Name of the Firestore database that the backup
 	// is from. Format is `projects/{project}/databases/{database}`.
@@ -1638,14 +1637,17 @@ func (s *GoogleFirestoreAdminV1BackupSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the
+// create database operation.
+type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
+}
+
 // GoogleFirestoreAdminV1DailyRecurrence: Represent a recurring schedule
 // that runs at a specific time every day. The time zone is UTC.
 type GoogleFirestoreAdminV1DailyRecurrence struct {
 }
 
-// GoogleFirestoreAdminV1Database: A Cloud Firestore Database. Currently
-// only one database is allowed per cloud project; this database must
-// have a `database_id` of '(default)'.
+// GoogleFirestoreAdminV1Database: A Cloud Firestore Database.
 type GoogleFirestoreAdminV1Database struct {
 	// AppEngineIntegrationMode: The App Engine integration mode to use for
 	// this database.
@@ -1790,6 +1792,11 @@ func (s *GoogleFirestoreAdminV1Database) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1Database
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the
+// delete database operation.
+type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
 }
 
 // GoogleFirestoreAdminV1ExportDocumentsMetadata: Metadata for
@@ -4215,7 +4222,18 @@ type Target struct {
 	ResumeToken string `json:"resumeToken,omitempty"`
 
 	// TargetId: The target ID that identifies the target on the stream.
-	// Must be a positive number and non-zero.
+	// Must be a positive number and non-zero. If `target_id` is 0 (or
+	// unspecified), the server will assign an ID for this target and return
+	// that in a `TargetChange::ADD` event. Once a target with `target_id=0`
+	// is added, all subsequent targets must also have `target_id=0`. If an
+	// `AddTarget` request with `target_id != 0` is sent to the server after
+	// a target with `target_id=0` is added, the server will immediately
+	// send a response with a `TargetChange::Remove` event. Note that if the
+	// client sends multiple `AddTarget` requests without an ID, the order
+	// of IDs returned in `TargetChage.target_ids` are undefined. Therefore,
+	// clients should provide a target ID instead of relying on the server
+	// to assign one. If `target_id` is non-zero, there must not be an
+	// existing active target on this stream with the same ID.
 	TargetId int64 `json:"targetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Documents") to
@@ -5733,7 +5751,7 @@ type ProjectsDatabasesRestoreCall struct {
 	header_                                      http.Header
 }
 
-// Restore: Create a new database by restore from an existing backup.
+// Restore: Creates a new database by restoring from an existing backup.
 // The new database must be in the same cloud region or multi-region
 // location as the existing backup. This behaves similar to
 // FirestoreAdmin.CreateDatabase except instead of creating a new empty
@@ -5743,9 +5761,7 @@ type ProjectsDatabasesRestoreCall struct {
 // restore, with the Operation's metadata field type being the
 // RestoreDatabaseMetadata. The response type is the Database if the
 // restore was successful. The new database is not readable or writeable
-// until the LRO has completed. Cancelling the returned operation will
-// stop the restore and delete the in-progress database, if the restore
-// is still active.
+// until the LRO has completed.
 //
 //   - parent: The project to restore the database in. Format is
 //     `projects/{project_id}`.
@@ -5847,7 +5863,7 @@ func (c *ProjectsDatabasesRestoreCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new database by restore from an existing backup. The new database must be in the same cloud region or multi-region location as the existing backup. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing backup. The long-running operation can be used to track the progress of the restore, with the Operation's metadata field type being the RestoreDatabaseMetadata. The response type is the Database if the restore was successful. The new database is not readable or writeable until the LRO has completed. Cancelling the returned operation will stop the restore and delete the in-progress database, if the restore is still active.",
+	//   "description": "Creates a new database by restoring from an existing backup. The new database must be in the same cloud region or multi-region location as the existing backup. This behaves similar to FirestoreAdmin.CreateDatabase except instead of creating a new empty database, a new database is created with the database type, index configuration, and documents from an existing backup. The long-running operation can be used to track the progress of the restore, with the Operation's metadata field type being the RestoreDatabaseMetadata. The response type is the Database if the restore was successful. The new database is not readable or writeable until the LRO has completed.",
 	//   "flatPath": "v1/projects/{projectsId}/databases:restore",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.restore",

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/bigquery-transfer/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	bigquerydatatransferService, err := bigquerydatatransfer.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	bigquerydatatransferService, err := bigquerydatatransfer.NewService(ctx, option.WithScopes(bigquerydatatransfer.CloudPlatformReadOnlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	bigquerydatatransferService, err := bigquerydatatransfer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	bigquerydatatransferService, err := bigquerydatatransfer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package bigquerydatatransfer // import "google.golang.org/api/bigquerydatatransfer/v1"
 
 import (
@@ -1209,11 +1223,11 @@ type TransferConfig struct {
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
 	// Name: The resource name of the transfer config. Transfer config names
-	// have the form
+	// have the form either
 	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`
-	// . Where `config_id` is usually a uuid, even though it is not
-	// guaranteed or required. The name is ignored when creating a transfer
-	// config.
+	//  or `projects/{project_id}/transferConfigs/{config_id}`, where
+	// `config_id` is usually a UUID, even though it is not guaranteed or
+	// required. The name is ignored when creating a transfer config.
 	Name string `json:"name,omitempty"`
 
 	// NextRunTime: Output only. Next time when data transfer will run.
@@ -3858,11 +3872,11 @@ type ProjectsLocationsTransferConfigsPatchCall struct {
 // even if they are not updated.
 //
 //   - name: The resource name of the transfer config. Transfer config
-//     names have the form
+//     names have the form either
 //     `projects/{project_id}/locations/{region}/transferConfigs/{config_id
-//     }`. Where `config_id` is usually a uuid, even though it is not
-//     guaranteed or required. The name is ignored when creating a
-//     transfer config.
+//     }` or `projects/{project_id}/transferConfigs/{config_id}`, where
+//     `config_id` is usually a UUID, even though it is not guaranteed or
+//     required. The name is ignored when creating a transfer config.
 func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsPatchCall {
 	c := &ProjectsLocationsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4028,7 +4042,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5884,11 +5898,11 @@ type ProjectsTransferConfigsPatchCall struct {
 // even if they are not updated.
 //
 //   - name: The resource name of the transfer config. Transfer config
-//     names have the form
+//     names have the form either
 //     `projects/{project_id}/locations/{region}/transferConfigs/{config_id
-//     }`. Where `config_id` is usually a uuid, even though it is not
-//     guaranteed or required. The name is ignored when creating a
-//     transfer config.
+//     }` or `projects/{project_id}/transferConfigs/{config_id}`, where
+//     `config_id` is usually a UUID, even though it is not guaranteed or
+//     required. The name is ignored when creating a transfer config.
 func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsTransferConfigsPatchCall {
 	c := &ProjectsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6054,7 +6068,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,

@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/network-connectivity/docs/reference/networkconnectivity/rest
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	networkconnectivityService, err := networkconnectivity.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	networkconnectivityService, err := networkconnectivity.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	networkconnectivityService, err := networkconnectivity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package networkconnectivity // import "google.golang.org/api/networkconnectivity/v1"
 
 import (
@@ -313,6 +326,48 @@ func NewProjectsLocationsSpokesService(s *Service) *ProjectsLocationsSpokesServi
 
 type ProjectsLocationsSpokesService struct {
 	s *Service
+}
+
+// AcceptHubSpokeRequest: The request for HubService.AcceptHubSpoke.
+type AcceptHubSpokeRequest struct {
+	// RequestId: Optional. A request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server
+	// will know to ignore the request if it has already been completed. The
+	// server guarantees that a request doesn't result in creation of
+	// duplicate commitments for at least 60 minutes. For example, consider
+	// a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the
+	// server can check to see whether the original operation was received.
+	// If it was, the server ignores the second request. This behavior
+	// prevents clients from mistakenly creating duplicate commitments. The
+	// request ID must be a valid UUID, with the exception that zero UUID is
+	// not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// SpokeUri: Required. The URI of the spoke to accept into the hub.
+	SpokeUri string `json:"spokeUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceptHubSpokeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceptHubSpokeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AcceptSpokeRequest: The request for HubService.AcceptSpoke.
@@ -744,6 +799,54 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Filter: Filter matches L4 traffic.
+type Filter struct {
+	// DestRange: Optional. The destination IP range of outgoing packets
+	// that this policy based route applies to. Default is "0.0.0.0/0" if
+	// protocol version is IPv4.
+	DestRange string `json:"destRange,omitempty"`
+
+	// IpProtocol: Optional. The IP protocol that this policy based route
+	// applies to. Valid values are 'TCP', 'UDP', and 'ALL'. Default is
+	// 'ALL'.
+	IpProtocol string `json:"ipProtocol,omitempty"`
+
+	// ProtocolVersion: Required. Internet protocol versions this policy
+	// based route applies to. For this version, only IPV4 is supported.
+	//
+	// Possible values:
+	//   "PROTOCOL_VERSION_UNSPECIFIED" - Default value.
+	//   "IPV4" - The PBR is for IPv4 internet protocol traffic.
+	ProtocolVersion string `json:"protocolVersion,omitempty"`
+
+	// SrcRange: Optional. The source IP range of outgoing packets that this
+	// policy based route applies to. Default is "0.0.0.0/0" if protocol
+	// version is IPv4.
+	SrcRange string `json:"srcRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Filter) MarshalJSON() ([]byte, error) {
+	type NoMethod Filter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleLongrunningCancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type GoogleLongrunningCancelOperationRequest struct {
@@ -951,10 +1054,7 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Group: A group is a set of spokes to which you can apply policies.
-// Each group of spokes has its own route table. For each group, you can
-// also set different rules for whether spokes can be automatically
-// attached to the hub.
+// Group: A group represents a subset of spokes attached to a hub.
 type Group struct {
 	// CreateTime: Output only. The time the group was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -962,8 +1062,8 @@ type Group struct {
 	// Description: Optional. The description of the group.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Optional. Labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional. Labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -1038,8 +1138,8 @@ type Hub struct {
 	// Description: An optional description of the hub.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -1115,6 +1215,37 @@ type Hub struct {
 
 func (s *Hub) MarshalJSON() ([]byte, error) {
 	type NoMethod Hub
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InterconnectAttachment: InterconnectAttachment to which this route
+// applies to.
+type InterconnectAttachment struct {
+	// Region: Optional. Cloud region to install this policy based route on
+	// interconnect attachment. Use `all` to install it on all interconnect
+	// attachments.
+	Region string `json:"region,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Region") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Region") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterconnectAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectAttachment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1614,6 +1745,47 @@ type ListLocationsResponse struct {
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPolicyBasedRoutesResponse: Response for
+// PolicyBasedRouting.ListPolicyBasedRoutes method.
+type ListPolicyBasedRoutesResponse struct {
+	// NextPageToken: The next pagination token in the List response. It
+	// should be used as page_token for the following request. An empty
+	// value means no more result.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PolicyBasedRoutes: Policy based routes to be returned.
+	PolicyBasedRoutes []*PolicyBasedRoute `json:"policyBasedRoutes,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPolicyBasedRoutesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPolicyBasedRoutesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2178,6 +2350,109 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PolicyBasedRoute: Policy Based Routes (PBR) are more powerful routes
+// that allows GCP customers to route their L4 network traffic based on
+// not just destination IP, but also source IP, protocol and more. A PBR
+// always take precedence when it conflicts with other types of routes.
+// Next id: 22
+type PolicyBasedRoute struct {
+	// CreateTime: Output only. Time when the PolicyBasedRoute was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. An optional description of this resource.
+	// Provide this field when you create the resource.
+	Description string `json:"description,omitempty"`
+
+	// Filter: Required. The filter to match L4 traffic.
+	Filter *Filter `json:"filter,omitempty"`
+
+	// InterconnectAttachment: Optional. The interconnect attachments to
+	// which this route applies to.
+	InterconnectAttachment *InterconnectAttachment `json:"interconnectAttachment,omitempty"`
+
+	// Kind: Output only. Type of this resource. Always
+	// networkconnectivity#policyBasedRoute for Policy Based Route
+	// resources.
+	Kind string `json:"kind,omitempty"`
+
+	// Labels: User-defined labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Immutable. A unique name of the resource in the form of
+	// `projects/{project_number}/locations/global/PolicyBasedRoutes/{policy_
+	// based_route_id}`
+	Name string `json:"name,omitempty"`
+
+	// Network: Required. Fully-qualified URL of the network that this route
+	// applies to. e.g. projects/my-project/global/networks/my-network.
+	Network string `json:"network,omitempty"`
+
+	// NextHopIlbIp: Optional. The IP of a global access enabled L4 ILB that
+	// should be the next hop to handle matching packets. For this version,
+	// only next_hop_ilb_ip is supported.
+	NextHopIlbIp string `json:"nextHopIlbIp,omitempty"`
+
+	// NextHopOtherRoutes: Optional. Other routes that will be referenced to
+	// determine the next hop of the packet.
+	//
+	// Possible values:
+	//   "OTHER_ROUTES_UNSPECIFIED" - Default value.
+	//   "DEFAULT_ROUTING" - Use the routes from the default routing tables
+	// (system-generated routes, custom routes, peering route) to determine
+	// the next hop. This will effectively exclude matching packets being
+	// applied on other PBRs with a lower priority.
+	NextHopOtherRoutes string `json:"nextHopOtherRoutes,omitempty"`
+
+	// Priority: Optional. The priority of this policy based route. Priority
+	// is used to break ties in cases where there are more than one matching
+	// policy based routes found. In cases where multiple policy based
+	// routes are matched, the one with the lowest-numbered priority value
+	// wins. The default value is 1000. The priority value must be from 1 to
+	// 65535, inclusive.
+	Priority int64 `json:"priority,omitempty"`
+
+	// SelfLink: Output only. Server-defined fully-qualified URL for this
+	// resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// UpdateTime: Output only. Time when the PolicyBasedRoute was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VirtualMachine: Optional. VM instances to which this policy based
+	// route applies to.
+	VirtualMachine *VirtualMachine `json:"virtualMachine,omitempty"`
+
+	// Warnings: Output only. If potential misconfigurations are detected
+	// for this route, this field will be populated with warning messages.
+	Warnings []*Warnings `json:"warnings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyBasedRoute) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyBasedRoute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ProducerPscConfig: The PSC configurations on producer side.
 type ProducerPscConfig struct {
 	// ServiceAttachmentUri: The resource path of a service attachment.
@@ -2322,6 +2597,52 @@ func (s *PscConnection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RejectHubSpokeRequest: The request for HubService.RejectHubSpoke.
+type RejectHubSpokeRequest struct {
+	// Details: Optional. Additional information provided by the hub
+	// administrator.
+	Details string `json:"details,omitempty"`
+
+	// RequestId: Optional. A request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server
+	// will know to ignore the request if it has already been completed. The
+	// server guarantees that a request doesn't result in creation of
+	// duplicate commitments for at least 60 minutes. For example, consider
+	// a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the
+	// server can check to see whether the original operation was received.
+	// If it was, the server ignores the second request. This behavior
+	// prevents clients from mistakenly creating duplicate commitments. The
+	// request ID must be a valid UUID, with the exception that zero UUID is
+	// not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// SpokeUri: Required. The URI of the spoke to reject from the hub.
+	SpokeUri string `json:"spokeUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RejectHubSpokeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RejectHubSpokeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RejectSpokeRequest: The request for HubService.RejectSpoke.
 type RejectSpokeRequest struct {
 	// Details: Optional. Additional information provided by the hub
@@ -2377,8 +2698,8 @@ type Route struct {
 	// IpCidrRange: The destination IP address range.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -2470,8 +2791,8 @@ type RouteTable struct {
 	// Description: An optional description of the route table.
 	Description string `json:"description,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -2949,14 +3270,15 @@ type Spoke struct {
 	// Description: An optional description of the spoke.
 	Description string `json:"description,omitempty"`
 
-	// Group: The name of the group that this spoke is associated with.
+	// Group: Optional. The name of the group that this spoke is associated
+	// with.
 	Group string `json:"group,omitempty"`
 
 	// Hub: Immutable. The name of the hub that this spoke is attached to.
 	Hub string `json:"hub,omitempty"`
 
-	// Labels: Optional labels in key:value format. For more information
-	// about labels, see Requirements for labels
+	// Labels: Optional labels in key-value pair format. For more
+	// information about labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -3331,6 +3653,85 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VirtualMachine: VM instances to which this policy based route applies
+// to.
+type VirtualMachine struct {
+	// Tags: Optional. A list of VM instance tags to which this policy based
+	// route applies to. VM instances that have ANY of tags specified here
+	// will install this PBR.
+	Tags []string `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tags") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VirtualMachine) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualMachine
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Warnings: Informational warning message.
+type Warnings struct {
+	// Code: Output only. A warning code, if applicable.
+	//
+	// Possible values:
+	//   "WARNING_UNSPECIFIED" - Default value.
+	//   "RESOURCE_NOT_ACTIVE" - The policy based route is not active and
+	// functioning. Common causes are the dependent network was deleted or
+	// the resource project was turned off.
+	//   "RESOURCE_BEING_MODIFIED" - The policy based route is being
+	// modified (e.g. created/deleted) at this time.
+	Code string `json:"code,omitempty"`
+
+	// Data: Output only. Metadata about this warning in key: value format.
+	// The key should provides more detail on the warning being returned.
+	// For example, for warnings where there are no results in a list
+	// request for a particular zone, this key might be scope and the key
+	// value might be the zone name. Other examples might be a key
+	// indicating a deprecated resource and a suggested replacement.
+	Data map[string]string `json:"data,omitempty"`
+
+	// WarningMessage: Output only. A human-readable description of the
+	// warning code.
+	WarningMessage string `json:"warningMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Warnings) MarshalJSON() ([]byte, error) {
+	type NoMethod Warnings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "networkconnectivity.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -3684,6 +4085,149 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.acceptSpoke":
+
+type ProjectsLocationsGlobalHubsAcceptSpokeCall struct {
+	s                     *Service
+	name                  string
+	accepthubspokerequest *AcceptHubSpokeRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// AcceptSpoke: Accepts a proposal to attach a Network Connectivity
+// Center spoke to the hub.
+//
+// - name: The name of the hub.
+func (r *ProjectsLocationsGlobalHubsService) AcceptSpoke(name string, accepthubspokerequest *AcceptHubSpokeRequest) *ProjectsLocationsGlobalHubsAcceptSpokeCall {
+	c := &ProjectsLocationsGlobalHubsAcceptSpokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.accepthubspokerequest = accepthubspokerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsAcceptSpokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsAcceptSpokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accepthubspokerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:acceptSpoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.acceptSpoke" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Accepts a proposal to attach a Network Connectivity Center spoke to the hub.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}:acceptSpoke",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.acceptSpoke",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the hub.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:acceptSpoke",
+	//   "request": {
+	//     "$ref": "AcceptHubSpokeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "networkconnectivity.projects.locations.global.hubs.create":
@@ -5005,6 +5549,151 @@ func (c *ProjectsLocationsGlobalHubsPatchCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Hub"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.global.hubs.rejectSpoke":
+
+type ProjectsLocationsGlobalHubsRejectSpokeCall struct {
+	s                     *Service
+	name                  string
+	rejecthubspokerequest *RejectHubSpokeRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// RejectSpoke: Rejects a Network Connectivity Center spoke from being
+// attached to the hub. If the spoke was previously in the `ACTIVE`
+// state, it transitions to the `INACTIVE` state and is no longer able
+// to connect to other spokes that are attached to the hub.
+//
+// - name: The name of the hub.
+func (r *ProjectsLocationsGlobalHubsService) RejectSpoke(name string, rejecthubspokerequest *RejectHubSpokeRequest) *ProjectsLocationsGlobalHubsRejectSpokeCall {
+	c := &ProjectsLocationsGlobalHubsRejectSpokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rejecthubspokerequest = rejecthubspokerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsRejectSpokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsRejectSpokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejecthubspokerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rejectSpoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.rejectSpoke" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Rejects a Network Connectivity Center spoke from being attached to the hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}:rejectSpoke",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.global.hubs.rejectSpoke",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the hub.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:rejectSpoke",
+	//   "request": {
+	//     "$ref": "RejectHubSpokeRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -6868,6 +7557,485 @@ func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Pages(ctx context
 	}
 }
 
+// method id "networkconnectivity.projects.locations.global.policyBasedRoutes.create":
+
+type ProjectsLocationsGlobalPolicyBasedRoutesCreateCall struct {
+	s                *Service
+	parent           string
+	policybasedroute *PolicyBasedRoute
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new PolicyBasedRoute in a given project and
+// location.
+//
+// - parent: The parent resource's name of the PolicyBasedRoute.
+func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Create(parent string, policybasedroute *PolicyBasedRoute) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
+	c := &ProjectsLocationsGlobalPolicyBasedRoutesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.policybasedroute = policybasedroute
+	return c
+}
+
+// PolicyBasedRouteId sets the optional parameter "policyBasedRouteId":
+// Required. Unique id for the Policy Based Route to create.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) PolicyBasedRouteId(policyBasedRouteId string) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
+	c.urlParams_.Set("policyBasedRouteId", policyBasedRouteId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes since the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policybasedroute)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/policyBasedRoutes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new PolicyBasedRoute in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource's name of the PolicyBasedRoute.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "policyBasedRouteId": {
+	//       "description": "Required. Unique id for the Policy Based Route to create.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/policyBasedRoutes",
+	//   "request": {
+	//     "$ref": "PolicyBasedRoute"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.global.policyBasedRoutes.delete":
+
+type ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single PolicyBasedRoute.
+//
+// - name: Name of the PolicyBasedRoute resource to delete.
+func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Delete(name string) *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall {
+	c := &ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single PolicyBasedRoute.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes/{policyBasedRoutesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the PolicyBasedRoute resource to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/policyBasedRoutes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.global.policyBasedRoutes.get":
+
+type ProjectsLocationsGlobalPolicyBasedRoutesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single PolicyBasedRoute.
+//
+// - name: Name of the PolicyBasedRoute resource to get.
+func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Get(name string) *ProjectsLocationsGlobalPolicyBasedRoutesGetCall {
+	c := &ProjectsLocationsGlobalPolicyBasedRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyBasedRoutesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalPolicyBasedRoutesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyBasedRoutesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.get" call.
+// Exactly one of *PolicyBasedRoute or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PolicyBasedRoute.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) Do(opts ...googleapi.CallOption) (*PolicyBasedRoute, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PolicyBasedRoute{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single PolicyBasedRoute.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes/{policyBasedRoutesId}",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the PolicyBasedRoute resource to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/policyBasedRoutes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PolicyBasedRoute"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "networkconnectivity.projects.locations.global.policyBasedRoutes.getIamPolicy":
 
 type ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall struct {
@@ -7041,6 +8209,221 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall) Do(opts ...go
 	//   ]
 	// }
 
+}
+
+// method id "networkconnectivity.projects.locations.global.policyBasedRoutes.list":
+
+type ProjectsLocationsGlobalPolicyBasedRoutesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists PolicyBasedRoutes in a given project and location.
+//
+// - parent: The parent resource's name.
+func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) List(parent string) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c := &ProjectsLocationsGlobalPolicyBasedRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the results listed in the response.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) Filter(filter string) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by a
+// certain order.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results per page that should be returned.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) PageToken(pageToken string) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) Context(ctx context.Context) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/policyBasedRoutes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.list" call.
+// Exactly one of *ListPolicyBasedRoutesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListPolicyBasedRoutesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) Do(opts ...googleapi.CallOption) (*ListPolicyBasedRoutesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPolicyBasedRoutesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists PolicyBasedRoutes in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that filters the results listed in the response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sort the results by a certain order.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results per page that should be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/policyBasedRoutes",
+	//   "response": {
+	//     "$ref": "ListPolicyBasedRoutesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) Pages(ctx context.Context, f func(*ListPolicyBasedRoutesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "networkconnectivity.projects.locations.global.policyBasedRoutes.setIamPolicy":

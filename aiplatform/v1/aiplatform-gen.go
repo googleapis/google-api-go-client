@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/vertex-ai/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	aiplatformService, err := aiplatform.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	aiplatformService, err := aiplatform.NewService(ctx, option.WithScopes(aiplatform.CloudPlatformReadOnlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	aiplatformService, err := aiplatform.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	aiplatformService, err := aiplatform.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package aiplatform // import "google.golang.org/api/aiplatform/v1"
 
 import (
@@ -8013,14 +8027,6 @@ type GoogleCloudAiplatformV1Feature struct {
 	//   "STRING_ARRAY" - Used for Feature that is a list of String.
 	//   "BYTES" - Used for Feature that is bytes.
 	ValueType string `json:"valueType,omitempty"`
-
-	// VersionLabels: The labels with user-defined metadata to organize your
-	// versions. Label keys and values can be no longer than 64 characters
-	// (Unicode codepoints), can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
-	// allowed. See https://goo.gl/xmQnxf for more information and examples
-	// of labels.
-	VersionLabels map[string]string `json:"versionLabels,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -18332,6 +18338,11 @@ func (s *GoogleCloudAiplatformV1ScheduleRunResponse) MarshalJSON() ([]byte, erro
 // GoogleCloudAiplatformV1Scheduling: All parameters related to queuing
 // and scheduling of custom jobs.
 type GoogleCloudAiplatformV1Scheduling struct {
+	// DisableRetries: Optional. Indicates if the job should retry for
+	// internal errors after the job starts running. If true, overrides
+	// `Scheduling.restart_job_on_worker_restart` to false.
+	DisableRetries bool `json:"disableRetries,omitempty"`
+
 	// RestartJobOnWorkerRestart: Restarts the entire CustomJob if a worker
 	// gets restarted. This feature can be used by distributed training jobs
 	// that are not resilient to workers leaving and joining a job.
@@ -18340,22 +18351,21 @@ type GoogleCloudAiplatformV1Scheduling struct {
 	// Timeout: The maximum job running time. The default is 7 days.
 	Timeout string `json:"timeout,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "RestartJobOnWorkerRestart") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisableRetries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "RestartJobOnWorkerRestart") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisableRetries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

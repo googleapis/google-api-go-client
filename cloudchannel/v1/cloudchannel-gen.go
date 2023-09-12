@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/channel
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	cloudchannelService, err := cloudchannel.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	cloudchannelService, err := cloudchannel.NewService(ctx, option.WithScopes(cloudchannel.AppsReportsUsageReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	cloudchannelService, err := cloudchannel.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	cloudchannelService, err := cloudchannel.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package cloudchannel // import "google.golang.org/api/cloudchannel/v1"
 
 import (
@@ -1322,9 +1336,10 @@ type GoogleCloudChannelV1Customer struct {
 	OrgDisplayName string `json:"orgDisplayName,omitempty"`
 
 	// OrgPostalAddress: Required. The organization address for the
-	// customer. To enforce US laws and embargoes, we require a region and
-	// zip code. You must provide valid addresses for every customer. To set
-	// the customer's language, use the Customer-level language code.
+	// customer. To enforce US laws and embargoes, we require a region,
+	// postal code, and address lines. You must provide valid addresses for
+	// every customer. To set the customer's language, use the
+	// Customer-level language code.
 	OrgPostalAddress *GoogleTypePostalAddress `json:"orgPostalAddress,omitempty"`
 
 	// PrimaryContactInfo: Primary contact info.
@@ -4003,7 +4018,8 @@ type GoogleCloudChannelV1RepricingConfig struct {
 
 	// ChannelPartnerGranularity: Applies the repricing configuration at the
 	// channel partner level. Only ChannelPartnerRepricingConfig supports
-	// this value.
+	// this value. Deprecated: This is no longer supported. Use
+	// RepricingConfig.entitlement_granularity instead.
 	ChannelPartnerGranularity *GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity `json:"channelPartnerGranularity,omitempty"`
 
 	// ConditionalOverrides: The conditional overrides to apply for this
@@ -4065,7 +4081,8 @@ func (s *GoogleCloudChannelV1RepricingConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity: Applies
 // the repricing configuration at the channel partner level. The channel
 // partner value is derived from the resource name. Takes an empty json
-// object.
+// object. Deprecated: This is no longer supported. Use
+// RepricingConfig.EntitlementGranularity instead.
 type GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity struct {
 }
 

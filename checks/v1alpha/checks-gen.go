@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/checks
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	checksService, err := checks.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	checksService, err := checks.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	checksService, err := checks.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package checks // import "google.golang.org/api/checks/v1alpha"
 
 import (
@@ -108,8 +121,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
-	s.Privacypolicy = NewPrivacypolicyService(s)
-	s.Projects = NewProjectsService(s)
+	s.Media = NewMediaService(s)
 	return s, nil
 }
 
@@ -120,9 +132,7 @@ type Service struct {
 
 	Accounts *AccountsService
 
-	Privacypolicy *PrivacypolicyService
-
-	Projects *ProjectsService
+	Media *MediaService
 }
 
 func (s *Service) userAgent() string {
@@ -147,6 +157,7 @@ type AccountsService struct {
 func NewAccountsAppsService(s *Service) *AccountsAppsService {
 	rs := &AccountsAppsService{s: s}
 	rs.Operations = NewAccountsAppsOperationsService(s)
+	rs.Reports = NewAccountsAppsReportsService(s)
 	return rs
 }
 
@@ -154,6 +165,8 @@ type AccountsAppsService struct {
 	s *Service
 
 	Operations *AccountsAppsOperationsService
+
+	Reports *AccountsAppsReportsService
 }
 
 func NewAccountsAppsOperationsService(s *Service) *AccountsAppsOperationsService {
@@ -165,184 +178,27 @@ type AccountsAppsOperationsService struct {
 	s *Service
 }
 
-func NewPrivacypolicyService(s *Service) *PrivacypolicyService {
-	rs := &PrivacypolicyService{s: s}
+func NewAccountsAppsReportsService(s *Service) *AccountsAppsReportsService {
+	rs := &AccountsAppsReportsService{s: s}
 	return rs
 }
 
-type PrivacypolicyService struct {
+type AccountsAppsReportsService struct {
 	s *Service
 }
 
-func NewProjectsService(s *Service) *ProjectsService {
-	rs := &ProjectsService{s: s}
-	rs.Privacypolicy = NewProjectsPrivacypolicyService(s)
+func NewMediaService(s *Service) *MediaService {
+	rs := &MediaService{s: s}
 	return rs
 }
 
-type ProjectsService struct {
+type MediaService struct {
 	s *Service
-
-	Privacypolicy *ProjectsPrivacypolicyService
-}
-
-func NewProjectsPrivacypolicyService(s *Service) *ProjectsPrivacypolicyService {
-	rs := &ProjectsPrivacypolicyService{s: s}
-	rs.Operations = NewProjectsPrivacypolicyOperationsService(s)
-	return rs
-}
-
-type ProjectsPrivacypolicyService struct {
-	s *Service
-
-	Operations *ProjectsPrivacypolicyOperationsService
-}
-
-func NewProjectsPrivacypolicyOperationsService(s *Service) *ProjectsPrivacypolicyOperationsService {
-	rs := &ProjectsPrivacypolicyOperationsService{s: s}
-	return rs
-}
-
-type ProjectsPrivacypolicyOperationsService struct {
-	s *Service
-}
-
-// AnalyzePrivacyPolicyRequest: The request proto for
-// AnalyzePrivacyPolicy method.
-type AnalyzePrivacyPolicyRequest struct {
-	// PrivacyPolicyPageContent: Web page raw HTML content for the privacy
-	// policy page to be analyzed. Useful when the client wants to analyze a
-	// privacy policy already fetched.
-	PrivacyPolicyPageContent string `json:"privacyPolicyPageContent,omitempty"`
-
-	// PrivacyPolicyUri: URL for the privacy policy page to be analyzed.
-	// https://linter.aip.dev/140/uri (Use `uri` instead of `url` in field
-	// name)
-	PrivacyPolicyUri string `json:"privacyPolicyUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PrivacyPolicyPageContent") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrivacyPolicyPageContent")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AnalyzePrivacyPolicyRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod AnalyzePrivacyPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AnalyzePrivacyPolicyResponse: The response proto for
-// AnalyzePrivacyPolicy method.
-type AnalyzePrivacyPolicyResponse struct {
-	// DataPurposeAnnotations: List of all data types in the privacy policy.
-	DataPurposeAnnotations []*PolicyPurposeOfUseAnnotation `json:"dataPurposeAnnotations,omitempty"`
-
-	// DataTypeAnnotations: List of all data types in the privacy policy.
-	DataTypeAnnotations []*PolicyDataTypeAnnotation `json:"dataTypeAnnotations,omitempty"`
-
-	// HtmlContent: HTML content for the privacy policy page.
-	HtmlContent string `json:"htmlContent,omitempty"`
-
-	// LastUpdatedDateInfo: Information about the date when the privacy
-	// policy was last updated.
-	LastUpdatedDateInfo *LastUpdatedDate `json:"lastUpdatedDateInfo,omitempty"`
-
-	// SectionAnnotations: List of all sections in the privacy policy.
-	SectionAnnotations []*PolicySectionAnnotation `json:"sectionAnnotations,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DataPurposeAnnotations") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataPurposeAnnotations")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AnalyzePrivacyPolicyResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod AnalyzePrivacyPolicyResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
-}
-
-// Date: Represents a whole or partial calendar date, such as a
-// birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
-// google.protobuf.Timestamp
-type Date struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
-	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
-	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
-	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Date) MarshalJSON() ([]byte, error) {
-	type NoMethod Date
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -356,13 +212,19 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// FindPrivacyPolicyResponse: Operation response for
-// `FindPrivacyPolicy`.
-type FindPrivacyPolicyResponse struct {
-	// PrivacyPolicy: Resource name of the PrivacyPolicy that was found.
-	PrivacyPolicy string `json:"privacyPolicy,omitempty"`
+// GoogleChecksAccountV1alphaApp: Represents an app in Checks.
+type GoogleChecksAccountV1alphaApp struct {
+	// Name: The resource name of the app. Example: `accounts/123/apps/456`
+	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PrivacyPolicy") to
+	// Title: The app's title.
+	Title string `json:"title,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -370,41 +232,37 @@ type FindPrivacyPolicyResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PrivacyPolicy") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *FindPrivacyPolicyResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod FindPrivacyPolicyResponse
+func (s *GoogleChecksAccountV1alphaApp) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAccountV1alphaApp
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LastUpdatedDate: Information about the date when the privacy policy
-// was last updated.
-type LastUpdatedDate struct {
-	// EndOffset: Byte offsets for the end of the date text inside the full
-	// text.
-	EndOffset int64 `json:"endOffset,omitempty,string"`
+// GoogleChecksAccountV1alphaListAppsResponse: The response message for
+// AccountService.ListApps.
+type GoogleChecksAccountV1alphaListAppsResponse struct {
+	// Apps: The apps.
+	Apps []*GoogleChecksAccountV1alphaApp `json:"apps,omitempty"`
 
-	// LastUpdatedDate: Date when the privacy policy was last updated.
-	LastUpdatedDate *Date `json:"lastUpdatedDate,omitempty"`
+	// NextPageToken: A token which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// StartOffset: Byte offsets for the start of the date text inside the
-	// full text.
-	StartOffset int64 `json:"startOffset,omitempty,string"`
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
-	// TextContent: The bytes of actual text content in the section. NOTE: -
-	// This will correspond to the whole sentence that includes the date. -
-	// This field might contain HTML and it is not sanitized.
-	TextContent string `json:"textContent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndOffset") to
+	// ForceSendFields is a list of field names (e.g. "Apps") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -412,7 +270,89 @@ type LastUpdatedDate struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EndOffset") to include in
+	// NullFields is a list of field names (e.g. "Apps") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksAccountV1alphaListAppsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAccountV1alphaListAppsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaAnalyzeUploadRequest: The request message
+// for ReportService.AnalyzeUpload.
+type GoogleChecksReportV1alphaAnalyzeUploadRequest struct {
+	// CodeReferenceId: Optional. Git commit hash or changelist number
+	// associated with the upload.
+	CodeReferenceId string `json:"codeReferenceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CodeReferenceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CodeReferenceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaAnalyzeUploadRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaAnalyzeUploadRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaAppBundle: Information about the analyzed
+// app bundle.
+type GoogleChecksReportV1alphaAppBundle struct {
+	// BundleId: Unique id of the bundle. For example: "com.google.Gmail".
+	BundleId string `json:"bundleId,omitempty"`
+
+	// CodeReferenceId: Git commit hash or changelist number associated with
+	// the release.
+	CodeReferenceId string `json:"codeReferenceId,omitempty"`
+
+	// ReleaseType: Identifies the type of release.
+	//
+	// Possible values:
+	//   "APP_BUNDLE_RELEASE_TYPE_UNSPECIFIED" - Not specified.
+	//   "PUBLIC" - Published production bundle.
+	//   "PRE_RELEASE" - Pre-release bundle.
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Version: The user-visible version of the bundle such as the Android
+	// `versionName` or iOS `CFBundleShortVersionString`. For example:
+	// "7.21.1".
+	Version string `json:"version,omitempty"`
+
+	// VersionId: The version used throughout the operating system and store
+	// to identify the build such as the Android `versionCode` or iOS
+	// `CFBundleVersion`.
+	VersionId string `json:"versionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -421,8 +361,1695 @@ type LastUpdatedDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LastUpdatedDate) MarshalJSON() ([]byte, error) {
-	type NoMethod LastUpdatedDate
+func (s *GoogleChecksReportV1alphaAppBundle) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaAppBundle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheck: A check that was run on your app.
+type GoogleChecksReportV1alphaCheck struct {
+	// Citations: Regulations and policies that serve as the legal basis for
+	// the check.
+	Citations []*GoogleChecksReportV1alphaCheckCitation `json:"citations,omitempty"`
+
+	// Evidence: Evidence that substantiates the check result.
+	Evidence *GoogleChecksReportV1alphaCheckEvidence `json:"evidence,omitempty"`
+
+	// RegionCodes: Regions that are impacted by the check. For more info,
+	// see https://google.aip.dev/143#countries-and-regions.
+	RegionCodes []string `json:"regionCodes,omitempty"`
+
+	// Severity: The urgency or risk level of the check.
+	//
+	// Possible values:
+	//   "CHECK_SEVERITY_UNSPECIFIED" - Not specified.
+	//   "PRIORITY" - Important privacy issue.
+	//   "POTENTIAL" - Potential privacy issue.
+	//   "OPPORTUNITY" - Opportunity to improve privacy coverage.
+	Severity string `json:"severity,omitempty"`
+
+	// State: The result after running the check.
+	//
+	// Possible values:
+	//   "CHECK_STATE_UNSPECIFIED" - Not specified.
+	//   "PASSED" - The check passed.
+	//   "FAILED" - The check failed.
+	//   "UNCHECKED" - The check was not run.
+	State string `json:"state,omitempty"`
+
+	// StateMetadata: Additional information about the check state in
+	// relation to past reports.
+	StateMetadata *GoogleChecksReportV1alphaCheckStateMetadata `json:"stateMetadata,omitempty"`
+
+	// Type: The type of check that was run. A type will only appear once in
+	// a report's list of checks.
+	//
+	// Possible values:
+	//   "CHECK_TYPE_UNSPECIFIED" - Not specified.
+	//   "STORE_LISTING_PRIVACY_POLICY_LINK_PRESENT" - Checks that your
+	// store listing includes a working link to your privacy policy.
+	//   "PRIVACY_POLICY_UPDATE_DATE_RECENT" - Checks that your privacy
+	// policy has been updated recently.
+	//   "PRIVACY_POLICY_GDPR_GENERAL_RULES" - Checks if your privacy policy
+	// references rights under GDPR for users in the EU.
+	//   "PRIVACY_POLICY_CCPA_GENERAL_RULES" - Checks if your privacy policy
+	// references rights under the CCPA.
+	//   "PRIVACY_POLICY_COLLECTION_CATEGORIES_DATA_NOTICE" - Checks if your
+	// privacy policy mentions the categories of personal data that are
+	// collected.
+	//   "PRIVACY_POLICY_PROCESSING_PURPOSE_DATA_NOTICE" - Checks if your
+	// privacy policy explains why personal data is processed.
+	//   "PRIVACY_POLICY_SHARING_CATEGORIES_DATA_NOTICE" - Checks if your
+	// privacy policy includes information about third-party sharing of
+	// personal data.
+	//   "PRIVACY_POLICY_DATA_RETENTION_NOTICE" - Checks if your privacy
+	// policy describes your data retention practices.
+	//   "PRIVACY_POLICY_CONTACT_DETAILS_NOTICE" - Checks if contact
+	// information is included in your privacy policy.
+	//   "PRIVACY_POLICY_CHILDREN_GENERAL_RULES" - Checks if information
+	// about requirements related to children is included in your privacy
+	// policy.
+	//   "PRIVACY_POLICY_DATA_TYPE_PHONE_NUMBER" - Checks if the Phone
+	// Number data type declaration in your privacy policy matches usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_USER_ACCOUNT_INFO" - Checks if the User
+	// Account Info data type declaration in your privacy policy matches
+	// usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_PRECISE_LOCATION" - Checks if the Precise
+	// Location data type declaration in your privacy policy matches usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_DEVICE_ID" - Checks if the Device ID data
+	// type declaration in your privacy policy matches usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_APPS_ON_DEVICE" - Checks if the Apps on
+	// Device data type declaration in your privacy policy matches usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_CONTACTS" - Checks if the Contacts data
+	// type declaration in your privacy policy matches usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_TEXT_MESSAGES" - Checks if the Text
+	// Messages data type declaration in your privacy policy matches usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_PII" - Checks if the PII data type
+	// declaration in your privacy policy matches usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_PII_CATEGORIES" - Checks if the PII
+	// Categories data type declaration in your privacy policy matches
+	// usage.
+	//   "PRIVACY_POLICY_DATA_TYPE_HEALTH_AND_BIOMETRIC" - Checks if the
+	// Health and Biometric data type declaration in your privacy policy
+	// matches usage.
+	//   "PRIVACY_POLICY_BRAZIL_LGPD_GENERAL_RULES" - Checks if your privacy
+	// policy references rights under LGPD for users in Brazil.
+	//   "PRIVACY_POLICY_VIRGINIA_VCDPA_GENERAL_RULES" - Checks if your
+	// privacy policy references rights under VCDPA for users in Virginia.
+	//   "PRIVACY_POLICY_AFFILIATION_MENTION" - Checks if your privacy
+	// policy identifies your company or app name(s).
+	//   "PRIVACY_POLICY_RIGHT_TO_DELETE_NOTICE" - Checks if your privacy
+	// policy mentions your users' right to delete their data.
+	//   "PRIVACY_POLICY_RIGHT_TO_ACCESS_NOTICE" - Checks if your privacy
+	// policy mentions your users' right to access the data held about them.
+	//   "PRIVACY_POLICY_RIGHT_TO_RECTIFICATION_NOTICE" - Checks if your
+	// privacy policy mentions your users' right to correct inaccuracies
+	// within their data.
+	//   "PRIVACY_POLICY_RIGHT_TO_KNOW_ABOUT_SELLING_NOTICE" - Checks if
+	// your privacy policy mentions your users' right to know about
+	// information selling.
+	//   "PRIVACY_POLICY_RIGHT_TO_KNOW_ABOUT_SHARING_NOTICE" - Checks if
+	// your privacy policy mentions your users' right to know about
+	// information sharing.
+	//   "PRIVACY_POLICY_RIGHT_TO_OPT_OUT_FROM_SELLING_NOTICE" - Checks if
+	// your privacy policy mentions your users' right to opt out from
+	// information selling.
+	//   "PRIVACY_POLICY_METHOD_TO_OPT_OUT_FROM_SELLING_OR_SHARING_NOTICE" -
+	// Checks if your privacy policy explains how your users opt out from
+	// the selling or sharing of their data.
+	//   "PRIVACY_POLICY_DATA_CONTROLLER_IDENTITY" - Checks if your privacy
+	// policy provides the name and contact information for your data
+	// controller.
+	//   "PRIVACY_POLICY_DPO_CONTACT_DETAILS" - Checks if your privacy
+	// policy provides the name and contact information for your Data
+	// Protection Officer.
+	//   "PRIVACY_POLICY_RIGHT_TO_LODGE_A_COMPLAINT" - Checks if your
+	// privacy policy mentions your users' right to lodge a complaint with a
+	// supervisory authority.
+	//   "PRIVACY_POLICY_LEGAL_BASIS" - Checks if your privacy policy
+	// mentions the legal basis you rely on for processing your users' data.
+	//   "PRIVACY_POLICY_CHILDREN_INFO_COLLECTION" - Checks if your privacy
+	// policy mentions what personal information is collected from children.
+	//   "PRIVACY_POLICY_CHILDREN_INFO_USAGE_PURPOSES" - Checks if your
+	// privacy policy mentions why you collect personal information from
+	// children.
+	//   "PRIVACY_POLICY_CHILDREN_INFO_DISCLOSURE_PRACTICES" - Checks if
+	// your privacy policy mentions what personal information from children
+	// is shared with third parties.
+	//   "PRIVACY_POLICY_CHILDREN_INFO_PUBLICITY" - Checks if your privacy
+	// policy mentions whether your app allows children to make their
+	// personal information publicly available.
+	//   "PRIVACY_POLICY_PARENTS_METHOD_OF_INFO_DELETION" - Checks if your
+	// privacy policy mentions how parents/caregivers/guardians can request
+	// the deletion of their child's personal information.
+	//   "PRIVACY_POLICY_PARENTS_METHOD_TO_INFO_REVIEW" - Checks if your
+	// privacy policy mentions how parents/caregivers/guardians can review
+	// their child's personal information.
+	//   "PRIVACY_POLICY_PARENTS_METHOD_TO_STOP_FURTHER_INFO_COLLECTION_USE"
+	// - Checks if your privacy policy explains how a
+	// parent/caregiver/guardian can stop the collection/use from their
+	// child's personal information.
+	//   "PRIVACY_POLICY_PARENTS_RIGHT_TO_INFO_DELETION" - Checks if your
+	// privacy policy mentions the right of a parent/caregiver/guardian to
+	// request the deletion of their child's personal information.
+	//   "PRIVACY_POLICY_PARENTS_RIGHT_TO_INFO_REVIEW" - Checks if your
+	// privacy policy mentions the right of a parent/caregiver/guardian to
+	// review their child's personal information.
+	//   "PRIVACY_POLICY_PARENTS_RIGHT_TO_STOP_FURTHER_INFO_COLLECTION_USE"
+	// - Checks if your privacy policy mentions the right of a
+	// parent/caregiver/guardian to stop collection/use from their child's
+	// personal information.
+	//   "PRIVACY_POLICY_PSL_APPROXIMATE_LOCATION" - Checks if your privacy
+	// policy mentions collection of your users' approximate location if
+	// this data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_PRECISE_LOCATION" - Checks if your privacy
+	// policy mentions collection of your users' precise location if this
+	// data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_NAME" - Checks if your privacy policy mentions
+	// collection of your users' personal names if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_EMAIL_ADDRESS" - Checks if your privacy policy
+	// mentions collection of your users' email addresses if this data type
+	// is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_USER_IDENTIFIERS" - Checks if your privacy
+	// policy mentions collection of your users' user IDs if this data type
+	// is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_ADDRESS" - Checks if your privacy policy
+	// mentions collection of your users' physical addresses if this data
+	// type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_PHONE_NUMBER" - Checks if your privacy policy
+	// mentions collection of your users' phone numbers if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_RACE_AND_ETHNICITY" - Checks if your privacy
+	// policy mentions collection of your users' race or ethnicity if this
+	// data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_CREDIT_SCORE" - Checks if your privacy policy
+	// mentions collection of your users' credit score if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_PURCHASE_HISTORY" - Checks if your privacy
+	// policy mentions collection of your users' purchase history if this
+	// data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_HEALTH_INFO" - Checks if your privacy policy
+	// mentions collection of your users' health info if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_FITNESS_INFO" - Checks if your privacy policy
+	// mentions collection of your users' fitness info if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_EMAIL_MESSAGES" - Checks if your privacy policy
+	// mentions collection of your users' emails if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_TEXT_MESSAGES" - Checks if your privacy policy
+	// mentions collection of your users' text messages if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_PHOTOS" - Checks if your privacy policy
+	// mentions collection of your users' photos if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_VIDEOS" - Checks if your privacy policy
+	// mentions collection of your users' videos if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_MUSIC_FILES" - Checks if your privacy policy
+	// mentions collection of your users' music files if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_VOICE_OR_SOUND_RECORDINGS" - Checks if your
+	// privacy policy mentions collection of your users' voice or sound
+	// recordings if this data type is declared in your Play Data Safety
+	// Section.
+	//   "PRIVACY_POLICY_PSL_FILES_AND_DOCS" - Checks if your privacy policy
+	// mentions collection of your users' files or documents if this data
+	// type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_CALENDAR_EVENTS" - Checks if your privacy
+	// policy mentions collection of your users' calendar events if this
+	// data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_CONTACTS" - Checks if your privacy policy
+	// mentions collection of your users' contacts if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_APP_INTERACTIONS" - Checks if your privacy
+	// policy mentions collection of your users' app interactions if this
+	// data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_IN_APP_SEARCH_HISTORY" - Checks if your privacy
+	// policy mentions collection of your users' in-app search history if
+	// this data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_WEB_BROWSING_HISTORY" - Checks if your privacy
+	// policy mentions collection of your users' web browsing history if
+	// this data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_INSTALLED_APPS" - Checks if your privacy policy
+	// mentions collection of your users' installed apps if this data type
+	// is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_CRASH_LOGS" - Checks if your privacy policy
+	// mentions collection of your users' crash logs if this data type is
+	// declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_DIAGNOSTICS" - Checks if your privacy policy
+	// mentions collection of your users' performance diagnostics if this
+	// data type is declared in your Play Data Safety Section.
+	//   "PRIVACY_POLICY_PSL_DEVICE_OR_OTHER_IDS" - Checks if your privacy
+	// policy mentions collection of your users' device or other IDs if this
+	// data type is declared in your Play Data Safety Section.
+	//   "DATA_MONITORING_NEW_ENDPOINT" - Checks if there is a new endpoint
+	// we've recently detected. Because this check accounts for flakiness,
+	// it may fail for several weeks even if the endpoint is not detected in
+	// the current report.
+	//   "DATA_MONITORING_NEW_PERMISSION" - Checks if there is a new
+	// permission we've recently detected. Because this check accounts for
+	// flakiness, it may fail for several weeks even if the permission is
+	// not detected in the current report.
+	//   "DATA_MONITORING_NEW_DATA_TYPE" - Checks if there is a new data
+	// type we've recently detected. Because this check accounts for
+	// flakiness, it may fail for several weeks even if the data type is not
+	// detected in the current report.
+	//   "DATA_MONITORING_NEW_SDK" - Checks if there is a new SDK we've
+	// recently detected. Because this check accounts for flakiness, it may
+	// fail for several weeks even if the SDK is not detected in the current
+	// report.
+	//   "DATA_MONITORING_ENCRYPTION" - Checks if there is any endpoint
+	// contacted using HTTP protocol instead of HTTPS. If no protocol is
+	// found in the URL, the endpoint is not considered for analysis.
+	//   "DATA_MONITORING_NEW_DATA_TYPE_VERSION_DIFF" - Checks if new data
+	// types have been detected since a specific app version.
+	//   "DATA_MONITORING_NEW_ENDPOINT_VERSION_DIFF" - Checks if new
+	// endpoints have been detected since a specific app version.
+	//   "DATA_MONITORING_NEW_PERMISSION_VERSION_DIFF" - Checks if new
+	// permissions have been detected since a specific app version.
+	//   "DATA_MONITORING_NEW_SDK_VERSION_DIFF" - Checks if new SDKs have
+	// been detected since a specific app version.
+	//   "DATA_MONITORING_SDKS_DENYLIST_VIOLATION" - Checks if any SDKs were
+	// detected that are specified in the denylist.
+	//   "DATA_MONITORING_PERMISSIONS_DENYLIST_VIOLATION" - Checks if any
+	// permissions were detected that are specified in the denylist.
+	//   "DATA_MONITORING_ENDPOINTS_DENYLIST_VIOLATION" - Checks if any
+	// endpoints were detected that are specified in the denylist.
+	//   "DATA_MONITORING_OUTDATED_SDK_VERSION" - Checks if there are any
+	// outdated SDKs.
+	//   "DATA_MONITORING_CRITICAL_SDK_ISSUE" - Checks if there are any SDKs
+	// with critical issues.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Citations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Citations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckCitation: Regulation or policy that
+// serves as the legal basis for the check.
+type GoogleChecksReportV1alphaCheckCitation struct {
+	// Type: Citation type.
+	//
+	// Possible values:
+	//   "CITATION_TYPE_UNSPECIFIED" - Not specified.
+	//   "COPPA" - Children's Online Privacy Protection Act.
+	//   "GDPR" - General Data Protection Regulation.
+	//   "FERPA" - Family Educational Rights and Privacy Act.
+	//   "CAL_OPPA" - The California Online Privacy Protection Act.
+	//   "CCPA" - California Consumer Privacy Act.
+	//   "SOPIPA" - Student Online Personal Information Protection Act.
+	//   "LGPD" - Lei Geral de Proteção de Dados.
+	//   "CPRA" - California Consumer Privacy Act.
+	//   "VCDPA" - Virginia Consumer Data Protection Act.
+	//   "GOOGLE_PLAY_POLICY" - Google Play Policy.
+	//   "APP_STORE_POLICY" - App Store Policy.
+	//   "CPA" - Colorado Privacy Act.
+	//   "CTDPA" - Connecticut Data Privacy Act.
+	//   "UCPA" - Utah Consumer Privacy Act.
+	//   "PIPEDA" - Personal Information Protection and Electronic Documents
+	// Act.
+	//   "ALBERTA_PIPA" - Alberta (Canada) Personal Information Protection
+	// Act.
+	//   "QUEBEC_ACT" - Quebec: Act Respecting the Protection of Personal
+	// Information in the Private Sector.
+	//   "QUEBEC_BILL_64" - Quebec Bill 64: An Act to Modernize Legislative
+	// Provisions as Regards the Protection of Personal Information.
+	//   "CHINA_PIPL" - China Personal Information Protection Law.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckCitation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckDataSecurityEvidence: Evidence
+// concerning data security.
+type GoogleChecksReportV1alphaCheckDataSecurityEvidence struct {
+	// DataInTransitInfo: Evidence related to data in transit.
+	DataInTransitInfo []*GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo `json:"dataInTransitInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataInTransitInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataInTransitInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckDataSecurityEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckDataSecurityEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo:
+// Evidence related to data in transit detected in your app.
+type GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo struct {
+	// Uri: The URL contacted by your app. This includes the protocol,
+	// domain, and URL parameters.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckDataSecurityEvidenceDataInTransitInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckDataTypeEvidence: Evidence concerning a
+// data type that was found in your app.
+type GoogleChecksReportV1alphaCheckDataTypeEvidence struct {
+	// DataType: The data type that was found in your app.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not specified.
+	//   "DATA_TYPE_APPROXIMATE_LOCATION" - User or device physical location
+	// to an area greater than or equal to 3 square kilometers, such as the
+	// city a user is in, or location provided by Android's
+	// ACCESS_COARSE_LOCATION permission.
+	//   "DATA_TYPE_PRECISE_LOCATION" - User or device physical location
+	// within an area less than 3 square kilometers, such as location
+	// provided by Android's ACCESS_FINE_LOCATION permission.
+	//   "DATA_TYPE_PERSONAL_NAME" - How a user refers to themselves, such
+	// as their first or last name, or nickname.
+	//   "DATA_TYPE_EMAIL_ADDRESS" - A user's email address.
+	//   "DATA_TYPE_USER_IDS" - Identifiers that relate to an identifiable
+	// person. For example, an account ID, account number, or account name.
+	//   "DATA_TYPE_PHYSICAL_ADDRESS" - A user's address, such as a mailing
+	// or home address.
+	//   "DATA_TYPE_PHONE_NUMBER" - A user's phone number.
+	//   "DATA_TYPE_RACE_AND_ETHNICITY" - Information about a user's race or
+	// ethnicity.
+	//   "DATA_TYPE_POLITICAL_OR_RELIGIOUS_BELIEFS" - Information about a
+	// user's political or religious beliefs.
+	//   "DATA_TYPE_SEXUAL_ORIENTATION" - Information about a user's sexual
+	// orientation.
+	//   "DATA_TYPE_OTHER_PERSONAL_INFO" - Any other personal information
+	// such as date of birth, gender identity, veteran status, etc.
+	//   "DATA_TYPE_PAYMENT_INFO" - Information about a user's financial
+	// accounts such as credit card number.
+	//   "DATA_TYPE_PURCHASE_HISTORY" - Information about purchases or
+	// transactions a user has made.
+	//   "DATA_TYPE_CREDIT_SCORE" - Information about a user's credit score.
+	//   "DATA_TYPE_OTHER_FINANCIAL_INFO" - Any other financial information
+	// such as user salary or debts.
+	//   "DATA_TYPE_HEALTH_INFO" - Information about a user's health, such
+	// as medical records or symptoms.
+	//   "DATA_TYPE_FITNESS_INFO" - Information about a user's fitness, such
+	// as exercise or other physical activity.
+	//   "DATA_TYPE_EMAILS" - A user's emails including the email subject
+	// line, sender, recipients, and the content of the email.
+	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the
+	// sender, recipients, and the content of the message.
+	//   "DATA_TYPE_PHOTOS" - A user's photos.
+	//   "DATA_TYPE_VIDEOS" - A user's videos.
+	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a
+	// voicemail or a sound recording.
+	//   "DATA_TYPE_MUSIC_FILES" - A user's music files.
+	//   "DATA_TYPE_OTHER_AUDIO_FILES" - Any other user-created or
+	// user-provided audio files.
+	//   "DATA_TYPE_FILES_AND_DOCS" - A user's files or documents, or
+	// information about their files or documents such as file names.
+	//   "DATA_TYPE_CALENDAR_EVENTS" - Information from a user's calendar
+	// such as events, event notes, and attendees.
+	//   "DATA_TYPE_CONTACTS" - Information about the user’s contacts such
+	// as contact names, message history, and social graph information like
+	// usernames, contact recency, contact frequency, interaction duration
+	// and call history.
+	//   "DATA_TYPE_APP_INTERACTIONS" - Information about how a user
+	// interacts with your app, such as the number of page views or taps.
+	//   "DATA_TYPE_IN_APP_SEARCH_HISTORY" - Information about what a user
+	// has searched for in your app.
+	//   "DATA_TYPE_INSTALLED_APPS" - Inventory of apps or packages
+	// installed on the user’s device.
+	//   "DATA_TYPE_OTHER_USER_GENERATED_CONTENT" - Any other user-generated
+	// content not listed here, or in any other section. For example, user
+	// bios, notes, or open-ended responses.
+	//   "DATA_TYPE_OTHER_ACTIONS" - Any other user activity or actions
+	// in-app not listed here such as gameplay, likes, and dialog options.
+	//   "DATA_TYPE_WEB_BROWSING_HISTORY" - Information about the websites a
+	// user has visited.
+	//   "DATA_TYPE_CRASH_LOGS" - Crash log data from your app. For example,
+	// the number of times your app has crashed, stack traces, or other
+	// information directly related to a crash.
+	//   "DATA_TYPE_PERFORMANCE_DIAGNOSTICS" - Information about the
+	// performance of your app. For example battery life, loading time,
+	// latency, framerate, or any technical diagnostics.
+	//   "DATA_TYPE_OTHER_APP_PERFORMANCE_DATA" - Any other app performance
+	// data not listed here.
+	//   "DATA_TYPE_DEVICE_OR_OTHER_IDS" - Identifiers that relate to an
+	// individual device, browser or app. For example, an IMEI number, MAC
+	// address, Widevine Device ID, Firebase installation ID, or advertising
+	// identifier.
+	DataType string `json:"dataType,omitempty"`
+
+	// DataTypeEvidence: Evidence collected about the data type.
+	DataTypeEvidence *GoogleChecksReportV1alphaDataTypeEvidence `json:"dataTypeEvidence,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckDataTypeEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckDataTypeEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckEndpointEvidence: Evidence concerning
+// an endpoint that was contacted by your app.
+type GoogleChecksReportV1alphaCheckEndpointEvidence struct {
+	// Endpoint: The endpoint that was contacted by your app.
+	Endpoint *GoogleChecksReportV1alphaEndpoint `json:"endpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckEndpointEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckEndpointEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence:
+// Evidence collected from endpoint restriction violation analysis.
+type GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence struct {
+	// EndpointDetails: Endpoints in violation.
+	EndpointDetails []*GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDetails `json:"endpointDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndpointDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndp
+// ointDetails: Details of the endpoint in violation.
+type GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDetails struct {
+	// Endpoint: The endpoint in violation.
+	Endpoint *GoogleChecksReportV1alphaEndpoint `json:"endpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidenceEndpointDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckEvidence: Evidence for a check.
+type GoogleChecksReportV1alphaCheckEvidence struct {
+	// DataSecurity: Evidence concerning data security.
+	DataSecurity *GoogleChecksReportV1alphaCheckDataSecurityEvidence `json:"dataSecurity,omitempty"`
+
+	// DataTypes: Evidence concerning data types found in your app.
+	DataTypes []*GoogleChecksReportV1alphaCheckDataTypeEvidence `json:"dataTypes,omitempty"`
+
+	// EndpointRestrictionViolations: Evidence collected from endpoint
+	// restriction violation analysis.
+	EndpointRestrictionViolations []*GoogleChecksReportV1alphaCheckEndpointRestrictionViolationEvidence `json:"endpointRestrictionViolations,omitempty"`
+
+	// Endpoints: Evidence concerning endpoints that were contacted by your
+	// app.
+	Endpoints []*GoogleChecksReportV1alphaCheckEndpointEvidence `json:"endpoints,omitempty"`
+
+	// PermissionRestrictionViolations: Evidence collected from permission
+	// restriction violation analysis.
+	PermissionRestrictionViolations []*GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence `json:"permissionRestrictionViolations,omitempty"`
+
+	// Permissions: Evidence concerning permissions that were found in your
+	// app.
+	Permissions []*GoogleChecksReportV1alphaCheckPermissionEvidence `json:"permissions,omitempty"`
+
+	// PrivacyPolicyTexts: Evidence collected from your privacy policy(s).
+	PrivacyPolicyTexts []*GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence `json:"privacyPolicyTexts,omitempty"`
+
+	// SdkIssues: Evidence concerning SDK issues.
+	SdkIssues []*GoogleChecksReportV1alphaCheckSdkIssueEvidence `json:"sdkIssues,omitempty"`
+
+	// SdkRestrictionViolations: Evidence collected from SDK restriction
+	// violation analysis.
+	SdkRestrictionViolations []*GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence `json:"sdkRestrictionViolations,omitempty"`
+
+	// Sdks: Evidence concerning SDKs that were found in your app.
+	Sdks []*GoogleChecksReportV1alphaCheckSdkEvidence `json:"sdks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSecurity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSecurity") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckPermissionEvidence: Evidence concerning
+// a permission that was found in your app.
+type GoogleChecksReportV1alphaCheckPermissionEvidence struct {
+	// Permission: The permission that was found in your app.
+	Permission *GoogleChecksReportV1alphaPermission `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permission") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permission") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckPermissionEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckPermissionEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence:
+// Evidence collected from permission restriction violation analysis.
+type GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence struct {
+	// PermissionDetails: Permissions in violation.
+	PermissionDetails []*GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissionDetails `json:"permissionDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PermissionDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PermissionDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePe
+// rmissionDetails: Details of the permission in violation.
+type GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissionDetails struct {
+	// Permission: The permission in violation.
+	Permission *GoogleChecksReportV1alphaPermission `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permission") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permission") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckPermissionRestrictionViolationEvidencePermissionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence: Evidence
+// collected from your privacy policy(s).
+type GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence struct {
+	// PolicyFragment: The privacy policy fragment that was used during the
+	// check.
+	PolicyFragment *GoogleChecksReportV1alphaPolicyFragment `json:"policyFragment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PolicyFragment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PolicyFragment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckPrivacyPolicyTextEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckSdkEvidence: Evidence conerning an SDK
+// that was found in your app.
+type GoogleChecksReportV1alphaCheckSdkEvidence struct {
+	// Sdk: The SDK that was found in your app.
+	Sdk *GoogleChecksReportV1alphaSdk `json:"sdk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sdk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sdk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckSdkEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckSdkEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckSdkIssueEvidence: Evidence concerning
+// an SDK issue.
+type GoogleChecksReportV1alphaCheckSdkIssueEvidence struct {
+	// Sdk: The SDK with an issue.
+	Sdk *GoogleChecksReportV1alphaSdk `json:"sdk,omitempty"`
+
+	// SdkVersion: The SDK version.
+	SdkVersion string `json:"sdkVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sdk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sdk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckSdkIssueEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckSdkIssueEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence:
+// Evidence collected from SDK restriction violation analysis.
+type GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence struct {
+	// SdkDetails: SDKs in violation.
+	SdkDetails []*GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails `json:"sdkDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SdkDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SdkDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetail
+// s: Details of the SDK in violation.
+type GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails struct {
+	// Sdk: The SDK in violation.
+	Sdk *GoogleChecksReportV1alphaSdk `json:"sdk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sdk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sdk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckSdkRestrictionViolationEvidenceSdkDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaCheckStateMetadata: Additional information
+// about the check state in relation to past reports.
+type GoogleChecksReportV1alphaCheckStateMetadata struct {
+	// Badges: Indicators related to the check state.
+	//
+	// Possible values:
+	//   "CHECK_STATE_BADGE_UNSPECIFIED" - Not specified.
+	//   "NEWLY_FAILING" - The check is newly failing, i.e. now failing but
+	// previously passing.
+	//   "RECENTLY_FAILING" - The check is currently failing and first
+	// started failing continuously within the last 28 days.
+	//   "RESOLVED" - The check is newly passing, i.e. now passing but
+	// previously failing.
+	Badges []string `json:"badges,omitempty"`
+
+	// FirstFailingTime: The time when the check first started failing.
+	FirstFailingTime string `json:"firstFailingTime,omitempty"`
+
+	// LastFailingTime: The last time the check failed.
+	LastFailingTime string `json:"lastFailingTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Badges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Badges") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaCheckStateMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaCheckStateMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataMonitoring: Represents the data
+// monitoring section of the report.
+type GoogleChecksReportV1alphaDataMonitoring struct {
+	// DataTypes: Data types that your app shares or collects.
+	DataTypes []*GoogleChecksReportV1alphaDataMonitoringDataTypeResult `json:"dataTypes,omitempty"`
+
+	// Endpoints: Endpoints that were found by dynamic analysis of your app.
+	Endpoints []*GoogleChecksReportV1alphaDataMonitoringEndpointResult `json:"endpoints,omitempty"`
+
+	// Permissions: Permissions that your app uses.
+	Permissions []*GoogleChecksReportV1alphaDataMonitoringPermissionResult `json:"permissions,omitempty"`
+
+	// Sdks: SDKs that your app uses.
+	Sdks []*GoogleChecksReportV1alphaDataMonitoringSdkResult `json:"sdks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataMonitoring) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataMonitoring
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataMonitoringDataTypeResult: Information
+// about a data type that was found in your app.
+type GoogleChecksReportV1alphaDataMonitoringDataTypeResult struct {
+	// DataType: The data type that was shared or collected by your app.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not specified.
+	//   "DATA_TYPE_APPROXIMATE_LOCATION" - User or device physical location
+	// to an area greater than or equal to 3 square kilometers, such as the
+	// city a user is in, or location provided by Android's
+	// ACCESS_COARSE_LOCATION permission.
+	//   "DATA_TYPE_PRECISE_LOCATION" - User or device physical location
+	// within an area less than 3 square kilometers, such as location
+	// provided by Android's ACCESS_FINE_LOCATION permission.
+	//   "DATA_TYPE_PERSONAL_NAME" - How a user refers to themselves, such
+	// as their first or last name, or nickname.
+	//   "DATA_TYPE_EMAIL_ADDRESS" - A user's email address.
+	//   "DATA_TYPE_USER_IDS" - Identifiers that relate to an identifiable
+	// person. For example, an account ID, account number, or account name.
+	//   "DATA_TYPE_PHYSICAL_ADDRESS" - A user's address, such as a mailing
+	// or home address.
+	//   "DATA_TYPE_PHONE_NUMBER" - A user's phone number.
+	//   "DATA_TYPE_RACE_AND_ETHNICITY" - Information about a user's race or
+	// ethnicity.
+	//   "DATA_TYPE_POLITICAL_OR_RELIGIOUS_BELIEFS" - Information about a
+	// user's political or religious beliefs.
+	//   "DATA_TYPE_SEXUAL_ORIENTATION" - Information about a user's sexual
+	// orientation.
+	//   "DATA_TYPE_OTHER_PERSONAL_INFO" - Any other personal information
+	// such as date of birth, gender identity, veteran status, etc.
+	//   "DATA_TYPE_PAYMENT_INFO" - Information about a user's financial
+	// accounts such as credit card number.
+	//   "DATA_TYPE_PURCHASE_HISTORY" - Information about purchases or
+	// transactions a user has made.
+	//   "DATA_TYPE_CREDIT_SCORE" - Information about a user's credit score.
+	//   "DATA_TYPE_OTHER_FINANCIAL_INFO" - Any other financial information
+	// such as user salary or debts.
+	//   "DATA_TYPE_HEALTH_INFO" - Information about a user's health, such
+	// as medical records or symptoms.
+	//   "DATA_TYPE_FITNESS_INFO" - Information about a user's fitness, such
+	// as exercise or other physical activity.
+	//   "DATA_TYPE_EMAILS" - A user's emails including the email subject
+	// line, sender, recipients, and the content of the email.
+	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the
+	// sender, recipients, and the content of the message.
+	//   "DATA_TYPE_PHOTOS" - A user's photos.
+	//   "DATA_TYPE_VIDEOS" - A user's videos.
+	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a
+	// voicemail or a sound recording.
+	//   "DATA_TYPE_MUSIC_FILES" - A user's music files.
+	//   "DATA_TYPE_OTHER_AUDIO_FILES" - Any other user-created or
+	// user-provided audio files.
+	//   "DATA_TYPE_FILES_AND_DOCS" - A user's files or documents, or
+	// information about their files or documents such as file names.
+	//   "DATA_TYPE_CALENDAR_EVENTS" - Information from a user's calendar
+	// such as events, event notes, and attendees.
+	//   "DATA_TYPE_CONTACTS" - Information about the user’s contacts such
+	// as contact names, message history, and social graph information like
+	// usernames, contact recency, contact frequency, interaction duration
+	// and call history.
+	//   "DATA_TYPE_APP_INTERACTIONS" - Information about how a user
+	// interacts with your app, such as the number of page views or taps.
+	//   "DATA_TYPE_IN_APP_SEARCH_HISTORY" - Information about what a user
+	// has searched for in your app.
+	//   "DATA_TYPE_INSTALLED_APPS" - Inventory of apps or packages
+	// installed on the user’s device.
+	//   "DATA_TYPE_OTHER_USER_GENERATED_CONTENT" - Any other user-generated
+	// content not listed here, or in any other section. For example, user
+	// bios, notes, or open-ended responses.
+	//   "DATA_TYPE_OTHER_ACTIONS" - Any other user activity or actions
+	// in-app not listed here such as gameplay, likes, and dialog options.
+	//   "DATA_TYPE_WEB_BROWSING_HISTORY" - Information about the websites a
+	// user has visited.
+	//   "DATA_TYPE_CRASH_LOGS" - Crash log data from your app. For example,
+	// the number of times your app has crashed, stack traces, or other
+	// information directly related to a crash.
+	//   "DATA_TYPE_PERFORMANCE_DIAGNOSTICS" - Information about the
+	// performance of your app. For example battery life, loading time,
+	// latency, framerate, or any technical diagnostics.
+	//   "DATA_TYPE_OTHER_APP_PERFORMANCE_DATA" - Any other app performance
+	// data not listed here.
+	//   "DATA_TYPE_DEVICE_OR_OTHER_IDS" - Identifiers that relate to an
+	// individual device, browser or app. For example, an IMEI number, MAC
+	// address, Widevine Device ID, Firebase installation ID, or advertising
+	// identifier.
+	DataType string `json:"dataType,omitempty"`
+
+	// DataTypeEvidence: Evidence collected about the data type.
+	DataTypeEvidence *GoogleChecksReportV1alphaDataTypeEvidence `json:"dataTypeEvidence,omitempty"`
+
+	// Metadata: Metadata about the result.
+	Metadata *GoogleChecksReportV1alphaDataMonitoringResultMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataMonitoringDataTypeResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataMonitoringDataTypeResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataMonitoringEndpointResult: Information
+// about an endpoint that was contacted by your app.
+type GoogleChecksReportV1alphaDataMonitoringEndpointResult struct {
+	// Endpoint: The endpoint that was contacted by your app.
+	Endpoint *GoogleChecksReportV1alphaEndpoint `json:"endpoint,omitempty"`
+
+	// HitCount: The number of times this endpoint was contacted by your
+	// app.
+	HitCount int64 `json:"hitCount,omitempty"`
+
+	// Metadata: Metadata about the result.
+	Metadata *GoogleChecksReportV1alphaDataMonitoringResultMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataMonitoringEndpointResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataMonitoringEndpointResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataMonitoringPermissionResult: Information
+// about a permission that was found in your app.
+type GoogleChecksReportV1alphaDataMonitoringPermissionResult struct {
+	// Metadata: Metadata about the result.
+	Metadata *GoogleChecksReportV1alphaDataMonitoringResultMetadata `json:"metadata,omitempty"`
+
+	// Permission: The permission that was found in your app.
+	Permission *GoogleChecksReportV1alphaPermission `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataMonitoringPermissionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataMonitoringPermissionResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataMonitoringResultMetadata: Information
+// about a data monitoring result.
+type GoogleChecksReportV1alphaDataMonitoringResultMetadata struct {
+	// Badges: Badges that apply to this result.
+	//
+	// Possible values:
+	//   "DATA_MONITORING_RESULT_BADGE_UNSPECIFIED" - Not specified.
+	//   "NEW" - Indicates a newly detected result in the data monitoring
+	// report.
+	Badges []string `json:"badges,omitempty"`
+
+	// FirstDetectedTime: The timestamp when this result was first detected
+	// within the last 8 weeks. If not set, it wasn't detected within the
+	// last 8 weeks.
+	FirstDetectedTime string `json:"firstDetectedTime,omitempty"`
+
+	// LastDetectedAppVersion: Your app's version name when this result was
+	// last detected within the last 8 weeks. If not set, it wasn't detected
+	// within the last 8 weeks.
+	LastDetectedAppVersion string `json:"lastDetectedAppVersion,omitempty"`
+
+	// LastDetectedTime: The timestamp when this result was last detected
+	// within the last 8 weeks. If not set, it wasn't detected within the
+	// last 8 weeks.
+	LastDetectedTime string `json:"lastDetectedTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Badges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Badges") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataMonitoringResultMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataMonitoringResultMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataMonitoringSdkResult: Information about
+// an SDK that was found in your app.
+type GoogleChecksReportV1alphaDataMonitoringSdkResult struct {
+	// Metadata: Metadata about the result.
+	Metadata *GoogleChecksReportV1alphaDataMonitoringResultMetadata `json:"metadata,omitempty"`
+
+	// Sdk: The SDK that was found in your app.
+	Sdk *GoogleChecksReportV1alphaSdk `json:"sdk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataMonitoringSdkResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataMonitoringSdkResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataTypeEndpointEvidence: Evidence based on
+// an endpoint that data was sent to.
+type GoogleChecksReportV1alphaDataTypeEndpointEvidence struct {
+	// AttributedSdks: Set of SDKs that are attributed to the exfiltration.
+	AttributedSdks []*GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk `json:"attributedSdks,omitempty"`
+
+	// EndpointDetails: Endpoints the data type was sent to.
+	EndpointDetails []*GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails `json:"endpointDetails,omitempty"`
+
+	// ExfiltratedDataType: Type of data that was exfiltrated.
+	//
+	// Possible values:
+	//   "EXFILTRATED_DATA_TYPE_UNSPECIFIED" - Not specified.
+	//   "EXFILTRATED_DATA_TYPE_PHONE_NUMBER" - The user's phone number.
+	//   "EXFILTRATED_DATA_TYPE_PRECISE_LOCATION" - The user's precise
+	// location.
+	//   "EXFILTRATED_DATA_TYPE_CONTACT_NAME" - Name of one or more contacts
+	// from the user's phone.
+	//   "EXFILTRATED_DATA_TYPE_CONTACT_EMAIL" - Email of one or more
+	// contacts from the user's phone.
+	//   "EXFILTRATED_DATA_TYPE_CONTACT_PHONE_NUMBER" - Phone number of one
+	// or more contacts from the user's phone.
+	//   "EXFILTRATED_DATA_TYPE_INCOMING_TEXT_NUMBER" - Phone number of an
+	// incoming text message.
+	//   "EXFILTRATED_DATA_TYPE_INCOMING_TEXT_MESSAGE" - Content of an
+	// incoming text message.
+	//   "EXFILTRATED_DATA_TYPE_OUTGOING_TEXT_NUMBER" - Phone number of an
+	// outgoing text message.
+	//   "EXFILTRATED_DATA_TYPE_OUTGOING_TEXT_MESSAGE" - Content of an
+	// outgoing text message.
+	//   "EXFILTRATED_DATA_TYPE_ADVERTISING_ID" - Advertising ID.
+	//   "EXFILTRATED_DATA_TYPE_ANDROID_ID" - Android ID.
+	//   "EXFILTRATED_DATA_TYPE_IMEI" - IMEI.
+	//   "EXFILTRATED_DATA_TYPE_IMSI" - IMSI.
+	//   "EXFILTRATED_DATA_TYPE_SIM_SERIAL_NUMBER" - Sim serial number.
+	//   "EXFILTRATED_DATA_TYPE_SSID" - SSID: Service Set IDentifier, i.e.
+	// the network's name.
+	//   "EXFILTRATED_DATA_TYPE_ACCOUNT" - Information about the main
+	// account of the device.
+	//   "EXFILTRATED_DATA_TYPE_EXTERNAL_ACCOUNT" - Information about an
+	// external account, e.g. Facebook, Twitter.
+	//   "EXFILTRATED_DATA_TYPE_INSTALLED_PACKAGES" - One or more of the
+	// package names of apps on the device.
+	ExfiltratedDataType string `json:"exfiltratedDataType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributedSdks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributedSdks") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataTypeEndpointEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataTypeEndpointEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk:
+// Details of SDK that is attributed to the exfiltration.
+type GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk struct {
+	// Sdk: SDK that is attributed to the exfiltration.
+	Sdk *GoogleChecksReportV1alphaSdk `json:"sdk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sdk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sdk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataTypeEndpointEvidenceAttributedSdk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails:
+// Details of the endpoint the data type was sent to.
+type GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails struct {
+	// Endpoint: Endpoint the data type was sent to.
+	Endpoint *GoogleChecksReportV1alphaEndpoint `json:"endpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataTypeEndpointEvidenceEndpointDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataTypeEvidence: Evidence collected about a
+// data type.
+type GoogleChecksReportV1alphaDataTypeEvidence struct {
+	// Endpoints: List of endpoints the data type was sent to.
+	Endpoints []*GoogleChecksReportV1alphaDataTypeEndpointEvidence `json:"endpoints,omitempty"`
+
+	// Permissions: List of included permissions that imply collection of
+	// the data type.
+	Permissions []*GoogleChecksReportV1alphaDataTypePermissionEvidence `json:"permissions,omitempty"`
+
+	// PrivacyPolicyTexts: List of privacy policy texts that imply
+	// collection of the data type.
+	PrivacyPolicyTexts []*GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence `json:"privacyPolicyTexts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoints") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataTypeEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataTypeEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataTypePermissionEvidence: Evidence based
+// on the inclusion of a permission.
+type GoogleChecksReportV1alphaDataTypePermissionEvidence struct {
+	// Permission: Permission declared by your app.
+	Permission *GoogleChecksReportV1alphaPermission `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permission") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permission") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataTypePermissionEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataTypePermissionEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence: Evidence
+// based on information from the privacy policy.
+type GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence struct {
+	// PolicyFragment: The privacy policy fragment that implies collection
+	// of the data type.
+	PolicyFragment *GoogleChecksReportV1alphaPolicyFragment `json:"policyFragment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PolicyFragment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PolicyFragment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaDataTypePrivacyPolicyTextEvidence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaEndpoint: Information about an endpoint.
+type GoogleChecksReportV1alphaEndpoint struct {
+	// Domain: Domain name (e.g. ads.google.com).
+	Domain string `json:"domain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaListReportsResponse: The response message
+// for ReportService.ListReports.
+type GoogleChecksReportV1alphaListReportsResponse struct {
+	// NextPageToken: A token which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Reports: The reports for the specified app.
+	Reports []*GoogleChecksReportV1alphaReport `json:"reports,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaListReportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaListReportsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaPermission: Information about a permission.
+type GoogleChecksReportV1alphaPermission struct {
+	// Id: Permission identifier.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaPermission) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaPermission
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaPolicyFragment: Information about a policy
+// fragment.
+type GoogleChecksReportV1alphaPolicyFragment struct {
+	// HtmlContent: HTML content.
+	HtmlContent string `json:"htmlContent,omitempty"`
+
+	// SourceUri: Policy URL.
+	SourceUri string `json:"sourceUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HtmlContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HtmlContent") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaPolicyFragment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaPolicyFragment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaReport: Privacy report.
+type GoogleChecksReportV1alphaReport struct {
+	// AppBundle: Information about the analyzed app bundle.
+	AppBundle *GoogleChecksReportV1alphaAppBundle `json:"appBundle,omitempty"`
+
+	// BaseReport: Resource name of the base report used for comparison. May
+	// be absent if this is the first report generated for the app.
+	BaseReport string `json:"baseReport,omitempty"`
+
+	// Checks: List of checks that were run on the app bundle.
+	Checks []*GoogleChecksReportV1alphaCheck `json:"checks,omitempty"`
+
+	// DataMonitoring: Information related to data monitoring.
+	DataMonitoring *GoogleChecksReportV1alphaDataMonitoring `json:"dataMonitoring,omitempty"`
+
+	// Name: Resource name of the report.
+	Name string `json:"name,omitempty"`
+
+	// ResultsUri: A URL to view results.
+	ResultsUri string `json:"resultsUri,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppBundle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppBundle") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksReportV1alphaSdk: Information about an SDK.
+type GoogleChecksReportV1alphaSdk struct {
+	// Id: SDK identifier.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChecksReportV1alphaSdk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksReportV1alphaSdk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -526,402 +2153,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type PolicyDataTypeAnnotation struct {
-	// DataType: Type of the data mentioned in the policy.
-	//
-	// Possible values:
-	//   "DATA_TYPE_UNSPECIFIED" - Default value.
-	//   "CONTACT_INFO_NAME" - Data type on the privacy policy describing
-	// Contact Info name.
-	//   "CONTACT_INFO_EMAIL_ADDRESS" - Data type on the privacy policy
-	// describing Contact Info email address.
-	//   "CONTACT_INFO_PHONE_NUMBER" - Data type on the privacy policy
-	// describing Contact Info phone number.
-	//   "CONTACT_INFO_MAILING_ADDRESS" - Data type on the privacy policy
-	// describing Contact Info mailing address.
-	//   "CONTACT_INFO_OTHER" - Data type on the privacy policy describing
-	// Contact Info other.
-	//   "IDENTITY_INFO_OTHER" - Data type on the privacy policy describing
-	// Identity Info other.
-	//   "USER_CONTENT_EMAIL_MESSAGES" - Data type on the privacy policy
-	// describing User Content email messages.
-	//   "USER_CONTENT_TEXT_MESSAGES" - Data type on the privacy policy
-	// describing User Content text messages.
-	//   "USER_CONTENT_OTHER_IN_APP_MESSAGES" - Data type on the privacy
-	// policy describing User Content other in-app messages.
-	//   "USER_CONTENT_PHOTOS" - Data type on the privacy policy describing
-	// User Content photos.
-	//   "USER_CONTENT_VIDEOS" - Data type on the privacy policy describing
-	// User Content videos.
-	//   "USER_CONTENT_MUSIC_FILES" - Data type on the privacy policy
-	// describing User Content music files.
-	//   "USER_CONTENT_VOICE_OR_SOUND_RECORDINGS" - Data type on the privacy
-	// policy describing User Content voice or sound recordings.
-	//   "USER_CONTENT_OTHER_AUDIO_FILES" - Data type on the privacy policy
-	// describing User Content other audio files.
-	//   "USER_CONTENT_FILES_AND_DOCS" - Data type on the privacy policy
-	// describing User Content files or documents.
-	//   "USER_CONTENT_GAMEPLAY_DATA" - Data type on the privacy policy
-	// describing User Content gameplay data.
-	//   "USER_CONTENT_CUSTOMER_SUPPORT" - Data type on the privacy policy
-	// describing User Content customer support.
-	//   "COOKIES_AND_TRACKING_ELEMENTS" - Data type on the privacy policy
-	// describing Cookies and other tracking elements, e.g. web beacons.
-	//   "BROWSING_HISTORY" - Data type on the privacy policy describing
-	// Browsing History.
-	//   "SEARCH_HISTORY" - Data type on the privacy policy describing
-	// Search History.
-	//   "PURCHASE_HISTORY" - Data type on the privacy policy describing
-	// Purchase History.
-	//   "PRODUCT_INTERACTION" - Data type on the privacy policy describing
-	// Product Interaction data.
-	//   "USER_GENERATED_CONTENT_OTHER" - Data type on the privacy policy
-	// describing other User Generated Content.
-	//   "IN_APP_ACTIONS_OTHER" - Data type on the privacy policy describing
-	// other User Generated Content.
-	//   "ADVERTISING" - Data type on the privacy policy describing
-	// Advertising data.
-	//   "APP_CRASH_LOGS" - Data type on the privacy policy describing Crash
-	// Logs data.
-	//   "APP_DIAGNOSTICS" - Data type on the privacy policy describing App
-	// Diagnostics data.
-	//   "APP_PERFORMANCE_OTHER" - Data type on the privacy policy
-	// describing other App Performance data.
-	//   "USER_IDENTIFIERS" - Data type on the privacy policy describing
-	// User or account-level IDs.
-	//   "DEVICE_IDENTIFIERS" - Data type on the privacy policy describing
-	// device-level IDs.
-	//   "IP_ADDRESS" - Data type on the privacy policy describing IP
-	// Addresses.
-	//   "CONTACTS" - Data type on the privacy policy describing Contacts
-	// data.
-	//   "AUTHENTICATION_DATA" - Data type on the privacy policy describing
-	// Authentication data, e.g. passwords.
-	//   "CALENDAR_EVENTS_OR_NOTES" - Data type on the privacy policy
-	// describing Calendar events or notes.
-	//   "HEALTH" - Data type on the privacy policy describing Health data.
-	//   "FITNESS" - Data type on the privacy policy describing Fitness
-	// data.
-	//   "LOCATION_PRECISE" - Data type on the privacy policy describing
-	// Precise Location data.
-	//   "LOCATION_COARSE" - Data type on the privacy policy describing
-	// Coarse Location data.
-	//   "LOCATION_GENERAL" - Data type on the privacy policy describing
-	// general Location data, without specifying precise or coarse.
-	//   "APPS_ON_DEVICE" - Data type on the privacy policy describing Apps
-	// on Device.
-	//   "FINANCIAL_PAYMENT_INFO" - Data type on the privacy policy
-	// describing Financial Payment info.
-	//   "FINANCIAL_CREDIT_INFO" - Data type on the privacy policy
-	// describing Financial Credit info.
-	//   "FINANCIAL_OTHER" - Data type on the privacy policy describing
-	// Financial other data.
-	//   "PERSONAL_INFO_RACE_AND_ETHNICITY" - Data type on the privacy
-	// policy describing a user’s race or ethnicity.
-	//   "PERSONAL_INFO_POLITICAL_OR_RELIGIOUS_BELIEFS" - Data type on the
-	// privacy policy describing a user’s political or religious beliefs.
-	//   "PERSONAL_INFO_SEXUAL_ORIENTATION" - Data type on the privacy
-	// policy describing a user’s sexual orientation.
-	//   "PERSONAL_INFO_OTHER" - Data type on the privacy policy describing
-	// Personal Info other.
-	//   "GENERIC_PERSONAL_INFORMATION" - Data type on the privacy policy
-	// describing generic personal information, e.g. "we collection your
-	// personal information."
-	//   "UNSPECIFIED_INFORMATION" - Data type on the privacy policy
-	// describing information in general with no speicific type, e.g. "we
-	// collect information you voluntarily provide."
-	//   "OTHER_DATA" - Data type on the privacy policy describing specific
-	// types of data that are not covered by others labels, or ambiguous
-	// cases where no clear type exists, e.g. "we collect your movement
-	// data," which could be location, fitness, or even product interaction,
-	// depending on the context.
-	DataType string `json:"dataType,omitempty"`
-
-	// EndOffset: Byte offsets for the end of the data type sentence inside
-	// the full text.
-	EndOffset int64 `json:"endOffset,omitempty,string"`
-
-	// Score: Score given by the model representing how confident it was
-	// regarding this `text_content` being of `data_type`.
-	Score float64 `json:"score,omitempty"`
-
-	// StartOffset: Byte offsets for the start of the data type sentence
-	// inside the full text.
-	StartOffset int64 `json:"startOffset,omitempty,string"`
-
-	// TextContent: Actual text content in the section. This makes it much
-	// easier to consume the information. NOTE: This field might contain
-	// HTML and does not guarantee a SafeHtml security contract
-	// go/safehtmltypecontracts#safehtml.
-	TextContent string `json:"textContent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DataType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PolicyDataTypeAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyDataTypeAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *PolicyDataTypeAnnotation) UnmarshalJSON(data []byte) error {
-	type NoMethod PolicyDataTypeAnnotation
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
-}
-
-type PolicyPurposeOfUseAnnotation struct {
-	// EndOffset: Byte offsets for the end of the purpose of use sentence
-	// inside the full text.
-	EndOffset int64 `json:"endOffset,omitempty,string"`
-
-	// PurposeOfUse: Purpose of use mentioned in the policy.
-	//
-	// Possible values:
-	//   "PURPOSE_OF_USE_UNSPECIFIED" - Default value.
-	//   "APP_FUNCTIONALITY" - Data is used for general app functions, or
-	// interface with the user, e.g. customer support.
-	//   "APP_DIAGNOSTICS_AND_PERFORMANCE" - Data is used for minimizing app
-	// crashes, enabling scalability and performance, etc.
-	//   "FRAUD_PREVENTION_AND_SECURITY" - Data is used for fraud
-	// prevention, protecting user accounts, or other security purposes.
-	//   "PRODUCT_PERSONALIZATION" - Data is used for
-	// personalizing/customizing what the user sees.
-	//   "ANALYTICS" - Data is used for evaluating user behavior, measuring
-	// audience size, etc.
-	//   "DEVELOPERS_COMMUNICATION_AND_MARKETING" - Data is used for sending
-	// marketing communications directly to your users, notifications,
-	// reminders, or update notices.
-	//   "THIRD_PARTY_ADVERTISING" - Data is used by a third-party to
-	// display ads in the app (or elsewhere).
-	//   "GENERAL_ADVERTISING" - Data is used for displaying ads in the app,
-	// or sharing data with entities who display ads.
-	//   "LEGAL_COMPLIANCE" - Data is used for compliance with legal
-	// obligations, e.g., regulations, government data requests, law
-	// enforcement requests in general, etc.
-	//   "MERGERS_AND_ACQUISITIONS" - If a company/organization merges or is
-	// acquired it transfers users' information to another
-	// company/organization.
-	//   "OTHER_SPECIFIED_PURPOSE" - Any other specific purposes that are
-	// not listed above.
-	//   "NO_PURPOSE_MENTIONED" - The purpose of use is not explicitly
-	// stated or unclear.
-	PurposeOfUse string `json:"purposeOfUse,omitempty"`
-
-	// Score: Score given by the model representing how confident it was
-	// regarding this `text_content` being of `purpose_of_use`.
-	Score float64 `json:"score,omitempty"`
-
-	// StartOffset: Byte offsets for the start of the purpose of use
-	// sentence inside the full text.
-	StartOffset int64 `json:"startOffset,omitempty,string"`
-
-	// TextContent: The bytes of actual text content in the sentence that
-	// mentions the purpose of use. This makes it much easier to consume the
-	// information. NOTE: This field might contain HTML and does not
-	// guarantee a SafeHtml security contract
-	// go/safehtmltypecontracts#safehtml.
-	TextContent string `json:"textContent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndOffset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndOffset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PolicyPurposeOfUseAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyPurposeOfUseAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *PolicyPurposeOfUseAnnotation) UnmarshalJSON(data []byte) error {
-	type NoMethod PolicyPurposeOfUseAnnotation
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
-}
-
-type PolicySectionAnnotation struct {
-	// EndOffset: Byte offsets for the end of the section inside the full
-	// text.
-	EndOffset int64 `json:"endOffset,omitempty,string"`
-
-	// Score: Score given by the model representing how confident it was
-	// regarding this `text_content` being of `section_type`.
-	Score float64 `json:"score,omitempty"`
-
-	// SectionType: Type of the high-level category in the policy.
-	//
-	// Possible values:
-	//   "SECTION_TYPE_UNSPECIFIED" - Default value.
-	//   "FIRST_PARTY_COLLECTION" - Section of the privacy policy describes
-	// 1st party collection practices.
-	//   "FIRST_PARTY_USE" - Section of the privacy policy describes 1st
-	// party use practices.
-	//   "THIRD_PARTY_SHARING" - Section of the privacy policy describes 3rd
-	// party sharing practices.
-	//   "CHILDREN_RELATED" - Section of the privacy policy describes
-	// Children related content.
-	//   "DATA_RETENTION" - Section of the privacy policy describes data
-	// retention practices.
-	//   "PRIVACY_CONTACT" - Section of the privacy policy references
-	// privacy contact information.
-	//   "RIGHT_TO_DELETE" - Section of the privacy policy describes users'
-	// right of data deletion.
-	//   "RIGHT_TO_RESTRICT_PROCESSING" - Section of the privacy policy
-	// about users' right to restrict processing.
-	//   "RIGHT_TO_ACCESS" - Section of the privacy policy about users'
-	// right to access their data.
-	//   "RIGHT_TO_RECTIFICATION" - Section of the privacy policy about
-	// users' right to correct inaccuracies.
-	//   "RIGHT_TO_KNOW_ABOUT_SELLING" - Section of the privacy policy about
-	// users' right to know about information selling.
-	//   "RIGHT_TO_KNOW_ABOUT_SHARING" - Section of the privacy policy about
-	// users' right to know about information sharing.
-	//   "RIGHT_TO_OPT_OUT_FROM_SELLING" - Section of the privacy policy
-	// about users' right to opt out from information selling.
-	//   "RIGHT_TO_OPT_OUT_FROM_SHARING" - Section of the privacy policy
-	// about users' right to opt out from information sharing.
-	//   "METHOD_TO_OPT_OUT_FROM_SELLING_OR_SHARING" - Section of the
-	// privacy policy about the method to opt out from selling or sharing.
-	//   "AUTHORIZED_AGENT" - Section of the privacy policy about the
-	// authorized agent designated by user.
-	//   "CCPA_CPRA_REFERENCE" - Section of the privacy policy about the
-	// mentions of the CCPA or CPRA.
-	//   "DATA_PROTECTION_OFFICER" - Section of the privacy policy about the
-	// mentions of data protection officer (DPO).
-	//   "DATA_CONTROLLER" - Section of the privacy policy about the
-	// mentions of a data controller.
-	//   "DO_NOT_SELL" - Section of the privacy policy stating that the
-	// company does not sell data in general (or as defined by the CCPA),
-	// without exceptions.
-	//   "GDPR_REFERENCE" - Section of the privacy policy about the mentions
-	// of the GDPR (General Data Protection Regulation).
-	//   "LAWFUL_LEGAL_BASIS" - Section of the privacy policy about
-	// lawful/legal basis for data processing.
-	//   "PRIVACY_SHIELD" - Section of the privacy policy about the Privacy
-	// Shielf framework.
-	//   "RIGHT_TO_LODGE_A_COMPLAINT" - Section of the privacy policy about
-	// the right to lodge a complaint with a supervisory authority.
-	//   "TRANSFER_MECHANISMS" - Section of the privacy policy about
-	// transfer mechanisms of data from the EU to third countries
-	//   "NO_CHILDREN_DATA_COLLECTION" - Section of the privacy policy
-	// stating that the company does not collect data from children.
-	//   "NO_CHILDREN_DATA_SHARING" - Section of the privacy policy stating
-	// that the company does not share data from children.
-	//   "CHILDREN_INFORMATION_PUBLICITY" - Section of the privacy policy
-	// stating whether the app allows children to make their personal
-	// information publicly available.
-	//   "PARENTS_METHOD_OF_INFORMATION_DELETION" - Section of the privacy
-	// policy stating to parents/caregivers/guardians how they can request
-	// the deletion of their child's personal information.
-	//   "PARENTS_METHOD_TO_INFORMATION_REVIEW" - Section of the privacy
-	// policy stating to parents/guardians/caregivers how they can review
-	// their child's personal information.
-	//   "PARENTS_METHOD_TO_STOP_FURTHER_INFORMATION_COLLECTION_USE" -
-	// Section of the privacy policy stating to parents/caregivers/guardians
-	// how they can stop the further collection or use of their child's
-	// personal information.
-	//   "PARENTS_RIGHT_TO_INFORMATION_DELETION" - Section of the privacy
-	// policy stating that a parent/caregiver/guardian has the right to
-	// request the deletion of their child's personal. information.
-	//   "PARENTS_RIGHT_TO_INFORMATION_REVIEW" - Section of the privacy
-	// policy stating to parents/guardians/caregivers that they have a right
-	// to review their child's personal information.
-	//   "PARENTS_RIGHT_TO_STOP_FURTHER_INFORMATION_COLLECTION_USE" -
-	// Section of the privacy policy stating to parents/caregivers/guardians
-	// that they have the right to stop the further collection or use of
-	// their child's personal information.
-	SectionType string `json:"sectionType,omitempty"`
-
-	// StartOffset: Byte offsets for the start of the section inside the
-	// full text.
-	StartOffset int64 `json:"startOffset,omitempty,string"`
-
-	// TextContent: Actual text content in the section. This makes it much
-	// easier to consume the information. NOTE: This field might contain
-	// HTML and does not guarantee a SafeHtml security contract
-	// go/safehtmltypecontracts#safehtml.
-	TextContent string `json:"textContent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndOffset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndOffset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PolicySectionAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicySectionAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *PolicySectionAnnotation) UnmarshalJSON(data []byte) error {
-	type NoMethod PolicySectionAnnotation
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
-}
-
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -996,6 +2227,343 @@ func (s *WaitOperationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WaitOperationRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "checks.accounts.apps.get":
+
+type AccountsAppsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an app.
+//
+// - name: Resource name of the app. Example: `accounts/123/apps/456`.
+func (r *AccountsAppsService) Get(name string) *AccountsAppsGetCall {
+	c := &AccountsAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAppsGetCall) Fields(s ...googleapi.Field) *AccountsAppsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAppsGetCall) IfNoneMatch(entityTag string) *AccountsAppsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAppsGetCall) Context(ctx context.Context) *AccountsAppsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAppsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAppsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "checks.accounts.apps.get" call.
+// Exactly one of *GoogleChecksAccountV1alphaApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleChecksAccountV1alphaApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsAppsGetCall) Do(opts ...googleapi.CallOption) (*GoogleChecksAccountV1alphaApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChecksAccountV1alphaApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an app.",
+	//   "flatPath": "v1alpha/accounts/{accountsId}/apps/{appsId}",
+	//   "httpMethod": "GET",
+	//   "id": "checks.accounts.apps.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the app. Example: `accounts/123/apps/456`",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleChecksAccountV1alphaApp"
+	//   }
+	// }
+
+}
+
+// method id "checks.accounts.apps.list":
+
+type AccountsAppsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the apps under the given account.
+//
+// - parent: The parent account. Example: `accounts/123`.
+func (r *AccountsAppsService) List(parent string) *AccountsAppsListCall {
+	c := &AccountsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. The server may further constrain the maximum
+// number of results returned in a single page. If unspecified, the
+// server will decide the number of results to be returned.
+func (c *AccountsAppsListCall) PageSize(pageSize int64) *AccountsAppsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous `ListApps` call. Provide this to retrieve
+// the subsequent page.
+func (c *AccountsAppsListCall) PageToken(pageToken string) *AccountsAppsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAppsListCall) Fields(s ...googleapi.Field) *AccountsAppsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAppsListCall) IfNoneMatch(entityTag string) *AccountsAppsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAppsListCall) Context(ctx context.Context) *AccountsAppsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAppsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "checks.accounts.apps.list" call.
+// Exactly one of *GoogleChecksAccountV1alphaListAppsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleChecksAccountV1alphaListAppsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleChecksAccountV1alphaListAppsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChecksAccountV1alphaListAppsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the apps under the given account.",
+	//   "flatPath": "v1alpha/accounts/{accountsId}/apps",
+	//   "httpMethod": "GET",
+	//   "id": "checks.accounts.apps.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return. The server may further constrain the maximum number of results returned in a single page. If unspecified, the server will decide the number of results to be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token received from a previous `ListApps` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent account. Example: `accounts/123`",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/apps",
+	//   "response": {
+	//     "$ref": "GoogleChecksAccountV1alphaListAppsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsAppsListCall) Pages(ctx context.Context, f func(*GoogleChecksAccountV1alphaListAppsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "checks.accounts.apps.operations.cancel":
@@ -1774,402 +3342,9 @@ func (c *AccountsAppsOperationsWaitCall) Do(opts ...googleapi.CallOption) (*Oper
 
 }
 
-// method id "checks.privacypolicy.analyze":
+// method id "checks.accounts.apps.reports.get":
 
-type PrivacypolicyAnalyzeCall struct {
-	s                           *Service
-	analyzeprivacypolicyrequest *AnalyzePrivacyPolicyRequest
-	urlParams_                  gensupport.URLParams
-	ctx_                        context.Context
-	header_                     http.Header
-}
-
-// Analyze: Analyzes the privacy policy of the given policy URL or
-// content.
-func (r *PrivacypolicyService) Analyze(analyzeprivacypolicyrequest *AnalyzePrivacyPolicyRequest) *PrivacypolicyAnalyzeCall {
-	c := &PrivacypolicyAnalyzeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.analyzeprivacypolicyrequest = analyzeprivacypolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PrivacypolicyAnalyzeCall) Fields(s ...googleapi.Field) *PrivacypolicyAnalyzeCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PrivacypolicyAnalyzeCall) Context(ctx context.Context) *PrivacypolicyAnalyzeCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PrivacypolicyAnalyzeCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PrivacypolicyAnalyzeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyzeprivacypolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/privacypolicy:analyze")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "checks.privacypolicy.analyze" call.
-// Exactly one of *AnalyzePrivacyPolicyResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *AnalyzePrivacyPolicyResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PrivacypolicyAnalyzeCall) Do(opts ...googleapi.CallOption) (*AnalyzePrivacyPolicyResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &AnalyzePrivacyPolicyResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Analyzes the privacy policy of the given policy URL or content.",
-	//   "flatPath": "v1alpha/privacypolicy:analyze",
-	//   "httpMethod": "POST",
-	//   "id": "checks.privacypolicy.analyze",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1alpha/privacypolicy:analyze",
-	//   "request": {
-	//     "$ref": "AnalyzePrivacyPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "AnalyzePrivacyPolicyResponse"
-	//   }
-	// }
-
-}
-
-// method id "checks.projects.privacypolicy.operations.cancel":
-
-type ProjectsPrivacypolicyOperationsCancelCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
-// `Code.CANCELLED`.
-//
-// - name: The name of the operation resource to be cancelled.
-func (r *ProjectsPrivacypolicyOperationsService) Cancel(name string) *ProjectsPrivacypolicyOperationsCancelCall {
-	c := &ProjectsPrivacypolicyOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsPrivacypolicyOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsPrivacypolicyOperationsCancelCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsPrivacypolicyOperationsCancelCall) Context(ctx context.Context) *ProjectsPrivacypolicyOperationsCancelCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsPrivacypolicyOperationsCancelCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsPrivacypolicyOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:cancel")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "checks.projects.privacypolicy.operations.cancel" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsPrivacypolicyOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacypolicy/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "checks.projects.privacypolicy.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/privacypolicy/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:cancel",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
-}
-
-// method id "checks.projects.privacypolicy.operations.delete":
-
-type ProjectsPrivacypolicyOperationsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns `google.rpc.Code.UNIMPLEMENTED`.
-//
-// - name: The name of the operation resource to be deleted.
-func (r *ProjectsPrivacypolicyOperationsService) Delete(name string) *ProjectsPrivacypolicyOperationsDeleteCall {
-	c := &ProjectsPrivacypolicyOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsPrivacypolicyOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsPrivacypolicyOperationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsPrivacypolicyOperationsDeleteCall) Context(ctx context.Context) *ProjectsPrivacypolicyOperationsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsPrivacypolicyOperationsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsPrivacypolicyOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "checks.projects.privacypolicy.operations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsPrivacypolicyOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacypolicy/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "checks.projects.privacypolicy.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/privacypolicy/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
-}
-
-// method id "checks.projects.privacypolicy.operations.get":
-
-type ProjectsPrivacypolicyOperationsGetCall struct {
+type AccountsAppsReportsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -2178,21 +3353,32 @@ type ProjectsPrivacypolicyOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets a report. By default, only the name and results_uri fields
+// are returned. You can include other fields by listing them in the
+// `fields` URL query parameter. For example, `?fields=name,checks` will
+// return the name and checks fields.
 //
-// - name: The name of the operation resource.
-func (r *ProjectsPrivacypolicyOperationsService) Get(name string) *ProjectsPrivacypolicyOperationsGetCall {
-	c := &ProjectsPrivacypolicyOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+//   - name: Resource name of the report. Example:
+//     `accounts/123/apps/456/reports/789`.
+func (r *AccountsAppsReportsService) Get(name string) *AccountsAppsReportsGetCall {
+	c := &AccountsAppsReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ChecksFilter sets the optional parameter "checksFilter": An AIP-160
+// (https://google.aip.dev/160) filter string to filter checks within
+// the report. Only checks that match the filter string are included in
+// the response. Example: `state = FAILED`
+func (c *AccountsAppsReportsGetCall) ChecksFilter(checksFilter string) *AccountsAppsReportsGetCall {
+	c.urlParams_.Set("checksFilter", checksFilter)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsPrivacypolicyOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsPrivacypolicyOperationsGetCall {
+func (c *AccountsAppsReportsGetCall) Fields(s ...googleapi.Field) *AccountsAppsReportsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2202,7 +3388,7 @@ func (c *ProjectsPrivacypolicyOperationsGetCall) Fields(s ...googleapi.Field) *P
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsPrivacypolicyOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsPrivacypolicyOperationsGetCall {
+func (c *AccountsAppsReportsGetCall) IfNoneMatch(entityTag string) *AccountsAppsReportsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2210,21 +3396,21 @@ func (c *ProjectsPrivacypolicyOperationsGetCall) IfNoneMatch(entityTag string) *
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsPrivacypolicyOperationsGetCall) Context(ctx context.Context) *ProjectsPrivacypolicyOperationsGetCall {
+func (c *AccountsAppsReportsGetCall) Context(ctx context.Context) *AccountsAppsReportsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsPrivacypolicyOperationsGetCall) Header() http.Header {
+func (c *AccountsAppsReportsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsPrivacypolicyOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *AccountsAppsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -2250,14 +3436,14 @@ func (c *ProjectsPrivacypolicyOperationsGetCall) doRequest(alt string) (*http.Re
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "checks.projects.privacypolicy.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsPrivacypolicyOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+// Do executes the "checks.accounts.apps.reports.get" call.
+// Exactly one of *GoogleChecksReportV1alphaReport or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleChecksReportV1alphaReport.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsAppsReportsGetCall) Do(opts ...googleapi.CallOption) (*GoogleChecksReportV1alphaReport, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2276,7 +3462,7 @@ func (c *ProjectsPrivacypolicyOperationsGetCall) Do(opts ...googleapi.CallOption
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Operation{
+	ret := &GoogleChecksReportV1alphaReport{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2288,69 +3474,90 @@ func (c *ProjectsPrivacypolicyOperationsGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacypolicy/operations/{operationsId}",
+	//   "description": "Gets a report. By default, only the name and results_uri fields are returned. You can include other fields by listing them in the `fields` URL query parameter. For example, `?fields=name,checks` will return the name and checks fields.",
+	//   "flatPath": "v1alpha/accounts/{accountsId}/apps/{appsId}/reports/{reportsId}",
 	//   "httpMethod": "GET",
-	//   "id": "checks.projects.privacypolicy.operations.get",
+	//   "id": "checks.accounts.apps.reports.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "checksFilter": {
+	//       "description": "Optional. An [AIP-160](https://google.aip.dev/160) filter string to filter checks within the report. Only checks that match the filter string are included in the response. Example: `state = FAILED`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
-	//       "description": "The name of the operation resource.",
+	//       "description": "Required. Resource name of the report. Example: `accounts/123/apps/456/reports/789`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/privacypolicy/operations/[^/]+$",
+	//       "pattern": "^accounts/[^/]+/apps/[^/]+/reports/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
-	//     "$ref": "Operation"
+	//     "$ref": "GoogleChecksReportV1alphaReport"
 	//   }
 	// }
 
 }
 
-// method id "checks.projects.privacypolicy.operations.list":
+// method id "checks.accounts.apps.reports.list":
 
-type ProjectsPrivacypolicyOperationsListCall struct {
+type AccountsAppsReportsListCall struct {
 	s            *Service
-	name         string
+	parent       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists reports for the specified app. By default, only the name
+// and results_uri fields are returned. You can include other fields by
+// listing them in the `fields` URL query parameter. For example,
+// `?fields=reports(name,checks)` will return the name and checks
+// fields.
 //
-// - name: The name of the operation's parent resource.
-func (r *ProjectsPrivacypolicyOperationsService) List(name string) *ProjectsPrivacypolicyOperationsListCall {
-	c := &ProjectsPrivacypolicyOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+// - parent: Resource name of the app. Example: `accounts/123/apps/456`.
+func (r *AccountsAppsReportsService) List(parent string) *AccountsAppsReportsListCall {
+	c := &AccountsAppsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
-func (c *ProjectsPrivacypolicyOperationsListCall) Filter(filter string) *ProjectsPrivacypolicyOperationsListCall {
+// ChecksFilter sets the optional parameter "checksFilter": An AIP-160
+// (https://google.aip.dev/160) filter string to filter checks within
+// reports. Only checks that match the filter string are included in the
+// response. Example: `state = FAILED`
+func (c *AccountsAppsReportsListCall) ChecksFilter(checksFilter string) *AccountsAppsReportsListCall {
+	c.urlParams_.Set("checksFilter", checksFilter)
+	return c
+}
+
+// Filter sets the optional parameter "filter": An AIP-160
+// (https://google.aip.dev/160) filter string to filter reports.
+// Example: `appBundle.releaseType = PRE_RELEASE`
+func (c *AccountsAppsReportsListCall) Filter(filter string) *AccountsAppsReportsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
-func (c *ProjectsPrivacypolicyOperationsListCall) PageSize(pageSize int64) *ProjectsPrivacypolicyOperationsListCall {
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of reports to return. If unspecified, at most 10 reports will be
+// returned. The maximum value is 50; values above 50 will be coerced to
+// 50.
+func (c *AccountsAppsReportsListCall) PageSize(pageSize int64) *AccountsAppsReportsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
-func (c *ProjectsPrivacypolicyOperationsListCall) PageToken(pageToken string) *ProjectsPrivacypolicyOperationsListCall {
+// PageToken sets the optional parameter "pageToken": A page token
+// received from a previous `ListReports` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListReports` must match the call that provided the page token.
+func (c *AccountsAppsReportsListCall) PageToken(pageToken string) *AccountsAppsReportsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -2358,7 +3565,7 @@ func (c *ProjectsPrivacypolicyOperationsListCall) PageToken(pageToken string) *P
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsPrivacypolicyOperationsListCall) Fields(s ...googleapi.Field) *ProjectsPrivacypolicyOperationsListCall {
+func (c *AccountsAppsReportsListCall) Fields(s ...googleapi.Field) *AccountsAppsReportsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2368,7 +3575,7 @@ func (c *ProjectsPrivacypolicyOperationsListCall) Fields(s ...googleapi.Field) *
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsPrivacypolicyOperationsListCall) IfNoneMatch(entityTag string) *ProjectsPrivacypolicyOperationsListCall {
+func (c *AccountsAppsReportsListCall) IfNoneMatch(entityTag string) *AccountsAppsReportsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2376,21 +3583,21 @@ func (c *ProjectsPrivacypolicyOperationsListCall) IfNoneMatch(entityTag string) 
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsPrivacypolicyOperationsListCall) Context(ctx context.Context) *ProjectsPrivacypolicyOperationsListCall {
+func (c *AccountsAppsReportsListCall) Context(ctx context.Context) *AccountsAppsReportsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsPrivacypolicyOperationsListCall) Header() http.Header {
+func (c *AccountsAppsReportsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsPrivacypolicyOperationsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *AccountsAppsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -2403,7 +3610,7 @@ func (c *ProjectsPrivacypolicyOperationsListCall) doRequest(alt string) (*http.R
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}/privacypolicy/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/reports")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2411,19 +3618,21 @@ func (c *ProjectsPrivacypolicyOperationsListCall) doRequest(alt string) (*http.R
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "checks.projects.privacypolicy.operations.list" call.
-// Exactly one of *ListOperationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListOperationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsPrivacypolicyOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
+// Do executes the "checks.accounts.apps.reports.list" call.
+// Exactly one of *GoogleChecksReportV1alphaListReportsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleChecksReportV1alphaListReportsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsAppsReportsListCall) Do(opts ...googleapi.CallOption) (*GoogleChecksReportV1alphaListReportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2442,7 +3651,7 @@ func (c *ProjectsPrivacypolicyOperationsListCall) Do(opts ...googleapi.CallOptio
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &ListOperationsResponse{
+	ret := &GoogleChecksReportV1alphaListReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2454,41 +3663,46 @@ func (c *ProjectsPrivacypolicyOperationsListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacypolicy/operations",
+	//   "description": "Lists reports for the specified app. By default, only the name and results_uri fields are returned. You can include other fields by listing them in the `fields` URL query parameter. For example, `?fields=reports(name,checks)` will return the name and checks fields.",
+	//   "flatPath": "v1alpha/accounts/{accountsId}/apps/{appsId}/reports",
 	//   "httpMethod": "GET",
-	//   "id": "checks.projects.privacypolicy.operations.list",
+	//   "id": "checks.accounts.apps.reports.list",
 	//   "parameterOrder": [
-	//     "name"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
+	//     "checksFilter": {
+	//       "description": "Optional. An [AIP-160](https://google.aip.dev/160) filter string to filter checks within reports. Only checks that match the filter string are included in the response. Example: `state = FAILED`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
+	//     "filter": {
+	//       "description": "Optional. An [AIP-160](https://google.aip.dev/160) filter string to filter reports. Example: `appBundle.releaseType = PRE_RELEASE`",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "Optional. The maximum number of reports to return. If unspecified, at most 10 reports will be returned. The maximum value is 50; values above 50 will be coerced to 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "Optional. A page token received from a previous `ListReports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListReports` must match the call that provided the page token.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the app. Example: `accounts/123/apps/456`",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/apps/[^/]+$",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha/{+name}/privacypolicy/operations",
+	//   "path": "v1alpha/{+parent}/reports",
 	//   "response": {
-	//     "$ref": "ListOperationsResponse"
+	//     "$ref": "GoogleChecksReportV1alphaListReportsResponse"
 	//   }
 	// }
 
@@ -2497,7 +3711,7 @@ func (c *ProjectsPrivacypolicyOperationsListCall) Do(opts ...googleapi.CallOptio
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsPrivacypolicyOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+func (c *AccountsAppsReportsListCall) Pages(ctx context.Context, f func(*GoogleChecksReportV1alphaListReportsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -2515,47 +3729,85 @@ func (c *ProjectsPrivacypolicyOperationsListCall) Pages(ctx context.Context, f f
 	}
 }
 
-// method id "checks.projects.privacypolicy.operations.wait":
+// method id "checks.media.upload":
 
-type ProjectsPrivacypolicyOperationsWaitCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+type MediaUploadCall struct {
+	s                                             *Service
+	parent                                        string
+	googlechecksreportv1alphaanalyzeuploadrequest *GoogleChecksReportV1alphaAnalyzeUploadRequest
+	urlParams_                                    gensupport.URLParams
+	mediaInfo_                                    *gensupport.MediaInfo
+	ctx_                                          context.Context
+	header_                                       http.Header
 }
 
-// Wait: Waits until the specified long-running operation is done or
-// reaches at most a specified timeout, returning the latest state. If
-// the operation is already done, the latest state is immediately
-// returned. If the timeout specified is greater than the default
-// HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does
-// not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
-// Note that this method is on a best-effort basis. It may return the
-// latest state before the specified timeout (including immediately),
-// meaning even an immediate response is no guarantee that the operation
-// is done.
+// Upload: Analyzes the uploaded app bundle and returns a
+// google.longrunning.Operation containing the generated Report. ##
+// Example (upload only) Send a regular POST request with the header
+// `X-Goog-Upload-Protocol: raw`. ``` POST
+// https://checks.googleapis.com/upload/v1alpha/{parent=accounts/*/apps/*}/reports:analyzeUpload
+// HTTP/1.1 X-Goog-Upload-Protocol: raw Content-Length: Content-Type:
+// application/octet-stream ``` ## Example (upload with metadata) Send a
+// multipart POST request where the first body part contains the
+// metadata JSON and the second body part contains the binary upload.
+// Include the header `X-Goog-Upload-Protocol: multipart`. ``` POST
+// https://checks.googleapis.com/upload/v1alpha/{parent=accounts/*/apps/*}/reports:analyzeUpload
+// HTTP/1.1 X-Goog-Upload-Protocol: multipart Content-Length: ?
+// Content-Type: multipart/related; boundary=BOUNDARY --BOUNDARY
+// Content-Type: application/json
+// {"code_reference_id":"db5bcc20f94055fb5bc08cbb9b0e7a5530308786"}
+// --BOUNDARY --BOUNDARY-- ``` *Note:* Metadata-only requests are not
+// supported.
 //
-// - name: The name of the operation resource to wait on.
-func (r *ProjectsPrivacypolicyOperationsService) Wait(name string) *ProjectsPrivacypolicyOperationsWaitCall {
-	c := &ProjectsPrivacypolicyOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+// - parent: Resource name of the app. Example: `accounts/123/apps/456`.
+func (r *MediaService) Upload(parent string, googlechecksreportv1alphaanalyzeuploadrequest *GoogleChecksReportV1alphaAnalyzeUploadRequest) *MediaUploadCall {
+	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlechecksreportv1alphaanalyzeuploadrequest = googlechecksreportv1alphaanalyzeuploadrequest
 	return c
 }
 
-// Timeout sets the optional parameter "timeout": The maximum duration
-// to wait before timing out. If left blank, the wait will be at most
-// the time permitted by the underlying HTTP/RPC protocol. If RPC
-// context deadline is also specified, the shorter one will be used.
-func (c *ProjectsPrivacypolicyOperationsWaitCall) Timeout(timeout string) *ProjectsPrivacypolicyOperationsWaitCall {
-	c.urlParams_.Set("timeout", timeout)
+// Media specifies the media to upload in one or more chunks. The chunk
+// size may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
+// upload request will be determined by sniffing the contents of r,
+// unless a MediaOption generated by googleapi.ContentType is
+// supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *MediaUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *MediaUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType
+// identifies the MIME media type of the upload, such as "image/png". If
+// mediaType is "", it will be auto-detected. The provided ctx will
+// supersede any context previously provided to the Context method.
+func (c *MediaUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *MediaUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
+func (c *MediaUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *MediaUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsPrivacypolicyOperationsWaitCall) Fields(s ...googleapi.Field) *ProjectsPrivacypolicyOperationsWaitCall {
+func (c *MediaUploadCall) Fields(s ...googleapi.Field) *MediaUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2563,21 +3815,23 @@ func (c *ProjectsPrivacypolicyOperationsWaitCall) Fields(s ...googleapi.Field) *
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsPrivacypolicyOperationsWaitCall) Context(ctx context.Context) *ProjectsPrivacypolicyOperationsWaitCall {
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *MediaUploadCall) Context(ctx context.Context) *MediaUploadCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsPrivacypolicyOperationsWaitCall) Header() http.Header {
+func (c *MediaUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsPrivacypolicyOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
+func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -2585,29 +3839,45 @@ func (c *ProjectsPrivacypolicyOperationsWaitCall) doRequest(alt string) (*http.R
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechecksreportv1alphaanalyzeuploadrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:wait")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/reports:analyzeUpload")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1alpha/{+parent}/reports:analyzeUpload")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders.Set("Content-Type", "application/json")
+	}
+	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	req.GetBody = getBody
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "checks.projects.privacypolicy.operations.wait" call.
+// Do executes the "checks.media.upload" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsPrivacypolicyOperationsWaitCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2626,6 +3896,23 @@ func (c *ProjectsPrivacypolicyOperationsWaitCall) Do(opts ...googleapi.CallOptio
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
@@ -2638,32 +3925,42 @@ func (c *ProjectsPrivacypolicyOperationsWaitCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Waits until the specified long-running operation is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/privacypolicy/operations/{operationsId}:wait",
+	//   "description": "Analyzes the uploaded app bundle and returns a google.longrunning.Operation containing the generated Report. ## Example (upload only) Send a regular POST request with the header `X-Goog-Upload-Protocol: raw`. ``` POST https://checks.googleapis.com/upload/v1alpha/{parent=accounts/*/apps/*}/reports:analyzeUpload HTTP/1.1 X-Goog-Upload-Protocol: raw Content-Length: Content-Type: application/octet-stream ``` ## Example (upload with metadata) Send a multipart POST request where the first body part contains the metadata JSON and the second body part contains the binary upload. Include the header `X-Goog-Upload-Protocol: multipart`. ``` POST https://checks.googleapis.com/upload/v1alpha/{parent=accounts/*/apps/*}/reports:analyzeUpload HTTP/1.1 X-Goog-Upload-Protocol: multipart Content-Length: ? Content-Type: multipart/related; boundary=BOUNDARY --BOUNDARY Content-Type: application/json {\"code_reference_id\":\"db5bcc20f94055fb5bc08cbb9b0e7a5530308786\"} --BOUNDARY --BOUNDARY-- ``` *Note:* Metadata-only requests are not supported. ",
+	//   "flatPath": "v1alpha/accounts/{accountsId}/apps/{appsId}/reports:analyzeUpload",
 	//   "httpMethod": "POST",
-	//   "id": "checks.projects.privacypolicy.operations.wait",
+	//   "id": "checks.media.upload",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "*/*"
+	//     ],
+	//     "maxSize": "10737418240",
+	//     "protocols": {
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/v1alpha/{+parent}/reports:analyzeUpload"
+	//       }
+	//     }
+	//   },
 	//   "parameterOrder": [
-	//     "name"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to wait on.",
+	//     "parent": {
+	//       "description": "Required. Resource name of the app. Example: `accounts/123/apps/456`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/privacypolicy/operations/[^/]+$",
+	//       "pattern": "^accounts/[^/]+/apps/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "timeout": {
-	//       "description": "The maximum duration to wait before timing out. If left blank, the wait will be at most the time permitted by the underlying HTTP/RPC protocol. If RPC context deadline is also specified, the shorter one will be used.",
-	//       "format": "google-duration",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha/{+name}:wait",
+	//   "path": "v1alpha/{+parent}/reports:analyzeUpload",
+	//   "request": {
+	//     "$ref": "GoogleChecksReportV1alphaAnalyzeUploadRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   }
+	//   },
+	//   "supportsMediaUpload": true
 	// }
 
 }

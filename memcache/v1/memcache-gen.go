@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/memorystore/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	memcacheService, err := memcache.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	memcacheService, err := memcache.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	memcacheService, err := memcache.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package memcache // import "google.golang.org/api/memcache/v1"
 
 import (
@@ -480,6 +493,43 @@ type GoogleCloudMemcacheV1OperationMetadata struct {
 
 func (s *GoogleCloudMemcacheV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMemcacheV1OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMemcacheV1UpgradeInstanceRequest: Request for
+// UpgradeInstance.
+type GoogleCloudMemcacheV1UpgradeInstanceRequest struct {
+	// MemcacheVersion: Required. Specifies the target version of memcached
+	// engine to upgrade to.
+	//
+	// Possible values:
+	//   "MEMCACHE_VERSION_UNSPECIFIED" - Memcache version is not specified
+	// by customer
+	//   "MEMCACHE_1_5" - Memcached 1.5 version.
+	//   "MEMCACHE_1_6_15" - Memcached 1.6.15 version.
+	MemcacheVersion string `json:"memcacheVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MemcacheVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MemcacheVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMemcacheV1UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMemcacheV1UpgradeInstanceRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1021,6 +1071,7 @@ type Instance struct {
 	//   "MEMCACHE_VERSION_UNSPECIFIED" - Memcache version is not specified
 	// by customer
 	//   "MEMCACHE_1_5" - Memcached 1.5 version.
+	//   "MEMCACHE_1_6_15" - Memcached 1.6.15 version.
 	MemcacheVersion string `json:"memcacheVersion,omitempty"`
 
 	// Name: Required. Unique name of the resource in this scope including
@@ -1058,6 +1109,8 @@ type Instance struct {
 	//   "DELETING" - Memcached instance is being deleted.
 	//   "PERFORMING_MAINTENANCE" - Memcached instance is going through
 	// maintenance, e.g. data plane rollout.
+	//   "MEMCACHE_VERSION_UPGRADING" - Memcached instance is undergoing
+	// memcached engine version upgrade.
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. The time the instance was updated.
@@ -1501,6 +1554,20 @@ type Node struct {
 	// Host: Output only. Hostname or IP address of the Memcached node used
 	// by the clients to connect to the Memcached server on this node.
 	Host string `json:"host,omitempty"`
+
+	// MemcacheFullVersion: Output only. The full version of memcached
+	// server running on this node. e.g. - memcached-1.5.16
+	MemcacheFullVersion string `json:"memcacheFullVersion,omitempty"`
+
+	// MemcacheVersion: Output only. Major version of memcached server
+	// running on this node, e.g. MEMCACHE_1_5
+	//
+	// Possible values:
+	//   "MEMCACHE_VERSION_UNSPECIFIED" - Memcache version is not specified
+	// by customer
+	//   "MEMCACHE_1_5" - Memcached 1.5 version.
+	//   "MEMCACHE_1_6_15" - Memcached 1.6.15 version.
+	MemcacheVersion string `json:"memcacheVersion,omitempty"`
 
 	// NodeId: Output only. Identifier of the Memcached node. The node id
 	// does not include project or location like the Memcached instance
@@ -3645,6 +3712,151 @@ func (c *ProjectsLocationsInstancesUpdateParametersCall) Do(opts ...googleapi.Ca
 	//   "path": "v1/{+name}:updateParameters",
 	//   "request": {
 	//     "$ref": "UpdateParametersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "memcache.projects.locations.instances.upgrade":
+
+type ProjectsLocationsInstancesUpgradeCall struct {
+	s                                           *Service
+	name                                        string
+	googlecloudmemcachev1upgradeinstancerequest *GoogleCloudMemcacheV1UpgradeInstanceRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Upgrade: Upgrades the Memcache instance to a newer memcached engine
+// version specified in the request.
+//
+//   - name: Memcache instance resource name using the form:
+//     `projects/{project}/locations/{location}/instances/{instance}`
+//     where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsInstancesService) Upgrade(name string, googlecloudmemcachev1upgradeinstancerequest *GoogleCloudMemcacheV1UpgradeInstanceRequest) *ProjectsLocationsInstancesUpgradeCall {
+	c := &ProjectsLocationsInstancesUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudmemcachev1upgradeinstancerequest = googlecloudmemcachev1upgradeinstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesUpgradeCall) Context(ctx context.Context) *ProjectsLocationsInstancesUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmemcachev1upgradeinstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:upgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "memcache.projects.locations.instances.upgrade" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upgrades the Memcache instance to a newer memcached engine version specified in the request.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:upgrade",
+	//   "httpMethod": "POST",
+	//   "id": "memcache.projects.locations.instances.upgrade",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Memcache instance resource name using the form: `projects/{project}/locations/{location}/instances/{instance}` where `location_id` refers to a GCP region.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:upgrade",
+	//   "request": {
+	//     "$ref": "GoogleCloudMemcacheV1UpgradeInstanceRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

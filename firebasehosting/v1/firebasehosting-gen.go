@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/hosting/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,31 @@
 //	ctx := context.Background()
 //	firebasehostingService, err := firebasehosting.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseScope))
+//
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package firebasehosting // import "google.golang.org/api/firebasehosting/v1"
 
 import (
@@ -79,8 +97,24 @@ const apiVersion = "v1"
 const basePath = "https://firebasehosting.googleapis.com/"
 const mtlsBasePath = "https://firebasehosting.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// View and administer all your Firebase data and settings
+	FirebaseScope = "https://www.googleapis.com/auth/firebase"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/firebase",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -108,6 +142,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Operations = NewOperationsService(s)
+	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
@@ -117,6 +152,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Operations *OperationsService
+
+	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -135,9 +172,395 @@ type OperationsService struct {
 	s *Service
 }
 
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Sites = NewProjectsSitesService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Sites *ProjectsSitesService
+}
+
+func NewProjectsSitesService(s *Service) *ProjectsSitesService {
+	rs := &ProjectsSitesService{s: s}
+	rs.CustomDomains = NewProjectsSitesCustomDomainsService(s)
+	return rs
+}
+
+type ProjectsSitesService struct {
+	s *Service
+
+	CustomDomains *ProjectsSitesCustomDomainsService
+}
+
+func NewProjectsSitesCustomDomainsService(s *Service) *ProjectsSitesCustomDomainsService {
+	rs := &ProjectsSitesCustomDomainsService{s: s}
+	rs.Operations = NewProjectsSitesCustomDomainsOperationsService(s)
+	return rs
+}
+
+type ProjectsSitesCustomDomainsService struct {
+	s *Service
+
+	Operations *ProjectsSitesCustomDomainsOperationsService
+}
+
+func NewProjectsSitesCustomDomainsOperationsService(s *Service) *ProjectsSitesCustomDomainsOperationsService {
+	rs := &ProjectsSitesCustomDomainsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsSitesCustomDomainsOperationsService struct {
+	s *Service
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CertVerification: A set of ACME challenges you can use to allow
+// Hosting to create an SSL certificate for your domain name before
+// directing traffic to Hosting servers. Use either the DNS or HTTP
+// challenge; it's not necessary to provide both.
+type CertVerification struct {
+	// Dns: Output only. A `TXT` record to add to your DNS records that
+	// confirms your intent to let Hosting create an SSL cert for your
+	// domain name.
+	Dns *DnsUpdates `json:"dns,omitempty"`
+
+	// Http: Output only. A file to add to your existing, non-Hosting
+	// hosting service that confirms your intent to let Hosting create an
+	// SSL cert for your domain name.
+	Http *HttpUpdate `json:"http,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dns") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertVerification) MarshalJSON() ([]byte, error) {
+	type NoMethod CertVerification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomDomainMetadata: Metadata associated with a`CustomDomain`
+// operation.
+type CustomDomainMetadata struct {
+	// CertState: The `CertState` of the domain name's SSL certificate.
+	//
+	// Possible values:
+	//   "CERT_STATE_UNSPECIFIED" - The certificate's state is unspecified.
+	// The message is invalid if this is unspecified.
+	//   "CERT_PREPARING" - The initial state of every certificate,
+	// represents Hosting's intent to create a certificate, before requests
+	// to a Certificate Authority are made.
+	//   "CERT_VALIDATING" - Hosting is validating whether a domain name's
+	// DNS records are in a state that allow certificate creation on its
+	// behalf.
+	//   "CERT_PROPAGATING" - The certificate was recently created, and
+	// needs time to propagate in Hosting's CDN.
+	//   "CERT_ACTIVE" - The certificate is active, providing secure
+	// connections for the domain names it represents.
+	//   "CERT_EXPIRING_SOON" - The certificate is expiring, all domain
+	// names on it will be given new certificates.
+	//   "CERT_EXPIRED" - The certificate has expired. Hosting can no longer
+	// serve secure content on your domain name.
+	CertState string `json:"certState,omitempty"`
+
+	// HostState: The `HostState` of the domain name this `CustomDomain`
+	// refers to.
+	//
+	// Possible values:
+	//   "HOST_STATE_UNSPECIFIED" - Your `CustomDomain`'s host state is
+	// unspecified. The message is invalid if this is unspecified.
+	//   "HOST_UNHOSTED" - Your `CustomDomain`'s domain name isn't
+	// associated with any IP addresses.
+	//   "HOST_UNREACHABLE" - Your `CustomDomain`'s domain name can't be
+	// reached. Hosting services' DNS queries to find your domain name's IP
+	// addresses resulted in errors. See your `CustomDomain`'s `issues`
+	// field for more details.
+	//   "HOST_MISMATCH" - Your `CustomDomain`'s domain name has IP
+	// addresses that don't ultimately resolve to Hosting.
+	//   "HOST_CONFLICT" - Your `CustomDomain`'s domain name has IP
+	// addresses that resolve to both Hosting and other services. To ensure
+	// consistent results, remove `A` and `AAAA` records related to
+	// non-Hosting services.
+	//   "HOST_ACTIVE" - All requests against your `CustomDomain`'s domain
+	// name are served by Hosting. If the `CustomDomain`'s `OwnershipState`
+	// is also `ACTIVE`, Hosting serves your Hosting Site's content on the
+	// domain name.
+	HostState string `json:"hostState,omitempty"`
+
+	// Issues: A list of issues that are currently preventing Hosting from
+	// completing the operation. These are generally DNS-related issues that
+	// Hosting encounters when querying a domain name's records or
+	// attempting to mint an SSL certificate.
+	Issues []*Status `json:"issues,omitempty"`
+
+	// LiveMigrationSteps: A set of DNS record updates and ACME challenges
+	// that allow you to transition domain names to Firebase Hosting with
+	// zero downtime. These updates allow Hosting's to create an SSL
+	// certificate and establish ownership for your custom domain before
+	// Hosting begins serving traffic on it. If your domain name is already
+	// in active use with another provider, add one of the challenges and
+	// make the recommended dns updates. After adding challenges and
+	// adjusting DNS records as necessary, wait for the `ownershipState` to
+	// be `OWNERSHIP_ACTIVE` and the `certState` to be `CERT_ACTIVE` before
+	// sending traffic to Hosting.
+	LiveMigrationSteps []*LiveMigrationStep `json:"liveMigrationSteps,omitempty"`
+
+	// OwnershipState: The `OwnershipState` of the domain name this
+	// `CustomDomain` refers to.
+	//
+	// Possible values:
+	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your `CustomDomain`'s ownership
+	// state is unspecified. This should never happen.
+	//   "OWNERSHIP_MISSING" - Your `CustomDomain`'s domain name has no
+	// Hosting-related ownership records; no Firebase project has permission
+	// to act on the domain name's behalf.
+	//   "OWNERSHIP_UNREACHABLE" - Your `CustomDomain`'s domain name can't
+	// be reached. Hosting services' DNS queries to find your domain name's
+	// ownership records resulted in errors. See your `CustomDomain`'s
+	// `issues` field for more details.
+	//   "OWNERSHIP_MISMATCH" - Your `CustomDomain`'s domain name is owned
+	// by another Firebase project. Remove the conflicting `TXT` records and
+	// replace them with project-specific records for your current Firebase
+	// project.
+	//   "OWNERSHIP_CONFLICT" - Your `CustomDomain`'s domain name has
+	// conflicting `TXT` records that indicate ownership by both your
+	// current Firebase project and another project. Remove the other
+	// project's ownership records to grant the current project ownership.
+	//   "OWNERSHIP_PENDING" - Your `CustomDomain`'s DNS records are
+	// configured correctly. Hosting will transfer ownership of your domain
+	// to this `CustomDomain` within 24 hours.
+	//   "OWNERSHIP_ACTIVE" - Your `CustomDomain`'s domain name has `TXT`
+	// records that grant its project permission to act on its behalf.
+	OwnershipState string `json:"ownershipState,omitempty"`
+
+	// QuickSetupUpdates: A set of DNS record updates that allow Hosting to
+	// serve secure content on your domain name. The record type determines
+	// the update's purpose: - `A` and `AAAA`: Updates your domain name's IP
+	// addresses so that they direct traffic to Hosting servers. - `TXT`:
+	// Updates ownership permissions on your domain name, letting Hosting
+	// know that your custom domain's project has permission to perfrom
+	// actions for that domain name. - `CAA`: Updates your domain name's
+	// list of authorized Certificate Authorities (CAs). Only present if you
+	// have existing `CAA` records that prohibit Hosting's CA from minting
+	// certs for your domain name. These updates include all DNS changes
+	// you'll need to get started with Hosting, but, if made all at once,
+	// can result in a brief period of downtime for your domain name--while
+	// Hosting creates and uploads an SSL cert, for example. If you'd like
+	// to add your domain name to Hosting without downtime, complete the
+	// `liveMigrationSteps` first, before making the remaining updates in
+	// this field.
+	QuickSetupUpdates *DnsUpdates `json:"quickSetupUpdates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertState") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomDomainMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomDomainMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsRecord: DNS records are resource records that define how systems
+// and services should behave when handling requests for a domain name.
+// For example, when you add `A` records to your domain name's DNS
+// records, you're informing other systems (e.g. your users' web
+// browsers) to contact those IPv4 addresses to retrieve resources
+// relevant to your domain name (e.g. your Hosting site files).
+type DnsRecord struct {
+	// DomainName: Output only. The domain name the record pertains to, e.g.
+	// `foo.bar.com.`.
+	DomainName string `json:"domainName,omitempty"`
+
+	// Rdata: Output only. The data of the record. The meaning of the value
+	// depends on record type: - A and AAAA: IP addresses for the domain
+	// name. - CNAME: Another domain to check for records. - TXT: Arbitrary
+	// text strings associated with the domain name. Hosting uses TXT
+	// records to determine a which Firebase Projects have permission to act
+	// on the domain name's behalf. - CAA: The record's flags, tag, and
+	// value, e.g. `0 issue "pki.goog".
+	Rdata string `json:"rdata,omitempty"`
+
+	// RequiredAction: Output only. An enum that indicates the a required
+	// action for this record.
+	//
+	// Possible values:
+	//   "NONE" - No action necessary.
+	//   "ADD" - Add this record to your DNS records.
+	//   "REMOVE" - Remove this record from your DNS records.
+	RequiredAction string `json:"requiredAction,omitempty"`
+
+	// Type: Output only. The record's type, which determines what data the
+	// record contains.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The record's type is unspecified. The message
+	// is invalid if this is unspecified.
+	//   "A" - An `A` record, as defined in [RFC
+	// 1035](https://tools.ietf.org/html/rfc1035). A records determine which
+	// IPv4 addresses a domain name directs traffic towards.
+	//   "CNAME" - A `CNAME` record, as defined in [RFC
+	// 1035](https://tools.ietf.org/html/rfc1035). `CNAME` or Canonical Name
+	// records map a domain name to a different, canonical domain name. If a
+	// `CNAME` record is present, it should be the only record on the domain
+	// name.
+	//   "TXT" - A `TXT` record, as defined in [RFC
+	// 1035](https://tools.ietf.org/html/rfc1035). `TXT` records hold
+	// arbitrary text data on a domain name. Hosting uses `TXT` records to
+	// establish which Firebase Project has permission to act on a domain
+	// name.
+	//   "AAAA" - An AAAA record, as defined in [RFC
+	// 3596](https://tools.ietf.org/html/rfc3596) AAAA records determine
+	// which IPv6 addresses a domain name directs traffic towards.
+	//   "CAA" - A CAA record, as defined in [RFC
+	// 6844](https://tools.ietf.org/html/rfc6844). CAA, or Certificate
+	// Authority Authorization, records determine which Certificate
+	// Authorities (SSL certificate minting organizations) are authorized to
+	// mint a certificate for the domain name. Firebase Hosting uses
+	// `pki.goog` as its primary CA. CAA records cascade. A CAA record on
+	// `foo.com` also applies to `bar.foo.com` unless `bar.foo.com` has its
+	// own set of CAA records. CAA records are optional. If a domain name
+	// and its parents have no CAA records, all CAs are authorized to mint
+	// certificates on its behalf. In general, Hosting only asks you to
+	// modify CAA records when doing so is required to unblock SSL cert
+	// creation.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DomainName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DomainName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsRecord
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsRecordSet: A set of DNS records relevant to the set up and
+// maintenance of a Custom Domain in Firebase Hosting.
+type DnsRecordSet struct {
+	// CheckError: Output only. An error Hosting services encountered when
+	// querying your domain name's DNS records. Note: Hosting ignores
+	// `NXDOMAIN` errors, as those generally just mean that a domain name
+	// hasn't been set up yet.
+	CheckError *Status `json:"checkError,omitempty"`
+
+	// DomainName: Output only. The domain name the record set pertains to.
+	DomainName string `json:"domainName,omitempty"`
+
+	// Records: Output only. Records on the domain.
+	Records []*DnsRecord `json:"records,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckError") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckError") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsRecordSet) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsRecordSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsUpdates: A set of DNS record updates that you should make to allow
+// Hosting to serve secure content in response to requests against your
+// domain name. These updates present the current state of your domain
+// name's DNS records when Hosting last queried them, and the desired
+// set of records that Hosting needs to see before your Custom Domain
+// can be fully active.
+type DnsUpdates struct {
+	// CheckTime: The last time Hosting checked your CustomDomain's DNS
+	// records.
+	CheckTime string `json:"checkTime,omitempty"`
+
+	// Desired: The set of DNS records Hosting needs to serve secure content
+	// on the domain.
+	Desired []*DnsRecordSet `json:"desired,omitempty"`
+
+	// Discovered: The set of DNS records Hosting discovered when inspecting
+	// a domain.
+	Discovered []*DnsRecordSet `json:"discovered,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsUpdates
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -149,6 +572,51 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// HttpUpdate: A file you can add to your existing, non-Hosting hosting
+// service that confirms your intent to allow Hosting's Certificate
+// Authorities to create an SSL certificate for your domain.
+type HttpUpdate struct {
+	// CheckError: Output only. An error encountered during the last
+	// contents check. If null, the check completed successfully.
+	CheckError *Status `json:"checkError,omitempty"`
+
+	// Desired: Output only. A text string to serve at the path.
+	Desired string `json:"desired,omitempty"`
+
+	// Discovered: Output only. Whether Hosting was able to find the
+	// required file contents on the specified path during its last check.
+	Discovered string `json:"discovered,omitempty"`
+
+	// LastCheckTime: Output only. The last time Hosting systems checked for
+	// the file contents.
+	LastCheckTime string `json:"lastCheckTime,omitempty"`
+
+	// Path: Output only. The path to the file.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckError") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckError") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpUpdate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -184,6 +652,78 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LiveMigrationStep: A set of updates including ACME challenges and DNS
+// records that allow Hosting to create an SSL certificate and establish
+// project ownership for your domain name before you direct traffic to
+// Hosting servers. Use these updates to facilitate zero downtime
+// migrations to Hosting from other services. After you've made the
+// recommended updates, check your custom domain's `ownershipState` and
+// `certState`. To avoid downtime, they should be `OWNERSHIP_ACTIVE` and
+// `CERT_ACTIVE`, respectively, before you update your `A` and `AAAA`
+// records.
+type LiveMigrationStep struct {
+	// CertVerification: Output only. A pair of ACME challenges that
+	// Hosting's Certificate Authority (CA) can use to create an SSL cert
+	// for your domain name. Use either the DNS or HTTP challenge; it's not
+	// necessary to provide both.
+	CertVerification *CertVerification `json:"certVerification,omitempty"`
+
+	// DnsUpdates: Output only. DNS updates to facilitate your domain's
+	// zero-downtime migration to Hosting.
+	DnsUpdates *DnsUpdates `json:"dnsUpdates,omitempty"`
+
+	// Issues: Output only. Issues that prevent the current step from
+	// completing.
+	Issues []*Status `json:"issues,omitempty"`
+
+	// State: Output only. The state of the live migration step, indicates
+	// whether you should work to complete the step now, in the future, or
+	// have already completed it.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The step's state is unspecified. The message
+	// is invalid if this is unspecified.
+	//   "PREPARING" - Hosting doesn't have enough information to construct
+	// the step yet. Complete any prior steps and/or resolve this step's
+	// issue to proceed.
+	//   "PENDING" - The step's state is pending. Complete prior steps
+	// before working on a `PENDING` step.
+	//   "INCOMPLETE" - The step is incomplete. You should complete any
+	// `certVerification` or `dnsUpdates` changes to complete it.
+	//   "PROCESSING" - You've done your part to update records and present
+	// challenges as necessary. Hosting is now completing background
+	// processes to complete the step, e.g. minting an SSL cert for your
+	// domain name.
+	//   "COMPLETE" - The step is complete. You've already made the
+	// necessary changes to your domain and/or prior hosting service to
+	// advance to the next step. Once all steps are complete, Hosting is
+	// ready to serve secure content on your domain.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertVerification") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertVerification") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveMigrationStep) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveMigrationStep
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -771,4 +1311,284 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*ListOperationsRe
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "firebasehosting.projects.sites.customDomains.operations.cancel":
+
+type ProjectsSitesCustomDomainsOperationsCancelCall struct {
+	s                      *Service
+	name                   string
+	canceloperationrequest *CancelOperationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: CancelOperation is a part of the
+// google.longrunning.Operations interface, but is not implemented for
+// CustomDomain resources.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsSitesCustomDomainsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsSitesCustomDomainsOperationsCancelCall {
+	c := &ProjectsSitesCustomDomainsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceloperationrequest = canceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsOperationsCancelCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.operations.cancel" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesCustomDomainsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "CancelOperation is a part of the google.longrunning.Operations interface, but is not implemented for CustomDomain resources.",
+	//   "flatPath": "v1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.projects.sites.customDomains.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelOperationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.customDomains.operations.delete":
+
+type ProjectsSitesCustomDomainsOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: DeleteOperation is a part of the
+// google.longrunning.Operations interface, but is not implemented for
+// CustomDomain resources.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *ProjectsSitesCustomDomainsOperationsService) Delete(name string) *ProjectsSitesCustomDomainsOperationsDeleteCall {
+	c := &ProjectsSitesCustomDomainsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsOperationsDeleteCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.operations.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesCustomDomainsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "DeleteOperation is a part of the google.longrunning.Operations interface, but is not implemented for CustomDomain resources.",
+	//   "flatPath": "v1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}/operations/{operationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firebasehosting.projects.sites.customDomains.operations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
 }

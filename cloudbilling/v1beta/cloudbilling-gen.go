@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://cloud.google.com/billing/docs/apis
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	cloudbillingService, err := cloudbilling.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithScopes(cloudbilling.CloudPlatformScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package cloudbilling // import "google.golang.org/api/cloudbilling/v1beta"
 
 import (
@@ -1350,7 +1364,8 @@ type GoogleCloudBillingBillingaccountpricesV1betaFixedDiscount struct {
 	DiscountPercent *Decimal `json:"discountPercent,omitempty"`
 
 	// DiscountScopeType: Type of the fixed discount scope which indicates
-	// the source of the discount. It can have values such as 'sku-group'.
+	// the source of the discount. It can have values such as 'unspecified'
+	// and 'sku-group'.
 	DiscountScopeType string `json:"discountScopeType,omitempty"`
 
 	// FixTime: Time that the fixed discount is anchored to.
@@ -1398,7 +1413,7 @@ type GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount struct {
 
 	// DiscountScopeType: Type of the floating discount scope which
 	// indicates the source of the discount. It can have values such as
-	// 'sku-group'.
+	// 'unspecified' and 'sku-group'.
 	DiscountScopeType string `json:"discountScopeType,omitempty"`
 
 	// SkuGroup: SKU group where the floating discount comes from.
@@ -1447,33 +1462,24 @@ type GoogleCloudBillingBillingaccountpricesV1betaMergedPrice struct {
 // GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice:
 // Encapsulates a price migrated from other SKUs.
 type GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice struct {
-	// SourceDiscountOnTargetPrice: The source SKU floating discount is
-	// applied on the target SKU's default price.
-	SourceDiscountOnTargetPrice *GoogleCloudBillingBillingaccountpricesV1betaSourceDiscountOnTargetPrice `json:"sourceDiscountOnTargetPrice,omitempty"`
-
-	// SourceSku: Source SKU where the discount is migrated from.
+	// SourceSku: Source SKU where the discount is migrated from. Format:
+	// billingAccounts/{billing_account}/skus/{sku}
 	SourceSku string `json:"sourceSku,omitempty"`
 
-	// Type: Type of the migrated price. It can have values such as
-	// 'source-discount-on-target-price'.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "SourceDiscountOnTargetPrice") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "SourceSku") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "SourceDiscountOnTargetPrice") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SourceSku") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1516,8 +1522,8 @@ type GoogleCloudBillingBillingaccountpricesV1betaPriceReason struct {
 	// MigratedPrice: Price migrated from other SKUs.
 	MigratedPrice *GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice `json:"migratedPrice,omitempty"`
 
-	// Type: Type of the price reason. It can values such as
-	// 'default-price', 'fixed-price', 'fixed-discount',
+	// Type: Type of the price reason. It can have values such as
+	// 'unspecified', 'default-price', 'fixed-price', 'fixed-discount',
 	// 'floating-discount', 'migrated-price', 'merged-price',
 	// 'list-price-as-ceiling'.
 	Type string `json:"type,omitempty"`
@@ -1630,39 +1636,6 @@ type GoogleCloudBillingBillingaccountpricesV1betaRateTier struct {
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaRateTier) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaRateTier
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudBillingBillingaccountpricesV1betaSourceDiscountOnTargetPric
-// e: Encapsulates a type of MigratedPrice where the source SKU floating
-// discount is applied on the target SKU's default price.
-type GoogleCloudBillingBillingaccountpricesV1betaSourceDiscountOnTargetPrice struct {
-	// MigratedDiscountPercent: Discount percent of the source SKU that is
-	// applied on the target SKU's default price.
-	MigratedDiscountPercent *Decimal `json:"migratedDiscountPercent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "MigratedDiscountPercent") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MigratedDiscountPercent")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudBillingBillingaccountpricesV1betaSourceDiscountOnTargetPrice) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaSourceDiscountOnTargetPrice
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

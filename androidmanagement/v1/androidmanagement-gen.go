@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/android/management
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	androidmanagementService, err := androidmanagement.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package androidmanagement // import "google.golang.org/api/androidmanagement/v1"
 
 import (
@@ -826,7 +839,8 @@ func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
 
 // ApplicationPolicy: Policy for an individual app. Note: Application
 // availability on a given device cannot be changed using this policy if
-// installAppsDisabled is enabled.
+// installAppsDisabled is enabled. The maximum number of applications
+// that you can specify per enterprise policy is 3,000.
 type ApplicationPolicy struct {
 	// AccessibleTrackIds: List of the app’s track IDs that a device
 	// belonging to the enterprise can access. If the list contains multiple
@@ -911,7 +925,8 @@ type ApplicationPolicy struct {
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
 	// DelegatedScopes: The scopes delegated to the app from Android Device
-	// Policy.
+	// Policy. These provide additional privileges for the applications they
+	// are applied to.
 	//
 	// Possible values:
 	//   "DELEGATED_SCOPE_UNSPECIFIED" - No delegation scope specified.
@@ -948,6 +963,19 @@ type ApplicationPolicy struct {
 	// Supported for fully managed devices and company-owned devices with a
 	// work profile on Android 12 and above. When delegation is supported
 	// and set, SECURITY_LOGS is ignored.
+	//   "CERT_SELECTION" - Grants access to selection of KeyChain
+	// certificates on behalf of requesting apps. Once granted, the
+	// delegated application will start receiving
+	// DelegatedAdminReceiver#onChoosePrivateKeyAlias
+	// (https://developer.android.com/reference/android/app/admin/DelegatedAdminReceiver#onChoosePrivateKeyAlias%28android.content.Context,%20android.content.Intent,%20int,%20android.net.Uri,%20java.lang.String%29).
+	// Allows the delegated application to call grantKeyPairToApp
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#grantKeyPairToApp%28android.content.ComponentName,%20java.lang.String,%20java.lang.String%29)
+	// and revokeKeyPairFromApp
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#revokeKeyPairFromApp%28android.content.ComponentName,%20java.lang.String,%20java.lang.String%29)
+	// methods. There can be at most one app that has this delegation.
+	// choosePrivateKeyRules must be empty and privateKeySelectionEnabled
+	// has no effect if certificate selection is delegated to an
+	// application.
 	DelegatedScopes []string `json:"delegatedScopes,omitempty"`
 
 	// Disabled: Whether the app is disabled. When disabled, the app data is
@@ -968,7 +996,8 @@ type ApplicationPolicy struct {
 	//   "FORCE_INSTALLED" - The app is automatically installed and can't be
 	// removed by the user.
 	//   "BLOCKED" - The app is blocked and can't be installed. If the app
-	// was installed under a previous policy, it will be uninstalled.
+	// was installed under a previous policy, it will be uninstalled. This
+	// also blocks its instant app functionality.
 	//   "AVAILABLE" - The app is available to install.
 	//   "REQUIRED_FOR_SETUP" - The app is automatically installed and can't
 	// be removed by the user and will prevent setup from completion until
@@ -2365,11 +2394,11 @@ func (s *DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
 // DeviceRadioState: Controls for device radio settings.
 type DeviceRadioState struct {
 	// AirplaneModeState: Controls whether airplane mode can be toggled by
-	// the user or not
+	// the user or not.
 	//
 	// Possible values:
 	//   "AIRPLANE_MODE_STATE_UNSPECIFIED" - Unspecified. Defaults to
-	// AIRPLANE_MODE_USER_CHOICE
+	// AIRPLANE_MODE_USER_CHOICE.
 	//   "AIRPLANE_MODE_USER_CHOICE" - The user is allowed to toggle
 	// airplane mode on or off.
 	//   "AIRPLANE_MODE_DISABLED" - Airplane mode is disabled. The user is
@@ -5258,7 +5287,8 @@ type Policy struct {
 	CellBroadcastsConfigDisabled bool `json:"cellBroadcastsConfigDisabled,omitempty"`
 
 	// ChoosePrivateKeyRules: Rules for determining apps' access to private
-	// keys. See ChoosePrivateKeyRule for details.
+	// keys. See ChoosePrivateKeyRule for details. This must be empty if any
+	// application has CERT_SELECTION delegation scope.
 	ChoosePrivateKeyRules []*ChoosePrivateKeyRule `json:"choosePrivateKeyRules,omitempty"`
 
 	// ComplianceRules: Rules declaring which mitigating actions to take
@@ -5570,7 +5600,8 @@ type Policy struct {
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in
 	// ChoosePrivateKeyRules. For devices below Android P, setting this may
-	// leave enterprise keys vulnerable.
+	// leave enterprise keys vulnerable. This value will have no effect if
+	// any application has CERT_SELECTION delegation scope.
 	PrivateKeySelectionEnabled bool `json:"privateKeySelectionEnabled,omitempty"`
 
 	// RecommendedGlobalProxy: The network-independent global HTTP proxy.

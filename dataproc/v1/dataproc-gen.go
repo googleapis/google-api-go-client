@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/dataproc/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,24 +30,26 @@
 //	ctx := context.Background()
 //	dataprocService, err := dataproc.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	dataprocService, err := dataproc.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	dataprocService, err := dataproc.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package dataproc // import "google.golang.org/api/dataproc/v1"
 
 import (
@@ -1444,6 +1457,11 @@ type DiagnoseClusterRequest struct {
 	// performed. Format: projects/{project}/regions/{region}/jobs/{job}
 	Jobs []string `json:"jobs,omitempty"`
 
+	// TarballGcsDir: Optional. (Optional) The output Cloud Storage
+	// directory for the diagnostic tarball. If not specified, a
+	// task-specific directory in the cluster's staging bucket will be used.
+	TarballGcsDir string `json:"tarballGcsDir,omitempty"`
+
 	// YarnApplicationId: Optional. DEPRECATED Specifies the yarn
 	// application on which diagnosis is to be performed.
 	YarnApplicationId string `json:"yarnApplicationId,omitempty"`
@@ -2591,30 +2609,19 @@ func (s *InjectCredentialsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InjectSessionCredentialsRequest: A request to inject credentials to a
-// session.
-type InjectSessionCredentialsRequest struct {
-	// CredentialsCiphertext: Required. The encrypted credentials being
-	// injected in to the session.The client is responsible for encrypting
-	// the credentials in a way that is supported by the session.A wrapped
-	// value is used here so that the actual contents of the encrypted
-	// credentials are not written to audit logs.
-	CredentialsCiphertext string `json:"credentialsCiphertext,omitempty"`
+// InstanceFlexibilityPolicy: Instance flexibility Policy allowing a
+// mixture of VM shapes and provisioning models.
+type InstanceFlexibilityPolicy struct {
+	// InstanceSelectionList: Optional. List of instance selection options
+	// that the group will use when creating new VMs.
+	InstanceSelectionList []*InstanceSelection `json:"instanceSelectionList,omitempty"`
 
-	// RequestId: Optional. A unique ID used to identify the request. If the
-	// service receives two TerminateSessionRequest
-	// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.TerminateSessionRequest)s
-	// with the same ID, the first request is ignored to ensure the most
-	// recent credentials are injected.Recommendation: Set this value to a
-	// UUID
-	// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The
-	// value must contain only letters (a-z, A-Z), numbers (0-9),
-	// underscores (_), and hyphens (-). The maximum length is 40
-	// characters.
-	RequestId string `json:"requestId,omitempty"`
+	// InstanceSelectionResults: Output only. A list of instance selection
+	// results in the group.
+	InstanceSelectionResults []*InstanceSelectionResult `json:"instanceSelectionResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "CredentialsCiphertext") to unconditionally include in API requests.
+	// "InstanceSelectionList") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -2622,7 +2629,7 @@ type InjectSessionCredentialsRequest struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CredentialsCiphertext") to
+	// NullFields is a list of field names (e.g. "InstanceSelectionList") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2632,8 +2639,8 @@ type InjectSessionCredentialsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InjectSessionCredentialsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod InjectSessionCredentialsRequest
+func (s *InstanceFlexibilityPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceFlexibilityPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2717,6 +2724,10 @@ type InstanceGroupConfig struct {
 	// SoftwareConfig.image_version or the system default.
 	ImageUri string `json:"imageUri,omitempty"`
 
+	// InstanceFlexibilityPolicy: Optional. Instance flexibility Policy
+	// allowing a mixture of VM shapes and provisioning models.
+	InstanceFlexibilityPolicy *InstanceFlexibilityPolicy `json:"instanceFlexibilityPolicy,omitempty"`
+
 	// InstanceNames: Output only. The list of instance names. Dataproc
 	// derives the names from cluster_name, num_instances, and the instance
 	// group.
@@ -2752,21 +2763,15 @@ type InstanceGroupConfig struct {
 	// (https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
-	// MinNumInstances: Optional. The minimum number of instances to create.
-	// If min_num_instances is set, min_num_instances is used for a criteria
-	// to decide the cluster. Cluster creation will be failed by being an
-	// error state if the total number of instances created is less than the
-	// min_num_instances. For example, given that num_instances = 5 and
-	// min_num_instances = 3, * if 4 instances are created and then
-	// registered successfully but one instance is failed, the failed VM
-	// will be deleted and the cluster will be resized to 4 instances in
-	// running state. * if 2 instances are created successfully and 3
-	// instances are failed, the cluster will be in an error state and does
-	// not delete failed VMs for debugging. * if 2 instance are created and
-	// then registered successfully but 3 instances are failed to
-	// initialize, the cluster will be in an error state and does not delete
-	// failed VMs for debugging. NB: This can only be set for primary
-	// workers now.
+	// MinNumInstances: Optional. The minimum number of primary worker
+	// instances to create. If min_num_instances is set, cluster creation
+	// will succeed if the number of primary workers created is at least
+	// equal to the min_num_instances number.Example: Cluster creation
+	// request with num_instances = 5 and min_num_instances = 3: If 4 VMs
+	// are created and 1 instance fails, the failed VM is deleted. The
+	// cluster is resized to 4 instances and placed in a RUNNING state. If 2
+	// instances are created and 3 instances fail, the cluster in placed in
+	// an ERROR state. The failed VMs are not deleted.
 	MinNumInstances int64 `json:"minNumInstances,omitempty"`
 
 	// NumInstances: Optional. The number of VM instances in the instance
@@ -2857,6 +2862,76 @@ type InstanceReference struct {
 
 func (s *InstanceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceSelection: Defines machines types and a rank to which the
+// machines types belong.
+type InstanceSelection struct {
+	// MachineTypes: Optional. Full machine-type names, e.g.
+	// "n1-standard-16".
+	MachineTypes []string `json:"machineTypes,omitempty"`
+
+	// Rank: Optional. Preference of this instance selection. Lower number
+	// means higher preference. Dataproc will first try to create a VM based
+	// on the machine-type with priority rank and fallback to next rank
+	// based on availability. Machine types and instance selections with the
+	// same priority have the same preference.
+	Rank int64 `json:"rank,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MachineTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MachineTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceSelection) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceSelection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceSelectionResult: Defines a mapping from machine types to the
+// number of VMs that are created with each machine type.
+type InstanceSelectionResult struct {
+	// MachineType: Output only. Full machine-type names, e.g.
+	// "n1-standard-16".
+	MachineType string `json:"machineType,omitempty"`
+
+	// VmCount: Output only. Number of VM provisioned with the machine_type.
+	VmCount int64 `json:"vmCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MachineType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceSelectionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceSelectionResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3780,7 +3855,7 @@ func (s *ListSessionTemplatesResponse) MarshalJSON() ([]byte, error) {
 
 // ListSessionsResponse: A list of interactive sessions.
 type ListSessionsResponse struct {
-	// NextPageToken: A token, which can be sent as page_token to retrieve
+	// NextPageToken: A token, which can be sent as page_token, to retrieve
 	// the next page. If this field is omitted, there are no subsequent
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -3934,6 +4009,11 @@ type ManagedGroupConfig struct {
 	// InstanceGroupManagerName: Output only. The name of the Instance Group
 	// Manager for this group.
 	InstanceGroupManagerName string `json:"instanceGroupManagerName,omitempty"`
+
+	// InstanceGroupManagerUri: Output only. The partial URI to the instance
+	// group manager for this group. E.g.
+	// projects/my-project/regions/us-central1/instanceGroupManagers/my-igm.
+	InstanceGroupManagerUri string `json:"instanceGroupManagerUri,omitempty"`
 
 	// InstanceTemplateName: Output only. The name of the Instance Template
 	// used for the Managed Instance Group.
@@ -4752,6 +4832,35 @@ func (s *PrestoJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PyPiRepositoryConfig: Configuration for PyPi repository
+type PyPiRepositoryConfig struct {
+	// PypiRepository: Optional. PyPi repository address
+	PypiRepository string `json:"pypiRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PypiRepository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PypiRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PyPiRepositoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PyPiRepositoryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PySparkBatch: A configuration for running an Apache PySpark
 // (https://spark.apache.org/docs/latest/api/python/getting_started/quickstart.html)
 // batch workload.
@@ -4990,6 +5099,36 @@ func (s *RepairClusterRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RepositoryConfig: Configuration for dependency repositories
+type RepositoryConfig struct {
+	// PypiRepositoryConfig: Optional. Configuration for PyPi repository.
+	PypiRepositoryConfig *PyPiRepositoryConfig `json:"pypiRepositoryConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PypiRepositoryConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PypiRepositoryConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepositoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RepositoryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReservationAffinity: Reservation Affinity for consuming Zonal
 // reservation.
 type ReservationAffinity struct {
@@ -5101,6 +5240,9 @@ type RuntimeConfig struct {
 	// Properties: Optional. A mapping of property names to values, which
 	// are used to configure workload execution.
 	Properties map[string]string `json:"properties,omitempty"`
+
+	// RepositoryConfig: Optional. Dependency repository configuration.
+	RepositoryConfig *RepositoryConfig `json:"repositoryConfig,omitempty"`
 
 	// Version: Optional. Version of the batch runtime.
 	Version string `json:"version,omitempty"`
@@ -5215,7 +5357,7 @@ func (s *SecurityConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Session: A representation of a session in the service. Next ID: 18
+// Session: A representation of a session.
 type Session struct {
 	// CreateTime: Output only. The time when the session was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -5231,7 +5373,7 @@ type Session struct {
 	// JupyterSession: Optional. Jupyter session config.
 	JupyterSession *JupyterConfig `json:"jupyterSession,omitempty"`
 
-	// Labels: Optional. The labels to associate with this session. Label
+	// Labels: Optional. The labels to associate with the session. Label
 	// keys must contain 1 to 63 characters, and must conform to RFC 1035
 	// (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty,
 	// but, if present, must contain 1 to 63 characters, and must conform to
@@ -5251,20 +5393,20 @@ type Session struct {
 	RuntimeInfo *RuntimeInfo `json:"runtimeInfo,omitempty"`
 
 	// SessionTemplate: Optional. The session template used by the
-	// session.Only resource names including project ID and location are
+	// session.Only resource names, including project ID and location, are
 	// valid.Example: *
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]
 	// *
 	// projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[te
-	// mplate_id]Note that the template must be in the same project and
-	// Dataproc region.
+	// mplate_id]The template must be in the same project and Dataproc
+	// region as the session.
 	SessionTemplate string `json:"sessionTemplate,omitempty"`
 
 	// State: Output only. A state of the session.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The session state is unknown.
-	//   "CREATING" - The session is created before running.
+	//   "CREATING" - The session is created prior to running.
 	//   "ACTIVE" - The session is running.
 	//   "TERMINATING" - The session is terminating.
 	//   "TERMINATED" - The session is terminated successfully.
@@ -5275,11 +5417,11 @@ type Session struct {
 	// session.
 	StateHistory []*SessionStateHistory `json:"stateHistory,omitempty"`
 
-	// StateMessage: Output only. Session state details, such as a failure
+	// StateMessage: Output only. Session state details, such as the failure
 	// description if the state is FAILED.
 	StateMessage string `json:"stateMessage,omitempty"`
 
-	// StateTime: Output only. The time when the session entered a current
+	// StateTime: Output only. The time when the session entered the current
 	// state.
 	StateTime string `json:"stateTime,omitempty"`
 
@@ -5375,12 +5517,12 @@ func (s *SessionOperationMetadata) MarshalJSON() ([]byte, error) {
 
 // SessionStateHistory: Historical state information.
 type SessionStateHistory struct {
-	// State: Output only. The state of the session at this point in
-	// history.
+	// State: Output only. The state of the session at this point in the
+	// session history.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The session state is unknown.
-	//   "CREATING" - The session is created before running.
+	//   "CREATING" - The session is created prior to running.
 	//   "ACTIVE" - The session is running.
 	//   "TERMINATING" - The session is terminating.
 	//   "TERMINATED" - The session is terminated successfully.
@@ -5388,7 +5530,7 @@ type SessionStateHistory struct {
 	State string `json:"state,omitempty"`
 
 	// StateMessage: Output only. Details about the state at this point in
-	// history.
+	// the session history.
 	StateMessage string `json:"stateMessage,omitempty"`
 
 	// StateStartTime: Output only. The time when the session entered the
@@ -5418,8 +5560,7 @@ func (s *SessionStateHistory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SessionTemplate: A representation of a session template in the
-// service. Next ID: 12
+// SessionTemplate: A representation of a session template.
 type SessionTemplate struct {
 	// CreateTime: Output only. The time when the template was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -5438,13 +5579,12 @@ type SessionTemplate struct {
 	// JupyterSession: Optional. Jupyter session config.
 	JupyterSession *JupyterConfig `json:"jupyterSession,omitempty"`
 
-	// Labels: Optional. The labels to associate with sessions created using
+	// Labels: Optional. Labels to associate with sessions created using
 	// this template. Label keys must contain 1 to 63 characters, and must
 	// conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label
-	// values may be empty, but, if present, must contain 1 to 63
-	// characters, and must conform to RFC 1035
-	// (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
-	// associated with a session.
+	// values can be empty, but, if present, must contain 1 to 63 characters
+	// and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No
+	// more than 32 labels can be associated with a session.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Required. The resource name of the session template.
@@ -5453,7 +5593,7 @@ type SessionTemplate struct {
 	// RuntimeConfig: Optional. Runtime configuration for session execution.
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
 
-	// UpdateTime: Output only. The time template was last updated.
+	// UpdateTime: Output only. The time the template was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9584,7 +9724,7 @@ type ProjectsLocationsSessionTemplatesCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Create an session template, synchronously.
+// Create: Create a session template synchronously.
 //
 //   - parent: The parent resource where this session template will be
 //     created.
@@ -9686,7 +9826,7 @@ func (c *ProjectsLocationsSessionTemplatesCreateCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Create an session template, synchronously.",
+	//   "description": "Create a session template synchronously.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessionTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dataproc.projects.locations.sessionTemplates.create",
@@ -10007,8 +10147,7 @@ type ProjectsLocationsSessionTemplatesListCall struct {
 
 // List: Lists session templates.
 //
-//   - parent: The parent, which owns this collection of session
-//     templates.
+// - parent: The parent that owns this collection of session templates.
 func (r *ProjectsLocationsSessionTemplatesService) List(parent string) *ProjectsLocationsSessionTemplatesListCall {
 	c := &ProjectsLocationsSessionTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10163,7 +10302,7 @@ func (c *ProjectsLocationsSessionTemplatesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of session templates.",
+	//       "description": "Required. The parent that owns this collection of session templates.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -10213,8 +10352,7 @@ type ProjectsLocationsSessionTemplatesPatchCall struct {
 	header_         http.Header
 }
 
-// Patch: Updates the session template, synchronously.Disable check for
-// update_mask, because all updates will be full replacements.
+// Patch: Updates the session template synchronously.
 //
 // - name: The resource name of the session template.
 func (r *ProjectsLocationsSessionTemplatesService) Patch(name string, sessiontemplate *SessionTemplate) *ProjectsLocationsSessionTemplatesPatchCall {
@@ -10315,7 +10453,7 @@ func (c *ProjectsLocationsSessionTemplatesPatchCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the session template, synchronously.Disable check for update_mask, because all updates will be full replacements.",
+	//   "description": "Updates the session template synchronously.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessionTemplates/{sessionTemplatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dataproc.projects.locations.sessionTemplates.patch",
@@ -10368,11 +10506,11 @@ func (r *ProjectsLocationsSessionsService) Create(parent string, session *Sessio
 
 // RequestId sets the optional parameter "requestId": A unique ID used
 // to identify the request. If the service receives two
-// CreateSessionRequest
+// CreateSessionRequests
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateSessionRequest)s
-// with the same ID, the second request is ignored and the first Session
-// is created and stored in the backend is returned.Recommendation: Set
-// this value to a UUID
+// with the same ID, the second request is ignored, and the first
+// Session is created and stored in the backend.Recommendation: Set this
+// value to a UUID
 // (https://en.wikipedia.org/wiki/Universally_unique_identifier).The
 // value must contain only letters (a-z, A-Z), numbers (0-9),
 // underscores (_), and hyphens (-). The maximum length is 40
@@ -10498,7 +10636,7 @@ func (c *ProjectsLocationsSessionsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A unique ID used to identify the request. If the service receives two CreateSessionRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateSessionRequest)s with the same ID, the second request is ignored and the first Session is created and stored in the backend is returned.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "description": "Optional. A unique ID used to identify the request. If the service receives two CreateSessionRequests (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateSessionRequest)s with the same ID, the second request is ignored, and the first Session is created and stored in the backend.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10533,7 +10671,7 @@ type ProjectsLocationsSessionsDeleteCall struct {
 }
 
 // Delete: Deletes the interactive session resource. If the session is
-// not in terminal state, it will be terminated and deleted afterwards.
+// not in terminal state, it is terminated, and then deleted.
 //
 // - name: The name of the session resource to delete.
 func (r *ProjectsLocationsSessionsService) Delete(name string) *ProjectsLocationsSessionsDeleteCall {
@@ -10643,7 +10781,7 @@ func (c *ProjectsLocationsSessionsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the interactive session resource. If the session is not in terminal state, it will be terminated and deleted afterwards.",
+	//   "description": "Deletes the interactive session resource. If the session is not in terminal state, it is terminated, and then deleted.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dataproc.projects.locations.sessions.delete",
@@ -10821,148 +10959,6 @@ func (c *ProjectsLocationsSessionsGetCall) Do(opts ...googleapi.CallOption) (*Se
 
 }
 
-// method id "dataproc.projects.locations.sessions.injectCredentials":
-
-type ProjectsLocationsSessionsInjectCredentialsCall struct {
-	s                               *Service
-	session                         string
-	injectsessioncredentialsrequest *InjectSessionCredentialsRequest
-	urlParams_                      gensupport.URLParams
-	ctx_                            context.Context
-	header_                         http.Header
-}
-
-// InjectCredentials: Inject Credentials in the interactive session.
-//
-// - session: The name of the session resource to inject credentials to.
-func (r *ProjectsLocationsSessionsService) InjectCredentials(session string, injectsessioncredentialsrequest *InjectSessionCredentialsRequest) *ProjectsLocationsSessionsInjectCredentialsCall {
-	c := &ProjectsLocationsSessionsInjectCredentialsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.session = session
-	c.injectsessioncredentialsrequest = injectsessioncredentialsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsSessionsInjectCredentialsCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsInjectCredentialsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsSessionsInjectCredentialsCall) Context(ctx context.Context) *ProjectsLocationsSessionsInjectCredentialsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsSessionsInjectCredentialsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSessionsInjectCredentialsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.injectsessioncredentialsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+session}:injectCredentials")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"session": c.session,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dataproc.projects.locations.sessions.injectCredentials" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsSessionsInjectCredentialsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Inject Credentials in the interactive session.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}:injectCredentials",
-	//   "httpMethod": "POST",
-	//   "id": "dataproc.projects.locations.sessions.injectCredentials",
-	//   "parameterOrder": [
-	//     "session"
-	//   ],
-	//   "parameters": {
-	//     "session": {
-	//       "description": "Required. The name of the session resource to inject credentials to.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+session}:injectCredentials",
-	//   "request": {
-	//     "$ref": "InjectSessionCredentialsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "dataproc.projects.locations.sessions.list":
 
 type ProjectsLocationsSessionsListCall struct {
@@ -10987,12 +10983,12 @@ func (r *ProjectsLocationsSessionsService) List(parent string) *ProjectsLocation
 // sessions to return in the response.A filter is a logical expression
 // constraining the values of various fields in each session resource.
 // Filters are case sensitive, and may contain multiple clauses combined
-// with logical operators (AND/OR). Supported fields are session_id,
-// session_uuid, state, and create_time.e.g. state = ACTIVE and
-// create_time < "2023-01-01T00:00:00Z" filters for sessions in state
-// ACTIVE that were created before 2023-01-01See
+// with logical operators (AND, OR). Supported fields are session_id,
+// session_uuid, state, and create_time.Example: state = ACTIVE and
+// create_time < "2023-01-01T00:00:00Z" is a filter for sessions in an
+// ACTIVE state that were created before 2023-01-01.See
 // https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed
-// description of the filter syntax and a list of supported comparisons.
+// description of the filter syntax and a list of supported comparators.
 func (c *ProjectsLocationsSessionsListCall) Filter(filter string) *ProjectsLocationsSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -11122,7 +11118,7 @@ func (c *ProjectsLocationsSessionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter for the sessions to return in the response.A filter is a logical expression constraining the values of various fields in each session resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND/OR). Supported fields are session_id, session_uuid, state, and create_time.e.g. state = ACTIVE and create_time \u003c \"2023-01-01T00:00:00Z\" filters for sessions in state ACTIVE that were created before 2023-01-01See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparisons.",
+	//       "description": "Optional. A filter for the sessions to return in the response.A filter is a logical expression constraining the values of various fields in each session resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND, OR). Supported fields are session_id, session_uuid, state, and create_time.Example: state = ACTIVE and create_time \u003c \"2023-01-01T00:00:00Z\" is a filter for sessions in an ACTIVE state that were created before 2023-01-01.See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparators.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

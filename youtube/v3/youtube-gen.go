@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/youtube/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	youtubeService, err := youtube.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	youtubeService, err := youtube.NewService(ctx, option.WithScopes(youtube.YoutubepartnerChannelAuditScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	youtubeService, err := youtube.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	youtubeService, err := youtube.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package youtube // import "google.golang.org/api/youtube/v3"
 
 import (
@@ -4154,9 +4168,9 @@ type CuepointSchedule struct {
 	// format.
 	PauseAdsUntil string `json:"pauseAdsUntil,omitempty"`
 
-	// RepeatInterval: Interval frequency that api uses to insert cuepoints
-	// automatically.
-	RepeatInterval string `json:"repeatInterval,omitempty"`
+	// RepeatIntervalSecs: Interval frequency in seconds that api uses to
+	// insert cuepoints automatically.
+	RepeatIntervalSecs int64 `json:"repeatIntervalSecs,omitempty"`
 
 	// ScheduleStrategy: The strategy to use when scheduling cuepoints.
 	//
@@ -20881,6 +20895,21 @@ func (c *SearchListCall) VideoLicense(videoLicense string) *SearchListCall {
 	return c
 }
 
+// VideoPaidProductPlacement sets the optional parameter
+// "videoPaidProductPlacement":
+//
+// Possible values:
+//
+//	"videoPaidProductPlacementUnspecified"
+//	"any" - Return all videos, paid product placement or not.
+//	"true" - Restrict results to only videos with paid product
+//
+// placement.
+func (c *SearchListCall) VideoPaidProductPlacement(videoPaidProductPlacement string) *SearchListCall {
+	c.urlParams_.Set("videoPaidProductPlacement", videoPaidProductPlacement)
+	return c
+}
+
 // VideoSyndicated sets the optional parameter "videoSyndicated": Filter
 // on syndicated videos.
 //
@@ -21282,6 +21311,20 @@ func (c *SearchListCall) Do(opts ...googleapi.CallOption) (*SearchListResponse, 
 	//         "Return all videos, regardless of which license they have, that match the query parameters.",
 	//         "Only return videos that have the standard YouTube license.",
 	//         "Only return videos that have a Creative Commons license. Users can reuse videos with this license in other videos that they create. Learn more."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoPaidProductPlacement": {
+	//       "enum": [
+	//         "videoPaidProductPlacementUnspecified",
+	//         "any",
+	//         "true"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Return all videos, paid product placement or not.",
+	//         "Restrict results to only videos with paid product placement."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

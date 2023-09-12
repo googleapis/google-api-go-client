@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developers.google.com/cloud-test-lab/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	testingService, err := testing.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	testingService, err := testing.NewService(ctx, option.WithScopes(testing.CloudPlatformReadOnlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	testingService, err := testing.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	testingService, err := testing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package testing // import "google.golang.org/api/testing/v1"
 
 import (
@@ -164,6 +178,7 @@ type ApplicationDetailServiceService struct {
 
 func NewProjectsService(s *APIService) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.DeviceSessions = NewProjectsDeviceSessionsService(s)
 	rs.TestMatrices = NewProjectsTestMatricesService(s)
 	return rs
 }
@@ -171,7 +186,18 @@ func NewProjectsService(s *APIService) *ProjectsService {
 type ProjectsService struct {
 	s *APIService
 
+	DeviceSessions *ProjectsDeviceSessionsService
+
 	TestMatrices *ProjectsTestMatricesService
+}
+
+func NewProjectsDeviceSessionsService(s *APIService) *ProjectsDeviceSessionsService {
+	rs := &ProjectsDeviceSessionsService{s: s}
+	return rs
+}
+
+type ProjectsDeviceSessionsService struct {
+	s *APIService
 }
 
 func NewProjectsTestMatricesService(s *APIService) *ProjectsTestMatricesService {
@@ -936,6 +962,11 @@ func (s *AppBundle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CancelDeviceSessionRequest: The request object for cancelling a
+// Device Session.
+type CancelDeviceSessionRequest struct {
+}
+
 // CancelTestMatrixResponse: Response containing the current state of
 // the specified test matrix.
 type CancelTestMatrixResponse struct {
@@ -1213,6 +1244,144 @@ func (s *DeviceIpBlockCatalog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeviceSession: Protobuf message describing the device message, used
+// from several RPCs.
+type DeviceSession struct {
+	// ActiveStartTime: Output only. The timestamp that the session first
+	// became ACTIVE.
+	ActiveStartTime string `json:"activeStartTime,omitempty"`
+
+	// AndroidDevice: Required. The requested device
+	AndroidDevice *AndroidDevice `json:"androidDevice,omitempty"`
+
+	// AndroidDeviceList: Optional. The list of requested devices. At most
+	// two devices may be simultaneously requested.
+	AndroidDeviceList *AndroidDeviceList `json:"androidDeviceList,omitempty"`
+
+	// CreateTime: Output only. The time that the Session was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Output only. The title of the DeviceSession to be
+	// presented in the UI.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExpireTime: Optional. If the device is still in use at this time, any
+	// connections will be ended and the SessionState will transition from
+	// ACTIVE to FINISHED.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// InactivityTimeout: Output only. The interval of time that this device
+	// must be interacted with before it transitions from ACTIVE to
+	// TIMEOUT_INACTIVITY.
+	InactivityTimeout string `json:"inactivityTimeout,omitempty"`
+
+	// Name: Optional. Name of the DeviceSession, e.g.
+	// "projects/{project_id}/deviceSessions/{session_id}"
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. Current state of the DeviceSession.
+	//
+	// Possible values:
+	//   "SESSION_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "REQUESTED" - Initial state of a session request. The session is
+	// being validated for correctness and a device is not yet requested.
+	//   "PENDING" - The session has been validated and is in the queue for
+	// a device.
+	//   "ACTIVE" - The session has been granted and the device is accepting
+	// connections.
+	//   "EXPIRED" - The session duration exceeded the device’s
+	// reservation time period and timed out automatically.
+	//   "FINISHED" - The user is finished with the session and it was
+	// canceled by the user while the request was still getting allocated or
+	// after allocation and during device usage period.
+	//   "UNAVAILABLE" - Unable to complete the session because the device
+	// was unavailable and it failed to allocate through the scheduler. For
+	// example, a device not in the catalog was requested or the request
+	// expired in the allocation queue.
+	//   "ERROR" - Unable to complete the session for an internal reason,
+	// such as an infrastructure failure.
+	State string `json:"state,omitempty"`
+
+	// StateHistories: Output only. The historical state transitions of the
+	// session_state message including the current session state.
+	StateHistories []*SessionStateEvent `json:"stateHistories,omitempty"`
+
+	// Ttl: Optional. The amount of time that a device will be initially
+	// allocated for. This can eventually be extended with the
+	// ExtendDeviceSession RPC. Default: 3 hours.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveStartTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveStartTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceSession) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceSession
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DirectAccessVersionInfo: Denotes whether Direct Access is supported,
+// and by which client versions. DirectAccessService is currently
+// available as a preview to select developers. You can register today
+// on behalf of you and your team at
+// https://developer.android.com/studio/preview/android-device-streaming
+type DirectAccessVersionInfo struct {
+	// DirectAccessSupported: Whether direct access is supported at all.
+	// Clients are expected to filter down the device list to only android
+	// models and versions which support Direct Access when that is the user
+	// intent.
+	DirectAccessSupported bool `json:"directAccessSupported,omitempty"`
+
+	// MinimumAndroidStudioVersion: Output only. Indicates client-device
+	// compatibility, where a device is known to work only with certain
+	// workarounds implemented in the Android Studio client. Expected format
+	// "major.minor.micro.patch", e.g. "5921.22.2211.8881706".
+	MinimumAndroidStudioVersion string `json:"minimumAndroidStudioVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DirectAccessSupported") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DirectAccessSupported") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DirectAccessVersionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DirectAccessVersionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Distribution: Data about the relative number of devices running a
 // given configuration of the Android platform.
 type Distribution struct {
@@ -1259,6 +1428,17 @@ func (s *Distribution) UnmarshalJSON(data []byte) error {
 	}
 	s.MarketShare = float64(s1.MarketShare)
 	return nil
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Environment: The environment in which the test is run.
@@ -1982,6 +2162,45 @@ func (s *IosXcTest) MarshalJSON() ([]byte, error) {
 type LauncherActivityIntent struct {
 }
 
+// ListDeviceSessionsResponse: A list of device sessions.
+type ListDeviceSessionsResponse struct {
+	// DeviceSessions: The sessions matching the specified filter in the
+	// given cloud project.
+	DeviceSessions []*DeviceSession `json:"deviceSessions,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceSessions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceSessions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDeviceSessionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDeviceSessionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Locale: A location/region designation for language.
 type Locale struct {
 	// Id: The id for this locale. Example: "en_US".
@@ -2258,6 +2477,10 @@ type PerAndroidVersionInfo struct {
 	// permanently and should not be requested. If the device is also marked
 	// as deprecated, this state is very likely permanent.
 	DeviceCapacity string `json:"deviceCapacity,omitempty"`
+
+	// DirectAccessVersionInfo: Output only. Identifies supported clients
+	// for DirectAccess for this Android version.
+	DirectAccessVersionInfo *DirectAccessVersionInfo `json:"directAccessVersionInfo,omitempty"`
 
 	// VersionId: An Android version.
 	VersionId string `json:"versionId,omitempty"`
@@ -2592,6 +2815,63 @@ type Service struct {
 
 func (s *Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SessionStateEvent: A message encapsulating a series of Session states
+// and the time that the DeviceSession first entered those states.
+type SessionStateEvent struct {
+	// EventTime: Output only. The time that the session_state first
+	// encountered that state.
+	EventTime string `json:"eventTime,omitempty"`
+
+	// SessionState: Output only. The session_state tracked by this event
+	//
+	// Possible values:
+	//   "SESSION_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "REQUESTED" - Initial state of a session request. The session is
+	// being validated for correctness and a device is not yet requested.
+	//   "PENDING" - The session has been validated and is in the queue for
+	// a device.
+	//   "ACTIVE" - The session has been granted and the device is accepting
+	// connections.
+	//   "EXPIRED" - The session duration exceeded the device’s
+	// reservation time period and timed out automatically.
+	//   "FINISHED" - The user is finished with the session and it was
+	// canceled by the user while the request was still getting allocated or
+	// after allocation and during device usage period.
+	//   "UNAVAILABLE" - Unable to complete the session because the device
+	// was unavailable and it failed to allocate through the scheduler. For
+	// example, a device not in the catalog was requested or the request
+	// expired in the allocation queue.
+	//   "ERROR" - Unable to complete the session for an internal reason,
+	// such as an infrastructure failure.
+	SessionState string `json:"sessionState,omitempty"`
+
+	// StateMessage: Output only. A human-readable message to explain the
+	// state.
+	StateMessage string `json:"stateMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SessionStateEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SessionStateEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3194,7 +3474,8 @@ type TestSetup struct {
 	Account *Account `json:"account,omitempty"`
 
 	// AdditionalApks: APKs to install in addition to those being directly
-	// tested. Currently capped at 100.
+	// tested. These will be installed after the app under test. Currently
+	// capped at 100.
 	AdditionalApks []*Apk `json:"additionalApks,omitempty"`
 
 	// DirectoriesToPull: List of directories on the device to upload to GCS
@@ -3737,6 +4018,813 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "GetApkDetailsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "testing.projects.deviceSessions.cancel":
+
+type ProjectsDeviceSessionsCancelCall struct {
+	s                          *APIService
+	name                       string
+	canceldevicesessionrequest *CancelDeviceSessionRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Cancel: POST
+// /v1/projects/{project_id}/deviceSessions/{device_session_id}:cancel
+// Changes the DeviceSession to state FINISHED and terminates all
+// connections. Canceled sessions are not deleted and can be retrieved
+// or listed by the user until they expire based on the 28 day deletion
+// policy.
+//
+//   - name: Name of the DeviceSession, e.g.
+//     "projects/{project_id}/deviceSessions/{session_id}".
+func (r *ProjectsDeviceSessionsService) Cancel(name string, canceldevicesessionrequest *CancelDeviceSessionRequest) *ProjectsDeviceSessionsCancelCall {
+	c := &ProjectsDeviceSessionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceldevicesessionrequest = canceldevicesessionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDeviceSessionsCancelCall) Fields(s ...googleapi.Field) *ProjectsDeviceSessionsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDeviceSessionsCancelCall) Context(ctx context.Context) *ProjectsDeviceSessionsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDeviceSessionsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDeviceSessionsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceldevicesessionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "testing.projects.deviceSessions.cancel" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsDeviceSessionsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "POST /v1/projects/{project_id}/deviceSessions/{device_session_id}:cancel Changes the DeviceSession to state FINISHED and terminates all connections. Canceled sessions are not deleted and can be retrieved or listed by the user until they expire based on the 28 day deletion policy.",
+	//   "flatPath": "v1/projects/{projectsId}/deviceSessions/{deviceSessionsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "testing.projects.deviceSessions.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the DeviceSession, e.g. \"projects/{project_id}/deviceSessions/{session_id}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/deviceSessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelDeviceSessionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "testing.projects.deviceSessions.create":
+
+type ProjectsDeviceSessionsCreateCall struct {
+	s             *APIService
+	parent        string
+	devicesession *DeviceSession
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: POST /v1/projects/{project_id}/deviceSessions
+//
+//   - parent: The Compute Engine project under which this device will be
+//     allocated. "projects/{project_id}".
+func (r *ProjectsDeviceSessionsService) Create(parent string, devicesession *DeviceSession) *ProjectsDeviceSessionsCreateCall {
+	c := &ProjectsDeviceSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.devicesession = devicesession
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDeviceSessionsCreateCall) Fields(s ...googleapi.Field) *ProjectsDeviceSessionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDeviceSessionsCreateCall) Context(ctx context.Context) *ProjectsDeviceSessionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDeviceSessionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDeviceSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.devicesession)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deviceSessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "testing.projects.deviceSessions.create" call.
+// Exactly one of *DeviceSession or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DeviceSession.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDeviceSessionsCreateCall) Do(opts ...googleapi.CallOption) (*DeviceSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeviceSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "POST /v1/projects/{project_id}/deviceSessions",
+	//   "flatPath": "v1/projects/{projectsId}/deviceSessions",
+	//   "httpMethod": "POST",
+	//   "id": "testing.projects.deviceSessions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The Compute Engine project under which this device will be allocated. \"projects/{project_id}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/deviceSessions",
+	//   "request": {
+	//     "$ref": "DeviceSession"
+	//   },
+	//   "response": {
+	//     "$ref": "DeviceSession"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "testing.projects.deviceSessions.get":
+
+type ProjectsDeviceSessionsGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: GET /v1/projects/{project_id}/deviceSessions/{device_session_id}
+// Return a DeviceSession, which documents the allocation status and
+// whether the device is allocated. Clients making requests from this
+// API must poll GetDeviceSession.
+//
+//   - name: Name of the DeviceSession, e.g.
+//     "projects/{project_id}/deviceSessions/{session_id}".
+func (r *ProjectsDeviceSessionsService) Get(name string) *ProjectsDeviceSessionsGetCall {
+	c := &ProjectsDeviceSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDeviceSessionsGetCall) Fields(s ...googleapi.Field) *ProjectsDeviceSessionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDeviceSessionsGetCall) IfNoneMatch(entityTag string) *ProjectsDeviceSessionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDeviceSessionsGetCall) Context(ctx context.Context) *ProjectsDeviceSessionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDeviceSessionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDeviceSessionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "testing.projects.deviceSessions.get" call.
+// Exactly one of *DeviceSession or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DeviceSession.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDeviceSessionsGetCall) Do(opts ...googleapi.CallOption) (*DeviceSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeviceSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GET /v1/projects/{project_id}/deviceSessions/{device_session_id} Return a DeviceSession, which documents the allocation status and whether the device is allocated. Clients making requests from this API must poll GetDeviceSession.",
+	//   "flatPath": "v1/projects/{projectsId}/deviceSessions/{deviceSessionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "testing.projects.deviceSessions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the DeviceSession, e.g. \"projects/{project_id}/deviceSessions/{session_id}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/deviceSessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "DeviceSession"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "testing.projects.deviceSessions.list":
+
+type ProjectsDeviceSessionsListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: GET /v1/projects/{project_id}/deviceSessions Lists device
+// Sessions owned by the project user.
+//
+//   - parent: The name of the parent to request, e.g.
+//     "projects/{project_id}".
+func (r *ProjectsDeviceSessionsService) List(parent string) *ProjectsDeviceSessionsListCall {
+	c := &ProjectsDeviceSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": If specified, responses
+// will be filtered by the given filter. Allowed fields are:
+// session_state.
+func (c *ProjectsDeviceSessionsListCall) Filter(filter string) *ProjectsDeviceSessionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of DeviceSessions to return.
+func (c *ProjectsDeviceSessionsListCall) PageSize(pageSize int64) *ProjectsDeviceSessionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token for paging.
+func (c *ProjectsDeviceSessionsListCall) PageToken(pageToken string) *ProjectsDeviceSessionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDeviceSessionsListCall) Fields(s ...googleapi.Field) *ProjectsDeviceSessionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDeviceSessionsListCall) IfNoneMatch(entityTag string) *ProjectsDeviceSessionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDeviceSessionsListCall) Context(ctx context.Context) *ProjectsDeviceSessionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDeviceSessionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDeviceSessionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deviceSessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "testing.projects.deviceSessions.list" call.
+// Exactly one of *ListDeviceSessionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDeviceSessionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDeviceSessionsListCall) Do(opts ...googleapi.CallOption) (*ListDeviceSessionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDeviceSessionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GET /v1/projects/{project_id}/deviceSessions Lists device Sessions owned by the project user.",
+	//   "flatPath": "v1/projects/{projectsId}/deviceSessions",
+	//   "httpMethod": "GET",
+	//   "id": "testing.projects.deviceSessions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. If specified, responses will be filtered by the given filter. Allowed fields are: session_state.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of DeviceSessions to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A continuation token for paging.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the parent to request, e.g. \"projects/{project_id}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/deviceSessions",
+	//   "response": {
+	//     "$ref": "ListDeviceSessionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsDeviceSessionsListCall) Pages(ctx context.Context, f func(*ListDeviceSessionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "testing.projects.deviceSessions.patch":
+
+type ProjectsDeviceSessionsPatchCall struct {
+	s             *APIService
+	name          string
+	devicesession *DeviceSession
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: PATCH
+// /v1/projects/{projectId}/deviceSessions/deviceSessionId}:updateDeviceS
+// ession Updates the current device session to the fields described by
+// the update_mask.
+//
+//   - name: Optional. Name of the DeviceSession, e.g.
+//     "projects/{project_id}/deviceSessions/{session_id}".
+func (r *ProjectsDeviceSessionsService) Patch(name string, devicesession *DeviceSession) *ProjectsDeviceSessionsPatchCall {
+	c := &ProjectsDeviceSessionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.devicesession = devicesession
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update.
+func (c *ProjectsDeviceSessionsPatchCall) UpdateMask(updateMask string) *ProjectsDeviceSessionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDeviceSessionsPatchCall) Fields(s ...googleapi.Field) *ProjectsDeviceSessionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDeviceSessionsPatchCall) Context(ctx context.Context) *ProjectsDeviceSessionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDeviceSessionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDeviceSessionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.devicesession)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "testing.projects.deviceSessions.patch" call.
+// Exactly one of *DeviceSession or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DeviceSession.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDeviceSessionsPatchCall) Do(opts ...googleapi.CallOption) (*DeviceSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeviceSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "PATCH /v1/projects/{projectId}/deviceSessions/deviceSessionId}:updateDeviceSession Updates the current device session to the fields described by the update_mask.",
+	//   "flatPath": "v1/projects/{projectsId}/deviceSessions/{deviceSessionsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "testing.projects.deviceSessions.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Optional. Name of the DeviceSession, e.g. \"projects/{project_id}/deviceSessions/{session_id}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/deviceSessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "DeviceSession"
+	//   },
+	//   "response": {
+	//     "$ref": "DeviceSession"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

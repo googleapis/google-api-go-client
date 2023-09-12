@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/vision/
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,28 +30,31 @@
 //	ctx := context.Background()
 //	visionService, err := vision.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	visionService, err := vision.NewService(ctx, option.WithScopes(vision.CloudVisionScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	visionService, err := vision.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	visionService, err := vision.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package vision // import "google.golang.org/api/vision/v1"
 
 import (
@@ -659,6 +673,14 @@ func (s *AsyncAnnotateFileResponse) MarshalJSON() ([]byte, error) {
 // AsyncBatchAnnotateFilesRequest: Multiple async file annotation
 // requests are batched into a single service call.
 type AsyncBatchAnnotateFilesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Parent: Optional. Target project and location to make a call. Format:
 	// `projects/{project-id}/locations/{location-id}`. If no parent is
 	// specified, a region will be chosen automatically. Supported
@@ -671,7 +693,7 @@ type AsyncBatchAnnotateFilesRequest struct {
 	// this batch.
 	Requests []*AsyncAnnotateFileRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -679,7 +701,7 @@ type AsyncBatchAnnotateFilesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -727,6 +749,14 @@ func (s *AsyncBatchAnnotateFilesResponse) MarshalJSON() ([]byte, error) {
 // AsyncBatchAnnotateImagesRequest: Request for async image annotation
 // for a list of images.
 type AsyncBatchAnnotateImagesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// OutputConfig: Required. The desired output location and metadata
 	// (e.g. format).
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
@@ -743,7 +773,7 @@ type AsyncBatchAnnotateImagesRequest struct {
 	// batch.
 	Requests []*AnnotateImageRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -751,10 +781,10 @@ type AsyncBatchAnnotateImagesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OutputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -799,6 +829,14 @@ func (s *AsyncBatchAnnotateImagesResponse) MarshalJSON() ([]byte, error) {
 // BatchAnnotateFilesRequest: A list of requests to annotate files using
 // the BatchAnnotateFiles API.
 type BatchAnnotateFilesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Parent: Optional. Target project and location to make a call. Format:
 	// `projects/{project-id}/locations/{location-id}`. If no parent is
 	// specified, a region will be chosen automatically. Supported
@@ -811,7 +849,7 @@ type BatchAnnotateFilesRequest struct {
 	// we support only one AnnotateFileRequest in BatchAnnotateFilesRequest.
 	Requests []*AnnotateFileRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -819,7 +857,7 @@ type BatchAnnotateFilesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -871,6 +909,14 @@ func (s *BatchAnnotateFilesResponse) MarshalJSON() ([]byte, error) {
 // BatchAnnotateImagesRequest: Multiple image annotation requests are
 // batched into a single service call.
 type BatchAnnotateImagesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Parent: Optional. Target project and location to make a call. Format:
 	// `projects/{project-id}/locations/{location-id}`. If no parent is
 	// specified, a region will be chosen automatically. Supported
@@ -883,7 +929,7 @@ type BatchAnnotateImagesRequest struct {
 	// batch.
 	Requests []*AnnotateImageRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -891,7 +937,7 @@ type BatchAnnotateImagesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

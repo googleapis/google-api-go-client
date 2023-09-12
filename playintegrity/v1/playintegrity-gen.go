@@ -8,6 +8,17 @@
 //
 // For product documentation, see: https://developer.android.com/google/play/integrity
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	playintegrityService, err := playintegrity.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	playintegrityService, err := playintegrity.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	playintegrityService, err := playintegrity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package playintegrity // import "google.golang.org/api/playintegrity/v1"
 
 import (
@@ -416,37 +429,24 @@ func (s *DeviceIntegrity) MarshalJSON() ([]byte, error) {
 // GuidanceDetails: Contains guidance details about the Integrity API
 // response, providing additional context to the integrity verdicts.
 type GuidanceDetails struct {
-	// UserRemediation: This shows when there is an issue with at least one
-	// of the integrity verdicts, and provides user remediation guidance.
-	//
-	// Possible values:
-	//   "UNKNOWN_USER_REMEDIATION" - Catch-all for unrecognized enum
-	// values. See go/protodosdonts.
-	//   "RESTORE_FACTORY_ROM" - The user has installed a custom ROM, and
-	// should restore the device to a clean factory ROM.
-	//   "LOCK_BOOTLOADER" - The device bootloader has been unlocked, the
-	// user should lock the bootloader.
-	//   "GET_UNMODIFIED_APP" - The app is unrecognized. The user should get
-	// an unmodified version of the app.
-	//   "SIGN_INTO_GOOGLE_ACCOUNT" - The user has not signed into their
-	// Google account.
-	//   "INSTALL_APP_FROM_PLAY" - The user has no license. They should
-	// install or purchase the app on the Google Play Store to add it to
-	// their library.
-	UserRemediation []string `json:"userRemediation,omitempty"`
+	// UserRemediationDetails: This shows when there is an issue with at
+	// least one of the integrity verdicts, which can be remedied by the
+	// user and provides additional details.
+	UserRemediationDetails []*UserRemediationDetails `json:"userRemediationDetails,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "UserRemediation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "UserRemediationDetails") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UserRemediation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "UserRemediationDetails")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -577,6 +577,50 @@ type TokenPayloadExternal struct {
 
 func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 	type NoMethod TokenPayloadExternal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserRemediationDetails: Contains details of remediation guidance that
+// the user can perform. See go/pia-interstitials-dd
+type UserRemediationDetails struct {
+	// Remediation: Description of the user remediation action. Required.
+	//
+	// Possible values:
+	//   "UNKNOWN_USER_REMEDIATION" - Catch-all for unrecognized enum
+	// values. See go/protodosdonts.
+	//   "RESTORE_FACTORY_ROM" - The user has installed a custom ROM, and
+	// should restore the device to a clean factory ROM.
+	//   "LOCK_BOOTLOADER" - The device bootloader has been unlocked, the
+	// user should lock the bootloader.
+	//   "GET_UNMODIFIED_APP" - The app is unrecognized. The user should get
+	// an unmodified version of the app.
+	//   "SIGN_INTO_GOOGLE_ACCOUNT" - The user has not signed into their
+	// Google account.
+	//   "INSTALL_APP_FROM_PLAY" - The user has no license. They should
+	// install or purchase the app on the Google Play Store to add it to
+	// their library.
+	Remediation string `json:"remediation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Remediation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Remediation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserRemediationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod UserRemediationDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

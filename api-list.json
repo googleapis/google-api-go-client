@@ -1945,7 +1945,7 @@
       "name": "dataform",
       "version": "v1beta1",
       "title": "Dataform API",
-      "description": "",
+      "description": "Service to develop, version control, and operationalize SQL pipelines in BigQuery.",
       "discoveryRestUrl": "https://dataform.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

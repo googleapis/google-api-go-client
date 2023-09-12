@@ -2595,6 +2595,8 @@ type Finding struct {
 	// informational purposes.
 	//   "SCC_ERROR" - Describes an error that prevents some SCC
 	// functionality.
+	//   "POSTURE_VIOLATION" - Describes a potential security risk due to a
+	// change in the security posture.
 	FindingClass string `json:"findingClass,omitempty"`
 
 	// IamBindings: Represents IAM bindings associated with the finding.

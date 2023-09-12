@@ -3681,7 +3681,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkDismissedCall) D
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,
@@ -5200,7 +5200,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,
@@ -7560,7 +7560,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkDismissedCall) Do(
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,
@@ -9740,7 +9740,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkDismissedCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,

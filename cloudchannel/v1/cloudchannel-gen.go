@@ -4018,7 +4018,8 @@ type GoogleCloudChannelV1RepricingConfig struct {
 
 	// ChannelPartnerGranularity: Applies the repricing configuration at the
 	// channel partner level. Only ChannelPartnerRepricingConfig supports
-	// this value.
+	// this value. Deprecated: This is no longer supported. Use
+	// RepricingConfig.entitlement_granularity instead.
 	ChannelPartnerGranularity *GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity `json:"channelPartnerGranularity,omitempty"`
 
 	// ConditionalOverrides: The conditional overrides to apply for this
@@ -4080,7 +4081,8 @@ func (s *GoogleCloudChannelV1RepricingConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity: Applies
 // the repricing configuration at the channel partner level. The channel
 // partner value is derived from the resource name. Takes an empty json
-// object.
+// object. Deprecated: This is no longer supported. Use
+// RepricingConfig.EntitlementGranularity instead.
 type GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity struct {
 }
 

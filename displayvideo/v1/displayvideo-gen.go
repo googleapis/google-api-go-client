@@ -13573,6 +13573,10 @@ type PartnerCost struct {
 	// fee 4. Billed by the partner.
 	//   "PARTNER_COST_TYPE_CUSTOM_FEE_5" - The cost is charged as custom
 	// fee 5. Billed by the partner.
+	//   "PARTNER_COST_TYPE_SCIBIDS_FEE" - The cost is charged for using
+	// Scibids. Billed through DV360. This type is currently only available
+	// to certain customers. Other customers attempting to use this type
+	// will receive an error.
 	CostType string `json:"costType,omitempty"`
 
 	// FeeAmount: The CPM fee amount in micros of advertiser's currency.

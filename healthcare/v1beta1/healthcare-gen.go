@@ -1197,7 +1197,7 @@ func (s *CharacterMaskConfig) MarshalJSON() ([]byte, error) {
 // CharacterMaskField: Replace field value with masking character.
 // Supported types (https://www.hl7.org/fhir/datatypes.html): Code,
 // Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
-// Uuid, Xhtml
+// Uuid, Xhtml.
 type CharacterMaskField struct {
 }
 
@@ -1308,15 +1308,15 @@ func (s *CheckDataAccessResponse) MarshalJSON() ([]byte, error) {
 // and U) in the Basic Profile
 // (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter_E.html).
 // These contextual phrases are replaced with the token "[CTX]". This
-// option uses an additional `InfoType` during inspection.
+// option uses an additional infoType during inspection.
 type CleanDescriptorsOption struct {
 }
 
 // CleanTextField: Inspect text and transform sensitive text. Configure
-// using `TextConfig`. Supported types
+// using TextConfig. Supported types
 // (https://www.hl7.org/fhir/datatypes.html): Code, Date, DateTime,
 // Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
-// Uuid, Xhtml
+// Uuid, Xhtml.
 type CleanTextField struct {
 }
 
@@ -1682,9 +1682,10 @@ func (s *ConsentStore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ContextualDeidConfig: The fields that aren't marked `Keep` or
-// `CleanText` in the `BASIC` profile are collected into a contextual
-// phrase list. For fields marked `CleanText`, the process attempts to
+// ContextualDeidConfig: Fields that don't match a KeepField or
+// CleanTextField `action` in the BASIC profile are collected into a
+// contextual phrase list. For fields that match a CleanTextField
+// `action` in FieldMetadata or ProfileType, the process attempts to
 // transform phrases matching these contextual entries. These contextual
 // phrases are replaced with the token "[CTX]". This feature uses an
 // additional InfoType during inspection.
@@ -1726,11 +1727,11 @@ func (s *CreateMessageRequest) MarshalJSON() ([]byte, error) {
 type CryptoHashConfig struct {
 	// CryptoKey: An AES 128/192/256 bit key. Causes the hash to be computed
 	// based on this key. A default key is generated for each Deidentify
-	// operation and is used when neither `crypto_key` nor `kms_wrapped` is
-	// specified. Must not be set if `kms_wrapped` is set.
+	// operation and is used when neither crypto_key nor kms_wrapped is
+	// specified. Must not be set if kms_wrapped is set.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
-	// KmsWrapped: KMS wrapped key. Must not be set if `crypto_key` is set.
+	// KmsWrapped: KMS wrapped key. Must not be set if crypto_key is set.
 	KmsWrapped *KmsWrappedCryptoKey `json:"kmsWrapped,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
@@ -1759,7 +1760,7 @@ func (s *CryptoHashConfig) MarshalJSON() ([]byte, error) {
 // CryptoHashField: Replace field value with a hash of that value.
 // Supported types (https://www.hl7.org/fhir/datatypes.html): Code,
 // Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
-// Uuid, Xhtml
+// Uuid, Xhtml.
 type CryptoHashField struct {
 }
 
@@ -1812,16 +1813,16 @@ type DateShiftConfig struct {
 	// CryptoKey: An AES 128/192/256 bit key. The date shift is computed
 	// based on this key and the patient ID. If the patient ID is empty for
 	// a DICOM resource, the date shift is computed based on this key and
-	// the study instance UID. If `crypto_key` is not set, then
-	// `kms_wrapped` is used to calculate the date shift. If neither is set,
-	// a default key is generated for each de-identify operation. Must not
-	// be set if `kms_wrapped` is set.
+	// the study instance UID. If crypto_key is not set, then kms_wrapped is
+	// used to calculate the date shift. If neither is set, a default key is
+	// generated for each de-identify operation. Must not be set if
+	// kms_wrapped is set.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
-	// KmsWrapped: KMS wrapped key. If `kms_wrapped` is not set, then
-	// `crypto_key` is used to calculate the date shift. If neither is set,
-	// a default key is generated for each de-identify operation. Must not
-	// be set if `crypto_key` is set.
+	// KmsWrapped: KMS wrapped key. If kms_wrapped is not set, then
+	// crypto_key is used to calculate the date shift. If neither is set, a
+	// default key is generated for each de-identify operation. Must not be
+	// set if crypto_key is set.
 	KmsWrapped *KmsWrappedCryptoKey `json:"kmsWrapped,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
@@ -1851,7 +1852,7 @@ func (s *DateShiftConfig) MarshalJSON() ([]byte, error) {
 // date shifting
 // (https://cloud.google.com/dlp/docs/concepts-date-shifting) for more
 // information. Supported types
-// (https://www.hl7.org/fhir/datatypes.html): Date, DateTime
+// (https://www.hl7.org/fhir/datatypes.html): Date, DateTime.
 type DateShiftField struct {
 }
 
@@ -3156,26 +3157,29 @@ func (s *FhirConfig) MarshalJSON() ([]byte, error) {
 // FHIR store.
 type FhirFieldConfig struct {
 	// FieldMetadataList: Specifies FHIR paths to match and how to transform
-	// them. Any field that is not matched by a `FieldMetadata` is passed
-	// through to the output dataset unmodified. All extensions will be
-	// processed according to `keep_extensions`. If a field can be matched
-	// by more than one `FieldMetadata`, the first `FieldMetadata.Action` is
-	// applied. Overrides `options` and `profile`.
+	// them. Any field that is not matched by a FieldMetadata `action` is
+	// passed through to the output dataset unmodified. All extensions will
+	// be processed according to keep_extensions. If a field can be matched
+	// by more than one FieldMetadata `action`, the first `action` option is
+	// applied. Overrides options and the union field `profile` in
+	// FhirFieldConfig.
 	FieldMetadataList []*GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata `json:"fieldMetadataList,omitempty"`
 
-	// Options: Specifies additional options, overriding the base `profile`.
+	// Options: Specifies additional options, overriding the base
+	// ProfileType.
 	Options *GoogleCloudHealthcareV1beta1DeidentifyOptions `json:"options,omitempty"`
 
 	// ProfileType: Base profile type for handling FHIR fields.
 	//
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - No profile provided. Same as `BASIC`.
-	//   "KEEP_ALL" - `Keep` all fields.
-	//   "BASIC" - Transforms known HIPAA 18 fields and cleans known
-	// unstructured text fields.
+	//   "KEEP_ALL" - Keep all fields.
+	//   "BASIC" - Transforms known [HIPAA
+	// 18](https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics
+	// /de-identification/index.html#standard)
 	//   "CLEAN_ALL" - Cleans all supported tags. Applies to types: Code,
 	// Date, DateTime, Decimal, HumanName, Id, LanguageCode, Markdown, Oid,
-	// String, Uri, Uuid, Xhtml
+	// String, Uri, Uuid, Xhtml.
 	ProfileType string `json:"profileType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FieldMetadataList")
@@ -4060,27 +4064,27 @@ type GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata struct {
 	// CharacterMaskField: Replace the field's value with a masking
 	// character. Supported types (https://www.hl7.org/fhir/datatypes.html):
 	// Code, Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String,
-	// Uri, Uuid, Xhtml
+	// Uri, Uuid, Xhtml.
 	CharacterMaskField *CharacterMaskField `json:"characterMaskField,omitempty"`
 
 	// CleanTextField: Inspect the field's text and transform sensitive
-	// text. Configure using `TextConfig`. Supported types
+	// text. Configure using TextConfig. Supported types
 	// (https://www.hl7.org/fhir/datatypes.html): Code, Date, DateTime,
 	// Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
-	// Uuid, Xhtml
+	// Uuid, Xhtml.
 	CleanTextField *CleanTextField `json:"cleanTextField,omitempty"`
 
 	// CryptoHashField: Replace field value with a hash of that value.
 	// Supported types (https://www.hl7.org/fhir/datatypes.html): Code,
 	// Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
-	// Uuid, Xhtml
+	// Uuid, Xhtml.
 	CryptoHashField *CryptoHashField `json:"cryptoHashField,omitempty"`
 
 	// DateShiftField: Shift the date by a randomized number of days. See
 	// date shifting
 	// (https://cloud.google.com/dlp/docs/concepts-date-shifting) for more
 	// information. Supported types
-	// (https://www.hl7.org/fhir/datatypes.html): Date, DateTime
+	// (https://www.hl7.org/fhir/datatypes.html): Date, DateTime.
 	DateShiftField *DateShiftField `json:"dateShiftField,omitempty"`
 
 	// KeepField: Keep the field unchanged.
@@ -4088,21 +4092,22 @@ type GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata struct {
 
 	// Paths: List of paths to FHIR fields to redact. Each path is a
 	// period-separated list where each component is either a field name or
-	// FHIR type name. All types begin with an upper case letter. For
-	// example, the resource field "Patient.Address.city", which uses a
-	// string type, can be matched by "Patient.Address.String". Path also
-	// supports partialkk matching. For example, "Patient.Address.city" can
-	// be matched by "Address.city" (Patient omitted). Partial matching and
-	// type matching can be combined, for example "Patient.Address.city" can
-	// be matched by "Address.String". For "choice" types (those defined in
-	// the FHIR spec with the form: field[x]), use two separate components.
-	// For example, "deceasedAge.unit" is matched by "Deceased.Age.unit".
-	// Supported types (https://www.hl7.org/fhir/datatypes.html) are:
-	// AdministrativeGenderCode, Base64Binary, Boolean, Code, Date,
-	// DateTime, Decimal, HumanName, Id, Instant, Integer, LanguageCode,
-	// Markdown, Oid, PositiveInt, String, UnsignedInt, Uri, Uuid, Xhtml.
-	// The sub-type for HumanName (for example HumanName.given,
-	// HumanName.family) can be omitted.
+	// FHIR type (https://www.hl7.org/fhir/datatypes.html) name. All types
+	// begin with an upper case letter. For example, the resource field
+	// `Patient.Address.city`, which uses a string
+	// (https://www.hl7.org/fhir/datatypes-definitions.html#Address.city)
+	// type, can be matched by `Patient.Address.String`. Partial matching is
+	// supported. For example, `Patient.Address.city` can be matched by
+	// `Address.city` (with `Patient` omitted). Partial matching and type
+	// matching can be combined, for example `Patient.Address.city` can be
+	// matched by `Address.String`. For "choice" types (those defined in the
+	// FHIR spec with the format `field[x]`), use two separate components.
+	// For example, `deceasedAge.unit` is matched by `Deceased.Age.unit`.
+	// The following types are supported: AdministrativeGenderCode,
+	// Base64Binary, Boolean, Code, Date, DateTime, Decimal, HumanName, Id,
+	// Instant, Integer, LanguageCode, Markdown, Oid, PositiveInt, String,
+	// UnsignedInt, Uri, Uuid, Xhtml. The sub-type for HumanName (for
+	// example `HumanName.given`, `HumanName.family`) can be omitted.
 	Paths []string `json:"paths,omitempty"`
 
 	// RemoveField: Remove the field.
@@ -4133,21 +4138,18 @@ func (s *GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata) MarshalJSON() ([]b
 }
 
 // GoogleCloudHealthcareV1beta1DeidentifyOptions: Specifies additional
-// options to apply to the base `profile`.
+// options to apply to the base ProfileType.
 type GoogleCloudHealthcareV1beta1DeidentifyOptions struct {
-	// CharacterMaskConfig: Character mask config for `CharacterMaskField`
-	// `FieldMetadatas`.
+	// CharacterMaskConfig: Character mask config for CharacterMaskField.
 	CharacterMaskConfig *CharacterMaskConfig `json:"characterMaskConfig,omitempty"`
 
 	// ContextualDeid: Configure contextual de-id.
 	ContextualDeid *ContextualDeidConfig `json:"contextualDeid,omitempty"`
 
-	// CryptoHashConfig: Crypo hash config for `CharacterMaskField`
-	// `FieldMetadatas`.
+	// CryptoHashConfig: Crypto hash config for CharacterMaskField.
 	CryptoHashConfig *CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
 
-	// DateShiftConfig: Date shifting config for `CharacterMaskField`
-	// `FieldMetadatas`.
+	// DateShiftConfig: Date shifting config for CharacterMaskField.
 	DateShiftConfig *DateShiftConfig `json:"dateShiftConfig,omitempty"`
 
 	// KeepExtensions: Configure keeping extensions by default.
@@ -5301,7 +5303,7 @@ func (s *IngestMessageResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// KeepExtensionsConfig: The behaviour for handling FHIR extensions that
+// KeepExtensionsConfig: The behavior for handling FHIR extensions that
 // aren't otherwise specified for de-identification. If provided, all
 // extensions are preserved during de-identification by default. If
 // unspecified, all extensions are removed during de-identification by
@@ -7621,10 +7623,11 @@ type TextConfig struct {
 	// ProfileType: Base profile type for text transformation.
 	//
 	// Possible values:
-	//   "PROFILE_TYPE_UNSPECIFIED" - Same as BASIC.
+	//   "PROFILE_TYPE_UNSPECIFIED" - No profile provided. Same as BASIC.
 	//   "EMPTY" - Empty profile which does not perform any transformations.
-	//   "BASIC" - Basic profile applies: DATE -> DateShift Default ->
-	// ReplaceWithInfoType
+	//   "BASIC" - Automatically converts "DATE" infoTypes using a
+	// DateShiftConfig, and all other infoTypes using a
+	// ReplaceWithInfoTypeConfig.
 	ProfileType string `json:"profileType,omitempty"`
 
 	// Transformations: The transformations to apply to the detected data.
@@ -27613,24 +27616,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // searchable as the server might trim its generated search index in
 // those cases. Note: FHIR resources are indexed asynchronously, so
 // there might be a slight delay between the time a resource is created
-// or changed, and the time when the change reflects in search results.
-// The only exception is resource identifier data, which is indexed
-// synchronously as a special index. As a result, searching using
-// resource identifier is not subject to indexing delay. To use the
-// special synchronous index, the search term for identifier should be
-// in the pattern `identifier=[system]|[value]` or `identifier=[value]`,
-// and any of the following search result parameters can be used: *
-// `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If
-// your query contains any other search parameters, the standard
-// asynchronous index will be used instead. Note that searching against
-// the special index is optimized for resolving a small number of
-// matches. The search isn't optimized if your identifier search
-// criteria matches a large number (i.e. more than 2,000) of resources.
-// For a search query that will match a large number of resources, you
-// can avoiding using the special synchronous index by including an
-// additional `_sort` parameter in your query. Use `_sort=-_lastUpdated`
-// if you want to keep the default sorting order. For samples and
-// detailed information, see Searching for FHIR resources
+// or changes and when the change is reflected in search results. For
+// samples and detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -27701,7 +27688,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changed, and the time when the change reflects in search results. The only exception is resource identifier data, which is indexed synchronously as a special index. As a result, searching using resource identifier is not subject to indexing delay. To use the special synchronous index, the search term for identifier should be in the pattern `identifier=[system]|[value]` or `identifier=[value]`, and any of the following search result parameters can be used: * `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If your query contains any other search parameters, the standard asynchronous index will be used instead. Note that searching against the special index is optimized for resolving a small number of matches. The search isn't optimized if your identifier search criteria matches a large number (i.e. more than 2,000) of resources. For a search query that will match a large number of resources, you can avoiding using the special synchronous index by including an additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you want to keep the default sorting order. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",
@@ -27793,24 +27780,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // searchable as the server might trim its generated search index in
 // those cases. Note: FHIR resources are indexed asynchronously, so
 // there might be a slight delay between the time a resource is created
-// or changed, and the time when the change reflects in search results.
-// The only exception is resource identifier data, which is indexed
-// synchronously as a special index. As a result, searching using
-// resource identifier is not subject to indexing delay. To use the
-// special synchronous index, the search term for identifier should be
-// in the pattern `identifier=[system]|[value]` or `identifier=[value]`,
-// and any of the following search result parameters can be used: *
-// `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If
-// your query contains any other search parameters, the standard
-// asynchronous index will be used instead. Note that searching against
-// the special index is optimized for resolving a small number of
-// matches. The search isn't optimized if your identifier search
-// criteria matches a large number (i.e. more than 2,000) of resources.
-// For a search query that will match a large number of resources, you
-// can avoiding using the special synchronous index by including an
-// additional `_sort` parameter in your query. Use `_sort=-_lastUpdated`
-// if you want to keep the default sorting order. For samples and
-// detailed information, see Searching for FHIR resources
+// or changes and when the change is reflected in search results. For
+// samples and detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -27891,7 +27862,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changed, and the time when the change reflects in search results. The only exception is resource identifier data, which is indexed synchronously as a special index. As a result, searching using resource identifier is not subject to indexing delay. To use the special synchronous index, the search term for identifier should be in the pattern `identifier=[system]|[value]` or `identifier=[value]`, and any of the following search result parameters can be used: * `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If your query contains any other search parameters, the standard asynchronous index will be used instead. Note that searching against the special index is optimized for resolving a small number of matches. The search isn't optimized if your identifier search criteria matches a large number (i.e. more than 2,000) of resources. For a search query that will match a large number of resources, you can avoiding using the special synchronous index by including an additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you want to keep the default sorting order. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{resourceType}/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search-type",

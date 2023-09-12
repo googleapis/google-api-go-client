@@ -1636,6 +1636,14 @@ func (s *GoogleCloudVisionV1p1beta1AsyncAnnotateFileResponse) MarshalJSON() ([]b
 // async file annotation requests are batched into a single service
 // call.
 type GoogleCloudVisionV1p1beta1AsyncBatchAnnotateFilesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Parent: Optional. Target project and location to make a call. Format:
 	// `projects/{project-id}/locations/{location-id}`. If no parent is
 	// specified, a region will be chosen automatically. Supported
@@ -1648,7 +1656,7 @@ type GoogleCloudVisionV1p1beta1AsyncBatchAnnotateFilesRequest struct {
 	// this batch.
 	Requests []*GoogleCloudVisionV1p1beta1AsyncAnnotateFileRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1656,7 +1664,7 @@ type GoogleCloudVisionV1p1beta1AsyncBatchAnnotateFilesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1704,6 +1712,14 @@ func (s *GoogleCloudVisionV1p1beta1AsyncBatchAnnotateFilesResponse) MarshalJSON(
 // GoogleCloudVisionV1p1beta1AsyncBatchAnnotateImagesRequest: Request
 // for async image annotation for a list of images.
 type GoogleCloudVisionV1p1beta1AsyncBatchAnnotateImagesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// OutputConfig: Required. The desired output location and metadata
 	// (e.g. format).
 	OutputConfig *GoogleCloudVisionV1p1beta1OutputConfig `json:"outputConfig,omitempty"`
@@ -1720,7 +1736,7 @@ type GoogleCloudVisionV1p1beta1AsyncBatchAnnotateImagesRequest struct {
 	// batch.
 	Requests []*GoogleCloudVisionV1p1beta1AnnotateImageRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1728,10 +1744,10 @@ type GoogleCloudVisionV1p1beta1AsyncBatchAnnotateImagesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OutputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1746,6 +1762,14 @@ func (s *GoogleCloudVisionV1p1beta1AsyncBatchAnnotateImagesRequest) MarshalJSON(
 // GoogleCloudVisionV1p1beta1BatchAnnotateFilesRequest: A list of
 // requests to annotate files using the BatchAnnotateFiles API.
 type GoogleCloudVisionV1p1beta1BatchAnnotateFilesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Parent: Optional. Target project and location to make a call. Format:
 	// `projects/{project-id}/locations/{location-id}`. If no parent is
 	// specified, a region will be chosen automatically. Supported
@@ -1758,7 +1782,7 @@ type GoogleCloudVisionV1p1beta1BatchAnnotateFilesRequest struct {
 	// we support only one AnnotateFileRequest in BatchAnnotateFilesRequest.
 	Requests []*GoogleCloudVisionV1p1beta1AnnotateFileRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1766,7 +1790,7 @@ type GoogleCloudVisionV1p1beta1BatchAnnotateFilesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1819,6 +1843,14 @@ func (s *GoogleCloudVisionV1p1beta1BatchAnnotateFilesResponse) MarshalJSON() ([]
 // GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest: Multiple image
 // annotation requests are batched into a single service call.
 type GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest struct {
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Parent: Optional. Target project and location to make a call. Format:
 	// `projects/{project-id}/locations/{location-id}`. If no parent is
 	// specified, a region will be chosen automatically. Supported
@@ -1831,7 +1863,7 @@ type GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest struct {
 	// batch.
 	Requests []*GoogleCloudVisionV1p1beta1AnnotateImageRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1839,7 +1871,7 @@ type GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

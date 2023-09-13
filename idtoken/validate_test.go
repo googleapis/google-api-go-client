@@ -231,6 +231,42 @@ func TestValidateES256(t *testing.T) {
 	}
 }
 
+func TestGetPayload(t *testing.T) {
+	idToken, _ := createRS256JWT(t)
+	tests := []struct {
+		name                string
+		token               string
+		wantPayloadAudience string
+		wantPayload         *Payload
+		wantErr             bool
+	}{{
+		name:                "valid token",
+		token:               idToken,
+		wantPayloadAudience: testAudience,
+	}, {
+		name:    "unparseable token",
+		token:   "aaa.bbb.ccc",
+		wantErr: true,
+	}}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx := context.Background()
+			v := &Validator{}
+			payload, err := v.GetPayload(ctx, tt.token)
+			gotErr := err != nil
+			if gotErr != tt.wantErr {
+				t.Errorf("GetPayload(ctx, %q) got error %v, wantErr = %v", tt.token, err, tt.wantErr)
+			}
+			if tt.wantPayloadAudience != "" {
+				if payload == nil || payload.Audience != tt.wantPayloadAudience {
+					t.Errorf("GetPayload(ctx, %q) got payload %+v, want payload with audience = %v", tt.token, payload, tt.wantPayloadAudience)
+				}
+			}
+		})
+	}
+}
+
 func createES256JWT(t *testing.T) (string, ecdsa.PublicKey) {
 	t.Helper()
 	token := commonToken(t, "ES256")

@@ -626,6 +626,10 @@ type CancelOperationRequest struct {
 // Consumer: Contains information of the customer's network
 // configurations.Next available ID: 5
 type Consumer struct {
+	// EndpointLocation: Output only. The location of the endpoint URI.
+	// Format: projects/{project}/locations/{location}.
+	EndpointLocation string `json:"endpointLocation,omitempty"`
+
 	// EndpointUri: Output only. The URI of the endpoint used to access the
 	// metastore service.
 	EndpointUri string `json:"endpointUri,omitempty"`
@@ -640,7 +644,7 @@ type Consumer struct {
 	// work_id}
 	Subnetwork string `json:"subnetwork,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EndpointUri") to
+	// ForceSendFields is a list of field names (e.g. "EndpointLocation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -648,12 +652,13 @@ type Consumer struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EndpointUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndpointLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

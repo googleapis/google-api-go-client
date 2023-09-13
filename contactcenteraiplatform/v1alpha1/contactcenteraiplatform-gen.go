@@ -801,6 +801,9 @@ type SAMLParams struct {
 	// Certificate: SAML certificate
 	Certificate string `json:"certificate,omitempty"`
 
+	// EmailMapping: IdP field that maps to the user’s email address
+	EmailMapping string `json:"emailMapping,omitempty"`
+
 	// EntityId: Entity id URL
 	EntityId string `json:"entityId,omitempty"`
 

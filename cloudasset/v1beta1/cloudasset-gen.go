@@ -1499,6 +1499,11 @@ type GoogleIdentityAccesscontextmanagerV1Condition struct {
 	// "accessPolicies/MY_POLICY/accessLevels/LEVEL_NAME"
 	RequiredAccessLevels []string `json:"requiredAccessLevels,omitempty"`
 
+	// VpcNetworkSources: The request must originate from one of the
+	// provided VPC networks in Google Cloud. Cannot specify this field
+	// together with `ip_subnetworks`.
+	VpcNetworkSources []*GoogleIdentityAccesscontextmanagerV1VpcNetworkSource `json:"vpcNetworkSources,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DevicePolicy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1659,6 +1664,27 @@ type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// outside the perimeter.
 	IdentityType string `json:"identityType,omitempty"`
 
+	// SourceRestriction: Whether to enforce traffic restrictions based on
+	// `sources` field. If the `sources` fields is non-empty, then this
+	// field must be set to `SOURCE_RESTRICTION_ENABLED`.
+	//
+	// Possible values:
+	//   "SOURCE_RESTRICTION_UNSPECIFIED" - Enforcement preference
+	// unspecified, will not enforce traffic restrictions based on `sources`
+	// in EgressFrom.
+	//   "SOURCE_RESTRICTION_ENABLED" - Enforcement preference enabled,
+	// traffic restrictions will be enforced based on `sources` in
+	// EgressFrom.
+	//   "SOURCE_RESTRICTION_DISABLED" - Enforcement preference disabled,
+	// will not enforce traffic restrictions based on `sources` in
+	// EgressFrom.
+	SourceRestriction string `json:"sourceRestriction,omitempty"`
+
+	// Sources: Sources that this EgressPolicy authorizes access from. If
+	// this field is not empty, then `source_restriction` must be set to
+	// `SOURCE_RESTRICTION_ENABLED`.
+	Sources []*GoogleIdentityAccesscontextmanagerV1EgressSource `json:"sources,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Identities") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1724,6 +1750,45 @@ type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
 
 func (s *GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressSource: The source that
+// EgressPolicy authorizes access from inside the ServicePerimeter to
+// somewhere outside the ServicePerimeter boundaries.
+type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
+	// AccessLevel: An AccessLevel resource name that allows protected
+	// resources inside the ServicePerimeters to access outside the
+	// ServicePerimeter boundaries. AccessLevels listed must be in the same
+	// policy as this ServicePerimeter. Referencing a nonexistent
+	// AccessLevel will cause an error. If an AccessLevel name is not
+	// specified, only resources within the perimeter can be accessed
+	// through Google Cloud calls with request origins within the perimeter.
+	// Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a
+	// single `*` is specified for `access_level`, then all EgressSources
+	// will be allowed.
+	AccessLevel string `json:"accessLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2241,6 +2306,79 @@ type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
 
 func (s *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1VpcNetworkSource: The originating
+// network source in Google Cloud.
+type GoogleIdentityAccesscontextmanagerV1VpcNetworkSource struct {
+	// VpcSubnetwork: Sub-segment ranges of a VPC network.
+	VpcSubnetwork *GoogleIdentityAccesscontextmanagerV1VpcSubNetwork `json:"vpcSubnetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VpcSubnetwork") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VpcSubnetwork") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1VpcNetworkSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcNetworkSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1VpcSubNetwork: Sub-segment ranges
+// inside of a VPC Network.
+type GoogleIdentityAccesscontextmanagerV1VpcSubNetwork struct {
+	// Network: Required. Network name. If the network is not part of the
+	// organization, the `compute.network.get` permission must be granted to
+	// the caller. Format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NETWO
+	// RK_NAME}` Example:
+	// `//compute.googleapis.com/projects/my-project/global/networks/network-
+	// 1`
+	Network string `json:"network,omitempty"`
+
+	// VpcIpSubnetworks: CIDR block IP subnetwork specification. The IP
+	// address must be an IPv4 address and can be a public or private IP
+	// address. Note that for a CIDR IP address block, the specified IP
+	// address portion must be properly truncated (i.e. all the host bits
+	// must be zero) or the input is considered malformed. For example,
+	// "192.0.2.0/24" is accepted but "192.0.2.1/24" is not. If empty, all
+	// IP addresses are allowed.
+	VpcIpSubnetworks []string `json:"vpcIpSubnetworks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Network") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Network") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1VpcSubNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcSubNetwork
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

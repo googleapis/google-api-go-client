@@ -254,6 +254,84 @@ type GoogleCloudAssuredworkloadsV1AcknowledgeViolationResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse: Response
+// containing the analysis results for the hypothetical resource move.
+type GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse struct {
+	// AssetMoveAnalyses: List of analysis results for each asset in scope.
+	AssetMoveAnalyses []*GoogleCloudAssuredworkloadsV1AssetMoveAnalysis `json:"assetMoveAnalyses,omitempty"`
+
+	// NextPageToken: The next page token. Is empty if the last page is
+	// reached.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetMoveAnalyses")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssetMoveAnalyses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1AssetMoveAnalysis: Represents move
+// analysis results for an asset.
+type GoogleCloudAssuredworkloadsV1AssetMoveAnalysis struct {
+	// AnalysisGroups: List of eligible analyses performed for the asset.
+	AnalysisGroups []*GoogleCloudAssuredworkloadsV1MoveAnalysisGroup `json:"analysisGroups,omitempty"`
+
+	// Asset: The full resource name of the asset being analyzed. Example:
+	// //compute.googleapis.com/projects/my_project_123/zones/zone1/instances
+	// /instance1
+	Asset string `json:"asset,omitempty"`
+
+	// AssetType: Type of the asset being analyzed. Possible values will be
+	// among the ones listed here
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+	AssetType string `json:"assetType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1AssetMoveAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1AssetMoveAnalysis
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata:
 // Operation metadata to give request details of CreateWorkload.
 type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
@@ -391,6 +469,107 @@ type GoogleCloudAssuredworkloadsV1ListWorkloadsResponse struct {
 
 func (s *GoogleCloudAssuredworkloadsV1ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ListWorkloadsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1MoveAnalysisGroup: Represents a logical
+// group of checks performed for an asset. If successful, the group
+// contains the analysis result, otherwise it contains an error with the
+// failure reason.
+type GoogleCloudAssuredworkloadsV1MoveAnalysisGroup struct {
+	// AnalysisResult: Result of a successful analysis.
+	AnalysisResult *GoogleCloudAssuredworkloadsV1MoveAnalysisResult `json:"analysisResult,omitempty"`
+
+	// DisplayName: Name of the analysis group.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Error: Error details for a failed analysis.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1MoveAnalysisGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1MoveAnalysisGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1MoveAnalysisResult: Represents the
+// successful move analysis results for a group.
+type GoogleCloudAssuredworkloadsV1MoveAnalysisResult struct {
+	// Blockers: List of blockers. If not resolved, these will result in
+	// compliance violations in the target.
+	Blockers []*GoogleCloudAssuredworkloadsV1MoveImpact `json:"blockers,omitempty"`
+
+	// Warnings: List of warnings. These are risks that may or may not
+	// result in compliance violations.
+	Warnings []*GoogleCloudAssuredworkloadsV1MoveImpact `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Blockers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Blockers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1MoveAnalysisResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1MoveAnalysisResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1MoveImpact: Represents the impact of
+// moving the asset to the target.
+type GoogleCloudAssuredworkloadsV1MoveImpact struct {
+	// Detail: Explanation of the impact.
+	Detail string `json:"detail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Detail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Detail") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1MoveImpact) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1MoveImpact
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1788,6 +1967,242 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove":
+
+type OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
+	s            *Service
+	target       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeWorkloadMove: Analyzes a hypothetical move of a source
+// resource to a target workload to surface compliance risks. The
+// analysis is best effort and is not guaranteed to be exhaustive.
+//
+//   - target: The resource ID of the folder-based destination workload.
+//     This workload is where the source resource will hypothetically be
+//     moved to. Specify the workload's relative resource name, formatted
+//     as:
+//     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
+//     WORKLOAD_ID}" For example:
+//     "organizations/123/locations/us-east1/workloads/assured-workload-2".
+func (r *OrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(target string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c := &OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.target = target
+	return c
+}
+
+// AssetTypes sets the optional parameter "assetTypes": List of asset
+// types to be analyzed, including and under the source resource. If
+// empty, all assets are analyzed. The complete list of asset types is
+// available here
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AssetTypes(assetTypes ...string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size. If a
+// value is not specified, the default value of 10 is used.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageSize(pageSize int64) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token
+// from the previous response. It needs to be passed in the second and
+// following requests.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageToken(pageToken string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Project sets the optional parameter "project": The source type is a
+// project. Specify the project's relative resource name, formatted as
+// either a project number or a project ID: "projects/{PROJECT_NUMBER}"
+// or "projects/{PROJECT_ID}" For example: "projects/951040570662" when
+// specifying a project number, or "projects/my-project-123" when
+// specifying a project ID.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Project(project string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("project", project)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) IfNoneMatch(entityTag string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+target}:analyzeWorkloadMove")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"target": c.target,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove" call.
+// Exactly one of
+// *GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.",
+	//   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
+	//   "httpMethod": "GET",
+	//   "id": "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove",
+	//   "parameterOrder": [
+	//     "target"
+	//   ],
+	//   "parameters": {
+	//     "assetTypes": {
+	//       "description": "Optional. List of asset types to be analyzed, including and under the source resource. If empty, all assets are analyzed. The complete list of asset types is available [here](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Page size. If a value is not specified, the default value of 10 is used.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The page token from the previous response. It needs to be passed in the second and following requests.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The source type is a project. Specify the project's relative resource name, formatted as either a project number or a project ID: \"projects/{PROJECT_NUMBER}\" or \"projects/{PROJECT_ID}\" For example: \"projects/951040570662\" when specifying a project number, or \"projects/my-project-123\" when specifying a project ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "target": {
+	//       "description": "Required. The resource ID of the folder-based destination workload. This workload is where the source resource will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+target}:analyzeWorkloadMove",
+	//   "response": {
+	//     "$ref": "GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

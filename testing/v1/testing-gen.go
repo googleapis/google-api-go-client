@@ -1308,7 +1308,7 @@ type DeviceSession struct {
 
 	// Ttl: Optional. The amount of time that a device will be initially
 	// allocated for. This can eventually be extended with the
-	// ExtendDeviceSession RPC. Default: 3 hours.
+	// ExtendDeviceSession RPC. Default: 30 minutes.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

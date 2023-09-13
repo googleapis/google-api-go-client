@@ -4266,7 +4266,7 @@ type Results struct {
 	// images, in the order corresponding to build step indices. Cloud
 	// Builders (https://cloud.google.com/cloud-build/docs/cloud-builders)
 	// can produce this output by writing to `$BUILDER_OUTPUT/output`. Only
-	// the first 4KB of data is stored.
+	// the first 50KB of data is stored.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
 
 	// Images: Container images that were built as a part of the build.
@@ -12415,7 +12415,7 @@ type ProjectsLocationsTriggersCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new `BuildTrigger`. This API is experimental.
+// Create: Creates a new `BuildTrigger`.
 //
 //   - parent: The parent resource where this trigger will be created.
 //     Format: `projects/{project}/locations/{location}`.
@@ -12524,7 +12524,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new `BuildTrigger`. This API is experimental.",
+	//   "description": "Creates a new `BuildTrigger`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.locations.triggers.create",
@@ -12570,7 +12570,6 @@ type ProjectsLocationsTriggersDeleteCall struct {
 }
 
 // Delete: Deletes a `BuildTrigger` by its project ID and trigger ID.
-// This API is experimental.
 //
 //   - name: The name of the `Trigger` to delete. Format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`.
@@ -12680,7 +12679,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a `BuildTrigger` by its project ID and trigger ID. This API is experimental.",
+	//   "description": "Deletes a `BuildTrigger` by its project ID and trigger ID.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudbuild.projects.locations.triggers.delete",
@@ -12728,8 +12727,7 @@ type ProjectsLocationsTriggersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns information about a `BuildTrigger`. This API is
-// experimental.
+// Get: Returns information about a `BuildTrigger`.
 //
 //   - name: The name of the `Trigger` to retrieve. Format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`.
@@ -12852,7 +12850,7 @@ func (c *ProjectsLocationsTriggersGetCall) Do(opts ...googleapi.CallOption) (*Bu
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns information about a `BuildTrigger`. This API is experimental.",
+	//   "description": "Returns information about a `BuildTrigger`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbuild.projects.locations.triggers.get",
@@ -12900,7 +12898,7 @@ type ProjectsLocationsTriggersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists existing `BuildTrigger`s. This API is experimental.
+// List: Lists existing `BuildTrigger`s.
 //
 //   - parent: The parent of the collection of `Triggers`. Format:
 //     `projects/{project}/locations/{location}`.
@@ -13030,7 +13028,7 @@ func (c *ProjectsLocationsTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists existing `BuildTrigger`s. This API is experimental.",
+	//   "description": "Lists existing `BuildTrigger`s.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbuild.projects.locations.triggers.list",
@@ -13106,7 +13104,6 @@ type ProjectsLocationsTriggersPatchCall struct {
 }
 
 // Patch: Updates a `BuildTrigger` by its project ID and trigger ID.
-// This API is experimental.
 //
 //   - resourceName: The `Trigger` name with format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`, where
@@ -13232,7 +13229,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a `BuildTrigger` by its project ID and trigger ID. This API is experimental.",
+	//   "description": "Updates a `BuildTrigger` by its project ID and trigger ID.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudbuild.projects.locations.triggers.patch",
@@ -14470,7 +14467,7 @@ type ProjectsTriggersCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new `BuildTrigger`. This API is experimental.
+// Create: Creates a new `BuildTrigger`.
 //
 //   - projectId: ID of the project for which to configure automatic
 //     builds.
@@ -14580,7 +14577,7 @@ func (c *ProjectsTriggersCreateCall) Do(opts ...googleapi.CallOption) (*BuildTri
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new `BuildTrigger`. This API is experimental.",
+	//   "description": "Creates a new `BuildTrigger`.",
 	//   "flatPath": "v1/projects/{projectId}/triggers",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.triggers.create",
@@ -14626,7 +14623,6 @@ type ProjectsTriggersDeleteCall struct {
 }
 
 // Delete: Deletes a `BuildTrigger` by its project ID and trigger ID.
-// This API is experimental.
 //
 // - projectId: ID of the project that owns the trigger.
 // - triggerId: ID of the `BuildTrigger` to delete.
@@ -14732,7 +14728,7 @@ func (c *ProjectsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a `BuildTrigger` by its project ID and trigger ID. This API is experimental.",
+	//   "description": "Deletes a `BuildTrigger` by its project ID and trigger ID.",
 	//   "flatPath": "v1/projects/{projectId}/triggers/{triggerId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudbuild.projects.triggers.delete",
@@ -14782,8 +14778,7 @@ type ProjectsTriggersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns information about a `BuildTrigger`. This API is
-// experimental.
+// Get: Returns information about a `BuildTrigger`.
 //
 //   - projectId: ID of the project that owns the trigger.
 //   - triggerId: Identifier (`id` or `name`) of the `BuildTrigger` to
@@ -14903,7 +14898,7 @@ func (c *ProjectsTriggersGetCall) Do(opts ...googleapi.CallOption) (*BuildTrigge
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns information about a `BuildTrigger`. This API is experimental.",
+	//   "description": "Returns information about a `BuildTrigger`.",
 	//   "flatPath": "v1/projects/{projectId}/triggers/{triggerId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbuild.projects.triggers.get",
@@ -14952,7 +14947,7 @@ type ProjectsTriggersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists existing `BuildTrigger`s. This API is experimental.
+// List: Lists existing `BuildTrigger`s.
 //
 // - projectId: ID of the project for which to list BuildTriggers.
 func (r *ProjectsTriggersService) List(projectId string) *ProjectsTriggersListCall {
@@ -15082,7 +15077,7 @@ func (c *ProjectsTriggersListCall) Do(opts ...googleapi.CallOption) (*ListBuildT
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists existing `BuildTrigger`s. This API is experimental.",
+	//   "description": "Lists existing `BuildTrigger`s.",
 	//   "flatPath": "v1/projects/{projectId}/triggers",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbuild.projects.triggers.list",
@@ -15158,7 +15153,6 @@ type ProjectsTriggersPatchCall struct {
 }
 
 // Patch: Updates a `BuildTrigger` by its project ID and trigger ID.
-// This API is experimental.
 //
 // - projectId: ID of the project that owns the trigger.
 // - triggerId: ID of the `BuildTrigger` to update.
@@ -15271,7 +15265,7 @@ func (c *ProjectsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*BuildTrig
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a `BuildTrigger` by its project ID and trigger ID. This API is experimental.",
+	//   "description": "Updates a `BuildTrigger` by its project ID and trigger ID.",
 	//   "flatPath": "v1/projects/{projectId}/triggers/{triggerId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudbuild.projects.triggers.patch",

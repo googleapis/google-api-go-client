@@ -764,6 +764,12 @@ type ConnectivityTest struct {
 	// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
 	Name string `json:"name,omitempty"`
 
+	// ProbingDetails: Output only. The probing details of this test from
+	// the latest run, present for applicable tests only. The details are
+	// updated when creating a new test, updating an existing test, or
+	// triggering a one-time rerun of an existing test.
+	ProbingDetails *ProbingDetails `json:"probingDetails,omitempty"`
+
 	// Protocol: IP Protocol of the test. When not provided, "TCP" is
 	// assumed.
 	Protocol string `json:"protocol,omitempty"`
@@ -1020,6 +1026,36 @@ func (s *DropInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EdgeLocation: Representation of a network edge location as per
+// https://cloud.google.com/vpc/docs/edge-locations.
+type EdgeLocation struct {
+	// MetropolitanArea: Name of the metropolitan area.
+	MetropolitanArea string `json:"metropolitanArea,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetropolitanArea") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetropolitanArea") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EdgeLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod EdgeLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1060,6 +1096,19 @@ type Endpoint struct {
 	// projects/{project}/regions/{region}/forwardingRules/{id}
 	ForwardingRule string `json:"forwardingRule,omitempty"`
 
+	// ForwardingRuleTarget: Output only. Specifies the type of the target
+	// of the forwarding rule.
+	//
+	// Possible values:
+	//   "FORWARDING_RULE_TARGET_UNSPECIFIED" - Forwarding rule target is
+	// unknown.
+	//   "INSTANCE" - Compute Engine instance for protocol forwarding.
+	//   "LOAD_BALANCER" - Load Balancer. The specific type can be found
+	// from load_balancer_type.
+	//   "VPN_GATEWAY" - Classic Cloud VPN Gateway.
+	//   "PSC" - Forwarding Rule is a Private Service Connect endpoint.
+	ForwardingRuleTarget string `json:"forwardingRuleTarget,omitempty"`
+
 	// GkeMasterCluster: A cluster URI for Google Kubernetes Engine master
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
 	GkeMasterCluster string `json:"gkeMasterCluster,omitempty"`
@@ -1070,8 +1119,37 @@ type Endpoint struct {
 	// IpAddress: The IP address of the endpoint, which can be an external
 	// or internal IP. An IPv6 address is only allowed when the test's
 	// destination is a global load balancer VIP
-	// (/load-balancing/docs/load-balancing-overview).
+	// (https://cloud.google.com/load-balancing/docs/load-balancing-overview).
 	IpAddress string `json:"ipAddress,omitempty"`
+
+	// LoadBalancerId: Output only. ID of the load balancer the forwarding
+	// rule points to. Empty for forwarding rules not related to load
+	// balancers.
+	LoadBalancerId string `json:"loadBalancerId,omitempty"`
+
+	// LoadBalancerType: Output only. Type of the load balancer the
+	// forwarding rule points to.
+	//
+	// Possible values:
+	//   "LOAD_BALANCER_TYPE_UNSPECIFIED" - Forwarding rule points to a
+	// different target than a load balancer or a load balancer type is
+	// unknown.
+	//   "HTTPS_ADVANCED_LOAD_BALANCER" - Global external HTTP(S) load
+	// balancer.
+	//   "HTTPS_LOAD_BALANCER" - Global external HTTP(S) load balancer
+	// (classic)
+	//   "REGIONAL_HTTPS_LOAD_BALANCER" - Regional external HTTP(S) load
+	// balancer.
+	//   "INTERNAL_HTTPS_LOAD_BALANCER" - Internal HTTP(S) load balancer.
+	//   "SSL_PROXY_LOAD_BALANCER" - External SSL proxy load balancer.
+	//   "TCP_PROXY_LOAD_BALANCER" - External TCP proxy load balancer.
+	//   "INTERNAL_TCP_PROXY_LOAD_BALANCER" - Internal regional TCP proxy
+	// load balancer.
+	//   "NETWORK_LOAD_BALANCER" - External TCP/UDP Network load balancer.
+	//   "LEGACY_NETWORK_LOAD_BALANCER" - Target-pool based external TCP/UDP
+	// Network load balancer.
+	//   "TCP_UDP_INTERNAL_LOAD_BALANCER" - Internal TCP/UDP load balancer.
+	LoadBalancerType string `json:"loadBalancerType,omitempty"`
 
 	// Network: A Compute Engine network URI.
 	Network string `json:"network,omitempty"`
@@ -1565,6 +1643,68 @@ type InstanceInfo struct {
 
 func (s *InstanceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LatencyDistribution: Describes measured latency distribution.
+type LatencyDistribution struct {
+	// LatencyPercentiles: Representative latency percentiles.
+	LatencyPercentiles []*LatencyPercentile `json:"latencyPercentiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LatencyPercentiles")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatencyPercentiles") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatencyDistribution) MarshalJSON() ([]byte, error) {
+	type NoMethod LatencyDistribution
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LatencyPercentile: Latency percentile rank and value.
+type LatencyPercentile struct {
+	// LatencyMicros: percent-th percentile of latency observed, in
+	// microseconds. Fraction of percent/100 of samples have latency lower
+	// or equal to the value of this field.
+	LatencyMicros int64 `json:"latencyMicros,omitempty,string"`
+
+	// Percent: Percentage of samples this data point applies to.
+	Percent int64 `json:"percent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LatencyMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatencyMicros") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatencyPercentile) MarshalJSON() ([]byte, error) {
+	type NoMethod LatencyPercentile
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2095,6 +2235,87 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProbingDetails: Results of active probing from the last run of the
+// test.
+type ProbingDetails struct {
+	// AbortCause: The reason probing was aborted.
+	//
+	// Possible values:
+	//   "PROBING_ABORT_CAUSE_UNSPECIFIED" - No reason was specified.
+	//   "PERMISSION_DENIED" - The user lacks permission to access some of
+	// the network resources required to run the test.
+	//   "NO_SOURCE_LOCATION" - No valid source endpoint could be derived
+	// from the request.
+	AbortCause string `json:"abortCause,omitempty"`
+
+	// DestinationEgressLocation: The EdgeLocation from which a packet
+	// destined for/originating from the internet will egress/ingress the
+	// Google network. This will only be populated for a connectivity test
+	// which has an internet destination/source address. The absence of this
+	// field *must not* be used as an indication that the destination/source
+	// is part of the Google network.
+	DestinationEgressLocation *EdgeLocation `json:"destinationEgressLocation,omitempty"`
+
+	// EndpointInfo: The source and destination endpoints derived from the
+	// test input and used for active probing.
+	EndpointInfo *EndpointInfo `json:"endpointInfo,omitempty"`
+
+	// Error: Details about an internal failure or the cancellation of
+	// active probing.
+	Error *Status `json:"error,omitempty"`
+
+	// ProbingLatency: Latency as measured by active probing in one
+	// direction: from the source to the destination endpoint.
+	ProbingLatency *LatencyDistribution `json:"probingLatency,omitempty"`
+
+	// Result: The overall result of active probing.
+	//
+	// Possible values:
+	//   "PROBING_RESULT_UNSPECIFIED" - No result was specified.
+	//   "REACHABLE" - At least 95% of packets reached the destination.
+	//   "UNREACHABLE" - No packets reached the destination.
+	//   "REACHABILITY_INCONSISTENT" - Less than 95% of packets reached the
+	// destination.
+	//   "UNDETERMINED" - Reachability could not be determined. Possible
+	// reasons are: * The user lacks permission to access some of the
+	// network resources required to run the test. * No valid source
+	// endpoint could be derived from the request. * An internal error
+	// occurred.
+	Result string `json:"result,omitempty"`
+
+	// SentProbeCount: Number of probes sent.
+	SentProbeCount int64 `json:"sentProbeCount,omitempty"`
+
+	// SuccessfulProbeCount: Number of probes that reached the destination.
+	SuccessfulProbeCount int64 `json:"successfulProbeCount,omitempty"`
+
+	// VerifyTime: The time that reachability was assessed through active
+	// probing.
+	VerifyTime string `json:"verifyTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AbortCause") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbortCause") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProbingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProbingDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

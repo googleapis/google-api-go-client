@@ -118,14 +118,15 @@ func Validate(ctx context.Context, idToken string, audience string) (*Payload, e
 	return defaultValidator.validate(ctx, idToken, audience)
 }
 
-// GetPayload just gets the payload part of the token.
+// GetPayload parses the given token and returns its payload.
 //
-// WARNING: THIS FUNCTION DOES NOT VALIDATE THE TOKEN.
+// Warning: This function does not validate the token prior to parsing it.
 //
-// In fact, it explicitly skips the validation part. It should only be used to inspect the payload
-// content of a token, perhaps for debugging purposes, as a means to try to figure out why the
-// validation failed. Note that if Validate() succeeds, it already returns the exact payload that
-// this function returns.
+// GetPayload is primarily meant to be used to inspect a token's payload. This is
+// useful when validation fails and the payload needs to be inspected.
+//
+// Note: A successful Validate() invocation with the same token will return an
+// identical payload.
 func (v *Validator) GetPayload(ctx context.Context, idToken string) (*Payload, error) {
 	jwt, err := parseJWT(idToken)
 	if err != nil {
@@ -134,14 +135,15 @@ func (v *Validator) GetPayload(ctx context.Context, idToken string) (*Payload, e
 	return jwt.parsedPayload()
 }
 
-// GetPayload just gets the payload part of the token.
+// GetPayload parses the given token and returns its payload.
 //
-// WARNING: THIS FUNCTION DOES NOT VALIDATE THE TOKEN.
+// Warning: This function does not validate the token prior to parsing it.
 //
-// In fact, it explicitly skips the validation part. It should only be used to inspect the payload
-// content of a token, perhaps for debugging purposes, as a means to try to figure out why the
-// validation failed. Note that if Validate() succeeds, it already returns the exact payload that
-// this function returns.
+// GetPayload is primarily meant to be used to inspect a token's payload. This is
+// useful when validation fails and the payload needs to be inspected.
+//
+// Note: A successful Validate() invocation with the same token will return an
+// identical payload.
 func GetPayload(ctx context.Context, idToken string) (*Payload, error) {
 	return defaultValidator.GetPayload(ctx, idToken)
 }
